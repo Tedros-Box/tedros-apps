@@ -1,10 +1,10 @@
-package com.tedros.module.produto;
+package com.tedros.location.module.produto;
 
 import com.tedros.core.TModule;
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
 import com.tedros.fxapi.presenter.dynamic.view.TDynaView;
-import com.tedros.module.produto.model.ProdutoModelView;
+import com.tedros.location.module.produto.model.ProdutoModelView;
 
 @TSecurity(	id="TLOCAT_PRODUTO_MODULE", appName = "#{myapp.name}", 
 moduleName = "#{module.adm}", 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.module.report;
+package com.tedros.location.module.report;
 
 import com.tedros.core.TModule;
 import com.tedros.core.annotation.security.TAuthorizationType;
@@ -10,7 +10,7 @@ import com.tedros.fxapi.presenter.dynamic.view.TDynaGroupView;
 import com.tedros.fxapi.presenter.view.group.TGroupPresenter;
 import com.tedros.fxapi.presenter.view.group.TGroupView;
 import com.tedros.fxapi.presenter.view.group.TViewItem;
-import com.tedros.module.report.model.ProdutoReportModelView;
+import com.tedros.location.module.report.model.ProdutoReportModelView;
 
 /**
  * @author Davis Gordon

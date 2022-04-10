@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.module.produto.model;
+package com.tedros.location.module.produto.model;
 
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;

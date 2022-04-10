@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.module.report.model;
+package com.tedros.location.module.report.model;
 
 import com.tedros.fxapi.presenter.model.TModelView;
 import com.tedros.report.model.ProdutoItemModel;

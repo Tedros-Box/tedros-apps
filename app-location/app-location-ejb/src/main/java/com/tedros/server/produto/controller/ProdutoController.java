@@ -18,8 +18,11 @@ import com.tedros.ejb.base.controller.TSecureEjbController;
 import com.tedros.ejb.base.result.TResult;
 import com.tedros.ejb.base.result.TResult.EnumResult;
 import com.tedros.ejb.base.security.ITSecurity;
+import com.tedros.ejb.base.security.TAccessPolicie;
 import com.tedros.ejb.base.security.TAccessToken;
-import com.tedros.ejb.base.security.TRemoteSecurity;
+import com.tedros.ejb.base.security.TBeanPolicie;
+import com.tedros.ejb.base.security.TBeanSecurity;
+import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.ejb.base.service.ITEjbService;
 import com.tedros.ejb.controller.IProdutoController;
 import com.tedros.model.Produto;
@@ -31,8 +34,10 @@ import com.tedros.server.produto.service.ProdutoService;
  * @author Davis Gordon
  *
  */
-@TRemoteSecurity
+@TSecurityInterceptor
 @Stateless(name="IProdutoController")
+@TBeanSecurity({@TBeanPolicie(id = "TLOCAT_CADPROD_FORM", 
+policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 public class ProdutoController extends TSecureEjbController<Produto> implements IProdutoController, ITSecurity {
 	

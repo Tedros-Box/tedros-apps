@@ -1,4 +1,4 @@
-package com.tedros.start;
+package com.tedros.location.start;
 
 public interface TConstant {
 
