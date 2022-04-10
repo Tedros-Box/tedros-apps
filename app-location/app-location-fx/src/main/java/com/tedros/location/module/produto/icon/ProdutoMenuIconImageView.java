@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.module.produto.icon;
+package com.tedros.location.module.produto.icon;
 
 import com.tedros.core.image.TImageView;
 
@@ -18,7 +18,7 @@ public class ProdutoMenuIconImageView extends TImageView {
 	
    @Override
 	public String getImagePathName() {
-	   return "com/tedros/module/produto/icon/menu_icon16.png";
+	   return "com/tedros/location/module/produto/icon/menu_icon16.png";
 	}
 
 }

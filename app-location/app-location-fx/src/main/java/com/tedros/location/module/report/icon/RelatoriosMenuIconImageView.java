@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.module.report.icon;
+package com.tedros.location.module.report.icon;
 
 import com.tedros.core.image.TImageView;
 
@@ -18,7 +18,7 @@ public class RelatoriosMenuIconImageView extends TImageView {
 	
    @Override
 	public String getImagePathName() {
-	   return "com/tedros/module/report/icon/menu_icones12.png";
+	   return "com/tedros/location/module/report/icon/menu_icones12.png";
 	}
 
 }

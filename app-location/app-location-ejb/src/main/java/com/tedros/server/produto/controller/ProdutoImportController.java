@@ -10,7 +10,7 @@ import javax.ejb.TransactionAttributeType;
 
 import com.tedros.ejb.base.controller.ITSecurityController;
 import com.tedros.ejb.base.controller.TEjbImportController;
-import com.tedros.ejb.base.security.TRemoteSecurity;
+import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.ejb.base.service.ITEjbImportService;
 import com.tedros.ejb.controller.IProdutoImportController;
 import com.tedros.model.Produto;
@@ -20,7 +20,7 @@ import com.tedros.server.produto.service.ProdutoImportService;
  * @author Davis Gordon
  *
  */
-@TRemoteSecurity
+@TSecurityInterceptor
 @Stateless(name="IProdutoImportController")
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 public class ProdutoImportController extends TEjbImportController<Produto> implements IProdutoImportController {

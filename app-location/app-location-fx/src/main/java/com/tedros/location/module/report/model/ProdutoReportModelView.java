@@ -1,4 +1,4 @@
-package com.tedros.module.report.model;
+package com.tedros.location.module.report.model;
 
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
@@ -34,8 +34,8 @@ import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
 import com.tedros.fxapi.presenter.model.TModelView;
 import com.tedros.fxapi.presenter.report.behavior.TDataSetReportBehavior;
 import com.tedros.fxapi.presenter.report.decorator.TDataSetReportDecorator;
-import com.tedros.module.produto.model.UnidadeMedidaBuilder;
-import com.tedros.module.report.process.ProdutoReportProcess;
+import com.tedros.location.module.produto.model.UnidadeMedidaBuilder;
+import com.tedros.location.module.report.process.ProdutoReportProcess;
 import com.tedros.report.model.ProdutoItemModel;
 import com.tedros.report.model.ProdutoReportModel;
 

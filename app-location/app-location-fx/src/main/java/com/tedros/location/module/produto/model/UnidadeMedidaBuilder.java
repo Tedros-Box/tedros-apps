@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.module.produto.model;
+package com.tedros.location.module.produto.model;
 
 import java.util.Arrays;
 

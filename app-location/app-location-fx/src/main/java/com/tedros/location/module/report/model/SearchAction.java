@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.module.report.model;
+package com.tedros.location.module.report.model;
 
 import com.tedros.fxapi.control.action.TPresenterAction;
 import com.tedros.fxapi.form.TDefaultForm;

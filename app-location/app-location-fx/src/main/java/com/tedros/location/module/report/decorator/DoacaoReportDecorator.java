@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.module.report.decorator;
+package com.tedros.location.module.report.decorator;
 
 import com.tedros.fxapi.annotation.form.TForm;
 import com.tedros.fxapi.annotation.presenter.TPresenter;

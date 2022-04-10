@@ -10,7 +10,7 @@
   	<dependency>
 	  	<groupId>com.tedros</groupId>
 	  	<artifactId>tedros-box</artifactId>
-	  	<version>8-2.0</version>
+	  	<version>8-3.0</version>
 	  	<scope>compile</scope>
 	 </dependency>
 	 

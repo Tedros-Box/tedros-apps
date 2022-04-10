@@ -13,14 +13,14 @@ import com.tedros.ejb.base.result.TResult;
 import com.tedros.ejb.base.result.TResult.EnumResult;
 import com.tedros.ejb.base.security.ITSecurity;
 import com.tedros.ejb.base.security.TAccessToken;
-import com.tedros.ejb.base.security.TRemoteSecurity;
+import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.ejb.controller.IProdutoReportController;
 import com.tedros.model.Produto;
 import com.tedros.report.model.ProdutoItemModel;
 import com.tedros.report.model.ProdutoReportModel;
 import com.tedros.server.produto.service.ProdutoService;
 
-@TRemoteSecurity
+@TSecurityInterceptor
 @Stateless(name="IProdutoReportController")
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 public class ProdutoReportController implements IProdutoReportController, ITSecurity {
