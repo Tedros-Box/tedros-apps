@@ -66,6 +66,4 @@ public class AdminArea extends TEntity {
 		this.iso2Code = iso2Code;
 	}
 	
-
-	final static String city = "city";
 }
