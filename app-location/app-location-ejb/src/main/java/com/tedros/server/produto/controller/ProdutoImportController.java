@@ -13,7 +13,7 @@ import com.tedros.ejb.base.controller.TEjbImportController;
 import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.ejb.base.service.ITEjbImportService;
 import com.tedros.ejb.controller.IProdutoImportController;
-import com.tedros.model.Produto;
+import com.tedros.location.model.Produto;
 import com.tedros.server.produto.service.ProdutoImportService;
 
 /**

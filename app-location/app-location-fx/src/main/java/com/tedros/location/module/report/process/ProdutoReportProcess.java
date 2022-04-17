@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.tedros.fxapi.exception.TProcessException;
 import com.tedros.fxapi.process.TReportProcess;
-import com.tedros.report.model.ProdutoReportModel;
+import com.tedros.location.report.model.ProdutoReportModel;
 
 public class ProdutoReportProcess extends TReportProcess<ProdutoReportModel> {
 

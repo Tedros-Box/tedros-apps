@@ -15,7 +15,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import com.tedros.ejb.base.service.TEjbService;
-import com.tedros.model.Produto;
+import com.tedros.location.model.Produto;
 import com.tedros.server.produto.bo.ProdutoBO;
 
 /**

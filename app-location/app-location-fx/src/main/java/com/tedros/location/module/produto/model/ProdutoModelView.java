@@ -33,7 +33,7 @@ import com.tedros.fxapi.control.TText.TTextStyle;
 import com.tedros.fxapi.domain.THtmlConstant;
 import com.tedros.fxapi.domain.TStyleParameter;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.model.Produto;
+import com.tedros.location.model.Produto;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -56,10 +56,10 @@ import javafx.scene.text.TextAlignment;
 						@TOption(text = "Nome", value = "nome")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle="#{view.prod}", buildImportButton=true),
 	behavior=@TBehavior(importModelViewClass=ProdutoImportModelView.class, runNewActionAfterSave=true)))
-@TSecurity(	id="TLOCAT_CADPROD_FORM", 
+/*@TSecurity(	id="TLOCAT_CADPROD_FORM", 
 	appName = "#{myapp.name}", moduleName = "#{module.adm}", viewName = "#{view.prod}",
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
+					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})*/
 public class ProdutoModelView extends TEntityModelView<Produto> {
 
 	

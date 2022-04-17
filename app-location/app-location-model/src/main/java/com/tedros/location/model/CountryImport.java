@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.model;
+package com.tedros.location.model;
 
 import com.tedros.common.model.TFileEntity;
 import com.tedros.ejb.base.entity.ITFileEntity;
@@ -11,7 +11,7 @@ import com.tedros.ejb.base.model.ITImportModel;
  * @author Davis Gordon
  *
  */
-public class ProdutoImport implements ITImportModel {
+public class CountryImport implements ITImportModel {
 
 	private static final long serialVersionUID = -5030633206012895009L;
 
@@ -19,7 +19,7 @@ public class ProdutoImport implements ITImportModel {
 	
 	private ITFileEntity file;
 	
-	public ProdutoImport() {
+	public CountryImport() {
 		file = new TFileEntity();
 	}
 	

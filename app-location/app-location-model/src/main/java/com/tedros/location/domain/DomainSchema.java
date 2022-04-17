@@ -1,4 +1,4 @@
-package com.tedros.domain;
+package com.tedros.location.domain;
 
 public interface DomainSchema {
 	

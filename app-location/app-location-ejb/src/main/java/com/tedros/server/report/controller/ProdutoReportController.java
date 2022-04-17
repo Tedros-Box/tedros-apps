@@ -15,9 +15,9 @@ import com.tedros.ejb.base.security.ITSecurity;
 import com.tedros.ejb.base.security.TAccessToken;
 import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.ejb.controller.IProdutoReportController;
-import com.tedros.model.Produto;
-import com.tedros.report.model.ProdutoItemModel;
-import com.tedros.report.model.ProdutoReportModel;
+import com.tedros.location.model.Produto;
+import com.tedros.location.report.model.ProdutoItemModel;
+import com.tedros.location.report.model.ProdutoReportModel;
 import com.tedros.server.produto.service.ProdutoService;
 
 @TSecurityInterceptor

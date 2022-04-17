@@ -17,7 +17,7 @@ import com.tedros.fxapi.annotation.scene.control.TControl;
 import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.domain.TLabelPosition;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.model.Produto;
+import com.tedros.location.model.Produto;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
