@@ -26,8 +26,8 @@ import com.tedros.fxapi.presenter.modal.behavior.TImportFileModalBehavior;
 import com.tedros.fxapi.presenter.modal.decorator.TImportFileModalDecorator;
 import com.tedros.fxapi.presenter.model.TImportModelView;
 import com.tedros.fxapi.property.TSimpleFileProperty;
-import com.tedros.model.Produto;
-import com.tedros.model.ProdutoImport;
+import com.tedros.location.model.Produto;
+import com.tedros.location.model.ProdutoImport;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

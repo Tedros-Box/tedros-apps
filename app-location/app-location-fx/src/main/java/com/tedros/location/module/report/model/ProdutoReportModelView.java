@@ -36,8 +36,8 @@ import com.tedros.fxapi.presenter.report.behavior.TDataSetReportBehavior;
 import com.tedros.fxapi.presenter.report.decorator.TDataSetReportDecorator;
 import com.tedros.location.module.produto.model.UnidadeMedidaBuilder;
 import com.tedros.location.module.report.process.ProdutoReportProcess;
-import com.tedros.report.model.ProdutoItemModel;
-import com.tedros.report.model.ProdutoReportModel;
+import com.tedros.location.report.model.ProdutoItemModel;
+import com.tedros.location.report.model.ProdutoReportModel;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -52,9 +52,9 @@ import javafx.scene.layout.Priority;
 			action=SearchAction.class), 
 			decorator = @TDecorator(type = TDataSetReportDecorator.class, 
 									viewTitle="#{view.rep.prod}"))
-@TSecurity(	id="TLOCAT_PRODUTREP_FORM", 
+/*@TSecurity(	id="TLOCAT_PRODUTREP_FORM", 
 			appName = "#{myapp.name}", moduleName = "#{module.adm}", viewName = "#{view.rep.prod}",
-			allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EXPORT, TAuthorizationType.SEARCH})
+			allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EXPORT, TAuthorizationType.SEARCH})*/
 public class ProdutoReportModelView extends TModelView<ProdutoReportModel>{
 	
 	private SimpleLongProperty id;

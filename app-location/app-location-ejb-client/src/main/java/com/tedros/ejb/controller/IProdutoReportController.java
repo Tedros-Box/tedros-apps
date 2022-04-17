@@ -6,7 +6,7 @@ package com.tedros.ejb.controller;
 import javax.ejb.Remote;
 
 import com.tedros.ejb.base.controller.ITEjbReportController;
-import com.tedros.report.model.ProdutoReportModel;
+import com.tedros.location.report.model.ProdutoReportModel;
 
 /**
  * @author Davis Gordon

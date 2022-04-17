@@ -16,8 +16,9 @@ import com.tedros.location.module.report.model.ProdutoReportModelView;
  * @author Davis Gordon
  *
  */
+/*
 @TSecurity(	id="TLOCAT_REPORT_MODULE", appName = "#{myapp.name}", moduleName = "#{module.adm}", 
-allowedAccesses=TAuthorizationType.MODULE_ACCESS)
+allowedAccesses=TAuthorizationType.MODULE_ACCESS)*/
 public class ReportModule extends TModule {
 
 	@Override

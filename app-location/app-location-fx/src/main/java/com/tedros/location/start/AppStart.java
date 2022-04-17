@@ -6,33 +6,33 @@ import com.tedros.core.annotation.TModule;
 import com.tedros.core.annotation.TResourceBundle;
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.location.module.produto.ProdutoModule;
-import com.tedros.location.module.report.ReportModule;
-import com.tedros.location.module.report.icon.RelatoriosIconImageView;
-import com.tedros.location.module.report.icon.RelatoriosMenuIconImageView;
+import com.tedros.location.domain.DomainApp;
+import com.tedros.location.module.adminArea.AdminAreaModule;
+import com.tedros.location.module.city.CityModule;
+import com.tedros.location.module.country.CountryModule;
 
 /**
  * The app start class.
  * 
  * @author Davis Gordon
  * */
-@TApplication(name="#{myapp.name}", universalUniqueIdentifier=TConstant.UUI,
+@TApplication(name="#{app.location.name}", universalUniqueIdentifier=TConstant.UUI,
 module = {	
-			@TModule(type=ReportModule.class, name="#{label.reports}", menu="#{module.adm}", 
-					icon=RelatoriosIconImageView.class, menuIcon=RelatoriosMenuIconImageView.class,
-					description="#{module.rep.desc}"),
-			@TModule(type=ProdutoModule.class, name="#{label.edit.prod}", menu="#{module.adm}", 
-					/*icon=ProdutoIconImageView.class, menuIcon=ProdutoMenuIconImageView.class,*/
-					description="#{module.prod.desc}")
+			@TModule(type=AdminAreaModule.class, name="#{menu.admin.area}", menu="#{module.administrative}",
+					description="#{menu.admin.area.popover}"),
+			@TModule(type=CityModule.class, name="#{menu.city}", menu="#{module.administrative}", 
+					description="#{menu.city.popover}"),
+			@TModule(type=CountryModule.class, name="#{menu.country}", menu="#{module.administrative}", 
+			/*icon=ProdutoIconImageView.class, menuIcon=ProdutoMenuIconImageView.class,*/
+			description="#{menu.country.popover}")
 
 }, packageName = "com.tedros.location")
-@TResourceBundle(resourceName={"AppLabels"})
-@TSecurity(id="APP_TLOCAT", appName = "#{myapp.name}", allowedAccesses=TAuthorizationType.APP_ACCESS)
+@TResourceBundle(resourceName={"AppLocationLang"})
+@TSecurity(id=DomainApp.MNEMONIC, appName = "#{app.location.name}", allowedAccesses=TAuthorizationType.APP_ACCESS)
 public class AppStart implements ITApplication {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub 
 		
 	}
 	

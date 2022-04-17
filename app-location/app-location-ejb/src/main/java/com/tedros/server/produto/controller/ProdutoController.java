@@ -25,7 +25,7 @@ import com.tedros.ejb.base.security.TBeanSecurity;
 import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.ejb.base.service.ITEjbService;
 import com.tedros.ejb.controller.IProdutoController;
-import com.tedros.model.Produto;
+import com.tedros.location.model.Produto;
 import com.tedros.server.produto.service.ProdutoService;
 
 /**

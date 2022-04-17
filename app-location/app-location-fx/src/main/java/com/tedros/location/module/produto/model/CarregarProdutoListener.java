@@ -17,7 +17,7 @@ import com.tedros.fxapi.modal.TMessageType;
 import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
 import com.tedros.fxapi.presenter.dynamic.behavior.TDynaViewSimpleBaseBehavior;
 import com.tedros.fxapi.process.TEntityProcess;
-import com.tedros.model.Produto;
+import com.tedros.location.model.Produto;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;

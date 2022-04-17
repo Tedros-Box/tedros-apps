@@ -4,7 +4,7 @@
 package com.tedros.location.module.report.model;
 
 import com.tedros.fxapi.presenter.model.TModelView;
-import com.tedros.report.model.ProdutoItemModel;
+import com.tedros.location.report.model.ProdutoItemModel;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.model;
+package com.tedros.location.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +15,8 @@ import com.tedros.ejb.base.annotation.TEntityImportRule;
 import com.tedros.ejb.base.annotation.TFieldImportRule;
 import com.tedros.ejb.base.annotation.TFileType;
 import com.tedros.ejb.base.entity.TEntity;
-import com.tedros.domain.DomainSchema;
-import com.tedros.domain.DomainTables;
+import com.tedros.location.domain.DomainSchema;
+import com.tedros.location.domain.DomainTables;
 
 /**
  * @author Davis Gordon

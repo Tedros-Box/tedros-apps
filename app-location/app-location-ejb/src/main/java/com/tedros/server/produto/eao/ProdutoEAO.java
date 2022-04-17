@@ -11,7 +11,7 @@ import javax.persistence.Query;
 import org.apache.commons.lang3.StringUtils;
 
 import com.tedros.ejb.base.eao.TGenericEAO;
-import com.tedros.model.Produto;
+import com.tedros.location.model.Produto;
 
 /**
  * @author Davis Gordon

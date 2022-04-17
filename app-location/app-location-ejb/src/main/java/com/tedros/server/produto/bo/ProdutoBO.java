@@ -14,7 +14,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import com.tedros.ejb.base.bo.TGenericBO;
-import com.tedros.model.Produto;
+import com.tedros.location.model.Produto;
 import com.tedros.server.produto.eao.ProdutoEAO;
 
 /**

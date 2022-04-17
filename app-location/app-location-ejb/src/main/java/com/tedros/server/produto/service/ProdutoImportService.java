@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 import com.tedros.ejb.base.bo.TImportFileEntityBO;
 import com.tedros.ejb.base.service.TEjbImportService;
-import com.tedros.model.Produto;
+import com.tedros.location.model.Produto;
 import com.tedros.server.produto.bo.ProdutoImportBO;
 
 /**

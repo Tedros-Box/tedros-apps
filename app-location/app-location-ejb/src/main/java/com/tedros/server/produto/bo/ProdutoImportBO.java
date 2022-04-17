@@ -6,8 +6,8 @@ import javax.inject.Inject;
 
 import com.tedros.ejb.base.bo.ITGenericBO;
 import com.tedros.ejb.base.bo.TImportFileEntityBO;
-import com.tedros.model.Produto;
-import com.tedros.model.ProdutoImport;
+import com.tedros.location.model.Produto;
+import com.tedros.location.model.ProdutoImport;
 
 /**
  * @author Davis Gordon
