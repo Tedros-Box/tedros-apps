@@ -4,12 +4,12 @@
   	
 	<parent>
 		<groupId>com.tedros</groupId>
-  		<artifactId>app-location</artifactId>
+  		<artifactId>app-extensions</artifactId>
   		<version>1.0</version>
 	</parent>	
 	
-  	<artifactId>app-location-fx</artifactId>
-  	<name>app-location-fx</name>
+  	<artifactId>app-extensions-fx</artifactId>
+  	<name>app-extensions-fx</name>
   	
   	<description>JavaFx App - Front end</description>
   
@@ -22,13 +22,7 @@
 	  	
 	  	<dependency>
 	  		<groupId>com.tedros</groupId>
-	  		<artifactId>app-extensions-fx</artifactId>
-	  		<version>${app.ext}</version>
-	  	</dependency>
-	  	
-	  	<dependency>
-	  		<groupId>com.tedros</groupId>
-	  		<artifactId>app-location-ejb-client</artifactId>
+	  		<artifactId>app-extensions-ejb-client</artifactId>
 	  		<version>1.0</version>
 	  	</dependency>
 	  	

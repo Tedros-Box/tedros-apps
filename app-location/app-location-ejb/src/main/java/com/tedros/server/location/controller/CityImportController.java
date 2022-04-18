@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.server.location.producer;
+package com.tedros.server.location.controller;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -12,27 +12,27 @@ import com.tedros.ejb.base.controller.ITSecurityController;
 import com.tedros.ejb.base.controller.TEjbImportController;
 import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.ejb.base.service.ITEjbImportService;
-import com.tedros.ejb.controller.IAdminAreaImportController;
-import com.tedros.location.model.AdminArea;
-import com.tedros.server.location.service.AdminAreaImportService;
+import com.tedros.ejb.controller.ICityImportController;
+import com.tedros.location.model.City;
+import com.tedros.server.location.service.CityImportService;
 
 /**
  * @author Davis Gordon
  *
  */
 @TSecurityInterceptor
-@Stateless(name="IAdminAreaImportController")
+@Stateless(name="ICityImportController")
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class AdminAreaImportController extends TEjbImportController<AdminArea> implements IAdminAreaImportController {
+public class CityImportController extends TEjbImportController<City> implements ICityImportController {
 
 	@EJB
-	private AdminAreaImportService serv;
+	private CityImportService serv;
 	
 	@EJB
 	private ITSecurityController security;
 	
 	@Override
-	public ITEjbImportService<AdminArea> getService() {
+	public ITEjbImportService<City> getService() {
 		return serv;
 	}
 

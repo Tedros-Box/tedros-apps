@@ -3,7 +3,7 @@
   	<modelVersion>4.0.0</modelVersion>
   
   	<groupId>com.tedros</groupId>
-  	<artifactId>app-location</artifactId>
+  	<artifactId>app-extensions</artifactId>
   	<version>1.0</version>
   
  	 <packaging>pom</packaging>
@@ -17,7 +17,6 @@
   	
   	<!-- PROPERTIES -->
 	<properties>
-		<app.ext>1.0</app.ext>
 		<app.version>snapshot-0.0.1</app.version>
 		<tedros.fx>8-3.0.1</tedros.fx>
 		<tedros.jee>8-3.0.1</tedros.jee>
@@ -99,17 +98,12 @@
 			<name>Apache</name>
 			<url>https://repository.apache.org/service/local/staging/deploy/maven2</url>
 		</repository>
-		<repository>
-			<id>githubTedrosApp</id>
-			<name>Tedros</name>
-			<url>https://maven.pkg.github.com/tedros-box/package</url>
-		</repository>
   	</repositories>
   <modules>
-    <module>app-location-ejb</module>
-    <module>app-location-ejb-client</module>
-    <module>app-location-ejb-ear</module>
-    <module>app-location-model</module>
-    <module>app-location-fx</module>
+    <module>app-extensions-ejb</module>
+    <module>app-extensions-ejb-client</module>
+    <module>app-extensions-ejb-ear</module>
+    <module>app-extensions-model</module>
+    <module>app-extensions-fx</module>
   </modules>
 </project>

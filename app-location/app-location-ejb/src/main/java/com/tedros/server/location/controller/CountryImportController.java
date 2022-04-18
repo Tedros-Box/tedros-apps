@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.server.location.producer;
+package com.tedros.server.location.controller;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
