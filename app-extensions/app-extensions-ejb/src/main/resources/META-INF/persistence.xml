@@ -7,17 +7,7 @@
 		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>tedrosDataSource</jta-data-source>
-		
-		<class>com.tedros.location.model.Produto</class>
-		<class>com.tedros.location.model.Country</class>
-		<class>com.tedros.location.model.City</class>
-		<class>com.tedros.location.model.AdminArea</class>
-		<class>com.tedros.location.model.Place</class>
-		<class>com.tedros.location.model.Address</class>
-		<class>com.tedros.location.model.StreetType</class>
-		
 		<class>com.tedros.extension.model.Contact</class>
-		
 		<class>com.tedros.common.model.TFileEntity</class>
 		<class>com.tedros.common.model.TByteEntity</class>
 		
@@ -34,12 +24,8 @@
           <property name="eclipselink.logging.thread" value="false"/>
           <property name="eclipselink.logging.session" value="false"/>
           <property name="eclipselink.logging.level.sql" value="OFF"/>
-           <property name="eclipselink.logging.parameters" value="true"/>
+          <property name="eclipselink.logging.parameters" value="true"/>
           
-         <!--  <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-          <property name="javax.persistence.schema-generation.create-source" value="metadata"/> 
-          <property name="javax.persistence.schema-generation.drop-source" value="metadata"/> 
-          <property name="javax.persistence.sql-load-script-source" value="init.sql"/>  -->
 	    </properties>
 		
       </persistence-unit> 

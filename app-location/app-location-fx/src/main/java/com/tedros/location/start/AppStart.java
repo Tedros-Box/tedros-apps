@@ -10,6 +10,7 @@ import com.tedros.location.domain.DomainApp;
 import com.tedros.location.module.adminArea.AdminAreaModule;
 import com.tedros.location.module.city.CityModule;
 import com.tedros.location.module.country.CountryModule;
+import com.tedros.location.module.place.PlaceModule;
 
 /**
  * The app start class.
@@ -17,7 +18,8 @@ import com.tedros.location.module.country.CountryModule;
  * @author Davis Gordon
  * */
 @TApplication(name="#{app.location.name}", universalUniqueIdentifier=TConstant.UUI,
-module = {	
+module = {	@TModule(type=PlaceModule.class, name="#{menu.place}", menu="#{module.administrative}",
+				description="#{menu.place.popover}"),
 			@TModule(type=AdminAreaModule.class, name="#{menu.admin.area}", menu="#{module.administrative}",
 					description="#{menu.admin.area.popover}"),
 			@TModule(type=CityModule.class, name="#{menu.city}", menu="#{module.administrative}", 

@@ -9,6 +9,7 @@ public interface DomainTables {
 	final static String address = "address";
 	final static String place = "place";
 	final static String place_picture = "place_picture";
+	final static String place_contact = "place_contact";
 	final static String streetType = "street_type";
 }
 

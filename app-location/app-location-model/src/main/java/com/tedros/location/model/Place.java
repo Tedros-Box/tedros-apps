@@ -5,6 +5,7 @@ package com.tedros.location.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -16,6 +17,7 @@ import javax.persistence.UniqueConstraint;
 
 import com.tedros.common.model.TFileEntity;
 import com.tedros.ejb.base.entity.TEntity;
+import com.tedros.extension.model.Contact;
 import com.tedros.location.domain.DomainSchema;
 import com.tedros.location.domain.DomainTables;
 
@@ -39,7 +41,15 @@ public class Place extends TEntity {
 	@JoinColumn(name="address_id", nullable=false)
 	private Address address;
 	
-	@ManyToMany
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name=DomainTables.place_contact, 
+	joinColumns=@JoinColumn(name="place_id"), 
+	inverseJoinColumns=@JoinColumn(name="contact_id"),
+	uniqueConstraints=@UniqueConstraint(name="placeContactUK", 
+	columnNames = { "place_id","contact_id"}))
+	public Set<Contact> contacts;
+	
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name=DomainTables.place_picture, 
 	joinColumns=@JoinColumn(name="place_id"), 
 	inverseJoinColumns=@JoinColumn(name="file_id"),
@@ -77,5 +87,13 @@ public class Place extends TEntity {
 
 	public void setPictures(Set<TFileEntity> pictures) {
 		this.pictures = pictures;
+	}
+
+	public Set<Contact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(Set<Contact> contacts) {
+		this.contacts = contacts;
 	}
 }

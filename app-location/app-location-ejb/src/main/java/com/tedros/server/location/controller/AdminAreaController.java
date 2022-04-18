@@ -4,7 +4,7 @@
  * TODOS OS DIREITOS RESERVADOS
  * 14/01/2014
  */
-package com.tedros.server.location.producer;
+package com.tedros.server.location.controller;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

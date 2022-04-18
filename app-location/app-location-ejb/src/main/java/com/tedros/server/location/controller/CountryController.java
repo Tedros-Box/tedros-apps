@@ -4,7 +4,7 @@
  * TODOS OS DIREITOS RESERVADOS
  * 14/01/2014
  */
-package com.tedros.server.location.producer;
+package com.tedros.server.location.controller;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -19,9 +19,9 @@ import com.tedros.ejb.base.security.TBeanPolicie;
 import com.tedros.ejb.base.security.TBeanSecurity;
 import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.ejb.base.service.ITEjbService;
-import com.tedros.ejb.controller.ICityController;
+import com.tedros.ejb.controller.ICountryController;
 import com.tedros.location.domain.DomainApp;
-import com.tedros.location.model.City;
+import com.tedros.location.model.Country;
 import com.tedros.server.base.service.TStatelessService;
 
 /**
@@ -31,20 +31,20 @@ import com.tedros.server.base.service.TStatelessService;
  *
  */
 @TSecurityInterceptor
-@Stateless(name="ICityController")
-@TBeanSecurity({@TBeanPolicie(id = DomainApp.CITY_FORM_ID, 
+@Stateless(name="ICountryController")
+@TBeanSecurity({@TBeanPolicie(id = DomainApp.COUNTRY_FORM_ID, 
 policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class CityController extends TSecureEjbController<City> implements ICityController, ITSecurity {
+public class CountryController extends TSecureEjbController<Country> implements ICountryController, ITSecurity {
 	
 	@EJB
-	private TStatelessService<City> serv;
+	private TStatelessService<Country> serv;
 	
 	@EJB
 	private ITSecurityController securityController;
 	
 	@Override
-	public ITEjbService<City> getService() {
+	public ITEjbService<Country> getService() {
 		return serv;
 	}
 	
