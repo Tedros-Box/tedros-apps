@@ -3,8 +3,6 @@
  */
 package com.tedros.location.module.city.model;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
 import com.tedros.fxapi.annotation.control.TLabel;
@@ -27,12 +25,10 @@ import com.tedros.fxapi.annotation.view.TOption;
 import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
 import com.tedros.location.domain.DomainApp;
-import com.tedros.location.model.AdminArea;
 import com.tedros.location.model.City;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.layout.Priority;
 
 /**
@@ -106,58 +102,15 @@ public class CityMV extends TEntityModelView<City> {
 	
 	public CityMV(City e) {
 		super(e);
-		this.buildDisplayText();
-		this.setDisplayText(e.getCountryIso2Code(), e.getAdminArea(), e.getName());
+		this.formatFieldsToDisplay("[%s] %s / %s", this.countryIso2Code, this.adminArea, this.name);
 	}
 	
 	@Override
 	public void reload(City e) {
 		super.reload(e);
-		this.buildDisplayText();
-		this.setDisplayText(e.getCountryIso2Code(), e.getAdminArea(), e.getName());
+		this.formatFieldsToDisplay("[%s] %s / %s", this.countryIso2Code, this.adminArea, this.name);
 	}
 	
-	private void buildDisplayText() {
-		ChangeListener<String> cchl = super.getListenerRepository().get("countryChl");
-		if(cchl==null) {
-			cchl = (a,o,n)->{
-				this.setDisplayText(n, this.adminArea.getValue(), this.name.getValue());
-			};
-		}else
-			super.removeListener("countryChl");
-		super.getListenerRepository().add("countryChl", cchl);
-		this.countryIso2Code.addListener(cchl);
-
-		ChangeListener<String> achl = super.getListenerRepository().get("admnameChl");
-		if(achl==null) {
-			achl = (a,o,n)->{
-				this.setDisplayText(this.countryIso2Code.getValue(), n, this.name.getValue());
-			};
-		}else
-			super.removeListener("admnameChl");
-		super.getListenerRepository().add("admnameChl", achl);
-		this.adminArea.addListener(achl);
-		
-		ChangeListener<String> nchl = super.getListenerRepository().get("nameChl");
-		if(nchl==null) {
-			nchl = (a,o,n)->{
-				this.setDisplayText(this.countryIso2Code.getValue(), this.adminArea.getValue(), n);
-			};
-		}else
-			super.removeListener("nameChl");
-		super.getListenerRepository().add("nameChl", nchl);
-		this.name.addListener(nchl);
-	}
-	
-	private void setDisplayText(String country, String adm, String name) {
-		String s = (StringUtils.isNotBlank(country) ? "["+country+"] " : "") 
-				+ (StringUtils.isNotBlank(adm) ? adm +" / " : "")
-				+ (StringUtils.isNotBlank(name) ? name : "");
-		if(this.display==null)
-			this.display = new SimpleStringProperty();
-		this.display.setValue(s);
-	}
-
 	public SimpleLongProperty getId() {
 		return id;
 	}

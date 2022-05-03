@@ -34,7 +34,7 @@ public class Place extends TEntity {
 	@Column(length=60, nullable=false)
 	private String title;
 	
-	@Column(nullable=true)
+	@Column(length=500, nullable=true)
 	private String description;
 	
 	@ManyToOne

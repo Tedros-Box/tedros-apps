@@ -3,8 +3,6 @@
  */
 package com.tedros.location.module.adminArea.model;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
 import com.tedros.fxapi.annotation.control.TLabel;
@@ -30,7 +28,6 @@ import com.tedros.location.model.AdminArea;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.layout.Priority;
 
 /**
@@ -79,46 +76,15 @@ public class AdminAreaMV extends TEntityModelView<AdminArea> {
 	
 	public AdminAreaMV(AdminArea e) {
 		super(e);
-		this.buildDisplayText();
-		this.setDisplayText(e.getCountryIso2Code(), e.getName());
+		this.formatFieldsToDisplay("[%s] %s", this.countryIso2Code, this.name);
 	}
 	
 	@Override
 	public void reload(AdminArea e) {
 		super.reload(e);
-		this.buildDisplayText();
-		this.setDisplayText(e.getCountryIso2Code(), e.getName());
+		this.formatFieldsToDisplay("[%s] %s", this.countryIso2Code, this.name);
 	}
 	
-	private void buildDisplayText() {
-		ChangeListener<String> cchl = super.getListenerRepository().get("countryChl");
-		if(cchl==null) {
-			cchl = (a,o,n)->{
-				this.setDisplayText(n, this.name.getValue());
-			};
-		}else
-			super.removeListener("countryChl");
-		super.getListenerRepository().add("countryChl", cchl);
-		this.countryIso2Code.addListener(cchl);
-		
-		ChangeListener<String> nchl = super.getListenerRepository().get("nameChl");
-		if(nchl==null) {
-			nchl = (a,o,n)->{
-				this.setDisplayText(this.countryIso2Code.getValue(), n);
-			};
-		}else
-			super.removeListener("nameChl");
-		super.getListenerRepository().add("nameChl", nchl);
-		this.name.addListener(nchl);
-	}
-	
-	private void setDisplayText(String country, String name) {
-		String s = (StringUtils.isNotBlank(country) ? "["+country+"] " : "") 
-				+ (StringUtils.isNotBlank(name) ? name : "");
-		if(this.display==null)
-			this.display = new SimpleStringProperty();
-		this.display.setValue(s);
-	}
 
 	public SimpleLongProperty getId() {
 		return id;
