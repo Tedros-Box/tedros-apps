@@ -18,6 +18,7 @@ public interface DomainApp {
 	static final String ADMIN_AREA = "ADMIN_AREA";
 	static final String PLACE = "PLACE";
 	static final String ADDRESS = "ADDRESS";
+	static final String STREET_TYPE = "STREET_TYPE";
 	static final String SEP = SEPARATOR;
 	
 	static final String MNEMONIC = "TGLOC";
@@ -41,6 +42,11 @@ public interface DomainApp {
 	static final String ADDRESS_FORM_ID = MNEMONIC + SEP + ADDRESS + SEP + FORM;
 	static final String ADDRESS_VIEW_ID = MNEMONIC + SEP + ADDRESS + SEP + VIEW;
 	static final String ADDRESS_MODULE_ID = MNEMONIC + SEP + ADDRESS + SEP + MODULE;
+	
+
+	static final String STREET_TYPE_FORM_ID = MNEMONIC + SEP + STREET_TYPE + SEP + FORM;
+	static final String STREET_TYPE_VIEW_ID = MNEMONIC + SEP + STREET_TYPE + SEP + VIEW;
+	static final String STREET_TYPE_MODULE_ID = MNEMONIC + SEP + STREET_TYPE + SEP + MODULE;
 
 
 

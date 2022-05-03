@@ -10,6 +10,7 @@ import com.tedros.extension.model.Contact;
 import com.tedros.fxapi.annotation.control.TEditEntityModal;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
+import com.tedros.fxapi.annotation.control.TTextAreaField;
 import com.tedros.fxapi.annotation.control.TTextField;
 import com.tedros.fxapi.annotation.form.TForm;
 import com.tedros.fxapi.annotation.presenter.TBehavior;
@@ -25,9 +26,12 @@ import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.collections.ITObservableList;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
 import com.tedros.location.domain.DomainApp;
+import com.tedros.location.model.Address;
 import com.tedros.location.model.Place;
+import com.tedros.location.module.address.model.AddressMV;
 
 import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -53,16 +57,26 @@ public class PlaceMV extends TEntityModelView<Place> {
 	
 	@TReaderHtml
 	@TLabel(text="#{label.title}")
-	@TTextField(maxLength=2, required = true, node=@TNode(requestFocus=true, parse = true))
+	@TTextField(maxLength=60, required = true, node=@TNode(requestFocus=true, parse = true))
 	private SimpleStringProperty title;
 	
-	//private String description;
 	
-	//private Address address;
+	@TReaderHtml
+	@TLabel(text="#{label.description}")
+	@TTextAreaField(maxLength=500, wrapText=true, prefRowCount=7)
+	private SimpleStringProperty description;
 	
+	@TReaderHtml
+	@TLabel(text="#{label.address}")
+	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
+	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
+	private SimpleObjectProperty<AddressMV> address;
+	
+	@TReaderHtml
+	@TLabel(text="#{label.contacts}")
 	@TEditEntityModal(modelClass = Contact.class, modelViewClass=ContactMV.class)
 	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
-	public ITObservableList<ContactMV> contacts;
+	private ITObservableList<ContactMV> contacts;
 	
 	public PlaceMV(Place entity) {
 		super(entity);
@@ -96,5 +110,22 @@ public class PlaceMV extends TEntityModelView<Place> {
 	public void setTitle(SimpleStringProperty title) {
 		this.title = title;
 	}
+
+	public SimpleStringProperty getDescription() {
+		return description;
+	}
+
+	public void setDescription(SimpleStringProperty description) {
+		this.description = description;
+	}
+
+	public SimpleObjectProperty<AddressMV> getAddress() {
+		return address;
+	}
+
+	public void setAddress(SimpleObjectProperty<AddressMV> address) {
+		this.address = address;
+	}
+
 
 }
