@@ -96,4 +96,9 @@ public class Place extends TEntity {
 	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
 	}
+
+	@Override
+	public String toString() {
+		return title!=null ? title : "";
+	}
 }

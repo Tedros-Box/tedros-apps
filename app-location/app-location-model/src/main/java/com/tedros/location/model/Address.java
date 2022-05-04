@@ -114,6 +114,13 @@ public class Address extends TEntity {
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"%s %s, %s, %s - %s %s %s %s",
+				streetType, plubicPlace, complement, neighborhood, country, adminArea, city, code);
+	}
 	
 	
 	

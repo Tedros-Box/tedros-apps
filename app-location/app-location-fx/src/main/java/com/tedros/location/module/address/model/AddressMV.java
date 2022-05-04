@@ -9,16 +9,20 @@ import com.tedros.fxapi.annotation.control.TComboBoxField;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TOptionsList;
 import com.tedros.fxapi.annotation.control.TTextField;
+import com.tedros.fxapi.annotation.control.TTextInputControl;
+import com.tedros.fxapi.annotation.form.TSetting;
 import com.tedros.fxapi.annotation.layout.THBox;
 import com.tedros.fxapi.annotation.layout.THGrow;
 import com.tedros.fxapi.annotation.layout.TPane;
 import com.tedros.fxapi.annotation.layout.TPriority;
+import com.tedros.fxapi.annotation.presenter.TBehavior;
 import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.process.TEjbService;
 import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
+import com.tedros.fxapi.presenter.modal.behavior.TEditModalBehavior;
 import com.tedros.fxapi.presenter.modal.decorator.TEditModalDecorator;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
 import com.tedros.location.domain.DomainApp;
@@ -38,11 +42,11 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-
+@TSetting(value = AddressSetting.class)
 @TEjbService(serviceName = "IAddressControllerRemote", model=Address.class)
-@TEditModalPresenter(
-		presenter=@TPresenter(decorator = @TDecorator(type=TEditModalDecorator.class,
-				viewTitle="#{view.address}", buildSaveButton=true, buildDeleteButton=true)))
+@TEditModalPresenter(presenter=@TPresenter(decorator = @TDecorator(type=TEditModalDecorator.class,
+				viewTitle="#{view.address}", buildSaveButton=true, buildDeleteButton=true),
+		behavior=@TBehavior(type=TEditModalBehavior.class)))
 @TSecurity(	id=DomainApp.ADDRESS_FORM_ID, 
 appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.address}",
 allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
@@ -88,7 +92,7 @@ public class AddressMV extends TEntityModelView<Address> {
 	
 	@TReaderHtml
 	@TLabel(text="#{label.address.code}")
-	@TTextField(maxLength=20, required = false)
+	@TTextField(maxLength=20, textInputControl=@TTextInputControl(promptText="#{text.address.code}", parse = true))
 	private SimpleStringProperty code;
 	
 	@TReaderHtml
@@ -115,6 +119,7 @@ public class AddressMV extends TEntityModelView<Address> {
 	
 	public AddressMV(Address entity) {
 		super(entity);
+		this.display = new SimpleStringProperty();
 		this.formatFieldsToDisplay("%s %s %s", this.streetType, this.plubicPlace, this.complement);
 	}
 	
@@ -201,6 +206,16 @@ public class AddressMV extends TEntityModelView<Address> {
 	@Override
 	public SimpleStringProperty getDisplayProperty() {
 		return display;
+	}
+
+
+	public SimpleStringProperty getDisplay() {
+		return display;
+	}
+
+
+	public void setDisplay(SimpleStringProperty display) {
+		this.display = display;
 	}
 
 }
