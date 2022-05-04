@@ -270,4 +270,9 @@ public class Country extends TEntity {
 		this.populationName = populationName;
 	}
 
+	@Override
+	public String toString() {
+		return name!=null ? name : "";
+	}
+
 }

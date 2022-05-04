@@ -13,6 +13,10 @@ import com.tedros.fxapi.annotation.control.TModelViewType;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
 import com.tedros.fxapi.annotation.control.TTextField;
 import com.tedros.fxapi.annotation.form.TForm;
+import com.tedros.fxapi.annotation.layout.THBox;
+import com.tedros.fxapi.annotation.layout.THGrow;
+import com.tedros.fxapi.annotation.layout.TPane;
+import com.tedros.fxapi.annotation.layout.TPriority;
 import com.tedros.fxapi.annotation.presenter.TBehavior;
 import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
@@ -33,6 +37,7 @@ import com.tedros.location.module.address.model.AddressMV;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
@@ -60,7 +65,6 @@ public class PlaceMV extends TEntityModelView<Place> {
 	@TTextField(maxLength=60, required = true, node=@TNode(requestFocus=true, parse = true))
 	private SimpleStringProperty title;
 	
-	
 	@TReaderHtml
 	@TLabel(text="#{label.description}")
 	@TTextAreaField(maxLength=500, wrapText=true, prefRowCount=7)
@@ -70,6 +74,9 @@ public class PlaceMV extends TEntityModelView<Place> {
 	@TLabel(text="#{label.address}")
 	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
 	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
+	@THBox(	pane=@TPane(children={"address", "contacts"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="address", priority=Priority.ALWAYS), 
+			@TPriority(field="contacts", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<AddressMV> address;
 	
 	@TReaderHtml

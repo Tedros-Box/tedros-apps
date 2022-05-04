@@ -8,7 +8,6 @@ import com.tedros.ejb.base.bo.ITGenericBO;
 import com.tedros.ejb.base.bo.TImportFileEntityBO;
 import com.tedros.location.model.AdminArea;
 import com.tedros.location.model.AdminAreaImport;
-import com.tedros.server.base.bo.TEntityBO;
 
 /**
  * @author Davis Gordon
@@ -18,7 +17,7 @@ import com.tedros.server.base.bo.TEntityBO;
 public class AdminAreaImportBO extends TImportFileEntityBO<AdminArea> {
 
 	@Inject
-	private TEntityBO<AdminArea> bo;
+	private AdminAreaBO bo;
 	
 	@Override
 	protected Class<AdminArea> getEntityClass() {

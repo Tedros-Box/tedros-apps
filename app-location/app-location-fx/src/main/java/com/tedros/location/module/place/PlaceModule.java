@@ -6,8 +6,12 @@ package com.tedros.location.module.place;
 import com.tedros.core.TModule;
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.fxapi.presenter.dynamic.view.TDynaView;
+import com.tedros.fxapi.presenter.dynamic.view.TDynaGroupView;
+import com.tedros.fxapi.presenter.view.group.TGroupPresenter;
+import com.tedros.fxapi.presenter.view.group.TGroupView;
+import com.tedros.fxapi.presenter.view.group.TViewItem;
 import com.tedros.location.domain.DomainApp;
+import com.tedros.location.module.address.model.StreetTypeMV;
 import com.tedros.location.module.place.model.PlaceMV;
 
 /**
@@ -24,7 +28,10 @@ public class PlaceModule extends TModule {
 	 */
 	@Override
 	public void tStart() {
-		super.tShowView(new TDynaView<>(PlaceMV.class));
+		super.tShowView(new TGroupView<TGroupPresenter>(this, "#{view.place.street.type}", 
+				new TViewItem(TDynaGroupView.class, PlaceMV.class, "#{view.place}"), 
+				new TViewItem(TDynaGroupView.class, StreetTypeMV.class, "#{view.street.type}")
+				));
 
 	}
 

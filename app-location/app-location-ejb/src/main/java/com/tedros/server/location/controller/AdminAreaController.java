@@ -6,6 +6,8 @@
  */
 package com.tedros.server.location.controller;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -13,8 +15,11 @@ import javax.ejb.TransactionAttributeType;
 
 import com.tedros.ejb.base.controller.ITSecurityController;
 import com.tedros.ejb.base.controller.TSecureEjbController;
+import com.tedros.ejb.base.result.TResult;
+import com.tedros.ejb.base.result.TResult.EnumResult;
 import com.tedros.ejb.base.security.ITSecurity;
 import com.tedros.ejb.base.security.TAccessPolicie;
+import com.tedros.ejb.base.security.TAccessToken;
 import com.tedros.ejb.base.security.TBeanPolicie;
 import com.tedros.ejb.base.security.TBeanSecurity;
 import com.tedros.ejb.base.security.TSecurityInterceptor;
@@ -22,7 +27,8 @@ import com.tedros.ejb.base.service.ITEjbService;
 import com.tedros.ejb.controller.IAdminAreaController;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.AdminArea;
-import com.tedros.server.base.service.TStatelessService;
+import com.tedros.location.model.Country;
+import com.tedros.server.location.service.AdminAreaService;
 
 /**
  * DESCRIÇÃO DA CLASSE
@@ -38,7 +44,7 @@ policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 public class AdminAreaController extends TSecureEjbController<AdminArea> implements IAdminAreaController, ITSecurity {
 	
 	@EJB
-	private TStatelessService<AdminArea> serv;
+	private AdminAreaService serv;
 	
 	@EJB
 	private ITSecurityController securityController;
@@ -51,6 +57,15 @@ public class AdminAreaController extends TSecureEjbController<AdminArea> impleme
 	@Override
 	public ITSecurityController getSecurityController() {
 		return securityController;
+	}
+
+	@Override
+	public TResult<List<AdminArea>> filter(TAccessToken token, Country country) {
+		try {
+			return new TResult<>(EnumResult.SUCESS, serv.filter(country));
+		} catch (Exception e) {
+			return super.processException(token, null, e);
+		}
 	}
 		
 

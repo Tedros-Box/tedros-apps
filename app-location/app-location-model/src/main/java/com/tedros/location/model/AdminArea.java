@@ -65,5 +65,10 @@ public class AdminArea extends TEntity {
 	public void setIso2Code(String iso2Code) {
 		this.iso2Code = iso2Code;
 	}
+
+	@Override
+	public String toString() {
+		return name!=null ? name : "";
+	}
 	
 }

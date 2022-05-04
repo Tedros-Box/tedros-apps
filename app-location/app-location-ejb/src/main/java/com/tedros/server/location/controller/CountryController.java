@@ -22,7 +22,7 @@ import com.tedros.ejb.base.service.ITEjbService;
 import com.tedros.ejb.controller.ICountryController;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.Country;
-import com.tedros.server.base.service.TStatelessService;
+import com.tedros.server.location.service.CountryService;
 
 /**
  * DESCRIÇÃO DA CLASSE
@@ -38,7 +38,7 @@ policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 public class CountryController extends TSecureEjbController<Country> implements ICountryController, ITSecurity {
 	
 	@EJB
-	private TStatelessService<Country> serv;
+	private CountryService serv;
 	
 	@EJB
 	private ITSecurityController securityController;

@@ -126,4 +126,9 @@ public class City extends TEntity {
 		this.adminArea = adminArea;
 	}
 
+	@Override
+	public String toString() {
+		return name!=null ? name : "";
+	}
+
 }
