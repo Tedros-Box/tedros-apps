@@ -3,15 +3,24 @@
  */
 package com.tedros.location.module.place.model;
 
+import com.tedros.common.model.TFileEntity;
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
+import com.tedros.ejb.base.model.ITFileBaseModel;
 import com.tedros.extension.contact.model.ContactMV;
 import com.tedros.extension.model.Contact;
+import com.tedros.extension.start.TConstant;
+import com.tedros.fxapi.annotation.control.TContent;
 import com.tedros.fxapi.annotation.control.TEditEntityModal;
+import com.tedros.fxapi.annotation.control.TFieldBox;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
+import com.tedros.fxapi.annotation.control.TSelectImageField;
+import com.tedros.fxapi.annotation.control.TTab;
+import com.tedros.fxapi.annotation.control.TTabPane;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
 import com.tedros.fxapi.annotation.control.TTextField;
+import com.tedros.fxapi.annotation.form.TDetailForm;
 import com.tedros.fxapi.annotation.form.TForm;
 import com.tedros.fxapi.annotation.layout.THBox;
 import com.tedros.fxapi.annotation.layout.THGrow;
@@ -28,6 +37,7 @@ import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.view.TOption;
 import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.collections.ITObservableList;
+import com.tedros.fxapi.domain.TEnvironment;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.Address;
@@ -58,6 +68,11 @@ import javafx.scene.layout.Priority;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class PlaceMV extends TEntityModelView<Place> {
 
+	@TTabPane(tabs = { @TTab(text = "#{label.main.data}", 
+			content = @TContent(detailForm=@TDetailForm(fields = {"title", "description", "address"}))),
+			@TTab(text = "#{label.pictures}", 
+				content = @TContent(detailForm=@TDetailForm(fields = {"pictures"}))) 
+	})
 	private SimpleLongProperty id;
 	
 	@TReaderHtml
@@ -72,7 +87,7 @@ public class PlaceMV extends TEntityModelView<Place> {
 	
 	@TReaderHtml
 	@TLabel(text="#{label.address}")
-	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
+	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class, required=true)
 	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
 	@THBox(	pane=@TPane(children={"address", "contacts"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="address", priority=Priority.ALWAYS), 
@@ -84,6 +99,11 @@ public class PlaceMV extends TEntityModelView<Place> {
 	@TEditEntityModal(modelClass = Contact.class, modelViewClass=ContactMV.class)
 	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
 	private ITObservableList<ContactMV> contacts;
+	
+	@TFieldBox(node=@TNode(id="img", parse = true))
+	@TSelectImageField(source=TEnvironment.LOCAL, target=TEnvironment.REMOTE, remoteOwner=TConstant.UUI)
+	@TModelViewType(modelClass = TFileEntity.class)
+	private ITObservableList<ITFileBaseModel> pictures;
 	
 	public PlaceMV(Place entity) {
 		super(entity);
@@ -132,6 +152,14 @@ public class PlaceMV extends TEntityModelView<Place> {
 
 	public void setAddress(SimpleObjectProperty<AddressMV> address) {
 		this.address = address;
+	}
+
+	public ITObservableList<ITFileBaseModel> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(ITObservableList<ITFileBaseModel> pictures) {
+		this.pictures = pictures;
 	}
 
 

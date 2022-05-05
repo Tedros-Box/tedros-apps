@@ -99,7 +99,7 @@ public class AddressMV extends TEntityModelView<Address> {
 	@TLabel(text="#{label.country}")
 	@TComboBoxField(firstItemTex="#{label.select}", required=true,
 		optionsList=@TOptionsList(serviceName = "ICountryControllerRemote", 
-		optionModelViewClass=CountryMV.class,
+		/*optionModelViewClass=CountryMV.class,*/
 		entityClass=Country.class))
 	@THBox(	pane=@TPane(children={"country", "adminArea", "city"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="country", priority=Priority.ALWAYS), 

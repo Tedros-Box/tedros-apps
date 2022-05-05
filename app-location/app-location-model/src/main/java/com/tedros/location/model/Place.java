@@ -3,11 +3,13 @@
  */
 package com.tedros.location.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -37,25 +39,27 @@ public class Place extends TEntity {
 	@Column(length=500, nullable=true)
 	private String description;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="address_id", nullable=false)
 	private Address address;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name=DomainTables.place_contact, 
+	schema=DomainSchema.schema,
 	joinColumns=@JoinColumn(name="place_id"), 
 	inverseJoinColumns=@JoinColumn(name="contact_id"),
 	uniqueConstraints=@UniqueConstraint(name="placeContactUK", 
 	columnNames = { "place_id","contact_id"}))
 	public Set<Contact> contacts;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name=DomainTables.place_picture, 
+	schema=DomainSchema.schema,
 	joinColumns=@JoinColumn(name="place_id"), 
 	inverseJoinColumns=@JoinColumn(name="file_id"),
 	uniqueConstraints=@UniqueConstraint(name="placePictureUK", 
 	columnNames = { "place_id","file_id"}))
-	public Set<TFileEntity> pictures;
+	public Set<TFileEntity> pictures = new HashSet<>();
 
 	public String getTitle() {
 		return title;
