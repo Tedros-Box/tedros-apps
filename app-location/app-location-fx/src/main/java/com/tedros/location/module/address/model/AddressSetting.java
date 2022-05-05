@@ -19,10 +19,8 @@ import com.tedros.fxapi.form.TSetting;
 import com.tedros.location.model.AdminArea;
 import com.tedros.location.model.City;
 import com.tedros.location.model.Country;
-import com.tedros.location.module.country.model.CountryMV;
 
 import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
 
 /**
  * @author Davis Gordon
@@ -44,7 +42,7 @@ public class AddressSetting extends TSetting {
 	public void run() {
 		AddressMV mv = super.getModelView();
 		//SimpleObjectProperty<Country> country = super.getProperty("country");
-		TComboBoxField<CountryMV> countryCB = super.getControl("country");
+		TComboBoxField<Country> countryCB = super.getControl("country");
 		TComboBoxField<AdminArea> admAreaCB = super.getControl("adminArea");
 		TComboBoxField<City> cityCB = super.getControl("city");
 		
@@ -53,21 +51,7 @@ public class AddressSetting extends TSetting {
 			admAreaCB.getSelectionModel().clearSelection();
 			admAreaCB.getItems().clear();
 			if(n!=null){
-				Platform.runLater(()->{
-					IAdminAreaController serv;
-					try { 
-						serv = ServiceLocator.getInstance().lookup("IAdminAreaControllerRemote");
-						TResult<List<AdminArea>> r = serv.filter(TedrosContext.getLoggedUser().getAccessToken(), n.getEntity());
-						if(r.getResult().equals(EnumResult.SUCESS)) {
-							List<AdminArea> lst = r.getValue();
-							admAreaCB.getItems().addAll(lst);
-						}
-					} catch (NamingException e) {
-						e.printStackTrace();
-					}finally {
-						ServiceLocator.getInstance().close();
-					}
-				});
+				countryAction(admAreaCB, n);
 			}
 		});
 		
@@ -76,24 +60,54 @@ public class AddressSetting extends TSetting {
 			cityCB.getSelectionModel().clearSelection();
 			cityCB.getItems().clear();
 			if(n!=null){
-				Platform.runLater(()->{
-					ICityController serv;
-					try { 
-						serv = ServiceLocator.getInstance().lookup("ICityControllerRemote");
-						TResult<List<City>> r = serv.filter(TedrosContext.getLoggedUser().getAccessToken(), countryCB.getValue().getEntity(), n);
-						if(r.getResult().equals(EnumResult.SUCESS)) {
-							List<City> lst = r.getValue();
-							cityCB.getItems().addAll(lst);
-						}
-					} catch (NamingException e) {
-						e.printStackTrace();
-					}finally {
-						ServiceLocator.getInstance().close();
-					}
-				});
+				admAreaAction(countryCB, cityCB, n);
 			}
 		});
 		
+		if(mv.getAdminArea().getValue()!=null) {
+			countryAction(admAreaCB, mv.getCountry().getValue());
+		}
+		
+		if(mv.getCity().getValue()!=null) {
+			admAreaAction(countryCB, cityCB, mv.getAdminArea().getValue());
+		}
+		
+	}
+
+	private void admAreaAction(TComboBoxField<Country> countryCB, TComboBoxField<City> cityCB, AdminArea n) {
+		Platform.runLater(()->{
+			ICityController serv;
+			try { 
+				serv = ServiceLocator.getInstance().lookup("ICityControllerRemote");
+				TResult<List<City>> r = serv.filter(TedrosContext.getLoggedUser().getAccessToken(), countryCB.getValue(), n);
+				if(r.getResult().equals(EnumResult.SUCESS)) {
+					List<City> lst = r.getValue();
+					cityCB.getItems().addAll(lst);
+				}
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}finally {
+				ServiceLocator.getInstance().close();
+			}
+		});
+	}
+
+	private void countryAction(TComboBoxField<AdminArea> admAreaCB, Country n) {
+		Platform.runLater(()->{
+			IAdminAreaController serv;
+			try { 
+				serv = ServiceLocator.getInstance().lookup("IAdminAreaControllerRemote");
+				TResult<List<AdminArea>> r = serv.filter(TedrosContext.getLoggedUser().getAccessToken(), n);
+				if(r.getResult().equals(EnumResult.SUCESS)) {
+					List<AdminArea> lst = r.getValue();
+					admAreaCB.getItems().addAll(lst);
+				}
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}finally {
+				ServiceLocator.getInstance().close();
+			}
+		});
 	}
 	
 	
