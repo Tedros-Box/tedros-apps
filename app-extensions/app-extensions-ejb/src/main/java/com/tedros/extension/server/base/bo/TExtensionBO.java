@@ -9,17 +9,17 @@ import javax.inject.Inject;
 import com.tedros.ejb.base.bo.TGenericBO;
 import com.tedros.ejb.base.eao.ITGenericEAO;
 import com.tedros.ejb.base.entity.ITEntity;
-import com.tedros.extension.server.base.eao.TEntityEAO;
+import com.tedros.extension.server.base.eao.TExtensionEAO;
 
 /**
  * @author Davis Gordon
  *
  */
 @Dependent
-public class TEntityBO<E extends ITEntity> extends TGenericBO<E> {
+public class TExtensionBO<E extends ITEntity> extends TGenericBO<E> {
 
 	@Inject
-	private TEntityEAO<E> eao;
+	private TExtensionEAO<E> eao;
 	
 	@Override
 	public ITGenericEAO<E> getEao() {

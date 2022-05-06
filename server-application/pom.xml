@@ -30,6 +30,13 @@
 		 <type>ear</type>
 		<version>1.0</version>
 	</dependency> 
+	
+	<dependency>
+		<groupId>com.tedros</groupId>
+		 <artifactId>app-extensions-ejb-ear</artifactId>
+		 <type>ear</type>
+		<version>1.0</version>
+	</dependency> 
   </dependencies>
   
 	 <build>
@@ -102,6 +109,11 @@
 			      	<type>ear</type>
 			      </deployable>
 			      
+			     <deployable>
+			        <groupId>com.tedros</groupId>
+			        <artifactId>app-extensions-ejb-ear</artifactId>
+			      	<type>ear</type>
+			      </deployable>
 			    </deployables>
 			    <packager>
 			      <outputLocation>${project.build.directory}/tomcat-packaged</outputLocation>

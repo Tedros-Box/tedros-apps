@@ -6,7 +6,7 @@
  */
 package com.tedros.extension.server.base.service;
 
-import javax.ejb.Local;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import com.tedros.ejb.base.bo.ITGenericBO;
 import com.tedros.ejb.base.entity.ITEntity;
 import com.tedros.ejb.base.service.TEjbService;
-import com.tedros.extension.server.base.bo.TEntityBO;
+import com.tedros.extension.server.base.bo.TExtensionBO;
 
 /**
  * DESCRIÇÃO DA CLASSE
@@ -23,13 +23,13 @@ import com.tedros.extension.server.base.bo.TEntityBO;
  * @author Davis Gordon
  *
  */
-@Local
-@Stateless(name="TStatelessService")
+@LocalBean
+@Stateless
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class TStatelessService<E extends ITEntity> extends TEjbService<E>  {
+public class TExtensionService<E extends ITEntity> extends TEjbService<E>  {
 	
 	@Inject
-	private TEntityBO<E> bo;
+	private TExtensionBO<E> bo;
 	
 	@Override
 	public ITGenericBO<E> getBussinesObject() {

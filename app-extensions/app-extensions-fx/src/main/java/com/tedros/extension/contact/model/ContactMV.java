@@ -15,6 +15,7 @@ import com.tedros.fxapi.annotation.layout.THGrow;
 import com.tedros.fxapi.annotation.layout.TPane;
 import com.tedros.fxapi.annotation.layout.TPriority;
 import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
+import com.tedros.fxapi.annotation.process.TEjbService;
 import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
@@ -28,6 +29,7 @@ import javafx.scene.layout.Priority;
  *
  */
 @TEditModalPresenter()
+@TEjbService(model = Contact.class, serviceName = "IContactControllerRemote")
 @TSecurity(	id=DomainApp.CONTACT_FORM_ID, 
 appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.place}",
 allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 

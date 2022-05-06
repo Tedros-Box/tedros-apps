@@ -15,15 +15,10 @@ import com.tedros.fxapi.annotation.layout.THBox;
 import com.tedros.fxapi.annotation.layout.THGrow;
 import com.tedros.fxapi.annotation.layout.TPane;
 import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.process.TEjbService;
 import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.presenter.modal.behavior.TEditModalBehavior;
-import com.tedros.fxapi.presenter.modal.decorator.TEditModalDecorator;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.Address;
@@ -31,7 +26,6 @@ import com.tedros.location.model.AdminArea;
 import com.tedros.location.model.City;
 import com.tedros.location.model.Country;
 import com.tedros.location.model.StreetType;
-import com.tedros.location.module.country.model.CountryMV;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -42,11 +36,9 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
+@TEditModalPresenter()
 @TSetting(value = AddressSetting.class)
 @TEjbService(serviceName = "IAddressControllerRemote", model=Address.class)
-@TEditModalPresenter(presenter=@TPresenter(decorator = @TDecorator(type=TEditModalDecorator.class,
-				viewTitle="#{view.address}", buildSaveButton=true, buildDeleteButton=true),
-		behavior=@TBehavior(type=TEditModalBehavior.class)))
 @TSecurity(	id=DomainApp.ADDRESS_FORM_ID, 
 appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.address}",
 allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
