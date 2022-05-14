@@ -13,5 +13,8 @@ import com.tedros.location.model.Country;
 @Remote
 public interface IAdminAreaController extends ITSecureEjbController<AdminArea>{
 	
+
+	static final String JNDI_NAME = "IAdminAreaControllerRemote";
+	
 	TResult<List<AdminArea>> filter(TAccessToken token, Country country);
 }
