@@ -8,4 +8,5 @@ import com.tedros.location.model.Country;
 @Remote
 public interface ICountryController extends ITSecureEjbController<Country>{
 	
+	static final String JNDI_NAME = "ICountryControllerRemote";
 }

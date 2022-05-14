@@ -20,6 +20,9 @@ import com.tedros.fxapi.annotation.process.TEjbService;
 import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
+import com.tedros.location.annotation.TAdminAreaComboBox;
+import com.tedros.location.annotation.TCityComboBox;
+import com.tedros.location.annotation.TCountryComboBox;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.Address;
 import com.tedros.location.model.AdminArea;
@@ -37,7 +40,7 @@ import javafx.scene.layout.Priority;
  *
  */
 @TEditModalPresenter()
-@TSetting(value = AddressSetting.class)
+//@TSetting(value = AddressSetting.class)
 @TEjbService(serviceName = "IAddressControllerRemote", model=Address.class)
 @TSecurity(	id=DomainApp.ADDRESS_FORM_ID, 
 appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.address}",
@@ -89,10 +92,7 @@ public class AddressMV extends TEntityModelView<Address> {
 	
 	@TReaderHtml
 	@TLabel(text="#{label.country}")
-	@TComboBoxField(firstItemTex="#{label.select}", required=true,
-		optionsList=@TOptionsList(serviceName = "ICountryControllerRemote", 
-		/*optionModelViewClass=CountryMV.class,*/
-		entityClass=Country.class))
+	@TCountryComboBox(firstItemTex="#{label.select}", required=true)
 	@THBox(	pane=@TPane(children={"country", "adminArea", "city"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="country", priority=Priority.ALWAYS), 
 			@TPriority(field="adminArea", priority=Priority.ALWAYS), 
@@ -101,12 +101,12 @@ public class AddressMV extends TEntityModelView<Address> {
 	
 	@TReaderHtml
 	@TLabel(text="#{label.admin.area}")
-	@TComboBoxField(firstItemTex="#{label.select}", required=false)
+	@TAdminAreaComboBox(firstItemTex="#{label.select}", countryField="country", required=false)
 	private SimpleObjectProperty<AdminArea> adminArea;
 	
 	@TReaderHtml
 	@TLabel(text="#{label.city}")
-	@TComboBoxField(firstItemTex="#{label.select}", required=false)
+	@TCityComboBox(firstItemTex="#{label.select}", countryField="country", adminAreaField="adminArea", required=false)
 	private SimpleObjectProperty<City> city;
 	
 	public AddressMV(Address entity) {

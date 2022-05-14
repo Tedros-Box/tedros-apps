@@ -13,6 +13,8 @@ import com.tedros.location.model.Country;
 
 @Remote
 public interface ICityController extends ITSecureEjbController<City>{
+
+	static final String JNDI_NAME = "ICityControllerRemote";
 	
 	TResult<List<City>> filter(TAccessToken token, Country country, AdminArea adminArea);
 	
