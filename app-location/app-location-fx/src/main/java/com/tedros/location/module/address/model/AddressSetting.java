@@ -23,6 +23,8 @@ import com.tedros.location.model.Country;
 import javafx.application.Platform;
 
 /**
+ * Example of TSetting for a form
+ * 
  * @author Davis Gordon
  *
  */

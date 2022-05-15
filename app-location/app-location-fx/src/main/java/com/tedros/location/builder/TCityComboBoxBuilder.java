@@ -65,16 +65,22 @@ implements ITControlBuilder<com.tedros.fxapi.control.TComboBoxField, Property<Ob
 				String countryIso2Code = tAnnotation.countryIso2Code();
 				String admName = tAnnotation.adminAreaName();
 				
-				final ComboBox countryCb = (ComboBox) super.getComponentDescriptor().getFieldDescriptor(tAnnotation.countryField()).getControl();;
+				final ComboBox countryCb = !"".equals(tAnnotation.countryField().trim()) 
+						? (ComboBox) super.getComponentDescriptor().getFieldDescriptor(tAnnotation.countryField()).getControl() 
+								: null;
 						
-				final ComboBox admCb = (ComboBox) super.getComponentDescriptor().getFieldDescriptor(tAnnotation.adminAreaField()).getControl();
+				final ComboBox admCb = !"".equals(tAnnotation.adminAreaField().trim()) 
+						? (ComboBox) super.getComponentDescriptor().getFieldDescriptor(tAnnotation.adminAreaField()).getControl()
+								: null;
 						
 				if(admCb!=null) {
 					admCb.getSelectionModel().selectedItemProperty().addListener((a, o, n) -> {
-						control.getSelectionModel().clearSelection();
 						control.getItems().clear();
+						control.getSelectionModel().clearSelection();
 						if(n instanceof AdminArea)
 							filter(tAnnotation, control, countryIso2Code, countryCb!=null?(Country)countryCb.getSelectionModel().getSelectedItem():null, (AdminArea) n);
+						else
+							LocationUtils.addEmptyItem(control.getItems());
 					});
 					AdminArea n = admCb!=null ? (AdminArea) admCb.getSelectionModel().getSelectedItem() : null;
 					if(n!=null)
