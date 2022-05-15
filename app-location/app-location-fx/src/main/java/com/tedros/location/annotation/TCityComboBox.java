@@ -258,7 +258,8 @@ public @interface TCityComboBox  {
 	 * <pre>
 	 * The field name of the SimpleObjectProperty 
 	 * that hold the AdminArea entity. This component will observe
-	 * this field to filter its Citys.
+	 * this field to filter its Citys. 
+	 * If possible use this with the countryField.
 	 * 
 	 * Default value: Empty string.
 	 * </pre>

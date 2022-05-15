@@ -61,7 +61,7 @@ import javafx.scene.layout.Priority;
 			show=true, showSearchField=true, searchFieldName="title", 
 			orderBy = {	@TOption(text = "#{label.title}", value = "title")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle="#{view.place}"),
-	behavior=@TBehavior(runNewActionAfterSave=true)))
+	behavior=@TBehavior(runNewActionAfterSave=true, saveOnlyChangedModels=false, saveAllModels=false)))
 @TSecurity(	id=DomainApp.PLACE_FORM_ID, 
 	appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.place}",
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 

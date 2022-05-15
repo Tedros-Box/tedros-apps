@@ -10,7 +10,6 @@ import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TOptionsList;
 import com.tedros.fxapi.annotation.control.TTextField;
 import com.tedros.fxapi.annotation.control.TTextInputControl;
-import com.tedros.fxapi.annotation.form.TSetting;
 import com.tedros.fxapi.annotation.layout.THBox;
 import com.tedros.fxapi.annotation.layout.THGrow;
 import com.tedros.fxapi.annotation.layout.TPane;
@@ -40,7 +39,6 @@ import javafx.scene.layout.Priority;
  *
  */
 @TEditModalPresenter()
-//@TSetting(value = AddressSetting.class)
 @TEjbService(serviceName = "IAddressControllerRemote", model=Address.class)
 @TSecurity(	id=DomainApp.ADDRESS_FORM_ID, 
 appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.address}",
@@ -106,7 +104,7 @@ public class AddressMV extends TEntityModelView<Address> {
 	
 	@TReaderHtml
 	@TLabel(text="#{label.city}")
-	@TCityComboBox(firstItemTex="#{label.select}", countryField="country", adminAreaField="adminArea", required=false)
+	@TCityComboBox(firstItemTex="#{label.select}", countryField="country", adminAreaField="adminArea",  required=false)
 	private SimpleObjectProperty<City> city;
 	
 	public AddressMV(Address entity) {

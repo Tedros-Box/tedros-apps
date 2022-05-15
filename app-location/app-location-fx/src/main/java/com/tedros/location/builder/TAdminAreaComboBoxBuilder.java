@@ -63,15 +63,18 @@ implements ITControlBuilder<com.tedros.fxapi.control.TComboBoxField, Property<Ob
 			if(b) {
 				String countryIso2Code = tAnnotation.countryIso2Code();
 				
-				final ComboBox cb = (ComboBox) super.getComponentDescriptor().getFieldDescriptor(tAnnotation.countryField()).getControl();
+				final ComboBox cb = !"".equals(tAnnotation.countryField().trim()) 
+						? (ComboBox) super.getComponentDescriptor().getFieldDescriptor(tAnnotation.countryField()).getControl()
+								: null;
 				
 				if(cb!=null) {
 					cb.getSelectionModel().selectedItemProperty().addListener((a, o, n) -> {
 						control.getSelectionModel().clearSelection();
 						control.getItems().clear();
-						if(n instanceof Country) {
+						if(n instanceof Country) 
 							LocationUtils.filterAdminArea(tAnnotation, (Country) n, control.getItems());
-						}
+						else
+							LocationUtils.addEmptyItem(control.getItems());
 					});
 					Country c = (Country) cb.getSelectionModel().getSelectedItem();
 					if(c!=null)

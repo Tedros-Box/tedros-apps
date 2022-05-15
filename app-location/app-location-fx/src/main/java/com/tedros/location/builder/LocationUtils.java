@@ -6,7 +6,6 @@ package com.tedros.location.builder;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -20,7 +19,6 @@ import com.tedros.ejb.base.result.TResult;
 import com.tedros.ejb.base.result.TResult.EnumResult;
 import com.tedros.ejb.controller.IAdminAreaController;
 import com.tedros.ejb.controller.ICityController;
-import com.tedros.fxapi.control.TComboBoxField;
 import com.tedros.fxapi.control.TItem;
 import com.tedros.fxapi.util.TReflectionUtil;
 import com.tedros.location.model.AdminArea;
@@ -29,7 +27,6 @@ import com.tedros.location.model.Country;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 
 /**
  * @author Davis Gordon
@@ -75,6 +72,14 @@ public class LocationUtils {
 		});
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void addEmptyItem(ObservableList items) {
+		if(items==null)
+			return;
+		items.add(0, new TItem("-", null));
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static void addFirstItem(Annotation ann, ObservableList items) {
 		if(ann==null || items==null)
 			return;
@@ -83,13 +88,12 @@ public class LocationUtils {
 			if(m!=null) {
 				final String firstItemText = (String) m.invoke(ann);
 				if(StringUtils.isNotBlank(firstItemText)){
-					items.addAll(0, Arrays.asList(new TItem(TLanguage.getInstance().getString(firstItemText), null)));
+					items.add(0, new TItem(TLanguage.getInstance().getString(firstItemText), null));
 				}
 			}
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 	}
-	
 
 }
