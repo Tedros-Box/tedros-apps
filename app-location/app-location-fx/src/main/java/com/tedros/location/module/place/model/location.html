@@ -2,50 +2,119 @@
   <head>
     <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
     <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
-
-    <script type="text/javascript">
-      window.onload = function() {
-        L.mapquest.key = 'dJ6GBXjIKvMm7fOTqhaVo2AtFj7yB0QM';
-
-        var baseLayer = L.mapquest.tileLayer('map');
-
-        var map = L.mapquest.map('map', {
-          center: [29.953745, -90.074158],
-          layers: baseLayer,
-          zoom: 10
-        });
-
-        L.control.layers({
-          'Map': baseLayer
-        }).addTo(map);
-
-        var drawnItems = L.featureGroup().addTo(map);
-
-        map.addControl(new L.Control.Draw({
-          edit: {
-            featureGroup: drawnItems,
-            poly: {
-              allowIntersection: false
-            }
-          },
-          draw: {
-            polygon: {
-              allowIntersection: false,
-              showArea: true
-            }
-          }
-        }));
-
-        map.on(L.Draw.Event.CREATED, function (event) {
-          var layer = event.layer;
-
-          drawnItems.addLayer(layer);
-        })
-      }
-    </script>
   </head>
 
   <body style="border: 0; margin: 0;">
-    <div id="map" style="width: 100%; height: 100%;"></div>
+ <!-- <a href="javascript: setMap('Brazil', 'Goias', 'Goiania', 'rua tamoios', null)" >TESTE</a>
+  -->   <div id="map" style="width: 100%; height: 100%;"></div>
+	 <div id="log"></div>
   </body>
+   <script type="text/javascript">
+   // console.log = function(message) { tedros.log(message); };
+    window.onload = function() {
+	try{
+    	popup = L.popup();
+    	buildMap();
+	}catch(err){ document.getElementById('log').innerHTML=err.message; };
+    };
+    
+    var popup, vZoom, map;
+	const z1 = 4.3;
+	const z2 = 6.5;
+	const z3 = 14;
+	const z4 = 18;
+    
+	function setCoord(lat, lng){
+		vZoom = z4;
+		goToLatLng([lat, lng]);
+	}
+	
+	function setAddress(pcountry, pstate, pcity, pstreet, ppostalcode){
+    	
+    	vZoom = 0;
+		if(pcountry && pcountry=='null') pcountry = null;
+    	if(pstate && pstate=='null') pstate = null;
+    	if(pcity && pcity=='null') pcity = null;
+    	if(pstreet&& pstreet=='null') pstreet = null;
+		if(ppostalcode && ppostalcode=='null') ppostalcode = null;
+    	
+    	if(pcountry) vZoom = z1;
+    	if(pstate) vZoom = z2;
+    	if(pcity) vZoom = z3;
+    	if(pstreet || ppostalcode) vZoom = z4;
+    	
+        L.mapquest.geocoding().geocode({
+        	country: pcountry,
+          	street: pstreet,
+          	city: pcity,
+          	state: pstate,
+          	postalCode: ppostalcode
+        }, callbackAddress);
+    }
+	
+	function callbackAddress(error, response) {
+		try{
+			var location = response.results[0].locations[0];
+			var latLng = location.displayLatLng;
+			   
+			goToLatLng(latLng);
+			
+		}catch(err){  document.getElementById('log').innerHTML=err.message;  };
+	}
+	
+	function goToLatLng(latLng) {
+		try{
+			map.flyTo(latLng, vZoom, {animate: true});
+			L.marker(latLng);
+		}catch(err){  document.getElementById('log').innerHTML=err.message;  };
+	}
+    
+    function buildMap(){
+		try{  
+			vZoom = z1;
+			L.mapquest.key = 'dJ6GBXjIKvMm7fOTqhaVo2AtFj7yB0QM';
+			
+			L.mapquest.geocoding().geocode({
+				country: 'Israel'
+			}, callbackBuildMap);
+		}catch(err){ document.getElementById('log').innerHTML=err.message;  };
+    }
+        
+    function callbackBuildMap(error, response) {
+		try{
+			var location = response.results[0].locations[0];
+			var latLng = location.displayLatLng;
+			createMap(latLng);
+		}catch(err){  document.getElementById('log').innerHTML=err.message;  };
+	}
+	
+	function createMap(latLng) {
+		try{
+			map = L.mapquest.map('map', {
+				center: latLng,
+				layers: L.mapquest.tileLayer('map'),
+				zoom: vZoom
+			});
+				  
+			map.addControl(L.mapquest.satelliteControl());
+		
+			map.on('click', function(e) {
+				popup.setLatLng(e.latlng).openOn(this);
+				L.mapquest.geocoding().reverse(e.latlng, generatePopupContent);
+			});
+		}catch(err){  document.getElementById('log').innerHTML=err.message;  };
+	} 
+
+	function generatePopupContent(error, response) {
+    	
+		var location = response.results[0].locations[0];
+        var street = location.street;
+        var city = location.adminArea5;
+        var state = location.adminArea3;
+        var lat = location.latLng.lat;
+        var lng = location.latLng.lng;
+		tedros.setLatLng(lat, lng);
+        popup.setContent(street + ', ' + city + ', ' + state);
+	}
+    </script>
 </html>

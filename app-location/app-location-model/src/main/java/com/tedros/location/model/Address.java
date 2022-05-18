@@ -50,6 +50,12 @@ public class Address extends TEntity {
 	
 	@Column(length=20, nullable=true)
 	private String code;
+	
+	@Column(length=15)
+	private String latitude;
+
+	@Column(length=15)
+	private String logintude;
 
 	public StreetType getStreetType() {
 		return streetType;
@@ -120,6 +126,22 @@ public class Address extends TEntity {
 		return String.format(
 				"%s %s, %s, %s - %s %s %s %s",
 				streetType, plubicPlace, complement, neighborhood, country, adminArea, city, code);
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLogintude() {
+		return logintude;
+	}
+
+	public void setLogintude(String logintude) {
+		this.logintude = logintude;
 	}
 	
 	
