@@ -18,7 +18,7 @@
 	}catch(err){ document.getElementById('log').innerHTML=err.message; };
     };
     
-    var popup, vZoom, map;
+    var popup, vZoom, map, marker;
 	const z1 = 4.3;
 	const z2 = 6.5;
 	const z3 = 14;
@@ -65,8 +65,14 @@
 	function goToLatLng(latLng) {
 		try{
 			map.flyTo(latLng, vZoom, {animate: true});
-			L.marker(latLng);
-		}catch(err){  document.getElementById('log').innerHTML=err.message;  };
+			addMarker(latLng);
+		}catch(err){  document.getElementById('log').innerHTML=err.message + ' - map='+map+', latLng='+latLng;  };
+	}
+	
+	function addMarker(latLng){
+		if(marker) marker.remove();
+		marker = L.marker(latLng);
+		marker.addTo(map);
 	}
     
     function buildMap(){
@@ -113,6 +119,7 @@
         var state = location.adminArea3;
         var lat = location.latLng.lat;
         var lng = location.latLng.lng;
+		addMarker(location.latLng);
 		tedros.setLatLng(lat, lng);
         popup.setContent(street + ', ' + city + ', ' + state);
 	}

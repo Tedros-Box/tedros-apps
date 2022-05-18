@@ -90,7 +90,7 @@ public class PlaceMV extends TEntityModelView<Place> {
 	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class, required=true)
 	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
 	@THBox(	pane=@TPane(children={"address", "contacts"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="address", priority=Priority.ALWAYS), 
+	hgrow=@THGrow(priority={@TPriority(field="address", priority=Priority.NEVER), 
 			@TPriority(field="contacts", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<AddressMV> address;
 	

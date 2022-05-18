@@ -25,6 +25,8 @@ import netscape.javascript.JSObject;
  */
 public class TAddressSetting extends TSetting {
 
+	private static final String NULL_PARAM = "'null'";
+
 	public TAddressSetting(TComponentDescriptor descriptor) {
 		super(descriptor);
 	}
@@ -86,13 +88,14 @@ public class TAddressSetting extends TSetting {
 		Address m = mv.getModel();
 		String lat = m.getLatitude();
 		String lng = m.getLogintude();
-		String co = m.getCountry()!=null ? "'"+m.getCountry().getName()+"'" : "'null'";
-		String st = m.getAdminArea()!=null ? "'"+m.getAdminArea().getName()+"'" : "'null'";
-		String ci = m.getCity()!=null ? "'"+m.getCity().getName()+"'" : "'null'";
+		String co = m.getCountry()!=null ? "'"+m.getCountry().getName()+"'" : NULL_PARAM;
+		String st = m.getAdminArea()!=null ? "'"+m.getAdminArea().getName()+"'" : NULL_PARAM;
+		String ci = m.getCity()!=null ? "'"+m.getCity().getName()+"'" : NULL_PARAM;
 		String sttp = m.getStreetType()!=null ? "'"+m.getStreetType().getName()+" " : null;
 		String pp = m.getPlubicPlace()!=null ? m.getPlubicPlace()+"'" : null;
-		String str = sttp!=null && pp!=null ? sttp+pp : "'null'";
-		String cp = m.getCode()!=null ? "'"+m.getCode()+"'" :"'null'";
+		String str = !NULL_PARAM.equals(co)  && !NULL_PARAM.equals(st) && !NULL_PARAM.equals(ci) 
+				&& sttp!=null && pp!=null ? sttp+pp : NULL_PARAM;
+		String cp = m.getCode()!=null ? "'"+m.getCode()+"'" :NULL_PARAM;
 		getWebEngine().executeScript("setAddress("+co+", "+st+", "+ci+", "+str+", "+cp+")");
 		getWebView().requestFocus();
 	}
