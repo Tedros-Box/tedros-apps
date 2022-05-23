@@ -10,12 +10,10 @@
 	 <div id="log"></div>
   </body>
    <script type="text/javascript">
-   // console.log = function(message) { tedros.log(message); };
+    console.log = function(message) { tedros.log(message); };
     window.onload = function() {
-	try{
-    	popup = L.popup();
-    	buildMap();
-	}catch(err){ document.getElementById('log').innerHTML=err.message; };
+		popup = L.popup();
+    	//buildMap('dJ6GBXjIKvMm7fOTqhaVo2AtFj7yB0QM');
     };
     
     var popup, vZoom, map, marker;
@@ -53,20 +51,20 @@
     }
 	
 	function callbackAddress(error, response) {
-		try{
+		//try{
 			var location = response.results[0].locations[0];
 			var latLng = location.displayLatLng;
 			   
 			goToLatLng(latLng);
 			
-		}catch(err){  document.getElementById('log').innerHTML=err.message;  };
+		//}catch(err){  document.getElementById('log').innerHTML=err.message;  };
 	}
 	
 	function goToLatLng(latLng) {
-		try{
+		//try{
 			map.flyTo(latLng, vZoom, {animate: true});
 			addMarker(latLng);
-		}catch(err){  document.getElementById('log').innerHTML=err.message + ' - map='+map+', latLng='+latLng;  };
+		//}catch(err){  document.getElementById('log').innerHTML=err.message + ' - map='+map+', latLng='+latLng;  };
 	}
 	
 	function addMarker(latLng){
@@ -74,30 +72,14 @@
 		marker = L.marker(latLng);
 		marker.addTo(map);
 	}
-    
-    function buildMap(){
-		try{  
-			vZoom = z1;
-			L.mapquest.key = 'dJ6GBXjIKvMm7fOTqhaVo2AtFj7yB0QM';
-			
-			L.mapquest.geocoding().geocode({
-				country: 'Israel'
-			}, callbackBuildMap);
-		}catch(err){ document.getElementById('log').innerHTML=err.message;  };
-    }
-        
-    function callbackBuildMap(error, response) {
-		try{
-			var location = response.results[0].locations[0];
-			var latLng = location.displayLatLng;
-			createMap(latLng);
-		}catch(err){  document.getElementById('log').innerHTML=err.message;  };
-	}
 	
-	function createMap(latLng) {
-		try{
+	function buildMap(key){
+		//try{  
+			vZoom = z1;
+			L.mapquest.key = key; 
+			
 			map = L.mapquest.map('map', {
-				center: latLng,
+				center: ['31.75176481308368', '34.881039811776404'],
 				layers: L.mapquest.tileLayer('map'),
 				zoom: vZoom
 			});
@@ -108,8 +90,11 @@
 				popup.setLatLng(e.latlng).openOn(this);
 				L.mapquest.geocoding().reverse(e.latlng, generatePopupContent);
 			});
-		}catch(err){  document.getElementById('log').innerHTML=err.message;  };
-	} 
+			
+			
+		//}catch(err){ document.getElementById('log').innerHTML=err.message;  };
+    }
+	
 
 	function generatePopupContent(error, response) {
     	

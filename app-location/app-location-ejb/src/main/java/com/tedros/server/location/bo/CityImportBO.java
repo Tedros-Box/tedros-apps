@@ -8,7 +8,7 @@ import com.tedros.ejb.base.bo.ITGenericBO;
 import com.tedros.ejb.base.bo.TImportFileEntityBO;
 import com.tedros.location.model.City;
 import com.tedros.location.model.CityImport;
-import com.tedros.server.base.bo.TEntityBO;
+import com.tedros.server.base.bo.TLocBO;
 
 /**
  * @author Davis Gordon
@@ -18,7 +18,7 @@ import com.tedros.server.base.bo.TEntityBO;
 public class CityImportBO extends TImportFileEntityBO<City> {
 
 	@Inject
-	private TEntityBO<City> bo;
+	private TLocBO<City> bo;
 	
 	@Override
 	protected Class<City> getEntityClass() {

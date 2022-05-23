@@ -28,7 +28,7 @@ public class Address extends TEntity {
 	private StreetType streetType;
 	
 	@Column(length=120, nullable=false)
-	private String plubicPlace;
+	private String publicPlace;
 	
 	@Column(length=120, nullable=true)
 	private String complement;
@@ -65,12 +65,12 @@ public class Address extends TEntity {
 		this.streetType = streetType;
 	}
 
-	public String getPlubicPlace() {
-		return plubicPlace;
+	public String getPublicPlace() {
+		return publicPlace;
 	}
 
-	public void setPlubicPlace(String plubicPlace) {
-		this.plubicPlace = plubicPlace;
+	public void setPublicPlace(String publicPlace) {
+		this.publicPlace = publicPlace;
 	}
 
 	public String getComplement() {
@@ -125,7 +125,7 @@ public class Address extends TEntity {
 	public String toString() {
 		return String.format(
 				"%s %s, %s, %s - %s %s %s %s",
-				streetType, plubicPlace, complement, neighborhood, country, adminArea, city, code);
+				streetType, publicPlace, complement, neighborhood, country, adminArea, city, code);
 	}
 
 	public String getLatitude() {

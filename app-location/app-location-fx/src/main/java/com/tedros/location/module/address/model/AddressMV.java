@@ -32,7 +32,6 @@ import com.tedros.location.model.AdminArea;
 import com.tedros.location.model.City;
 import com.tedros.location.model.Country;
 import com.tedros.location.model.StreetType;
-import com.tedros.util.TedrosFolder;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -90,9 +89,9 @@ public class AddressMV extends TEntityModelView<Address> {
 		optionsList=@TOptionsList(serviceName = "IStreetTypeControllerRemote", 
 		optionModelViewClass=StreetTypeMV.class,
 		entityClass=StreetType.class))
-	@THBox(	pane=@TPane(children={"streetType", "plubicPlace", "complement", "neighborhood", "code"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"streetType", "publicPlace", "complement", "neighborhood", "code"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="streetType", priority=Priority.SOMETIMES), 
-			@TPriority(field="plubicPlace", priority=Priority.ALWAYS),
+			@TPriority(field="publicPlace", priority=Priority.ALWAYS),
 			@TPriority(field="complement", priority=Priority.ALWAYS), 
 			@TPriority(field="neighborhood", priority=Priority.ALWAYS), 
 			@TPriority(field="code", priority=Priority.SOMETIMES)}))
@@ -103,7 +102,7 @@ public class AddressMV extends TEntityModelView<Address> {
 	@TTextField(maxLength=120, required = true, 
 		control=@TControl(tooltip="#{text.mapview.press.enter}", parse = true), 
 		node=@TNode(requestFocus=true, parse = true))
-	private SimpleStringProperty plubicPlace;
+	private SimpleStringProperty publicPlace;
 	
 	@TReaderHtml
 	@TLabel(text="#{label.complement}")
@@ -141,21 +140,20 @@ public class AddressMV extends TEntityModelView<Address> {
 	private SimpleStringProperty viewMap;*/
 	
 	@TWebView(prefHeight=300,
-			engine=@TWebEngine(//load="http://localhost:8081/editor-web-webapp/story/edit.html",
-			load=TWebEngine.MODULE_FOLDER+"/geolocation/location.html"))
+			engine=@TWebEngine(load=TWebEngine.MODULE_FOLDER+"/geolocation/location.html"))
 	private SimpleStringProperty webview;
 	
 	public AddressMV(Address entity) {
 		super(entity);
 		this.display = new SimpleStringProperty();
-		this.formatFieldsToDisplay("%s %s %s", this.streetType, this.plubicPlace, this.complement);
+		this.formatFieldsToDisplay("%s %s %s", this.streetType, this.publicPlace, this.complement);
 	}
 	
 
 	@Override
 	public void reload(Address e) {
 		super.reload(e);
-		this.formatFieldsToDisplay("%s %s %s", this.streetType, this.plubicPlace, this.complement);
+		this.formatFieldsToDisplay("%s %s %s", this.streetType, this.publicPlace, this.complement);
 	}
 	
 
@@ -175,12 +173,12 @@ public class AddressMV extends TEntityModelView<Address> {
 		this.streetType = streetType;
 	}
 
-	public SimpleStringProperty getPlubicPlace() {
-		return plubicPlace;
+	public SimpleStringProperty getPublicPlace() {
+		return publicPlace;
 	}
 
-	public void setPlubicPlace(SimpleStringProperty plubicPlace) {
-		this.plubicPlace = plubicPlace;
+	public void setPublicPlace(SimpleStringProperty publicPlace) {
+		this.publicPlace = publicPlace;
 	}
 
 	public SimpleStringProperty getComplement() {

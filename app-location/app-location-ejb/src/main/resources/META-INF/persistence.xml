@@ -20,6 +20,7 @@
 		
 		<class>com.tedros.common.model.TFileEntity</class>
 		<class>com.tedros.common.model.TByteEntity</class>
+		<class>com.tedros.location.model.PlaceType</class>
 		
 		<properties>
 		
