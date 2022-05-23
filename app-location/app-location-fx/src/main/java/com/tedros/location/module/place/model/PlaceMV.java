@@ -10,11 +10,13 @@ import com.tedros.ejb.base.model.ITFileBaseModel;
 import com.tedros.extension.contact.model.ContactMV;
 import com.tedros.extension.model.Contact;
 import com.tedros.extension.start.TConstant;
+import com.tedros.fxapi.annotation.control.TComboBoxField;
 import com.tedros.fxapi.annotation.control.TContent;
 import com.tedros.fxapi.annotation.control.TEditEntityModal;
 import com.tedros.fxapi.annotation.control.TFieldBox;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
+import com.tedros.fxapi.annotation.control.TOptionsList;
 import com.tedros.fxapi.annotation.control.TSelectImageField;
 import com.tedros.fxapi.annotation.control.TTab;
 import com.tedros.fxapi.annotation.control.TTabPane;
@@ -42,6 +44,7 @@ import com.tedros.fxapi.presenter.model.TEntityModelView;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.Address;
 import com.tedros.location.model.Place;
+import com.tedros.location.model.PlaceType;
 import com.tedros.location.module.address.model.AddressMV;
 
 import javafx.beans.property.SimpleLongProperty;
@@ -61,7 +64,7 @@ import javafx.scene.layout.Priority;
 			show=true, showSearchField=true, searchFieldName="title", 
 			orderBy = {	@TOption(text = "#{label.title}", value = "title")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle="#{view.place}"),
-	behavior=@TBehavior(runNewActionAfterSave=true, saveOnlyChangedModels=false, saveAllModels=false)))
+	behavior=@TBehavior(saveOnlyChangedModels=false, saveAllModels=false)))
 @TSecurity(	id=DomainApp.PLACE_FORM_ID, 
 	appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.place}",
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
@@ -69,7 +72,7 @@ import javafx.scene.layout.Priority;
 public class PlaceMV extends TEntityModelView<Place> {
 
 	@TTabPane(tabs = { @TTab(text = "#{label.main.data}", 
-			content = @TContent(detailForm=@TDetailForm(fields = {"title", "description", "address"}))),
+			content = @TContent(detailForm=@TDetailForm(fields = {"title", "description"}))),
 			@TTab(text = "#{label.pictures}", 
 				content = @TContent(detailForm=@TDetailForm(fields = {"pictures"}))) 
 	})
@@ -78,20 +81,32 @@ public class PlaceMV extends TEntityModelView<Place> {
 	@TReaderHtml
 	@TLabel(text="#{label.title}")
 	@TTextField(maxLength=60, required = true, node=@TNode(requestFocus=true, parse = true))
+	@THBox(	pane=@TPane(children={"title", "type"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="title", priority=Priority.ALWAYS), 
+			@TPriority(field="type", priority=Priority.SOMETIMES)}))
 	private SimpleStringProperty title;
+	
+	@TReaderHtml
+	@TLabel(text="#{label.type}")
+	@TComboBoxField(firstItemTex="#{label.select}", required=true,
+		optionsList=@TOptionsList(serviceName = "IPlaceTypeControllerRemote", 
+		optionModelViewClass=PlaceTypeMV.class,
+		entityClass=PlaceType.class))
+	private SimpleObjectProperty<PlaceType> type;
 	
 	@TReaderHtml
 	@TLabel(text="#{label.description}")
 	@TTextAreaField(maxLength=500, wrapText=true, prefRowCount=7)
+	@THBox(	pane=@TPane(children={"description","address", "contacts"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="description", priority=Priority.ALWAYS), 
+			@TPriority(field="address", priority=Priority.NEVER), 
+			@TPriority(field="contacts", priority=Priority.NEVER)}))
 	private SimpleStringProperty description;
 	
 	@TReaderHtml
 	@TLabel(text="#{label.address}")
 	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class, required=true)
 	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
-	@THBox(	pane=@TPane(children={"address", "contacts"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="address", priority=Priority.NEVER), 
-			@TPriority(field="contacts", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<AddressMV> address;
 	
 	@TReaderHtml
@@ -160,6 +175,14 @@ public class PlaceMV extends TEntityModelView<Place> {
 
 	public void setPictures(ITObservableList<ITFileBaseModel> pictures) {
 		this.pictures = pictures;
+	}
+
+	public SimpleObjectProperty<PlaceType> getType() {
+		return type;
+	}
+
+	public void setType(SimpleObjectProperty<PlaceType> type) {
+		this.type = type;
 	}
 
 

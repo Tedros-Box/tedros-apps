@@ -19,9 +19,9 @@ import com.tedros.ejb.base.security.TBeanPolicie;
 import com.tedros.ejb.base.security.TBeanSecurity;
 import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.ejb.base.service.ITEjbService;
-import com.tedros.ejb.controller.IAddressController;
+import com.tedros.ejb.controller.IPlaceTypeController;
 import com.tedros.location.domain.DomainApp;
-import com.tedros.location.model.Address;
+import com.tedros.location.model.PlaceType;
 import com.tedros.server.base.service.TLocService;
 
 /**
@@ -31,20 +31,20 @@ import com.tedros.server.base.service.TLocService;
  *
  */
 @TSecurityInterceptor
-@Stateless(name="IAddressController")
-@TBeanSecurity({@TBeanPolicie(id = DomainApp.PLACE_FORM_ID, 
+@Stateless(name="IPlaceTypeController")
+@TBeanSecurity({@TBeanPolicie(id = DomainApp.PLACE_TYPE_FORM_ID, 
 policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class AddressController extends TSecureEjbController<Address> implements IAddressController, ITSecurity {
+public class PlaceTypeController extends TSecureEjbController<PlaceType> implements IPlaceTypeController, ITSecurity {
 	
 	@EJB
-	private TLocService<Address> serv;
+	private TLocService<PlaceType> serv;
 	
 	@EJB
 	private ITSecurityController securityController;
 	
 	@Override
-	public ITEjbService<Address> getService() {
+	public ITEjbService<PlaceType> getService() {
 		return serv;
 	}
 	

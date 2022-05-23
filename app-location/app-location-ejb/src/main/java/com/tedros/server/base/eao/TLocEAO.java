@@ -13,6 +13,6 @@ import com.tedros.ejb.base.entity.ITEntity;
  *
  */
 @Dependent
-public class TEntityEAO<E extends ITEntity> extends TGenericEAO<E> {
+public class TLocEAO<E extends ITEntity> extends TGenericEAO<E> {
 
 }

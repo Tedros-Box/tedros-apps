@@ -22,7 +22,7 @@ import com.tedros.ejb.base.service.ITEjbService;
 import com.tedros.ejb.controller.IStreetTypeController;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.StreetType;
-import com.tedros.server.base.service.TStatelessService;
+import com.tedros.server.base.service.TLocService;
 
 /**
  * DESCRIÇÃO DA CLASSE
@@ -38,7 +38,7 @@ policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 public class StreetTypeController extends TSecureEjbController<StreetType> implements IStreetTypeController, ITSecurity {
 	
 	@EJB
-	private TStatelessService<StreetType> serv;
+	private TLocService<StreetType> serv;
 	
 	@EJB
 	private ITSecurityController securityController;

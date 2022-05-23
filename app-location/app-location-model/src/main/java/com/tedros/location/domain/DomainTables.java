@@ -11,6 +11,7 @@ public interface DomainTables {
 	final static String place_picture = "place_picture";
 	final static String place_contact = "place_contact";
 	final static String streetType = "street_type";
+	final static String placeType = "place_type";
 }
 
 

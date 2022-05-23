@@ -36,6 +36,10 @@ public class Place extends TEntity {
 	@Column(length=60, nullable=false)
 	private String title;
 	
+	@ManyToOne
+	@JoinColumn(name="place_id", nullable=false)
+	private PlaceType type;
+	
 	@Column(length=500, nullable=true)
 	private String description;
 	
@@ -104,5 +108,13 @@ public class Place extends TEntity {
 	@Override
 	public String toString() {
 		return title!=null ? title : "";
+	}
+
+	public PlaceType getType() {
+		return type;
+	}
+
+	public void setType(PlaceType type) {
+		this.type = type;
 	}
 }
