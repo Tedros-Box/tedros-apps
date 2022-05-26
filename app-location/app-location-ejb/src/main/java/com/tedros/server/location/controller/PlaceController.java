@@ -22,7 +22,7 @@ import com.tedros.ejb.base.service.ITEjbService;
 import com.tedros.ejb.controller.IPlaceController;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.Place;
-import com.tedros.server.base.service.TLocService;
+import com.tedros.server.location.service.PlaceService;
 
 /**
  * DESCRIÇÃO DA CLASSE
@@ -38,7 +38,7 @@ policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 public class PlaceController extends TSecureEjbController<Place> implements IPlaceController, ITSecurity {
 	
 	@EJB
-	private TLocService<Place> serv;
+	private PlaceService serv;
 	
 	@EJB
 	private ITSecurityController securityController;

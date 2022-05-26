@@ -6,7 +6,7 @@ package com.tedros.location.module.place.model;
 import java.util.Properties;
 
 import com.tedros.ejb.base.model.ITModel;
-import com.tedros.location.module.address.util.LocationUtils;
+import com.tedros.location.resource.AppResource;
 
 /**
  * @author Davis Gordon
@@ -30,7 +30,7 @@ public class MapSettingModel implements ITModel {
 	 * 
 	 */
 	public MapSettingModel() {
-		Properties p = LocationUtils.getSettings();
+		Properties p = AppResource.getSettings();
 		this.mapType = p.getProperty(TYPE);
 		this.mapquestKey = p.getProperty(MAPQUEST_KEY);
 	}

@@ -80,7 +80,7 @@ implements ITControlBuilder<com.tedros.fxapi.control.TComboBoxField, Property<Ob
 						if(n instanceof AdminArea)
 							filter(tAnnotation, control, countryIso2Code, countryCb!=null?(Country)countryCb.getSelectionModel().getSelectedItem():null, (AdminArea) n);
 						else
-							LocationUtils.addEmptyItem(control.getItems());
+							FilterHelper.addEmptyItem(control.getItems());
 					});
 					AdminArea n = admCb!=null ? (AdminArea) admCb.getSelectionModel().getSelectedItem() : null;
 					if(n!=null)
@@ -108,6 +108,6 @@ implements ITControlBuilder<com.tedros.fxapi.control.TComboBoxField, Property<Ob
 			c = new Country();
 			c.setIso2Code(countryIso2Code);
 		}
-		LocationUtils.filterCity(ann, c, n, control.getItems());
+		FilterHelper.filterCity(ann, c, n, control.getItems());
 	}
 }
