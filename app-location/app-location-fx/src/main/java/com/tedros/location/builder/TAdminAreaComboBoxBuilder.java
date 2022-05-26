@@ -72,17 +72,17 @@ implements ITControlBuilder<com.tedros.fxapi.control.TComboBoxField, Property<Ob
 						control.getSelectionModel().clearSelection();
 						control.getItems().clear();
 						if(n instanceof Country) 
-							LocationUtils.filterAdminArea(tAnnotation, (Country) n, control.getItems());
+							FilterHelper.filterAdminArea(tAnnotation, (Country) n, control.getItems());
 						else
-							LocationUtils.addEmptyItem(control.getItems());
+							FilterHelper.addEmptyItem(control.getItems());
 					});
 					Country c = (Country) cb.getSelectionModel().getSelectedItem();
 					if(c!=null)
-						LocationUtils.filterAdminArea(null, c, control.getItems());
+						FilterHelper.filterAdminArea(null, c, control.getItems());
 				}else if (!"".equals(countryIso2Code)) {
 					Country c = new Country();
 					c.setIso2Code(countryIso2Code);
-					LocationUtils.filterAdminArea(null, c, control.getItems());
+					FilterHelper.filterAdminArea(null, c, control.getItems());
 				}
 			}
 		});

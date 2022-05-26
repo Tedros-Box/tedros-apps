@@ -14,9 +14,9 @@ import com.tedros.fxapi.modal.TMessageType;
 import com.tedros.fxapi.presenter.behavior.TActionType;
 import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
 import com.tedros.fxapi.presenter.entity.behavior.TSaveViewBehavior;
-import com.tedros.location.module.address.util.LocationUtils;
 import com.tedros.location.module.place.model.MapSettingMV;
 import com.tedros.location.module.place.model.MapSettingModel;
+import com.tedros.location.resource.AppResource;
 
 /**
  * @author Davis Gordon
@@ -51,7 +51,7 @@ public class MapSettingSaveAction extends TPresenterAction {
 		Properties p = new Properties();
 		p.setProperty(MapSettingModel.TYPE, type);
 		p.setProperty(MapSettingModel.MAPQUEST_KEY, key);
-		LocationUtils.saveSettings(p);
+		AppResource.saveSettings(p);
 		
 		bv.addMessage(new TMessage(TMessageType.INFO, TLanguage.getInstance()
 				.getFormatedString("#{tedros.fxapi.message.save}", "Map Settings")));

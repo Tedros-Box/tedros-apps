@@ -7,11 +7,11 @@ import com.tedros.core.annotation.TResourceBundle;
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
 import com.tedros.location.domain.DomainApp;
-import com.tedros.location.module.address.util.LocationUtils;
 import com.tedros.location.module.adminArea.AdminAreaModule;
 import com.tedros.location.module.city.CityModule;
 import com.tedros.location.module.country.CountryModule;
 import com.tedros.location.module.place.PlaceModule;
+import com.tedros.location.resource.AppResource;
 
 /**
  * The app start class.
@@ -36,7 +36,7 @@ public class AppStart implements ITApplication {
 
 	@Override
 	public void start() {
-		LocationUtils.createResource();
+		AppResource.createResource();
 	}
 	
 	

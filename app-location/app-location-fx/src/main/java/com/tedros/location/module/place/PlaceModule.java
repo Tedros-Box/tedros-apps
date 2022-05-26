@@ -15,6 +15,7 @@ import com.tedros.location.module.address.model.StreetTypeMV;
 import com.tedros.location.module.place.model.MapSettingMV;
 import com.tedros.location.module.place.model.PlaceMV;
 import com.tedros.location.module.place.model.PlaceTypeMV;
+import com.tedros.location.module.report.model.PlaceReportMV;
 
 /**
  * @author Davis Gordon
@@ -34,7 +35,8 @@ public class PlaceModule extends TModule {
 				new TViewItem(TDynaGroupView.class, PlaceMV.class, "#{view.place}"),
 				new TViewItem(TDynaGroupView.class, PlaceTypeMV.class, "#{view.place.type}"), 
 				new TViewItem(TDynaGroupView.class, StreetTypeMV.class, "#{view.street.type}"), 
-				new TViewItem(TDynaGroupView.class, MapSettingMV.class, "#{view.map.setting}")
+				new TViewItem(TDynaGroupView.class, MapSettingMV.class, "#{view.map.setting}"), 
+				new TViewItem(TDynaGroupView.class, PlaceReportMV.class, "#{view.repo.place}")
 				));
 
 	}

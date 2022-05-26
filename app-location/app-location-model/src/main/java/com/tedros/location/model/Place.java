@@ -64,6 +64,17 @@ public class Place extends TEntity {
 	uniqueConstraints=@UniqueConstraint(name="placePictureUK", 
 	columnNames = { "place_id","file_id"}))
 	public Set<TFileEntity> pictures = new HashSet<>();
+	
+	public String getAllContacts() {
+		StringBuilder sb = new StringBuilder("");
+		if(contacts!=null)
+			contacts.forEach(e->{
+				if(!"".equals(sb.toString()))
+					sb.append(", ");
+				sb.append(e.getValue());
+			});
+		return sb.toString();
+	}
 
 	public String getTitle() {
 		return title;
