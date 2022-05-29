@@ -16,7 +16,7 @@ import javax.ejb.TransactionAttributeType;
 import com.tedros.ejb.base.controller.ITSecurityController;
 import com.tedros.ejb.base.controller.TSecureEjbController;
 import com.tedros.ejb.base.result.TResult;
-import com.tedros.ejb.base.result.TResult.EnumResult;
+import com.tedros.ejb.base.result.TResult.TState;
 import com.tedros.ejb.base.security.ITSecurity;
 import com.tedros.ejb.base.security.TAccessPolicie;
 import com.tedros.ejb.base.security.TAccessToken;
@@ -63,7 +63,7 @@ public class CityController extends TSecureEjbController<City> implements ICityC
 	@Override
 	public TResult<List<City>> filter(TAccessToken token, Country country, AdminArea adminArea) {
 		try {
-			return new TResult<>(EnumResult.SUCESS, serv.filter(country, adminArea));
+			return new TResult<>(TState.SUCCESS, serv.filter(country, adminArea));
 		} catch (Exception e) {
 			return super.processException(token, null, e);
 		}
