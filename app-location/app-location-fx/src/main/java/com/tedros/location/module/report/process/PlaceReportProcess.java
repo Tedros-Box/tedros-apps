@@ -17,6 +17,7 @@ import com.tedros.fxapi.exception.TProcessException;
 import com.tedros.fxapi.process.TReportProcess;
 import com.tedros.location.report.model.PlaceReportModel;
 import com.tedros.location.resource.AppResource;
+import com.tedros.location.start.TConstant;
 import com.tedros.settings.util.TSettingsUtil;
 import com.tedros.util.TedrosFolder;
 
@@ -34,7 +35,7 @@ public class PlaceReportProcess extends TReportProcess<PlaceReportModel> {
 			e.printStackTrace();
 			o = null;
 		}
-		TLanguage l = TLanguage.getInstance();
+		TLanguage l = TLanguage.getInstance(TConstant.UUI);
 		InputStream logoIs = null;
 		if(o!=null && o.getLogo()!=null && o.getLogo().getByteEntity()!=null)
 			logoIs = new ByteArrayInputStream(o.getLogo().getByteEntity().getBytes());

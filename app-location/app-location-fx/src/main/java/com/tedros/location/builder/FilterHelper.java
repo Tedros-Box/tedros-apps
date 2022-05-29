@@ -16,7 +16,7 @@ import com.tedros.core.TLanguage;
 import com.tedros.core.context.TedrosContext;
 import com.tedros.core.service.remote.ServiceLocator;
 import com.tedros.ejb.base.result.TResult;
-import com.tedros.ejb.base.result.TResult.EnumResult;
+import com.tedros.ejb.base.result.TResult.TState;
 import com.tedros.ejb.controller.IAdminAreaController;
 import com.tedros.ejb.controller.ICityController;
 import com.tedros.fxapi.control.TItem;
@@ -40,7 +40,7 @@ class FilterHelper {
 			try { 
 				serv = ServiceLocator.getInstance().lookup(ICityController.JNDI_NAME);
 				TResult<List<City>> r = serv.filter(TedrosContext.getLoggedUser().getAccessToken(), country, adminArea);
-				if(r.getResult().equals(EnumResult.SUCESS)) {
+				if(r.getState().equals(TState.SUCCESS)) {
 					addFirstItem(ann,items);
 					List<City> lst = r.getValue();
 					items.addAll(lst);
@@ -59,7 +59,7 @@ class FilterHelper {
 			try { 
 				serv = ServiceLocator.getInstance().lookup(IAdminAreaController.JNDI_NAME);
 				TResult<List<AdminArea>> r = serv.filter(TedrosContext.getLoggedUser().getAccessToken(), country);
-				if(r.getResult().equals(EnumResult.SUCESS)) {
+				if(r.getState().equals(TState.SUCCESS)) {
 					addFirstItem(ann,items);
 					List<AdminArea> lst = r.getValue();
 					items.addAll(lst);

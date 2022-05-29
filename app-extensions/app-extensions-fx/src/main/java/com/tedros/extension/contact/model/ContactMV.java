@@ -3,9 +3,7 @@
  */
 package com.tedros.extension.contact.model;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.extension.domain.DomainApp;
+import com.tedros.extension.ejb.controller.IContactController;
 import com.tedros.extension.model.Contact;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
@@ -29,11 +27,7 @@ import javafx.scene.layout.Priority;
  *
  */
 @TEditModalPresenter()
-@TEjbService(model = Contact.class, serviceName = "IContactControllerRemote")
-@TSecurity(	id=DomainApp.CONTACT_FORM_ID, 
-appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.place}",
-allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
-				TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
+@TEjbService(model = Contact.class, serviceName = IContactController.JNDI_NAME)
 public class ContactMV extends TEntityModelView<Contact> {
 
 	private SimpleLongProperty id;

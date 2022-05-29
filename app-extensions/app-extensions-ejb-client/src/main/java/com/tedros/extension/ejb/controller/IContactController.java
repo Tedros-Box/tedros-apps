@@ -8,4 +8,5 @@ import com.tedros.extension.model.Contact;
 @Remote
 public interface IContactController extends ITSecureEjbController<Contact>{
 	
+	static final String JNDI_NAME = "IContactControllerRemote";
 }
