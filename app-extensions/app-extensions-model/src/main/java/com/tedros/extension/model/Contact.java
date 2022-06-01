@@ -5,6 +5,8 @@ package com.tedros.extension.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import com.tedros.ejb.base.entity.TEntity;
@@ -21,22 +23,18 @@ public class Contact extends TEntity {
 	
 	private static final long serialVersionUID = -5856982120333629714L;
 
-	@Column(length=60, nullable = false)
-	private String type;
+	@Column(length=60)
+	private String name;
+
+	@Column(length=10, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private ContactType type;
 	
 	@Column(length=120, nullable = false)
 	private String value;
 	
 	@Column(length=250, nullable = true)
 	private String observation;
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public String getValue() {
 		return value;
@@ -94,6 +92,22 @@ public class Contact extends TEntity {
 	@Override
 	public String toString() {
 		return String.format("[%s] %s", type, value);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public ContactType getType() {
+		return type;
+	}
+
+	public void setType(ContactType type) {
+		this.type = type;
 	}
 	
 

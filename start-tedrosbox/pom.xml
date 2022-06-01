@@ -15,17 +15,31 @@
 	 </dependency>
 	 
 	 <dependency>
-	  		<groupId>com.tedros</groupId>
-	  		<artifactId>app-location-fx</artifactId>
-	  		<version>1.0</version>
-	  		<scope>compile</scope>
-	  		<exclusions>
-	  			<exclusion>
-	  				<groupId>org.eclipse.persistence</groupId>
-	  				<artifactId>eclipselink</artifactId>
-	  			</exclusion>
-	  		</exclusions>
-	  	</dependency>
+  		<groupId>com.tedros</groupId>
+  		<artifactId>app-location-fx</artifactId>
+  		<version>1.0</version>
+  		<scope>compile</scope>
+  		<exclusions>
+  			<exclusion>
+  				<groupId>org.eclipse.persistence</groupId>
+  				<artifactId>eclipselink</artifactId>
+  			</exclusion>
+  		</exclusions>
+  	</dependency>
+  	
+  	
+	 <dependency>
+  		<groupId>com.tedros</groupId>
+  		<artifactId>app-docs-fx</artifactId>
+  		<version>1.0</version>
+  		<scope>compile</scope>
+  		<exclusions>
+  			<exclusion>
+  				<groupId>org.eclipse.persistence</groupId>
+  				<artifactId>eclipselink</artifactId>
+  			</exclusion>
+  		</exclusions>
+  	</dependency>
 	 
   </dependencies>
   
