@@ -13,6 +13,7 @@
 		<class>com.tedros.docs.model.DocumentEvent</class>
 		<class>com.tedros.docs.model.DocumentState</class>
 		<class>com.tedros.docs.model.DocumentType</class>
+		<class>com.tedros.extension.model.Contact</class>
 		
 		<properties>
 		

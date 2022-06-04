@@ -4,6 +4,7 @@
 package com.tedros.docs.server.base.bo;
 
 import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 
 import com.tedros.ejb.base.bo.TGenericBO;
@@ -18,7 +19,7 @@ import com.tedros.docs.server.base.eao.TDocsEAO;
 @Dependent
 public class TDocsBO<E extends ITEntity> extends TGenericBO<E> {
 
-	@Inject
+	@Inject @Any
 	private TDocsEAO<E> eao;
 	
 	@Override
