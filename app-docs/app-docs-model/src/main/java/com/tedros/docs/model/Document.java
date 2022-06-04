@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -33,7 +34,7 @@ public class Document extends TEntity {
 	
 	private static final long serialVersionUID = -2382651197866734106L;
 
-	@Column(length=10, nullable = false)
+	@Column(length=10)
 	private String code;
 	
 	@Column(length=60, nullable = false)
@@ -47,16 +48,16 @@ public class Document extends TEntity {
 	@JoinColumn(name="docstate_id")
 	private DocumentState state;
 
-	@Column(length=60, nullable = true)
+	@Column(length=600)
 	private String summary;
 	
-	@Column(length=120, nullable = true)
+	@Column(length=400)
 	private String observation;
 	
-	@Column(length=15, nullable = true)
+	@Column()
 	private String content;
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="file_id")
 	private TFileEntity file;
 	

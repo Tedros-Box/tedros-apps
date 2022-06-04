@@ -3,6 +3,8 @@
  */
 package com.tedros.docs.module.model;
 
+import java.util.Date;
+
 import com.tedros.common.model.TFileEntity;
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
@@ -26,6 +28,8 @@ import com.tedros.fxapi.annotation.control.THTMLEditor;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
 import com.tedros.fxapi.annotation.control.TOptionsList;
+import com.tedros.fxapi.annotation.control.TShowField;
+import com.tedros.fxapi.annotation.control.TShowField.TField;
 import com.tedros.fxapi.annotation.control.TTab;
 import com.tedros.fxapi.annotation.control.TTabPane;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
@@ -46,24 +50,19 @@ import com.tedros.fxapi.annotation.process.TEjbService;
 import com.tedros.fxapi.annotation.reader.TDetailReaderHtml;
 import com.tedros.fxapi.annotation.reader.TFormReaderHtml;
 import com.tedros.fxapi.annotation.reader.TReaderHtml;
-import com.tedros.fxapi.annotation.reader.TTextReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.text.TText;
+import com.tedros.fxapi.annotation.scene.control.TControl;
 import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.control.TText.TTextStyle;
 import com.tedros.fxapi.domain.TFileExtension;
 import com.tedros.fxapi.domain.TFileModelType;
-import com.tedros.fxapi.domain.THtmlConstant;
-import com.tedros.fxapi.domain.TStyleParameter;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
 import com.tedros.fxapi.property.TSimpleFileProperty;
+import com.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
-import javafx.scene.text.TextAlignment;
 
 /**
  * @author Davis Gordon
@@ -79,33 +78,23 @@ import javafx.scene.text.TextAlignment;
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class DocumentMV extends TEntityModelView<Document> {
-
-	
-	@TTextReaderHtml(text="#{label.docs}", 
-			htmlTemplateForControlValue="<h2 id='"+THtmlConstant.ID+"' name='"+THtmlConstant.NAME+"' style='"+THtmlConstant.STYLE+"'>"+THtmlConstant.CONTENT+"</h2>",
-			cssForControlValue="width:100%; padding:8px; background-color: "+TStyleParameter.PANEL_BACKGROUND_COLOR+";",
-			cssForHtmlBox="", cssForContentValue="color:"+TStyleParameter.PANEL_TEXT_COLOR+";")
-	@TFieldBox(alignment=Pos.CENTER_LEFT, node=@TNode(id="t-fieldbox-title", parse = true))
-	@TText(text="#{header.docs}", textAlignment=TextAlignment.LEFT, 
-			textStyle = TTextStyle.LARGE)
-	private SimpleStringProperty header;
 	
 	@TTabPane(tabs = { 
-		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"text", "file"})), text = "#{label.main.data}"), 
+		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"text", "insertDate"})), text = "#{label.main.data}"), 
 		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"content"})), text = "#{label.content}"), 
 		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"events"})), text = "#{label.events}")
 	})
 	private SimpleLongProperty id;
 	
 	
-	@THBox(	pane=@TPane(children={"code", "summary"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"code", "file"}), spacing=10, fillHeight=true,
 			hgrow=@THGrow(priority={@TPriority(field="code", priority=Priority.SOMETIMES), 
-					@TPriority(field="summary", priority=Priority.ALWAYS)}))
+					@TPriority(field="file", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty text;
 	
 	@TReaderHtml
 	@TLabel(text="#{label.ref.code}")
-	@TTextField(maxLength=10, required = true, node=@TNode(requestFocus=true, parse = true))
+	@TTextField(maxLength=10,  node=@TNode(requestFocus=true, parse = true))
 	@TVBox(	pane=@TPane(children={"code","title","type","state", "contacts"}), spacing=10, fillWidth=true,
 	vgrow=@TVGrow(priority={@TPriority(field="title", priority=Priority.ALWAYS), 
 			@TPriority(field="code", priority=Priority.ALWAYS),
@@ -116,7 +105,8 @@ public class DocumentMV extends TEntityModelView<Document> {
 	
 	@TReaderHtml
 	@TLabel(text="#{label.title}")
-	@TTextField(maxLength=60, required = true)
+	@TTextField(maxLength=60, required = true, 
+	node=@TNode(requestFocus=true, parse = true) )
 	private SimpleStringProperty title;
 
 	@TReaderHtml
@@ -137,27 +127,46 @@ public class DocumentMV extends TEntityModelView<Document> {
 	
 	@TReaderHtml
 	@TLabel(text="#{label.contacts}")
-	@TEditEntityModal(modelClass = Contact.class, modelViewClass=ContactMV.class)
+	@TEditEntityModal(height=100, modelClass = Contact.class, modelViewClass=ContactMV.class)
 	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
 	private ITObservableList<ContactMV> contacts;
 
+	@TLabel(text="#{label.file}")
+	@TFileField(propertyValueType=TFileModelType.ENTITY, preLoadFileBytes=true,
+	extensions= {TFileExtension.ALL_FILES}, showFilePath=true)
+	@TVBox(	pane=@TPane(children={"summary","file"}), spacing=10, fillWidth=true,
+	vgrow=@TVGrow(priority={@TPriority(field="summary", priority=Priority.ALWAYS), 
+						@TPriority(field="file", priority=Priority.ALWAYS)}))
+	@TModelViewType(modelClass=TFileEntity.class)
+	private TSimpleFileProperty<TFileEntity> file;
+	
 	@TReaderHtml
 	@TLabel(text="#{label.summary}")
-	@TTextAreaField(maxLength=250)
-	@TVBox(	pane=@TPane(children={"summary","observation"}), spacing=10, fillWidth=true,
-	vgrow=@TVGrow(priority={@TPriority(field="summary", priority=Priority.ALWAYS), 
+	@TTextAreaField(maxLength=600, wrapText=true, prefRowCount=8)
+	@THBox(	pane=@TPane(children={"summary","observation"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="summary", priority=Priority.ALWAYS), 
 						@TPriority(field="observation", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty summary;
 
 	@TReaderHtml
 	@TLabel(text="#{label.observation}")
-	@TTextAreaField(maxLength=250)
+	@TTextAreaField(maxLength=400, wrapText=true, prefRowCount=4)
 	private SimpleStringProperty observation;
 	
-	@TLabel(text="#{label.file}")
-	@TFileField(propertyValueType=TFileModelType.ENTITY, 
-	extensions= {TFileExtension.ALL_FILES}, showFilePath=true)
-	private TSimpleFileProperty<TFileEntity> file;
+
+	@TReaderHtml
+	@TLabel(text="#{label.date.insert}")
+	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
+	@THBox(	pane=@TPane(children={"insertDate","lastUpdate"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="insertDate", priority=Priority.ALWAYS), 
+						@TPriority(field="lastUpdate", priority=Priority.ALWAYS)}))
+	private SimpleObjectProperty<Date> insertDate;
+	
+	@TReaderHtml
+	@TLabel(text="#{label.date.update}")
+	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
+	private SimpleObjectProperty<Date> lastUpdate;
+	
 	
 	@TFieldBox(node=@TNode(id="evdtl", parse = true))
 	@TDetailReaderHtml(label=@TLabel(text="#{label.events}"), entityClass=DocumentEvent.class, modelViewClass=DocumentEventMV.class)
@@ -166,7 +175,7 @@ public class DocumentMV extends TEntityModelView<Document> {
 	private ITObservableList<DocumentEventMV> events;
 	
 	@TReaderHtml
-	@THTMLEditor
+	@THTMLEditor(control=@TControl( maxHeight=500, parse = true))
 	private SimpleStringProperty content;
 	
 	public DocumentMV(Document entity) {
@@ -181,13 +190,6 @@ public class DocumentMV extends TEntityModelView<Document> {
 		this.id = id;
 	}
 
-	public SimpleStringProperty getHeader() {
-		return header;
-	}
-
-	public void setHeader(SimpleStringProperty header) {
-		this.header = header;
-	}
 
 	public SimpleStringProperty getText() {
 		return text;
@@ -280,6 +282,22 @@ public class DocumentMV extends TEntityModelView<Document> {
 	@Override
 	public SimpleStringProperty getDisplayProperty() {
 		return title;
+	}
+
+	public SimpleObjectProperty<Date> getInsertDate() {
+		return insertDate;
+	}
+
+	public void setInsertDate(SimpleObjectProperty<Date> insertDate) {
+		this.insertDate = insertDate;
+	}
+
+	public SimpleObjectProperty<Date> getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(SimpleObjectProperty<Date> lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 
