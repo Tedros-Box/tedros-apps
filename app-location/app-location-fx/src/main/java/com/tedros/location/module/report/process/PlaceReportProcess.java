@@ -12,13 +12,12 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.tedros.core.TLanguage;
-import com.tedros.core.owner.model.TOwner;
 import com.tedros.fxapi.exception.TProcessException;
 import com.tedros.fxapi.process.TReportProcess;
 import com.tedros.location.report.model.PlaceReportModel;
 import com.tedros.location.resource.AppResource;
 import com.tedros.location.start.TConstant;
-import com.tedros.settings.util.TSettingsUtil;
+import com.tedros.settings.util.TOwnerProperties;
 import com.tedros.util.TedrosFolder;
 
 public class PlaceReportProcess extends TReportProcess<PlaceReportModel> {
@@ -28,17 +27,12 @@ public class PlaceReportProcess extends TReportProcess<PlaceReportModel> {
 	}
 	
 	protected HashMap<String, Object> getReportParameters() {
-		TOwner o;
-		try {
-			o = new TSettingsUtil().getOwner();
-		}catch(Throwable e) {
-			e.printStackTrace();
-			o = null;
-		}
+		TOwnerProperties o = null;// new TOwnerProperties();
+		
 		TLanguage l = TLanguage.getInstance(TConstant.UUI);
 		InputStream logoIs = null;
-		if(o!=null && o.getLogo()!=null && o.getLogo().getByteEntity()!=null)
-			logoIs = new ByteArrayInputStream(o.getLogo().getByteEntity().getBytes());
+		if(o!=null && o.getLogotype()!=null && o.getLogotype().getByteEntity()!=null)
+			logoIs = new ByteArrayInputStream(o.getLogotype().getByteEntity().getBytes());
 		else
 			try {
 				logoIs = new FileInputStream(new File(TedrosFolder.IMAGES_FOLDER.getFullPath()+"logo-tedros-medium.png"));

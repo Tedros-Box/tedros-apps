@@ -23,7 +23,7 @@ public class Contact extends TEntity {
 	
 	private static final long serialVersionUID = -5856982120333629714L;
 
-	@Column(length=60)
+	@Column(length=60, nullable=false)
 	private String name;
 
 	@Column(length=10, nullable = false)

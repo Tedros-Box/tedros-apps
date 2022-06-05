@@ -4,7 +4,7 @@
  * TODOS OS DIREITOS RESERVADOS
  * 14/01/2014
  */
-package com.tedros.extension.controller;
+package com.tedros.extension.server.controller;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
