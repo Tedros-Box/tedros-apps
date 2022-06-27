@@ -3,14 +3,14 @@
  */
 package com.tedros.location.report.model;
 
-import com.tedros.ejb.base.model.ITModel;
+import com.tedros.ejb.base.model.ITReportItemModel;
 import com.tedros.location.model.Place;
 
 /**
  * @author Davis Gordon
  *
  */
-public class PlaceItemModel implements ITModel {
+public class PlaceItemModel implements ITReportItemModel<Place> {
 
 	private static final long serialVersionUID = 2413643979622464683L;
 
@@ -26,6 +26,8 @@ public class PlaceItemModel implements ITModel {
 	
 	public String description;
 	
+	private Place item;
+	
 	/**
 	 * 
 	 */
@@ -33,6 +35,7 @@ public class PlaceItemModel implements ITModel {
 	}
 
 	public PlaceItemModel(Place p) {
+		this.item = p;
 		this.title = p.getTitle();
 		this.type = p.getType().getName();
 		this.country = p.getAddress().getCountry().getName();
@@ -87,6 +90,11 @@ public class PlaceItemModel implements ITModel {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public Place getModel() {
+		return item;
 	}
 
 }

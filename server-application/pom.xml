@@ -16,7 +16,12 @@
 	    <artifactId>h2</artifactId>
 	    <version>${h2.version}</version>
 	</dependency>
-	
+
+	<dependency>
+	  		<groupId>com.tedros</groupId>
+	  		<artifactId>tedros-core-ejb</artifactId>
+	  		<version>8-3.0.1</version>
+	  	</dependency>
 	<dependency>
 	    <groupId>com.tedros</groupId>
 	    <artifactId>tedros-core-ejb-ear</artifactId>

@@ -6,7 +6,7 @@ import com.tedros.fxapi.annotation.control.TComboBoxField;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
 import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TRadioButtonField;
+import com.tedros.fxapi.annotation.control.TRadioButton;
 import com.tedros.fxapi.annotation.control.TTableColumn;
 import com.tedros.fxapi.annotation.control.TTableView;
 import com.tedros.fxapi.annotation.control.TTextField;
@@ -30,6 +30,7 @@ import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.scene.control.TControl;
 import com.tedros.fxapi.annotation.scene.layout.TRegion;
 import com.tedros.fxapi.collections.ITObservableList;
+import com.tedros.fxapi.domain.TLabelKey;
 import com.tedros.fxapi.domain.TLayoutType;
 import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
 import com.tedros.fxapi.presenter.model.TModelView;
@@ -48,6 +49,7 @@ import com.tedros.location.module.address.model.StreetTypeMV;
 import com.tedros.location.module.place.model.PlaceTypeMV;
 import com.tedros.location.module.report.action.SearchAction;
 import com.tedros.location.module.report.process.PlaceReportProcess;
+import com.tedros.location.module.report.table.PlaceRowFactoryBuilder;
 import com.tedros.location.report.model.PlaceItemModel;
 import com.tedros.location.report.model.PlaceReportModel;
 
@@ -141,23 +143,24 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 		region=@TRegion(maxWidth=600, parse = true),
 		legend = "#{label.result.order}")
 	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButtonField(text="#{label.title}", userData="e.title"), 
-					@TRadioButtonField(text="#{label.type}", userData="t.name"), 
-					@TRadioButtonField(text="#{label.country}", userData="c.name"), 
-					@TRadioButtonField(text="#{label.admin.area}", userData="aa.name"), 
-					@TRadioButtonField(text="#{label.city}", userData="ct.name"), 
-					@TRadioButtonField(text="#{label.code}", userData="a.code")
+	radioButtons = {@TRadioButton(text="#{label.title}", userData="e.title"), 
+					@TRadioButton(text="#{label.type}", userData="t.name"), 
+					@TRadioButton(text="#{label.country}", userData="c.name"), 
+					@TRadioButton(text="#{label.admin.area}", userData="aa.name"), 
+					@TRadioButton(text="#{label.city}", userData="ct.name"), 
+					@TRadioButton(text="#{label.code}", userData="a.code")
 	})
 	private SimpleStringProperty orderBy;
 	
 	@TLabel(text="#{label.order.type}:")
 	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButtonField(text="#{label.order.asc}", userData="asc"), 
-					@TRadioButtonField(text="#{label.order.desc}", userData="desc")
+	radioButtons = {@TRadioButton(text="#{label.order.asc}", userData="asc"), 
+					@TRadioButton(text="#{label.order.desc}", userData="desc")
 	})
 	private SimpleStringProperty orderType;
 	
-	@TTableView(editable=true, 
+	@TTableView(editable=true, rowFactory=PlaceRowFactoryBuilder.class,
+			control=@TControl(tooltip=TLabelKey.TABLE_MENU_TOOLTIP, parse = true),
 			columns = { @TTableColumn(cellValue="title", text = "#{label.title}", prefWidth=20, resizable=true), 
 					@TTableColumn(cellValue="type", text = "#{label.type}", resizable=true), 
 						@TTableColumn(cellValue="country", text = "#{label.country}", resizable=true), 

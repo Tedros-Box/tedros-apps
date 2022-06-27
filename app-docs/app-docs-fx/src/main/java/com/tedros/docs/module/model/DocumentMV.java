@@ -16,6 +16,7 @@ import com.tedros.docs.model.Document;
 import com.tedros.docs.model.DocumentEvent;
 import com.tedros.docs.model.DocumentState;
 import com.tedros.docs.model.DocumentType;
+import com.tedros.docs.module.builder.TNotifyBuilder;
 import com.tedros.extension.contact.model.ContactMV;
 import com.tedros.extension.model.Contact;
 import com.tedros.fxapi.annotation.control.TComboBoxField;
@@ -47,16 +48,16 @@ import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.reader.TDetailReaderHtml;
-import com.tedros.fxapi.annotation.reader.TFormReaderHtml;
-import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.scene.control.TControl;
+import com.tedros.fxapi.annotation.view.TOption;
+import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.collections.ITObservableList;
 import com.tedros.fxapi.domain.TFileExtension;
 import com.tedros.fxapi.domain.TFileModelType;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
 import com.tedros.fxapi.property.TSimpleFileProperty;
+import com.tedros.tools.annotation.TNotifyLink;
 import com.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleLongProperty;
@@ -68,16 +69,23 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TFormReaderHtml
 @TForm(name = "#{form.doc}", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IDocumentController.JNDI_NAME, model=Document.class)
-@TListViewPresenter(presenter=@TPresenter(decorator = @TDecorator(viewTitle="#{view.docs}"),
+@TListViewPresenter(
+		paginator=@TPaginator(entityClass = Document.class, serviceName = IDocumentController.JNDI_NAME,
+		show=true, showSearchField=true, searchFieldName="title", 
+		orderBy = {	@TOption(text = "#{label.ref.code}", value = "code"),
+					@TOption(text = "#{label.title}", value = "title")}),
+		presenter=@TPresenter(decorator = @TDecorator(viewTitle="#{view.docs}",
+		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.DOCUMENT_FORM_ID, 
 	appName = "#{app.docs}", moduleName = "#{module.docs}", viewName = "#{view.docs}",
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class DocumentMV extends TEntityModelView<Document> {
+	
+	private SimpleStringProperty displayProperty = new SimpleStringProperty();
 	
 	@TTabPane(tabs = { 
 		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"text", "insertDate"})), text = "#{label.main.data}"), 
@@ -92,7 +100,6 @@ public class DocumentMV extends TEntityModelView<Document> {
 					@TPriority(field="file", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty text;
 	
-	@TReaderHtml
 	@TLabel(text="#{label.ref.code}")
 	@TTextField(maxLength=10,  node=@TNode(requestFocus=true, parse = true))
 	@TVBox(	pane=@TPane(children={"code","title","type","state", "contacts"}), spacing=10, fillWidth=true,
@@ -103,13 +110,11 @@ public class DocumentMV extends TEntityModelView<Document> {
 			@TPriority(field="contacts", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty code;
 	
-	@TReaderHtml
 	@TLabel(text="#{label.title}")
 	@TTextField(maxLength=60, required = true, 
 	node=@TNode(requestFocus=true, parse = true) )
 	private SimpleStringProperty title;
 
-	@TReaderHtml
 	@TLabel(text="#{label.type}")
 	@TComboBoxField(firstItemTex="#{label.select}",
 	optionsList=@TOptionsList(serviceName = IDocumentTypeController.JNDI_NAME, 
@@ -117,7 +122,6 @@ public class DocumentMV extends TEntityModelView<Document> {
 	entityClass=DocumentType.class))
 	private SimpleObjectProperty<DocumentType> type;
 	
-	@TReaderHtml
 	@TLabel(text="#{label.state}")
 	@TComboBoxField(firstItemTex="#{label.select}",
 	optionsList=@TOptionsList(serviceName = IDocumentStateController.JNDI_NAME, 
@@ -125,7 +129,6 @@ public class DocumentMV extends TEntityModelView<Document> {
 	entityClass=DocumentState.class))
 	private SimpleObjectProperty<DocumentState> state;
 	
-	@TReaderHtml
 	@TLabel(text="#{label.contacts}")
 	@TEditEntityModal(height=100, modelClass = Contact.class, modelViewClass=ContactMV.class)
 	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
@@ -134,13 +137,13 @@ public class DocumentMV extends TEntityModelView<Document> {
 	@TLabel(text="#{label.file}")
 	@TFileField(propertyValueType=TFileModelType.ENTITY, preLoadFileBytes=true,
 	extensions= {TFileExtension.ALL_FILES}, showFilePath=true)
-	@TVBox(	pane=@TPane(children={"summary","file"}), spacing=10, fillWidth=true,
+	@TVBox(	pane=@TPane(children={"summary","file", "notification"}), spacing=10, fillWidth=true,
 	vgrow=@TVGrow(priority={@TPriority(field="summary", priority=Priority.ALWAYS), 
-						@TPriority(field="file", priority=Priority.ALWAYS)}))
+						@TPriority(field="file", priority=Priority.ALWAYS), 
+						@TPriority(field="notification", priority=Priority.ALWAYS)}))
 	@TModelViewType(modelClass=TFileEntity.class)
 	private TSimpleFileProperty<TFileEntity> file;
 	
-	@TReaderHtml
 	@TLabel(text="#{label.summary}")
 	@TTextAreaField(maxLength=600, wrapText=true, prefRowCount=8)
 	@THBox(	pane=@TPane(children={"summary","observation"}), spacing=10, fillHeight=true,
@@ -148,13 +151,10 @@ public class DocumentMV extends TEntityModelView<Document> {
 						@TPriority(field="observation", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty summary;
 
-	@TReaderHtml
 	@TLabel(text="#{label.observation}")
 	@TTextAreaField(maxLength=400, wrapText=true, prefRowCount=4)
 	private SimpleStringProperty observation;
 	
-
-	@TReaderHtml
 	@TLabel(text="#{label.date.insert}")
 	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
 	@THBox(	pane=@TPane(children={"insertDate","lastUpdate"}), spacing=10, fillHeight=true,
@@ -162,24 +162,30 @@ public class DocumentMV extends TEntityModelView<Document> {
 						@TPriority(field="lastUpdate", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<Date> insertDate;
 	
-	@TReaderHtml
 	@TLabel(text="#{label.date.update}")
 	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
 	private SimpleObjectProperty<Date> lastUpdate;
 	
+	@TNotifyLink(entityBuilder = TNotifyBuilder.class)
+	private SimpleStringProperty notification;
 	
 	@TFieldBox(node=@TNode(id="evdtl", parse = true))
-	@TDetailReaderHtml(label=@TLabel(text="#{label.events}"), entityClass=DocumentEvent.class, modelViewClass=DocumentEventMV.class)
 	@TDetailListField(entityModelViewClass = DocumentEventMV.class, entityClass = DocumentEvent.class)
 	@TModelViewType(modelClass=DocumentEvent.class, modelViewClass=DocumentEventMV.class)
 	private ITObservableList<DocumentEventMV> events;
 	
-	@TReaderHtml
 	@THTMLEditor(control=@TControl( maxHeight=500, parse = true))
 	private SimpleStringProperty content;
 	
 	public DocumentMV(Document entity) {
 		super(entity);
+		super.formatFieldsToDisplay("%s %s", code, title);
+	}
+	
+	@Override
+	public void reload(Document model) {
+		super.reload(model);
+		super.formatFieldsToDisplay("%s %s", code, title);
 	}
 
 	public SimpleLongProperty getId() {
@@ -281,7 +287,7 @@ public class DocumentMV extends TEntityModelView<Document> {
 
 	@Override
 	public SimpleStringProperty getDisplayProperty() {
-		return title;
+		return displayProperty;
 	}
 
 	public SimpleObjectProperty<Date> getInsertDate() {
@@ -298,6 +304,14 @@ public class DocumentMV extends TEntityModelView<Document> {
 
 	public void setLastUpdate(SimpleObjectProperty<Date> lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	public SimpleStringProperty getNotification() {
+		return notification;
+	}
+
+	public void setNotification(SimpleStringProperty notification) {
+		this.notification = notification;
 	}
 
 

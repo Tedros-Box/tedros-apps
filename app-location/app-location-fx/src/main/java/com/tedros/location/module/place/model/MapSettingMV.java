@@ -6,7 +6,7 @@ package com.tedros.location.module.place.model;
 import com.tedros.fxapi.annotation.control.TFieldBox;
 import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
 import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TRadioButtonField;
+import com.tedros.fxapi.annotation.control.TRadioButton;
 import com.tedros.fxapi.annotation.control.TTextField;
 import com.tedros.fxapi.annotation.presenter.TBehavior;
 import com.tedros.fxapi.annotation.presenter.TDecorator;
@@ -34,7 +34,7 @@ public class MapSettingMV extends TModelView<MapSettingModel> {
 
 	@TLabel(text="#{label.map.type}")
 	@THorizontalRadioGroup(radioButtons = { 
-			@TRadioButtonField(text = "MapQuest", userData = MapSettingModel.TYPE_MAPQUEST)/*,
+			@TRadioButton(text = "MapQuest", userData = MapSettingModel.TYPE_MAPQUEST)/*,
 			@TRadioButtonField(text = "Google Maps", userData = MapSettingModel.TYPE_GOOGLE)*/})
 	private SimpleStringProperty mapType;
 	

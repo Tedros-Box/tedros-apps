@@ -8,21 +8,18 @@ import java.util.Date;
 import com.tedros.docs.model.DocumentEvent;
 import com.tedros.extension.contact.model.ContactMV;
 import com.tedros.extension.model.Contact;
-import com.tedros.fxapi.annotation.control.TCheckBoxField;
 import com.tedros.fxapi.annotation.control.TContent;
 import com.tedros.fxapi.annotation.control.TDatePickerField;
 import com.tedros.fxapi.annotation.control.TEditEntityModal;
 import com.tedros.fxapi.annotation.control.THTMLEditor;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TShowField;
 import com.tedros.fxapi.annotation.control.TTab;
 import com.tedros.fxapi.annotation.control.TTabPane;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
 import com.tedros.fxapi.annotation.control.TTextField;
 import com.tedros.fxapi.annotation.form.TDetailForm;
 import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.TFieldSet;
 import com.tedros.fxapi.annotation.layout.THBox;
 import com.tedros.fxapi.annotation.layout.THGrow;
 import com.tedros.fxapi.annotation.layout.TPane;
@@ -33,12 +30,8 @@ import com.tedros.fxapi.annotation.presenter.TBehavior;
 import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TDetailListViewPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.reader.TFormReaderHtml;
-import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.scene.control.TControl;
-import com.tedros.fxapi.annotation.scene.control.TLabeled;
-import com.tedros.fxapi.annotation.scene.layout.TRegion;
 import com.tedros.fxapi.builder.DateTimeFormatBuilder;
 import com.tedros.fxapi.collections.ITObservableList;
 import com.tedros.fxapi.presenter.entity.behavior.TDetailCrudViewBehavior;
@@ -54,7 +47,6 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TFormReaderHtml
 @TForm(name = "#{form.docs.event}", showBreadcrumBar=true, scroll=false)
 @TDetailListViewPresenter(presenter=@TPresenter(
 behavior = @TBehavior(type = TDetailCrudViewBehavior.class), 
@@ -72,7 +64,6 @@ public class DocumentEventMV extends TEntityModelView<DocumentEvent> {
 								@TPriority(field="description", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty hboxPane;
 	
-	@TReaderHtml
 	@TLabel(text="#{label.name}")
 	@TTextField(maxLength=60, required = true, node=@TNode(requestFocus=true, parse = true))
 	@TVBox(	pane=@TPane(children={"title","dateEvent","contacts"}), spacing=10, fillWidth=true,
@@ -81,38 +72,19 @@ public class DocumentEventMV extends TEntityModelView<DocumentEvent> {
 						@TPriority(field="contacts", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty title;
 
-	@TReaderHtml
 	@TLabel(text="#{label.date}")
 	@TDatePickerField(dateFormat=DateTimeFormatBuilder.class)
 	private SimpleObjectProperty<Date> dateEvent;
 	
-	@TReaderHtml
 	@TLabel(text="#{label.contacts}")
 	@TEditEntityModal(height=60, modelClass = Contact.class, modelViewClass=ContactMV.class)
 	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
 	private ITObservableList<ContactMV> contacts;
 	
-	@TReaderHtml
 	@TLabel(text="#{label.description}")
 	@TTextAreaField(maxLength=250, wrapText=true, prefRowCount=4)
-	@TVBox(	pane=@TPane(children={"description", "warn"}), spacing=10, fillWidth=true,
-	vgrow=@TVGrow(priority={@TPriority(field="warn", priority=Priority.ALWAYS), 
-						@TPriority(field="description", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty description;
 	
-	@TFieldSet(fields = { "warn", "statusWarning" },
-			region=@TRegion(maxWidth=500, parse = true),
-			legend = "#{label.warn.process}")
-	@TCheckBoxField(labeled = @TLabeled(text="#{label.warn}", parse = true))
-	private SimpleStringProperty warn;
-	
-	@TReaderHtml
-	@TLabel(text="#{label.status}")
-	@TShowField
-	private SimpleStringProperty statusWarning;
-	
-	
-	@TReaderHtml
 	@THTMLEditor(control=@TControl( maxHeight=400, parse = true))
 	private SimpleStringProperty content;
 	
@@ -155,22 +127,6 @@ public class DocumentEventMV extends TEntityModelView<DocumentEvent> {
 
 	public void setDateEvent(SimpleObjectProperty<Date> dateEvent) {
 		this.dateEvent = dateEvent;
-	}
-
-	public SimpleStringProperty getWarn() {
-		return warn;
-	}
-
-	public void setWarn(SimpleStringProperty warn) {
-		this.warn = warn;
-	}
-
-	public SimpleStringProperty getStatusWarning() {
-		return statusWarning;
-	}
-
-	public void setStatusWarning(SimpleStringProperty statusWarning) {
-		this.statusWarning = statusWarning;
 	}
 
 	public ITObservableList<ContactMV> getContacts() {
