@@ -3,10 +3,6 @@
  */
 package com.tedros.location.report.model;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import com.tedros.ejb.base.model.TReportModel;
 import com.tedros.location.model.AdminArea;
 import com.tedros.location.model.City;

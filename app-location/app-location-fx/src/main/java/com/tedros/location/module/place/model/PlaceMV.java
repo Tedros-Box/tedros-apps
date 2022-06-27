@@ -60,22 +60,25 @@ import javafx.scene.layout.Priority;
 @TForm(name = "#{form.keep.update}", showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = "IPlaceControllerRemote", model=Place.class)
 @TListViewPresenter(
-	paginator=@TPaginator(entityClass = Place.class, serviceName = "IPlaceControllerRemote",
-			show=true, showSearchField=true, searchFieldName="title", 
-			orderBy = {	@TOption(text = "#{label.title}", value = "title")}),
-	presenter=@TPresenter(decorator = @TDecorator(viewTitle="#{view.place}"),
-	behavior=@TBehavior(saveOnlyChangedModels=false, saveAllModels=false)))
-@TSecurity(	id=DomainApp.PLACE_FORM_ID, 
+	paginator=@TPaginator(entityClass = Place.class, 
+		serviceName = "IPlaceControllerRemote",
+		show=true, showSearchField=true, searchFieldName="title", 
+		orderBy = {	@TOption(text = "#{label.title}", value = "title")}),
+	presenter=@TPresenter(
+		decorator = @TDecorator(viewTitle="#{view.place}", buildModesRadioButton=false),
+		behavior = @TBehavior(saveOnlyChangedModels=false, saveAllModels=false)))
+@TSecurity(id=DomainApp.PLACE_FORM_ID, 
 	appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.place}",
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class PlaceMV extends TEntityModelView<Place> {
 
-	@TTabPane(tabs = { @TTab(text = "#{label.main.data}", 
-			content = @TContent(detailForm=@TDetailForm(fields = {"title", "description"}))),
+	@TTabPane(
+	tabs = { 
+			@TTab(text = "#{label.main.data}", 
+				content = @TContent(detailForm=@TDetailForm(fields = {"title", "description"}))),
 			@TTab(text = "#{label.pictures}", 
-				content = @TContent(detailForm=@TDetailForm(fields = {"pictures"}))) 
-	})
+				content = @TContent(detailForm=@TDetailForm(fields = {"pictures"}))) })
 	private SimpleLongProperty id;
 	
 	@TReaderHtml

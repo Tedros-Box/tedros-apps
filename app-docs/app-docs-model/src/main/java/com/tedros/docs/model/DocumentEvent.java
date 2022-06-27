@@ -48,12 +48,6 @@ public class DocumentEvent extends TEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateEvent;
 	
-	@Column(length=15)
-	private String warn;
-	
-	@Column(length=15)
-	private String statusWarning;
-	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name=DomainTables.document_event_contact, 
 	schema=DomainSchema.schema,
@@ -97,22 +91,6 @@ public class DocumentEvent extends TEntity {
 
 	public void setDateEvent(Date dateEvent) {
 		this.dateEvent = dateEvent;
-	}
-
-	public String getStatusWarning() {
-		return statusWarning;
-	}
-
-	public void setStatusWarning(String statusWarning) {
-		this.statusWarning = statusWarning;
-	}
-
-	public String getWarn() {
-		return warn;
-	}
-
-	public void setWarn(String warn) {
-		this.warn = warn;
 	}
 
 	public List<Contact> getContacts() {

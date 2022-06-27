@@ -73,6 +73,16 @@ public class Document extends TEntity {
 	@OneToMany(mappedBy="document", fetch=FetchType.EAGER)
 	private Set<DocumentEvent> events;
 	
+/*
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinTable(name=DomainTables.document_notify, 
+	schema=DomainSchema.schema,
+	joinColumns=@JoinColumn(name="doc_id"), 
+	inverseJoinColumns=@JoinColumn(name="notify_id"),
+	uniqueConstraints=@UniqueConstraint(name="docNotifyUK", 
+	columnNames = { "doc_id","notify_id"}))
+	public Set<TNotify> notification;*/
+	
 	public Document() {
 	}
 
