@@ -29,7 +29,7 @@ public class DocumentModule extends TModule {
 	 */
 	@Override
 	public void tStart() {
-		super.tShowView(new TGroupView<TGroupPresenter>(this, "#{view.docs}", 
+		super.tShowView(new TGroupView<TGroupPresenter>(this, "#{view.group.docs}", 
 				new TViewItem(TDynaGroupView.class, DocumentMV.class, "#{view.docs}", true), 
 				new TViewItem(TDynaGroupView.class, DocumentTypeMV.class, "#{view.docs.type}"), 
 				new TViewItem(TDynaGroupView.class, DocumentStateMV.class, "#{view.docs.state}")
