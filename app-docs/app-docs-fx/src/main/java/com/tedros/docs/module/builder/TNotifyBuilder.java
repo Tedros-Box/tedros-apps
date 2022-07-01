@@ -5,14 +5,13 @@ package com.tedros.docs.module.builder;
 
 import java.util.Date;
 
-import com.tedros.core.TLanguage;
 import com.tedros.core.context.TModuleContext;
 import com.tedros.core.context.TedrosAppManager;
 import com.tedros.core.notify.model.TNotify;
+import com.tedros.docs.TDocsKey;
 import com.tedros.docs.model.Document;
 import com.tedros.docs.module.DocumentModule;
 import com.tedros.docs.module.model.DocumentMV;
-import com.tedros.docs.start.TConstant;
 import com.tedros.extension.model.ContactType;
 import com.tedros.fxapi.builder.TGenericBuilder;
 
@@ -55,7 +54,8 @@ public class TNotifyBuilder extends TGenericBuilder<TNotify> {
 		TModuleContext ct = TedrosAppManager.getInstance().getModuleContext(DocumentModule.class);
 		
 		n.setIntegratedAppUUID(ct.getModuleDescriptor().getApplicationUUID());
-		n.setIntegratedModulePath(ct.getModuleDescriptor().getSourcePath());
+		n.setIntegratedModulePath(ct.getModuleDescriptor().getPathKeys());
+		n.setIntegratedViewName(TDocsKey.APP_DOCS);
 		n.setIntegratedDate(new Date());
 		n.setIntegratedEntityId(d.getId());
 		n.setIntegratedModelView(mv.getClass().getName());

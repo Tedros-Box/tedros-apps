@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.tedros.core.TLanguage;
 import com.tedros.extension.model.ContactType;
-import com.tedros.extension.start.TConstant;
 import com.tedros.fxapi.builder.TGenericBuilder;
 import com.tedros.fxapi.control.TItem;
 
@@ -24,7 +23,7 @@ public class TypeItemBuiler extends TGenericBuilder<ObservableList> {
 
 	@Override
 	public ObservableList build() {
-		TLanguage lan = TLanguage.getInstance(TConstant.UUI);
+		TLanguage lan = TLanguage.getInstance();
 		List<TItem> l = new ArrayList<>();
 		for(ContactType t : ContactType.values()) {
 			TItem i = new TItem(lan.getString(t.getValue()), t);

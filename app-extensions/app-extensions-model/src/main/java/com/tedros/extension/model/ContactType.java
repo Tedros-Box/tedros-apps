@@ -11,7 +11,7 @@ public enum ContactType {
 
 	EMAIL("Email"), 
 	FAX("Fax"), 
-	PHONE("#{label.phone}"), 
+	PHONE("#{label.telephone}"), 
 	OTHER("#{label.other}");
 	
 	private String value;

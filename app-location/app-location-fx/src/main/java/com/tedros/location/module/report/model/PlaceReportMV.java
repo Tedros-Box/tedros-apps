@@ -2,6 +2,7 @@ package com.tedros.location.module.report.model;
 
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
+import com.tedros.fxapi.TFxKey;
 import com.tedros.fxapi.annotation.control.TComboBoxField;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
@@ -30,7 +31,6 @@ import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.scene.control.TControl;
 import com.tedros.fxapi.annotation.scene.layout.TRegion;
 import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.domain.TLabelKey;
 import com.tedros.fxapi.domain.TLayoutType;
 import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
 import com.tedros.fxapi.presenter.model.TModelView;
@@ -160,7 +160,7 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	private SimpleStringProperty orderType;
 	
 	@TTableView(editable=true, rowFactory=PlaceRowFactoryBuilder.class,
-			control=@TControl(tooltip=TLabelKey.TABLE_MENU_TOOLTIP, parse = true),
+			control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 			columns = { @TTableColumn(cellValue="title", text = "#{label.title}", prefWidth=20, resizable=true), 
 					@TTableColumn(cellValue="type", text = "#{label.type}", resizable=true), 
 						@TTableColumn(cellValue="country", text = "#{label.country}", resizable=true), 

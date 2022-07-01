@@ -6,6 +6,7 @@ package com.tedros.extension.contact.model;
 import com.tedros.extension.ejb.controller.IContactController;
 import com.tedros.extension.model.Contact;
 import com.tedros.extension.model.ContactType;
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TComboBoxField;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
@@ -36,7 +37,7 @@ public class ContactMV extends TEntityModelView<Contact> {
 	private SimpleLongProperty id;
 	
 	@TReaderHtml
-	@TLabel(text="#{label.name}")
+	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=60, required = true, node=@TNode(requestFocus=true, parse = true))
 	@THBox(	pane=@TPane(children={"name", "type", "value"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.ALWAYS), 
@@ -45,17 +46,17 @@ public class ContactMV extends TEntityModelView<Contact> {
 	private SimpleStringProperty name;
 	
 	@TReaderHtml
-	@TLabel(text="#{label.type}")
-	@TComboBoxField(firstItemTex="#{label.select}", items=TypeItemBuiler.class)
+	@TLabel(text=TUsualKey.TYPE)
+	@TComboBoxField(firstItemTex=TUsualKey.SELECT, items=TypeItemBuiler.class)
 	private SimpleObjectProperty<ContactType> type;
 	
 	@TReaderHtml
-	@TLabel(text="#{label.value}")
+	@TLabel(text=TUsualKey.VALUE)
 	@TTextField(maxLength=120, required = true)
 	private SimpleStringProperty value;
 	
 	@TReaderHtml
-	@TLabel(text="#{label.observation}")
+	@TLabel(text=TUsualKey.OBSERVATION)
 	@TTextAreaField(maxLength=250)
 	private SimpleStringProperty observation;
 
