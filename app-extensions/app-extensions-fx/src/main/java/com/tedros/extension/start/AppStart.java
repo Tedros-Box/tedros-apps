@@ -13,7 +13,7 @@ import com.tedros.core.annotation.TResourceBundle;
  */
 @TApplication(name="#{app.extension.name}", universalUniqueIdentifier=TConstant.UUI,
  packageName = "com.tedros.extension")
-@TResourceBundle(resourceName={"AppExtensionsLang"})
+@TResourceBundle(resourceName={"AppExtLang"})
 public class AppStart implements ITApplication {
 
 	/* (non-Javadoc)
@@ -21,7 +21,6 @@ public class AppStart implements ITApplication {
 	 */
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
 
 	}
 
