@@ -5,26 +5,32 @@
 	<!-- PARENT INFO -->
 	<parent>
 		<groupId>com.tedros</groupId>
-  		<artifactId>app-docs</artifactId>
+  		<artifactId>app-person</artifactId>
   		<version>1.0</version>
 	</parent>
 	
 	<!-- MODULE INFO -->
-  	<artifactId>app-docs-model</artifactId>
+  	<artifactId>app-person-model</artifactId>
   	<packaging>jar</packaging>
 
-  	<name>app-docs-model</name>
+  	<name>app-person-model</name>
   	<description>The app entitys</description>
   
   	<!-- DEPENDENCIES -->
   	<dependencies>
-  	
+  		
 	  	<dependency>
 	  		<groupId>com.tedros</groupId>
-	  		<artifactId>app-extensions-model</artifactId>
-	  		<version>${app.ext}</version>
+	  		<artifactId>app-docs-model</artifactId>
+	  		<version>${app.docs}</version>
 	  	</dependency>
-  	
+	  	
+	  	<dependency>
+	  		<groupId>com.tedros</groupId>
+	  		<artifactId>app-location-model</artifactId>
+	  		<version>${app.location}</version>
+	  	</dependency>
+	  	
 	  	<dependency>
 	  		<groupId>com.tedros</groupId>
 	  		<artifactId>tedros-ejb-model-base</artifactId>

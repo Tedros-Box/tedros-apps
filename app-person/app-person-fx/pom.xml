@@ -4,12 +4,12 @@
   	
 	<parent>
 		<groupId>com.tedros</groupId>
-  		<artifactId>app-docs</artifactId>
+  		<artifactId>app-person</artifactId>
   		<version>1.0</version>
 	</parent>	
 	
-  	<artifactId>app-docs-fx</artifactId>
-  	<name>app-docs-fx</name>
+  	<artifactId>app-person-fx</artifactId>
+  	<name>app-person-fx</name>
   	
   	<description>JavaFx App - Front end</description>
   
@@ -22,20 +22,7 @@
 	  	
 	  	<dependency>
 	  		<groupId>com.tedros</groupId>
-	  		<artifactId>tedros-box-app-settings</artifactId>
-	  		<version>8-3.0.1</version>
-	  		<scope>compile</scope>
-	  	</dependency>
-	  	
-	  	<dependency>
-	  		<groupId>com.tedros</groupId>
-	  		<artifactId>app-extensions-fx</artifactId>
-	  		<version>${app.ext}</version>
-	  	</dependency>
-	  	
-	  	<dependency>
-	  		<groupId>com.tedros</groupId>
-	  		<artifactId>app-docs-ejb-client</artifactId>
+	  		<artifactId>app-person-ejb-client</artifactId>
 	  		<version>1.0</version>
 	  	</dependency>
 	  	

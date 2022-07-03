@@ -1,0 +1,41 @@
+/**
+ * 
+ */
+package com.tedros.person.domain;
+
+/**
+ * @author Davis Gordon
+ *
+ */
+public interface DomainApp {
+
+	static final String SEPARATOR = "_";
+	static final String VIEW = "VIEW";
+	static final String MODULE = "MODULE";
+	static final String FORM = "FORM";
+	static final String NATURAL_PERSON = "NATURAL_PERSON";
+	static final String JURIDICAL_PERSON = "JURIDICAL_PERSON";
+	static final String TYPE = "TYPE";
+	static final String STAFF = "STAFF";
+	static final String DOCUMENT_REPORT = "DOCUMENT_REPORT";
+	static final String SEP = SEPARATOR;
+	
+	static final String MNEMONIC = "TPERSON";
+
+	static final String NATURAL_PERSON_FORM_ID = MNEMONIC + SEP + NATURAL_PERSON + SEP + FORM;
+	static final String NATURAL_PERSON_VIEW_ID = MNEMONIC + SEP + NATURAL_PERSON + SEP + VIEW;
+	static final String NATURAL_PERSON_MODULE_ID = MNEMONIC + SEP + NATURAL_PERSON + SEP + MODULE;
+
+	static final String JURIDICAL_PERSON_FORM_ID = MNEMONIC + SEP + JURIDICAL_PERSON + SEP + FORM;
+	static final String JURIDICAL_PERSON_VIEW_ID = MNEMONIC + SEP + JURIDICAL_PERSON + SEP + VIEW;
+	static final String JURIDICAL_PERSON_MODULE_ID = MNEMONIC + SEP + JURIDICAL_PERSON + SEP + MODULE;
+
+	static final String JURIDICAL_TYPE_FORM_ID = MNEMONIC + SEP + JURIDICAL_PERSON + SEP + TYPE + SEP + FORM;
+	static final String JURIDICAL_TYPE_VIEW_ID = MNEMONIC + SEP + JURIDICAL_PERSON + SEP + TYPE + SEP  + VIEW;
+
+	static final String STAFF_TYPE_FORM_ID = MNEMONIC + SEP + STAFF + SEP + TYPE + SEP + FORM;
+	static final String STAFF_TYPE_VIEW_ID = MNEMONIC + SEP + STAFF + SEP + TYPE + SEP  + VIEW;
+
+
+
+}
