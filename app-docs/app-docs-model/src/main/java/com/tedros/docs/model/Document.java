@@ -37,8 +37,11 @@ public class Document extends TEntity {
 	@Column(length=10)
 	private String code;
 	
-	@Column(length=60, nullable = false)
-	private String title;
+	@Column(length=120, nullable = false)
+	private String name;
+	
+	@Column()
+	private String value;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="doctype_id")
@@ -47,11 +50,8 @@ public class Document extends TEntity {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="docstate_id")
 	private DocumentState state;
-
-	@Column(length=600)
-	private String summary;
 	
-	@Column(length=400)
+	@Column()
 	private String observation;
 	
 	@Column()
@@ -94,14 +94,6 @@ public class Document extends TEntity {
 		this.code = code;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public DocumentType getType() {
 		return type;
 	}
@@ -116,14 +108,6 @@ public class Document extends TEntity {
 
 	public void setState(DocumentState state) {
 		this.state = state;
-	}
-
-	public String getSummary() {
-		return summary;
-	}
-
-	public void setSummary(String summary) {
-		this.summary = summary;
 	}
 
 	public String getObservation() {
@@ -160,7 +144,7 @@ public class Document extends TEntity {
 
 	@Override
 	public String toString() {
-		return (title != null ? title : "");
+		return (name != null ? name : "");
 	}
 
 	public Set<Contact> getContacts() {
@@ -169,6 +153,22 @@ public class Document extends TEntity {
 
 	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 }
