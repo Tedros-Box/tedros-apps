@@ -8,7 +8,7 @@ import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
 import com.tedros.person.PersonKeys;
 import com.tedros.person.domain.DomainApp;
-import com.tedros.person.module.juridical.JuridicalPersonModule;
+import com.tedros.person.module.legal.LegalPersonModule;
 import com.tedros.person.module.natural.NaturalPersonModule;
 
 /**
@@ -16,19 +16,23 @@ import com.tedros.person.module.natural.NaturalPersonModule;
  * 
  * @author Davis Gordon
  * */
-@TApplication(name=PersonKeys.APP_PERSON, universalUniqueIdentifier=TConstant.UUI,
+@TApplication(name=PersonKeys.APP_PERSON, 
+universalUniqueIdentifier=TConstant.UUI,
 module = {	
-			@TModule(type=NaturalPersonModule.class,
-					name=PersonKeys.MODULE_NATURAL_PERSON, menu=PersonKeys.MENU_PERSON,
-					description="#{module.rep.desc}"),
-			@TModule(type=JuridicalPersonModule.class,
-					name=PersonKeys.MODULE_LEGAL_PERSON, menu=PersonKeys.MENU_PERSON, 
-					/*icon=ProdutoIconImageView.class, menuIcon=ProdutoMenuIconImageView.class,*/
-					description="#{module.prod.desc}")
+	@TModule(type=NaturalPersonModule.class,
+		name=PersonKeys.MODULE_NATURAL_PERSON, 
+		menu=PersonKeys.MENU_PERSON,
+		description="#{module.rep.desc}"),
+	@TModule(type=LegalPersonModule.class,
+		name=PersonKeys.MODULE_LEGAL_PERSON, 
+		menu=PersonKeys.MENU_PERSON, 
+		/*icon=ProdutoIconImageView.class, menuIcon=ProdutoMenuIconImageView.class,*/
+		description="#{module.prod.desc}")
 
 }, packageName = "com.tedros.person")
-@TResourceBundle(resourceName={"AppLabels"})
-@TSecurity(id=DomainApp.MNEMONIC, appName = "#{myapp.name}", allowedAccesses=TAuthorizationType.APP_ACCESS)
+@TResourceBundle(resourceName={"TPerson"})
+@TSecurity(id=DomainApp.MNEMONIC, appName = PersonKeys.APP_PERSON, 
+allowedAccesses=TAuthorizationType.APP_ACCESS)
 public class AppStart implements ITApplication {
 
 	@Override

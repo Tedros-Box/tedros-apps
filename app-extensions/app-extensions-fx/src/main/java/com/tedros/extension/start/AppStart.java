@@ -13,7 +13,7 @@ import com.tedros.core.annotation.TResourceBundle;
  */
 @TApplication(name="#{app.extension.name}", universalUniqueIdentifier=TConstant.UUI,
  packageName = "com.tedros.extension")
-@TResourceBundle(resourceName={"AppExtLang"})
+@TResourceBundle(resourceName={"TExt"})
 public class AppStart implements ITApplication {
 
 	/* (non-Javadoc)

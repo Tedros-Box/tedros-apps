@@ -16,8 +16,8 @@ import com.tedros.person.domain.DomainTables;
  *
  */
 @Entity
-@Table(name = DomainTables.juridical_type, schema = DomainSchema.schema)
-public class JuridicalType extends TEntity {
+@Table(name = DomainTables.legal_type, schema = DomainSchema.schema)
+public class LegalType extends TEntity {
 
 	private static final long serialVersionUID = -3295912313615959243L;
 

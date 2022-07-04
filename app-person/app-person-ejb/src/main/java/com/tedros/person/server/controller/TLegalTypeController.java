@@ -17,8 +17,8 @@ import com.tedros.ejb.base.security.TBeanSecurity;
 import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.ejb.base.service.ITEjbService;
 import com.tedros.person.domain.DomainApp;
-import com.tedros.person.ejb.controller.IJuridicalTypeController;
-import com.tedros.person.model.JuridicalType;
+import com.tedros.person.ejb.controller.ILegalTypeController;
+import com.tedros.person.model.LegalType;
 import com.tedros.person.server.base.service.TPersonService;
 
 /**
@@ -26,20 +26,20 @@ import com.tedros.person.server.base.service.TPersonService;
  *
  */
 @TSecurityInterceptor
-@Stateless(name="IJuridicalTypeController")
-@TBeanSecurity({@TBeanPolicie(id = DomainApp.JURIDICAL_TYPE_FORM_ID, 
+@Stateless(name="ILegalTypeController")
+@TBeanSecurity({@TBeanPolicie(id = DomainApp.LEGAL_TYPE_FORM_ID, 
 policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class TJuridicalTypeController extends TSecureEjbController<JuridicalType> implements IJuridicalTypeController, ITSecurity  {
+public class TLegalTypeController extends TSecureEjbController<LegalType> implements ILegalTypeController, ITSecurity  {
 
 	@EJB
-	private TPersonService<JuridicalType> serv;
+	private TPersonService<LegalType> serv;
 	
 	@EJB
 	private ITSecurityController securityController;
 	
 	@Override
-	public ITEjbService<JuridicalType> getService() {
+	public ITEjbService<LegalType> getService() {
 		return serv;
 	}
 	

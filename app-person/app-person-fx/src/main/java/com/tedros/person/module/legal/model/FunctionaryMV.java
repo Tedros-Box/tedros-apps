@@ -1,10 +1,10 @@
 /**
  * 
  */
-package com.tedros.person.module.juridical.model;
+package com.tedros.person.module.legal.model;
 
 import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.person.model.JuridicalPerson;
+import com.tedros.person.model.Functionary;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,13 +13,13 @@ import javafx.beans.property.SimpleStringProperty;
  * @author Davis Gordon
  *
  */
-public class JuridicalPersonMV extends TEntityModelView<JuridicalPerson> {
+public class FunctionaryMV extends TEntityModelView<Functionary> {
 
 	private SimpleLongProperty id;
 	
 	private SimpleStringProperty displayProperty;
 	
-	public JuridicalPersonMV(JuridicalPerson entity) {
+	public FunctionaryMV(Functionary entity) {
 		super(entity);
 	}
 
