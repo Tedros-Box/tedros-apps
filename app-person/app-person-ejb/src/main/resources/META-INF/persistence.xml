@@ -11,9 +11,9 @@
 		<class>com.tedros.common.model.TByteEntity</class>
 		<class>com.tedros.person.model.Person</class>
 		<class>com.tedros.person.model.NaturalPerson</class>
-		<class>com.tedros.person.model.JuridicalPerson</class>
+		<class>com.tedros.person.model.LegalPerson</class>
 		<class>com.tedros.person.model.Functionary</class>
-		<class>com.tedros.person.model.JuridicalType</class>
+		<class>com.tedros.person.model.LegalType</class>
 		<class>com.tedros.person.model.PersonAttributes</class>
 		<class>com.tedros.person.model.StaffType</class>
 		

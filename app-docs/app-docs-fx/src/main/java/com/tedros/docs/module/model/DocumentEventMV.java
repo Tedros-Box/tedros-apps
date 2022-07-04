@@ -50,7 +50,8 @@ import javafx.scene.layout.Priority;
 @TForm(name = "#{form.docs.event}", showBreadcrumBar=true, scroll=false)
 @TDetailListViewPresenter(presenter=@TPresenter(
 behavior = @TBehavior(type = TDetailCrudViewBehavior.class), 
-decorator = @TDecorator(type = TDetailCrudViewDecorator.class, buildModesRadioButton=false, viewTitle="#{view.docs.event}")))
+decorator = @TDecorator(type = TDetailCrudViewDecorator.class, 
+buildModesRadioButton=false, viewTitle="#{view.docs.event}")))
 public class DocumentEventMV extends TEntityModelView<DocumentEvent> {
 	
 	@TTabPane(tabs = { 

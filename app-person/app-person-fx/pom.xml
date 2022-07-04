@@ -22,6 +22,18 @@
 	  	
 	  	<dependency>
 	  		<groupId>com.tedros</groupId>
+	  		<artifactId>app-location-fx</artifactId>
+	  		<version>${app.location}</version>
+	  	</dependency>
+	  	
+	  	<dependency>
+	  		<groupId>com.tedros</groupId>
+	  		<artifactId>app-docs-fx</artifactId>
+	  		<version>${app.docs}</version>
+	  	</dependency>
+	  	
+	  	<dependency>
+	  		<groupId>com.tedros</groupId>
 	  		<artifactId>app-person-ejb-client</artifactId>
 	  		<version>1.0</version>
 	  	</dependency>

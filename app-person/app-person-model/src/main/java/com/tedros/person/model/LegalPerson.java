@@ -25,9 +25,9 @@ import com.tedros.person.domain.DomainTables;
  *
  */
 @Entity
-@Table(name = DomainTables.juridical_person, schema = DomainSchema.schema)
-@DiscriminatorValue("J")
-public class JuridicalPerson extends Person {
+@Table(name = DomainTables.legal_person, schema = DomainSchema.schema)
+@DiscriminatorValue("L")
+public class LegalPerson extends Person {
 
 	private static final long serialVersionUID = 2331186566521960594L;
 
@@ -35,8 +35,8 @@ public class JuridicalPerson extends Person {
 	private String otherName;
 	
 	@OneToMany(fetch=FetchType.EAGER)
-	@JoinColumn(name="juridical_type_id")
-	private JuridicalType type;
+	@JoinColumn(name="legal_type_id")
+	private LegalType type;
 	
 	@Column()
 	@Temporal(TemporalType.DATE)
@@ -58,11 +58,11 @@ public class JuridicalPerson extends Person {
 		this.otherName = otherName;
 	}
 
-	public JuridicalType getType() {
+	public LegalType getType() {
 		return type;
 	}
 
-	public void setType(JuridicalType type) {
+	public void setType(LegalType type) {
 		this.type = type;
 	}
 

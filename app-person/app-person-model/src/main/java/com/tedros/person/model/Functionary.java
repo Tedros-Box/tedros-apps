@@ -23,7 +23,7 @@ import com.tedros.person.domain.DomainTables;
  *
  */
 @Entity
-@Table(name = DomainTables.functionary, schema = DomainSchema.schema)
+@Table(name = DomainTables.employee, schema = DomainSchema.schema)
 @DiscriminatorValue("F")
 public class Functionary extends NaturalPerson {
 
@@ -43,7 +43,7 @@ public class Functionary extends NaturalPerson {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_employer")
-	private JuridicalPerson employer;
+	private LegalPerson employer;
 
 	public StaffType getType() {
 		return type;
@@ -69,11 +69,11 @@ public class Functionary extends NaturalPerson {
 		this.resignationDate = resignationDate;
 	}
 
-	public JuridicalPerson getEmployer() {
+	public LegalPerson getEmployer() {
 		return employer;
 	}
 
-	public void setEmployer(JuridicalPerson employer) {
+	public void setEmployer(LegalPerson employer) {
 		this.employer = employer;
 	}
 
