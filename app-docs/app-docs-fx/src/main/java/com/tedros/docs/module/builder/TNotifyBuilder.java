@@ -45,11 +45,9 @@ public class TNotifyBuilder extends TGenericBuilder<TNotify> {
 		
 		if(d.getContent()!=null)
 			n.setContent(d.getContent());
-		else if(d.getSummary()!=null)
-			n.setContent(d.getSummary());
 		
-		if(d.getTitle()!=null)
-			n.setSubject(d.getTitle());
+		if(d.getName()!=null)
+			n.setSubject(d.getName());
 		
 		TModuleContext ct = TedrosAppManager.getInstance().getModuleContext(DocumentModule.class);
 		

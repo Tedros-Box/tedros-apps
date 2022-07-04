@@ -3,25 +3,34 @@
  */
 package com.tedros.docs.export;
 
+import java.util.Date;
+
 import com.tedros.common.model.TFileEntity;
 import com.tedros.docs.ejb.controller.IDocumentStateController;
 import com.tedros.docs.ejb.controller.IDocumentTypeController;
 import com.tedros.docs.model.Document;
 import com.tedros.docs.model.DocumentState;
 import com.tedros.docs.model.DocumentType;
+import com.tedros.docs.module.builder.TNotifyBuilder;
 import com.tedros.docs.module.model.DocumentStateMV;
 import com.tedros.docs.module.model.DocumentTypeMV;
+import com.tedros.extension.contact.model.ContactMV;
+import com.tedros.extension.model.Contact;
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TComboBoxField;
 import com.tedros.fxapi.annotation.control.TContent;
+import com.tedros.fxapi.annotation.control.TEditEntityModal;
 import com.tedros.fxapi.annotation.control.TFileField;
 import com.tedros.fxapi.annotation.control.THTMLEditor;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
 import com.tedros.fxapi.annotation.control.TOptionsList;
+import com.tedros.fxapi.annotation.control.TShowField;
 import com.tedros.fxapi.annotation.control.TTab;
 import com.tedros.fxapi.annotation.control.TTabPane;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
 import com.tedros.fxapi.annotation.control.TTextField;
+import com.tedros.fxapi.annotation.control.TShowField.TField;
 import com.tedros.fxapi.annotation.form.TDetailForm;
 import com.tedros.fxapi.annotation.form.TForm;
 import com.tedros.fxapi.annotation.layout.THBox;
@@ -36,12 +45,15 @@ import com.tedros.fxapi.annotation.presenter.TDetailListViewPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.scene.control.TControl;
+import com.tedros.fxapi.collections.ITObservableList;
 import com.tedros.fxapi.domain.TFileExtension;
 import com.tedros.fxapi.domain.TFileModelType;
 import com.tedros.fxapi.presenter.entity.behavior.TDetailCrudViewBehavior;
 import com.tedros.fxapi.presenter.entity.decorator.TDetailCrudViewDecorator;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
 import com.tedros.fxapi.property.TSimpleFileProperty;
+import com.tedros.tools.annotation.TNotifyLink;
+import com.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -52,7 +64,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = "#{form.doc}", showBreadcrumBar=true, scroll=true)
+@TForm(name = "#{form.doc}", showBreadcrumBar=false, scroll=true)
 @TDetailListViewPresenter(presenter=@TPresenter(
 behavior = @TBehavior(type = TDetailCrudViewBehavior.class), 
 decorator = @TDecorator(type = TDetailCrudViewDecorator.class, 
@@ -61,80 +73,70 @@ public class DetailDocumentMV extends TEntityModelView<Document> {
 	
 
 	private SimpleStringProperty displayProperty;
-	
+
 	@TTabPane(tabs = { 
-		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"text"})), text = "#{label.main.data}"), 
-		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"content"})), text = "#{label.content}")
+		@TTab(closable=false, 
+			content = @TContent(detailForm=@TDetailForm(fields={"code","value", "type", "file"})), text = TUsualKey.MAIN_DATA),
+		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"observation"})), text = TUsualKey.OBSERVATION)
 	})
 	private SimpleLongProperty id;
 	
-	
-	@THBox(	pane=@TPane(children={"code", "file"}), spacing=10, fillHeight=true,
-			hgrow=@THGrow(priority={@TPriority(field="code", priority=Priority.SOMETIMES), 
-					@TPriority(field="file", priority=Priority.ALWAYS)}))
-	private SimpleStringProperty text;
-	
-	@TLabel(text="#{label.ref.code}")
+	@TLabel(text=TUsualKey.REF_CODE)
 	@TTextField(maxLength=10,  node=@TNode(requestFocus=true, parse = true))
-	@TVBox(	pane=@TPane(children={"code","title","type","state"}), spacing=10, fillWidth=true,
-	vgrow=@TVGrow(priority={@TPriority(field="title", priority=Priority.ALWAYS), 
-			@TPriority(field="code", priority=Priority.ALWAYS),
-			@TPriority(field="type", priority=Priority.ALWAYS),
-			@TPriority(field="state", priority=Priority.ALWAYS)}))
+	@THBox(	pane=@TPane(children={"code","name"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="name", priority=Priority.ALWAYS), 
+			@TPriority(field="code", priority=Priority.NEVER)}))
 	private SimpleStringProperty code;
 	
-	@TLabel(text="#{label.title}")
-	@TTextField(maxLength=60, required = true, 
+	@TLabel(text=TUsualKey.NAME)
+	@TTextField(maxLength=120, required = true, 
 	node=@TNode(requestFocus=true, parse = true) )
-	private SimpleStringProperty title;
+	private SimpleStringProperty name;
+	
+	@TLabel(text=TUsualKey.ADDITIONAL_DATA)
+	@TTextAreaField(wrapText=true, prefRowCount=4)
+	private SimpleStringProperty value;
 
-	@TLabel(text="#{label.type}")
-	@TComboBoxField(firstItemTex="#{label.select}",
+	@TLabel(text=TUsualKey.TYPE)
+	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
 	optionsList=@TOptionsList(serviceName = IDocumentTypeController.JNDI_NAME, 
 	optionModelViewClass=DocumentTypeMV.class,
 	entityClass=DocumentType.class))
+	@THBox(	pane=@TPane(children={"type","state"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={
+			@TPriority(field="type", priority=Priority.NEVER),
+			@TPriority(field="state", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<DocumentType> type;
 	
-	@TLabel(text="#{label.state}")
-	@TComboBoxField(firstItemTex="#{label.select}",
+	@TLabel(text=TUsualKey.STATE)
+	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
 	optionsList=@TOptionsList(serviceName = IDocumentStateController.JNDI_NAME, 
 	optionModelViewClass=DocumentStateMV.class,
 	entityClass=DocumentState.class))
 	private SimpleObjectProperty<DocumentState> state;
+	
 
-	@TLabel(text="#{label.file}")
+	@TLabel(text=TUsualKey.FILE)
 	@TFileField(propertyValueType=TFileModelType.ENTITY, preLoadFileBytes=true,
 	extensions= {TFileExtension.ALL_FILES}, showFilePath=true)
-	@TVBox(	pane=@TPane(children={"summary","file"}), spacing=10, fillWidth=true,
-	vgrow=@TVGrow(priority={@TPriority(field="summary", priority=Priority.ALWAYS), 
-						@TPriority(field="file", priority=Priority.ALWAYS)}))
 	@TModelViewType(modelClass=TFileEntity.class)
 	private TSimpleFileProperty<TFileEntity> file;
 	
-	@TLabel(text="#{label.summary}")
-	@TTextAreaField(maxLength=600, wrapText=true, prefRowCount=10)
-	@THBox(	pane=@TPane(children={"summary","observation"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="summary", priority=Priority.ALWAYS), 
-						@TPriority(field="observation", priority=Priority.ALWAYS)}))
-	private SimpleStringProperty summary;
-
-	@TLabel(text="#{label.observation}")
-	@TTextAreaField(maxLength=400, wrapText=true, prefRowCount=10)
+	
+	@TTextAreaField(wrapText=true)
 	private SimpleStringProperty observation;
 	
-	
-	@THTMLEditor(control=@TControl( maxHeight=500, parse = true))
-	private SimpleStringProperty content;
+
 	
 	public DetailDocumentMV(Document entity) {
 		super(entity);
-		super.formatFieldsToDisplay("%s %s", code, title);
+		super.formatFieldsToDisplay("%s %s", code, name);
 	}
 	
 	@Override
 	public void reload(Document model) {
 		super.reload(model);
-		super.formatFieldsToDisplay("%s %s", code, title);
+		super.formatFieldsToDisplay("%s %s", code, name);
 	}
 
 	public SimpleLongProperty getId() {
@@ -146,28 +148,12 @@ public class DetailDocumentMV extends TEntityModelView<Document> {
 	}
 
 
-	public SimpleStringProperty getText() {
-		return text;
-	}
-
-	public void setText(SimpleStringProperty text) {
-		this.text = text;
-	}
-
 	public SimpleStringProperty getCode() {
 		return code;
 	}
 
 	public void setCode(SimpleStringProperty code) {
 		this.code = code;
-	}
-
-	public SimpleStringProperty getTitle() {
-		return title;
-	}
-
-	public void setTitle(SimpleStringProperty title) {
-		this.title = title;
 	}
 
 	public SimpleObjectProperty<DocumentType> getType() {
@@ -185,15 +171,6 @@ public class DetailDocumentMV extends TEntityModelView<Document> {
 	public void setState(SimpleObjectProperty<DocumentState> state) {
 		this.state = state;
 	}
-
-	public SimpleStringProperty getSummary() {
-		return summary;
-	}
-
-	public void setSummary(SimpleStringProperty summary) {
-		this.summary = summary;
-	}
-
 	public SimpleStringProperty getObservation() {
 		return observation;
 	}
@@ -210,15 +187,6 @@ public class DetailDocumentMV extends TEntityModelView<Document> {
 		this.file = file;
 	}
 
-
-	public SimpleStringProperty getContent() {
-		return content;
-	}
-
-	public void setContent(SimpleStringProperty content) {
-		this.content = content;
-	}
-
 	@Override
 	public SimpleStringProperty getDisplayProperty() {
 		return displayProperty;
@@ -226,6 +194,22 @@ public class DetailDocumentMV extends TEntityModelView<Document> {
 
 	public void setDisplayProperty(SimpleStringProperty displayProperty) {
 		this.displayProperty = displayProperty;
+	}
+
+	public SimpleStringProperty getName() {
+		return name;
+	}
+
+	public void setName(SimpleStringProperty name) {
+		this.name = name;
+	}
+
+	public SimpleStringProperty getValue() {
+		return value;
+	}
+
+	public void setValue(SimpleStringProperty value) {
+		this.value = value;
 	}
 
 }

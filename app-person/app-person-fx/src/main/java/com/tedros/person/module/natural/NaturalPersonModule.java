@@ -26,6 +26,6 @@ public class NaturalPersonModule extends TModule {
 	 */
 	@Override
 	public void tStart() {
-		super.tShowView(new TDynaView<NaturalPersonMV>(NaturalPersonMV.class));
+		super.tShowView(new TDynaView<NaturalPersonMV>(this, NaturalPersonMV.class));
 	}
 }
