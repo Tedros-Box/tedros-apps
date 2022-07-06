@@ -69,4 +69,34 @@ public class PersonAttributesMV extends TEntityModelView<PersonAttributes> {
 	}
 
 
+	public SimpleStringProperty getName() {
+		return name;
+	}
+
+
+	public void setName(SimpleStringProperty name) {
+		this.name = name;
+	}
+
+
+	public SimpleStringProperty getValue() {
+		return value;
+	}
+
+
+	public void setValue(SimpleStringProperty value) {
+		this.value = value;
+	}
+
+
+	public SimpleStringProperty getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(SimpleStringProperty description) {
+		this.description = description;
+	}
+
+
 }

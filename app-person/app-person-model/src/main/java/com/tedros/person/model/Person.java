@@ -23,7 +23,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.tedros.docs.model.Document;
-import com.tedros.ejb.base.entity.TEntity;
 import com.tedros.ejb.base.entity.TReceptiveEntity;
 import com.tedros.extension.model.Contact;
 import com.tedros.location.model.Address;

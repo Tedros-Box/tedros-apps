@@ -9,8 +9,8 @@ package com.tedros.person.domain;
  */
 public enum Sex {
 
-	MALE ("#{label.male}"),
-	FEMALE ("#{label.female}");
+	MALE ("#{label.masculine}"),
+	FEMALE ("#{label.feminine}");
 	
 	private String value;
 

@@ -25,7 +25,7 @@ import com.tedros.person.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.employee, schema = DomainSchema.schema)
 @DiscriminatorValue("F")
-public class Functionary extends NaturalPerson {
+public class Employee extends NaturalPerson {
 
 	private static final long serialVersionUID = -2752532386208736142L;
 
