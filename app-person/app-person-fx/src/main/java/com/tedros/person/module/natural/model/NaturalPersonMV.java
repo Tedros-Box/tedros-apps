@@ -7,27 +7,20 @@ import java.util.Date;
 
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.docs.domain.DomainApp;
-import com.tedros.docs.export.DetailDocumentMV;
+import com.tedros.docs.export.ModalDocumentMV;
 import com.tedros.docs.model.Document;
 import com.tedros.extension.contact.model.ContactMV;
 import com.tedros.extension.model.Contact;
 import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TContent;
 import com.tedros.fxapi.annotation.control.TConverter;
 import com.tedros.fxapi.annotation.control.TDatePickerField;
-import com.tedros.fxapi.annotation.control.TDetailListField;
 import com.tedros.fxapi.annotation.control.TEditEntityModal;
-import com.tedros.fxapi.annotation.control.TFieldBox;
 import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
 import com.tedros.fxapi.annotation.control.TRadioButton;
-import com.tedros.fxapi.annotation.control.TTab;
-import com.tedros.fxapi.annotation.control.TTabPane;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
 import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TDetailForm;
 import com.tedros.fxapi.annotation.form.TForm;
 import com.tedros.fxapi.annotation.layout.THBox;
 import com.tedros.fxapi.annotation.layout.THGrow;
@@ -49,6 +42,7 @@ import com.tedros.location.module.address.model.AddressMV;
 import com.tedros.person.PersonKeys;
 import com.tedros.person.converter.GenderConverter;
 import com.tedros.person.converter.SexConverter;
+import com.tedros.person.domain.DomainApp;
 import com.tedros.person.domain.Gender;
 import com.tedros.person.domain.Sex;
 import com.tedros.person.ejb.controller.INaturalPersonController;
@@ -74,17 +68,12 @@ import javafx.scene.layout.Priority;
 		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_NATURAL_PERSON,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false)))
-@TSecurity(id=DomainApp.DOCUMENT_FORM_ID, appName = PersonKeys.APP_PERSON,
+@TSecurity(id=DomainApp.NATURAL_PERSON_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_NATURAL_PERSON, viewName = PersonKeys.VIEW_NATURAL_PERSON,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 	
-
-	@TTabPane(tabs = { 
-			@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"name", "sex", "description", "address" })), text = "#{label.main.data}"), 
-			@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"documents"})), text = "#{view.docs}")
-		})
 	private SimpleLongProperty id;
 	
 	private SimpleStringProperty displayProperty;
@@ -107,7 +96,7 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 	private SimpleObjectProperty<Date> birthDate;
 	
 	@TLabel(text=TUsualKey.SEX)
-	@THorizontalRadioGroup(
+	@THorizontalRadioGroup(spacing= 10,
 		converter=@TConverter(parse = true, type = SexConverter.class),
 		radioButtons = { @TRadioButton(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE ),
 				@TRadioButton(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE )
@@ -118,7 +107,7 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 	private SimpleObjectProperty<Sex> sex;
 	
 	@TLabel(text=TUsualKey.GENDER)
-	@THorizontalRadioGroup(
+	@THorizontalRadioGroup(spacing= 10,
 		converter=@TConverter(parse = true, type = GenderConverter.class),
 		radioButtons = { @TRadioButton(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE),
 				@TRadioButton(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE),
@@ -141,10 +130,11 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 	@TLabel(text=LocatKey.ADDRESS)
 	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
 	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
-	@THBox(	pane=@TPane(children={"address", "contacts", "attributes"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"address", "contacts", "documents", "attributes"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="address", priority=Priority.ALWAYS), 
 			@TPriority(field="contacts", priority=Priority.ALWAYS), 
-			@TPriority(field="attributes", priority=Priority.ALWAYS)}))
+			@TPriority(field="attributes", priority=Priority.ALWAYS), 
+			@TPriority(field="documents", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<AddressMV> address;
 	
 	@TLabel(text=TUsualKey.ATTRIBUTES)
@@ -157,10 +147,10 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
 	private ITObservableList<ContactMV> contacts;
 	
-	@TFieldBox(node=@TNode(id="ddmv", parse = true))
-	@TDetailListField(entityModelViewClass = DetailDocumentMV.class, entityClass = Document.class)
-	@TModelViewType(modelClass=Document.class, modelViewClass=DetailDocumentMV.class)
-	public ITObservableList<DetailDocumentMV> documents;
+	@TLabel(text=TUsualKey.DOCUMENTS)
+	@TEditEntityModal(modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
+	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
+	public ITObservableList<ModalDocumentMV> documents;
 
 	public NaturalPersonMV(NaturalPerson entity) {
 		super(entity);
@@ -263,11 +253,11 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 		this.contacts = contacts;
 	}
 
-	public ITObservableList<DetailDocumentMV> getDocuments() {
+	public ITObservableList<ModalDocumentMV> getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(ITObservableList<DetailDocumentMV> documents) {
+	public void setDocuments(ITObservableList<ModalDocumentMV> documents) {
 		this.documents = documents;
 	}
 

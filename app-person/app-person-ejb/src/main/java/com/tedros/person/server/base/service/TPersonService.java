@@ -24,7 +24,7 @@ import com.tedros.person.server.base.bo.TPersonBO;
  *
  */
 @Local
-@Stateless(name="TStatelessService")
+@Stateless(name="TPersonService")
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 public class TPersonService<E extends ITEntity> extends TEjbService<E>  {
 	

@@ -3,57 +3,38 @@
  */
 package com.tedros.docs.export;
 
-import java.util.Date;
-
 import com.tedros.common.model.TFileEntity;
+import com.tedros.docs.ejb.controller.IDocumentController;
 import com.tedros.docs.ejb.controller.IDocumentStateController;
 import com.tedros.docs.ejb.controller.IDocumentTypeController;
 import com.tedros.docs.model.Document;
 import com.tedros.docs.model.DocumentState;
 import com.tedros.docs.model.DocumentType;
-import com.tedros.docs.module.builder.TNotifyBuilder;
 import com.tedros.docs.module.model.DocumentStateMV;
 import com.tedros.docs.module.model.DocumentTypeMV;
-import com.tedros.extension.contact.model.ContactMV;
-import com.tedros.extension.model.Contact;
 import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TComboBoxField;
 import com.tedros.fxapi.annotation.control.TContent;
-import com.tedros.fxapi.annotation.control.TEditEntityModal;
 import com.tedros.fxapi.annotation.control.TFileField;
-import com.tedros.fxapi.annotation.control.THTMLEditor;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
 import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TShowField;
 import com.tedros.fxapi.annotation.control.TTab;
 import com.tedros.fxapi.annotation.control.TTabPane;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
 import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.control.TShowField.TField;
 import com.tedros.fxapi.annotation.form.TDetailForm;
-import com.tedros.fxapi.annotation.form.TForm;
 import com.tedros.fxapi.annotation.layout.THBox;
 import com.tedros.fxapi.annotation.layout.THGrow;
 import com.tedros.fxapi.annotation.layout.TPane;
 import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.layout.TVBox;
-import com.tedros.fxapi.annotation.layout.TVGrow;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TDetailListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
+import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
+import com.tedros.fxapi.annotation.process.TEjbService;
 import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.scene.control.TControl;
-import com.tedros.fxapi.collections.ITObservableList;
 import com.tedros.fxapi.domain.TFileExtension;
 import com.tedros.fxapi.domain.TFileModelType;
-import com.tedros.fxapi.presenter.entity.behavior.TDetailCrudViewBehavior;
-import com.tedros.fxapi.presenter.entity.decorator.TDetailCrudViewDecorator;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
 import com.tedros.fxapi.property.TSimpleFileProperty;
-import com.tedros.tools.annotation.TNotifyLink;
-import com.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -64,12 +45,9 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = "#{form.doc}", showBreadcrumBar=false, scroll=true)
-@TDetailListViewPresenter(presenter=@TPresenter(
-behavior = @TBehavior(type = TDetailCrudViewBehavior.class), 
-decorator = @TDecorator(type = TDetailCrudViewDecorator.class, 
-buildModesRadioButton=false, viewTitle="#{view.docs}")))
-public class DetailDocumentMV extends TEntityModelView<Document> {
+@TEditModalPresenter()
+@TEjbService(model = Document.class, serviceName = IDocumentController.JNDI_NAME)
+public class ModalDocumentMV extends TEntityModelView<Document> {
 	
 
 	private SimpleStringProperty displayProperty;
@@ -94,7 +72,7 @@ public class DetailDocumentMV extends TEntityModelView<Document> {
 	private SimpleStringProperty name;
 	
 	@TLabel(text=TUsualKey.ADDITIONAL_DATA)
-	@TTextAreaField(wrapText=true, prefRowCount=4)
+	@TTextAreaField(wrapText=true, prefRowCount=2)
 	private SimpleStringProperty value;
 
 	@TLabel(text=TUsualKey.TYPE)
@@ -128,7 +106,7 @@ public class DetailDocumentMV extends TEntityModelView<Document> {
 	
 
 	
-	public DetailDocumentMV(Document entity) {
+	public ModalDocumentMV(Document entity) {
 		super(entity);
 		super.formatFieldsToDisplay("%s %s", code, name);
 	}

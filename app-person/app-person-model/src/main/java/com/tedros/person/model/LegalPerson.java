@@ -12,6 +12,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -34,7 +35,7 @@ public class LegalPerson extends Person {
 	@Column(length=120)
 	private String otherName;
 	
-	@OneToMany(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="legal_type_id")
 	private LegalType type;
 	
@@ -48,7 +49,7 @@ public class LegalPerson extends Person {
 	
 	@OneToMany(mappedBy="employer", 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public Set<Functionary> staff;
+	public Set<Employee> staff;
 
 	public String getOtherName() {
 		return otherName;
@@ -66,11 +67,11 @@ public class LegalPerson extends Person {
 		this.type = type;
 	}
 
-	public Set<Functionary> getStaff() {
+	public Set<Employee> getStaff() {
 		return staff;
 	}
 
-	public void setStaff(Set<Functionary> staff) {
+	public void setStaff(Set<Employee> staff) {
 		this.staff = staff;
 	}
 
