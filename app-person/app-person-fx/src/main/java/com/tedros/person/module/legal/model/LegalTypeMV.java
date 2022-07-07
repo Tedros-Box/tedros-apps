@@ -48,8 +48,6 @@ import javafx.beans.property.SimpleStringProperty;
 public class LegalTypeMV extends TEntityModelView<LegalType> {
 
 	private SimpleLongProperty id;
-	
-	private SimpleStringProperty displayProperty;
 
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=120, required = true, 
@@ -73,11 +71,7 @@ public class LegalTypeMV extends TEntityModelView<LegalType> {
 	}
 
 	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
+		return name;
 	}
 
 	public SimpleStringProperty getName() {

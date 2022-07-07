@@ -4,7 +4,9 @@
 package com.tedros.person.module.natural.model;
 
 import java.util.Date;
+import java.util.Locale;
 
+import com.tedros.core.TLanguage;
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
 import com.tedros.docs.export.ModalDocumentMV;
@@ -154,7 +156,10 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 
 	public NaturalPersonMV(NaturalPerson entity) {
 		super(entity);
-		super.formatFieldsToDisplay("%s %s", name, lastName);
+		if(TLanguage.getLocale().equals(Locale.ENGLISH))
+			super.formatFieldsToDisplay("%s, %s", lastName, name);
+		else
+			super.formatFieldsToDisplay("%s %s", name, lastName);
 	}
 
 	public SimpleLongProperty getId() {

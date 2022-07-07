@@ -5,6 +5,7 @@ package com.tedros.person.model;
 
 import java.util.Date;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -23,8 +24,9 @@ import com.tedros.person.domain.DomainTables;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.employee, schema = DomainSchema.schema)
-@DiscriminatorValue("F")
+@DiscriminatorValue("E")
 public class Employee extends NaturalPerson {
 
 	private static final long serialVersionUID = -2752532386208736142L;
@@ -74,7 +76,11 @@ public class Employee extends NaturalPerson {
 	}
 
 	public void setEmployer(LegalPerson employer) {
+		if(this.employer!=null)
+			this.employer.removeEmployee(this);
 		this.employer = employer;
+		this.employer.addEmployee(this);
+		
 	}
 
 }

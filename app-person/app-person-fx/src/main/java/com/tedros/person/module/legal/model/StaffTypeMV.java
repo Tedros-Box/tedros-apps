@@ -49,8 +49,6 @@ public class StaffTypeMV extends TEntityModelView<StaffType> {
 
 	private SimpleLongProperty id;
 	
-	private SimpleStringProperty displayProperty;
-	
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=120, required = true, 
 	node=@TNode(requestFocus=true, parse = true) )
@@ -73,11 +71,7 @@ public class StaffTypeMV extends TEntityModelView<StaffType> {
 	}
 
 	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
+		return name;
 	}
 
 	public SimpleStringProperty getName() {
