@@ -4,8 +4,10 @@
 package com.tedros.person.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -26,6 +28,7 @@ import com.tedros.person.domain.DomainTables;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.legal_person, schema = DomainSchema.schema)
 @DiscriminatorValue("L")
 public class LegalPerson extends Person {
@@ -50,6 +53,20 @@ public class LegalPerson extends Person {
 	@OneToMany(mappedBy="employer", 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	public Set<Employee> staff;
+	
+	public void addEmployee(Employee e) {
+		if(staff==null)
+			staff = new HashSet<>();
+		if(!staff.contains(e))
+			staff.add(e);
+	}
+	
+	public void removeEmployee(Employee e) {
+		if(staff==null)
+			return;
+		if(staff.contains(e))
+			staff.remove(e);
+	}
 
 	public String getOtherName() {
 		return otherName;

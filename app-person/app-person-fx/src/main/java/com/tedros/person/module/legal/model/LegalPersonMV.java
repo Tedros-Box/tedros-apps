@@ -11,15 +11,24 @@ import com.tedros.docs.export.ModalDocumentMV;
 import com.tedros.docs.model.Document;
 import com.tedros.extension.contact.model.ContactMV;
 import com.tedros.extension.model.Contact;
+import com.tedros.fxapi.TFxKey;
 import com.tedros.fxapi.TUsualKey;
+import com.tedros.fxapi.annotation.control.TCallbackFactory;
+import com.tedros.fxapi.annotation.control.TCellValueFactory;
 import com.tedros.fxapi.annotation.control.TComboBoxField;
+import com.tedros.fxapi.annotation.control.TContent;
 import com.tedros.fxapi.annotation.control.TDatePickerField;
 import com.tedros.fxapi.annotation.control.TEditEntityModal;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
 import com.tedros.fxapi.annotation.control.TOptionsList;
+import com.tedros.fxapi.annotation.control.TTab;
+import com.tedros.fxapi.annotation.control.TTabPane;
+import com.tedros.fxapi.annotation.control.TTableColumn;
+import com.tedros.fxapi.annotation.control.TTableView;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
 import com.tedros.fxapi.annotation.control.TTextField;
+import com.tedros.fxapi.annotation.form.TDetailForm;
 import com.tedros.fxapi.annotation.form.TForm;
 import com.tedros.fxapi.annotation.layout.THBox;
 import com.tedros.fxapi.annotation.layout.THGrow;
@@ -31,6 +40,7 @@ import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.process.TEjbService;
 import com.tedros.fxapi.annotation.scene.TNode;
+import com.tedros.fxapi.annotation.scene.control.TControl;
 import com.tedros.fxapi.annotation.view.TOption;
 import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.collections.ITObservableList;
@@ -42,9 +52,15 @@ import com.tedros.person.PersonKeys;
 import com.tedros.person.domain.DomainApp;
 import com.tedros.person.ejb.controller.ILegalPersonController;
 import com.tedros.person.ejb.controller.ILegalTypeController;
+import com.tedros.person.model.Employee;
 import com.tedros.person.model.LegalPerson;
 import com.tedros.person.model.LegalType;
 import com.tedros.person.model.PersonAttributes;
+import com.tedros.person.module.legal.table.EmployeeITemMV;
+import com.tedros.person.module.legal.table.EmployeeRowFactoryBuilder;
+import com.tedros.person.module.legal.table.HiringDateCellCallBack;
+import com.tedros.person.module.legal.table.ResignationDateCellCallBack;
+import com.tedros.person.module.legal.table.StaffTypeCellCallBack;
 import com.tedros.person.module.natural.model.PersonAttributesMV;
 
 import javafx.beans.property.SimpleLongProperty;
@@ -73,11 +89,19 @@ import javafx.scene.layout.Priority;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 
+	
+	@TTabPane(tabs = { 
+		@TTab(closable=false, text = TUsualKey.MAIN_DATA,
+			content = @TContent(detailForm=@TDetailForm(fields={"name","type", "address"}))),  
+		@TTab(closable=false, text = TUsualKey.STAFF,
+			content = @TContent(detailForm=@TDetailForm(fields={"staff"}))),
+		@TTab(closable=false, text = TUsualKey.DESCRIPTION, 
+			content = @TContent(detailForm=@TDetailForm(fields={"description"}))),
+		@TTab(closable=false, text = TUsualKey.OBSERVATION, 
+			content = @TContent(detailForm=@TDetailForm(fields={"observation"})))
+	})
 	private SimpleLongProperty id;
 	
-	private SimpleStringProperty displayProperty;
-	
-
 	@TLabel(text=TUsualKey.CORPORATE_NAME)
 	@TTextField(maxLength=120, required = true,
 		node=@TNode(requestFocus=true, parse = true))
@@ -110,17 +134,6 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 	@TDatePickerField
 	private SimpleObjectProperty<Date> endActivities;
 	
-	@TLabel(text=TUsualKey.DESCRIPTION)
-	@TTextAreaField(maxLength=2000, wrapText=true, prefRowCount=5)
-	@THBox(	pane=@TPane(children={"description", "observation"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="description", priority=Priority.ALWAYS), 
-			@TPriority(field="observation", priority=Priority.ALWAYS)}))
-	private SimpleStringProperty description;
-	
-	@TLabel(text=TUsualKey.OBSERVATION)
-	@TTextAreaField(maxLength=2000, wrapText=true, prefRowCount=5)
-	private SimpleStringProperty observation;
-	
 	@TLabel(text=LocatKey.ADDRESS)
 	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
 	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
@@ -145,6 +158,30 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 	@TEditEntityModal(modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
 	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
 	public ITObservableList<ModalDocumentMV> documents;
+
+	@TTableView(editable=true, rowFactory=EmployeeRowFactoryBuilder.class,
+			control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
+			columns = { @TTableColumn(cellValue="displayProperty", text = TUsualKey.NAME, prefWidth=20, resizable=true), 
+					@TTableColumn(cellValue="type", text = TUsualKey.OCCUPATION, resizable=true,
+							cellValueFactory=@TCellValueFactory(parse=true, 
+							value=@TCallbackFactory(parse=true, value=StaffTypeCellCallBack.class))), 
+						@TTableColumn(cellValue="hiringDate", text = TUsualKey.HIRING_DATE, resizable=true,
+								cellValueFactory=@TCellValueFactory(parse=true, 
+								value=@TCallbackFactory(parse=true, value=HiringDateCellCallBack.class))), 
+						@TTableColumn(cellValue="resignationDate", text = TUsualKey.RESIGNATION_DATE, resizable=true,
+								cellValueFactory=@TCellValueFactory(parse=true, 
+								value=@TCallbackFactory(parse=true, value=ResignationDateCellCallBack.class)))
+	})
+	@TModelViewType(modelClass = Employee.class, modelViewClass=EmployeeITemMV.class)
+	private ITObservableList<EmployeeITemMV> staff;
+	
+
+	@TTextAreaField(maxLength=2000, wrapText=true, prefRowCount=5)
+	private SimpleStringProperty description;
+	
+	@TTextAreaField(maxLength=2000, wrapText=true, prefRowCount=5)
+	private SimpleStringProperty observation;
+	
 	
 	public LegalPersonMV(LegalPerson entity) {
 		super(entity);
@@ -159,11 +196,7 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 	}
 
 	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
+		return name;
 	}
 
 	public SimpleStringProperty getName() {
@@ -252,6 +285,14 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 
 	public void setDocuments(ITObservableList<ModalDocumentMV> documents) {
 		this.documents = documents;
+	}
+
+	public ITObservableList<EmployeeITemMV> getStaff() {
+		return staff;
+	}
+
+	public void setStaff(ITObservableList<EmployeeITemMV> staff) {
+		this.staff = staff;
 	}
 
 }
