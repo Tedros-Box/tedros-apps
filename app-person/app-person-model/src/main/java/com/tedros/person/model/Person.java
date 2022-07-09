@@ -55,8 +55,9 @@ public class Person extends TReceptiveEntity {
 	@JoinColumn(name="address_id")
 	private Address address;
 	
-	@OneToMany(mappedBy="person", 
+	@OneToMany(orphanRemoval=true, 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="id_person", nullable=false, updatable=false)
 	private Set<PersonAttributes> attributes;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
@@ -76,6 +77,7 @@ public class Person extends TReceptiveEntity {
 	uniqueConstraints=@UniqueConstraint(name="PersonDocumentUK", 
 	columnNames = { "person_id","doc_id"}))
 	public Set<Document> documents;
+	
 	
 	public String getName() {
 		return name;
