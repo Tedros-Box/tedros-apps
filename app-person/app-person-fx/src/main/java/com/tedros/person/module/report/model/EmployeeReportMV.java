@@ -1,105 +1,92 @@
-/**
- * 
- */
-package com.tedros.person.module.legal.model;
+package com.tedros.person.module.report.model;
 
 import java.util.Date;
-import java.util.Locale;
 
-import com.tedros.core.TLanguage;
 import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.docs.export.ModalDocumentMV;
-import com.tedros.docs.model.Document;
-import com.tedros.extension.contact.model.ContactMV;
-import com.tedros.extension.model.Contact;
+import com.tedros.fxapi.TFxKey;
 import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TContent;
 import com.tedros.fxapi.annotation.control.TConverter;
 import com.tedros.fxapi.annotation.control.TDatePickerField;
-import com.tedros.fxapi.annotation.control.TEditEntityModal;
 import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
 import com.tedros.fxapi.annotation.control.TOneSelectionModal;
 import com.tedros.fxapi.annotation.control.TOptionsList;
 import com.tedros.fxapi.annotation.control.TRadioButton;
-import com.tedros.fxapi.annotation.control.TTab;
-import com.tedros.fxapi.annotation.control.TTabPane;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
+import com.tedros.fxapi.annotation.control.TTableColumn;
+import com.tedros.fxapi.annotation.control.TTableView;
 import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TDetailForm;
+import com.tedros.fxapi.annotation.control.TVerticalRadioGroup;
 import com.tedros.fxapi.annotation.form.TForm;
+import com.tedros.fxapi.annotation.layout.TAccordion;
+import com.tedros.fxapi.annotation.layout.TFieldSet;
 import com.tedros.fxapi.annotation.layout.THBox;
 import com.tedros.fxapi.annotation.layout.THGrow;
 import com.tedros.fxapi.annotation.layout.TPane;
 import com.tedros.fxapi.annotation.layout.TPriority;
+import com.tedros.fxapi.annotation.layout.TTitledPane;
 import com.tedros.fxapi.annotation.presenter.TBehavior;
 import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
+import com.tedros.fxapi.annotation.process.TReportProcess;
 import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.view.TOption;
-import com.tedros.fxapi.annotation.view.TPaginator;
+import com.tedros.fxapi.annotation.scene.control.TControl;
+import com.tedros.fxapi.annotation.scene.layout.TRegion;
 import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.location.LocatKey;
-import com.tedros.location.model.Address;
-import com.tedros.location.module.address.model.AddressMV;
-import com.tedros.person.PersonKeys;
+import com.tedros.fxapi.domain.TLayoutType;
+import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
+import com.tedros.fxapi.presenter.model.TModelView;
+import com.tedros.fxapi.presenter.report.behavior.TDataSetReportBehavior;
+import com.tedros.fxapi.presenter.report.decorator.TDataSetReportDecorator;
+import com.tedros.location.domain.DomainApp;
+import com.tedros.location.module.report.action.SearchAction;
 import com.tedros.person.converter.GenderConverter;
 import com.tedros.person.converter.SexConverter;
-import com.tedros.person.domain.DomainApp;
 import com.tedros.person.domain.Gender;
 import com.tedros.person.domain.Sex;
-import com.tedros.person.ejb.controller.IEmployeeController;
 import com.tedros.person.ejb.controller.IStaffTypeController;
-import com.tedros.person.model.Employee;
 import com.tedros.person.model.LegalPerson;
-import com.tedros.person.model.PersonAttributes;
 import com.tedros.person.model.StaffType;
-import com.tedros.person.module.natural.model.PersonAttributesMV;
+import com.tedros.person.module.legal.model.FindLegalPersonMV;
+import com.tedros.person.module.legal.model.StaffTypeMV;
+import com.tedros.person.module.legal.table.EmployeeRowFactoryBuilder;
+import com.tedros.person.module.report.process.EmployeeReportProcess;
+import com.tedros.person.report.model.EmployeeItemModel;
+import com.tedros.person.report.model.EmployeeReportModel;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 
-/**
- * @author Davis Gordon
- *
- */
 
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
-@TEjbService(serviceName = IEmployeeController.JNDI_NAME, model=Employee.class)
-@TListViewPresenter(
-		paginator=@TPaginator(entityClass = Employee.class, serviceName = IEmployeeController.JNDI_NAME,
-		show=true, showSearchField=true, searchFieldName="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name"),
-				@TOption(text = TUsualKey.LAST_NAME , value = "lastName")}),
-		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_EMPLOYEES,
-		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))
-@TSecurity(id=DomainApp.EMPLOYEE_FORM_ID, appName = PersonKeys.APP_PERSON,
-	moduleName = PersonKeys.MODULE_LEGAL_PERSON, viewName = PersonKeys.VIEW_EMPLOYEES,
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
-public class EmployeeMV extends TEntityModelView<Employee> {
-
+@TForm(name = "#{form.repo.place}", showBreadcrumBar=true, editCssId="")
+@TReportProcess(type=EmployeeReportProcess.class, model = EmployeeReportModel.class)
+@TPresenter(type = TDynaPresenter.class,
+			behavior = @TBehavior(type = TDataSetReportBehavior.class, 
+			action=SearchAction.class), 
+			decorator = @TDecorator(type = TDataSetReportDecorator.class, 
+									viewTitle="#{view.repo.place}"))
+@TSecurity(	id=DomainApp.PLACE_REPORT_FORM_ID, 
+			appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.repo.place}",
+			allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EXPORT, TAuthorizationType.SEARCH})
+public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
+	
 	private SimpleLongProperty id;
 	
-	@TTabPane(tabs = { 
-		@TTab(closable=false, 
-			content = @TContent(detailForm=@TDetailForm(fields={"name","type", "sex", "address"})), text = TUsualKey.MAIN_DATA), 
-		@TTab(closable=false, 
-			content = @TContent(detailForm=@TDetailForm(fields={"description"})), text = TUsualKey.DESCRIPTION),
-		@TTab(closable=false, 
-			content = @TContent(detailForm=@TDetailForm(fields={"observation"})), text = TUsualKey.OBSERVATION)
-	})
-	private SimpleStringProperty displayProperty;
+	@TAccordion(expandedPane="filtro", node=@TNode(id="repdoaacc",parse = true),
+			panes={
+					@TTitledPane(text="#{label.filters}", node=@TNode(id="filtro",parse = true), 
+							expanded=true, layoutType=TLayoutType.HBOX,
+							fields={"title", "orderBy"}),
+					@TTitledPane(text="#{label.result}", node=@TNode(id="resultado",parse = true),
+						fields={"result"})})	
+	private SimpleStringProperty displayText;
 	
+
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=120, required = true,
 		node=@TNode(requestFocus=true, parse = true))
@@ -163,182 +150,190 @@ public class EmployeeMV extends TEntityModelView<Employee> {
 		})
 	private SimpleObjectProperty<Gender> gender;
 	
-	@TLabel(text=LocatKey.ADDRESS)
-	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
-	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
-	@THBox(	pane=@TPane(children={"address", "contacts", "documents", "attributes"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="address", priority=Priority.ALWAYS), 
-			@TPriority(field="contacts", priority=Priority.ALWAYS), 
-			@TPriority(field="attributes", priority=Priority.ALWAYS), 
-			@TPriority(field="documents", priority=Priority.ALWAYS)}))
-	private SimpleObjectProperty<AddressMV> address;
 	
-	@TLabel(text=TUsualKey.ATTRIBUTES)
-	@TEditEntityModal(modelClass = PersonAttributes.class, modelViewClass=PersonAttributesMV.class)
-	@TModelViewType(modelClass = PersonAttributes.class, modelViewClass=PersonAttributesMV.class)
-	private ITObservableList<PersonAttributesMV> attributes;
+	@TLabel(text="#{label.order.by}:")
+	@TFieldSet(fields = { "orderBy", "orderType" }, 
+		region=@TRegion(maxWidth=600, parse = true),
+		legend = "#{label.result.order}")
+	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radioButtons = {@TRadioButton(text="#{label.title}", userData="e.title"), 
+					@TRadioButton(text="#{label.type}", userData="t.name"), 
+					@TRadioButton(text="#{label.country}", userData="c.name"), 
+					@TRadioButton(text="#{label.admin.area}", userData="aa.name"), 
+					@TRadioButton(text="#{label.city}", userData="ct.name"), 
+					@TRadioButton(text="#{label.code}", userData="a.code")
+	})
+	private SimpleStringProperty orderBy;
 	
-	@TLabel(text=TUsualKey.CONTACTS)
-	@TEditEntityModal(modelClass = Contact.class, modelViewClass=ContactMV.class)
-	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
-	private ITObservableList<ContactMV> contacts;
+	@TLabel(text="#{label.order.type}:")
+	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radioButtons = {@TRadioButton(text="#{label.order.asc}", userData="asc"), 
+					@TRadioButton(text="#{label.order.desc}", userData="desc")
+	})
+	private SimpleStringProperty orderType;
 	
-	@TLabel(text=TUsualKey.DOCUMENTS)
-	@TEditEntityModal(modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
-	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
-	public ITObservableList<ModalDocumentMV> documents;
+	@TTableView(editable=true, rowFactory=EmployeeRowFactoryBuilder.class,
+			control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
+			columns = { @TTableColumn(cellValue="title", text = "#{label.title}", prefWidth=20, resizable=true), 
+					@TTableColumn(cellValue="type", text = "#{label.type}", resizable=true), 
+						@TTableColumn(cellValue="country", text = "#{label.country}", resizable=true), 
+						@TTableColumn(cellValue="address", text = "#{label.address}", resizable=true)
+			})
+	@TModelViewType(modelClass=EmployeeItemModel.class, modelViewClass=EmployeeItemMV.class)
+	private ITObservableList<EmployeeItemMV> result;
 	
-
-	@TTextAreaField(maxLength=2000, wrapText=true)
-	private SimpleStringProperty description;
-	
-	@TTextAreaField(maxLength=2000, wrapText=true)
-	private SimpleStringProperty observation;
-	
-	
-	
-	public EmployeeMV(Employee entity) {
-		super(entity);
-		if(TLanguage.getLocale().equals(Locale.ENGLISH))
-			super.formatFieldsToDisplay("%s, %s", lastName, name);
-		else
-			super.formatFieldsToDisplay("%s %s", name, lastName);
+	public EmployeeReportMV(EmployeeReportModel entidade) {
+		super(entidade);
 	}
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
+	
+	
+	@Override
 	public void setId(SimpleLongProperty id) {
 		this.id = id;
 	}
 
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
+	@Override
+	public SimpleLongProperty getId() {
+		return id;
 	}
 
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
+	@Override
+	public SimpleStringProperty getDisplayProperty() {
+		return this.displayText;
 	}
+
+	/**
+	 * @return the displayText
+	 */
+	public SimpleStringProperty getDisplayText() {
+		return displayText;
+	}
+
+	/**
+	 * @param displayText the displayText to set
+	 */
+	public void setDisplayText(SimpleStringProperty displayText) {
+		this.displayText = displayText;
+	}
+
 
 	public SimpleStringProperty getName() {
 		return name;
 	}
 
+
 	public void setName(SimpleStringProperty name) {
 		this.name = name;
 	}
+
 
 	public SimpleStringProperty getLastName() {
 		return lastName;
 	}
 
+
 	public void setLastName(SimpleStringProperty lastName) {
 		this.lastName = lastName;
 	}
+
 
 	public SimpleObjectProperty<Date> getBirthDate() {
 		return birthDate;
 	}
 
+
 	public void setBirthDate(SimpleObjectProperty<Date> birthDate) {
 		this.birthDate = birthDate;
 	}
+
 
 	public SimpleObjectProperty<StaffType> getType() {
 		return type;
 	}
 
+
 	public void setType(SimpleObjectProperty<StaffType> type) {
 		this.type = type;
 	}
+
 
 	public SimpleObjectProperty<Date> getHiringDate() {
 		return hiringDate;
 	}
 
+
 	public void setHiringDate(SimpleObjectProperty<Date> hiringDate) {
 		this.hiringDate = hiringDate;
 	}
+
 
 	public SimpleObjectProperty<Date> getResignationDate() {
 		return resignationDate;
 	}
 
+
 	public void setResignationDate(SimpleObjectProperty<Date> resignationDate) {
 		this.resignationDate = resignationDate;
 	}
+
 
 	public SimpleObjectProperty<LegalPerson> getEmployer() {
 		return employer;
 	}
 
+
 	public void setEmployer(SimpleObjectProperty<LegalPerson> employer) {
 		this.employer = employer;
 	}
+
 
 	public SimpleObjectProperty<Sex> getSex() {
 		return sex;
 	}
 
+
 	public void setSex(SimpleObjectProperty<Sex> sex) {
 		this.sex = sex;
 	}
+
 
 	public SimpleObjectProperty<Gender> getGender() {
 		return gender;
 	}
 
+
 	public void setGender(SimpleObjectProperty<Gender> gender) {
 		this.gender = gender;
 	}
 
-	public SimpleStringProperty getDescription() {
-		return description;
+
+	public SimpleStringProperty getOrderBy() {
+		return orderBy;
 	}
 
-	public void setDescription(SimpleStringProperty description) {
-		this.description = description;
+
+	public void setOrderBy(SimpleStringProperty orderBy) {
+		this.orderBy = orderBy;
 	}
 
-	public SimpleStringProperty getObservation() {
-		return observation;
+
+	public SimpleStringProperty getOrderType() {
+		return orderType;
 	}
 
-	public void setObservation(SimpleStringProperty observation) {
-		this.observation = observation;
+
+	public void setOrderType(SimpleStringProperty orderType) {
+		this.orderType = orderType;
 	}
 
-	public SimpleObjectProperty<AddressMV> getAddress() {
-		return address;
+
+	public ITObservableList<EmployeeItemMV> getResult() {
+		return result;
 	}
 
-	public void setAddress(SimpleObjectProperty<AddressMV> address) {
-		this.address = address;
-	}
 
-	public ITObservableList<PersonAttributesMV> getAttributes() {
-		return attributes;
-	}
-
-	public void setAttributes(ITObservableList<PersonAttributesMV> attributes) {
-		this.attributes = attributes;
-	}
-
-	public ITObservableList<ContactMV> getContacts() {
-		return contacts;
-	}
-
-	public void setContacts(ITObservableList<ContactMV> contacts) {
-		this.contacts = contacts;
-	}
-
-	public ITObservableList<ModalDocumentMV> getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(ITObservableList<ModalDocumentMV> documents) {
-		this.documents = documents;
+	public void setResult(ITObservableList<EmployeeItemMV> result) {
+		this.result = result;
 	}
 
 }
