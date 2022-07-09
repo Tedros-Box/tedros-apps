@@ -3,6 +3,8 @@
  */
 package com.tedros.extension.model;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -35,6 +37,17 @@ public class Contact extends TEntity {
 	
 	@Column(length=250, nullable = true)
 	private String observation;
+	
+	public static String toStringList(Collection<Contact> contacts) {
+		StringBuilder sb = new StringBuilder("");
+		if(contacts!=null)
+			contacts.forEach(e->{
+				if(!"".equals(sb.toString()))
+					sb.append(", ");
+				sb.append(e.getValue());
+			});
+		return sb.toString();
+	}
 
 	public String getValue() {
 		return value;

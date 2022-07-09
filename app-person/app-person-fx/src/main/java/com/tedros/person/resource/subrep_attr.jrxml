@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subrep_attributes" pageWidth="595" pageHeight="802" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="191ec7ab-7ce8-4bd4-b3c5-cb79712e2f2b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="hValue" class="java.lang.String"/>
+	<parameter name="hName" class="java.lang.String"/>
+	<parameter name="hDesc" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Desenv\\Projetos\\CovidSemFome\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="name" class="java.lang.String"/>
+	<field name="value" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="0" y="0" width="290" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9697cd2f-3c1f-4708-a528-052aefeeb804"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="290" y="0" width="305" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="8e60dfa6-15cd-4eb8-9c93-ed8a9e13ef09"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hValue}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="0" y="0" width="290" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d9a0cba1-209e-4a70-8680-c903c635990c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="290" y="0" width="305" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="62580e40-d47d-4867-9574-bad30c6da6b2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="19">
+			<printWhenExpression><![CDATA[$F{description}!=null]]></printWhenExpression>
+			<subreport isUsingCache="false" runToBottom="false">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="595" height="19" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" backcolor="#CCCCCC" uuid="ce1ad606-90e1-4d32-a9e8-e06422643b0f"/>
+				<subreportParameter name="vText">
+					<subreportParameterExpression><![CDATA[$F{description}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hText">
+					<subreportParameterExpression><![CDATA[$P{hDesc}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource()]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"subrep_textarea.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

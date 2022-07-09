@@ -76,13 +76,13 @@ import javafx.scene.layout.Priority;
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = ILegalPersonController.JNDI_NAME, model=LegalPerson.class)
 @TListViewPresenter(
-		paginator=@TPaginator(entityClass = LegalPerson.class, serviceName = ILegalPersonController.JNDI_NAME,
+	paginator=@TPaginator(entityClass = LegalPerson.class, serviceName = ILegalPersonController.JNDI_NAME,
 		show=true, showSearchField=true, searchFieldName="name", 
 		orderBy = {	@TOption(text = TUsualKey.CORPORATE_NAME , value = "name"),
 				@TOption(text = TUsualKey.TRADE_NAME , value = "otherName")}),
-		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_LEGAL_PERSON,
+	presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_LEGAL_PERSON,
 		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))
+		behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.LEGAL_PERSON_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_LEGAL_PERSON, viewName = PersonKeys.VIEW_LEGAL_PERSON,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
@@ -160,26 +160,26 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 	public ITObservableList<ModalDocumentMV> documents;
 
 	@TTableView(editable=true, rowFactory=EmployeeRowFactoryBuilder.class,
-			control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
-			columns = { @TTableColumn(cellValue="displayProperty", text = TUsualKey.NAME, prefWidth=20, resizable=true), 
-					@TTableColumn(cellValue="type", text = TUsualKey.OCCUPATION, resizable=true,
-							cellValueFactory=@TCellValueFactory(parse=true, 
-							value=@TCallbackFactory(parse=true, value=StaffTypeCellCallBack.class))), 
-						@TTableColumn(cellValue="hiringDate", text = TUsualKey.HIRING_DATE, resizable=true,
-								cellValueFactory=@TCellValueFactory(parse=true, 
-								value=@TCallbackFactory(parse=true, value=HiringDateCellCallBack.class))), 
-						@TTableColumn(cellValue="resignationDate", text = TUsualKey.RESIGNATION_DATE, resizable=true,
-								cellValueFactory=@TCellValueFactory(parse=true, 
-								value=@TCallbackFactory(parse=true, value=ResignationDateCellCallBack.class)))
+		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
+		columns = { 
+			@TTableColumn(cellValue="displayProperty", text = TUsualKey.NAME, prefWidth=20, resizable=true), 
+			@TTableColumn(cellValue="type", text = TUsualKey.OCCUPATION, resizable=true,
+				cellValueFactory=@TCellValueFactory(parse=true, 
+				value=@TCallbackFactory(parse=true, value=StaffTypeCellCallBack.class))), 
+			@TTableColumn(cellValue="hiringDate", text = TUsualKey.HIRING_DATE, resizable=true,
+				cellValueFactory=@TCellValueFactory(parse=true, 
+				value=@TCallbackFactory(parse=true, value=HiringDateCellCallBack.class))), 
+			@TTableColumn(cellValue="resignationDate", text = TUsualKey.RESIGNATION_DATE, resizable=true,
+				cellValueFactory=@TCellValueFactory(parse=true, 
+				value=@TCallbackFactory(parse=true, value=ResignationDateCellCallBack.class)))
 	})
 	@TModelViewType(modelClass = Employee.class, modelViewClass=EmployeeITemMV.class)
 	private ITObservableList<EmployeeITemMV> staff;
-	
 
-	@TTextAreaField(maxLength=2000, wrapText=true, prefRowCount=5)
+	@TTextAreaField(maxLength=2000, wrapText=true)
 	private SimpleStringProperty description;
 	
-	@TTextAreaField(maxLength=2000, wrapText=true, prefRowCount=5)
+	@TTextAreaField(maxLength=2000, wrapText=true)
 	private SimpleStringProperty observation;
 	
 	
