@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.person.module.report.model;
+package com.tedros.person.module.report.table;
 
 import com.tedros.fxapi.presenter.model.TModelView;
 import com.tedros.person.report.model.EmployeeItemModel;
@@ -17,9 +17,9 @@ public class EmployeeItemMV extends TModelView<EmployeeItemModel> {
 	
 	private SimpleLongProperty id;
 	
-	private SimpleStringProperty name;
+	private SimpleStringProperty displayProperty;
 	
-	private SimpleStringProperty lastName;
+	private SimpleStringProperty name;
 	
 	private SimpleStringProperty type;
 	
@@ -29,11 +29,6 @@ public class EmployeeItemMV extends TModelView<EmployeeItemModel> {
 		super(model);
 	}
 	
-	@Override
-	public SimpleStringProperty getDisplayProperty() {
-		return null;
-	}
-
 	/**
 	 * @return the id
 	 */
@@ -64,20 +59,20 @@ public class EmployeeItemMV extends TModelView<EmployeeItemModel> {
 		this.name = name;
 	}
 
-	public SimpleStringProperty getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(SimpleStringProperty lastName) {
-		this.lastName = lastName;
-	}
-
 	public SimpleStringProperty getEmployer() {
 		return employer;
 	}
 
 	public void setEmployer(SimpleStringProperty employer) {
 		this.employer = employer;
+	}
+
+	public SimpleStringProperty getDisplayProperty() {
+		return displayProperty;
+	}
+
+	public void setDisplayProperty(SimpleStringProperty displayProperty) {
+		this.displayProperty = displayProperty;
 	}
 
 }
