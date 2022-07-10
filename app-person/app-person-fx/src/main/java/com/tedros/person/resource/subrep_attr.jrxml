@@ -9,6 +9,7 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Desenv\\Projetos\\CovidSemFome\\relatorios\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="hAttrib" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="value" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
@@ -19,22 +20,31 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band splitType="Stretch"/>
+		<band height="20" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="0" y="0" width="595" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="4aebab36-1516-443c-b8f7-e029aa38a201"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hAttrib}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement mode="Transparent" x="0" y="0" width="290" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9697cd2f-3c1f-4708-a528-052aefeeb804"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
-					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{hName}]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="false">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="290" y="0" width="305" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="8e60dfa6-15cd-4eb8-9c93-ed8a9e13ef09"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
-					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{hValue}]]></textFieldExpression>
@@ -46,7 +56,7 @@
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement mode="Transparent" x="0" y="0" width="290" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d9a0cba1-209e-4a70-8680-c903c635990c"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
-					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
@@ -54,11 +64,17 @@
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement mode="Transparent" x="290" y="0" width="305" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="62580e40-d47d-4867-9574-bad30c6da6b2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
-					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="0" width="595" height="1" forecolor="#CCCCCC" uuid="f9eac50e-694c-4200-a036-8bb15793d7d6"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
 		</band>
 		<band height="19">
 			<printWhenExpression><![CDATA[$F{description}!=null]]></printWhenExpression>

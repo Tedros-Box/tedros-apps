@@ -21,39 +21,39 @@ import com.tedros.ejb.base.security.TMethodPolicie;
 import com.tedros.ejb.base.security.TMethodSecurity;
 import com.tedros.ejb.base.security.TSecurityInterceptor;
 import com.tedros.person.domain.DomainApp;
-import com.tedros.person.ejb.controller.IEmployeeReportController;
-import com.tedros.person.model.Employee;
-import com.tedros.person.report.model.EmployeeItemModel;
-import com.tedros.person.report.model.EmployeeReportModel;
-import com.tedros.person.server.service.EmployeeService;
+import com.tedros.person.ejb.controller.ILegalPersonReportController;
+import com.tedros.person.model.LegalPerson;
+import com.tedros.person.report.model.LegalPersonItemModel;
+import com.tedros.person.report.model.LegalPersonReportModel;
+import com.tedros.person.server.service.LegalPersonService;
 
 @TSecurityInterceptor
 
-@TBeanSecurity({@TBeanPolicie(id = DomainApp.EMPLOYEE_REPORT_FORM_ID, 
+@TBeanSecurity({@TBeanPolicie(id = DomainApp.LEGAL_PERSON_REPORT_FORM_ID, 
 policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
-@Stateless(name="IEmployeeReportController")
+@Stateless(name="ILegalPersonReportController")
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class EmployeeReportController implements IEmployeeReportController, ITSecurity {
+public class LegalPersonReportController implements ILegalPersonReportController, ITSecurity {
 
 	@EJB
-	private EmployeeService serv;
+	private LegalPersonService serv;
 	
 	@EJB
 	private ITSecurityController security;
 	
-	public EmployeeReportController() {
+	public LegalPersonReportController() {
 	}
 
 	@Override	
 	@TMethodSecurity({
 		@TMethodPolicie(policie = {TActionPolicie.SEARCH})})
-	public TResult<EmployeeReportModel> process(TAccessToken token, EmployeeReportModel m) {
+	public TResult<LegalPersonReportModel> process(TAccessToken token, LegalPersonReportModel m) {
 		try{
-			List<Employee> lst = serv.filterBy(m);
+			List<LegalPerson> lst = serv.filterBy(m);
 			if(lst!=null){
-				List<EmployeeItemModel> itens = new ArrayList<>();
-				for(Employee a : lst){
-					itens.add(new EmployeeItemModel(a));
+				List<LegalPersonItemModel> itens = new ArrayList<>();
+				for(LegalPerson a : lst){
+					itens.add(new LegalPersonItemModel(a));
 				}
 				m.setResult(itens);
 			}

@@ -22,14 +22,14 @@
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="20" width="555" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="5949f2d8-e154-45f5-9466-621b3768a911"/>
 				<textElement>
-					<font size="10"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{vText}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="555" height="20" forecolor="#000000" uuid="7d0d8afe-6c59-4762-950e-fa807f6e0134"/>
 				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{hText}+":"]]></textFieldExpression>
 			</textField>

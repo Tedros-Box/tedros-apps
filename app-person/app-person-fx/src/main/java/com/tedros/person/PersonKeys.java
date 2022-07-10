@@ -18,6 +18,9 @@ public interface PersonKeys {
 	static final String MODULE_LEGAL_PERSON = "#{module.legal.person}";
 	static final String MODULE_NATURAL_PERSON = "#{module.natural.person}";
 	static final String MODULE_REPORTS = "#{module.reports}";
+	static final String REPORT_HEADER_EMPLOYEES = "#{report.header.employees}";
+	static final String REPORT_HEADER_LEGAL_PERSON = "#{report.header.legal.person}";
+	static final String REPORT_HEADER_NATURAL_PERSON = "#{report.header.natural.person}";
 	static final String TITLE_REPORT = "#{title.report}";
 	static final String TITLE_SELECT_EMPLOYEE = "#{title.select.employee}";
 	static final String TITLE_SELECT_LEGAL_PERSON = "#{title.select.legal.person}";

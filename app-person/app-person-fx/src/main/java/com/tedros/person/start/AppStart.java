@@ -11,6 +11,7 @@ import com.tedros.person.domain.DomainApp;
 import com.tedros.person.module.legal.LegalPersonModule;
 import com.tedros.person.module.natural.NaturalPersonModule;
 import com.tedros.person.module.report.ReportModule;
+import com.tedros.person.resource.AppResource;
 
 /**
  * The app start class.
@@ -41,8 +42,7 @@ public class AppStart implements ITApplication {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub 
-		
+		AppResource.createResource();
 	}
 	
 	
