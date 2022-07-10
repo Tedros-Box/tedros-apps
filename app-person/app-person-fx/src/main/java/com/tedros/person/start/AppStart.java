@@ -10,6 +10,7 @@ import com.tedros.person.PersonKeys;
 import com.tedros.person.domain.DomainApp;
 import com.tedros.person.module.legal.LegalPersonModule;
 import com.tedros.person.module.natural.NaturalPersonModule;
+import com.tedros.person.module.report.ReportModule;
 
 /**
  * The app start class.
@@ -22,12 +23,15 @@ module = {
 	@TModule(type=NaturalPersonModule.class,
 		name=PersonKeys.MODULE_NATURAL_PERSON, 
 		menu=PersonKeys.MENU_PERSON,
-		description="#{module.rep.desc}"),
+		description=PersonKeys.MODULE_DESC_NATURAL_PERSON),
 	@TModule(type=LegalPersonModule.class,
 		name=PersonKeys.MODULE_LEGAL_PERSON, 
 		menu=PersonKeys.MENU_PERSON, 
-		/*icon=ProdutoIconImageView.class, menuIcon=ProdutoMenuIconImageView.class,*/
-		description="#{module.prod.desc}")
+		description=PersonKeys.MODULE_DESC_LEGAL_PERSON),
+	@TModule(type=ReportModule.class,
+		name=PersonKeys.MODULE_REPORTS, 
+		menu=PersonKeys.MENU_PERSON, 
+		description=PersonKeys.MODULE_DESC_REPORTS)
 
 }, packageName = "com.tedros.person")
 @TResourceBundle(resourceName={"TPerson"})

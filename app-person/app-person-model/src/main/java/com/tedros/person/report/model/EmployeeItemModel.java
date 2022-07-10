@@ -59,12 +59,12 @@ public class EmployeeItemModel implements ITReportItemModel<Employee> {
 
 	public EmployeeItemModel(Employee p) {
 		this.item = p;
-		this.name = p.getName() + p.getLastName()!=null ? " "+p.getLastName() : "";
-		this.type = p.getType().getName();
-		this.address = p.getAddress().toString();
+		this.name = p.getName() + (p.getLastName()!=null ? " "+p.getLastName() : "");
+		this.type = p.getType()!=null ? p.getType().getName() : null;
+		this.address = p.getAddress()!=null ? p.getAddress().toString() : null;
 		this.contacts = Contact.toStringList(p.getContacts());
 		this.description = p.getDescription();
-		this.employer = p.getEmployer().getName();
+		this.employer = p.getEmployer()!=null ? p.getEmployer().getName() : null;
 		this.birthDate = p.getBirthDate()!=null ? format(p.getBirthDate()) : null;
 		this.hiringDate = p.getHiringDate()!=null ? format(p.getHiringDate()) : null;
 		this.resignationDate = p.getResignationDate()!=null ? format(p.getResignationDate()) : null;

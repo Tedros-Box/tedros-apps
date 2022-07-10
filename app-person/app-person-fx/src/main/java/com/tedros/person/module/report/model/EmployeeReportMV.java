@@ -12,7 +12,6 @@ import com.tedros.fxapi.annotation.control.TDatePickerField;
 import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TOneSelectionModal;
 import com.tedros.fxapi.annotation.control.TOptionsList;
 import com.tedros.fxapi.annotation.control.TRadioButton;
 import com.tedros.fxapi.annotation.control.TTableColumn;
@@ -27,6 +26,8 @@ import com.tedros.fxapi.annotation.layout.THGrow;
 import com.tedros.fxapi.annotation.layout.TPane;
 import com.tedros.fxapi.annotation.layout.TPriority;
 import com.tedros.fxapi.annotation.layout.TTitledPane;
+import com.tedros.fxapi.annotation.layout.TVBox;
+import com.tedros.fxapi.annotation.layout.TVGrow;
 import com.tedros.fxapi.annotation.presenter.TBehavior;
 import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
@@ -40,19 +41,22 @@ import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
 import com.tedros.fxapi.presenter.model.TModelView;
 import com.tedros.fxapi.presenter.report.behavior.TDataSetReportBehavior;
 import com.tedros.fxapi.presenter.report.decorator.TDataSetReportDecorator;
-import com.tedros.location.domain.DomainApp;
-import com.tedros.location.module.report.action.SearchAction;
+import com.tedros.person.PersonKeys;
 import com.tedros.person.converter.GenderConverter;
 import com.tedros.person.converter.SexConverter;
+import com.tedros.person.domain.DomainApp;
 import com.tedros.person.domain.Gender;
 import com.tedros.person.domain.Sex;
+import com.tedros.person.ejb.controller.ILegalPersonController;
 import com.tedros.person.ejb.controller.IStaffTypeController;
 import com.tedros.person.model.LegalPerson;
 import com.tedros.person.model.StaffType;
-import com.tedros.person.module.legal.model.FindLegalPersonMV;
+import com.tedros.person.module.legal.model.LegalPersonMV;
 import com.tedros.person.module.legal.model.StaffTypeMV;
-import com.tedros.person.module.legal.table.EmployeeRowFactoryBuilder;
+import com.tedros.person.module.report.action.SearchAction;
 import com.tedros.person.module.report.process.EmployeeReportProcess;
+import com.tedros.person.module.report.table.EmployeeItemMV;
+import com.tedros.person.module.report.table.EmployeeReportRowFactoryBuilder;
 import com.tedros.person.report.model.EmployeeItemModel;
 import com.tedros.person.report.model.EmployeeReportModel;
 
@@ -63,71 +67,50 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 
 
-@TForm(name = "#{form.repo.place}", showBreadcrumBar=true, editCssId="")
+@TForm(name = PersonKeys.FORM_REPORT, showBreadcrumBar=true, editCssId="")
 @TReportProcess(type=EmployeeReportProcess.class, model = EmployeeReportModel.class)
 @TPresenter(type = TDynaPresenter.class,
-			behavior = @TBehavior(type = TDataSetReportBehavior.class, 
-			action=SearchAction.class), 
-			decorator = @TDecorator(type = TDataSetReportDecorator.class, 
-									viewTitle="#{view.repo.place}"))
-@TSecurity(	id=DomainApp.PLACE_REPORT_FORM_ID, 
-			appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.repo.place}",
-			allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EXPORT, TAuthorizationType.SEARCH})
+	behavior = @TBehavior(type = TDataSetReportBehavior.class, 
+		action=SearchAction.class), 
+	decorator = @TDecorator(type = TDataSetReportDecorator.class, 
+		viewTitle=PersonKeys.VIEW_REPORT_EMPLOYEES))
+@TSecurity(	id=DomainApp.EMPLOYEE_REPORT_FORM_ID, 
+appName = PersonKeys.APP_PERSON, 
+moduleName = PersonKeys.MODULE_LEGAL_PERSON, 
+viewName = PersonKeys.VIEW_REPORT_EMPLOYEES,
+allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EXPORT, TAuthorizationType.SEARCH})
 public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 	
 	private SimpleLongProperty id;
 	
 	@TAccordion(expandedPane="filtro", node=@TNode(id="repdoaacc",parse = true),
-			panes={
-					@TTitledPane(text="#{label.filters}", node=@TNode(id="filtro",parse = true), 
-							expanded=true, layoutType=TLayoutType.HBOX,
-							fields={"title", "orderBy"}),
-					@TTitledPane(text="#{label.result}", node=@TNode(id="resultado",parse = true),
-						fields={"result"})})	
-	private SimpleStringProperty displayText;
+		panes={
+			@TTitledPane(text=TUsualKey.FILTERS, node=@TNode(id="filtro",parse = true), 
+				expanded=true, layoutType=TLayoutType.HBOX,
+				fields={"title", "orderBy"}),
+			@TTitledPane(text=TUsualKey.RESULT, node=@TNode(id="resultado",parse = true),
+				fields={"result"})})	
+	private SimpleStringProperty displayProperty;
 	
-
+	@TVBox(	pane=@TPane(children={"name", "sex", "type", "interval" }), spacing=10, fillWidth=true,
+			vgrow=@TVGrow(priority={@TPriority(field="name", priority=Priority.ALWAYS), 
+					@TPriority(field="sex", priority=Priority.ALWAYS), 
+					@TPriority(field="type", priority=Priority.ALWAYS), 
+					@TPriority(field="interval", priority=Priority.ALWAYS)}))
+			
+	private SimpleStringProperty title;
+	
 	@TLabel(text=TUsualKey.NAME)
-	@TTextField(maxLength=120, required = true,
+	@TTextField(maxLength=120,
 		node=@TNode(requestFocus=true, parse = true))
-	@THBox(	pane=@TPane(children={"name", "lastName", "birthDate"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"name", "lastName"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="name", priority=Priority.ALWAYS), 
-			@TPriority(field="lastName", priority=Priority.ALWAYS), 
-			@TPriority(field="birthDate", priority=Priority.SOMETIMES)}))
+			@TPriority(field="lastName", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty name;
 	
 	@TLabel(text=TUsualKey.LAST_NAME)
 	@TTextField(maxLength=60)
 	private SimpleStringProperty lastName;
-	
-	@TLabel(text=TUsualKey.BIRTHDATE)
-	@TDatePickerField
-	private SimpleObjectProperty<Date> birthDate;
-
-	@TLabel(text=TUsualKey.OCCUPATION)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
-	optionsList=@TOptionsList(serviceName = IStaffTypeController.JNDI_NAME, 
-	optionModelViewClass=StaffTypeMV.class,
-	entityClass=StaffType.class))
-	@THBox(	pane=@TPane(children={"type", "hiringDate", "resignationDate", "employer"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.ALWAYS), 
-			@TPriority(field="hiringDate", priority=Priority.ALWAYS), 
-			@TPriority(field="resignationDate", priority=Priority.ALWAYS), 
-			@TPriority(field="employer", priority=Priority.ALWAYS)}))
-	private SimpleObjectProperty<StaffType> type;
-	
-	@TLabel(text=TUsualKey.HIRING_DATE)
-	@TDatePickerField
-	private SimpleObjectProperty<Date> hiringDate;
-	
-	@TLabel(text=TUsualKey.RESIGNATION_DATE)
-	@TDatePickerField
-	private SimpleObjectProperty<Date> resignationDate;
-	
-	@TLabel(text=TUsualKey.EMPLOYER)
-	@TOneSelectionModal(modelClass = LegalPerson.class, modelViewClass = FindLegalPersonMV.class, 
-	width=300, height=50, required=true)
-	private SimpleObjectProperty<LegalPerson> employer;
 	
 	@TLabel(text=TUsualKey.SEX)
 	@THorizontalRadioGroup(spacing= 10,
@@ -149,35 +132,88 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 				@TRadioButton(text = TUsualKey.COMMON, userData = TUsualKey.COMMON)
 		})
 	private SimpleObjectProperty<Gender> gender;
+
+	@TLabel(text=TUsualKey.OCCUPATION)
+	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	optionsList=@TOptionsList(serviceName = IStaffTypeController.JNDI_NAME, 
+	optionModelViewClass=StaffTypeMV.class,
+	entityClass=StaffType.class))
+	@THBox(	pane=@TPane(children={"type", "employer"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.ALWAYS), 
+			@TPriority(field="employer", priority=Priority.ALWAYS)}))
+	private SimpleObjectProperty<StaffType> type;
 	
+	@TLabel(text=TUsualKey.EMPLOYER)
+	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	optionsList=@TOptionsList(serviceName = ILegalPersonController.JNDI_NAME, 
+	optionModelViewClass=LegalPersonMV.class,
+	entityClass=LegalPerson.class))
+	private SimpleObjectProperty<LegalPerson> employer;
 	
-	@TLabel(text="#{label.order.by}:")
+	@THBox(pane=@TPane(children={"birthDate", "hiringDate", "resignationDate"}), spacing=10, fillHeight=true,
+		hgrow=@THGrow(priority={@TPriority(field="birthDate", priority=Priority.ALWAYS), 
+			@TPriority(field="hiringDate", priority=Priority.ALWAYS), 
+			@TPriority(field="resignationDate", priority=Priority.ALWAYS)}))		
+	private SimpleStringProperty interval;
+	
+	@TFieldSet(fields = { "birthDate", "birthDateEnd" }, 
+		region=@TRegion(maxWidth=600, parse = true),
+		legend = TUsualKey.BIRTHDATE)
+	@TLabel(text=TUsualKey.BEGIN)
+	@TDatePickerField
+	private SimpleObjectProperty<Date> birthDate;
+	
+	@TLabel(text=TUsualKey.END)
+	@TDatePickerField
+	private SimpleObjectProperty<Date> birthDateEnd;
+
+	@TFieldSet(fields = { "hiringDate", "hiringDateEnd" }, 
+		region=@TRegion(maxWidth=600, parse = true),
+		legend = TUsualKey.HIRING_DATE)
+	@TLabel(text=TUsualKey.BEGIN)
+	@TDatePickerField
+	private SimpleObjectProperty<Date> hiringDate;
+
+	@TLabel(text=TUsualKey.END)
+	@TDatePickerField
+	private SimpleObjectProperty<Date> hiringDateEnd;
+	
+	@TFieldSet(fields = { "resignationDate", "resignationDateEnd" }, 
+		region=@TRegion(maxWidth=600, parse = true),
+		legend = TUsualKey.RESIGNATION_DATE)
+	@TLabel(text=TUsualKey.BEGIN)
+	@TDatePickerField
+	private SimpleObjectProperty<Date> resignationDate;
+	
+	@TLabel(text=TUsualKey.END)
+	@TDatePickerField
+	private SimpleObjectProperty<Date> resignationDateEnd;
+	
+	@TLabel(text=TFxKey.SORT_BY)
 	@TFieldSet(fields = { "orderBy", "orderType" }, 
 		region=@TRegion(maxWidth=600, parse = true),
-		legend = "#{label.result.order}")
+		legend =TUsualKey.RESULT_ORDER)
 	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text="#{label.title}", userData="e.title"), 
-					@TRadioButton(text="#{label.type}", userData="t.name"), 
-					@TRadioButton(text="#{label.country}", userData="c.name"), 
-					@TRadioButton(text="#{label.admin.area}", userData="aa.name"), 
-					@TRadioButton(text="#{label.city}", userData="ct.name"), 
-					@TRadioButton(text="#{label.code}", userData="a.code")
+	radioButtons = {@TRadioButton(text=TUsualKey.NAME, userData="e.name"),  
+					@TRadioButton(text=TUsualKey.OCCUPATION, userData="t.name"), 
+					@TRadioButton(text=TUsualKey.EMPLOYER, userData="a.name"), 
+					@TRadioButton(text=TUsualKey.SEX, userData="e.sex")
 	})
 	private SimpleStringProperty orderBy;
 	
-	@TLabel(text="#{label.order.type}:")
+	@TLabel(text=TFxKey.SORT_TYPE)
 	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text="#{label.order.asc}", userData="asc"), 
-					@TRadioButton(text="#{label.order.desc}", userData="desc")
+	radioButtons = {@TRadioButton(text=TFxKey.SORT_BY_ASC, userData="asc"), 
+					@TRadioButton(text=TFxKey.SORT_BY_DESC, userData="desc")
 	})
 	private SimpleStringProperty orderType;
 	
-	@TTableView(editable=true, rowFactory=EmployeeRowFactoryBuilder.class,
-			control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
-			columns = { @TTableColumn(cellValue="title", text = "#{label.title}", prefWidth=20, resizable=true), 
-					@TTableColumn(cellValue="type", text = "#{label.type}", resizable=true), 
-						@TTableColumn(cellValue="country", text = "#{label.country}", resizable=true), 
-						@TTableColumn(cellValue="address", text = "#{label.address}", resizable=true)
+	@TTableView(editable=true, rowFactory=EmployeeReportRowFactoryBuilder.class,
+		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
+		columns = { 
+				@TTableColumn(cellValue="name", text = TUsualKey.NAME, prefWidth=20, resizable=true), 
+				@TTableColumn(cellValue="type", text = TUsualKey.OCCUPATION, resizable=true), 
+				@TTableColumn(cellValue="employer", text = TUsualKey.EMPLOYER, resizable=true)
 			})
 	@TModelViewType(modelClass=EmployeeItemModel.class, modelViewClass=EmployeeItemMV.class)
 	private ITObservableList<EmployeeItemMV> result;
@@ -185,7 +221,6 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 	public EmployeeReportMV(EmployeeReportModel entidade) {
 		super(entidade);
 	}
-	
 	
 	@Override
 	public void setId(SimpleLongProperty id) {
@@ -197,140 +232,145 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 		return id;
 	}
 
-	@Override
 	public SimpleStringProperty getDisplayProperty() {
-		return this.displayText;
+		return displayProperty;
 	}
 
-	/**
-	 * @return the displayText
-	 */
-	public SimpleStringProperty getDisplayText() {
-		return displayText;
+	public void setDisplayProperty(SimpleStringProperty displayProperty) {
+		this.displayProperty = displayProperty;
 	}
 
-	/**
-	 * @param displayText the displayText to set
-	 */
-	public void setDisplayText(SimpleStringProperty displayText) {
-		this.displayText = displayText;
+	public SimpleStringProperty getTitle() {
+		return title;
 	}
 
+	public void setTitle(SimpleStringProperty title) {
+		this.title = title;
+	}
 
 	public SimpleStringProperty getName() {
 		return name;
 	}
 
-
 	public void setName(SimpleStringProperty name) {
 		this.name = name;
 	}
-
 
 	public SimpleStringProperty getLastName() {
 		return lastName;
 	}
 
-
 	public void setLastName(SimpleStringProperty lastName) {
 		this.lastName = lastName;
 	}
-
-
-	public SimpleObjectProperty<Date> getBirthDate() {
-		return birthDate;
-	}
-
-
-	public void setBirthDate(SimpleObjectProperty<Date> birthDate) {
-		this.birthDate = birthDate;
-	}
-
-
-	public SimpleObjectProperty<StaffType> getType() {
-		return type;
-	}
-
-
-	public void setType(SimpleObjectProperty<StaffType> type) {
-		this.type = type;
-	}
-
-
-	public SimpleObjectProperty<Date> getHiringDate() {
-		return hiringDate;
-	}
-
-
-	public void setHiringDate(SimpleObjectProperty<Date> hiringDate) {
-		this.hiringDate = hiringDate;
-	}
-
-
-	public SimpleObjectProperty<Date> getResignationDate() {
-		return resignationDate;
-	}
-
-
-	public void setResignationDate(SimpleObjectProperty<Date> resignationDate) {
-		this.resignationDate = resignationDate;
-	}
-
-
-	public SimpleObjectProperty<LegalPerson> getEmployer() {
-		return employer;
-	}
-
-
-	public void setEmployer(SimpleObjectProperty<LegalPerson> employer) {
-		this.employer = employer;
-	}
-
 
 	public SimpleObjectProperty<Sex> getSex() {
 		return sex;
 	}
 
-
 	public void setSex(SimpleObjectProperty<Sex> sex) {
 		this.sex = sex;
 	}
-
 
 	public SimpleObjectProperty<Gender> getGender() {
 		return gender;
 	}
 
-
 	public void setGender(SimpleObjectProperty<Gender> gender) {
 		this.gender = gender;
 	}
 
+	public SimpleObjectProperty<StaffType> getType() {
+		return type;
+	}
+
+	public void setType(SimpleObjectProperty<StaffType> type) {
+		this.type = type;
+	}
+
+	public SimpleObjectProperty<LegalPerson> getEmployer() {
+		return employer;
+	}
+
+	public void setEmployer(SimpleObjectProperty<LegalPerson> employer) {
+		this.employer = employer;
+	}
+
+	public SimpleStringProperty getInterval() {
+		return interval;
+	}
+
+	public void setInterval(SimpleStringProperty interval) {
+		this.interval = interval;
+	}
+
+	public SimpleObjectProperty<Date> getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(SimpleObjectProperty<Date> birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public SimpleObjectProperty<Date> getBirthDateEnd() {
+		return birthDateEnd;
+	}
+
+	public void setBirthDateEnd(SimpleObjectProperty<Date> birthDateEnd) {
+		this.birthDateEnd = birthDateEnd;
+	}
+
+	public SimpleObjectProperty<Date> getHiringDate() {
+		return hiringDate;
+	}
+
+	public void setHiringDate(SimpleObjectProperty<Date> hiringDate) {
+		this.hiringDate = hiringDate;
+	}
+
+	public SimpleObjectProperty<Date> getHiringDateEnd() {
+		return hiringDateEnd;
+	}
+
+	public void setHiringDateEnd(SimpleObjectProperty<Date> hiringDateEnd) {
+		this.hiringDateEnd = hiringDateEnd;
+	}
+
+	public SimpleObjectProperty<Date> getResignationDate() {
+		return resignationDate;
+	}
+
+	public void setResignationDate(SimpleObjectProperty<Date> resignationDate) {
+		this.resignationDate = resignationDate;
+	}
+
+	public SimpleObjectProperty<Date> getResignationDateEnd() {
+		return resignationDateEnd;
+	}
+
+	public void setResignationDateEnd(SimpleObjectProperty<Date> resignationDateEnd) {
+		this.resignationDateEnd = resignationDateEnd;
+	}
 
 	public SimpleStringProperty getOrderBy() {
 		return orderBy;
 	}
 
-
 	public void setOrderBy(SimpleStringProperty orderBy) {
 		this.orderBy = orderBy;
 	}
-
 
 	public SimpleStringProperty getOrderType() {
 		return orderType;
 	}
 
-
 	public void setOrderType(SimpleStringProperty orderType) {
 		this.orderType = orderType;
 	}
 
-
 	public ITObservableList<EmployeeItemMV> getResult() {
 		return result;
 	}
-
 
 	public void setResult(ITObservableList<EmployeeItemMV> result) {
 		this.result = result;

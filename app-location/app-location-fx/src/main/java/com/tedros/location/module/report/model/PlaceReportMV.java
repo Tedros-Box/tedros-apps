@@ -138,7 +138,7 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	
 	
 	
-	@TLabel(text="#{label.order.by}:")
+	@TLabel(text=TFxKey.SORT_BY)
 	@TFieldSet(fields = { "orderBy", "orderType" }, 
 		region=@TRegion(maxWidth=600, parse = true),
 		legend = "#{label.result.order}")
@@ -152,10 +152,10 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	})
 	private SimpleStringProperty orderBy;
 	
-	@TLabel(text="#{label.order.type}:")
+	@TLabel(text=TFxKey.SORT_TYPE)
 	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text="#{label.order.asc}", userData="asc"), 
-					@TRadioButton(text="#{label.order.desc}", userData="desc")
+	radioButtons = {@TRadioButton(text=TFxKey.SORT_BY_ASC, userData="asc"), 
+					@TRadioButton(text=TFxKey.SORT_BY_DESC, userData="desc")
 	})
 	private SimpleStringProperty orderType;
 	
