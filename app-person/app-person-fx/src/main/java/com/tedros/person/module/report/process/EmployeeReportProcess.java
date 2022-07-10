@@ -6,29 +6,71 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.tedros.core.TLanguage;
+import com.tedros.ejb.base.result.TResult;
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.exception.TProcessException;
 import com.tedros.fxapi.process.TReportProcess;
+import com.tedros.person.PersonKeys;
 import com.tedros.person.report.model.EmployeeReportModel;
 import com.tedros.person.resource.AppResource;
 import com.tedros.person.start.TConstant;
 
+import net.sf.jasperreports.engine.JRException;
+
 public class EmployeeReportProcess extends TReportProcess<EmployeeReportModel> {
 
 	public EmployeeReportProcess() throws TProcessException {
-		super("IEmployeeReportControllerRemote", "Employee");
+		super("IEmployeeReportControllerRemote", 
+				TLanguage.getInstance().getString(PersonKeys.REPORT_HEADER_EMPLOYEES));
 	}
 	
 	protected HashMap<String, Object> getReportParameters() {
-		TLanguage l = TLanguage.getInstance(TConstant.UUI);
+		TLanguage l = TLanguage.getInstance();
 		super.setSubReportDir(AppResource.APP_MODULE_PATH);
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("hTitle", l.getString("#{label.title}"));
-		params.put("hDesc", l.getString("#{label.description}"));
-		params.put("hType", l.getString("#{label.type}"));
-		params.put("hAddr", l.getString("#{label.address}"));
-		params.put("hContact", l.getString("#{label.contacts}"));
-		params.put("report_title", l.getString("#{header.jasper.place}"));
+		params.put("hName", l.getString(TUsualKey.NAME));
+		params.put("hOccup", l.getString(TUsualKey.OCCUPATION));
+		params.put("hBirthDt", l.getString(TUsualKey.BIRTHDATE));
+		params.put("hHirDt", l.getString(TUsualKey.HIRING_DATE));
+		params.put("hResDt", l.getString(TUsualKey.RESIGNATION_DATE));
+		params.put("hEmployer", l.getString(TUsualKey.EMPLOYER));
+		params.put("hSex", l.getString(TUsualKey.SEX));
+		params.put("hGender", l.getString(TUsualKey.GENDER));
+		params.put("hDocs", l.getString(TUsualKey.DOCUMENTS));
+		params.put("hAttrib", l.getString(TUsualKey.ATTRIBUTES));
+		params.put("hObs", l.getString(TUsualKey.OBSERVATION));
+		params.put("hVale", l.getString(TUsualKey.ADDITIONAL_DATA));
+		params.put("hCode", l.getString(TUsualKey.REF_CODE));
+		params.put("hState", l.getString(TUsualKey.STATE));
+		params.put("hFile", l.getString(TUsualKey.FILE));
+		params.put("hDesc", l.getString(TUsualKey.DESCRIPTION));
+		params.put("hType", l.getString(TUsualKey.TYPE));
+		params.put("hAddr", l.getString(TUsualKey.ADDRESS));
+		params.put("hContact", l.getString(TUsualKey.CONTACTS));
+		params.put("report_title", l.getString(PersonKeys.REPORT_HEADER_EMPLOYEES));
 		return params;
+	}
+	
+	protected TResult<EmployeeReportModel> runExportPdf() throws JRException {
+		evaluateModel();
+		return super.runExportPdf();
+	}
+	
+	protected TResult<EmployeeReportModel> runExportXls() throws JRException {
+		evaluateModel();
+		return super.runExportXls();
+	}
+
+	private void evaluateModel() {
+		TLanguage l = TLanguage.getInstance();
+		EmployeeReportModel m = super.getModel();
+		if(m.getResult()!=null)
+			m.getResult().parallelStream().forEach(c->{
+				if(c.getSex()!=null)
+					c.setSex(l.getString(c.getSex()));
+				if(c.getGender()!=null)
+					c.setGender(l.getString(c.getGender()));
+			});
 	}
 	
 	protected InputStream getJasperInputStream() {
