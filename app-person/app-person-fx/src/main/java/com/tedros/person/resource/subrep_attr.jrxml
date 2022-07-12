@@ -70,7 +70,7 @@
 				<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="0" width="595" height="1" forecolor="#CCCCCC" uuid="f9eac50e-694c-4200-a036-8bb15793d7d6"/>
+				<reportElement x="0" y="0" width="555" height="1" forecolor="#CCCCCC" uuid="f9eac50e-694c-4200-a036-8bb15793d7d6"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>

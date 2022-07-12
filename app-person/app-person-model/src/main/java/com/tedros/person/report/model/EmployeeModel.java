@@ -3,8 +3,10 @@
  */
 package com.tedros.person.report.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import com.tedros.extension.model.Contact;
 import com.tedros.person.model.Employee;
 import com.tedros.util.TDateUtil;
 
@@ -12,8 +14,10 @@ import com.tedros.util.TDateUtil;
  * @author Davis Gordon
  *
  */
-public class EmployeeModel {
+public class EmployeeModel implements Serializable{
 	
+	private static final long serialVersionUID = 8263364630321441440L;
+
 	private String name;
 	
 	private String hiringDate;
@@ -21,12 +25,15 @@ public class EmployeeModel {
 	private String resignationDate;
 	
 	private String type;
+	
+	private String contacts;
 
 	public EmployeeModel(Employee p) {
 		this.name = p.getName() + (p.getLastName()!=null ? " "+p.getLastName() : "");
 		this.type = p.getType()!=null ? p.getType().getName() : null;
 		this.hiringDate = p.getHiringDate()!=null ? format(p.getHiringDate()) : null;
 		this.resignationDate = p.getResignationDate()!=null ? format(p.getResignationDate()) : null;
+		this.contacts = Contact.toStringList(p.getContacts());
 	}
 	
 	private String format(Date dt) {
@@ -63,6 +70,14 @@ public class EmployeeModel {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(String contacts) {
+		this.contacts = contacts;
 	}
 
 }

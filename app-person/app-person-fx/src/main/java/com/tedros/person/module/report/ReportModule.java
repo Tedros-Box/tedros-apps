@@ -13,6 +13,8 @@ import com.tedros.fxapi.presenter.view.group.TViewItem;
 import com.tedros.person.PersonKeys;
 import com.tedros.person.domain.DomainApp;
 import com.tedros.person.module.report.model.EmployeeReportMV;
+import com.tedros.person.module.report.model.LegalPersonReportMV;
+import com.tedros.person.module.report.model.NaturalPersonReportMV;
 
 /**
  * @author Davis Gordon
@@ -30,10 +32,9 @@ public class ReportModule extends TModule {
 	@Override
 	public void tStart() {
 		super.tShowView(new TGroupView<TGroupPresenter>(this, PersonKeys.VIEW_REPORTS, 
-				new TViewItem(TDynaGroupView.class, EmployeeReportMV.class, PersonKeys.VIEW_REPORT_EMPLOYEES)/*,
-				new TViewItem(TDynaGroupView.class, LegalTypeMV.class, PersonKeys.VIEW_LEGAL_TYPE), 
-				new TViewItem(TDynaGroupView.class, StaffTypeMV.class, PersonKeys.VIEW_STAFF_TYPE), 
-				new TViewItem(TDynaGroupView.class, EmployeeMV.class, PersonKeys.VIEW_EMPLOYEES)*/
+				new TViewItem(TDynaGroupView.class, EmployeeReportMV.class, PersonKeys.VIEW_REPORT_EMPLOYEES),
+				new TViewItem(TDynaGroupView.class, LegalPersonReportMV.class, PersonKeys.VIEW_REPORT_LEGAL_PERSON), 
+				new TViewItem(TDynaGroupView.class, NaturalPersonReportMV.class, PersonKeys.VIEW_REPORT_NATURAL_PERSON)
 				));
 
 	}
