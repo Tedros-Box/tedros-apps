@@ -1,33 +1,32 @@
 /**
  * 
  */
-package com.tedros.location.module.report.table;
+package com.tedros.person.module.report.table;
 
 import com.tedros.core.ITModule;
 import com.tedros.core.model.ITModelView;
 import com.tedros.ejb.base.model.ITModel;
 import com.tedros.fxapi.builder.TReportRowFactoryCallBackBuilder;
 import com.tedros.fxapi.presenter.model.TModelView;
-import com.tedros.location.module.place.PlaceModule;
-import com.tedros.location.module.place.model.PlaceMV;
-import com.tedros.location.module.report.model.PlaceItemMV;
+import com.tedros.person.module.legal.LegalPersonModule;
+import com.tedros.person.module.legal.model.LegalPersonMV;
 
 /**
  * @author Davis Gordon
  *
  */
-public class PlaceRowFactoryBuilder extends TReportRowFactoryCallBackBuilder<PlaceItemMV> {
+public class LegalPersonReportRowFactoryBuilder extends TReportRowFactoryCallBackBuilder<LegalPersonItemMV> {
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	protected Class<? extends ITModule> getTargetModuleClass(Class<? extends ITModelView> modelViewClass) {
-		return PlaceModule.class;
+		return LegalPersonModule.class;
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	protected Class<? extends TModelView> getTargetModelViewClass(Class<? extends ITModel> modelClass) {
-		return PlaceMV.class;
+		return LegalPersonMV.class;
 	}
 
 }
