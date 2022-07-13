@@ -67,7 +67,7 @@ public class Person extends TReceptiveEntity {
 	inverseJoinColumns=@JoinColumn(name="contact_id"),
 	uniqueConstraints=@UniqueConstraint(name="PersonContactUK", 
 	columnNames = { "person_id","contact_id"}))
-	public Set<Contact> contacts;
+	private Set<Contact> contacts;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name=DomainTables.person_document, 
@@ -76,7 +76,7 @@ public class Person extends TReceptiveEntity {
 	inverseJoinColumns=@JoinColumn(name="doc_id"),
 	uniqueConstraints=@UniqueConstraint(name="PersonDocumentUK", 
 	columnNames = { "person_id","doc_id"}))
-	public Set<Document> documents;
+	private Set<Document> documents;
 	
 	
 	public String getName() {
