@@ -1,0 +1,116 @@
+/**
+ * 
+ */
+package com.tedros.services.model;
+
+import java.util.Date;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
+import com.tedros.docs.model.Document;
+import com.tedros.ejb.base.entity.TEntity;
+import com.tedros.person.model.Person;
+import com.tedros.services.domain.DomainSchema;
+import com.tedros.services.domain.DomainTables;
+import com.tedros.services.domain.Status;
+
+/**
+ * @author Davis Gordon
+ *
+ */
+public class Contracted extends TEntity {
+
+	private Contractor contractor;
+	
+	private Person person;
+	
+	private Set<ServiceType> serviceTypes;
+	
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinTable(name=DomainTables.contracted_docs, 
+	schema=DomainSchema.schema,
+	joinColumns=@JoinColumn(name="contr_id"), 
+	inverseJoinColumns=@JoinColumn(name="doc_id"),
+	uniqueConstraints=@UniqueConstraint(name="ContractedDocumentUK", 
+	columnNames = { "contr_id","doc_id"}))
+	private Set<Document> documents;
+	
+	@Column
+	@Enumerated(EnumType.STRING)
+	private Status status;
+	
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date beginDate;
+	
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date endDate;
+
+	public Contractor getContractor() {
+		return contractor;
+	}
+
+	public void setContractor(Contractor contractor) {
+		this.contractor = contractor;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public Set<ServiceType> getServiceTypes() {
+		return serviceTypes;
+	}
+
+	public void setServiceTypes(Set<ServiceType> serviceTypes) {
+		this.serviceTypes = serviceTypes;
+	}
+
+	public Set<Document> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(Set<Document> documents) {
+		this.documents = documents;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+}
