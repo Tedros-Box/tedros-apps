@@ -7,8 +7,40 @@
 		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>tedrosDataSource</jta-data-source>
+		
 		<class>com.tedros.common.model.TFileEntity</class>
 		<class>com.tedros.common.model.TByteEntity</class>
+		<class>com.tedros.person.model.Person</class>
+		<class>com.tedros.person.model.NaturalPerson</class>
+		<class>com.tedros.person.model.LegalPerson</class>
+		<class>com.tedros.person.model.Employee</class>
+		<class>com.tedros.person.model.LegalType</class>
+		<class>com.tedros.person.model.PersonAttributes</class>
+		<class>com.tedros.person.model.StaffType</class>
+		
+		<class>com.tedros.docs.model.Document</class>
+		<class>com.tedros.extension.model.Contact</class>
+		<class>com.tedros.docs.model.DocumentEvent</class>
+		<class>com.tedros.docs.model.DocumentState</class>
+		<class>com.tedros.docs.model.DocumentType</class>
+		
+		<class>com.tedros.location.model.Country</class>
+		<class>com.tedros.location.model.City</class>
+		<class>com.tedros.location.model.AdminArea</class>
+		<class>com.tedros.location.model.Place</class>
+		<class>com.tedros.location.model.Address</class>
+		<class>com.tedros.location.model.StreetType</class>
+		<class>com.tedros.location.model.PlaceType</class>
+		<class>com.tedros.services.model.Contracted</class>
+		<class>com.tedros.services.model.Contractor</class>
+		<class>com.tedros.services.model.PaymentPlan</class>
+		<class>com.tedros.services.model.Plan</class>
+		<class>com.tedros.services.model.Service</class>
+		<class>com.tedros.services.model.ServiceLocation</class>
+		<class>com.tedros.services.model.ServiceType</class>
+		
+		
+		
 		
 		<properties>
 		
