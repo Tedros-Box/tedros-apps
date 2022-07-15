@@ -11,8 +11,8 @@ public interface DomainTables {
 	final static String contracted= "contracted";
 	final static String payment_plan= "payment_plan";
 	final static String contracted_docs = "contracted_docs";
-	final static String staff_type = "staff_type";
-	final static String employee = "employee";
+	final static String contracted_serv_types = "contracted_serv_types";
+	final static String service_plan = "service_plan";
 	
 	
 }

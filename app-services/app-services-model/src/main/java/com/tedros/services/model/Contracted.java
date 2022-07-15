@@ -8,12 +8,15 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
@@ -29,12 +32,27 @@ import com.tedros.services.domain.Status;
  * @author Davis Gordon
  *
  */
+@Entity
+@Table(name=DomainTables.contracted, schema=DomainSchema.schema)
 public class Contracted extends TEntity {
 
+	private static final long serialVersionUID = 6542389635444105197L;
+
+	@ManyToOne
+	@JoinColumn(name="contrac_id", nullable=false, updatable=false)
 	private Contractor contractor;
 	
+	@ManyToOne
+	@JoinColumn(name="person_id", nullable=false, updatable=false)
 	private Person person;
 	
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinTable(name=DomainTables.contracted_serv_types, 
+	schema=DomainSchema.schema,
+	joinColumns=@JoinColumn(name="contr_id"), 
+	inverseJoinColumns=@JoinColumn(name="type_id"),
+	uniqueConstraints=@UniqueConstraint(name="ContractedServTypeUK", 
+	columnNames = { "contr_id","type_id"}))
 	private Set<ServiceType> serviceTypes;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)

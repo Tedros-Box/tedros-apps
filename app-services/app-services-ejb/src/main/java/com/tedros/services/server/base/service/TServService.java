@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import com.tedros.ejb.base.bo.ITGenericBO;
 import com.tedros.ejb.base.entity.ITEntity;
 import com.tedros.ejb.base.service.TEjbService;
-import com.tedros.services.server.base.bo.TEntityBO;
+import com.tedros.services.server.base.bo.TServBO;
 
 /**
  * DESCRIÇÃO DA CLASSE
@@ -24,12 +24,12 @@ import com.tedros.services.server.base.bo.TEntityBO;
  *
  */
 @Local
-@Stateless(name="TStatelessService")
+@Stateless(name="TServService")
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class TStatelessService<E extends ITEntity> extends TEjbService<E>  {
+public class TServService<E extends ITEntity> extends TEjbService<E>  {
 	
 	@Inject
-	private TEntityBO<E> bo;
+	private TServBO<E> bo;
 	
 	@Override
 	public ITGenericBO<E> getBussinesObject() {

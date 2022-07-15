@@ -125,7 +125,9 @@ public class Address extends TEntity {
 	public String toString() {
 		return String.format(
 				"%s %s, %s, %s - %s %s %s %s",
-				streetType, publicPlace, complement, neighborhood, country, adminArea, city, code);
+				streetType, (publicPlace!=null?publicPlace:""), (complement!=null?complement:""), 
+				(neighborhood!=null?neighborhood:""), (country!=null?country:""), 
+				(adminArea!=null?adminArea:""), (city!=null?city:""), (code!=null?code:""));
 	}
 
 	public String getLatitude() {
