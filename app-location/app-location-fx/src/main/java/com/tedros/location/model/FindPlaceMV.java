@@ -12,11 +12,17 @@ import com.tedros.fxapi.annotation.control.TLabelDefaultSetting;
 import com.tedros.fxapi.annotation.control.TOptionsList;
 import com.tedros.fxapi.annotation.control.TTableColumn;
 import com.tedros.fxapi.annotation.control.TTableView;
+import com.tedros.fxapi.annotation.control.TTextField;
 import com.tedros.fxapi.annotation.form.TForm;
+import com.tedros.fxapi.annotation.layout.THBox;
+import com.tedros.fxapi.annotation.layout.THGrow;
+import com.tedros.fxapi.annotation.layout.TPane;
+import com.tedros.fxapi.annotation.layout.TPriority;
 import com.tedros.fxapi.annotation.presenter.TBehavior;
 import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.presenter.TSelectionModalPresenter;
+import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.text.TFont;
 import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.presenter.modal.behavior.TSelectionModalBehavior;
@@ -28,6 +34,7 @@ import com.tedros.location.module.place.model.PlaceTypeMV;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
@@ -41,7 +48,8 @@ import javafx.beans.property.SimpleStringProperty;
 	presenter=@TPresenter(behavior = @TBehavior(type = TSelectionModalBehavior.class), 
 		decorator = @TDecorator(type=TSelectionModalDecorator.class, viewTitle=LocatKey.VIEW_PLACE)),
 	tableView=@TTableView(editable=true, 
-		columns = { @TTableColumn(cellValue="type", text = TUsualKey.TYPE, resizable=true,
+		columns = {@TTableColumn(cellValue="title", text = TUsualKey.TITLE, resizable=true), 
+			@TTableColumn(cellValue="type", text = TUsualKey.TYPE, resizable=true,
 				cellValueFactory=@TCellValueFactory(parse=true, 
 				value=@TCallbackFactory(parse=true, value=PlaceTypeCellCallBack.class))), 
 			@TTableColumn(cellValue="address", text =TUsualKey.ADDRESS, resizable=true,
@@ -53,8 +61,15 @@ public class FindPlaceMV extends TEntityModelView<Place> {
 
 	private SimpleLongProperty id;
 	
+	@TLabel(text=TUsualKey.TITLE)
+	@TTextField(maxLength=60, node=@TNode(requestFocus=true, parse = true))
+	@THBox(	pane=@TPane(children={"title", "type"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="title", priority=Priority.ALWAYS), 
+			@TPriority(field="type", priority=Priority.SOMETIMES)}))
+	private SimpleStringProperty title;
+	
 	@TLabel(text=TUsualKey.TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT, required=true,
+	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
 		optionsList=@TOptionsList(serviceName = "IPlaceTypeControllerRemote", 
 		optionModelViewClass=PlaceTypeMV.class,
 		entityClass=PlaceType.class))
@@ -74,7 +89,7 @@ public class FindPlaceMV extends TEntityModelView<Place> {
 
 	@Override
 	public SimpleStringProperty getDisplayProperty() {
-		return new SimpleStringProperty(null);
+		return title;
 	}
 
 	public SimpleObjectProperty<PlaceType> getType() {
@@ -83,6 +98,14 @@ public class FindPlaceMV extends TEntityModelView<Place> {
 
 	public void setType(SimpleObjectProperty<PlaceType> type) {
 		this.type = type;
+	}
+
+	public SimpleStringProperty getTitle() {
+		return title;
+	}
+
+	public void setTitle(SimpleStringProperty title) {
+		this.title = title;
 	}
 
 

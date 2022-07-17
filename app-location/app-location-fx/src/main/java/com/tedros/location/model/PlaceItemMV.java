@@ -18,7 +18,7 @@ import javafx.beans.value.WeakChangeListener;
 
 	private SimpleLongProperty id;
 	
-	private SimpleStringProperty displayProperty;
+	private SimpleStringProperty title;
 	
 	private SimpleObjectProperty<PlaceType> type;
 	
@@ -27,11 +27,7 @@ import javafx.beans.value.WeakChangeListener;
 	
 	public PlaceItemMV(Place entity) {
 		super(entity);
-		ChangeListener<PlaceType> chl = (a,b,n)->{
-			displayProperty.setValue(n!=null?n.getName():"");
-		};
-		super.getListenerRepository().add("type01", chl);
-		type.addListener(new WeakChangeListener<>(chl));
+		
 	}
 
 	public SimpleLongProperty getId() {
@@ -59,12 +55,17 @@ import javafx.beans.value.WeakChangeListener;
 	}
 
 	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
+		return title;
 	}
 
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
+	public SimpleStringProperty getTitle() {
+		return title;
 	}
+
+	public void setTitle(SimpleStringProperty title) {
+		this.title = title;
+	}
+
 
 
 }

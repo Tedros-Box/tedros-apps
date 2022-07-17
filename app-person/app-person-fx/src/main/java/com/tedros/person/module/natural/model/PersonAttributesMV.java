@@ -26,7 +26,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TEditModalPresenter()
+@TEditModalPresenter(listViewMaxWidth=150, listViewMinWidth=150)
 @TEjbService(model = PersonAttributes.class, serviceName = IPersonAttributesController.JNDI_NAME)
 public class PersonAttributesMV extends TEntityModelView<PersonAttributes> {
 
@@ -45,7 +45,7 @@ public class PersonAttributesMV extends TEntityModelView<PersonAttributes> {
 	private SimpleStringProperty value;
 	
 	@TLabel(text=TUsualKey.DESCRIPTION)
-	@TTextAreaField(maxLength=1024)
+	@TTextAreaField(maxLength=1024, wrapText=true)
 	private SimpleStringProperty description;
 	
 	

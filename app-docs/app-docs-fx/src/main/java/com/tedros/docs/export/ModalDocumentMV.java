@@ -45,7 +45,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TEditModalPresenter()
+@TEditModalPresenter(listViewMaxWidth=150, listViewMinWidth=150)
 @TEjbService(model = Document.class, serviceName = IDocumentController.JNDI_NAME)
 public class ModalDocumentMV extends TEntityModelView<Document> {
 	
@@ -53,10 +53,10 @@ public class ModalDocumentMV extends TEntityModelView<Document> {
 	private SimpleStringProperty displayProperty;
 
 	@TTabPane(tabs = { 
-		@TTab(closable=false, 
-			content = @TContent(detailForm=@TDetailForm(fields={"code","value", "type", "file"})), text = TUsualKey.MAIN_DATA),
-		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"observation"})), text = TUsualKey.OBSERVATION)
-	})
+		@TTab(closable=false, scroll=false, text = TUsualKey.MAIN_DATA,
+			content = @TContent(detailForm=@TDetailForm( fields={"code","value", "type", "file"}))),
+		@TTab(closable=false, text = TUsualKey.OBSERVATION, 
+			content = @TContent(detailForm=@TDetailForm(fields={"observation"})))})
 	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.REF_CODE)

@@ -30,7 +30,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TEditModalPresenter()
+@TEditModalPresenter(listViewMaxWidth=150, listViewMinWidth=150)
 @TEjbService(model = Contact.class, serviceName = IContactController.JNDI_NAME)
 public class ContactMV extends TEntityModelView<Contact> {
 

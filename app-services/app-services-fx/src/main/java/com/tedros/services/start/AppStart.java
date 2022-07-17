@@ -8,6 +8,7 @@ import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
 import com.tedros.services.ServKey;
 import com.tedros.services.domain.DomainApp;
+import com.tedros.services.module.plan.PlanModule;
 import com.tedros.services.module.service.ServiceModule;
 
 /**
@@ -20,10 +21,11 @@ import com.tedros.services.module.service.ServiceModule;
 		@TModule(type=ServiceModule.class, 
 			name=ServKey.MODULE_SERVICES, 
 			menu=ServKey.MENU_SERVICE, 
-			description=ServKey.MODULE_DESC_SERVICE) /*,
-			@TModule(type=ProdutoModule.class, name="#{label.edit.prod}", menu="#{module.adm}", 
-					description="#{module.prod.desc}")
-*/
+			description=ServKey.MODULE_DESC_SERVICE),
+		@TModule(type=PlanModule.class, 
+			name=ServKey.MODULE_PLANS, 
+			menu=ServKey.MENU_SERVICE, 
+			description=ServKey.MODULE_DESC_PLAN)
 	}, packageName = "com.tedros.services", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"TServ"})
