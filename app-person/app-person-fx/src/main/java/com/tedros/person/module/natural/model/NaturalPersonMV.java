@@ -140,17 +140,20 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 	private SimpleObjectProperty<AddressMV> address;
 	
 	@TLabel(text=TUsualKey.ATTRIBUTES)
-	@TEditEntityModal(modelClass = PersonAttributes.class, modelViewClass=PersonAttributesMV.class)
+	@TEditEntityModal(modalHeight=400, modalWidth=600,
+	modelClass = PersonAttributes.class, modelViewClass=PersonAttributesMV.class)
 	@TModelViewType(modelClass = PersonAttributes.class, modelViewClass=PersonAttributesMV.class)
 	private ITObservableList<PersonAttributesMV> attributes;
 	
 	@TLabel(text=TUsualKey.CONTACTS)
-	@TEditEntityModal(modelClass = Contact.class, modelViewClass=ContactMV.class)
+	@TEditEntityModal(modalHeight=400, modalWidth=600,
+	modelClass = Contact.class, modelViewClass=ContactMV.class)
 	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
 	private ITObservableList<ContactMV> contacts;
 	
 	@TLabel(text=TUsualKey.DOCUMENTS)
-	@TEditEntityModal(modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
+	@TEditEntityModal(modalHeight=490, modalWidth=700,
+	modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
 	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
 	public ITObservableList<ModalDocumentMV> documents;
 
