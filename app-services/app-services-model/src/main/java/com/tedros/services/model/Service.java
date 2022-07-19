@@ -5,7 +5,6 @@ package com.tedros.services.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,7 +45,7 @@ public class Service extends TEntity {
 	@JoinColumn(name="serv_type_id", nullable=false)
 	private ServiceType type;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name=DomainTables.service_plan, 
 	schema=DomainSchema.schema,
 	joinColumns=@JoinColumn(name="serv_id"),

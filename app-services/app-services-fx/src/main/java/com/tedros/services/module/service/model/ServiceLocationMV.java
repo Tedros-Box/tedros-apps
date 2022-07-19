@@ -63,8 +63,8 @@ public class ServiceLocationMV extends TEntityModelView<ServiceLocation> {
 	private SimpleStringProperty description;
 	
 	@TLabel(text=LocatKey.VIEW_PLACE)
-	@TOneSelectionModal(modelClass = Place.class, modelViewClass = FindPlaceMV.class, 
-	width=300, height=50, required=true)
+	@TOneSelectionModal(height=50,
+		modelClass = Place.class, modelViewClass = FindPlaceMV.class)
 	private SimpleObjectProperty<Place> place;
 	
 	public ServiceLocationMV(ServiceLocation entity) {

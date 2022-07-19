@@ -83,4 +83,11 @@ public class Employee extends NaturalPerson {
 		
 	}
 
+	@Override
+	public String toString() {
+		return "[#{label.employee}] " + (type != null ? type.getName() + ", " : "")
+				+ (employer != null ? employer.getName() + ", " : "")
+				+ (getName() != null ?  getName() : "");
+	}
+
 }

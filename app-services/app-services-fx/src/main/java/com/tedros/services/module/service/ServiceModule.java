@@ -12,6 +12,7 @@ import com.tedros.fxapi.presenter.view.group.TGroupView;
 import com.tedros.fxapi.presenter.view.group.TViewItem;
 import com.tedros.services.ServKey;
 import com.tedros.services.domain.DomainApp;
+import com.tedros.services.module.service.model.ContractMV;
 import com.tedros.services.module.service.model.ServiceLocationMV;
 import com.tedros.services.module.service.model.ServiceMV;
 import com.tedros.services.module.service.model.ServiceTypeMV;
@@ -34,8 +35,8 @@ public class ServiceModule extends TModule {
 		super.tShowView(new TGroupView<TGroupPresenter>(this, ServKey.VIEW_SERVICE, 
 				new TViewItem(TDynaGroupView.class, ServiceTypeMV.class, ServKey.VIEW_SERVICE_TYPE),
 				new TViewItem(TDynaGroupView.class, ServiceLocationMV.class, ServKey.VIEW_SERVICE_LOCATION), 
-				new TViewItem(TDynaGroupView.class, ServiceMV.class, ServKey.VIEW_SERVICE)/*, 
-				new TViewItem(TDynaGroupView.class, EmployeeMV.class, PersonKeys.VIEW_EMPLOYEES)*/
+				new TViewItem(TDynaGroupView.class, ServiceMV.class, ServKey.VIEW_SERVICE), 
+				new TViewItem(TDynaGroupView.class, ContractMV.class, ServKey.VIEW_CONTRACT)
 				));
 
 	}

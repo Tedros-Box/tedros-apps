@@ -38,6 +38,8 @@
 		<class>com.tedros.services.model.Service</class>
 		<class>com.tedros.services.model.ServiceLocation</class>
 		<class>com.tedros.services.model.ServiceType</class>
+		<class>com.tedros.services.model.Contract</class>
+		<class>com.tedros.services.model.ContractualAgreement</class>
 		
 		
 		

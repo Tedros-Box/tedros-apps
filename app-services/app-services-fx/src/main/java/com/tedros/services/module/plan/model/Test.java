@@ -20,6 +20,7 @@ public class Test {
 		String s = String.format("%d %.2f%%", i, d);
 		
 		System.out.println(s);
+		System.out.println(String.format("%s%-1s", "abc","b"));
 		
 		System.out.println(DateFormat
 			.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM, Locale.forLanguageTag("pt"))

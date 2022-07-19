@@ -19,6 +19,7 @@ public interface ServKey {
 	static final String MODULE_PLANS = "#{module.plans}";
 	static final String MODULE_SERVICE_REPORTS = "#{module.service.reports}";
 	static final String MODULE_SERVICES = "#{module.services}";
+	static final String VIEW_CONTRACT = "#{view.contract}";
 	static final String VIEW_CONTRACTED = "#{view.contracted}";
 	static final String VIEW_CONTRACTOR = "#{view.contractor}";
 	static final String VIEW_PLAN = "#{view.plan}";
