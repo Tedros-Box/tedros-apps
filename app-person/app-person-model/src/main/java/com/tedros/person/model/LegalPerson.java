@@ -107,6 +107,11 @@ public class LegalPerson extends Person {
 	public void setEndActivities(Date endActivities) {
 		this.endActivities = endActivities;
 	}
+
+	@Override
+	public String toString() {
+		return (getName() != null ? "[#{label.legal.person}] "+ getName() : "");
+	}
 	
 	
 	

@@ -17,6 +17,7 @@ public interface DomainApp {
 	static final String PLAN = "PLAN";
 	static final String SERVICE_TYPE = "SERVICE_TYPE";
 	static final String SERVICE_LOCATION = "SERVICE_LOCATION";
+	static final String CONTRACT = "CONTRACT";
 	static final String CONTRACTED = "CONTRACTED";
 	static final String CONTRACTOR = "CONTRACTOR";
 	static final String REPORT = "REPORT";
@@ -46,6 +47,10 @@ public interface DomainApp {
 	static final String CONTRACTED_FORM_ID = MNEMONIC + SEP + CONTRACTED + SEP + FORM;
 	static final String CONTRACTED_VIEW_ID = MNEMONIC + SEP + CONTRACTED + SEP + VIEW;
 	static final String CONTRACTED_MODULE_ID = MNEMONIC + SEP + CONTRACTED + SEP + MODULE;
+
+	static final String CONTRACT_FORM_ID = MNEMONIC + SEP + CONTRACT + SEP + FORM;
+	static final String CONTRACT_VIEW_ID = MNEMONIC + SEP + CONTRACT + SEP + VIEW;
+	static final String CONTRACT_MODULE_ID = MNEMONIC + SEP + CONTRACT + SEP + MODULE;
 	
 	
 /*

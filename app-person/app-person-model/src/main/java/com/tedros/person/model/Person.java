@@ -42,6 +42,9 @@ public class Person extends TReceptiveEntity {
 
 	private static final long serialVersionUID = -1790917959813402388L;
 
+	@Column(length=1)
+	private String dType;
+	
 	@Column(length=120, nullable = false)
 	private String name;
 	
@@ -133,6 +136,19 @@ public class Person extends TReceptiveEntity {
 
 	public void setObservation(String observation) {
 		this.observation = observation;
+	}
+
+	public String getdType() {
+		return dType;
+	}
+
+	public void setdType(String dType) {
+		this.dType = dType;
+	}
+
+	@Override
+	public String toString() {
+		return (name != null ?  name : "");
 	}
 	
 }
