@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import org.apache.commons.lang3.StringUtils;
 
 import com.tedros.ejb.base.eao.TGenericEAO;
+import com.tedros.ejb.base.entity.ITEntity;
 import com.tedros.person.model.LegalPerson;
 import com.tedros.person.report.model.LegalPersonReportModel;
 
@@ -21,6 +22,8 @@ import com.tedros.person.report.model.LegalPersonReportModel;
 @RequestScoped
 public class LegalPersonEAO extends TGenericEAO<LegalPerson> {
 
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<LegalPerson> filterBy(LegalPersonReportModel m){
 		
@@ -81,5 +84,6 @@ public class LegalPersonEAO extends TGenericEAO<LegalPerson> {
 
 		return qry.getResultList();
 	}
+	
 	
 }
