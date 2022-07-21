@@ -167,7 +167,8 @@ public class DocumentMV extends TEntityModelView<Document> {
 	@TModelViewType(modelClass=DocumentEvent.class, modelViewClass=DocumentEventMV.class)
 	private ITObservableList<DocumentEventMV> events;
 	
-	@THTMLEditor(control=@TControl( maxHeight=500, parse = true))
+	@THTMLEditor(showActionsToolBar=true,
+			control=@TControl( maxHeight=500, parse = true))
 	private SimpleStringProperty content;
 	
 	public DocumentMV(Document entity) {
@@ -178,7 +179,7 @@ public class DocumentMV extends TEntityModelView<Document> {
 	@Override
 	public void reload(Document model) {
 		super.reload(model);
-		super.formatFieldsToDisplay("%s %s", code, name);
+		//super.formatFieldsToDisplay("%s %s", code, name);
 	}
 
 	public SimpleLongProperty getId() {
