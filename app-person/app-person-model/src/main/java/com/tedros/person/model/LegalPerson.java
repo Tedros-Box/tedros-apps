@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -28,7 +27,6 @@ import com.tedros.person.domain.DomainTables;
  *
  */
 @Entity
-@Cacheable(false)
 @Table(name = DomainTables.legal_person, schema = DomainSchema.schema)
 @DiscriminatorValue("L")
 public class LegalPerson extends Person {
