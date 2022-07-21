@@ -59,6 +59,9 @@ public class Contract extends TEntity {
 	@Column(length=2000)
 	private String observation;
 	
+	@Column
+	private String content;
+	
 	@OneToMany(orphanRemoval=true, 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="id_contract", nullable=false, updatable=false)
@@ -171,5 +174,13 @@ public class Contract extends TEntity {
 
 	public void setAgreements(Set<ContractualAgreement> agreements) {
 		this.agreements = agreements;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 }

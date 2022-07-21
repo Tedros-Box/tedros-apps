@@ -62,7 +62,7 @@ public class ContractualAgreementMV extends TEntityModelView<ContractualAgreemen
 	
 
 	@TLabel(text=TUsualKey.AMOUNT)
-	@TIntegerField(zeroValidation=TZeroValidation.GREATHER_THAN_ZERO)
+	@TIntegerField(zeroValidation=TZeroValidation.NONE)
 	private SimpleIntegerProperty amount;
 	
 	@TLabel(text=TUsualKey.VALUE)

@@ -14,15 +14,18 @@ import com.tedros.fxapi.annotation.control.TContent;
 import com.tedros.fxapi.annotation.control.TConverter;
 import com.tedros.fxapi.annotation.control.TDatePickerField;
 import com.tedros.fxapi.annotation.control.TEditEntityModal;
+import com.tedros.fxapi.annotation.control.THTMLEditor;
 import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
 import com.tedros.fxapi.annotation.control.TOneSelectionModal;
 import com.tedros.fxapi.annotation.control.TRadioButton;
+import com.tedros.fxapi.annotation.control.TShowField;
 import com.tedros.fxapi.annotation.control.TTab;
 import com.tedros.fxapi.annotation.control.TTabPane;
 import com.tedros.fxapi.annotation.control.TTextAreaField;
 import com.tedros.fxapi.annotation.control.TTextField;
+import com.tedros.fxapi.annotation.control.TShowField.TField;
 import com.tedros.fxapi.annotation.form.TDetailForm;
 import com.tedros.fxapi.annotation.form.TForm;
 import com.tedros.fxapi.annotation.layout.THBox;
@@ -35,6 +38,7 @@ import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.process.TEjbService;
 import com.tedros.fxapi.annotation.scene.TNode;
+import com.tedros.fxapi.annotation.scene.control.TControl;
 import com.tedros.fxapi.annotation.view.TOption;
 import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.collections.ITObservableList;
@@ -48,6 +52,7 @@ import com.tedros.services.domain.Status;
 import com.tedros.services.ejb.controller.IContractController;
 import com.tedros.services.model.Contract;
 import com.tedros.services.model.ContractualAgreement;
+import com.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -79,7 +84,9 @@ public class ContractMV extends TEntityModelView<Contract> {
 	@TTabPane(tabs = { 
 			@TTab(closable=false, text = TUsualKey.MAIN_DATA, scroll=false,
 				content = @TContent(detailForm=@TDetailForm(
-						fields={"code","description","beginDate", "contractor"}))),  
+						fields={"code","description", "contractor","status"}))), 
+			@TTab(closable=false, text = TUsualKey.CONTENT, 
+				content = @TContent(detailForm=@TDetailForm(fields={"content"}))),  
 			@TTab(closable=false, text = TUsualKey.OBSERVATION, 
 				content = @TContent(detailForm=@TDetailForm(fields={"observation"})))
 		})
@@ -87,9 +94,11 @@ public class ContractMV extends TEntityModelView<Contract> {
 	
 	@TLabel(text=TUsualKey.REF_CODE)
 	@TTextField(maxLength=15)
-	@THBox(	pane=@TPane(children={"code","name"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"code","name","beginDate", "endDate"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="name", priority=Priority.ALWAYS), 
-			@TPriority(field="code", priority=Priority.NEVER)}))
+			@TPriority(field="code", priority=Priority.NEVER),
+			@TPriority(field="beginDate", priority=Priority.NEVER), 
+			@TPriority(field="endDate", priority=Priority.NEVER)}))
 	private SimpleStringProperty code;
 
 	@TLabel(text=TUsualKey.NAME)
@@ -103,10 +112,6 @@ public class ContractMV extends TEntityModelView<Contract> {
 
 	@TLabel(text=TUsualKey.BEGIN_DATE)
 	@TDatePickerField
-	@THBox(	pane=@TPane(children={"beginDate", "endDate", "status"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="beginDate", priority=Priority.NEVER), 
-			@TPriority(field="endDate", priority=Priority.NEVER), 
-			@TPriority(field="status", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<Date> beginDate;
 	
 	@TLabel(text=TUsualKey.END_DATE)
@@ -145,10 +150,27 @@ public class ContractMV extends TEntityModelView<Contract> {
 			@TRadioButton(text = TUsualKey.DISABLED, userData = TUsualKey.DISABLED),
 			@TRadioButton(text = TUsualKey.SUSPENDED, userData = TUsualKey.SUSPENDED)
 	})
+	@THBox(	pane=@TPane(children={"status","insertDate","lastUpdate"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="insertDate", priority=Priority.NEVER), 
+						@TPriority(field="lastUpdate", priority=Priority.NEVER), 
+						@TPriority(field="status", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<Status> status;
+	
+	@TLabel(text=TUsualKey.DATE_INSERT)
+	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
+	private SimpleObjectProperty<Date> insertDate;
+	
+	@TLabel(text=TUsualKey.DATE_UPDATE)
+	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
+	private SimpleObjectProperty<Date> lastUpdate;
+	
 	
 	@TTextAreaField(maxLength=2000, wrapText=true)
 	private SimpleStringProperty observation;
+	
+	@THTMLEditor(showActionsToolBar=true,
+			control=@TControl( maxHeight=500, parse = true))
+	private SimpleStringProperty content;
 	
 	public ContractMV(Contract entity) {
 		super(entity);
@@ -257,6 +279,30 @@ public class ContractMV extends TEntityModelView<Contract> {
 
 	public void setContracted(SimpleObjectProperty<FindPersonMV> contracted) {
 		this.contracted = contracted;
+	}
+
+	public SimpleObjectProperty<Date> getInsertDate() {
+		return insertDate;
+	}
+
+	public void setInsertDate(SimpleObjectProperty<Date> insertDate) {
+		this.insertDate = insertDate;
+	}
+
+	public SimpleObjectProperty<Date> getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(SimpleObjectProperty<Date> lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public SimpleStringProperty getContent() {
+		return content;
+	}
+
+	public void setContent(SimpleStringProperty content) {
+		this.content = content;
 	}
 
 }
