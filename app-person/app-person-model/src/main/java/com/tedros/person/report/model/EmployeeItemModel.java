@@ -3,6 +3,7 @@
  */
 package com.tedros.person.report.model;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,6 @@ import com.tedros.docs.report.model.DocumentItemModel;
 import com.tedros.ejb.base.model.ITReportItemModel;
 import com.tedros.extension.model.Contact;
 import com.tedros.person.model.Employee;
-import com.tedros.util.TDateUtil;
 
 /**
  * @author Davis Gordon
@@ -96,7 +96,7 @@ public class EmployeeItemModel implements ITReportItemModel<Employee> {
 
 
 	private String format(Date dt) {
-		return TDateUtil.getFormatedDate(dt, TDateUtil.DDMMYYYY);
+		return DateFormat.getDateInstance(DateFormat.MEDIUM).format(dt);
 	}
 
 	@Override

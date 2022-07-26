@@ -62,8 +62,23 @@
 	  		<groupId>org.apache.commons</groupId>
 	  		<artifactId>commons-lang3</artifactId>
 	  		<version>${commons.lang.version}</version>
+			<scope>provided</scope>
 	  	</dependency>
 	  	
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>${apache.poi}</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+	  	<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>${apache.poi}</version>
+		    <scope>provided</scope>
+		</dependency>
+  		
 	  	<dependency>
 	      	<groupId>org.apache.tomee</groupId>
 	      	<artifactId>javaee-api</artifactId>
