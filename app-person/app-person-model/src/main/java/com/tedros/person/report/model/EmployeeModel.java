@@ -4,11 +4,11 @@
 package com.tedros.person.report.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 
 import com.tedros.extension.model.Contact;
 import com.tedros.person.model.Employee;
-import com.tedros.util.TDateUtil;
 
 /**
  * @author Davis Gordon
@@ -37,7 +37,7 @@ public class EmployeeModel implements Serializable{
 	}
 	
 	private String format(Date dt) {
-		return TDateUtil.getFormatedDate(dt, TDateUtil.DDMMYYYY);
+		return DateFormat.getDateInstance(DateFormat.MEDIUM).format(dt);
 	}
 
 	public String getName() {

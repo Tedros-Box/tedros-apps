@@ -29,6 +29,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.home>C:\Program Files\Java\jdk1.8.0_102\bin</java.home>
 		
+		<apache.poi>4.1.2</apache.poi>
+		
 		<commons-collections.version>4.4</commons-collections.version>
 		<commons.logging.version>1.2</commons.logging.version>
 		<commons.io.version>2.7</commons.io.version>

@@ -4,10 +4,10 @@
 package com.tedros.docs.report.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 
 import com.tedros.docs.model.DocumentEvent;
 import com.tedros.extension.model.Contact;
-import com.tedros.util.TDateUtil;
 
 /**
  * @author Davis Gordon
@@ -28,7 +28,10 @@ public class Event implements Serializable {
 	public Event(DocumentEvent e) {
 		this.title = e.getTitle();
 		this.description = e.getDescription();
-		this.dateEvent = e.getDateEvent()!=null ? TDateUtil.getFormatedDate(e.getDateEvent(), TDateUtil.DDMMYYYY_HHMM) : null;
+		this.dateEvent = e.getDateEvent()!=null 
+				? DateFormat
+						.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(e.getDateEvent()) 
+						: null;
 		this.contacts = Contact.toStringList(e.getContacts());
 	}
 
