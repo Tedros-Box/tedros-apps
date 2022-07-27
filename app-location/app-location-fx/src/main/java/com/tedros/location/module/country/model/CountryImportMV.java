@@ -28,6 +28,7 @@ import com.tedros.fxapi.presenter.model.TImportModelView;
 import com.tedros.fxapi.property.TSimpleFileProperty;
 import com.tedros.location.model.Country;
 import com.tedros.location.model.CountryImport;
+import com.tedros.location.start.TConstant;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -58,6 +59,7 @@ public class CountryImportMV extends TImportModelView<CountryImport> {
 	
 	@TLabel(text="#{label.file}")
 	@TFileField(propertyValueType=TFileModelType.ENTITY, 
+	initialDirectory=TFileField.TEDROS_MODULE+TConstant.UUI,
 	extensions= {TFileExtension.CSV}, moreExtensions= {"*.xls", "*.xlsx"},
 	showFilePath=true, required=true)
 	private TSimpleFileProperty<TFileEntity> file;

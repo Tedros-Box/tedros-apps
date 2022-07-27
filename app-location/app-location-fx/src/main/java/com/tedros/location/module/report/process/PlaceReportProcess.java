@@ -20,7 +20,7 @@ public class PlaceReportProcess extends TReportProcess<PlaceReportModel> {
 	
 	protected HashMap<String, Object> getReportParameters() {
 		TLanguage l = TLanguage.getInstance(TConstant.UUI);
-		super.setSubReportDir(AppResource.APP_MODULE_PATH);
+		super.setSubReportDir(new AppResource().getFolderPath());
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("hTitle", l.getString("#{label.title}"));
 		params.put("hDesc", l.getString("#{label.description}"));
