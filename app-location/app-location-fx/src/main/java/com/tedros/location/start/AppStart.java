@@ -36,7 +36,7 @@ public class AppStart implements ITApplication {
 
 	@Override
 	public void start() {
-		AppResource.createResource();
+		new AppResource().copyToFolder();;
 	}
 	
 	
