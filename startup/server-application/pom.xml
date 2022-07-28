@@ -17,7 +17,7 @@
 	    <groupId>com.tedros</groupId>
 	    <artifactId>tedros-core-ejb-ear</artifactId>
 	    <type>ear</type>
-	    <version>8-3.0.1</version>
+	    <version>8-3.1.0</version>
 	</dependency>
 	
 	<dependency>

@@ -22,9 +22,9 @@
 		<app.location>1.0</app.location>
 		<app.person>1.0</app.person>
 		<app.version>1.0</app.version>
-		<tedros.fx>8-3.0.1</tedros.fx>
-		<app.settings>8-3.0.1</app.settings>
-		<tedros.jee>8-3.0.1</tedros.jee>
+		<tedros.fx>8-3.1.0</tedros.fx>
+		<app.settings>8-3.1.0</app.settings>
+		<tedros.jee>8-3.1.0</tedros.jee>
 		<javafx.version>1.8.0_261</javafx.version>
 		<java.version>1.8</java.version>
 		<maven.compiler.target>1.8</maven.compiler.target>
