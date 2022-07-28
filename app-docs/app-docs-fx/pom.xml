@@ -23,7 +23,7 @@
 	  	<dependency>
 	  		<groupId>com.tedros</groupId>
 	  		<artifactId>tedros-box-app-settings</artifactId>
-	  		<version>8-3.0.1</version>
+	  		<version>${app.settings}</version>
 	  		<scope>compile</scope>
 	  	</dependency>
 	  	
