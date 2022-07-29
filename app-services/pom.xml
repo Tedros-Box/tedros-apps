@@ -4,7 +4,7 @@
   
   	<groupId>com.tedros</groupId>
   	<artifactId>app-services</artifactId>
-  	<version>1.0</version>
+  	<version>8-1.0.0</version>
   
  	 <packaging>pom</packaging>
   
@@ -17,11 +17,10 @@
   	
   	<!-- PROPERTIES -->
 	<properties>
-		<app.ext>1.0</app.ext>
-		<app.docs>1.0</app.docs>
-		<app.location>1.0</app.location>
-		<app.person>1.0</app.person>
-		<app.version>1.0</app.version>
+		<app.ext>8-1.0.0</app.ext>
+		<app.docs>8-1.0.0</app.docs>
+		<app.location>8-1.0.0</app.location>
+		<app.person>8-1.0.0</app.person>
 		<tedros.fx>8-3.1.0</tedros.fx>
 		<app.settings>8-3.1.0</app.settings>
 		<tedros.jee>8-3.1.0</tedros.jee>
@@ -88,7 +87,15 @@
  	</build>
  
  	<!-- MODULES -->
-	
+	 <modules>
+	    <module>app-services-ejb</module>
+	    <module>app-services-ejb-client</module>
+	    <module>app-services-ejb-ear</module>
+	    <module>app-services-model</module>
+	    <module>app-services-fx</module>
+	 </modules>
+	 
+	 
 	<!-- REPOSITORIES -->
 	<repositories>
 		<repository>
@@ -101,12 +108,19 @@
 			<name>Apache</name>
 			<url>https://repository.apache.org/service/local/staging/deploy/maven2</url>
 		</repository>
+		<repository>
+			<id>githubTedrosApp</id>
+			<name>Tedros</name>
+			<url>https://maven.pkg.github.com/tedros-box/package</url>
+		</repository>
   	</repositories>
-  <modules>
-    <module>app-services-ejb</module>
-    <module>app-services-ejb-client</module>
-    <module>app-services-ejb-ear</module>
-    <module>app-services-model</module>
-    <module>app-services-fx</module>
-  </modules>
+  	
+ 	<distributionManagement>
+	   <repository>
+	     <id>githubTedrosApp</id>
+	     <name>GitHub Tedros Apache Maven Packages</name>
+	     <url>https://maven.pkg.github.com/tedros-box/package</url>
+		 <uniqueVersion>false</uniqueVersion>
+	   </repository>
+	</distributionManagement>
 </project>

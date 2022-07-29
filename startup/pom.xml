@@ -4,25 +4,42 @@
   <parent>
     <groupId>com.tedros</groupId>
     <artifactId>tedrosbox</artifactId>
-    <version>8-3.1.0</version>
+    <version>8-3.0.1</version>
   </parent>
   
   <groupId>com.tedros</groupId>
   <artifactId>startup</artifactId>
-  <version>1.0.0</version>
+  <version>8-0.0.1</version>
   
   <packaging>pom</packaging>
-  <name>Tedros Box start and application server</name>
+  <name>The Tedros Box startup, database and application server projects</name>
   
   	<!-- DEVELOPERS -->
 	<developers>
 		<developer>
-			<id>davis.dun</id>
 			<name>Davis Gordon Dun</name>
 			<email>tedrosbox@gmail.com</email>
 			<organization>Tedros</organization>
 		</developer>
 	</developers>
+	
+  	<!-- PROPERTIES -->
+	<properties>
+		<app.ext>8-1.0.0</app.ext>
+		<app.docs>8-1.0.0</app.docs>
+		<app.location>8-1.0.0</app.location>
+		<app.person>8-1.0.0</app.person>
+		<app.services>8-1.0.0</app.services>
+		<tedros.box>8-3.1.0</tedros.box>
+		<tedros.fx>8-3.1.0</tedros.fx>
+		<app.settings>8-3.1.0</app.settings>
+		<tedros.jee>8-3.1.0</tedros.jee>
+		<java.home>C:\Program Files\Java\jdk1.8.0_102\bin</java.home>
+		
+		<junit.version>4.13</junit.version>
+		<tomee.ejb.url>http://127.0.0.1:8080/tomee/ejb</tomee.ejb.url>
+	
+	</properties>
   
   	<!-- BUILD -->
   	<build>
@@ -43,13 +60,9 @@
 	          <version>3.0.0</version>
 	        </plugin>  	
   		</plugins>
-  		
-        	
  	</build>
- 
- 	<!-- MODULES -->
-	
-	<!-- REPOSITORIES -->
+ 	
+ 	<!-- REPOSITORIES -->
 	<repositories>
 		<repository>
 			<id>oss.sonatype.org</id>
@@ -61,10 +74,17 @@
 			<name>Apache</name>
 			<url>https://repository.apache.org/service/local/staging/deploy/maven2</url>
 		</repository>
+		<repository>
+			<id>githubTedrosApp</id>
+			<name>Tedros</name>
+			<url>https://maven.pkg.github.com/tedros-box/package</url>
+		</repository>
   	</repositories>
+ 
+ 	<!-- MODULES -->
   <modules>
     <module>server-application</module>
-    <module>start-tedrosbox</module>
-    <module>start-db</module>
+    <module>startup-tedros-box</module>
+    <module>startup-database</module>
   </modules>
 </project>

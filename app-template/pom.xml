@@ -2,26 +2,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   	<modelVersion>4.0.0</modelVersion>
   
-  	<groupId>com.tedros</groupId>
+  	<groupId>com.tedros.archetype</groupId>
   	<artifactId>app-template</artifactId>
-  	<version>1.0</version>
+  	<version>8-1.0.0</version>
   
  	 <packaging>pom</packaging>
   
-  	<name>App Template Project</name>
-  	<description>App TedrosBox and jee project templates</description>
+  	<name>App Tedros Box parent project</name>
+  	<description>Tedros-Box application and jee projects</description>
   
  	<organization>
-		<name>Tedros</name>
+		<name>organizationname</name>
 	</organization>
   	
   	<!-- PROPERTIES -->
 	<properties>
-		<app.ext>1.0</app.ext>
-		<app.docs>1.0</app.docs>
-		<app.location>1.0</app.location>
-		<app.person>1.0</app.person>
-		<app.version>1.0</app.version>
+		<app.ext>8-1.0.0</app.ext>
+		<app.docs>8-1.0.0</app.docs>
+		<app.location>8-1.0.0</app.location>
+		<app.person>8-1.0.0</app.person>
+		<app.services>8-1.0.0</app.services>
 		<tedros.fx>8-3.1.0</tedros.fx>
 		<app.settings>8-3.1.0</app.settings>
 		<tedros.jee>8-3.1.0</tedros.jee>
@@ -57,10 +57,9 @@
   	<!-- DEVELOPERS -->
 	<developers>
 		<developer>
-			<id>davis.dun</id>
-			<name>Davis Gordon Dun</name>
-			<email>tedrosbox@gmail.com</email>
-			<organization>Tedros</organization>
+			<name>myname</name>
+			<email>myemail</email>
+			<organization>organizationname</organization>
 		</developer>
 	</developers>
   
@@ -86,9 +85,7 @@
   		
         	
  	</build>
- 
- 	<!-- MODULES -->
-	
+ 	
 	<!-- REPOSITORIES -->
 	<repositories>
 		<repository>
@@ -101,12 +98,19 @@
 			<name>Apache</name>
 			<url>https://repository.apache.org/service/local/staging/deploy/maven2</url>
 		</repository>
+		<repository>
+			<id>githubTedrosApp</id>
+			<name>Tedros</name>
+			<url>https://maven.pkg.github.com/tedros-box/package</url>
+		</repository>
   	</repositories>
-  <modules>
-    <module>app-template-ejb</module>
-    <module>app-template-ejb-client</module>
-    <module>app-template-ejb-ear</module>
-    <module>app-template-model</module>
-    <module>app-template-fx</module>
-  </modules>
+ 
+ 	<!-- MODULES -->
+	<modules>
+	    <module>app-template-ejb</module>
+	    <module>app-template-ejb-client</module>
+	    <module>app-template-ejb-ear</module>
+	    <module>app-template-model</module>
+	    <module>app-template-fx</module>
+	</modules>
 </project>
