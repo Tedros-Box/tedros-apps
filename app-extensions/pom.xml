@@ -4,7 +4,7 @@
   
   	<groupId>com.tedros</groupId>
   	<artifactId>app-extensions</artifactId>
-  	<version>1.0</version>
+  	<version>8-1.0.0</version>
   
  	 <packaging>pom</packaging>
   
@@ -17,7 +17,6 @@
   	
   	<!-- PROPERTIES -->
 	<properties>
-		<app.version>snapshot-0.0.1</app.version>
 		<tedros.fx>8-3.1.0</tedros.fx>
 		<tedros.jee>8-3.1.0</tedros.jee>
 		<javafx.version>1.8.0_261</javafx.version>
@@ -85,7 +84,14 @@
  	</build>
  
  	<!-- MODULES -->
-	
+	<modules>
+	    <module>app-extensions-ejb</module>
+	    <module>app-extensions-ejb-client</module>
+	    <module>app-extensions-ejb-ear</module>
+	    <module>app-extensions-model</module>
+	    <module>app-extensions-fx</module>
+	</modules>
+	 
 	<!-- REPOSITORIES -->
 	<repositories>
 		<repository>
@@ -98,12 +104,19 @@
 			<name>Apache</name>
 			<url>https://repository.apache.org/service/local/staging/deploy/maven2</url>
 		</repository>
+		<repository>
+			<id>githubTedrosApp</id>
+			<name>Tedros</name>
+			<url>https://maven.pkg.github.com/tedros-box/package</url>
+		</repository>
   	</repositories>
-  <modules>
-    <module>app-extensions-ejb</module>
-    <module>app-extensions-ejb-client</module>
-    <module>app-extensions-ejb-ear</module>
-    <module>app-extensions-model</module>
-    <module>app-extensions-fx</module>
-  </modules>
+  	
+ 	<distributionManagement>
+	   <repository>
+	     <id>githubTedrosApp</id>
+	     <name>GitHub Tedros Apache Maven Packages</name>
+	     <url>https://maven.pkg.github.com/tedros-box/package</url>
+		 <uniqueVersion>false</uniqueVersion>
+	   </repository>
+	</distributionManagement>
 </project>

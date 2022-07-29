@@ -31,6 +31,7 @@
 		<class>com.tedros.location.model.Address</class>
 		<class>com.tedros.location.model.StreetType</class>
 		<class>com.tedros.location.model.PlaceType</class>
+		
 		<class>com.tedros.services.model.Contracted</class>
 		<class>com.tedros.services.model.Contractor</class>
 		<class>com.tedros.services.model.PaymentPlan</class>
@@ -40,9 +41,6 @@
 		<class>com.tedros.services.model.ServiceType</class>
 		<class>com.tedros.services.model.Contract</class>
 		<class>com.tedros.services.model.ContractualAgreement</class>
-		
-		
-		
 		
 		<properties>
 		

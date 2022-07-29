@@ -4,9 +4,9 @@
 	
 	<!-- PARENT INFO -->
 	<parent>
-		<groupId>com.tedros</groupId>
+		<groupId>com.tedros.archetype</groupId>
   		<artifactId>app-template</artifactId>
-  		<version>1.0</version>
+  		<version>8-1.0.0</version>
 	</parent>
 	
 	<!-- MODULE INFO -->
@@ -14,14 +14,14 @@
   	<packaging>ear</packaging>
 
   	<name>app-template-ejb-ear</name>
-  	<url>The ear project for the app-template-ejb</url>
+  	<url>The ear project to deploy</url>
   
   	<!-- DEPENDENCIES -->
 	<dependencies>
 		<dependency>
-	  		<groupId>com.tedros</groupId>
+	  		<groupId>com.tedros.archetype</groupId>
 	  		<artifactId>app-template-ejb</artifactId>
-	  		<version>1.0</version>
+	  		<version>${project.version}</version>
 	  		<scope>compile</scope>
 	  		<type>ejb</type>
 	  	</dependency>
@@ -31,7 +31,6 @@
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
 		</dependency>
-		
 		
 	 	<dependency>
 	    	<groupId>junit</groupId>
@@ -92,7 +91,7 @@
 	        		<!-- <outputDirectory>${project.basedir}/target/${project.build.finalName}</outputDirectory> -->
 	          		<modules>
 	            		<ejbModule>
-	              			<groupId>com.tedros</groupId>
+	              			<groupId>com.tedros.archetype</groupId>
 	              			<artifactId>app-template-ejb</artifactId>
 	            		</ejbModule>
 	          		</modules>

@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.template</groupId>
-    <artifactId>tedros-start</artifactId>
-    <version>8-1.0.0</version>
+    <groupId>com.tedros.archetype</groupId>
+    <artifactId>tedros-startup-template</artifactId>
+    <version>8-0.0.0</version>
   </parent>
   
   <artifactId>server-application</artifactId>
@@ -17,42 +17,42 @@
 	    <groupId>com.tedros</groupId>
 	    <artifactId>tedros-core-ejb-ear</artifactId>
 	    <type>ear</type>
-	    <version>8-3.0.1</version>
+	    <version>${tedros.jee}</version>
 	</dependency>
 	
 	<dependency>
 		<groupId>com.tedros</groupId>
 		 <artifactId>app-services-ejb-ear</artifactId>
 		 <type>ear</type>
-		<version>1.0</version>
+		<version>${app.services}</version>
 	</dependency> 
 	
 	<dependency>
 		<groupId>com.tedros</groupId>
 		 <artifactId>app-location-ejb-ear</artifactId>
 		 <type>ear</type>
-		<version>1.0</version>
+		<version>${app.location}</version>
 	</dependency> 
 	
 	<dependency>
 		<groupId>com.tedros</groupId>
 		 <artifactId>app-docs-ejb-ear</artifactId>
 		 <type>ear</type>
-		<version>1.0</version>
+		<version>${app.docs}</version>
 	</dependency> 
 	
 	<dependency>
 		<groupId>com.tedros</groupId>
 		 <artifactId>app-person-ejb-ear</artifactId>
 		 <type>ear</type>
-		<version>1.0</version>
+		<version>${app.person}</version>
 	</dependency> 
 	
 	<dependency>
 		<groupId>com.tedros</groupId>
 		 <artifactId>app-extensions-ejb-ear</artifactId>
 		 <type>ear</type>
-		<version>1.0</version>
+		<version>${app.ext}</version>
 	</dependency> 
 	
 	<dependency>
@@ -109,61 +109,51 @@
       <artifactId>SparseBitSet</artifactId>
       <version>1.2</version>
     </dependency>
-  
 	<dependency>
 	    <groupId>com.h2database</groupId>
 	    <artifactId>h2</artifactId>
 	    <version>${h2.version}</version>
 	</dependency>
-	
 	<dependency>
 	   	<groupId>commons-io</groupId>
 	   	<artifactId>commons-io</artifactId>
 	   	<version>${commons.io.version}</version>
 	</dependency>
-	
 	<dependency>
 	    <groupId>org.apache.commons</groupId>
 	    <artifactId>commons-text</artifactId>
 	    <version>${commons.text.version}</version>
 	</dependency>
-	
   	<dependency>
   		<groupId>org.apache.commons</groupId>
   		<artifactId>commons-lang3</artifactId>
   		<version>${commons.lang.version}</version>
   	</dependency>
-  	
   	<dependency>
   		<groupId>org.apache.commons</groupId>
   		<artifactId>commons-compress</artifactId>
   		<version>${commons.compress.version}</version>
   	</dependency>
-  	
 	<dependency>
 	  	<groupId>org.apache.commons</groupId>
 	  	<artifactId>commons-collections4</artifactId>
 	  	<version>${commons-collections.version}</version>
 	</dependency>
-	
 	<dependency>
 	    <groupId>javax.mail</groupId>
 	    <artifactId>javax.mail-api</artifactId>
 	    <version>1.5.6</version>
 	</dependency>
-
 	<dependency>
 	    <groupId>com.sun.mail</groupId>
 	    <artifactId>javax.mail</artifactId>
 	    <version>1.5.1</version>
 	</dependency>
-	
 	<dependency>
 	    <groupId>com.sun.mail</groupId>
 	    <artifactId>smtp</artifactId>
 	    <version>1.5.6</version>
 	</dependency>
-	
 	<dependency>
 		<groupId>javax.activation</groupId>
 		<artifactId>activation</artifactId>
@@ -369,25 +359,19 @@
 		      </goals>
 		    </execution>
 		  </executions>
-		  
 		</plugin>
-		
 		<plugin>
-	      		<groupId>org.apache.maven.plugins</groupId>
-	      		<artifactId>maven-compiler-plugin</artifactId>
-	      		<version>3.3</version>
-	      		<configuration>
-	        			<source>${java.version}</source>
-	        			<target>${java.version}</target>
-	        			<!-- <compilerArgs>
-	                     <arg>-Dhttps.protocols=TLSv1.2</arg>
-	                  </compilerArgs>
-	-->        		</configuration>
-	     		</plugin>
-			
-		</plugins>
-	   
+      		<groupId>org.apache.maven.plugins</groupId>
+      		<artifactId>maven-compiler-plugin</artifactId>
+      		<version>3.3</version>
+      		<configuration>
+        			<source>${java.version}</source>
+        			<target>${java.version}</target>        		
+        	</configuration>
+     	</plugin>
+	  </plugins>
 	 </build>
+	 
 	 <!-- REPOSITORIES -->
 	<repositories>
 		<repository>

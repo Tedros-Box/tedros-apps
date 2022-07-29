@@ -1,52 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   
   <!-- PARENT INFO -->
   <parent>
-	<groupId>com.tedros</groupId>
-	 <artifactId>startup</artifactId>
-	 <version>1.0.0</version>
+	<groupId>com.tedros.archetype</groupId>
+	 <artifactId>tedros-startup-template</artifactId>
+	 <version>8-0.0.0</version>
   </parent>
 	
-  <artifactId>start-tedrosbox</artifactId>
+  <artifactId>startup-tedros-box</artifactId>
   
-  <name>Start TedrosBox</name>
-  <description>The initial project to load and run the main app</description>
+  <name>Tedros Box startup project</name>
+  <description>The startup project to load, run and package the main class</description>
   
   <dependencies>
   	<dependency>
 	  	<groupId>com.tedros</groupId>
 	  	<artifactId>tedros-box</artifactId>
-	  	<version>8-3.1.0</version>
+	  	<version>${tedros.box}</version>
 	  	<scope>compile</scope>
 	 </dependency>
 	 
 	 <dependency>
   		<groupId>com.tedros</groupId>
   		<artifactId>app-services-fx</artifactId>
-  		<version>1.0</version>
+  		<version>${app.services}</version>
   		<scope>compile</scope>
   	</dependency>
 	 
 	 <dependency>
   		<groupId>com.tedros</groupId>
   		<artifactId>app-location-fx</artifactId>
-  		<version>1.0</version>
+  		<version>${app.location}</version>
   		<scope>compile</scope>
   	</dependency>
   	
   	 <dependency>
   		<groupId>com.tedros</groupId>
   		<artifactId>app-person-fx</artifactId>
-  		<version>1.0</version>
+  		<version>${app.person}</version>
   		<scope>compile</scope>
   	</dependency>
   	
 	 <dependency>
   		<groupId>com.tedros</groupId>
   		<artifactId>app-docs-fx</artifactId>
-  		<version>1.0</version>
+  		<version>${app.docs}</version>
   		<scope>compile</scope>
   	</dependency>
 	 
@@ -85,28 +84,7 @@
          			<target>${java.version}</target>
        		</configuration>
      	</plugin>
-		
-		<plugin>
-  <groupId>com.edugility</groupId>
-  <artifactId>h2-maven-plugin</artifactId>
-  <version>1.0</version> <!-- or whatever version you like -->
-  <executions>
-    <execution>
-      <id>Spawn a new H2 TCP server</id>
-      <goals>
-        <goal>spawn</goal>
-      </goals>
-    </execution>
-    <execution>
-      <id>Stop a spawned H2 TCP server</id>
-      <goals>
-        <goal>stop</goal>
-      </goals>
-    </execution>
-  </executions>
-</plugin>
-		
-	</plugins>
+	  </plugins>
 	 	  
     	<resources>
         	<resource>

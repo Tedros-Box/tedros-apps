@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.tedros</groupId>
   		<artifactId>app-services</artifactId>
-  		<version>1.0</version>
+  		<version>8-1.0.0</version>
 	</parent>	
 	
   	<artifactId>app-services-fx</artifactId>
@@ -30,7 +30,7 @@
 	  	<dependency>
 	  		<groupId>com.tedros</groupId>
 	  		<artifactId>app-services-ejb-client</artifactId>
-	  		<version>1.0</version>
+	  		<version>8-1.0.0</version>
 	  	</dependency>
 	  	
   	</dependencies> 
@@ -67,5 +67,14 @@
       		</resource>
     	</resources>
  	</build>
-  
+
+ 	<distributionManagement>
+	   <repository>
+	     <id>githubTedrosApp</id>
+	     <name>GitHub Tedros Apache Maven Packages</name>
+	     <url>https://maven.pkg.github.com/tedros-box/package</url>
+		 <uniqueVersion>false</uniqueVersion>
+	   </repository>
+	</distributionManagement>
+  	  
 </project>
