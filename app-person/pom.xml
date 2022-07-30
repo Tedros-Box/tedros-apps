@@ -8,8 +8,8 @@
   
  	 <packaging>pom</packaging>
   
-  	<name>App Person Project</name>
-  	<description>App TedrosBox and jee project</description>
+  	<name>App person</name>
+  	<description>Base project to manage person types</description>
   
  	<organization>
 		<name>Tedros</name>

@@ -8,8 +8,8 @@
   
  	 <packaging>pom</packaging>
   
-  	<name>App Template Project</name>
-  	<description>App TedrosBox and jee project templates</description>
+  	<name>App services</name>
+  	<description>Base project to manage provision of services</description>
   
  	<organization>
 		<name>Tedros</name>

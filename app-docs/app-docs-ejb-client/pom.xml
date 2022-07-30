@@ -13,7 +13,7 @@
   	<artifactId>app-docs-ejb-client</artifactId>
   	<packaging>jar</packaging>
 
-  	<name>app-template-client</name>
+  	<name>app-docs-ejb-client</name>
   	<description>The app ejb client</description>
 
 	<!-- DEPENDENCIES -->
