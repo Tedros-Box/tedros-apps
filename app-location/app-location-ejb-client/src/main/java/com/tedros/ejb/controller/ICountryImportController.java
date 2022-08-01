@@ -15,4 +15,6 @@ import com.tedros.location.model.Country;
 @Remote
 public interface ICountryImportController extends ITEjbImportController<Country> {
 
+	static final String JNDI_NAME = "ICountryImportControllerRemote";
+	
 }

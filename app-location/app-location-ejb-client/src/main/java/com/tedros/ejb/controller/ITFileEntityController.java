@@ -8,4 +8,6 @@ import com.tedros.ejb.base.controller.ITSecureEjbController;
 @Remote
 public interface ITFileEntityController extends ITSecureEjbController<TFileEntity>{
 
+	static final String JNDI_NAME = "ITFileEntityControllerRemote";
+	
 }

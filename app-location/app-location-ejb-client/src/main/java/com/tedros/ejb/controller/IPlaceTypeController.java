@@ -7,5 +7,7 @@ import com.tedros.location.model.PlaceType;
 
 @Remote
 public interface IPlaceTypeController extends ITSecureEjbController<PlaceType>{
+
+	static final String JNDI_NAME = "IPlaceTypeControllerRemote";
 	
 }

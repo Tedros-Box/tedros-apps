@@ -3,6 +3,7 @@
  */
 package com.tedros.location.module.place.model;
 
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TFieldBox;
 import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
 import com.tedros.fxapi.annotation.control.TLabel;
@@ -17,6 +18,7 @@ import com.tedros.fxapi.control.TText.TTextStyle;
 import com.tedros.fxapi.presenter.entity.behavior.TSaveViewBehavior;
 import com.tedros.fxapi.presenter.entity.decorator.TSaveViewDecorator;
 import com.tedros.fxapi.presenter.model.TModelView;
+import com.tedros.location.LocatKey;
 import com.tedros.location.module.place.action.MapSettingSaveAction;
 
 import javafx.beans.property.SimpleLongProperty;
@@ -28,22 +30,22 @@ import javafx.scene.text.TextAlignment;
  * @author Davis Gordon
  *
  */
-@TPresenter(decorator = @TDecorator(viewTitle="#{view.map.setting}", type=TSaveViewDecorator.class),
+@TPresenter(decorator = @TDecorator(viewTitle=LocatKey.VIEW_MAP_SETTING, type=TSaveViewDecorator.class),
 behavior=@TBehavior(type=TSaveViewBehavior.class, action=MapSettingSaveAction.class))
 public class MapSettingMV extends TModelView<MapSettingModel> {
 
-	@TLabel(text="#{label.map.type}")
+	@TLabel(text=TUsualKey.MAP_TYPE)
 	@THorizontalRadioGroup(radioButtons = { 
 			@TRadioButton(text = "MapQuest", userData = MapSettingModel.TYPE_MAPQUEST)/*,
 			@TRadioButtonField(text = "Google Maps", userData = MapSettingModel.TYPE_GOOGLE)*/})
 	private SimpleStringProperty mapType;
 	
-	@TLabel(text="#{label.mapquest.key}")
+	@TLabel(text=TUsualKey.MAPQUEST_KEY)
 	@TTextField(maxLength=120)
 	private SimpleStringProperty mapquestKey;
 	
 	
-	@TText(text="#{text.map.setting}", 
+	@TText(text=LocatKey.TEXT_MAP_SETTING, 
 	textAlignment=TextAlignment.LEFT,/* wrappingWidth=750,*/
 	textStyle = TTextStyle.MEDIUM)
 	@TFieldBox(alignment=Pos.CENTER_LEFT, node=@TNode(id="t-fieldbox-hsplit-last", parse = true))

@@ -3,8 +3,19 @@
  */
 package com.tedros.location.module.city.model;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
+import static com.tedros.core.annotation.security.TAuthorizationType.DELETE;
+import static com.tedros.core.annotation.security.TAuthorizationType.EDIT;
+import static com.tedros.core.annotation.security.TAuthorizationType.NEW;
+import static com.tedros.core.annotation.security.TAuthorizationType.SAVE;
+import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+import static com.tedros.fxapi.TUsualKey.ADMIN_AREA;
+import static com.tedros.fxapi.TUsualKey.CAPITAL;
+import static com.tedros.fxapi.TUsualKey.NAME;
+import static com.tedros.fxapi.TUsualKey.POPULATION;
+
 import com.tedros.core.annotation.security.TSecurity;
+import com.tedros.ejb.controller.ICityController;
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TNumberSpinnerField;
 import com.tedros.fxapi.annotation.control.TTextField;
@@ -18,12 +29,12 @@ import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.reader.TFormReaderHtml;
 import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.view.TOption;
 import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
+import com.tedros.location.LocatKey;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.City;
 
@@ -35,28 +46,25 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TFormReaderHtml
-@TForm(name = "#{form.keep.update}", showBreadcrumBar=true, scroll=false)
-@TEjbService(serviceName = "ICityControllerRemote", model=City.class)
+@TForm(name = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
+@TEjbService(serviceName = ICityController.JNDI_NAME, model=City.class)
 @TListViewPresenter(listViewMinWidth=350, listViewMaxWidth=350,
-	paginator=@TPaginator(entityClass = City.class, serviceName = "ICityControllerRemote",
+	paginator=@TPaginator(entityClass = City.class, serviceName=ICityController.JNDI_NAME,
 			show=true, showSearchField=true, searchFieldName="name", 
-			orderBy = {	@TOption(text = "#{label.country.code}", value = "countryIso2Code"), 
-						@TOption(text = "#{label.name}", value = "name")}),
-	presenter=@TPresenter(decorator = @TDecorator(viewTitle="#{view.city}", buildImportButton=true),
+			orderBy = {	@TOption(text = TUsualKey.COUNTRY_CODE, value = "countryIso2Code"), 
+						@TOption(text = TUsualKey.NAME, value = "name")}),
+	presenter=@TPresenter(decorator = @TDecorator(viewTitle=LocatKey.VIEW_CITY, buildImportButton=true),
 	behavior=@TBehavior(importModelViewClass=CityImportMV.class, runNewActionAfterSave=true)))
-@TSecurity(	id=DomainApp.CITY_FORM_ID, 
-	appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.city}",
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
+@TSecurity(	id=DomainApp.CITY_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
+moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_CITY,
+allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class CityMV extends TEntityModelView<City> {
 
 	private SimpleLongProperty id;
 	
 	private SimpleStringProperty display;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.country.code} (ISO2)")
+	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO2)")
 	@TTextField(maxLength=2, required = true, node=@TNode(requestFocus=true, parse = true))
 	@THBox(	pane=@TPane(children={"countryIso2Code", "name", "capital", "adminArea", "population"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="countryIso2Code", priority=Priority.NEVER), 
@@ -66,23 +74,19 @@ public class CityMV extends TEntityModelView<City> {
 			@TPriority(field="capital", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty countryIso2Code;
 			
-	@TReaderHtml
-	@TLabel(text="#{label.name}")
+	@TLabel(text=NAME)
 	@TTextField(maxLength=60, required = true)
 	private SimpleStringProperty name;
 			
-	@TReaderHtml
-	@TLabel(text="#{label.capital}")
+	@TLabel(text=CAPITAL)
 	@TTextField(maxLength=120, required = true)
 	private SimpleStringProperty capital;
 			
-	@TReaderHtml
-	@TLabel(text = "#{label.population}")
+	@TLabel(text = POPULATION)
 	@TNumberSpinnerField(maxValue = Long.MAX_VALUE)
 	private SimpleLongProperty population;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.admin.area}")
+	@TLabel(text=ADMIN_AREA)
 	@TTextField(maxLength=120, required = false)
 	private SimpleStringProperty adminArea;
 	
@@ -102,12 +106,6 @@ public class CityMV extends TEntityModelView<City> {
 	
 	public CityMV(City e) {
 		super(e);
-		this.formatFieldsToDisplay("[%s] %s / %s", this.countryIso2Code, this.adminArea, this.name);
-	}
-	
-	@Override
-	public void reload(City e) {
-		super.reload(e);
 		this.formatFieldsToDisplay("[%s] %s / %s", this.countryIso2Code, this.adminArea, this.name);
 	}
 	

@@ -3,8 +3,15 @@
  */
 package com.tedros.location.module.adminArea.model;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
+import static com.tedros.core.annotation.security.TAuthorizationType.DELETE;
+import static com.tedros.core.annotation.security.TAuthorizationType.EDIT;
+import static com.tedros.core.annotation.security.TAuthorizationType.NEW;
+import static com.tedros.core.annotation.security.TAuthorizationType.SAVE;
+import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+
 import com.tedros.core.annotation.security.TSecurity;
+import com.tedros.ejb.controller.IAdminAreaController;
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TTextField;
 import com.tedros.fxapi.annotation.form.TForm;
@@ -17,12 +24,11 @@ import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.reader.TFormReaderHtml;
-import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.view.TOption;
 import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
+import com.tedros.location.LocatKey;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.AdminArea;
 
@@ -34,28 +40,25 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TFormReaderHtml
-@TForm(name = "#{form.keep.update}", showBreadcrumBar=true, scroll=false)
-@TEjbService(serviceName = "IAdminAreaControllerRemote", model=AdminArea.class)
+@TForm(name = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
+@TEjbService(serviceName = IAdminAreaController.JNDI_NAME, model=AdminArea.class)
 @TListViewPresenter(listViewMinWidth=350, listViewMaxWidth=350,
-	paginator=@TPaginator(entityClass = AdminArea.class, serviceName = "IAdminAreaControllerRemote",
+	paginator=@TPaginator(entityClass = AdminArea.class, serviceName = IAdminAreaController.JNDI_NAME,
 			show=true, showSearchField=true, searchFieldName="name", 
-			orderBy = {	@TOption(text = "#{label.country.code}", value = "countryIso2Code"), 
-						@TOption(text = "#{label.name}", value = "name")}),
-	presenter=@TPresenter(decorator = @TDecorator(viewTitle="#{view.admin.area}", buildImportButton=true),
+			orderBy = {	@TOption(text = TUsualKey.COUNTRY_CODE, value = "countryIso2Code"), 
+						@TOption(text = TUsualKey.NAME, value = "name")}),
+	presenter=@TPresenter(decorator = @TDecorator(viewTitle=LocatKey.VIEW_ADMIN_AREA, buildImportButton=true),
 	behavior=@TBehavior(importModelViewClass=AdminAreaImportMV.class, runNewActionAfterSave=true)))
-@TSecurity(	id=DomainApp.ADMIN_AREA_FORM_ID, 
-	appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.admin.area}",
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
+@TSecurity(	id=DomainApp.ADMIN_AREA_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
+moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_ADMIN_AREA,
+allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class AdminAreaMV extends TEntityModelView<AdminArea> {
 
 	private SimpleLongProperty id;
 	
 	private SimpleStringProperty display;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.country.code} (ISO2)")
+	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO2)")
 	@TTextField(maxLength=2, required = true, node=@TNode(requestFocus=true, parse = true))
 	@THBox(	pane=@TPane(children={"countryIso2Code", "name", "iso2Code"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="countryIso2Code", priority=Priority.NEVER), 
@@ -63,13 +66,11 @@ public class AdminAreaMV extends TEntityModelView<AdminArea> {
 			@TPriority(field="name", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty countryIso2Code;
 			
-	@TReaderHtml
-	@TLabel(text="#{label.name}")
+	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=60, required = true)
 	private SimpleStringProperty name;
 			
-	@TReaderHtml
-	@TLabel(text="#{label.capital}")
+	@TLabel(text=TUsualKey.CAPITAL)
 	@TTextField(maxLength=120, required = false)
 	private SimpleStringProperty iso2Code;
 			
@@ -79,13 +80,6 @@ public class AdminAreaMV extends TEntityModelView<AdminArea> {
 		this.formatFieldsToDisplay("[%s] %s", this.countryIso2Code, this.name);
 	}
 	
-	@Override
-	public void reload(AdminArea e) {
-		super.reload(e);
-		this.formatFieldsToDisplay("[%s] %s", this.countryIso2Code, this.name);
-	}
-	
-
 	public SimpleLongProperty getId() {
 		return id;
 	}

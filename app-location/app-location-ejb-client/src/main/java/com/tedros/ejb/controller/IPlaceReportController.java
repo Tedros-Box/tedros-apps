@@ -15,4 +15,6 @@ import com.tedros.location.report.model.PlaceReportModel;
 @Remote
 public interface IPlaceReportController extends ITEjbReportController<PlaceReportModel> {
 
+	static final String JNDI_NAME = "IPlaceReportControllerRemote";
+	
 }

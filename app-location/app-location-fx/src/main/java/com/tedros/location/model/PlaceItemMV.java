@@ -8,8 +8,6 @@ import com.tedros.fxapi.presenter.model.TEntityModelView;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.WeakChangeListener;
 
 /**
  * @author Davis Gordon

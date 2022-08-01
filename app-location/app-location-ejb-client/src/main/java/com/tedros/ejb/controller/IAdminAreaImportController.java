@@ -15,4 +15,6 @@ import com.tedros.location.model.AdminArea;
 @Remote
 public interface IAdminAreaImportController extends ITEjbImportController<AdminArea> {
 
+	static final String JNDI_NAME = "IAdminAreaImportControllerRemote";
+	
 }
