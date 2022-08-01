@@ -1,8 +1,14 @@
 package com.tedros.location.module.report.model;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
+import static com.tedros.core.annotation.security.TAuthorizationType.EXPORT;
+import static com.tedros.core.annotation.security.TAuthorizationType.SEARCH;
+import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+
 import com.tedros.core.annotation.security.TSecurity;
+import com.tedros.ejb.controller.IPlaceTypeController;
+import com.tedros.ejb.controller.IStreetTypeController;
 import com.tedros.fxapi.TFxKey;
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TComboBoxField;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TModelViewType;
@@ -11,7 +17,6 @@ import com.tedros.fxapi.annotation.control.TRadioButton;
 import com.tedros.fxapi.annotation.control.TTableColumn;
 import com.tedros.fxapi.annotation.control.TTableView;
 import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.control.TTextInputControl;
 import com.tedros.fxapi.annotation.control.TVerticalRadioGroup;
 import com.tedros.fxapi.annotation.form.TForm;
 import com.tedros.fxapi.annotation.layout.TAccordion;
@@ -36,6 +41,7 @@ import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
 import com.tedros.fxapi.presenter.model.TModelView;
 import com.tedros.fxapi.presenter.report.behavior.TDataSetReportBehavior;
 import com.tedros.fxapi.presenter.report.decorator.TDataSetReportDecorator;
+import com.tedros.location.LocatKey;
 import com.tedros.location.annotation.TAdminAreaComboBox;
 import com.tedros.location.annotation.TCityComboBox;
 import com.tedros.location.annotation.TCountryComboBox;
@@ -60,62 +66,62 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 
 
-@TForm(name = "#{form.repo.place}", showBreadcrumBar=true, editCssId="")
+@TForm(name = LocatKey.FORM_REPO_PLACE, showBreadcrumBar=true, editCssId="")
 @TReportProcess(type=PlaceReportProcess.class, model = PlaceReportModel.class)
 @TPresenter(type = TDynaPresenter.class,
 			behavior = @TBehavior(type = TDataSetReportBehavior.class, 
 			action=SearchAction.class), 
 			decorator = @TDecorator(type = TDataSetReportDecorator.class, 
-									viewTitle="#{view.repo.place}"))
-@TSecurity(	id=DomainApp.PLACE_REPORT_FORM_ID, 
-			appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.repo.place}",
-			allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EXPORT, TAuthorizationType.SEARCH})
+									viewTitle=LocatKey.VIEW_REPO_PLACE))
+@TSecurity(	id=DomainApp.PLACE_REPORT_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
+moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_ADDRESS,
+allowedAccesses={VIEW_ACCESS, EXPORT, SEARCH})
 public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	
 	private SimpleLongProperty id;
 	
 	@TAccordion(expandedPane="filtro", node=@TNode(id="repdoaacc",parse = true),
 			panes={
-					@TTitledPane(text="#{label.filters}", node=@TNode(id="filtro",parse = true), 
+					@TTitledPane(text=TUsualKey.FILTERS, node=@TNode(id="filtro",parse = true), 
 							expanded=true, layoutType=TLayoutType.HBOX,
 							fields={"title", "orderBy"}),
-					@TTitledPane(text="#{label.result}", node=@TNode(id="resultado",parse = true),
+					@TTitledPane(text=TUsualKey.RESULT, node=@TNode(id="resultado",parse = true),
 						fields={"result"})})	
 	private SimpleStringProperty displayText;
 	
-	@TLabel(text="#{label.title}")
+	@TLabel(text=TUsualKey.TITLE)
 	@TTextField(maxLength=60,node=@TNode(requestFocus=true, parse = true))
 	@TVBox(	pane=@TPane(children={"title", "type", "country", "streetType"}), spacing=10, fillWidth=true,
 	vgrow=@TVGrow(priority={@TPriority(field="title", priority=Priority.ALWAYS), 
 			@TPriority(field="type", priority=Priority.NEVER)}))
 	private SimpleStringProperty title;
 	
-	@TLabel(text="#{label.type}")
-	@TComboBoxField(firstItemTex="#{label.select}",
-		optionsList=@TOptionsList(serviceName = "IPlaceTypeControllerRemote", 
+	@TLabel(text=TUsualKey.TYPE)
+	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+		optionsList=@TOptionsList(serviceName = IPlaceTypeController.JNDI_NAME, 
 		optionModelViewClass=PlaceTypeMV.class,
 		entityClass=PlaceType.class))
 	private SimpleObjectProperty<PlaceType> type;
 	
-	@TLabel(text="#{label.country}")
-	@TCountryComboBox(firstItemTex="#{label.select}")
+	@TLabel(text=TUsualKey.COUNTRY)
+	@TCountryComboBox
 	@THBox(	pane=@TPane(children={"country", "adminArea", "city"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="country", priority=Priority.ALWAYS), 
 			@TPriority(field="adminArea", priority=Priority.ALWAYS), 
 			@TPriority(field="city", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<Country> country;
 	
-	@TLabel(text="#{label.admin.area}")
-	@TAdminAreaComboBox(firstItemTex="#{label.select}", countryField="country")
+	@TLabel(text=TUsualKey.ADMIN_AREA)
+	@TAdminAreaComboBox(countryField="country")
 	private SimpleObjectProperty<AdminArea> adminArea;
 	
-	@TLabel(text="#{label.city}")
-	@TCityComboBox(firstItemTex="#{label.select}", countryField="country", adminAreaField="adminArea")
+	@TLabel(text=TUsualKey.CITY)
+	@TCityComboBox(countryField="country", adminAreaField="adminArea")
 	private SimpleObjectProperty<City> city;
 	
-	@TLabel(text="#{label.street.type}")
-	@TComboBoxField(firstItemTex="#{label.select}",
-		optionsList=@TOptionsList(serviceName = "IStreetTypeControllerRemote", 
+	@TLabel(text=TUsualKey.STREET_TYPE)
+	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+		optionsList=@TOptionsList(serviceName = IStreetTypeController.JNDI_NAME, 
 		optionModelViewClass=StreetTypeMV.class,
 		entityClass=StreetType.class))
 	@THBox(	pane=@TPane(children={"streetType", "publicPlace", "code"}), spacing=10, fillHeight=true,
@@ -124,31 +130,25 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 			@TPriority(field="code", priority=Priority.SOMETIMES)}))
 	private SimpleObjectProperty<StreetType> streetType;
 	
-	@TLabel(text="#{label.public.place}")
-	@TTextField(maxLength=120, 
-		control=@TControl(tooltip="#{text.mapview.press.enter}", parse = true), 
-		node=@TNode(requestFocus=true, parse = true))
+	@TLabel(text=TUsualKey.PUBLIC_PLACE)
+	@TTextField(maxLength=120)
 	private SimpleStringProperty publicPlace;
 	
-	@TLabel(text="#{label.address.code}")
-	@TTextField(maxLength=20, 
-	control=@TControl(tooltip="#{text.mapview.press.enter}", parse = true),
-	textInputControl=@TTextInputControl(promptText="#{text.address.code}", parse = true))
+	@TLabel(text=TUsualKey.ADDRESS_CODE)
+	@TTextField(maxLength=20)
 	private SimpleStringProperty code;
-	
-	
 	
 	@TLabel(text=TFxKey.SORT_BY)
 	@TFieldSet(fields = { "orderBy", "orderType" }, 
 		region=@TRegion(maxWidth=600, parse = true),
-		legend = "#{label.result.order}")
+		legend = TUsualKey.RESULT_ORDER)
 	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text="#{label.title}", userData="e.title"), 
-					@TRadioButton(text="#{label.type}", userData="t.name"), 
-					@TRadioButton(text="#{label.country}", userData="c.name"), 
-					@TRadioButton(text="#{label.admin.area}", userData="aa.name"), 
-					@TRadioButton(text="#{label.city}", userData="ct.name"), 
-					@TRadioButton(text="#{label.code}", userData="a.code")
+	radioButtons = {@TRadioButton(text=TUsualKey.TITLE, userData="e.title"), 
+					@TRadioButton(text=TUsualKey.TYPE, userData="t.name"), 
+					@TRadioButton(text=TUsualKey.COUNTRY, userData="c.name"), 
+					@TRadioButton(text=TUsualKey.ADMIN_AREA, userData="aa.name"), 
+					@TRadioButton(text=TUsualKey.CITY, userData="ct.name"), 
+					@TRadioButton(text=TUsualKey.CODE, userData="a.code")
 	})
 	private SimpleStringProperty orderBy;
 	
@@ -161,10 +161,10 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	
 	@TTableView(editable=true, rowFactory=PlaceRowFactoryBuilder.class,
 			control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
-			columns = { @TTableColumn(cellValue="title", text = "#{label.title}", prefWidth=20, resizable=true), 
-					@TTableColumn(cellValue="type", text = "#{label.type}", resizable=true), 
-						@TTableColumn(cellValue="country", text = "#{label.country}", resizable=true), 
-						@TTableColumn(cellValue="address", text = "#{label.address}", resizable=true)
+			columns = { @TTableColumn(cellValue="title", text = TUsualKey.TITLE, prefWidth=20, resizable=true), 
+					@TTableColumn(cellValue="type", text = TUsualKey.TYPE, resizable=true), 
+						@TTableColumn(cellValue="country", text = TUsualKey.COUNTRY, resizable=true), 
+						@TTableColumn(cellValue="address", text = TUsualKey.ADDRESS, resizable=true)
 			})
 	@TModelViewType(modelClass=PlaceItemModel.class, modelViewClass=PlaceItemMV.class)
 	private ITObservableList<PlaceItemMV> result;

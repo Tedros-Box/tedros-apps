@@ -8,12 +8,14 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 
 import com.tedros.core.TLanguage;
+import com.tedros.fxapi.TFxKey;
 import com.tedros.fxapi.control.action.TPresenterAction;
 import com.tedros.fxapi.modal.TMessage;
 import com.tedros.fxapi.modal.TMessageType;
 import com.tedros.fxapi.presenter.behavior.TActionType;
 import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
 import com.tedros.fxapi.presenter.entity.behavior.TSaveViewBehavior;
+import com.tedros.location.LocatKey;
 import com.tedros.location.module.place.model.MapSettingMV;
 import com.tedros.location.module.place.model.MapSettingModel;
 import com.tedros.location.resource.AppResource;
@@ -45,7 +47,7 @@ public class MapSettingSaveAction extends TPresenterAction {
 		
 		if(mv.getModel().isMapQuestType() && StringUtils.isBlank(key)) {
 			bv.addMessage(new TMessage(TMessageType.WARNING,TLanguage.getInstance()
-					.getString("#{msg.mapquest.key.required}")));
+					.getString(LocatKey.MSG_MAPQUEST_KEY_REQUIRED)));
 			return false;
 		}
 		Properties p = new Properties();
@@ -54,7 +56,7 @@ public class MapSettingSaveAction extends TPresenterAction {
 		AppResource.saveSettings(p);
 		
 		bv.addMessage(new TMessage(TMessageType.INFO, TLanguage.getInstance()
-				.getFormatedString("#{tedros.fxapi.message.save}", "Map Settings")));
+				.getFormatedString(TFxKey.MESSAGE_SAVE, "Map Settings")));
 		
 		return false;
 	}

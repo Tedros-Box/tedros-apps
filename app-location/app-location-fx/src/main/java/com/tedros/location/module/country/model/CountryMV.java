@@ -3,9 +3,16 @@
  */
 package com.tedros.location.module.country.model;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
+import static com.tedros.core.annotation.security.TAuthorizationType.DELETE;
+import static com.tedros.core.annotation.security.TAuthorizationType.EDIT;
+import static com.tedros.core.annotation.security.TAuthorizationType.NEW;
+import static com.tedros.core.annotation.security.TAuthorizationType.SAVE;
+import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+
 import com.tedros.core.annotation.security.TSecurity;
 import com.tedros.ejb.base.model.ITFileBaseModel;
+import com.tedros.ejb.controller.ICountryController;
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TContent;
 import com.tedros.fxapi.annotation.control.TFieldBox;
 import com.tedros.fxapi.annotation.control.TLabel;
@@ -25,13 +32,12 @@ import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.reader.TFormReaderHtml;
-import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.view.TOption;
 import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.domain.TEnvironment;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
+import com.tedros.location.LocatKey;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.Country;
 
@@ -45,34 +51,31 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TFormReaderHtml
-@TForm(name = "#{form.keep.update}", showBreadcrumBar=true, scroll=false)
-@TEjbService(serviceName = "ICountryControllerRemote", model=Country.class)
+@TForm(name = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
+@TEjbService(serviceName = ICountryController.JNDI_NAME, model=Country.class)
 @TListViewPresenter(listViewMinWidth=350, listViewMaxWidth=350,
-	paginator=@TPaginator(entityClass = Country.class, serviceName = "ICountryControllerRemote",
+	paginator=@TPaginator(entityClass = Country.class, serviceName = ICountryController.JNDI_NAME,
 			show=true, showSearchField=true, searchFieldName="name", 
-			orderBy = {	@TOption(text = "#{label.country.code}", value = "iso2Code"), 
-						@TOption(text = "#{label.name}", value = "name")}),
-	presenter=@TPresenter(decorator = @TDecorator(viewTitle="#{view.country}", buildImportButton=true),
+			orderBy = {	@TOption(text = TUsualKey.COUNTRY_CODE, value = "iso2Code"), 
+						@TOption(text = TUsualKey.NAME, value = "name")}),
+	presenter=@TPresenter(decorator = @TDecorator(viewTitle=LocatKey.VIEW_COUNTRY, buildImportButton=true),
 	behavior=@TBehavior(importModelViewClass=CountryImportMV.class, runNewActionAfterSave=true)))
-@TSecurity(	id=DomainApp.COUNTRY_FORM_ID, 
-	appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.country}",
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
+@TSecurity(	id=DomainApp.COUNTRY_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
+moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_COUNTRY,
+allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class CountryMV extends TEntityModelView<Country> {
 
 	@TTabPane(tabs = { 
 			@TTab(closable=false, scroll=false, content = @TContent(detailForm=
 				@TDetailForm(fields={"iso2Code", "numericCode", "currencyCode","latitude"})), 
-				text = "#{label.main}"), 
+				text = TUsualKey.MAIN), 
 			@TTab(closable=false, content = @TContent(detailForm=
 				@TDetailForm(fields={"flag"})), 
-				text = "#{label.flag}")
+				text = TUsualKey.FLAG)
 	})
 	private SimpleLongProperty id;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.country.code} (ISO2)")
+	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO2)")
 	@TTextField(maxLength=2, required = true, node=@TNode(requestFocus=true, parse = true))
 	@THBox(	pane=@TPane(children={"iso2Code", "iso3Code", "name", "capital"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="iso2Code", priority=Priority.NEVER), 
@@ -80,24 +83,20 @@ public class CountryMV extends TEntityModelView<Country> {
 			@TPriority(field="name", priority=Priority.ALWAYS), 
 			@TPriority(field="capital", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty iso2Code;
-			
-	@TReaderHtml
-	@TLabel(text="#{label.country.code} (ISO3)")
+	
+	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO3)")
 	@TTextField(maxLength=3, required = true)
 	private SimpleStringProperty iso3Code;
 			
-	@TReaderHtml
-	@TLabel(text="#{label.name}")
+	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=60, required = true)
 	private SimpleStringProperty name;
 			
-	@TReaderHtml
-	@TLabel(text="#{label.capital}")
+	@TLabel(text=TUsualKey.CAPITAL)
 	@TTextField(maxLength=120, required = true)
 	private SimpleStringProperty capital;
 			
-	@TReaderHtml
-	@TLabel(text = "#{label.numeric.code}")
+	@TLabel(text = TUsualKey.NUMERIC_CODE)
 	@TNumberSpinnerField(maxValue = Long.MAX_VALUE)
 	@THBox(	pane=@TPane(children={"numericCode", "iddCode", "populationName", "totalArea", "population"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="numericCode", priority=Priority.NEVER), 
@@ -107,28 +106,23 @@ public class CountryMV extends TEntityModelView<Country> {
 			@TPriority(field="population", priority=Priority.NEVER)}))
 	private SimpleLongProperty numericCode;
 			
-	@TReaderHtml
-	@TLabel(text="#{label.population.name}")
+	@TLabel(text=TUsualKey.POPULATION_NAME)
 	@TTextField(maxLength=60)
 	private SimpleStringProperty populationName;
 			
-	@TReaderHtml
-	@TLabel(text = "#{label.total.area}")
+	@TLabel(text = TUsualKey.TOTAL_AREA)
 	@TNumberSpinnerField(maxValue = Long.MAX_VALUE)
 	private SimpleLongProperty totalArea;
 			
-	@TReaderHtml
-	@TLabel(text = "#{label.population}")
+	@TLabel(text = TUsualKey.POPULATION)
 	@TNumberSpinnerField(maxValue = Long.MAX_VALUE)
 	private SimpleLongProperty population;
 			
-	@TReaderHtml
-	@TLabel(text = "#{label.idd.code}")
+	@TLabel(text = TUsualKey.IDD_CODE)
 	@TNumberSpinnerField(maxValue = Long.MAX_VALUE)
 	private SimpleIntegerProperty iddCode;
 			
-	@TReaderHtml
-	@TLabel(text="#{label.currency.code}")
+	@TLabel(text=TUsualKey.CURRENCY_CODE)
 	@TTextField(maxLength=3)
 	@THBox(	pane=@TPane(children={"currencyCode", "currencyName", "langCode", "langName", "cctld"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="currencyCode", priority=Priority.NEVER), 
@@ -138,27 +132,22 @@ public class CountryMV extends TEntityModelView<Country> {
 			@TPriority(field="cctld", priority=Priority.NEVER)}))
 	private SimpleStringProperty currencyCode;
 			
-	@TReaderHtml
-	@TLabel(text="#{label.currency.name}")
+	@TLabel(text=TUsualKey.CURRENCY_NAME)
 	@TTextField(maxLength=60)
 	private SimpleStringProperty currencyName;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.lang.code}")
+	@TLabel(text=TUsualKey.LANG_CODE)
 	@TTextField(maxLength=2)
 	private SimpleStringProperty langCode;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.lang.name}")
+	@TLabel(text=TUsualKey.LANG_NAME)
 	@TTextField(maxLength=60)
 	private SimpleStringProperty langName;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.cctld}")
+	@TLabel(text=TUsualKey.CCTLD)
 	@TTextField(maxLength=2)
 	private SimpleStringProperty cctld;
 			
-	@TReaderHtml
 	@TLabel(text="Latitude")
 	@TTextField(maxLength=20)
 	@THBox(	pane=@TPane(children={"latitude", "longitude"}), spacing=10, fillHeight=true,
@@ -166,12 +155,10 @@ public class CountryMV extends TEntityModelView<Country> {
 			@TPriority(field="longitude", priority=Priority.SOMETIMES)}))
 	private SimpleStringProperty latitude;
 			
-	@TReaderHtml
 	@TLabel(text="Longitude")
 	@TTextField(maxLength=20)
 	private SimpleStringProperty longitude;
 			
-	@TReaderHtml
 	@TFieldBox(node=@TNode(id="img", parse = true))
 	@TSelectImageField(source=TEnvironment.LOCAL, target=TEnvironment.REMOTE, 
 	remoteOwner=DomainApp.MNEMONIC, maxFileSize=300000)

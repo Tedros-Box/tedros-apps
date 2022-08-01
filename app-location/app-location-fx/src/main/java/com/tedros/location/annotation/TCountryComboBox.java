@@ -11,6 +11,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.TAnnotationDefaultValue;
 import com.tedros.fxapi.annotation.parser.ITAnnotationParser;
 import com.tedros.fxapi.annotation.parser.TComboBoxParser;
@@ -228,10 +229,10 @@ public @interface TCountryComboBox  {
 	 * 
 	 * The text to show on the first item.
 	 * 
-	 * Default value: Empty string.
+	 * Default value: #{label.select}
 	 * </pre>
 	 * */
-	public String firstItemTex() default "";
+	public String firstItemTex() default TUsualKey.SELECT;
 
 	
 	// 	PROPERTYS

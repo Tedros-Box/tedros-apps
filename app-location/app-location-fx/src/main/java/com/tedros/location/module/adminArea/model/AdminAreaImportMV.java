@@ -4,6 +4,8 @@
 package com.tedros.location.module.adminArea.model;
 
 import com.tedros.common.model.TFileEntity;
+import com.tedros.ejb.controller.IAdminAreaImportController;
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TFieldBox;
 import com.tedros.fxapi.annotation.control.TFileField;
 import com.tedros.fxapi.annotation.control.TLabel;
@@ -26,6 +28,7 @@ import com.tedros.fxapi.presenter.modal.behavior.TImportFileModalBehavior;
 import com.tedros.fxapi.presenter.modal.decorator.TImportFileModalDecorator;
 import com.tedros.fxapi.presenter.model.TImportModelView;
 import com.tedros.fxapi.property.TSimpleFileProperty;
+import com.tedros.location.LocatKey;
 import com.tedros.location.model.AdminArea;
 import com.tedros.location.model.AdminAreaImport;
 import com.tedros.location.start.TConstant;
@@ -39,25 +42,26 @@ import javafx.scene.text.TextAlignment;
  * @author Davis Gordon
  *
  */
-@TEjbService(serviceName = "IAdminAreaImportControllerRemote", model=AdminAreaImport.class)
-@TPresenter(decorator = @TDecorator(type=TImportFileModalDecorator.class, viewTitle="#{view.admin.area.imp}"),
+@TEjbService(serviceName = IAdminAreaImportController.JNDI_NAME, model=AdminAreaImport.class)
+@TPresenter(decorator = @TDecorator(type=TImportFileModalDecorator.class, viewTitle=LocatKey.VIEW_ADMIN_AREA_IMP),
 			behavior = @TBehavior(type=TImportFileModalBehavior.class, 
 			importedEntityClass=AdminArea.class, importedModelViewClass=AdminAreaMV.class))
 public class AdminAreaImportMV extends TImportModelView<AdminAreaImport> {
 
-	@TTextReaderHtml(text="#{import.text}", 
-			htmlTemplateForControlValue="<h2 id='"+THtmlConstant.ID+"' name='"+THtmlConstant.NAME+"' style='"+THtmlConstant.STYLE+"'>"+THtmlConstant.CONTENT+"</h2>",
-			cssForControlValue="width:100%; padding:8px; background-color: "+TStyleParameter.PANEL_BACKGROUND_COLOR+";",
-			cssForHtmlBox="", cssForContentValue="color:"+TStyleParameter.PANEL_TEXT_COLOR+";")
-	@TFieldBox(alignment=Pos.CENTER_LEFT, node=@TNode(id="t-form", effect=@TEffect(dropShadow=@TDropShadow, parse=true), parse = true))
-	@TText(text="#{import.up.file}", textAlignment=TextAlignment.LEFT, 
+	@TTextReaderHtml(text=LocatKey.IMPORT_TEXT, 
+		htmlTemplateForControlValue="<h2 id='"+THtmlConstant.ID+"' name='"+THtmlConstant.NAME+"' style='"+THtmlConstant.STYLE+"'>"+THtmlConstant.CONTENT+"</h2>",
+		cssForControlValue="width:100%; padding:8px; background-color: "+TStyleParameter.PANEL_BACKGROUND_COLOR+";",
+		cssForHtmlBox="", cssForContentValue="color:"+TStyleParameter.PANEL_TEXT_COLOR+";")
+	@TFieldBox(alignment=Pos.CENTER_LEFT, node=@TNode(id="t-form", 
+			effect=@TEffect(dropShadow=@TDropShadow, parse=true), parse = true))
+	@TText(text=LocatKey.IMPORT_UP_FILE, textAlignment=TextAlignment.LEFT, 
 			textStyle = TTextStyle.LARGE)
 	private SimpleStringProperty texto;
 	
 	@TReaderHtml
 	private SimpleStringProperty rules;
 	
-	@TLabel(text="#{label.file}")
+	@TLabel(text=TUsualKey.FILE)
 	@TFileField(propertyValueType=TFileModelType.ENTITY, 
 	initialDirectory=TFileField.TEDROS_MODULE+TConstant.UUI,
 	extensions= {TFileExtension.CSV}, moreExtensions= {"*.xls", "*.xlsx"},

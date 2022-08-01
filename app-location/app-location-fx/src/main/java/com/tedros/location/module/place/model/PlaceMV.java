@@ -3,13 +3,21 @@
  */
 package com.tedros.location.module.place.model;
 
+import static com.tedros.core.annotation.security.TAuthorizationType.DELETE;
+import static com.tedros.core.annotation.security.TAuthorizationType.EDIT;
+import static com.tedros.core.annotation.security.TAuthorizationType.NEW;
+import static com.tedros.core.annotation.security.TAuthorizationType.SAVE;
+import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+
 import com.tedros.common.model.TFileEntity;
-import com.tedros.core.annotation.security.TAuthorizationType;
 import com.tedros.core.annotation.security.TSecurity;
 import com.tedros.ejb.base.model.ITFileBaseModel;
+import com.tedros.ejb.controller.IPlaceController;
+import com.tedros.ejb.controller.IPlaceTypeController;
 import com.tedros.extension.contact.model.ContactMV;
 import com.tedros.extension.model.Contact;
 import com.tedros.extension.start.TConstant;
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TComboBoxField;
 import com.tedros.fxapi.annotation.control.TContent;
 import com.tedros.fxapi.annotation.control.TEditEntityModal;
@@ -33,14 +41,13 @@ import com.tedros.fxapi.annotation.presenter.TDecorator;
 import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
 import com.tedros.fxapi.annotation.presenter.TPresenter;
 import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.reader.TFormReaderHtml;
-import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.view.TOption;
 import com.tedros.fxapi.annotation.view.TPaginator;
 import com.tedros.fxapi.collections.ITObservableList;
 import com.tedros.fxapi.domain.TEnvironment;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
+import com.tedros.location.LocatKey;
 import com.tedros.location.domain.DomainApp;
 import com.tedros.location.model.Address;
 import com.tedros.location.model.Place;
@@ -56,49 +63,44 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TFormReaderHtml
-@TForm(name = "#{form.keep.update}", showBreadcrumBar=true, scroll=false)
-@TEjbService(serviceName = "IPlaceControllerRemote", model=Place.class)
+@TForm(name = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
+@TEjbService(serviceName = IPlaceController.JNDI_NAME, model=Place.class)
 @TListViewPresenter(
 	paginator=@TPaginator(entityClass = Place.class, 
-		serviceName = "IPlaceControllerRemote",
+		serviceName = IPlaceController.JNDI_NAME,
 		show=true, showSearchField=true, searchFieldName="title", 
-		orderBy = {	@TOption(text = "#{label.title}", value = "title")}),
+		orderBy = {	@TOption(text = TUsualKey.TITLE, value = "title")}),
 	presenter=@TPresenter(
-		decorator = @TDecorator(viewTitle="#{view.place}", buildModesRadioButton=false),
+		decorator = @TDecorator(viewTitle=LocatKey.VIEW_PLACE),
 		behavior = @TBehavior(saveOnlyChangedModels=false, saveAllModels=false)))
-@TSecurity(id=DomainApp.PLACE_FORM_ID, 
-	appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.place}",
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
+@TSecurity(id=DomainApp.PLACE_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
+moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_PLACE,
+allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class PlaceMV extends TEntityModelView<Place> {
 
 	@TTabPane(
 	tabs = { 
-			@TTab(text = "#{label.main.data}", 
+			@TTab(text = TUsualKey.MAIN_DATA, 
 				content = @TContent(detailForm=@TDetailForm(fields = {"title", "description"}))),
-			@TTab(text = "#{label.pictures}", 
+			@TTab(text = TUsualKey.PICTURES, 
 				content = @TContent(detailForm=@TDetailForm(fields = {"pictures"}))) })
 	private SimpleLongProperty id;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.title}")
+	@TLabel(text=TUsualKey.TITLE)
 	@TTextField(maxLength=60, required = true, node=@TNode(requestFocus=true, parse = true))
 	@THBox(	pane=@TPane(children={"title", "type"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="title", priority=Priority.ALWAYS), 
 			@TPriority(field="type", priority=Priority.SOMETIMES)}))
 	private SimpleStringProperty title;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.type}")
-	@TComboBoxField(firstItemTex="#{label.select}", required=true,
-		optionsList=@TOptionsList(serviceName = "IPlaceTypeControllerRemote", 
+	@TLabel(text=TUsualKey.TYPE)
+	@TComboBoxField(firstItemTex=TUsualKey.SELECT, required=true,
+		optionsList=@TOptionsList(serviceName = IPlaceTypeController.JNDI_NAME, 
 		optionModelViewClass=PlaceTypeMV.class,
 		entityClass=PlaceType.class))
 	private SimpleObjectProperty<PlaceType> type;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.description}")
+	@TLabel(text=TUsualKey.DESCRIPTION)
 	@TTextAreaField(maxLength=500, wrapText=true, prefRowCount=7)
 	@THBox(	pane=@TPane(children={"description","address", "contacts"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="description", priority=Priority.ALWAYS), 
@@ -106,14 +108,12 @@ public class PlaceMV extends TEntityModelView<Place> {
 			@TPriority(field="contacts", priority=Priority.NEVER)}))
 	private SimpleStringProperty description;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.address}")
+	@TLabel(text=TUsualKey.ADDRESS)
 	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class, required=true)
 	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
 	private SimpleObjectProperty<AddressMV> address;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.contacts}")
+	@TLabel(text=TUsualKey.CONTACTS)
 	@TEditEntityModal(modelClass = Contact.class, modelViewClass=ContactMV.class)
 	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
 	private ITObservableList<ContactMV> contacts;

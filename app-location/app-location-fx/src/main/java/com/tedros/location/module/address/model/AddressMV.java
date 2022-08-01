@@ -3,8 +3,16 @@
  */
 package com.tedros.location.module.address.model;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
+import static com.tedros.core.annotation.security.TAuthorizationType.DELETE;
+import static com.tedros.core.annotation.security.TAuthorizationType.EDIT;
+import static com.tedros.core.annotation.security.TAuthorizationType.NEW;
+import static com.tedros.core.annotation.security.TAuthorizationType.SAVE;
+import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+
 import com.tedros.core.annotation.security.TSecurity;
+import com.tedros.ejb.controller.IAddressController;
+import com.tedros.ejb.controller.IStreetTypeController;
+import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TComboBoxField;
 import com.tedros.fxapi.annotation.control.TLabel;
 import com.tedros.fxapi.annotation.control.TOptionsList;
@@ -17,12 +25,12 @@ import com.tedros.fxapi.annotation.layout.TPane;
 import com.tedros.fxapi.annotation.layout.TPriority;
 import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
 import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.reader.TReaderHtml;
 import com.tedros.fxapi.annotation.scene.TNode;
 import com.tedros.fxapi.annotation.scene.control.TControl;
 import com.tedros.fxapi.annotation.scene.web.TWebEngine;
 import com.tedros.fxapi.annotation.scene.web.TWebView;
 import com.tedros.fxapi.presenter.model.TEntityModelView;
+import com.tedros.location.LocatKey;
 import com.tedros.location.annotation.TAdminAreaComboBox;
 import com.tedros.location.annotation.TCityComboBox;
 import com.tedros.location.annotation.TCountryComboBox;
@@ -42,51 +50,37 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TEditModalPresenter()
+@TEditModalPresenter
 @TSetting(TAddressSetting.class)
-@TEjbService(serviceName = "IAddressControllerRemote", model=Address.class)
-@TSecurity(	id=DomainApp.ADDRESS_FORM_ID, 
-appName = "#{app.location.name}", moduleName = "#{module.administrative}", viewName = "#{view.address}",
-allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
-				TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
-
+@TEjbService(serviceName = IAddressController.JNDI_NAME, model=Address.class)
+@TSecurity(	id=DomainApp.ADDRESS_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
+moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_ADDRESS,
+allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class AddressMV extends TEntityModelView<Address> {
 
 
 	private SimpleLongProperty id;
+	private SimpleStringProperty displayProperty;
 	
-	/*@TTabPane(tabs = { @TTab(text = "#{label.main.data}", 
-			content = @TContent(detailForm=@TDetailForm(fields = {"country", "streetType", "complement"}))),
-			@TTab(text = "#{label.map}", 
-				content = @TContent(detailForm=@TDetailForm(fields = {"latitude", "webview"}))) 
-	})*/
-	private SimpleStringProperty display;
-	
-
-	@TReaderHtml
-	@TLabel(text="#{label.country}")
-	@TCountryComboBox(firstItemTex="#{label.select}", required=true)
+	@TLabel(text=TUsualKey.COUNTRY)
+	@TCountryComboBox(required=true)
 	@THBox(	pane=@TPane(children={"country", "adminArea", "city"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="country", priority=Priority.ALWAYS), 
 			@TPriority(field="adminArea", priority=Priority.ALWAYS), 
 			@TPriority(field="city", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<Country> country;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.admin.area}")
-	@TAdminAreaComboBox(firstItemTex="#{label.select}", countryField="country", required=false)
+	@TLabel(text=TUsualKey.ADMIN_AREA)
+	@TAdminAreaComboBox(countryField="country", required=false)
 	private SimpleObjectProperty<AdminArea> adminArea;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.city}")
-	@TCityComboBox(firstItemTex="#{label.select}", countryField="country", adminAreaField="adminArea",  required=false)
+	@TLabel(text=TUsualKey.CITY)
+	@TCityComboBox(countryField="country", adminAreaField="adminArea",  required=false)
 	private SimpleObjectProperty<City> city;
 	
-	
-	@TReaderHtml
-	@TLabel(text="#{label.street.type}")
-	@TComboBoxField(firstItemTex="#{label.select}", required=true,
-		optionsList=@TOptionsList(serviceName = "IStreetTypeControllerRemote", 
+	@TLabel(text=TUsualKey.STREET_TYPE)
+	@TComboBoxField(firstItemTex=TUsualKey.SELECT, required=true,
+		optionsList=@TOptionsList(serviceName = IStreetTypeController.JNDI_NAME, 
 		optionModelViewClass=StreetTypeMV.class,
 		entityClass=StreetType.class))
 	@THBox(	pane=@TPane(children={"streetType", "publicPlace", "complement", "neighborhood", "code"}), spacing=10, fillHeight=true,
@@ -97,47 +91,38 @@ public class AddressMV extends TEntityModelView<Address> {
 			@TPriority(field="code", priority=Priority.SOMETIMES)}))
 	private SimpleObjectProperty<StreetType> streetType;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.public.place}")
+	@TLabel(text=TUsualKey.PUBLIC_PLACE)
 	@TTextField(maxLength=120, required = true, 
-		control=@TControl(tooltip="#{text.mapview.press.enter}", parse = true), 
+		control=@TControl(tooltip=LocatKey.TEXT_MAPVIEW_PRESS_ENTER, parse = true), 
 		node=@TNode(requestFocus=true, parse = true))
 	private SimpleStringProperty publicPlace;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.complement}")
+	@TLabel(text=TUsualKey.COMPLEMENT)
 	@TTextField(maxLength=120)
 	private SimpleStringProperty complement;
 
-	@TReaderHtml
-	@TLabel(text="#{label.neighborhood}")
+	@TLabel(text=TUsualKey.NEIGHBORHOOD)
 	@TTextField(maxLength=120)
 	private SimpleStringProperty neighborhood;
 	
-	@TReaderHtml
-	@TLabel(text="#{label.address.code}")
+	@TLabel(text=TUsualKey.ADDRESS_CODE)
 	@TTextField(maxLength=20, 
-	control=@TControl(tooltip="#{text.mapview.press.enter}", parse = true),
-	textInputControl=@TTextInputControl(promptText="#{text.address.code}", parse = true))
+	control=@TControl(tooltip=LocatKey.TEXT_MAPVIEW_PRESS_ENTER, parse = true),
+	textInputControl=@TTextInputControl(promptText=LocatKey.TEXT_ADDRESS_CODE, parse = true))
 	private SimpleStringProperty code;
 	
-	@TReaderHtml
 	@TLabel(text="Latitude")
 	@TTextField(maxLength=15, 
-			control=@TControl(tooltip="#{text.mapview.press.enter}", parse = true))
+			control=@TControl(tooltip=LocatKey.TEXT_MAPVIEW_PRESS_ENTER, parse = true))
 	@THBox(	pane=@TPane(children={"latitude", "logintude"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="latitude", priority=Priority.ALWAYS), 
 			@TPriority(field="logintude", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty latitude;
 	
-	@TReaderHtml
 	@TLabel(text="Logintude")
 	@TTextField(maxLength=15, 
-			control=@TControl(tooltip="#{text.mapview.press.enter}", parse = true))
+			control=@TControl(tooltip=LocatKey.TEXT_MAPVIEW_PRESS_ENTER, parse = true))
 	private SimpleStringProperty logintude;
-	
-	/*@THyperlinkField(labeled = @TLabeled(text="View On Map", parse = true))
-	private SimpleStringProperty viewMap;*/
 	
 	@TWebView(prefHeight=300,
 			engine=@TWebEngine(load=TWebEngine.MODULE_FOLDER+"/geolocation/location.html"))
@@ -145,17 +130,8 @@ public class AddressMV extends TEntityModelView<Address> {
 	
 	public AddressMV(Address entity) {
 		super(entity);
-		this.display = new SimpleStringProperty();
 		this.formatFieldsToDisplay("%s %s %s", this.streetType, this.publicPlace, this.complement);
 	}
-	
-
-	@Override
-	public void reload(Address e) {
-		super.reload(e);
-		this.formatFieldsToDisplay("%s %s %s", this.streetType, this.publicPlace, this.complement);
-	}
-	
 
 	public SimpleLongProperty getId() {
 		return id;
@@ -229,22 +205,6 @@ public class AddressMV extends TEntityModelView<Address> {
 		this.city = city;
 	}
 
-	@Override
-	public SimpleStringProperty getDisplayProperty() {
-		return display;
-	}
-
-
-	public SimpleStringProperty getDisplay() {
-		return display;
-	}
-
-
-	public void setDisplay(SimpleStringProperty display) {
-		this.display = display;
-	}
-
-
 	public SimpleStringProperty getLatitude() {
 		return latitude;
 	}
@@ -272,6 +232,14 @@ public class AddressMV extends TEntityModelView<Address> {
 
 	public void setWebview(SimpleStringProperty webview) {
 		this.webview = webview;
+	}
+
+	public SimpleStringProperty getDisplayProperty() {
+		return displayProperty;
+	}
+
+	public void setDisplayProperty(SimpleStringProperty displayProperty) {
+		this.displayProperty = displayProperty;
 	}
 
 /*

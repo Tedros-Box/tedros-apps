@@ -7,5 +7,7 @@ import com.tedros.location.model.Address;
 
 @Remote
 public interface IAddressController extends ITSecureEjbController<Address>{
+
+	static final String JNDI_NAME = "IAddressControllerRemote";
 	
 }

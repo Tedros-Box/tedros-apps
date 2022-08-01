@@ -3,6 +3,8 @@
  */
 package com.tedros.location.model;
 
+import com.tedros.ejb.controller.IPlaceController;
+import com.tedros.ejb.controller.IPlaceTypeController;
 import com.tedros.fxapi.TUsualKey;
 import com.tedros.fxapi.annotation.control.TCallbackFactory;
 import com.tedros.fxapi.annotation.control.TCellValueFactory;
@@ -44,7 +46,7 @@ import javafx.scene.layout.Priority;
 @TLabelDefaultSetting(font=@TFont(size=12))
 @TSelectionModalPresenter(
 	paginator=@TPaginator(entityClass = Place.class, modelViewClass=PlaceItemMV.class, 
-		serviceName = "IPlaceControllerRemote"),
+		serviceName = IPlaceController.JNDI_NAME),
 	presenter=@TPresenter(behavior = @TBehavior(type = TSelectionModalBehavior.class), 
 		decorator = @TDecorator(type=TSelectionModalDecorator.class, viewTitle=LocatKey.VIEW_PLACE)),
 	tableView=@TTableView(editable=true, 
@@ -70,7 +72,7 @@ public class FindPlaceMV extends TEntityModelView<Place> {
 	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
-		optionsList=@TOptionsList(serviceName = "IPlaceTypeControllerRemote", 
+		optionsList=@TOptionsList(serviceName = IPlaceTypeController.JNDI_NAME, 
 		optionModelViewClass=PlaceTypeMV.class,
 		entityClass=PlaceType.class))
 	private SimpleObjectProperty<PlaceType> type;
