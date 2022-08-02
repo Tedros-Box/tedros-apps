@@ -58,7 +58,7 @@
 		  <configuration>
 		  	<archive>
 		      <manifest>
-		        <mainClass>com.tedros.start.Main</mainClass>
+		        <mainClass>com.template.Main</mainClass>
 		      </manifest>
 		    </archive>
 		    <descriptorRefs>
@@ -90,12 +90,6 @@
         	<resource>
             	<directory>src/main/resources</directory>
         	</resource>
-        	<resource>
-        		<directory>src/main/java</directory>
-        		<includes>
-          			<include>**/*.*</include>
-        		</includes>
-      		</resource>
     	</resources>
 	</build>
   

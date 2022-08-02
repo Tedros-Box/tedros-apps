@@ -4,7 +4,7 @@
   
   	<groupId>com.tedros</groupId>
   	<artifactId>app-docs</artifactId>
-  	<version>8-1.0.1</version>
+  	<version>8-1.0.2</version>
   
  	 <packaging>pom</packaging>
   
@@ -17,10 +17,10 @@
   	
   	<!-- PROPERTIES -->
 	<properties>
-		<app.ext>8-1.0.1</app.ext>
-		<tedros.fx>8-3.1.1</tedros.fx>
-		<app.settings>8-3.1.1</app.settings>
-		<tedros.jee>8-3.1.1</tedros.jee>
+		<app.ext>8-1.0.2</app.ext>
+		<tedros.fx>8-3.1.2</tedros.fx>
+		<app.settings>8-3.1.2</app.settings>
+		<tedros.jee>8-3.1.2</tedros.jee>
 		<javafx.version>1.8.0_261</javafx.version>
 		<java.version>1.8</java.version>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -74,6 +74,20 @@
           			<target>${java.version}</target>
         		</configuration>
       		</plugin>
+      		<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-source-plugin</artifactId>
+		        <version>3.2.1</version>
+		        <executions>
+		          <execution>
+		            <id>attach-sources</id>
+		            <phase>verify</phase>
+		            <goals>
+		              <goal>jar-no-fork</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+		      </plugin>
       		
       		<plugin>
 	          <groupId>org.apache.maven.plugins</groupId>
