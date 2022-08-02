@@ -25,15 +25,15 @@
 	
   	<!-- PROPERTIES -->
 	<properties>
-		<app.ext>8-1.0.1</app.ext>
-		<app.docs>8-1.0.1</app.docs>
-		<app.location>8-1.0.1</app.location>
-		<app.person>8-1.0.1</app.person>
-		<app.services>8-1.0.1</app.services>
-		<tedros.box>8-3.1.1</tedros.box>
-		<tedros.fx>8-3.1.1</tedros.fx>
-		<app.settings>8-3.1.1</app.settings>
-		<tedros.jee>8-3.1.1</tedros.jee>
+		<app.ext>8-1.0.2</app.ext>
+		<app.docs>8-1.0.2</app.docs>
+		<app.location>8-1.0.2</app.location>
+		<app.person>8-1.0.2</app.person>
+		<app.services>8-1.0.2</app.services>
+		<tedros.box>8-3.1.2</tedros.box>
+		<tedros.fx>8-3.1.2</tedros.fx>
+		<app.settings>8-3.1.2</app.settings>
+		<tedros.jee>8-3.1.2</tedros.jee>
 		<java.home>C:\Program Files\Java\jdk1.8.0_102\bin</java.home>
 		
 		<junit.version>4.13</junit.version>

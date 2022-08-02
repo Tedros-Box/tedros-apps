@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.tedros</groupId>
   		<artifactId>app-person</artifactId>
-  		<version>8-1.0.1</version>
+  		<version>8-1.0.2</version>
 	</parent>	
 	
   	<artifactId>app-person-fx</artifactId>
@@ -35,7 +35,7 @@
 	  	<dependency>
 	  		<groupId>com.tedros</groupId>
 	  		<artifactId>app-person-ejb-client</artifactId>
-	  		<version>8-1.0.1</version>
+	  		<version>8-1.0.2</version>
 	  	</dependency>
 	  	
   	</dependencies> 
@@ -64,12 +64,6 @@
         	<resource>
             	<directory>src/main/resources</directory>
         	</resource>
-        	<resource>
-        		<directory>src/main/java</directory>
-        		<includes>
-          			<include>**/*.*</include>
-        		</includes>
-      		</resource>
     	</resources>
  	</build>
   
