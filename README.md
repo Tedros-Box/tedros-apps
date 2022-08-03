@@ -39,4 +39,23 @@ A integração entre os aplicativos se dá pela utilização dos componentes ou 
 
 **Print Screen**
 
+Tela de login:
 ![Tela Login](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/login.png)
+
+Tela de configuração inicial:
+![Tela configuração inicial](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/config.png)
+
+Tela principal:
+![Tela principal](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/tela1.png)
+
+Tela para definir thema:
+![Tela para definir thema](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/thema1.png)
+
+Thema Pedras:
+![Thema Pedras](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/thema2.png)
+
+Thema Solidariedade:
+![Thema Solidariedade](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/thema3.png)
+
+
+
