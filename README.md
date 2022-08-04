@@ -57,5 +57,28 @@ Thema Pedras:
 Thema Solidariedade:
 ![Thema Solidariedade](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/thema3.png)
 
+Tela Perfil:
+![Tela Perfil](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/perfil.png)
+
+Tela de notificação com um email agendado para envio em uma data futura: :
+![Tela de notificação](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/notify.png)
+
+Tela para edição de país:
+![Tela pais](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/pais.png)
+
+Tela pessoa fisica:
+![Tela pessoa fisica ](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/pf_1.png)
+
+Tela pessoa fisica utilizando componente de endereço do aplicativo Localização:
+![Tela endereço](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/pf_2.png)
+
+Tela gerar relatório de pessoa fisica:
+![Tela relatorio](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/pf_rel1.png)
+
+Tela PDF gerado:
+![Tela pdf](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/pf_rel2.png)
+
+
+
 
 
