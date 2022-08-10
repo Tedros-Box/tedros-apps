@@ -45,8 +45,6 @@ Segue alguns prints do Tedros Box e aplicativos feitos para a ONG.
 Tela do aplicativo da ONG:
 ![Tela 1](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos1.png)
 
-![Tela 2](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos2.png)
-
 ![Tela 3](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos3.png)
 
 ![Tela 4](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos4.png)
