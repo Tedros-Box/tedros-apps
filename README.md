@@ -33,14 +33,33 @@ A proposta Tedros com a plataforma Tedros Box é atender estas necessidades e mi
  
  * **Fornecimento de serviços**, este aplicativo possui dois modulos, um para gerenciar os serviços e outro para os planos. 
  
- Para mais detalhes sobre cada um destes aplicativos visite nossa wiki. 
+# Use Case
 
-A integração entre os aplicativos se dá pela utilização dos componentes ou serviços que estes fornecem ou até mesmo extendendo as suas entidades. Desta forma é possível desenvolver soluções integráveis entre si de forma simples sem precisar recriar bases redundantes de informação. 
+O sistema Tedros Box esta em plena utilização pela ONG [Social Movement](http://www.somossocial.org.br)
+
+Esta ONG começou durante a pandemia do Covid-19 que resultou no aumento da fome,  por conta do  lock-down, em muitas pessoas vulneráveis e moradores de rua que dependiam das doações de comida de restaurantes e de pessoas comuns, foi então que um grupo de amigos começaram a preparar refeições em casa e distribui-las nas ruas. A iniciativa deu certo e eles cresceram em voluntários, doações e refeições distribuídas. Com este crescimento veio a necessidade de seguir um processo de trabalho que os ajudassem no gerenciamento das ações, doações, entrada e saída de produtos em estoque, recrutamento e controle dos voluntários, mailing, termos de adesão e das informações do web site. Com o Tedros Box foi desenvolvida uma solução completa que atendesse a todas as necessidades do então projeto chamado Covid Sem Fome e de forma rápida e gradual a solução foi desenvolvida sem muito esforço, ouve varias iterações e mudanças nos aplicativos e no sistema foram 27 versões no total, mas todas foram realizadas de forma rápida e sem muitas complicações. Quando o projeto foi registrado oficialmente como uma ONG e com um novo nome, processo e web site a refatoração dos aplicativos e do web site foi realizado sem muito esforço e complicação.
+O web site da ONG esta integrado aos serviços na camada  de negócios dos aplicativos do  sistema Tedros Box que é utilizado pelos diversos colaboradores da ONG, cada um com o perfil e permissões adequados a sua atribuição. 
+
+Segue alguns prints do Tedros Box e aplicativos feitos para a ONG.
+
+Tela do aplicativo da ONG:
+![Tela 1](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos1.png)
+
+![Tela 2](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos2.png)
+
+![Tela 3](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos3.png)
+
+![Tela 4](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos4.png)
+
+![Tela 5](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos5.png)
+
+![Tela 6](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos6.png)
+
 
 **Print Screen**
 
 Tela de login:
-![Tela Login](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/login.png)
+![Tela de login](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/login.png)
 
 Tela de configuração inicial:
 ![Tela configuração inicial](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/config.png)
