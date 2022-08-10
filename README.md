@@ -27,9 +27,9 @@ A proposta Tedros com a plataforma Tedros Box é atender estas necessidades e mi
  *  **Ferramentas**, Este aplicativo possui um módulo para definir e editar Themas, Controle de Autorização, perfil e usuários, Preferências (Definições do sistema) e um módulo de notificação para envio e agendamento de emails a ser enviado. 
  
  * **Suporte**, neste aplicativo encontra-se alguns dos módulos básicos para integração com a maioria das soluções:
-    - Artefatos Documentais para gerar ou guardar documentos (arquivos). Integrado ao módulo de notificação é possível enviar o documento por email. 
+    - **Artefatos Documentais** para gerar ou guardar documentos (arquivos). Integrado ao módulo de notificação é possível enviar o documento por email. 
     - **Localização**, este item possui módulos para Gerenciar e linkar informações de Países, Estados, Cidades, Endereços e Lugares. Podendo estes dados serem importados através de um arquivo xls, xlsx ou csv. A solução já vem com estes arquivos para importação com uma grande base de dados e a edição de endereços pode ser acompanhada e visualizada através de um mapa. (Mapquest) 
-    - Pessoas e Empresas, aqui encontra-se modulos para gerenciar todas as pessoas físicas e pessoas jurídicas podendo gerar relatórios dos mesmos. 
+    - **Pessoas e Empresas**, aqui encontra-se modulos para gerenciar todas as pessoas físicas e pessoas jurídicas podendo gerar relatórios dos mesmos. 
  
  * **Fornecimento de serviços**, este aplicativo possui dois modulos, um para gerenciar os serviços e outro para os planos. 
  
