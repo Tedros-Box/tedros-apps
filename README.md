@@ -55,8 +55,7 @@ Tela do aplicativo da ONG:
 
 ![Tela 6](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos6.png)
 
-
-**Print Screen**
+## Tedros Box 
 
 Tela de login:
 ![Tela de login](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/login.png)
