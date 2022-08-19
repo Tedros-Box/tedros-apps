@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.tedros.archetype</groupId>
+    <groupId>org.tedros.archetype</groupId>
     <artifactId>tedros-startup-template</artifactId>
     <version>8-0.0.0</version>
   </parent>
@@ -14,42 +14,42 @@
   <dependencies>
   
 	<dependency>
-	    <groupId>com.tedros</groupId>
+	    <groupId>org.tedros</groupId>
 	    <artifactId>tedros-core-ejb-ear</artifactId>
 	    <type>ear</type>
 	    <version>${tedros.jee}</version>
 	</dependency>
 	
 	<dependency>
-		<groupId>com.tedros</groupId>
+		<groupId>org.tedros</groupId>
 		 <artifactId>app-services-ejb-ear</artifactId>
 		 <type>ear</type>
 		<version>${app.services}</version>
 	</dependency> 
 	
 	<dependency>
-		<groupId>com.tedros</groupId>
+		<groupId>org.tedros</groupId>
 		 <artifactId>app-location-ejb-ear</artifactId>
 		 <type>ear</type>
 		<version>${app.location}</version>
 	</dependency> 
 	
 	<dependency>
-		<groupId>com.tedros</groupId>
+		<groupId>org.tedros</groupId>
 		 <artifactId>app-docs-ejb-ear</artifactId>
 		 <type>ear</type>
 		<version>${app.docs}</version>
 	</dependency> 
 	
 	<dependency>
-		<groupId>com.tedros</groupId>
+		<groupId>org.tedros</groupId>
 		 <artifactId>app-person-ejb-ear</artifactId>
 		 <type>ear</type>
 		<version>${app.person}</version>
 	</dependency> 
 	
 	<dependency>
-		<groupId>com.tedros</groupId>
+		<groupId>org.tedros</groupId>
 		 <artifactId>app-extensions-ejb-ear</artifactId>
 		 <type>ear</type>
 		<version>${app.ext}</version>
@@ -296,37 +296,37 @@
 		    <deployables>
 		      
 		      <deployable>
-		        <groupId>com.tedros</groupId>
+		        <groupId>org.tedros</groupId>
 		        <artifactId>tedros-core-ejb-ear</artifactId>
 		        <type>ear</type>
 		      </deployable>
 		     
 		     <deployable>
-		        <groupId>com.tedros</groupId>
+		        <groupId>org.tedros</groupId>
 		        <artifactId>app-services-ejb-ear</artifactId>
 		      	<type>ear</type>
 		      </deployable>
 		      
 		     <deployable>
-		        <groupId>com.tedros</groupId>
+		        <groupId>org.tedros</groupId>
 		        <artifactId>app-person-ejb-ear</artifactId>
 		      	<type>ear</type>
 		      </deployable>
 		      
 		     <deployable>
-		        <groupId>com.tedros</groupId>
+		        <groupId>org.tedros</groupId>
 		        <artifactId>app-location-ejb-ear</artifactId>
 		      	<type>ear</type>
 		      </deployable>
 		      
 		      <deployable>
-		        <groupId>com.tedros</groupId>
+		        <groupId>org.tedros</groupId>
 		        <artifactId>app-docs-ejb-ear</artifactId>
 		      	<type>ear</type>
 		      </deployable>
 		      
 		     <deployable>
-		        <groupId>com.tedros</groupId>
+		        <groupId>org.tedros</groupId>
 		        <artifactId>app-extensions-ejb-ear</artifactId>
 		      	<type>ear</type>
 		      </deployable>

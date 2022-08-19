@@ -3,7 +3,7 @@
  */
 package com.template;
 
-import com.tedros.TedrosBox;
+import org.tedros.TedrosBox;
 
 /**
  * @author Davis Gordon
