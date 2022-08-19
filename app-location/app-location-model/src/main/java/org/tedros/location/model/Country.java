@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.location.model;
+package org.tedros.location.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,14 +12,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.tedros.common.model.TFileEntity;
-import com.tedros.ejb.base.annotation.TCaseSensitive;
-import com.tedros.ejb.base.annotation.TEntityImportRule;
-import com.tedros.ejb.base.annotation.TFieldImportRule;
-import com.tedros.ejb.base.annotation.TFileType;
-import com.tedros.ejb.base.entity.TEntity;
-import com.tedros.location.domain.DomainSchema;
-import com.tedros.location.domain.DomainTables;
+import org.tedros.location.domain.DomainSchema;
+import org.tedros.location.domain.DomainTables;
+
+import org.tedros.common.model.TFileEntity;
+import org.tedros.server.annotation.TCaseSensitive;
+import org.tedros.server.annotation.TEntityImportRule;
+import org.tedros.server.annotation.TFieldImportRule;
+import org.tedros.server.annotation.TFileType;
+import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon

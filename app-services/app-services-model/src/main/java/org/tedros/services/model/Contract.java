@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.services.model;
+package org.tedros.services.model;
 
 import java.util.Date;
 import java.util.Set;
@@ -22,12 +22,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-import com.tedros.docs.model.Document;
-import com.tedros.ejb.base.entity.TEntity;
-import com.tedros.person.model.Person;
-import com.tedros.services.domain.DomainSchema;
-import com.tedros.services.domain.DomainTables;
-import com.tedros.services.domain.Status;
+import org.tedros.docs.model.Document;
+import org.tedros.person.model.Person;
+import org.tedros.services.domain.DomainSchema;
+import org.tedros.services.domain.DomainTables;
+import org.tedros.services.domain.Status;
+
+import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon

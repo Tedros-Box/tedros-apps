@@ -7,15 +7,15 @@
 		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>tedrosDataSource</jta-data-source>
-		<class>com.tedros.common.model.TFileEntity</class>
-		<class>com.tedros.common.model.TByteEntity</class>
-		<class>com.tedros.docs.model.Document</class>
-		<class>com.tedros.docs.model.DocumentEvent</class>
-		<class>com.tedros.docs.model.DocumentState</class>
-		<class>com.tedros.docs.model.DocumentType</class>
-		<class>com.tedros.extension.model.Contact</class>
-		<class>com.tedros.core.notify.model.TNotify</class>
-		<class>com.tedros.core.notify.model.TNotifyLog</class>
+		<class>org.tedros.common.model.TFileEntity</class>
+		<class>org.tedros.common.model.TByteEntity</class>
+		<class>org.tedros.docs.model.Document</class>
+		<class>org.tedros.docs.model.DocumentEvent</class>
+		<class>org.tedros.docs.model.DocumentState</class>
+		<class>org.tedros.docs.model.DocumentType</class>
+		<class>org.tedros.extension.model.Contact</class>
+		<class>org.tedros.core.notify.model.TNotify</class>
+		<class>org.tedros.core.notify.model.TNotifyLog</class>
 		
 		<properties>
 		

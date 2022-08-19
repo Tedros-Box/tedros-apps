@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.server.location.eao;
+package org.tedros.server.location.eao;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,9 +9,10 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.Query;
 
-import com.tedros.ejb.base.eao.TGenericEAO;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.Country;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.Country;
+
+import org.tedros.server.cdi.eao.TGenericEAO;
 
 /**
  * @author Davis Gordon

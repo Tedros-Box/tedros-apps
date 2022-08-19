@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.person.resource;
+package org.tedros.person.resource;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,7 +11,7 @@ import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 
-import com.tedros.util.TedrosFolder;
+import org.tedros.util.TedrosFolder;
 
 /**
  * @author Davis Gordon

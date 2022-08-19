@@ -4,17 +4,18 @@
  * TODOS OS DIREITOS RESERVADOS
  * 10/01/2014
  */
-package com.tedros.location.builder;
+package org.tedros.location.builder;
 
 import java.lang.annotation.Annotation;
 
-import com.tedros.fxapi.builder.ITControlBuilder;
-import com.tedros.fxapi.builder.TBuilder;
-import com.tedros.fxapi.control.TComboBoxField;
-import com.tedros.fxapi.control.TItem;
-import com.tedros.location.annotation.TCityComboBox;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.Country;
+import org.tedros.location.annotation.TCityComboBox;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.Country;
+
+import org.tedros.fx.builder.ITControlBuilder;
+import org.tedros.fx.builder.TBuilder;
+import org.tedros.fx.control.TComboBoxField;
+import org.tedros.fx.control.TItem;
 
 import javafx.beans.property.Property;
 import javafx.scene.control.ComboBox;
@@ -30,10 +31,10 @@ import javafx.scene.control.ListCell;
 @SuppressWarnings("rawtypes")
 public final class TCityComboBoxBuilder 
 extends TBuilder
-implements ITControlBuilder<com.tedros.fxapi.control.TComboBoxField, Property<Object>> {
+implements ITControlBuilder<org.tedros.fx.control.TComboBoxField, Property<Object>> {
 	
 	@SuppressWarnings({"unchecked"})
-	public com.tedros.fxapi.control.TComboBoxField build(final Annotation annotation, final Property<Object> attrProperty) throws Exception {
+	public org.tedros.fx.control.TComboBoxField build(final Annotation annotation, final Property<Object> attrProperty) throws Exception {
 	
 		final TCityComboBox tAnnotation = (TCityComboBox) annotation;
 		final TComboBoxField control = new TComboBoxField();

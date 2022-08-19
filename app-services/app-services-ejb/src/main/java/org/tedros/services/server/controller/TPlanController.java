@@ -1,25 +1,26 @@
 /**
  * 
  */
-package com.tedros.services.server.controller;
+package org.tedros.services.server.controller;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import com.tedros.ejb.base.controller.ITSecurityController;
-import com.tedros.ejb.base.controller.TSecureEjbController;
-import com.tedros.ejb.base.security.ITSecurity;
-import com.tedros.ejb.base.security.TAccessPolicie;
-import com.tedros.ejb.base.security.TBeanPolicie;
-import com.tedros.ejb.base.security.TBeanSecurity;
-import com.tedros.ejb.base.security.TSecurityInterceptor;
-import com.tedros.ejb.base.service.ITEjbService;
-import com.tedros.services.domain.DomainApp;
-import com.tedros.services.ejb.controller.IPlanController;
-import com.tedros.services.model.Plan;
-import com.tedros.services.server.base.service.TServService;
+import org.tedros.services.domain.DomainApp;
+import org.tedros.services.ejb.controller.IPlanController;
+import org.tedros.services.model.Plan;
+import org.tedros.services.server.base.service.TServService;
+
+import org.tedros.server.ejb.controller.ITSecurityController;
+import org.tedros.server.ejb.controller.TSecureEjbController;
+import org.tedros.server.security.ITSecurity;
+import org.tedros.server.security.TAccessPolicie;
+import org.tedros.server.security.TBeanPolicie;
+import org.tedros.server.security.TBeanSecurity;
+import org.tedros.server.security.TSecurityInterceptor;
+import org.tedros.server.service.ITEjbService;
 
 /**
  * @author Davis Gordon

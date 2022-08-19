@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.server.location.eao;
+package org.tedros.server.location.eao;
 
 import java.util.List;
 
@@ -9,10 +9,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.persistence.Query;
 
 import org.apache.commons.lang3.StringUtils;
+import org.tedros.location.model.Place;
+import org.tedros.location.report.model.PlaceReportModel;
 
-import com.tedros.ejb.base.eao.TGenericEAO;
-import com.tedros.location.model.Place;
-import com.tedros.location.report.model.PlaceReportModel;
+import org.tedros.server.cdi.eao.TGenericEAO;
 
 /**
  * @author Davis Gordon

@@ -1,39 +1,38 @@
 /**
  * 
  */
-package com.tedros.location.module.adminArea.model;
+package org.tedros.location.module.adminArea.model;
 
-import com.tedros.common.model.TFileEntity;
-import com.tedros.ejb.controller.IAdminAreaImportController;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TFieldBox;
-import com.tedros.fxapi.annotation.control.TFileField;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.effect.TDropShadow;
-import com.tedros.fxapi.annotation.effect.TEffect;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.reader.TReaderHtml;
-import com.tedros.fxapi.annotation.reader.TTextReaderHtml;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.text.TText;
-import com.tedros.fxapi.control.TText.TTextStyle;
-import com.tedros.fxapi.domain.TFileExtension;
-import com.tedros.fxapi.domain.TFileModelType;
-import com.tedros.fxapi.domain.THtmlConstant;
-import com.tedros.fxapi.domain.TStyleParameter;
-import com.tedros.fxapi.presenter.modal.behavior.TImportFileModalBehavior;
-import com.tedros.fxapi.presenter.modal.decorator.TImportFileModalDecorator;
-import com.tedros.fxapi.presenter.model.TImportModelView;
-import com.tedros.fxapi.property.TSimpleFileProperty;
-import com.tedros.location.LocatKey;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.AdminAreaImport;
-import com.tedros.location.start.TConstant;
+import org.tedros.common.model.TFileEntity;
+import org.tedros.ejb.controller.IAdminAreaImportController;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TFieldBox;
+import org.tedros.fx.annotation.control.TFileField;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.effect.TDropShadow;
+import org.tedros.fx.annotation.effect.TEffect;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.reader.TReaderHtml;
+import org.tedros.fx.annotation.reader.TTextReaderHtml;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.text.TText;
+import org.tedros.fx.control.TText.TTextStyle;
+import org.tedros.fx.domain.TFileExtension;
+import org.tedros.fx.domain.TFileModelType;
+import org.tedros.fx.domain.THtmlConstant;
+import org.tedros.fx.domain.TStyleParameter;
+import org.tedros.fx.presenter.modal.behavior.TImportFileModalBehavior;
+import org.tedros.fx.presenter.modal.decorator.TImportFileModalDecorator;
+import org.tedros.fx.presenter.model.TImportModelView;
+import org.tedros.fx.property.TSimpleFileProperty;
+import org.tedros.location.LocatKey;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.AdminAreaImport;
+import org.tedros.location.start.TConstant;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.text.TextAlignment;
@@ -70,21 +69,6 @@ public class AdminAreaImportMV extends TImportModelView<AdminAreaImport> {
 	
 	public AdminAreaImportMV(AdminAreaImport model) {
 		super(model);
-	}
-
-	@Override
-	public void setId(SimpleLongProperty id) {
-		
-	}
-
-	@Override
-	public SimpleLongProperty getId() {
-		return null;
-	}
-
-	@Override
-	public SimpleStringProperty getDisplayProperty() {
-		return null;
 	}
 
 	/**

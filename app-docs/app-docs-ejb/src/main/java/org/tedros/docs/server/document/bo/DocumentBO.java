@@ -1,15 +1,16 @@
 /**
  * 
  */
-package com.tedros.docs.server.document.bo;
+package org.tedros.docs.server.document.bo;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-import com.tedros.docs.model.Document;
-import com.tedros.docs.server.document.eao.DocumentEAO;
-import com.tedros.ejb.base.bo.TGenericBO;
-import com.tedros.ejb.base.eao.ITGenericEAO;
+import org.tedros.docs.model.Document;
+import org.tedros.docs.server.document.eao.DocumentEAO;
+
+import org.tedros.server.cdi.bo.TGenericBO;
+import org.tedros.server.cdi.eao.ITGenericEAO;
 
 /**
  * @author Davis Gordon

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.location.resource;
+package org.tedros.location.resource;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,9 +12,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
-import com.tedros.location.start.TConstant;
-import com.tedros.util.TAppResource;
-import com.tedros.util.TZipUtil;
+import org.tedros.location.start.TConstant;
+
+import org.tedros.util.TAppResource;
+import org.tedros.util.TZipUtil;
 
 /**
  * @author Davis Gordon

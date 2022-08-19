@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.docs.model;
+package org.tedros.docs.model;
 
 import java.util.Date;
 import java.util.List;
@@ -19,10 +19,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-import com.tedros.docs.domain.DomainSchema;
-import com.tedros.docs.domain.DomainTables;
-import com.tedros.ejb.base.entity.TEntity;
-import com.tedros.extension.model.Contact;
+import org.tedros.docs.domain.DomainSchema;
+import org.tedros.docs.domain.DomainTables;
+import org.tedros.extension.model.Contact;
+
+import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon

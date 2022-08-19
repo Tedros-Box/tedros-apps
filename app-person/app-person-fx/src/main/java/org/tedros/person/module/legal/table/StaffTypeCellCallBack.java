@@ -1,8 +1,8 @@
-package com.tedros.person.module.legal.table;
+package org.tedros.person.module.legal.table;
 
 import java.util.Date;
 
-import com.tedros.person.model.StaffType;
+import org.tedros.person.model.StaffType;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;

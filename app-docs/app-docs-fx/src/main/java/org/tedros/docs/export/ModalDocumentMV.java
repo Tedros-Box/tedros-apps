@@ -1,42 +1,41 @@
 /**
  * 
  */
-package com.tedros.docs.export;
+package org.tedros.docs.export;
 
-import com.tedros.common.model.TFileEntity;
-import com.tedros.docs.ejb.controller.IDocumentController;
-import com.tedros.docs.ejb.controller.IDocumentStateController;
-import com.tedros.docs.ejb.controller.IDocumentTypeController;
-import com.tedros.docs.model.Document;
-import com.tedros.docs.model.DocumentState;
-import com.tedros.docs.model.DocumentType;
-import com.tedros.docs.module.model.DocumentStateMV;
-import com.tedros.docs.module.model.DocumentTypeMV;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TContent;
-import com.tedros.fxapi.annotation.control.TFileField;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TTab;
-import com.tedros.fxapi.annotation.control.TTabPane;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TDetailForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.domain.TFileExtension;
-import com.tedros.fxapi.domain.TFileModelType;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.fxapi.property.TSimpleFileProperty;
+import org.tedros.common.model.TFileEntity;
+import org.tedros.docs.ejb.controller.IDocumentController;
+import org.tedros.docs.ejb.controller.IDocumentStateController;
+import org.tedros.docs.ejb.controller.IDocumentTypeController;
+import org.tedros.docs.model.Document;
+import org.tedros.docs.model.DocumentState;
+import org.tedros.docs.model.DocumentType;
+import org.tedros.docs.module.model.DocumentStateMV;
+import org.tedros.docs.module.model.DocumentTypeMV;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TComboBoxField;
+import org.tedros.fx.annotation.control.TContent;
+import org.tedros.fx.annotation.control.TFileField;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TTab;
+import org.tedros.fx.annotation.control.TTabPane;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TDetailForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TEditModalPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.domain.TFileExtension;
+import org.tedros.fx.domain.TFileModelType;
+import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.property.TSimpleFileProperty;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -49,15 +48,12 @@ import javafx.scene.layout.Priority;
 @TEjbService(model = Document.class, serviceName = IDocumentController.JNDI_NAME)
 public class ModalDocumentMV extends TEntityModelView<Document> {
 	
-
-	private SimpleStringProperty displayProperty;
-
 	@TTabPane(tabs = { 
 		@TTab(closable=false, scroll=false, text = TUsualKey.MAIN_DATA,
 			content = @TContent(detailForm=@TDetailForm( fields={"code","value", "type", "file"}))),
 		@TTab(closable=false, text = TUsualKey.OBSERVATION, 
 			content = @TContent(detailForm=@TDetailForm(fields={"observation"})))})
-	private SimpleLongProperty id;
+	private SimpleStringProperty displayProperty;
 	
 	@TLabel(text=TUsualKey.REF_CODE)
 	@TTextField(maxLength=10,  node=@TNode(requestFocus=true, parse = true))
@@ -100,29 +96,12 @@ public class ModalDocumentMV extends TEntityModelView<Document> {
 	@TModelViewType(modelClass=TFileEntity.class)
 	private TSimpleFileProperty<TFileEntity> file;
 	
-	
 	@TTextAreaField(wrapText=true)
 	private SimpleStringProperty observation;
 	
-
-	
 	public ModalDocumentMV(Document entity) {
 		super(entity);
-		super.formatFieldsToDisplay("%s %s", code, name);
-	}
-	
-	@Override
-	public void reload(Document model) {
-		super.reload(model);
-		super.formatFieldsToDisplay("%s %s", code, name);
-	}
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
+		super.formatToString("%s %s", code, name);
 	}
 
 
@@ -164,12 +143,6 @@ public class ModalDocumentMV extends TEntityModelView<Document> {
 	public void setFile(TSimpleFileProperty<TFileEntity> file) {
 		this.file = file;
 	}
-
-	@Override
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
 	public void setDisplayProperty(SimpleStringProperty displayProperty) {
 		this.displayProperty = displayProperty;
 	}

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.location.builder;
+package org.tedros.location.builder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -11,19 +11,19 @@ import java.util.List;
 import javax.naming.NamingException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.tedros.ejb.controller.IAdminAreaController;
+import org.tedros.ejb.controller.ICityController;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.City;
+import org.tedros.location.model.Country;
 
-import com.tedros.core.TLanguage;
-import com.tedros.core.context.TedrosContext;
-import com.tedros.core.service.remote.ServiceLocator;
-import com.tedros.ejb.base.result.TResult;
-import com.tedros.ejb.base.result.TResult.TState;
-import com.tedros.ejb.controller.IAdminAreaController;
-import com.tedros.ejb.controller.ICityController;
-import com.tedros.fxapi.control.TItem;
-import com.tedros.fxapi.util.TReflectionUtil;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.City;
-import com.tedros.location.model.Country;
+import org.tedros.core.TLanguage;
+import org.tedros.core.context.TedrosContext;
+import org.tedros.core.service.remote.ServiceLocator;
+import org.tedros.server.result.TResult;
+import org.tedros.server.result.TResult.TState;
+import org.tedros.fx.control.TItem;
+import org.tedros.fx.util.TReflectionUtil;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;

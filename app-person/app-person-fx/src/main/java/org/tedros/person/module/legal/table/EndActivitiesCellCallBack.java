@@ -1,4 +1,4 @@
-package com.tedros.person.module.legal.table;
+package org.tedros.person.module.legal.table;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

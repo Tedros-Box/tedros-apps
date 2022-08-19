@@ -1,15 +1,16 @@
-package com.tedros.ejb.controller;
+package org.tedros.ejb.controller;
 
 import java.util.List;
 
 import javax.ejb.Remote;
 
-import com.tedros.ejb.base.controller.ITSecureEjbController;
-import com.tedros.ejb.base.result.TResult;
-import com.tedros.ejb.base.security.TAccessToken;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.City;
-import com.tedros.location.model.Country;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.City;
+import org.tedros.location.model.Country;
+
+import org.tedros.server.controller.ITSecureEjbController;
+import org.tedros.server.result.TResult;
+import org.tedros.server.security.TAccessToken;
 
 @Remote
 public interface ICityController extends ITSecureEjbController<City>{

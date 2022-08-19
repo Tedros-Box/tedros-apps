@@ -1,12 +1,13 @@
 /**
  * 
  */
-package com.tedros.location.module.place.model;
+package org.tedros.location.module.place.model;
 
 import java.util.Properties;
 
-import com.tedros.ejb.base.model.ITModel;
-import com.tedros.location.resource.AppResource;
+import org.tedros.location.resource.AppResource;
+
+import org.tedros.server.model.ITModel;
 
 /**
  * @author Davis Gordon

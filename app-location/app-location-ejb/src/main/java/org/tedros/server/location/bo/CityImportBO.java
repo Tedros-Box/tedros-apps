@@ -1,14 +1,15 @@
 
-package com.tedros.server.location.bo;
+package org.tedros.server.location.bo;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-import com.tedros.ejb.base.bo.ITGenericBO;
-import com.tedros.ejb.base.bo.TImportFileEntityBO;
-import com.tedros.location.model.City;
-import com.tedros.location.model.CityImport;
-import com.tedros.server.base.bo.TLocBO;
+import org.tedros.location.model.City;
+import org.tedros.location.model.CityImport;
+import org.tedros.server.base.bo.TLocBO;
+
+import org.tedros.server.cdi.bo.ITGenericBO;
+import org.tedros.server.cdi.bo.TImportFileEntityBO;
 
 /**
  * @author Davis Gordon

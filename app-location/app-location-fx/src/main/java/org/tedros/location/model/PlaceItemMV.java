@@ -1,9 +1,13 @@
 /**
  * 
  */
-package com.tedros.location.model;
+package org.tedros.location.model;
 
-import com.tedros.fxapi.presenter.model.TEntityModelView;
+import org.tedros.location.model.Address;
+import org.tedros.location.model.Place;
+import org.tedros.location.model.PlaceType;
+
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;

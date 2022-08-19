@@ -1,9 +1,10 @@
-package com.tedros.ejb.controller;
+package org.tedros.ejb.controller;
 
 import javax.ejb.Remote;
 
-import com.tedros.ejb.base.controller.ITSecureEjbController;
-import com.tedros.location.model.Address;
+import org.tedros.location.model.Address;
+
+import org.tedros.server.controller.ITSecureEjbController;
 
 @Remote
 public interface IAddressController extends ITSecureEjbController<Address>{

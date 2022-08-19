@@ -4,34 +4,35 @@
  * TODOS OS DIREITOS RESERVADOS
  * 08/11/2013
  */
-package com.tedros.location.annotation;
+package org.tedros.location.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.TAnnotationDefaultValue;
-import com.tedros.fxapi.annotation.parser.ITAnnotationParser;
-import com.tedros.fxapi.annotation.parser.TComboBoxParser;
-import com.tedros.fxapi.annotation.parser.TRequiredComboBoxParser;
-import com.tedros.fxapi.annotation.property.TIntegerProperty;
-import com.tedros.fxapi.annotation.property.TObjectProperty;
-import com.tedros.fxapi.annotation.property.TReadOnlyObjectProperty;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.scene.control.TComboBoxBase;
-import com.tedros.fxapi.annotation.scene.control.TControl;
-import com.tedros.fxapi.builder.ITControlBuilder;
-import com.tedros.fxapi.builder.ITFieldBuilder;
-import com.tedros.fxapi.builder.ITGenericBuilder;
-import com.tedros.fxapi.builder.NullCallbackListViewListCellBuilder;
-import com.tedros.fxapi.builder.NullListCellBuilder;
-import com.tedros.fxapi.builder.NullObservableListBuilder;
-import com.tedros.fxapi.control.TRequiredCheckBox;
-import com.tedros.fxapi.domain.TDefaultValues;
-import com.tedros.location.builder.TCountryComboBoxBuilder;
-import com.tedros.location.model.Country;
+import org.tedros.location.builder.TCountryComboBoxBuilder;
+import org.tedros.location.model.Country;
+
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.TAnnotationDefaultValue;
+import org.tedros.fx.annotation.parser.ITAnnotationParser;
+import org.tedros.fx.annotation.parser.TComboBoxParser;
+import org.tedros.fx.annotation.parser.TRequiredComboBoxParser;
+import org.tedros.fx.annotation.property.TIntegerProperty;
+import org.tedros.fx.annotation.property.TObjectProperty;
+import org.tedros.fx.annotation.property.TReadOnlyObjectProperty;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.scene.control.TComboBoxBase;
+import org.tedros.fx.annotation.scene.control.TControl;
+import org.tedros.fx.builder.ITControlBuilder;
+import org.tedros.fx.builder.ITFieldBuilder;
+import org.tedros.fx.builder.ITGenericBuilder;
+import org.tedros.fx.builder.NullCallbackListViewListCellBuilder;
+import org.tedros.fx.builder.NullListCellBuilder;
+import org.tedros.fx.builder.NullObservableListBuilder;
+import org.tedros.fx.control.TRequiredCheckBox;
+import org.tedros.fx.domain.TDefaultValues;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -46,7 +47,7 @@ import javafx.util.StringConverter;
 
 /**
  * <pre>
- * Build a {@link com.tedros.fxapi.control.TComboBoxField} component for {@link Country} entity.
+ * Build a {@link org.tedros.fx.control.TComboBoxField} component for {@link Country} entity.
  * 
  * The annotatin for the implementation of the ComboBoxBase abstract class for the most common form of ComboBox, 
  * where a popup list is shown to users providing them with a choice that they may select from. 

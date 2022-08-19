@@ -1,18 +1,19 @@
 /**
  * 
  */
-package com.tedros.person.module.report.table;
+package org.tedros.person.module.report.table;
 
-import com.tedros.core.ITModule;
-import com.tedros.core.model.ITModelView;
-import com.tedros.ejb.base.model.ITModel;
-import com.tedros.fxapi.builder.TReportRowFactoryCallBackBuilder;
-import com.tedros.fxapi.presenter.model.TModelView;
-import com.tedros.person.model.Employee;
-import com.tedros.person.module.legal.LegalPersonModule;
-import com.tedros.person.module.legal.model.EmployeeMV;
-import com.tedros.person.module.natural.NaturalPersonModule;
-import com.tedros.person.module.natural.model.NaturalPersonMV;
+import org.tedros.person.model.Employee;
+import org.tedros.person.module.legal.LegalPersonModule;
+import org.tedros.person.module.legal.model.EmployeeMV;
+import org.tedros.person.module.natural.NaturalPersonModule;
+import org.tedros.person.module.natural.model.NaturalPersonMV;
+
+import org.tedros.core.ITModule;
+import org.tedros.core.model.ITModelView;
+import org.tedros.server.model.ITModel;
+import org.tedros.fx.builder.TReportRowFactoryCallBackBuilder;
+import org.tedros.fx.presenter.model.TModelView;
 
 /**
  * @author Davis Gordon

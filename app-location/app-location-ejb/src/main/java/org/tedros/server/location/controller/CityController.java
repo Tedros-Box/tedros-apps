@@ -4,7 +4,7 @@
  * TODOS OS DIREITOS RESERVADOS
  * 14/01/2014
  */
-package com.tedros.server.location.controller;
+package org.tedros.server.location.controller;
 
 import java.util.List;
 
@@ -13,23 +13,24 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import com.tedros.ejb.base.controller.ITSecurityController;
-import com.tedros.ejb.base.controller.TSecureEjbController;
-import com.tedros.ejb.base.result.TResult;
-import com.tedros.ejb.base.result.TResult.TState;
-import com.tedros.ejb.base.security.ITSecurity;
-import com.tedros.ejb.base.security.TAccessPolicie;
-import com.tedros.ejb.base.security.TAccessToken;
-import com.tedros.ejb.base.security.TBeanPolicie;
-import com.tedros.ejb.base.security.TBeanSecurity;
-import com.tedros.ejb.base.security.TSecurityInterceptor;
-import com.tedros.ejb.base.service.ITEjbService;
-import com.tedros.ejb.controller.ICityController;
-import com.tedros.location.domain.DomainApp;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.City;
-import com.tedros.location.model.Country;
-import com.tedros.server.location.service.CityService;
+import org.tedros.ejb.controller.ICityController;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.City;
+import org.tedros.location.model.Country;
+import org.tedros.server.location.service.CityService;
+
+import org.tedros.server.ejb.controller.ITSecurityController;
+import org.tedros.server.ejb.controller.TSecureEjbController;
+import org.tedros.server.result.TResult;
+import org.tedros.server.result.TResult.TState;
+import org.tedros.server.security.ITSecurity;
+import org.tedros.server.security.TAccessPolicie;
+import org.tedros.server.security.TAccessToken;
+import org.tedros.server.security.TBeanPolicie;
+import org.tedros.server.security.TBeanSecurity;
+import org.tedros.server.security.TSecurityInterceptor;
+import org.tedros.server.service.ITEjbService;
 
 /**
  * DESCRIÇÃO DA CLASSE

@@ -1,66 +1,65 @@
-package com.tedros.person.module.report.model;
+package org.tedros.person.module.report.model;
 
 import java.util.Date;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.fxapi.TFxKey;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TConverter;
-import com.tedros.fxapi.annotation.control.TDatePickerField;
-import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TRadioButton;
-import com.tedros.fxapi.annotation.control.TTableColumn;
-import com.tedros.fxapi.annotation.control.TTableView;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.control.TVerticalRadioGroup;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.TAccordion;
-import com.tedros.fxapi.annotation.layout.TFieldSet;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.layout.TTitledPane;
-import com.tedros.fxapi.annotation.layout.TVBox;
-import com.tedros.fxapi.annotation.layout.TVGrow;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TReportProcess;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.scene.control.TControl;
-import com.tedros.fxapi.annotation.scene.layout.TRegion;
-import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.domain.TLayoutType;
-import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
-import com.tedros.fxapi.presenter.model.TModelView;
-import com.tedros.fxapi.presenter.report.behavior.TDataSetReportBehavior;
-import com.tedros.fxapi.presenter.report.decorator.TDataSetReportDecorator;
-import com.tedros.person.PersonKeys;
-import com.tedros.person.converter.GenderConverter;
-import com.tedros.person.converter.SexConverter;
-import com.tedros.person.domain.DomainApp;
-import com.tedros.person.domain.Gender;
-import com.tedros.person.domain.Sex;
-import com.tedros.person.ejb.controller.ILegalPersonController;
-import com.tedros.person.ejb.controller.IStaffTypeController;
-import com.tedros.person.model.LegalPerson;
-import com.tedros.person.model.StaffType;
-import com.tedros.person.module.legal.model.LegalPersonMV;
-import com.tedros.person.module.legal.model.StaffTypeMV;
-import com.tedros.person.module.report.action.SearchAction;
-import com.tedros.person.module.report.process.EmployeeReportProcess;
-import com.tedros.person.module.report.table.EmployeeItemMV;
-import com.tedros.person.module.report.table.EmployeeReportRowFactoryBuilder;
-import com.tedros.person.report.model.EmployeeItemModel;
-import com.tedros.person.report.model.EmployeeReportModel;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.TFxKey;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TComboBoxField;
+import org.tedros.fx.annotation.control.TConverter;
+import org.tedros.fx.annotation.control.TDatePickerField;
+import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TTableColumn;
+import org.tedros.fx.annotation.control.TTableView;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.control.TVerticalRadioGroup;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.TAccordion;
+import org.tedros.fx.annotation.layout.TFieldSet;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.layout.TTitledPane;
+import org.tedros.fx.annotation.layout.TVBox;
+import org.tedros.fx.annotation.layout.TVGrow;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TReportProcess;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.scene.control.TControl;
+import org.tedros.fx.annotation.scene.layout.TRegion;
+import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.domain.TLayoutType;
+import org.tedros.fx.presenter.dynamic.TDynaPresenter;
+import org.tedros.fx.presenter.model.TModelView;
+import org.tedros.fx.presenter.report.behavior.TDataSetReportBehavior;
+import org.tedros.fx.presenter.report.decorator.TDataSetReportDecorator;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.converter.GenderConverter;
+import org.tedros.person.converter.SexConverter;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.domain.Gender;
+import org.tedros.person.domain.Sex;
+import org.tedros.person.ejb.controller.ILegalPersonController;
+import org.tedros.person.ejb.controller.IStaffTypeController;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.model.StaffType;
+import org.tedros.person.module.legal.model.LegalPersonMV;
+import org.tedros.person.module.legal.model.StaffTypeMV;
+import org.tedros.person.module.report.action.SearchAction;
+import org.tedros.person.module.report.process.EmployeeReportProcess;
+import org.tedros.person.module.report.table.EmployeeItemMV;
+import org.tedros.person.module.report.table.EmployeeReportRowFactoryBuilder;
+import org.tedros.person.report.model.EmployeeItemModel;
+import org.tedros.person.report.model.EmployeeReportModel;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -80,8 +79,6 @@ moduleName = PersonKeys.MODULE_REPORTS,
 viewName = PersonKeys.VIEW_REPORT_EMPLOYEES,
 allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EXPORT, TAuthorizationType.SEARCH})
 public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
-	
-	private SimpleLongProperty id;
 	
 	@TAccordion(expandedPane="filtro", node=@TNode(id="repdoaacc",parse = true),
 		panes={
@@ -222,16 +219,6 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 		super(entidade);
 	}
 	
-	@Override
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	@Override
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
 	public SimpleStringProperty getDisplayProperty() {
 		return displayProperty;
 	}

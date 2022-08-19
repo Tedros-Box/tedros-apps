@@ -1,7 +1,8 @@
-package com.tedros.services.module.plan.table;
+package org.tedros.services.module.plan.table;
 
-import com.tedros.core.TLanguage;
-import com.tedros.services.domain.Status;
+import org.tedros.services.domain.Status;
+
+import org.tedros.core.TLanguage;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;

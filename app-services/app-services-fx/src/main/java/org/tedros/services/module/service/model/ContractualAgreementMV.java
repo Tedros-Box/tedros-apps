@@ -1,35 +1,34 @@
 /**
  * 
  */
-package com.tedros.services.module.service.model;
+package org.tedros.services.module.service.model;
 
 import java.math.BigDecimal;
 
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TBigDecimalField;
-import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TDoubleField;
-import com.tedros.fxapi.annotation.control.TIntegerField;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.domain.TZeroValidation;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.services.ejb.controller.IContractualAgreementController;
-import com.tedros.services.ejb.controller.IServiceTypeController;
-import com.tedros.services.model.ContractualAgreement;
-import com.tedros.services.model.ServiceType;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TBigDecimalField;
+import org.tedros.fx.annotation.control.TComboBoxField;
+import org.tedros.fx.annotation.control.TDoubleField;
+import org.tedros.fx.annotation.control.TIntegerField;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TEditModalPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.domain.TZeroValidation;
+import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.services.ejb.controller.IContractualAgreementController;
+import org.tedros.services.ejb.controller.IServiceTypeController;
+import org.tedros.services.model.ContractualAgreement;
+import org.tedros.services.model.ServiceType;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -41,8 +40,6 @@ import javafx.scene.layout.Priority;
 @TEditModalPresenter(listViewMaxWidth=150, listViewMinWidth=150)
 @TEjbService(model = ContractualAgreement.class, serviceName = IContractualAgreementController.JNDI_NAME)
 public class ContractualAgreementMV extends TEntityModelView<ContractualAgreement> {
-	
-	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=60, required = true, 
@@ -59,7 +56,6 @@ public class ContractualAgreementMV extends TEntityModelView<ContractualAgreemen
 	optionModelViewClass=ServiceTypeMV.class,
 	entityClass=ServiceType.class))
 	private SimpleObjectProperty<ServiceType> serviceType;
-	
 
 	@TLabel(text=TUsualKey.AMOUNT)
 	@TIntegerField(zeroValidation=TZeroValidation.NONE)
@@ -75,14 +71,6 @@ public class ContractualAgreementMV extends TEntityModelView<ContractualAgreemen
 	
 	public ContractualAgreementMV(ContractualAgreement entity) {
 		super(entity);
-	}
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
 	}
 
 	public SimpleStringProperty getName() {
@@ -126,7 +114,7 @@ public class ContractualAgreementMV extends TEntityModelView<ContractualAgreemen
 	}
 
 	@Override
-	public SimpleStringProperty getDisplayProperty() {
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
 	

@@ -1,10 +1,11 @@
 /**
  * 
  */
-package com.tedros.person.table;
+package org.tedros.person.table;
 
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.person.model.Person;
+import org.tedros.person.model.Person;
+
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

@@ -7,9 +7,9 @@
 		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>tedrosDataSource</jta-data-source>
-		<class>com.tedros.extension.model.Contact</class>
-		<class>com.tedros.common.model.TFileEntity</class>
-		<class>com.tedros.common.model.TByteEntity</class>
+		<class>org.tedros.extension.model.Contact</class>
+		<class>org.tedros.common.model.TFileEntity</class>
+		<class>org.tedros.common.model.TByteEntity</class>
 		
 		<properties>
 		

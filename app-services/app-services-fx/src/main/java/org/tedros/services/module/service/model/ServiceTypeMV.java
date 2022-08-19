@@ -1,30 +1,29 @@
 /**
  * 
  */
-package com.tedros.services.module.service.model;
+package org.tedros.services.module.service.model;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.view.TOption;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.services.ServKey;
-import com.tedros.services.domain.DomainApp;
-import com.tedros.services.ejb.controller.IServiceTypeController;
-import com.tedros.services.model.ServiceType;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TListViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.view.TOption;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.services.ServKey;
+import org.tedros.services.domain.DomainApp;
+import org.tedros.services.ejb.controller.IServiceTypeController;
+import org.tedros.services.model.ServiceType;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -46,8 +45,6 @@ import javafx.beans.property.SimpleStringProperty;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ServiceTypeMV extends TEntityModelView<ServiceType> {
 
-	private SimpleLongProperty id;
-
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=120, required = true, 
 	node=@TNode(requestFocus=true, parse = true) )
@@ -62,18 +59,10 @@ public class ServiceTypeMV extends TEntityModelView<ServiceType> {
 	}
 
 	@Override
-	public SimpleStringProperty getDisplayProperty() {
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
+	
 	public SimpleStringProperty getName() {
 		return name;
 	}

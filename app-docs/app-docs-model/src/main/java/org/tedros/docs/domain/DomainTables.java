@@ -1,4 +1,4 @@
-package com.tedros.docs.domain;
+package org.tedros.docs.domain;
 
 public interface DomainTables {
 	

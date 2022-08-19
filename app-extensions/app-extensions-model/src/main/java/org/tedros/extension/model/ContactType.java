@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.extension.model;
+package org.tedros.extension.model;
 
 /**
  * @author Davis Gordon

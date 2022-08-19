@@ -1,15 +1,16 @@
 /**
  * 
  */
-package com.tedros.person.module.legal.table;
+package org.tedros.person.module.legal.table;
 
 import java.util.Date;
 import java.util.Locale;
 
-import com.tedros.core.TLanguage;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.person.model.Employee;
-import com.tedros.person.model.StaffType;
+import org.tedros.person.model.Employee;
+import org.tedros.person.model.StaffType;
+
+import org.tedros.core.TLanguage;
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -38,9 +39,9 @@ public class EmployeeITemMV extends TEntityModelView<Employee> {
 	public EmployeeITemMV(Employee entity) {
 		super(entity);
 		if(TLanguage.getLocale().equals(Locale.ENGLISH))
-			super.formatFieldsToDisplay("%s, %s", lastName, name);
+			super.formatToString("%s, %s", lastName, name);
 		else
-			super.formatFieldsToDisplay("%s %s", name, lastName);
+			super.formatToString("%s %s", name, lastName);
 		super.registerProperty("displayProperty", displayProperty);
 	}
 
@@ -58,6 +59,11 @@ public class EmployeeITemMV extends TEntityModelView<Employee> {
 
 	public void setDisplayProperty(SimpleStringProperty displayProperty) {
 		this.displayProperty = displayProperty;
+	}
+	
+	@Override
+	public SimpleStringProperty toStringProperty() {
+		return this.displayProperty;
 	}
 
 	public SimpleStringProperty getName() {

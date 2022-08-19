@@ -1,4 +1,4 @@
-package com.tedros.services.module.plan.model;
+package org.tedros.services.module.plan.model;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;

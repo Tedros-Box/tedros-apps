@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.location;
+package org.tedros.location;
 
 /**
  * @author Davis Gordon

@@ -1,27 +1,26 @@
 /**
  * 
  */
-package com.tedros.extension.contact.model;
+package org.tedros.extension.contact.model;
 
-import com.tedros.extension.ejb.controller.IContactController;
-import com.tedros.extension.model.Contact;
-import com.tedros.extension.model.ContactType;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.reader.TReaderHtml;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
+import org.tedros.extension.ejb.controller.IContactController;
+import org.tedros.extension.model.Contact;
+import org.tedros.extension.model.ContactType;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TComboBoxField;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TEditModalPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.reader.TReaderHtml;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.presenter.model.TEntityModelView;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -34,8 +33,6 @@ import javafx.scene.layout.Priority;
 @TEjbService(model = Contact.class, serviceName = IContactController.JNDI_NAME)
 public class ContactMV extends TEntityModelView<Contact> {
 
-	private SimpleLongProperty id;
-	
 	@TReaderHtml
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=60, required = true, node=@TNode(requestFocus=true, parse = true))
@@ -63,15 +60,6 @@ public class ContactMV extends TEntityModelView<Contact> {
 	public ContactMV(Contact entity) {
 		super(entity);
 	}
-	
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
 
 	public SimpleStringProperty getValue() {
 		return value;
@@ -90,7 +78,7 @@ public class ContactMV extends TEntityModelView<Contact> {
 	}
 
 	@Override
-	public SimpleStringProperty getDisplayProperty() {
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
 

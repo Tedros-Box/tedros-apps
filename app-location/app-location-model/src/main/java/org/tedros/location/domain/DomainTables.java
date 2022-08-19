@@ -1,4 +1,4 @@
-package com.tedros.location.domain;
+package org.tedros.location.domain;
 
 public interface DomainTables {
 	

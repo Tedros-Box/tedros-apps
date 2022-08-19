@@ -1,7 +1,8 @@
-package com.tedros.services.converter;
+package org.tedros.services.converter;
 
-import com.tedros.fxapi.form.TConverter;
-import com.tedros.services.domain.Status;
+import org.tedros.services.domain.Status;
+
+import org.tedros.fx.form.TConverter;
 
 public class StatusConverter extends TConverter<String, Status> {
 

@@ -1,12 +1,13 @@
 /**
  * 
  */
-package com.tedros.person.module.legal.table;
+package org.tedros.person.module.legal.table;
 
 import java.util.Date;
 
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.person.model.LegalPerson;
+import org.tedros.person.model.LegalPerson;
+
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;

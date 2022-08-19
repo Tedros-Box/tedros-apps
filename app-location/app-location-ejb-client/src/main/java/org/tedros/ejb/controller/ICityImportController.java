@@ -1,12 +1,13 @@
 /**
  * 
  */
-package com.tedros.ejb.controller;
+package org.tedros.ejb.controller;
 
 import javax.ejb.Remote;
 
-import com.tedros.ejb.base.controller.ITEjbImportController;
-import com.tedros.location.model.City;
+import org.tedros.location.model.City;
+
+import org.tedros.server.controller.ITEjbImportController;
 
 /**
  * @author Davis Gordon

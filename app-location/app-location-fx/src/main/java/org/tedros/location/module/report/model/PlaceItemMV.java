@@ -1,10 +1,11 @@
 /**
  * 
  */
-package com.tedros.location.module.report.model;
+package org.tedros.location.module.report.model;
 
-import com.tedros.fxapi.presenter.model.TModelView;
-import com.tedros.location.report.model.PlaceItemModel;
+import org.tedros.location.report.model.PlaceItemModel;
+
+import org.tedros.fx.presenter.model.TModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -29,11 +30,6 @@ public class PlaceItemMV extends TModelView<PlaceItemModel> {
 		super(model);
 	}
 	
-	@Override
-	public SimpleStringProperty getDisplayProperty() {
-		return null;
-	}
-
 	/**
 	 * @return the id
 	 */

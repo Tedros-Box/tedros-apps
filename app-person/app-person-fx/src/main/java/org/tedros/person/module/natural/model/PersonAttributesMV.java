@@ -1,22 +1,23 @@
 /**
  * 
  */
-package com.tedros.person.module.natural.model;
+package org.tedros.person.module.natural.model;
 
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.person.ejb.controller.IPersonAttributesController;
-import com.tedros.person.model.PersonAttributes;
+import org.tedros.person.ejb.controller.IPersonAttributesController;
+import org.tedros.person.model.PersonAttributes;
+
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TEditModalPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

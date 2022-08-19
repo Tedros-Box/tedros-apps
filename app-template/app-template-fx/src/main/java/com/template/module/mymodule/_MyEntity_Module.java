@@ -3,10 +3,10 @@
  */
 package com.template.module.mymodule;
 
-import com.tedros.core.TModule;
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.fxapi.presenter.dynamic.view.TDynaView;
+import org.tedros.core.TModule;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.presenter.dynamic.view.TDynaView;
 import com.template.TMP_Key;
 import com.template.domain.DomainApp;
 import com.template.module.mymodule.model._MyEntity_MV;
@@ -22,7 +22,7 @@ allowedAccesses=TAuthorizationType.MODULE_ACCESS)
 public class _MyEntity_Module extends TModule {
 
 	/* (non-Javadoc)
-	 * @see com.tedros.core.ITModule#tStart()
+	 * @see org.tedros.core.ITModule#tStart()
 	 */
 	@Override
 	public void tStart() {

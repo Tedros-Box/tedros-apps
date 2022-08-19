@@ -4,21 +4,21 @@
  * TODOS OS DIREITOS RESERVADOS
  * 14/01/2014
  */
-package com.tedros.extension.server.controller;
+package org.tedros.extension.server.controller;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import com.tedros.ejb.base.controller.ITSecurityController;
-import com.tedros.ejb.base.controller.TSecureEjbController;
-import com.tedros.ejb.base.security.ITSecurity;
-import com.tedros.ejb.base.security.TSecurityInterceptor;
-import com.tedros.ejb.base.service.ITEjbService;
-import com.tedros.extension.ejb.controller.IContactController;
-import com.tedros.extension.model.Contact;
-import com.tedros.extension.server.base.service.TExtensionService;
+import org.tedros.extension.ejb.controller.IContactController;
+import org.tedros.extension.model.Contact;
+import org.tedros.extension.server.base.service.TExtensionService;
+import org.tedros.server.ejb.controller.ITSecurityController;
+import org.tedros.server.ejb.controller.TSecureEjbController;
+import org.tedros.server.security.ITSecurity;
+import org.tedros.server.security.TSecurityInterceptor;
+import org.tedros.server.service.ITEjbService;
 
 /**
  * DESCRIÇÃO DA CLASSE

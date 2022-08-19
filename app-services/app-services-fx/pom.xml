@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
   	
 	<parent>
-		<groupId>com.tedros</groupId>
+		<groupId>org.tedros</groupId>
   		<artifactId>app-services</artifactId>
-  		<version>8-1.0.2</version>
+  		<version>8-2.0.0</version>
 	</parent>	
 	
   	<artifactId>app-services-fx</artifactId>
@@ -16,21 +16,21 @@
   	<dependencies>
   		
   		<dependency>
-	  		<groupId>com.tedros</groupId>
+	  		<groupId>org.tedros</groupId>
 	  		<artifactId>app-person-fx</artifactId>
 	  		<version>${app.person}</version>
 	  	</dependency>
   	
 	  	<dependency>
-	  		<groupId>com.tedros</groupId>
-	  		<artifactId>tedros-fx-component</artifactId>
+	  		<groupId>org.tedros</groupId>
+	  		<artifactId>tedros-fx-api</artifactId>
 	  		<version>${tedros.fx}</version>
 	  	</dependency>
 	  	
 	  	<dependency>
-	  		<groupId>com.tedros</groupId>
+	  		<groupId>org.tedros</groupId>
 	  		<artifactId>app-services-ejb-client</artifactId>
-	  		<version>8-1.0.2</version>
+	  		<version>8-2.0.0</version>
 	  	</dependency>
 	  	
   	</dependencies> 

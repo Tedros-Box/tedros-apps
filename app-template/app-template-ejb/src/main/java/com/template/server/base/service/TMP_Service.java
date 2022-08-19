@@ -12,9 +12,9 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
-import com.tedros.ejb.base.bo.ITGenericBO;
-import com.tedros.ejb.base.entity.ITEntity;
-import com.tedros.ejb.base.service.TEjbService;
+import org.tedros.server.cdi.bo.ITGenericBO;
+import org.tedros.server.entity.ITEntity;
+import org.tedros.server.ejb.service.TEjbService;
 import com.template.server.base.bo.TMP_BO;
 
 /**

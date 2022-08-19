@@ -1,14 +1,14 @@
 /**
  * 
  */
-package com.tedros.location.module.report.action;
+package org.tedros.location.module.report.action;
 
-import com.tedros.fxapi.control.action.TPresenterAction;
-import com.tedros.fxapi.form.TDefaultForm;
-import com.tedros.fxapi.form.TProgressIndicatorForm;
-import com.tedros.fxapi.presenter.behavior.TActionType;
-import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
-import com.tedros.fxapi.presenter.report.behavior.TDataSetReportBehavior;
+import org.tedros.fx.control.action.TPresenterAction;
+import org.tedros.fx.form.TDefaultForm;
+import org.tedros.fx.form.TProgressIndicatorForm;
+import org.tedros.fx.presenter.behavior.TActionType;
+import org.tedros.fx.presenter.dynamic.TDynaPresenter;
+import org.tedros.fx.presenter.report.behavior.TDataSetReportBehavior;
 
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;

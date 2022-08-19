@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.services.model;
+package org.tedros.services.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,10 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.tedros.ejb.base.entity.TEntity;
-import com.tedros.location.model.Place;
-import com.tedros.services.domain.DomainSchema;
-import com.tedros.services.domain.DomainTables;
+import org.tedros.location.model.Place;
+import org.tedros.services.domain.DomainSchema;
+import org.tedros.services.domain.DomainTables;
+
+import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon

@@ -1,15 +1,16 @@
 /**
  * 
  */
-package com.tedros.person.module.legal.table;
+package org.tedros.person.module.legal.table;
 
-import com.tedros.core.ITModule;
-import com.tedros.core.model.ITModelView;
-import com.tedros.ejb.base.model.ITModel;
-import com.tedros.fxapi.builder.TModelRowFactoryCallBackBuilder;
-import com.tedros.fxapi.presenter.model.TModelView;
-import com.tedros.person.module.legal.LegalPersonModule;
-import com.tedros.person.module.legal.model.EmployeeMV;
+import org.tedros.person.module.legal.LegalPersonModule;
+import org.tedros.person.module.legal.model.EmployeeMV;
+
+import org.tedros.core.ITModule;
+import org.tedros.core.model.ITModelView;
+import org.tedros.server.model.ITModel;
+import org.tedros.fx.builder.TModelRowFactoryCallBackBuilder;
+import org.tedros.fx.presenter.model.TModelView;
 
 /**
  * @author Davis Gordon

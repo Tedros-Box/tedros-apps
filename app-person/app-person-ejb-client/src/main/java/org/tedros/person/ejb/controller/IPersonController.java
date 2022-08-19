@@ -1,12 +1,13 @@
 /**
  * 
  */
-package com.tedros.person.ejb.controller;
+package org.tedros.person.ejb.controller;
 
 import javax.ejb.Remote;
 
-import com.tedros.ejb.base.controller.ITSecureEjbController;
-import com.tedros.person.model.Person;
+import org.tedros.person.model.Person;
+
+import org.tedros.server.controller.ITSecureEjbController;
 
 /**
  * @author Davis Gordon

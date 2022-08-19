@@ -1,6 +1,6 @@
-package com.tedros.person.table;
+package org.tedros.person.table;
 
-import com.tedros.core.TLanguage;
+import org.tedros.core.TLanguage;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;

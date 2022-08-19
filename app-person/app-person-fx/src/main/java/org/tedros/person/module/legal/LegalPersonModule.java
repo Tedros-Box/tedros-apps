@@ -1,21 +1,22 @@
 /**
  * 
  */
-package com.tedros.person.module.legal;
+package org.tedros.person.module.legal;
 
-import com.tedros.core.TModule;
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.fxapi.presenter.dynamic.view.TDynaGroupView;
-import com.tedros.fxapi.presenter.view.group.TGroupPresenter;
-import com.tedros.fxapi.presenter.view.group.TGroupView;
-import com.tedros.fxapi.presenter.view.group.TViewItem;
-import com.tedros.person.PersonKeys;
-import com.tedros.person.domain.DomainApp;
-import com.tedros.person.module.legal.model.EmployeeMV;
-import com.tedros.person.module.legal.model.LegalPersonMV;
-import com.tedros.person.module.legal.model.LegalTypeMV;
-import com.tedros.person.module.legal.model.StaffTypeMV;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.module.legal.model.EmployeeMV;
+import org.tedros.person.module.legal.model.LegalPersonMV;
+import org.tedros.person.module.legal.model.LegalTypeMV;
+import org.tedros.person.module.legal.model.StaffTypeMV;
+
+import org.tedros.core.TModule;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.presenter.dynamic.view.TDynaGroupView;
+import org.tedros.fx.presenter.view.group.TGroupPresenter;
+import org.tedros.fx.presenter.view.group.TGroupView;
+import org.tedros.fx.presenter.view.group.TViewItem;
 
 /**
  * @author Davis Gordon
@@ -28,7 +29,7 @@ allowedAccesses=TAuthorizationType.MODULE_ACCESS)
 public class LegalPersonModule extends TModule {
 
 	/* (non-Javadoc)
-	 * @see com.tedros.core.ITModule#tStart()
+	 * @see org.tedros.core.ITModule#tStart()
 	 */
 	@Override
 	public void tStart() {

@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.tedros.person.report.model;
+package org.tedros.person.report.model;
 
 import java.io.Serializable;
 
-import com.tedros.person.model.PersonAttributes;
+import org.tedros.person.model.PersonAttributes;
 
 /**
  * @author Davis Gordon

@@ -1,6 +1,6 @@
-package com.tedros.location.start;
+package org.tedros.location.start;
 
-import com.tedros.location.domain.DomainApp;
+import org.tedros.location.domain.DomainApp;
 
 public interface TConstant {
 

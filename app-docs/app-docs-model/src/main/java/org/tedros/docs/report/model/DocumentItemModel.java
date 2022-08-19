@@ -1,14 +1,15 @@
 /**
  * 
  */
-package com.tedros.docs.report.model;
+package org.tedros.docs.report.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tedros.docs.model.Document;
-import com.tedros.ejb.base.model.ITReportItemModel;
-import com.tedros.extension.model.Contact;
+import org.tedros.docs.model.Document;
+import org.tedros.extension.model.Contact;
+
+import org.tedros.server.model.ITReportItemModel;
 
 /**
  * @author Davis Gordon

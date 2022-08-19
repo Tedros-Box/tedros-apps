@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.tedros.location.model;
+package org.tedros.location.model;
 
-import com.tedros.common.model.TFileEntity;
-import com.tedros.ejb.base.entity.ITFileEntity;
-import com.tedros.ejb.base.model.ITImportModel;
+import org.tedros.common.model.TFileEntity;
+import org.tedros.server.entity.ITFileEntity;
+import org.tedros.server.model.ITImportModel;
 
 /**
  * @author Davis Gordon

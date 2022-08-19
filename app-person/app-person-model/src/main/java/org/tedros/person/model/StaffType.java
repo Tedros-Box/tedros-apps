@@ -1,15 +1,16 @@
 /**
  * 
  */
-package com.tedros.person.model;
+package org.tedros.person.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.tedros.ejb.base.entity.TEntity;
-import com.tedros.person.domain.DomainSchema;
-import com.tedros.person.domain.DomainTables;
+import org.tedros.person.domain.DomainSchema;
+import org.tedros.person.domain.DomainTables;
+
+import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon

@@ -1,18 +1,18 @@
 /**
  * 
  */
-package com.tedros.location.module.address.model;
+package org.tedros.location.module.address.model;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.lang3.StringUtils;
+import org.tedros.location.model.Address;
+import org.tedros.location.module.place.model.MapSettingModel;
 
-import com.tedros.fxapi.descriptor.TComponentDescriptor;
-import com.tedros.fxapi.form.TSetting;
-import com.tedros.location.model.Address;
-import com.tedros.location.module.place.model.MapSettingModel;
+import org.tedros.fx.descriptor.TComponentDescriptor;
+import org.tedros.fx.form.TSetting;
 
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Worker.State;

@@ -1,17 +1,18 @@
 /**
  * 
  */
-package com.tedros.person.report.model;
+package org.tedros.person.report.model;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.tedros.docs.report.model.DocumentItemModel;
-import com.tedros.ejb.base.model.ITReportItemModel;
-import com.tedros.extension.model.Contact;
-import com.tedros.person.model.LegalPerson;
+import org.tedros.docs.report.model.DocumentItemModel;
+import org.tedros.extension.model.Contact;
+import org.tedros.person.model.LegalPerson;
+
+import org.tedros.server.model.ITReportItemModel;
 
 /**
  * @author Davis Gordon

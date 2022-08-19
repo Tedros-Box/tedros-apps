@@ -1,36 +1,37 @@
 /**
  * 
  */
-package com.tedros.location.module.adminArea.model;
+package org.tedros.location.module.adminArea.model;
 
-import static com.tedros.core.annotation.security.TAuthorizationType.DELETE;
-import static com.tedros.core.annotation.security.TAuthorizationType.EDIT;
-import static com.tedros.core.annotation.security.TAuthorizationType.NEW;
-import static com.tedros.core.annotation.security.TAuthorizationType.SAVE;
-import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+import static org.tedros.core.annotation.security.TAuthorizationType.DELETE;
+import static org.tedros.core.annotation.security.TAuthorizationType.EDIT;
+import static org.tedros.core.annotation.security.TAuthorizationType.NEW;
+import static org.tedros.core.annotation.security.TAuthorizationType.SAVE;
+import static org.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
 
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.ejb.controller.IAdminAreaController;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.view.TOption;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.location.LocatKey;
-import com.tedros.location.domain.DomainApp;
-import com.tedros.location.model.AdminArea;
+import org.tedros.ejb.controller.IAdminAreaController;
+import org.tedros.location.LocatKey;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.model.AdminArea;
+
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TListViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.view.TOption;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -53,10 +54,6 @@ import javafx.scene.layout.Priority;
 moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_ADMIN_AREA,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class AdminAreaMV extends TEntityModelView<AdminArea> {
-
-	private SimpleLongProperty id;
-	
-	private SimpleStringProperty display;
 	
 	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO2)")
 	@TTextField(maxLength=2, required = true, node=@TNode(requestFocus=true, parse = true))
@@ -77,20 +74,7 @@ public class AdminAreaMV extends TEntityModelView<AdminArea> {
 	
 	public AdminAreaMV(AdminArea e) {
 		super(e);
-		this.formatFieldsToDisplay("[%s] %s", this.countryIso2Code, this.name);
-	}
-	
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	@Override
-	public SimpleStringProperty getDisplayProperty() {
-		return display;
+		this.formatToString("[%s] %s", this.countryIso2Code, this.name);
 	}
 
 	public SimpleStringProperty getCountryIso2Code() {
@@ -115,14 +99,6 @@ public class AdminAreaMV extends TEntityModelView<AdminArea> {
 
 	public void setIso2Code(SimpleStringProperty iso2Code) {
 		this.iso2Code = iso2Code;
-	}
-
-	public SimpleStringProperty getDisplay() {
-		return display;
-	}
-
-	public void setDisplay(SimpleStringProperty display) {
-		this.display = display;
 	}
 
 }

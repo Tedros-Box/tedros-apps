@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.location.model;
+package org.tedros.location.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,11 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.tedros.common.model.TFileEntity;
-import com.tedros.ejb.base.entity.TEntity;
-import com.tedros.extension.model.Contact;
-import com.tedros.location.domain.DomainSchema;
-import com.tedros.location.domain.DomainTables;
+import org.tedros.extension.model.Contact;
+import org.tedros.location.domain.DomainSchema;
+import org.tedros.location.domain.DomainTables;
+
+import org.tedros.common.model.TFileEntity;
+import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon

@@ -1,13 +1,13 @@
 /**
  * 
  */
-package com.tedros.docs.report.model;
+package org.tedros.docs.report.model;
 
 import java.io.Serializable;
 import java.text.DateFormat;
 
-import com.tedros.docs.model.DocumentEvent;
-import com.tedros.extension.model.Contact;
+import org.tedros.docs.model.DocumentEvent;
+import org.tedros.extension.model.Contact;
 
 /**
  * @author Davis Gordon

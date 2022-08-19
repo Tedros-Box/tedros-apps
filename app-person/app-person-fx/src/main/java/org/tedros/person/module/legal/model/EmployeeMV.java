@@ -1,66 +1,66 @@
 /**
  * 
  */
-package com.tedros.person.module.legal.model;
+package org.tedros.person.module.legal.model;
 
 import java.util.Date;
 import java.util.Locale;
 
-import com.tedros.core.TLanguage;
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.docs.export.ModalDocumentMV;
-import com.tedros.docs.model.Document;
-import com.tedros.extension.contact.model.ContactMV;
-import com.tedros.extension.model.Contact;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TContent;
-import com.tedros.fxapi.annotation.control.TConverter;
-import com.tedros.fxapi.annotation.control.TDatePickerField;
-import com.tedros.fxapi.annotation.control.TEditEntityModal;
-import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TOneSelectionModal;
-import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TRadioButton;
-import com.tedros.fxapi.annotation.control.TTab;
-import com.tedros.fxapi.annotation.control.TTabPane;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TDetailForm;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.view.TOption;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.location.LocatKey;
-import com.tedros.location.model.Address;
-import com.tedros.location.module.address.model.AddressMV;
-import com.tedros.person.PersonKeys;
-import com.tedros.person.converter.GenderConverter;
-import com.tedros.person.converter.SexConverter;
-import com.tedros.person.domain.DomainApp;
-import com.tedros.person.domain.Gender;
-import com.tedros.person.domain.Sex;
-import com.tedros.person.ejb.controller.IEmployeeController;
-import com.tedros.person.ejb.controller.IStaffTypeController;
-import com.tedros.person.model.Employee;
-import com.tedros.person.model.LegalPerson;
-import com.tedros.person.model.PersonAttributes;
-import com.tedros.person.model.StaffType;
-import com.tedros.person.module.natural.model.PersonAttributesMV;
+import org.tedros.core.TLanguage;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.docs.export.ModalDocumentMV;
+import org.tedros.docs.model.Document;
+import org.tedros.extension.contact.model.ContactMV;
+import org.tedros.extension.model.Contact;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TComboBoxField;
+import org.tedros.fx.annotation.control.TContent;
+import org.tedros.fx.annotation.control.TConverter;
+import org.tedros.fx.annotation.control.TDatePickerField;
+import org.tedros.fx.annotation.control.TEditEntityModal;
+import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TOneSelectionModal;
+import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TTab;
+import org.tedros.fx.annotation.control.TTabPane;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TDetailForm;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TListViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.view.TOption;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.location.LocatKey;
+import org.tedros.location.model.Address;
+import org.tedros.location.module.address.model.AddressMV;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.converter.GenderConverter;
+import org.tedros.person.converter.SexConverter;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.domain.Gender;
+import org.tedros.person.domain.Sex;
+import org.tedros.person.ejb.controller.IEmployeeController;
+import org.tedros.person.ejb.controller.IStaffTypeController;
+import org.tedros.person.model.Employee;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.model.PersonAttributes;
+import org.tedros.person.model.StaffType;
+import org.tedros.person.module.natural.model.PersonAttributesMV;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -88,8 +88,6 @@ import javafx.scene.layout.Priority;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class EmployeeMV extends TEntityModelView<Employee> {
 
-	private SimpleLongProperty id;
-	
 	@TTabPane(tabs = { 
 		@TTab(closable=false, 
 			content = @TContent(detailForm=@TDetailForm(fields={"name","type", "sex", "address"})), text = TUsualKey.MAIN_DATA), 
@@ -98,7 +96,7 @@ public class EmployeeMV extends TEntityModelView<Employee> {
 		@TTab(closable=false, 
 			content = @TContent(detailForm=@TDetailForm(fields={"observation"})), text = TUsualKey.OBSERVATION)
 	})
-	private SimpleStringProperty displayProperty;
+	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=120, required = true,
@@ -200,9 +198,9 @@ public class EmployeeMV extends TEntityModelView<Employee> {
 	public EmployeeMV(Employee entity) {
 		super(entity);
 		if(TLanguage.getLocale().equals(Locale.ENGLISH))
-			super.formatFieldsToDisplay("%s, %s", lastName, name);
+			super.formatToString("%s, %s", lastName, name);
 		else
-			super.formatFieldsToDisplay("%s %s", name, lastName);
+			super.formatToString("%s %s", name, lastName);
 	}
 
 	public SimpleLongProperty getId() {
@@ -211,14 +209,6 @@ public class EmployeeMV extends TEntityModelView<Employee> {
 
 	public void setId(SimpleLongProperty id) {
 		this.id = id;
-	}
-
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
 	}
 
 	public SimpleStringProperty getName() {

@@ -1,65 +1,64 @@
-package com.tedros.location.module.report.model;
+package org.tedros.location.module.report.model;
 
-import static com.tedros.core.annotation.security.TAuthorizationType.EXPORT;
-import static com.tedros.core.annotation.security.TAuthorizationType.SEARCH;
-import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+import static org.tedros.core.annotation.security.TAuthorizationType.EXPORT;
+import static org.tedros.core.annotation.security.TAuthorizationType.SEARCH;
+import static org.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
 
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.ejb.controller.IPlaceTypeController;
-import com.tedros.ejb.controller.IStreetTypeController;
-import com.tedros.fxapi.TFxKey;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TRadioButton;
-import com.tedros.fxapi.annotation.control.TTableColumn;
-import com.tedros.fxapi.annotation.control.TTableView;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.control.TVerticalRadioGroup;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.TAccordion;
-import com.tedros.fxapi.annotation.layout.TFieldSet;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.layout.TTitledPane;
-import com.tedros.fxapi.annotation.layout.TVBox;
-import com.tedros.fxapi.annotation.layout.TVGrow;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TReportProcess;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.scene.control.TControl;
-import com.tedros.fxapi.annotation.scene.layout.TRegion;
-import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.domain.TLayoutType;
-import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
-import com.tedros.fxapi.presenter.model.TModelView;
-import com.tedros.fxapi.presenter.report.behavior.TDataSetReportBehavior;
-import com.tedros.fxapi.presenter.report.decorator.TDataSetReportDecorator;
-import com.tedros.location.LocatKey;
-import com.tedros.location.annotation.TAdminAreaComboBox;
-import com.tedros.location.annotation.TCityComboBox;
-import com.tedros.location.annotation.TCountryComboBox;
-import com.tedros.location.domain.DomainApp;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.City;
-import com.tedros.location.model.Country;
-import com.tedros.location.model.PlaceType;
-import com.tedros.location.model.StreetType;
-import com.tedros.location.module.address.model.StreetTypeMV;
-import com.tedros.location.module.place.model.PlaceTypeMV;
-import com.tedros.location.module.report.action.SearchAction;
-import com.tedros.location.module.report.process.PlaceReportProcess;
-import com.tedros.location.module.report.table.PlaceRowFactoryBuilder;
-import com.tedros.location.report.model.PlaceItemModel;
-import com.tedros.location.report.model.PlaceReportModel;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.ejb.controller.IPlaceTypeController;
+import org.tedros.ejb.controller.IStreetTypeController;
+import org.tedros.fx.TFxKey;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TComboBoxField;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TTableColumn;
+import org.tedros.fx.annotation.control.TTableView;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.control.TVerticalRadioGroup;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.TAccordion;
+import org.tedros.fx.annotation.layout.TFieldSet;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.layout.TTitledPane;
+import org.tedros.fx.annotation.layout.TVBox;
+import org.tedros.fx.annotation.layout.TVGrow;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TReportProcess;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.scene.control.TControl;
+import org.tedros.fx.annotation.scene.layout.TRegion;
+import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.domain.TLayoutType;
+import org.tedros.fx.presenter.dynamic.TDynaPresenter;
+import org.tedros.fx.presenter.model.TModelView;
+import org.tedros.fx.presenter.report.behavior.TDataSetReportBehavior;
+import org.tedros.fx.presenter.report.decorator.TDataSetReportDecorator;
+import org.tedros.location.LocatKey;
+import org.tedros.location.annotation.TAdminAreaComboBox;
+import org.tedros.location.annotation.TCityComboBox;
+import org.tedros.location.annotation.TCountryComboBox;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.City;
+import org.tedros.location.model.Country;
+import org.tedros.location.model.PlaceType;
+import org.tedros.location.model.StreetType;
+import org.tedros.location.module.address.model.StreetTypeMV;
+import org.tedros.location.module.place.model.PlaceTypeMV;
+import org.tedros.location.module.report.action.SearchAction;
+import org.tedros.location.module.report.process.PlaceReportProcess;
+import org.tedros.location.module.report.table.PlaceRowFactoryBuilder;
+import org.tedros.location.report.model.PlaceItemModel;
+import org.tedros.location.report.model.PlaceReportModel;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -78,7 +77,6 @@ moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_ADDRESS,
 allowedAccesses={VIEW_ACCESS, EXPORT, SEARCH})
 public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	
-	private SimpleLongProperty id;
 	
 	@TAccordion(expandedPane="filtro", node=@TNode(id="repdoaacc",parse = true),
 			panes={
@@ -173,21 +171,6 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 		super(entidade);
 	}
 	
-	
-	@Override
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	@Override
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	@Override
-	public SimpleStringProperty getDisplayProperty() {
-		return this.displayText;
-	}
 
 	/**
 	 * @return the displayText

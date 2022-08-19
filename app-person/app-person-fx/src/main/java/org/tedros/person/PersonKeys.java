@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.person;
+package org.tedros.person;
 
 /**
  * @author Davis Gordon

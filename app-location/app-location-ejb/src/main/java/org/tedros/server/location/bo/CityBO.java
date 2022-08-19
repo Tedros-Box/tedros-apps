@@ -1,19 +1,20 @@
 /**
  * 
  */
-package com.tedros.server.location.bo;
+package org.tedros.server.location.bo;
 
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-import com.tedros.ejb.base.bo.TGenericBO;
-import com.tedros.ejb.base.eao.ITGenericEAO;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.City;
-import com.tedros.location.model.Country;
-import com.tedros.server.location.eao.CityEAO;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.City;
+import org.tedros.location.model.Country;
+import org.tedros.server.location.eao.CityEAO;
+
+import org.tedros.server.cdi.bo.TGenericBO;
+import org.tedros.server.cdi.eao.ITGenericEAO;
 
 /**
  * @author Davis Gordon

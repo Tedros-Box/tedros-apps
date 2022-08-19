@@ -1,16 +1,17 @@
 /**
  * 
  */
-package com.tedros.location.module.report.table;
+package org.tedros.location.module.report.table;
 
-import com.tedros.core.ITModule;
-import com.tedros.core.model.ITModelView;
-import com.tedros.ejb.base.model.ITModel;
-import com.tedros.fxapi.builder.TReportRowFactoryCallBackBuilder;
-import com.tedros.fxapi.presenter.model.TModelView;
-import com.tedros.location.module.place.PlaceModule;
-import com.tedros.location.module.place.model.PlaceMV;
-import com.tedros.location.module.report.model.PlaceItemMV;
+import org.tedros.location.module.place.PlaceModule;
+import org.tedros.location.module.place.model.PlaceMV;
+import org.tedros.location.module.report.model.PlaceItemMV;
+
+import org.tedros.core.ITModule;
+import org.tedros.core.model.ITModelView;
+import org.tedros.server.model.ITModel;
+import org.tedros.fx.builder.TReportRowFactoryCallBackBuilder;
+import org.tedros.fx.presenter.model.TModelView;
 
 /**
  * @author Davis Gordon

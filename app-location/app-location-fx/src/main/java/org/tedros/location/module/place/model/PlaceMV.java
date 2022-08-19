@@ -1,58 +1,59 @@
 /**
  * 
  */
-package com.tedros.location.module.place.model;
+package org.tedros.location.module.place.model;
 
-import static com.tedros.core.annotation.security.TAuthorizationType.DELETE;
-import static com.tedros.core.annotation.security.TAuthorizationType.EDIT;
-import static com.tedros.core.annotation.security.TAuthorizationType.NEW;
-import static com.tedros.core.annotation.security.TAuthorizationType.SAVE;
-import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+import static org.tedros.core.annotation.security.TAuthorizationType.DELETE;
+import static org.tedros.core.annotation.security.TAuthorizationType.EDIT;
+import static org.tedros.core.annotation.security.TAuthorizationType.NEW;
+import static org.tedros.core.annotation.security.TAuthorizationType.SAVE;
+import static org.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
 
-import com.tedros.common.model.TFileEntity;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.ejb.base.model.ITFileBaseModel;
-import com.tedros.ejb.controller.IPlaceController;
-import com.tedros.ejb.controller.IPlaceTypeController;
-import com.tedros.extension.contact.model.ContactMV;
-import com.tedros.extension.model.Contact;
-import com.tedros.extension.start.TConstant;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TContent;
-import com.tedros.fxapi.annotation.control.TEditEntityModal;
-import com.tedros.fxapi.annotation.control.TFieldBox;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TSelectImageField;
-import com.tedros.fxapi.annotation.control.TTab;
-import com.tedros.fxapi.annotation.control.TTabPane;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TDetailForm;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.view.TOption;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.domain.TEnvironment;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.location.LocatKey;
-import com.tedros.location.domain.DomainApp;
-import com.tedros.location.model.Address;
-import com.tedros.location.model.Place;
-import com.tedros.location.model.PlaceType;
-import com.tedros.location.module.address.model.AddressMV;
+import org.tedros.ejb.controller.IPlaceController;
+import org.tedros.ejb.controller.IPlaceTypeController;
+import org.tedros.extension.contact.model.ContactMV;
+import org.tedros.extension.model.Contact;
+import org.tedros.extension.start.TConstant;
+import org.tedros.location.LocatKey;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.model.Address;
+import org.tedros.location.model.Place;
+import org.tedros.location.model.PlaceType;
+import org.tedros.location.module.address.model.AddressMV;
+
+import org.tedros.common.model.TFileEntity;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.server.model.ITFileBaseModel;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TComboBoxField;
+import org.tedros.fx.annotation.control.TContent;
+import org.tedros.fx.annotation.control.TEditEntityModal;
+import org.tedros.fx.annotation.control.TFieldBox;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TSelectImageField;
+import org.tedros.fx.annotation.control.TTab;
+import org.tedros.fx.annotation.control.TTabPane;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TDetailForm;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TListViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.view.TOption;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.domain.TEnvironment;
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -144,7 +145,7 @@ public class PlaceMV extends TEntityModelView<Place> {
 	}
 
 	@Override
-	public SimpleStringProperty getDisplayProperty() {
+	public SimpleStringProperty toStringProperty() {
 		return title;
 	}
 

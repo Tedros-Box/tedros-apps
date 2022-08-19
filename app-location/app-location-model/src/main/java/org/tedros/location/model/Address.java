@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.location.model;
+package org.tedros.location.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,9 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.tedros.ejb.base.entity.TEntity;
-import com.tedros.location.domain.DomainSchema;
-import com.tedros.location.domain.DomainTables;
+import org.tedros.location.domain.DomainSchema;
+import org.tedros.location.domain.DomainTables;
+
+import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon

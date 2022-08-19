@@ -4,22 +4,23 @@
  * TODOS OS DIREITOS RESERVADOS
  * 10/01/2014
  */
-package com.tedros.location.builder;
+package org.tedros.location.builder;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
 
-import com.tedros.ejb.base.entity.ITEntity;
-import com.tedros.ejb.base.result.TResult;
-import com.tedros.ejb.controller.ICountryController;
-import com.tedros.fxapi.builder.ITControlBuilder;
-import com.tedros.fxapi.builder.TBuilder;
-import com.tedros.fxapi.control.TComboBoxField;
-import com.tedros.fxapi.control.TItem;
-import com.tedros.fxapi.presenter.model.TModelView;
-import com.tedros.fxapi.process.TOptionsProcess;
-import com.tedros.location.annotation.TCountryComboBox;
-import com.tedros.location.model.Country;
+import org.tedros.ejb.controller.ICountryController;
+import org.tedros.location.annotation.TCountryComboBox;
+import org.tedros.location.model.Country;
+
+import org.tedros.server.entity.ITEntity;
+import org.tedros.server.result.TResult;
+import org.tedros.fx.builder.ITControlBuilder;
+import org.tedros.fx.builder.TBuilder;
+import org.tedros.fx.control.TComboBoxField;
+import org.tedros.fx.control.TItem;
+import org.tedros.fx.presenter.model.TModelView;
+import org.tedros.fx.process.TOptionsProcess;
 
 import javafx.beans.property.Property;
 import javafx.concurrent.Worker.State;
@@ -38,10 +39,10 @@ import javafx.util.Callback;
 @SuppressWarnings("rawtypes")
 public final class TCountryComboBoxBuilder 
 extends TBuilder
-implements ITControlBuilder<com.tedros.fxapi.control.TComboBoxField, Property<Object>> {
+implements ITControlBuilder<org.tedros.fx.control.TComboBoxField, Property<Object>> {
 	
 	@SuppressWarnings({"unchecked"})
-	public com.tedros.fxapi.control.TComboBoxField build(final Annotation annotation, final Property<Object> attrProperty) throws Exception {
+	public org.tedros.fx.control.TComboBoxField build(final Annotation annotation, final Property<Object> attrProperty) throws Exception {
 	
 		final TCountryComboBox tAnnotation = (TCountryComboBox) annotation;
 		final TComboBoxField control = new TComboBoxField();

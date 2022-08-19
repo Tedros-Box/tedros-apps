@@ -1,58 +1,59 @@
 /**
  * 
  */
-package com.tedros.services.module.service.model;
+package org.tedros.services.module.service.model;
 
 import java.util.Date;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.docs.export.ModalDocumentMV;
-import com.tedros.docs.model.Document;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TContent;
-import com.tedros.fxapi.annotation.control.TConverter;
-import com.tedros.fxapi.annotation.control.TDatePickerField;
-import com.tedros.fxapi.annotation.control.TEditEntityModal;
-import com.tedros.fxapi.annotation.control.THTMLEditor;
-import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TOneSelectionModal;
-import com.tedros.fxapi.annotation.control.TRadioButton;
-import com.tedros.fxapi.annotation.control.TShowField;
-import com.tedros.fxapi.annotation.control.TTab;
-import com.tedros.fxapi.annotation.control.TTabPane;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.control.TShowField.TField;
-import com.tedros.fxapi.annotation.form.TDetailForm;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.scene.control.TControl;
-import com.tedros.fxapi.annotation.view.TOption;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.person.model.FindPersonMV;
-import com.tedros.person.model.Person;
-import com.tedros.services.ServKey;
-import com.tedros.services.converter.StatusConverter;
-import com.tedros.services.domain.DomainApp;
-import com.tedros.services.domain.Status;
-import com.tedros.services.ejb.controller.IContractController;
-import com.tedros.services.model.Contract;
-import com.tedros.services.model.ContractualAgreement;
-import com.tedros.util.TDateUtil;
+import org.tedros.docs.export.ModalDocumentMV;
+import org.tedros.docs.model.Document;
+import org.tedros.person.model.FindPersonMV;
+import org.tedros.person.model.Person;
+import org.tedros.services.ServKey;
+import org.tedros.services.converter.StatusConverter;
+import org.tedros.services.domain.DomainApp;
+import org.tedros.services.domain.Status;
+import org.tedros.services.ejb.controller.IContractController;
+import org.tedros.services.model.Contract;
+import org.tedros.services.model.ContractualAgreement;
+
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TContent;
+import org.tedros.fx.annotation.control.TConverter;
+import org.tedros.fx.annotation.control.TDatePickerField;
+import org.tedros.fx.annotation.control.TEditEntityModal;
+import org.tedros.fx.annotation.control.THTMLEditor;
+import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TOneSelectionModal;
+import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TShowField;
+import org.tedros.fx.annotation.control.TTab;
+import org.tedros.fx.annotation.control.TTabPane;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.control.TShowField.TField;
+import org.tedros.fx.annotation.form.TDetailForm;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TListViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.scene.control.TControl;
+import org.tedros.fx.annotation.view.TOption;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -79,8 +80,6 @@ import javafx.scene.layout.Priority;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ContractMV extends TEntityModelView<Contract> {
 
-	private SimpleLongProperty id;
-	
 	@TTabPane(tabs = { 
 			@TTab(closable=false, text = TUsualKey.MAIN_DATA, scroll=false,
 				content = @TContent(detailForm=@TDetailForm(
@@ -90,7 +89,7 @@ public class ContractMV extends TEntityModelView<Contract> {
 			@TTab(closable=false, text = TUsualKey.OBSERVATION, 
 				content = @TContent(detailForm=@TDetailForm(fields={"observation"})))
 		})
-	private SimpleStringProperty displayProperty;
+	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.REF_CODE)
 	@TTextField(maxLength=15)
@@ -174,7 +173,7 @@ public class ContractMV extends TEntityModelView<Contract> {
 	
 	public ContractMV(Contract entity) {
 		super(entity);
-		super.formatFieldsToDisplay("%s %s", code, name);
+		super.formatToString("%s %s", code, name);
 	}
 
 	public SimpleLongProperty getId() {
@@ -183,14 +182,6 @@ public class ContractMV extends TEntityModelView<Contract> {
 
 	public void setId(SimpleLongProperty id) {
 		this.id = id;
-	}
-
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
 	}
 
 	public SimpleStringProperty getCode() {

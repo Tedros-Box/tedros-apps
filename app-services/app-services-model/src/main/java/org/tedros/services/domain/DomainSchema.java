@@ -1,4 +1,4 @@
-package com.tedros.services.domain;
+package org.tedros.services.domain;
 
 public interface DomainSchema {
 	
