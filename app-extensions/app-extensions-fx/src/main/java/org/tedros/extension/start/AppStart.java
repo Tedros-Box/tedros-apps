@@ -1,23 +1,23 @@
 /**
  * 
  */
-package com.tedros.extension.start;
+package org.tedros.extension.start;
 
-import com.tedros.core.ITApplication;
-import com.tedros.core.annotation.TApplication;
-import com.tedros.core.annotation.TResourceBundle;
+import org.tedros.core.ITApplication;
+import org.tedros.core.annotation.TApplication;
+import org.tedros.core.annotation.TResourceBundle;
 
 /**
  * @author Davis Gordon
  *
  */
 @TApplication(name="#{app.extension.name}", universalUniqueIdentifier=TConstant.UUI,
- packageName = "com.tedros.extension")
+ packageName = "org.tedros.extension")
 @TResourceBundle(resourceName={"TExt"})
 public class AppStart implements ITApplication {
 
 	/* (non-Javadoc)
-	 * @see com.tedros.core.ITApplication#start()
+	 * @see org.tedros.core.ITApplication#start()
 	 */
 	@Override
 	public void start() {

@@ -1,46 +1,47 @@
 /**
  * 
  */
-package com.tedros.services.module.service.model;
+package org.tedros.services.module.service.model;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.docs.export.ModalDocumentMV;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TContent;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TMultipleSelectionModal;
-import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TTab;
-import com.tedros.fxapi.annotation.control.TTabPane;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TDetailForm;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.view.TOption;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.services.ServKey;
-import com.tedros.services.domain.DomainApp;
-import com.tedros.services.ejb.controller.IServiceController;
-import com.tedros.services.ejb.controller.IServiceTypeController;
-import com.tedros.services.model.Plan;
-import com.tedros.services.model.Service;
-import com.tedros.services.model.ServiceType;
-import com.tedros.services.module.plan.model.FindPlanMV;
+import org.tedros.docs.export.ModalDocumentMV;
+import org.tedros.services.ServKey;
+import org.tedros.services.domain.DomainApp;
+import org.tedros.services.ejb.controller.IServiceController;
+import org.tedros.services.ejb.controller.IServiceTypeController;
+import org.tedros.services.model.Plan;
+import org.tedros.services.model.Service;
+import org.tedros.services.model.ServiceType;
+import org.tedros.services.module.plan.model.FindPlanMV;
+
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TComboBoxField;
+import org.tedros.fx.annotation.control.TContent;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TMultipleSelectionModal;
+import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TTab;
+import org.tedros.fx.annotation.control.TTabPane;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TDetailForm;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TListViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.view.TOption;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -67,15 +68,13 @@ import javafx.scene.layout.Priority;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ServiceMV extends TEntityModelView<Service> {
 
-	private SimpleLongProperty id;
-	
 	@TTabPane(tabs = { 
 			@TTab(closable=false, text = TUsualKey.MAIN_DATA, scroll=false,
 				content = @TContent(detailForm=@TDetailForm(fields={"code","description", "plans"}))),  
 			@TTab(closable=false, text = TUsualKey.OBSERVATION, 
 				content = @TContent(detailForm=@TDetailForm(fields={"observation"})))
 		})
-	private SimpleStringProperty displayProperty;
+	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.REF_CODE)
 	@TTextField(maxLength=15)
@@ -112,7 +111,7 @@ public class ServiceMV extends TEntityModelView<Service> {
 	
 	public ServiceMV(Service entity) {
 		super(entity);
-		super.formatFieldsToDisplay("%s %s", code, name);
+		super.formatToString("%s %s", code, name);
 	}
 
 	public SimpleLongProperty getId() {
@@ -170,13 +169,4 @@ public class ServiceMV extends TEntityModelView<Service> {
 	public void setType(SimpleObjectProperty<ServiceType> type) {
 		this.type = type;
 	}
-
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
-	}
-
 }

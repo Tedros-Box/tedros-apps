@@ -1,18 +1,19 @@
-package com.tedros.person.module.report.process;
+package org.tedros.person.module.report.process;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.tedros.core.TLanguage;
-import com.tedros.ejb.base.result.TResult;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.exception.TProcessException;
-import com.tedros.fxapi.process.TReportProcess;
-import com.tedros.person.PersonKeys;
-import com.tedros.person.report.model.NaturalPersonReportModel;
-import com.tedros.person.resource.AppResource;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.report.model.NaturalPersonReportModel;
+import org.tedros.person.resource.AppResource;
+
+import org.tedros.core.TLanguage;
+import org.tedros.server.result.TResult;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.exception.TProcessException;
+import org.tedros.fx.process.TReportProcess;
 
 import net.sf.jasperreports.engine.JRException;
 

@@ -1,13 +1,14 @@
 
-package com.tedros.server.location.bo;
+package org.tedros.server.location.bo;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-import com.tedros.ejb.base.bo.ITGenericBO;
-import com.tedros.ejb.base.bo.TImportFileEntityBO;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.AdminAreaImport;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.AdminAreaImport;
+
+import org.tedros.server.cdi.bo.ITGenericBO;
+import org.tedros.server.cdi.bo.TImportFileEntityBO;
 
 /**
  * @author Davis Gordon

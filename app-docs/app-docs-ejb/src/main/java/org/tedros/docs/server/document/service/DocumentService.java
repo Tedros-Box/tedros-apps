@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.docs.server.document.service;
+package org.tedros.docs.server.document.service;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -9,10 +9,11 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
-import com.tedros.docs.model.Document;
-import com.tedros.docs.server.document.bo.DocumentBO;
-import com.tedros.ejb.base.bo.ITGenericBO;
-import com.tedros.ejb.base.service.TEjbService;
+import org.tedros.docs.model.Document;
+import org.tedros.docs.server.document.bo.DocumentBO;
+
+import org.tedros.server.cdi.bo.ITGenericBO;
+import org.tedros.server.ejb.service.TEjbService;
 
 /**
  * @author Davis Gordon

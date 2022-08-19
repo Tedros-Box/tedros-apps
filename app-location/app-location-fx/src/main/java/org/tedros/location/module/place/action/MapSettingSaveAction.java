@@ -1,24 +1,24 @@
 /**
  * 
  */
-package com.tedros.location.module.place.action;
+package org.tedros.location.module.place.action;
 
 import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
+import org.tedros.location.LocatKey;
+import org.tedros.location.module.place.model.MapSettingMV;
+import org.tedros.location.module.place.model.MapSettingModel;
+import org.tedros.location.resource.AppResource;
 
-import com.tedros.core.TLanguage;
-import com.tedros.fxapi.TFxKey;
-import com.tedros.fxapi.control.action.TPresenterAction;
-import com.tedros.fxapi.modal.TMessage;
-import com.tedros.fxapi.modal.TMessageType;
-import com.tedros.fxapi.presenter.behavior.TActionType;
-import com.tedros.fxapi.presenter.dynamic.TDynaPresenter;
-import com.tedros.fxapi.presenter.entity.behavior.TSaveViewBehavior;
-import com.tedros.location.LocatKey;
-import com.tedros.location.module.place.model.MapSettingMV;
-import com.tedros.location.module.place.model.MapSettingModel;
-import com.tedros.location.resource.AppResource;
+import org.tedros.core.TLanguage;
+import org.tedros.fx.TFxKey;
+import org.tedros.fx.control.action.TPresenterAction;
+import org.tedros.fx.modal.TMessage;
+import org.tedros.fx.modal.TMessageType;
+import org.tedros.fx.presenter.behavior.TActionType;
+import org.tedros.fx.presenter.dynamic.TDynaPresenter;
+import org.tedros.fx.presenter.entity.behavior.TSaveViewBehavior;
 
 /**
  * @author Davis Gordon
@@ -34,7 +34,7 @@ public class MapSettingSaveAction extends TPresenterAction {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.tedros.fxapi.control.action.TPresenterAction#runBefore()
+	 * @see org.tedros.fx.control.action.TPresenterAction#runBefore()
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -62,7 +62,7 @@ public class MapSettingSaveAction extends TPresenterAction {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.tedros.fxapi.control.action.TPresenterAction#runAfter()
+	 * @see org.tedros.fx.control.action.TPresenterAction#runAfter()
 	 */
 	@Override
 	public void runAfter() {

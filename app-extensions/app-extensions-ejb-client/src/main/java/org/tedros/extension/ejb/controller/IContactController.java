@@ -1,9 +1,9 @@
-package com.tedros.extension.ejb.controller;
+package org.tedros.extension.ejb.controller;
 
 import javax.ejb.Remote;
 
-import com.tedros.ejb.base.controller.ITSecureEjbController;
-import com.tedros.extension.model.Contact;
+import org.tedros.extension.model.Contact;
+import org.tedros.server.controller.ITSecureEjbController;
 
 @Remote
 public interface IContactController extends ITSecureEjbController<Contact>{

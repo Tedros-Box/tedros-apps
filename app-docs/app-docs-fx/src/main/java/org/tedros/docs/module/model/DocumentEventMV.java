@@ -1,42 +1,43 @@
 /**
  * 
  */
-package com.tedros.docs.module.model;
+package org.tedros.docs.module.model;
 
 import java.util.Date;
 
-import com.tedros.docs.model.DocumentEvent;
-import com.tedros.extension.contact.model.ContactMV;
-import com.tedros.extension.model.Contact;
-import com.tedros.fxapi.annotation.control.TContent;
-import com.tedros.fxapi.annotation.control.TDatePickerField;
-import com.tedros.fxapi.annotation.control.TEditEntityModal;
-import com.tedros.fxapi.annotation.control.THTMLEditor;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TTab;
-import com.tedros.fxapi.annotation.control.TTabPane;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TDetailForm;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.layout.TVBox;
-import com.tedros.fxapi.annotation.layout.TVGrow;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TDetailListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.scene.control.TControl;
-import com.tedros.fxapi.builder.DateTimeFormatBuilder;
-import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.presenter.entity.behavior.TDetailCrudViewBehavior;
-import com.tedros.fxapi.presenter.entity.decorator.TDetailCrudViewDecorator;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
+import org.tedros.docs.model.DocumentEvent;
+import org.tedros.extension.contact.model.ContactMV;
+import org.tedros.extension.model.Contact;
+
+import org.tedros.fx.annotation.control.TContent;
+import org.tedros.fx.annotation.control.TDatePickerField;
+import org.tedros.fx.annotation.control.TEditEntityModal;
+import org.tedros.fx.annotation.control.THTMLEditor;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TTab;
+import org.tedros.fx.annotation.control.TTabPane;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TDetailForm;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.layout.TVBox;
+import org.tedros.fx.annotation.layout.TVGrow;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TDetailListViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.scene.control.TControl;
+import org.tedros.fx.builder.DateTimeFormatBuilder;
+import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.presenter.entity.behavior.TDetailCrudViewBehavior;
+import org.tedros.fx.presenter.entity.decorator.TDetailCrudViewDecorator;
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -110,7 +111,7 @@ public class DocumentEventMV extends TEntityModelView<DocumentEvent> {
 	}
 
 	@Override
-	public SimpleStringProperty getDisplayProperty() {
+	public SimpleStringProperty toStringProperty() {
 		return title;
 	}
 

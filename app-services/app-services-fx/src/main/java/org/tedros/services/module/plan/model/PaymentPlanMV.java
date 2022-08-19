@@ -1,23 +1,21 @@
 /**
  * 
  */
-package com.tedros.services.module.plan.model;
+package org.tedros.services.module.plan.model;
 
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TDoubleField;
-import com.tedros.fxapi.annotation.control.TIntegerField;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.domain.TZeroValidation;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.services.ejb.controller.IPaymentPlanController;
-import com.tedros.services.model.PaymentPlan;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TDoubleField;
+import org.tedros.fx.annotation.control.TIntegerField;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.presenter.TEditModalPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.domain.TZeroValidation;
+import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.services.ejb.controller.IPaymentPlanController;
+import org.tedros.services.model.PaymentPlan;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 /**
  * @author Davis Gordon
@@ -27,10 +25,6 @@ import javafx.beans.property.SimpleStringProperty;
 @TEjbService(model = PaymentPlan.class, serviceName = IPaymentPlanController.JNDI_NAME)
 public class PaymentPlanMV extends TEntityModelView<PaymentPlan> {
 
-	private SimpleLongProperty id;
-	
-	private SimpleStringProperty displayProperty;
-	
 	@TLabel(text=TUsualKey.AMOUNT)
 	@TIntegerField(zeroValidation=TZeroValidation.GREATHER_THAN_ZERO)
 	private SimpleIntegerProperty amount;
@@ -41,23 +35,7 @@ public class PaymentPlanMV extends TEntityModelView<PaymentPlan> {
 	
 	public PaymentPlanMV(PaymentPlan entity) {
 		super(entity);
-		super.formatFieldsToDisplay("%d > %.2f%%", amount, discount);
-	}
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
+		super.formatToString("%d > %.2f%%", amount, discount);
 	}
 
 	public SimpleIntegerProperty getAmount() {

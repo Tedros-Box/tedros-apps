@@ -1,30 +1,35 @@
 /**
  * 
  */
-package com.tedros.person.model;
+package org.tedros.person.model;
 
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TCallbackFactory;
-import com.tedros.fxapi.annotation.control.TCellValueFactory;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TLabelDefaultSetting;
-import com.tedros.fxapi.annotation.control.TTableColumn;
-import com.tedros.fxapi.annotation.control.TTableView;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.presenter.TSelectionModalPresenter;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.text.TFont;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.presenter.modal.behavior.TSelectionModalBehavior;
-import com.tedros.fxapi.presenter.modal.decorator.TSelectionModalDecorator;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.person.ejb.controller.IPersonController;
-import com.tedros.person.table.PersonCellCallBack;
-import com.tedros.person.table.PersonItemMV;
+import org.tedros.person.ejb.controller.IPersonController;
+import org.tedros.person.model.Employee;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.model.NaturalPerson;
+import org.tedros.person.model.Person;
+import org.tedros.person.table.PersonCellCallBack;
+import org.tedros.person.table.PersonItemMV;
+
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TCallbackFactory;
+import org.tedros.fx.annotation.control.TCellValueFactory;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TLabelDefaultSetting;
+import org.tedros.fx.annotation.control.TTableColumn;
+import org.tedros.fx.annotation.control.TTableView;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.presenter.TSelectionModalPresenter;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.text.TFont;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.presenter.modal.behavior.TSelectionModalBehavior;
+import org.tedros.fx.presenter.modal.decorator.TSelectionModalDecorator;
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

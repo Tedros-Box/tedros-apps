@@ -1,14 +1,14 @@
 /**
  * 
  */
-package com.tedros.person.report.model;
+package org.tedros.person.report.model;
 
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Date;
 
-import com.tedros.extension.model.Contact;
-import com.tedros.person.model.Employee;
+import org.tedros.extension.model.Contact;
+import org.tedros.person.model.Employee;
 
 /**
  * @author Davis Gordon

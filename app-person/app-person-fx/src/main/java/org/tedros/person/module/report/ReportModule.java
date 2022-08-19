@@ -1,20 +1,21 @@
 /**
  * 
  */
-package com.tedros.person.module.report;
+package org.tedros.person.module.report;
 
-import com.tedros.core.TModule;
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.fxapi.presenter.dynamic.view.TDynaGroupView;
-import com.tedros.fxapi.presenter.view.group.TGroupPresenter;
-import com.tedros.fxapi.presenter.view.group.TGroupView;
-import com.tedros.fxapi.presenter.view.group.TViewItem;
-import com.tedros.person.PersonKeys;
-import com.tedros.person.domain.DomainApp;
-import com.tedros.person.module.report.model.EmployeeReportMV;
-import com.tedros.person.module.report.model.LegalPersonReportMV;
-import com.tedros.person.module.report.model.NaturalPersonReportMV;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.module.report.model.EmployeeReportMV;
+import org.tedros.person.module.report.model.LegalPersonReportMV;
+import org.tedros.person.module.report.model.NaturalPersonReportMV;
+
+import org.tedros.core.TModule;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.presenter.dynamic.view.TDynaGroupView;
+import org.tedros.fx.presenter.view.group.TGroupPresenter;
+import org.tedros.fx.presenter.view.group.TGroupView;
+import org.tedros.fx.presenter.view.group.TViewItem;
 
 /**
  * @author Davis Gordon
@@ -27,7 +28,7 @@ allowedAccesses=TAuthorizationType.MODULE_ACCESS)
 public class ReportModule extends TModule {
 
 	/* (non-Javadoc)
-	 * @see com.tedros.core.ITModule#tStart()
+	 * @see org.tedros.core.ITModule#tStart()
 	 */
 	@Override
 	public void tStart() {

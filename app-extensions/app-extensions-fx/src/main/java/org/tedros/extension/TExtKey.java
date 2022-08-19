@@ -1,4 +1,4 @@
-package com.tedros.extension;
+package org.tedros.extension;
 
 public interface TExtKey {
 

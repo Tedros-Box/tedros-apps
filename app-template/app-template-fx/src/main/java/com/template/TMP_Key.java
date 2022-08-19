@@ -6,7 +6,7 @@ package com.template;
 /**
  * The language  resource key domain
  * 
- * Run the com.tedros.fxapi.util.LanguageKeysBuilder to create the constants from your language resource.
+ * Run the org.tedros.fx.util.LanguageKeysBuilder to create the constants from your language resource.
  * Type the resource name without the locale, for example to read the App_en.properties just  
  * type App
  * 

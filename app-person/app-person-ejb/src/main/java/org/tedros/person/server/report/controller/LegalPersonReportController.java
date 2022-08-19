@@ -1,4 +1,4 @@
-package com.tedros.person.server.report.controller;
+package org.tedros.person.server.report.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,24 +8,25 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import com.tedros.ejb.base.controller.ITSecurityController;
-import com.tedros.ejb.base.result.TResult;
-import com.tedros.ejb.base.result.TResult.TState;
-import com.tedros.ejb.base.security.ITSecurity;
-import com.tedros.ejb.base.security.TAccessPolicie;
-import com.tedros.ejb.base.security.TAccessToken;
-import com.tedros.ejb.base.security.TActionPolicie;
-import com.tedros.ejb.base.security.TBeanPolicie;
-import com.tedros.ejb.base.security.TBeanSecurity;
-import com.tedros.ejb.base.security.TMethodPolicie;
-import com.tedros.ejb.base.security.TMethodSecurity;
-import com.tedros.ejb.base.security.TSecurityInterceptor;
-import com.tedros.person.domain.DomainApp;
-import com.tedros.person.ejb.controller.ILegalPersonReportController;
-import com.tedros.person.model.LegalPerson;
-import com.tedros.person.report.model.LegalPersonItemModel;
-import com.tedros.person.report.model.LegalPersonReportModel;
-import com.tedros.person.server.service.LegalPersonService;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.ejb.controller.ILegalPersonReportController;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.report.model.LegalPersonItemModel;
+import org.tedros.person.report.model.LegalPersonReportModel;
+import org.tedros.person.server.service.LegalPersonService;
+
+import org.tedros.server.ejb.controller.ITSecurityController;
+import org.tedros.server.result.TResult;
+import org.tedros.server.result.TResult.TState;
+import org.tedros.server.security.ITSecurity;
+import org.tedros.server.security.TAccessPolicie;
+import org.tedros.server.security.TAccessToken;
+import org.tedros.server.security.TActionPolicie;
+import org.tedros.server.security.TBeanPolicie;
+import org.tedros.server.security.TBeanSecurity;
+import org.tedros.server.security.TMethodPolicie;
+import org.tedros.server.security.TMethodSecurity;
+import org.tedros.server.security.TSecurityInterceptor;
 
 @TSecurityInterceptor
 

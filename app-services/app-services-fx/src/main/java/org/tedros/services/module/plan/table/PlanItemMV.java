@@ -1,14 +1,15 @@
 /**
  * 
  */
-package com.tedros.services.module.plan.table;
+package org.tedros.services.module.plan.table;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.services.domain.Status;
-import com.tedros.services.model.Plan;
+import org.tedros.services.domain.Status;
+import org.tedros.services.model.Plan;
+
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -95,7 +96,7 @@ import javafx.beans.property.SimpleStringProperty;
 	}
 
 	@Override
-	public SimpleStringProperty getDisplayProperty() {
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
 

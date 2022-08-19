@@ -1,19 +1,20 @@
 /**
  * 
  */
-package com.tedros.docs.module.builder;
+package org.tedros.docs.module.builder;
 
 import java.util.Date;
 
-import com.tedros.core.context.TModuleContext;
-import com.tedros.core.context.TedrosAppManager;
-import com.tedros.core.notify.model.TNotify;
-import com.tedros.docs.TDocsKey;
-import com.tedros.docs.model.Document;
-import com.tedros.docs.module.DocumentModule;
-import com.tedros.docs.module.model.DocumentMV;
-import com.tedros.extension.model.ContactType;
-import com.tedros.fxapi.builder.TGenericBuilder;
+import org.tedros.docs.TDocsKey;
+import org.tedros.docs.model.Document;
+import org.tedros.docs.module.DocumentModule;
+import org.tedros.docs.module.model.DocumentMV;
+import org.tedros.extension.model.ContactType;
+
+import org.tedros.core.context.TModuleContext;
+import org.tedros.core.context.TedrosAppManager;
+import org.tedros.core.notify.model.TNotify;
+import org.tedros.fx.builder.TGenericBuilder;
 
 /**
  * @author Davis Gordon

@@ -1,15 +1,16 @@
-package com.tedros.services.start;
+package org.tedros.services.start;
 
-import com.tedros.core.ITApplication;
-import com.tedros.core.annotation.TApplication;
-import com.tedros.core.annotation.TModule;
-import com.tedros.core.annotation.TResourceBundle;
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.services.ServKey;
-import com.tedros.services.domain.DomainApp;
-import com.tedros.services.module.plan.PlanModule;
-import com.tedros.services.module.service.ServiceModule;
+import org.tedros.services.ServKey;
+import org.tedros.services.domain.DomainApp;
+import org.tedros.services.module.plan.PlanModule;
+import org.tedros.services.module.service.ServiceModule;
+
+import org.tedros.core.ITApplication;
+import org.tedros.core.annotation.TApplication;
+import org.tedros.core.annotation.TModule;
+import org.tedros.core.annotation.TResourceBundle;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
 
 /**
  * The app start class.
@@ -26,7 +27,7 @@ import com.tedros.services.module.service.ServiceModule;
 			name=ServKey.MODULE_PLANS, 
 			menu=ServKey.MENU_SERVICE, 
 			description=ServKey.MODULE_DESC_PLAN)
-	}, packageName = "com.tedros.services", 
+	}, packageName = "org.tedros.services", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"TServ"})
 @TSecurity(id=DomainApp.MNEMONIC, 

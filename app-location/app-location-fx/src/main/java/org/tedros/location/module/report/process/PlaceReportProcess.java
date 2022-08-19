@@ -1,19 +1,20 @@
-package com.tedros.location.module.report.process;
+package org.tedros.location.module.report.process;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.tedros.core.TLanguage;
-import com.tedros.ejb.controller.IPlaceReportController;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.exception.TProcessException;
-import com.tedros.fxapi.process.TReportProcess;
-import com.tedros.location.LocatKey;
-import com.tedros.location.report.model.PlaceReportModel;
-import com.tedros.location.resource.AppResource;
-import com.tedros.location.start.TConstant;
+import org.tedros.ejb.controller.IPlaceReportController;
+import org.tedros.location.LocatKey;
+import org.tedros.location.report.model.PlaceReportModel;
+import org.tedros.location.resource.AppResource;
+import org.tedros.location.start.TConstant;
+
+import org.tedros.core.TLanguage;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.exception.TProcessException;
+import org.tedros.fx.process.TReportProcess;
 
 public class PlaceReportProcess extends TReportProcess<PlaceReportModel> {
 

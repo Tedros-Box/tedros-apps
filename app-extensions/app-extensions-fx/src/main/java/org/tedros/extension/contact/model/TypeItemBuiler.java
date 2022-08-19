@@ -1,15 +1,16 @@
 /**
  * 
  */
-package com.tedros.extension.contact.model;
+package org.tedros.extension.contact.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tedros.core.TLanguage;
-import com.tedros.extension.model.ContactType;
-import com.tedros.fxapi.builder.TGenericBuilder;
-import com.tedros.fxapi.control.TItem;
+import org.tedros.extension.model.ContactType;
+
+import org.tedros.core.TLanguage;
+import org.tedros.fx.builder.TGenericBuilder;
+import org.tedros.fx.control.TItem;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

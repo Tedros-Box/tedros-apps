@@ -1,48 +1,49 @@
 /**
  * 
  */
-package com.tedros.services.module.plan.model;
+package org.tedros.services.module.plan.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TBigDecimalField;
-import com.tedros.fxapi.annotation.control.TConverter;
-import com.tedros.fxapi.annotation.control.TDatePickerField;
-import com.tedros.fxapi.annotation.control.TEditEntityModal;
-import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TRadioButton;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.layout.TVBox;
-import com.tedros.fxapi.annotation.layout.TVGrow;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.view.TOption;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.services.ServKey;
-import com.tedros.services.converter.StatusConverter;
-import com.tedros.services.domain.DomainApp;
-import com.tedros.services.domain.Status;
-import com.tedros.services.ejb.controller.IPlanController;
-import com.tedros.services.model.PaymentPlan;
-import com.tedros.services.model.Plan;
+import org.tedros.services.ServKey;
+import org.tedros.services.converter.StatusConverter;
+import org.tedros.services.domain.DomainApp;
+import org.tedros.services.domain.Status;
+import org.tedros.services.ejb.controller.IPlanController;
+import org.tedros.services.model.PaymentPlan;
+import org.tedros.services.model.Plan;
+
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TBigDecimalField;
+import org.tedros.fx.annotation.control.TConverter;
+import org.tedros.fx.annotation.control.TDatePickerField;
+import org.tedros.fx.annotation.control.TEditEntityModal;
+import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.layout.TVBox;
+import org.tedros.fx.annotation.layout.TVGrow;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TListViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.view.TOption;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -67,8 +68,6 @@ import javafx.scene.layout.Priority;
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class PlanMV extends TEntityModelView<Plan> {
-
-	private SimpleLongProperty id;
 
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=250, required = true, 
@@ -126,15 +125,6 @@ public class PlanMV extends TEntityModelView<Plan> {
 	
 	public PlanMV(Plan entity) {
 		super(entity);
-	}
-
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
 	}
 
 	public SimpleStringProperty getName() {
@@ -203,7 +193,7 @@ public class PlanMV extends TEntityModelView<Plan> {
 	}
 
 	@Override
-	public SimpleStringProperty getDisplayProperty() {
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
 

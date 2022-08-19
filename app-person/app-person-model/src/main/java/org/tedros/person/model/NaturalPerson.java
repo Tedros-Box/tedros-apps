@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.person.model;
+package org.tedros.person.model;
 
 import java.util.Date;
 
@@ -14,10 +14,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.tedros.person.domain.DomainSchema;
-import com.tedros.person.domain.DomainTables;
-import com.tedros.person.domain.Gender;
-import com.tedros.person.domain.Sex;
+import org.tedros.person.domain.DomainSchema;
+import org.tedros.person.domain.DomainTables;
+import org.tedros.person.domain.Gender;
+import org.tedros.person.domain.Sex;
 
 /**
  * @author Davis Gordon

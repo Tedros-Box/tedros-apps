@@ -1,18 +1,19 @@
-package com.tedros.location.start;
+package org.tedros.location.start;
 
-import com.tedros.core.ITApplication;
-import com.tedros.core.annotation.TApplication;
-import com.tedros.core.annotation.TModule;
-import com.tedros.core.annotation.TResourceBundle;
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.location.LocatKey;
-import com.tedros.location.domain.DomainApp;
-import com.tedros.location.module.adminArea.AdminAreaModule;
-import com.tedros.location.module.city.CityModule;
-import com.tedros.location.module.country.CountryModule;
-import com.tedros.location.module.place.PlaceModule;
-import com.tedros.location.resource.AppResource;
+import org.tedros.location.LocatKey;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.module.adminArea.AdminAreaModule;
+import org.tedros.location.module.city.CityModule;
+import org.tedros.location.module.country.CountryModule;
+import org.tedros.location.module.place.PlaceModule;
+import org.tedros.location.resource.AppResource;
+
+import org.tedros.core.ITApplication;
+import org.tedros.core.annotation.TApplication;
+import org.tedros.core.annotation.TModule;
+import org.tedros.core.annotation.TResourceBundle;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
 
 /**
  * The app start class.
@@ -33,7 +34,7 @@ module = {
 	@TModule(type=CountryModule.class, name=LocatKey.MENU_COUNTRY, 
 		menu=LocatKey.MODULE_ADMINISTRATIVE,
 		description=LocatKey.MENU_COUNTRY_POPOVER)
-}, packageName = "com.tedros.location")
+}, packageName = "org.tedros.location")
 @TResourceBundle(resourceName={"AppLocationLang"})
 @TSecurity(id=DomainApp.MNEMONIC, appName = LocatKey.APP_LOCATION_NAME, 
 allowedAccesses=TAuthorizationType.APP_ACCESS)

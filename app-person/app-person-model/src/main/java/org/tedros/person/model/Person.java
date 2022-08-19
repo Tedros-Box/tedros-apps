@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.person.model;
+package org.tedros.person.model;
 
 import java.util.Set;
 
@@ -22,12 +22,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.tedros.docs.model.Document;
-import com.tedros.ejb.base.entity.TReceptiveEntity;
-import com.tedros.extension.model.Contact;
-import com.tedros.location.model.Address;
-import com.tedros.person.domain.DomainSchema;
-import com.tedros.person.domain.DomainTables;
+import org.tedros.docs.model.Document;
+import org.tedros.extension.model.Contact;
+import org.tedros.location.model.Address;
+import org.tedros.person.domain.DomainSchema;
+import org.tedros.person.domain.DomainTables;
+
+import org.tedros.server.entity.TReceptiveEntity;
 
 /**
  * @author Davis Gordon

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.server.location.service;
+package org.tedros.server.location.service;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -9,10 +9,11 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
-import com.tedros.ejb.base.bo.TImportFileEntityBO;
-import com.tedros.ejb.base.service.TEjbImportService;
-import com.tedros.location.model.City;
-import com.tedros.server.location.bo.CityImportBO;
+import org.tedros.location.model.City;
+import org.tedros.server.location.bo.CityImportBO;
+
+import org.tedros.server.cdi.bo.TImportFileEntityBO;
+import org.tedros.server.ejb.service.TEjbImportService;
 
 /**
  * @author Davis Gordon

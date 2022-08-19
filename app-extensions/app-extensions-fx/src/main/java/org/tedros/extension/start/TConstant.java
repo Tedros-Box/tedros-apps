@@ -1,4 +1,4 @@
-package com.tedros.extension.start;
+package org.tedros.extension.start;
 
 public interface TConstant {
 

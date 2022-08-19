@@ -1,6 +1,6 @@
-package com.tedros.docs.start;
+package org.tedros.docs.start;
 
-import com.tedros.docs.domain.DomainApp;
+import org.tedros.docs.domain.DomainApp;
 
 public interface TConstant {
 

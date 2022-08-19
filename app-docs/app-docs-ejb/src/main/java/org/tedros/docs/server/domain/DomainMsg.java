@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.docs.server.domain;
+package org.tedros.docs.server.domain;
 
 /**
  * @author Davis Gordon

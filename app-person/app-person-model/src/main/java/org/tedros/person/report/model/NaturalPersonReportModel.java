@@ -1,13 +1,14 @@
 /**
  * 
  */
-package com.tedros.person.report.model;
+package org.tedros.person.report.model;
 
 import java.util.Date;
 
-import com.tedros.ejb.base.model.TReportModel;
-import com.tedros.person.domain.Gender;
-import com.tedros.person.domain.Sex;
+import org.tedros.person.domain.Gender;
+import org.tedros.person.domain.Sex;
+
+import org.tedros.server.model.TReportModel;
 
 /**
  * @author Davis Gordon

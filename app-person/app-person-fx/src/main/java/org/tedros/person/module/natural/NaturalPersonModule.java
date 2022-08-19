@@ -1,15 +1,16 @@
 /**
  * 
  */
-package com.tedros.person.module.natural;
+package org.tedros.person.module.natural;
 
-import com.tedros.core.TModule;
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.fxapi.presenter.dynamic.view.TDynaView;
-import com.tedros.person.PersonKeys;
-import com.tedros.person.domain.DomainApp;
-import com.tedros.person.module.natural.model.NaturalPersonMV;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.module.natural.model.NaturalPersonMV;
+
+import org.tedros.core.TModule;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.presenter.dynamic.view.TDynaView;
 
 /**
  * @author Davis Gordon
@@ -22,7 +23,7 @@ allowedAccesses=TAuthorizationType.MODULE_ACCESS)
 public class NaturalPersonModule extends TModule {
 
 	/* (non-Javadoc)
-	 * @see com.tedros.core.ITModule#tStart()
+	 * @see org.tedros.core.ITModule#tStart()
 	 */
 	@Override
 	public void tStart() {

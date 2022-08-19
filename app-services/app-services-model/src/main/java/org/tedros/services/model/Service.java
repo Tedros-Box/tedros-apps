@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.services.model;
+package org.tedros.services.model;
 
 import java.util.Set;
 
@@ -15,9 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.tedros.ejb.base.entity.TEntity;
-import com.tedros.services.domain.DomainSchema;
-import com.tedros.services.domain.DomainTables;
+import org.tedros.services.domain.DomainSchema;
+import org.tedros.services.domain.DomainTables;
+
+import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon

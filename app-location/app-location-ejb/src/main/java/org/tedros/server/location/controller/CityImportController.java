@@ -1,20 +1,20 @@
 /**
  * 
  */
-package com.tedros.server.location.controller;
+package org.tedros.server.location.controller;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import com.tedros.ejb.base.controller.ITSecurityController;
-import com.tedros.ejb.base.controller.TEjbImportController;
-import com.tedros.ejb.base.security.TSecurityInterceptor;
-import com.tedros.ejb.base.service.ITEjbImportService;
-import com.tedros.ejb.controller.ICityImportController;
-import com.tedros.location.model.City;
-import com.tedros.server.location.service.CityImportService;
+import org.tedros.ejb.controller.ICityImportController;
+import org.tedros.location.model.City;
+import org.tedros.server.ejb.controller.ITSecurityController;
+import org.tedros.server.ejb.controller.TEjbImportController;
+import org.tedros.server.location.service.CityImportService;
+import org.tedros.server.security.TSecurityInterceptor;
+import org.tedros.server.service.ITEjbImportService;
 
 /**
  * @author Davis Gordon

@@ -1,42 +1,43 @@
 /**
  * 
  */
-package com.tedros.location.module.city.model;
+package org.tedros.location.module.city.model;
 
-import static com.tedros.core.annotation.security.TAuthorizationType.DELETE;
-import static com.tedros.core.annotation.security.TAuthorizationType.EDIT;
-import static com.tedros.core.annotation.security.TAuthorizationType.NEW;
-import static com.tedros.core.annotation.security.TAuthorizationType.SAVE;
-import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
-import static com.tedros.fxapi.TUsualKey.ADMIN_AREA;
-import static com.tedros.fxapi.TUsualKey.CAPITAL;
-import static com.tedros.fxapi.TUsualKey.NAME;
-import static com.tedros.fxapi.TUsualKey.POPULATION;
+import static org.tedros.core.annotation.security.TAuthorizationType.DELETE;
+import static org.tedros.core.annotation.security.TAuthorizationType.EDIT;
+import static org.tedros.core.annotation.security.TAuthorizationType.NEW;
+import static org.tedros.core.annotation.security.TAuthorizationType.SAVE;
+import static org.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+import static org.tedros.fx.TUsualKey.ADMIN_AREA;
+import static org.tedros.fx.TUsualKey.CAPITAL;
+import static org.tedros.fx.TUsualKey.NAME;
+import static org.tedros.fx.TUsualKey.POPULATION;
 
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.ejb.controller.ICityController;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TNumberSpinnerField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.reader.TReaderHtml;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.view.TOption;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.location.LocatKey;
-import com.tedros.location.domain.DomainApp;
-import com.tedros.location.model.City;
+import org.tedros.ejb.controller.ICityController;
+import org.tedros.location.LocatKey;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.model.City;
+
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TNumberSpinnerField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TListViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.reader.TReaderHtml;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.view.TOption;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -59,10 +60,6 @@ import javafx.scene.layout.Priority;
 moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_CITY,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class CityMV extends TEntityModelView<City> {
-
-	private SimpleLongProperty id;
-	
-	private SimpleStringProperty display;
 	
 	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO2)")
 	@TTextField(maxLength=2, required = true, node=@TNode(requestFocus=true, parse = true))
@@ -106,22 +103,8 @@ public class CityMV extends TEntityModelView<City> {
 	
 	public CityMV(City e) {
 		super(e);
-		this.formatFieldsToDisplay("[%s] %s / %s", this.countryIso2Code, this.adminArea, this.name);
+		this.formatToString("[%s] %s / %s", this.countryIso2Code, this.adminArea, this.name);
 	}
-	
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	@Override
-	public SimpleStringProperty getDisplayProperty() {
-		return display;
-	}
-
 	public SimpleStringProperty getCountryIso2Code() {
 		return countryIso2Code;
 	}
@@ -177,13 +160,4 @@ public class CityMV extends TEntityModelView<City> {
 	public void setAdminArea(SimpleStringProperty adminArea) {
 		this.adminArea = adminArea;
 	}
-
-	public SimpleStringProperty getDisplay() {
-		return display;
-	}
-
-	public void setDisplay(SimpleStringProperty display) {
-		this.display = display;
-	}
-
 }

@@ -1,12 +1,12 @@
 /**
  * 
  */
-package com.tedros.extension.server.base.eao;
+package org.tedros.extension.server.base.eao;
 
 import javax.enterprise.context.Dependent;
 
-import com.tedros.ejb.base.eao.TGenericEAO;
-import com.tedros.ejb.base.entity.ITEntity;
+import org.tedros.server.cdi.eao.TGenericEAO;
+import org.tedros.server.entity.ITEntity;
 
 /**
  * @author Davis Gordon

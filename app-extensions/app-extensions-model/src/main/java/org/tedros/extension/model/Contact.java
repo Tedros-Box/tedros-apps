@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.extension.model;
+package org.tedros.extension.model;
 
 import java.util.Collection;
 
@@ -11,9 +11,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
-import com.tedros.ejb.base.entity.TEntity;
-import com.tedros.extension.domain.DomainSchema;
-import com.tedros.extension.domain.DomainTables;
+import org.tedros.extension.domain.DomainSchema;
+import org.tedros.extension.domain.DomainTables;
+
+import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon

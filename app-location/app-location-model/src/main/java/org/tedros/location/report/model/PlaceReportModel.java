@@ -1,14 +1,15 @@
 /**
  * 
  */
-package com.tedros.location.report.model;
+package org.tedros.location.report.model;
 
-import com.tedros.ejb.base.model.TReportModel;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.City;
-import com.tedros.location.model.Country;
-import com.tedros.location.model.PlaceType;
-import com.tedros.location.model.StreetType;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.City;
+import org.tedros.location.model.Country;
+import org.tedros.location.model.PlaceType;
+import org.tedros.location.model.StreetType;
+
+import org.tedros.server.model.TReportModel;
 
 /**
  * @author Davis Gordon

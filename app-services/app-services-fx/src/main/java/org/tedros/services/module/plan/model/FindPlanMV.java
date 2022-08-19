@@ -1,51 +1,50 @@
 /**
  * 
  */
-package com.tedros.services.module.plan.model;
+package org.tedros.services.module.plan.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TBigDecimalField;
-import com.tedros.fxapi.annotation.control.TCallbackFactory;
-import com.tedros.fxapi.annotation.control.TCellFactory;
-import com.tedros.fxapi.annotation.control.TCellValueFactory;
-import com.tedros.fxapi.annotation.control.TConverter;
-import com.tedros.fxapi.annotation.control.TDatePickerField;
-import com.tedros.fxapi.annotation.control.THorizontalRadioGroup;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TLabelDefaultSetting;
-import com.tedros.fxapi.annotation.control.TRadioButton;
-import com.tedros.fxapi.annotation.control.TTableColumn;
-import com.tedros.fxapi.annotation.control.TTableView;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.presenter.TSelectionModalPresenter;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.text.TFont;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.control.tablecell.TCurrencyCallback;
-import com.tedros.fxapi.control.tablecell.TShortDateCallback;
-import com.tedros.fxapi.presenter.modal.behavior.TSelectionModalBehavior;
-import com.tedros.fxapi.presenter.modal.decorator.TSelectionModalDecorator;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.services.ServKey;
-import com.tedros.services.converter.StatusConverter;
-import com.tedros.services.domain.Status;
-import com.tedros.services.ejb.controller.IPlanController;
-import com.tedros.services.model.Plan;
-import com.tedros.services.module.plan.table.PlanItemMV;
-import com.tedros.services.module.plan.table.StatusCellCallBack;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TBigDecimalField;
+import org.tedros.fx.annotation.control.TCallbackFactory;
+import org.tedros.fx.annotation.control.TCellFactory;
+import org.tedros.fx.annotation.control.TCellValueFactory;
+import org.tedros.fx.annotation.control.TConverter;
+import org.tedros.fx.annotation.control.TDatePickerField;
+import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TLabelDefaultSetting;
+import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TTableColumn;
+import org.tedros.fx.annotation.control.TTableView;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.presenter.TSelectionModalPresenter;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.text.TFont;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.control.tablecell.TCurrencyCallback;
+import org.tedros.fx.control.tablecell.TShortDateCallback;
+import org.tedros.fx.presenter.modal.behavior.TSelectionModalBehavior;
+import org.tedros.fx.presenter.modal.decorator.TSelectionModalDecorator;
+import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.services.ServKey;
+import org.tedros.services.converter.StatusConverter;
+import org.tedros.services.domain.Status;
+import org.tedros.services.ejb.controller.IPlanController;
+import org.tedros.services.model.Plan;
+import org.tedros.services.module.plan.table.PlanItemMV;
+import org.tedros.services.module.plan.table.StatusCellCallBack;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -82,8 +81,6 @@ import javafx.scene.layout.Priority;
 		}), 
 	allowsMultipleSelections = true)
 public class FindPlanMV extends TEntityModelView<Plan> {
-
-	private SimpleLongProperty id;
 
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=250, 
@@ -125,15 +122,6 @@ public class FindPlanMV extends TEntityModelView<Plan> {
 	
 	public FindPlanMV(Plan entity) {
 		super(entity);
-	}
-
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
 	}
 
 	public SimpleStringProperty getName() {
@@ -185,7 +173,7 @@ public class FindPlanMV extends TEntityModelView<Plan> {
 	}
 
 	@Override
-	public SimpleStringProperty getDisplayProperty() {
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
 

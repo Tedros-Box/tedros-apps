@@ -1,47 +1,46 @@
 /**
  * 
  */
-package com.tedros.location.module.address.model;
+package org.tedros.location.module.address.model;
 
-import static com.tedros.core.annotation.security.TAuthorizationType.DELETE;
-import static com.tedros.core.annotation.security.TAuthorizationType.EDIT;
-import static com.tedros.core.annotation.security.TAuthorizationType.NEW;
-import static com.tedros.core.annotation.security.TAuthorizationType.SAVE;
-import static com.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
+import static org.tedros.core.annotation.security.TAuthorizationType.DELETE;
+import static org.tedros.core.annotation.security.TAuthorizationType.EDIT;
+import static org.tedros.core.annotation.security.TAuthorizationType.NEW;
+import static org.tedros.core.annotation.security.TAuthorizationType.SAVE;
+import static org.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
 
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.ejb.controller.IAddressController;
-import com.tedros.ejb.controller.IStreetTypeController;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.control.TTextInputControl;
-import com.tedros.fxapi.annotation.form.TSetting;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TEditModalPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.scene.control.TControl;
-import com.tedros.fxapi.annotation.scene.web.TWebEngine;
-import com.tedros.fxapi.annotation.scene.web.TWebView;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.location.LocatKey;
-import com.tedros.location.annotation.TAdminAreaComboBox;
-import com.tedros.location.annotation.TCityComboBox;
-import com.tedros.location.annotation.TCountryComboBox;
-import com.tedros.location.domain.DomainApp;
-import com.tedros.location.model.Address;
-import com.tedros.location.model.AdminArea;
-import com.tedros.location.model.City;
-import com.tedros.location.model.Country;
-import com.tedros.location.model.StreetType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.ejb.controller.IAddressController;
+import org.tedros.ejb.controller.IStreetTypeController;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TComboBoxField;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.control.TTextInputControl;
+import org.tedros.fx.annotation.form.TSetting;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TEditModalPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.scene.control.TControl;
+import org.tedros.fx.annotation.scene.web.TWebEngine;
+import org.tedros.fx.annotation.scene.web.TWebView;
+import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.location.LocatKey;
+import org.tedros.location.annotation.TAdminAreaComboBox;
+import org.tedros.location.annotation.TCityComboBox;
+import org.tedros.location.annotation.TCountryComboBox;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.model.Address;
+import org.tedros.location.model.AdminArea;
+import org.tedros.location.model.City;
+import org.tedros.location.model.Country;
+import org.tedros.location.model.StreetType;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -57,10 +56,6 @@ import javafx.scene.layout.Priority;
 moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_ADDRESS,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class AddressMV extends TEntityModelView<Address> {
-
-
-	private SimpleLongProperty id;
-	private SimpleStringProperty displayProperty;
 	
 	@TLabel(text=TUsualKey.COUNTRY)
 	@TCountryComboBox(required=true)
@@ -130,15 +125,7 @@ public class AddressMV extends TEntityModelView<Address> {
 	
 	public AddressMV(Address entity) {
 		super(entity);
-		this.formatFieldsToDisplay("%s %s %s", this.streetType, this.publicPlace, this.complement);
-	}
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
+		this.formatToString("%s %s %s", this.streetType, this.publicPlace, this.complement);
 	}
 
 	public SimpleObjectProperty<StreetType> getStreetType() {
@@ -233,23 +220,5 @@ public class AddressMV extends TEntityModelView<Address> {
 	public void setWebview(SimpleStringProperty webview) {
 		this.webview = webview;
 	}
-
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
-	}
-
-/*
-	public SimpleStringProperty getViewMap() {
-		return viewMap;
-	}
-
-
-	public void setViewMap(SimpleStringProperty viewMap) {
-		this.viewMap = viewMap;
-	}*/
 
 }

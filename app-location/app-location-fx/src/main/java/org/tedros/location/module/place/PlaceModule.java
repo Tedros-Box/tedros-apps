@@ -1,22 +1,23 @@
 /**
  * 
  */
-package com.tedros.location.module.place;
+package org.tedros.location.module.place;
 
-import com.tedros.core.TModule;
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.fxapi.presenter.dynamic.view.TDynaGroupView;
-import com.tedros.fxapi.presenter.view.group.TGroupPresenter;
-import com.tedros.fxapi.presenter.view.group.TGroupView;
-import com.tedros.fxapi.presenter.view.group.TViewItem;
-import com.tedros.location.LocatKey;
-import com.tedros.location.domain.DomainApp;
-import com.tedros.location.module.address.model.StreetTypeMV;
-import com.tedros.location.module.place.model.MapSettingMV;
-import com.tedros.location.module.place.model.PlaceMV;
-import com.tedros.location.module.place.model.PlaceTypeMV;
-import com.tedros.location.module.report.model.PlaceReportMV;
+import org.tedros.location.LocatKey;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.module.address.model.StreetTypeMV;
+import org.tedros.location.module.place.model.MapSettingMV;
+import org.tedros.location.module.place.model.PlaceMV;
+import org.tedros.location.module.place.model.PlaceTypeMV;
+import org.tedros.location.module.report.model.PlaceReportMV;
+
+import org.tedros.core.TModule;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.presenter.dynamic.view.TDynaGroupView;
+import org.tedros.fx.presenter.view.group.TGroupPresenter;
+import org.tedros.fx.presenter.view.group.TGroupView;
+import org.tedros.fx.presenter.view.group.TViewItem;
 
 /**
  * @author Davis Gordon
@@ -29,7 +30,7 @@ allowedAccesses=TAuthorizationType.MODULE_ACCESS)
 public class PlaceModule extends TModule {
 
 	/* (non-Javadoc)
-	 * @see com.tedros.core.ITModule#tStart()
+	 * @see org.tedros.core.ITModule#tStart()
 	 */
 	@Override
 	public void tStart() {

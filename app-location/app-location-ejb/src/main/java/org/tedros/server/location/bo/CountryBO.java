@@ -1,15 +1,16 @@
 /**
  * 
  */
-package com.tedros.server.location.bo;
+package org.tedros.server.location.bo;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-import com.tedros.ejb.base.bo.TGenericBO;
-import com.tedros.ejb.base.eao.ITGenericEAO;
-import com.tedros.location.model.Country;
-import com.tedros.server.location.eao.CountryEAO;
+import org.tedros.location.model.Country;
+import org.tedros.server.location.eao.CountryEAO;
+
+import org.tedros.server.cdi.bo.TGenericBO;
+import org.tedros.server.cdi.eao.ITGenericEAO;
 
 /**
  * @author Davis Gordon

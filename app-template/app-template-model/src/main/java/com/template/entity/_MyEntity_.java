@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.tedros.ejb.base.entity.TEntity;
+import org.tedros.server.entity.TEntity;
 import com.template.domain.DomainSchema;
 import com.template.domain.DomainTables;
 

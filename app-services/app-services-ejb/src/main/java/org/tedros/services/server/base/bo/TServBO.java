@@ -1,15 +1,16 @@
 /**
  * 
  */
-package com.tedros.services.server.base.bo;
+package org.tedros.services.server.base.bo;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-import com.tedros.ejb.base.bo.TGenericBO;
-import com.tedros.ejb.base.eao.ITGenericEAO;
-import com.tedros.ejb.base.entity.ITEntity;
-import com.tedros.services.server.base.eao.TServEAO;
+import org.tedros.services.server.base.eao.TServEAO;
+
+import org.tedros.server.cdi.bo.TGenericBO;
+import org.tedros.server.cdi.eao.ITGenericEAO;
+import org.tedros.server.entity.ITEntity;
 
 /**
  * @author Davis Gordon

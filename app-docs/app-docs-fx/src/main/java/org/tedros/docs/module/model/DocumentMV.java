@@ -1,66 +1,65 @@
 /**
  * 
  */
-package com.tedros.docs.module.model;
+package org.tedros.docs.module.model;
 
 import java.util.Date;
 
-import com.tedros.common.model.TFileEntity;
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.docs.TDocsKey;
-import com.tedros.docs.domain.DomainApp;
-import com.tedros.docs.ejb.controller.IDocumentController;
-import com.tedros.docs.ejb.controller.IDocumentStateController;
-import com.tedros.docs.ejb.controller.IDocumentTypeController;
-import com.tedros.docs.model.Document;
-import com.tedros.docs.model.DocumentEvent;
-import com.tedros.docs.model.DocumentState;
-import com.tedros.docs.model.DocumentType;
-import com.tedros.docs.module.builder.TNotifyBuilder;
-import com.tedros.extension.contact.model.ContactMV;
-import com.tedros.extension.model.Contact;
-import com.tedros.fxapi.TUsualKey;
-import com.tedros.fxapi.annotation.control.TComboBoxField;
-import com.tedros.fxapi.annotation.control.TContent;
-import com.tedros.fxapi.annotation.control.TDetailListField;
-import com.tedros.fxapi.annotation.control.TEditEntityModal;
-import com.tedros.fxapi.annotation.control.TFieldBox;
-import com.tedros.fxapi.annotation.control.TFileField;
-import com.tedros.fxapi.annotation.control.THTMLEditor;
-import com.tedros.fxapi.annotation.control.TLabel;
-import com.tedros.fxapi.annotation.control.TModelViewType;
-import com.tedros.fxapi.annotation.control.TOptionsList;
-import com.tedros.fxapi.annotation.control.TShowField;
-import com.tedros.fxapi.annotation.control.TShowField.TField;
-import com.tedros.fxapi.annotation.control.TTab;
-import com.tedros.fxapi.annotation.control.TTabPane;
-import com.tedros.fxapi.annotation.control.TTextAreaField;
-import com.tedros.fxapi.annotation.control.TTextField;
-import com.tedros.fxapi.annotation.form.TDetailForm;
-import com.tedros.fxapi.annotation.form.TForm;
-import com.tedros.fxapi.annotation.layout.THBox;
-import com.tedros.fxapi.annotation.layout.THGrow;
-import com.tedros.fxapi.annotation.layout.TPane;
-import com.tedros.fxapi.annotation.layout.TPriority;
-import com.tedros.fxapi.annotation.presenter.TBehavior;
-import com.tedros.fxapi.annotation.presenter.TDecorator;
-import com.tedros.fxapi.annotation.presenter.TListViewPresenter;
-import com.tedros.fxapi.annotation.presenter.TPresenter;
-import com.tedros.fxapi.annotation.process.TEjbService;
-import com.tedros.fxapi.annotation.scene.TNode;
-import com.tedros.fxapi.annotation.scene.control.TControl;
-import com.tedros.fxapi.annotation.view.TOption;
-import com.tedros.fxapi.annotation.view.TPaginator;
-import com.tedros.fxapi.collections.ITObservableList;
-import com.tedros.fxapi.domain.TFileExtension;
-import com.tedros.fxapi.domain.TFileModelType;
-import com.tedros.fxapi.presenter.model.TEntityModelView;
-import com.tedros.fxapi.property.TSimpleFileProperty;
-import com.tedros.tools.annotation.TNotifyLink;
-import com.tedros.util.TDateUtil;
+import org.tedros.common.model.TFileEntity;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.docs.TDocsKey;
+import org.tedros.docs.domain.DomainApp;
+import org.tedros.docs.ejb.controller.IDocumentController;
+import org.tedros.docs.ejb.controller.IDocumentStateController;
+import org.tedros.docs.ejb.controller.IDocumentTypeController;
+import org.tedros.docs.model.Document;
+import org.tedros.docs.model.DocumentEvent;
+import org.tedros.docs.model.DocumentState;
+import org.tedros.docs.model.DocumentType;
+import org.tedros.docs.module.builder.TNotifyBuilder;
+import org.tedros.extension.contact.model.ContactMV;
+import org.tedros.extension.model.Contact;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TComboBoxField;
+import org.tedros.fx.annotation.control.TContent;
+import org.tedros.fx.annotation.control.TDetailListField;
+import org.tedros.fx.annotation.control.TEditEntityModal;
+import org.tedros.fx.annotation.control.TFieldBox;
+import org.tedros.fx.annotation.control.TFileField;
+import org.tedros.fx.annotation.control.THTMLEditor;
+import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TShowField;
+import org.tedros.fx.annotation.control.TShowField.TField;
+import org.tedros.fx.annotation.control.TTab;
+import org.tedros.fx.annotation.control.TTabPane;
+import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TDetailForm;
+import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
+import org.tedros.fx.annotation.presenter.TListViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.scene.control.TControl;
+import org.tedros.fx.annotation.view.TOption;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.domain.TFileExtension;
+import org.tedros.fx.domain.TFileModelType;
+import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.property.TSimpleFileProperty;
+import org.tedros.tools.annotation.TNotifyLink;
+import org.tedros.util.TDateUtil;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -85,8 +84,6 @@ import javafx.scene.layout.Priority;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class DocumentMV extends TEntityModelView<Document> {
 	
-	private SimpleStringProperty displayProperty;
-	
 	@TTabPane(tabs = { 
 		@TTab(closable=false, 
 			content = @TContent(detailForm=@TDetailForm(fields={"code","value", "type", "contacts", "insertDate"})), text = TUsualKey.MAIN_DATA), 
@@ -94,7 +91,7 @@ public class DocumentMV extends TEntityModelView<Document> {
 		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"observation"})), text = TUsualKey.OBSERVATION), 
 		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"events"})), text = TUsualKey.EVENTS)
 	})
-	private SimpleLongProperty id;
+	private SimpleStringProperty displayProperty;
 	
 	@TLabel(text=TUsualKey.REF_CODE)
 	@TTextField(maxLength=10,  node=@TNode(requestFocus=true, parse = true))
@@ -173,22 +170,9 @@ public class DocumentMV extends TEntityModelView<Document> {
 	
 	public DocumentMV(Document entity) {
 		super(entity);
-		super.formatFieldsToDisplay("%s %s", code, name);
+		super.formatToString("%s %s", code, name);
 	}
 	
-	@Override
-	public void reload(Document model) {
-		super.reload(model);
-		//super.formatFieldsToDisplay("%s %s", code, name);
-	}
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
 
 	public SimpleStringProperty getCode() {
 		return code;
@@ -254,7 +238,6 @@ public class DocumentMV extends TEntityModelView<Document> {
 		this.content = content;
 	}
 
-	@Override
 	public SimpleStringProperty getDisplayProperty() {
 		return displayProperty;
 	}

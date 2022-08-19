@@ -8,39 +8,39 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>tedrosDataSource</jta-data-source>
 		
-		<class>com.tedros.common.model.TFileEntity</class>
-		<class>com.tedros.common.model.TByteEntity</class>
-		<class>com.tedros.person.model.Person</class>
-		<class>com.tedros.person.model.NaturalPerson</class>
-		<class>com.tedros.person.model.LegalPerson</class>
-		<class>com.tedros.person.model.Employee</class>
-		<class>com.tedros.person.model.LegalType</class>
-		<class>com.tedros.person.model.PersonAttributes</class>
-		<class>com.tedros.person.model.StaffType</class>
+		<class>org.tedros.common.model.TFileEntity</class>
+		<class>org.tedros.common.model.TByteEntity</class>
+		<class>org.tedros.person.model.Person</class>
+		<class>org.tedros.person.model.NaturalPerson</class>
+		<class>org.tedros.person.model.LegalPerson</class>
+		<class>org.tedros.person.model.Employee</class>
+		<class>org.tedros.person.model.LegalType</class>
+		<class>org.tedros.person.model.PersonAttributes</class>
+		<class>org.tedros.person.model.StaffType</class>
 		
-		<class>com.tedros.docs.model.Document</class>
-		<class>com.tedros.extension.model.Contact</class>
-		<class>com.tedros.docs.model.DocumentEvent</class>
-		<class>com.tedros.docs.model.DocumentState</class>
-		<class>com.tedros.docs.model.DocumentType</class>
+		<class>org.tedros.docs.model.Document</class>
+		<class>org.tedros.extension.model.Contact</class>
+		<class>org.tedros.docs.model.DocumentEvent</class>
+		<class>org.tedros.docs.model.DocumentState</class>
+		<class>org.tedros.docs.model.DocumentType</class>
 		
-		<class>com.tedros.location.model.Country</class>
-		<class>com.tedros.location.model.City</class>
-		<class>com.tedros.location.model.AdminArea</class>
-		<class>com.tedros.location.model.Place</class>
-		<class>com.tedros.location.model.Address</class>
-		<class>com.tedros.location.model.StreetType</class>
-		<class>com.tedros.location.model.PlaceType</class>
+		<class>org.tedros.location.model.Country</class>
+		<class>org.tedros.location.model.City</class>
+		<class>org.tedros.location.model.AdminArea</class>
+		<class>org.tedros.location.model.Place</class>
+		<class>org.tedros.location.model.Address</class>
+		<class>org.tedros.location.model.StreetType</class>
+		<class>org.tedros.location.model.PlaceType</class>
 		
-		<class>com.tedros.services.model.Contracted</class>
-		<class>com.tedros.services.model.Contractor</class>
-		<class>com.tedros.services.model.PaymentPlan</class>
-		<class>com.tedros.services.model.Plan</class>
-		<class>com.tedros.services.model.Service</class>
-		<class>com.tedros.services.model.ServiceLocation</class>
-		<class>com.tedros.services.model.ServiceType</class>
-		<class>com.tedros.services.model.Contract</class>
-		<class>com.tedros.services.model.ContractualAgreement</class>
+		<class>org.tedros.services.model.Contracted</class>
+		<class>org.tedros.services.model.Contractor</class>
+		<class>org.tedros.services.model.PaymentPlan</class>
+		<class>org.tedros.services.model.Plan</class>
+		<class>org.tedros.services.model.Service</class>
+		<class>org.tedros.services.model.ServiceLocation</class>
+		<class>org.tedros.services.model.ServiceType</class>
+		<class>org.tedros.services.model.Contract</class>
+		<class>org.tedros.services.model.ContractualAgreement</class>
 		
 		<properties>
 		

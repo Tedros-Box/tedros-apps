@@ -4,9 +4,9 @@
 	
 	<!-- PARENT INFO -->
 	<parent>
-		<groupId>com.tedros.archetype</groupId>
+		<groupId>org.tedros.archetype</groupId>
   		<artifactId>app-template</artifactId>
-  		<version>8-1.0.2</version>
+  		<version>8-2.0.0</version>
 	</parent>
 	
 	<!-- MODULE INFO -->
@@ -31,21 +31,21 @@
 	<!-- DEPENDENCIES -->
     <dependencies>
 	  	<dependency>
-	  		<groupId>com.tedros.archetype</groupId>
+	  		<groupId>org.tedros.archetype</groupId>
 	  		<artifactId>app-template-ejb-client</artifactId>
 	  		<version>${project.version}</version>
 	  		<scope>compile</scope>
 	  	</dependency>
 	  	
 	  	<dependency>
-	  		<groupId>com.tedros</groupId>
-	  		<artifactId>tedros-ejb-service-base</artifactId>
+	  		<groupId>org.tedros</groupId>
+	  		<artifactId>tedros-server-api</artifactId>
 	  		<version>${tedros.jee}</version>
 	  		<scope>compile</scope>
 	  	</dependency>
 	  
 	  <dependency>
-	  		<groupId>com.tedros</groupId>
+	  		<groupId>org.tedros</groupId>
 	  		<artifactId>tedros-core-ejb-client</artifactId>
 	  		<version>${tedros.jee}</version>
 	  		<scope>compile</scope>

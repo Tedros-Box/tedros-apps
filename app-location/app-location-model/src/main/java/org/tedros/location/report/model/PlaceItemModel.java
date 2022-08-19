@@ -1,10 +1,11 @@
 /**
  * 
  */
-package com.tedros.location.report.model;
+package org.tedros.location.report.model;
 
-import com.tedros.ejb.base.model.ITReportItemModel;
-import com.tedros.location.model.Place;
+import org.tedros.location.model.Place;
+
+import org.tedros.server.model.ITReportItemModel;
 
 /**
  * @author Davis Gordon

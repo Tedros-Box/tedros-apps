@@ -1,4 +1,6 @@
-package com.tedros.location.model;
+package org.tedros.location.model;
+
+import org.tedros.location.model.Address;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;

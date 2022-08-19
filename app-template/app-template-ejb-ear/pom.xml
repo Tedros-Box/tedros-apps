@@ -4,9 +4,9 @@
 	
 	<!-- PARENT INFO -->
 	<parent>
-		<groupId>com.tedros.archetype</groupId>
+		<groupId>org.tedros.archetype</groupId>
   		<artifactId>app-template</artifactId>
-  		<version>8-1.0.2</version>
+  		<version>8-2.0.0</version>
 	</parent>
 	
 	<!-- MODULE INFO -->
@@ -19,7 +19,7 @@
   	<!-- DEPENDENCIES -->
 	<dependencies>
 		<dependency>
-	  		<groupId>com.tedros.archetype</groupId>
+	  		<groupId>org.tedros.archetype</groupId>
 	  		<artifactId>app-template-ejb</artifactId>
 	  		<version>${project.version}</version>
 	  		<scope>compile</scope>
@@ -91,7 +91,7 @@
 	        		<!-- <outputDirectory>${project.basedir}/target/${project.build.finalName}</outputDirectory> -->
 	          		<modules>
 	            		<ejbModule>
-	              			<groupId>com.tedros.archetype</groupId>
+	              			<groupId>org.tedros.archetype</groupId>
 	              			<artifactId>app-template-ejb</artifactId>
 	            		</ejbModule>
 	          		</modules>

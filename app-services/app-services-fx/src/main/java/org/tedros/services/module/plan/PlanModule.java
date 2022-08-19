@@ -1,15 +1,16 @@
 /**
  * 
  */
-package com.tedros.services.module.plan;
+package org.tedros.services.module.plan;
 
-import com.tedros.core.TModule;
-import com.tedros.core.annotation.security.TAuthorizationType;
-import com.tedros.core.annotation.security.TSecurity;
-import com.tedros.fxapi.presenter.dynamic.view.TDynaView;
-import com.tedros.services.ServKey;
-import com.tedros.services.domain.DomainApp;
-import com.tedros.services.module.plan.model.PlanMV;
+import org.tedros.services.ServKey;
+import org.tedros.services.domain.DomainApp;
+import org.tedros.services.module.plan.model.PlanMV;
+
+import org.tedros.core.TModule;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.presenter.dynamic.view.TDynaView;
 
 /**
  * @author Davis Gordon
@@ -22,7 +23,7 @@ allowedAccesses=TAuthorizationType.MODULE_ACCESS)
 public class PlanModule extends TModule {
 
 	/* (non-Javadoc)
-	 * @see com.tedros.core.ITModule#tStart()
+	 * @see org.tedros.core.ITModule#tStart()
 	 */
 	@Override
 	public void tStart() {

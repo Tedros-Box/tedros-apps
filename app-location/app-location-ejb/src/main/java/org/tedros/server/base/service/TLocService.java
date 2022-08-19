@@ -4,7 +4,7 @@
  * TODOS OS DIREITOS RESERVADOS
  * 14/01/2014
  */
-package com.tedros.server.base.service;
+package org.tedros.server.base.service;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -12,10 +12,11 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
-import com.tedros.ejb.base.bo.ITGenericBO;
-import com.tedros.ejb.base.entity.ITEntity;
-import com.tedros.ejb.base.service.TEjbService;
-import com.tedros.server.base.bo.TLocBO;
+import org.tedros.server.base.bo.TLocBO;
+
+import org.tedros.server.cdi.bo.ITGenericBO;
+import org.tedros.server.entity.ITEntity;
+import org.tedros.server.ejb.service.TEjbService;
 
 /**
  * DESCRIÇÃO DA CLASSE
