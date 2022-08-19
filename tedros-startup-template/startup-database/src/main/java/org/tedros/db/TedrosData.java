@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tedros.db;
+package org.tedros.db;
 
 import java.io.File;
 import java.io.IOException;
