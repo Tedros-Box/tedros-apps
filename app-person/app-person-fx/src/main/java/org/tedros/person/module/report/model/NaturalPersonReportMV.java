@@ -33,6 +33,7 @@ import org.tedros.fx.annotation.process.TReportProcess;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.layout.TRegion;
+import org.tedros.fx.builder.TReportRowFactoryCallBackBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TLayoutType;
 import org.tedros.fx.presenter.dynamic.TDynaPresenter;
@@ -48,7 +49,6 @@ import org.tedros.person.domain.Sex;
 import org.tedros.person.module.report.action.SearchAction;
 import org.tedros.person.module.report.process.NaturalPersonReportProcess;
 import org.tedros.person.module.report.table.NaturalPersonItemMV;
-import org.tedros.person.module.report.table.NaturalPersonReportRowFactoryBuilder;
 import org.tedros.person.report.model.NaturalPersonItemModel;
 import org.tedros.person.report.model.NaturalPersonReportModel;
 
@@ -149,7 +149,7 @@ public class NaturalPersonReportMV extends TModelView<NaturalPersonReportModel>{
 	})
 	private SimpleStringProperty orderType;
 	
-	@TTableView(editable=true, rowFactory=NaturalPersonReportRowFactoryBuilder.class,
+	@TTableView(editable=true, rowFactory=TReportRowFactoryCallBackBuilder.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
 				@TTableColumn(cellValue="name", text = TUsualKey.NAME, resizable=true)
