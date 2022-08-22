@@ -35,6 +35,7 @@ import org.tedros.fx.annotation.process.TReportProcess;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.layout.TRegion;
+import org.tedros.fx.builder.TReportRowFactoryCallBackBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TLayoutType;
 import org.tedros.fx.presenter.dynamic.TDynaPresenter;
@@ -55,7 +56,6 @@ import org.tedros.location.module.address.model.StreetTypeMV;
 import org.tedros.location.module.place.model.PlaceTypeMV;
 import org.tedros.location.module.report.action.SearchAction;
 import org.tedros.location.module.report.process.PlaceReportProcess;
-import org.tedros.location.module.report.table.PlaceRowFactoryBuilder;
 import org.tedros.location.report.model.PlaceItemModel;
 import org.tedros.location.report.model.PlaceReportModel;
 
@@ -157,7 +157,7 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	})
 	private SimpleStringProperty orderType;
 	
-	@TTableView(editable=true, rowFactory=PlaceRowFactoryBuilder.class,
+	@TTableView(editable=true, rowFactory=TReportRowFactoryCallBackBuilder.class,
 			control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 			columns = { @TTableColumn(cellValue="title", text = TUsualKey.TITLE, prefWidth=20, resizable=true), 
 					@TTableColumn(cellValue="type", text = TUsualKey.TYPE, resizable=true), 

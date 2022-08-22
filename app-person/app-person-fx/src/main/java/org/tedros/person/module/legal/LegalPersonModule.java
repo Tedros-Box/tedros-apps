@@ -3,20 +3,23 @@
  */
 package org.tedros.person.module.legal;
 
-import org.tedros.person.PersonKeys;
-import org.tedros.person.domain.DomainApp;
-import org.tedros.person.module.legal.model.EmployeeMV;
-import org.tedros.person.module.legal.model.LegalPersonMV;
-import org.tedros.person.module.legal.model.LegalTypeMV;
-import org.tedros.person.module.legal.model.StaffTypeMV;
-
 import org.tedros.core.TModule;
+import org.tedros.core.annotation.TLoadable;
+import org.tedros.core.annotation.TModel;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.presenter.dynamic.view.TDynaGroupView;
 import org.tedros.fx.presenter.view.group.TGroupPresenter;
 import org.tedros.fx.presenter.view.group.TGroupView;
 import org.tedros.fx.presenter.view.group.TViewItem;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.model.Employee;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.module.legal.model.EmployeeMV;
+import org.tedros.person.module.legal.model.LegalPersonMV;
+import org.tedros.person.module.legal.model.LegalTypeMV;
+import org.tedros.person.module.legal.model.StaffTypeMV;
 
 /**
  * @author Davis Gordon
@@ -26,6 +29,10 @@ import org.tedros.fx.presenter.view.group.TViewItem;
 appName = PersonKeys.APP_PERSON, 
 moduleName = PersonKeys.MODULE_LEGAL_PERSON, 
 allowedAccesses=TAuthorizationType.MODULE_ACCESS)
+@TLoadable({
+	@TModel(modelType = LegalPerson.class, modelViewType=LegalPersonMV.class, moduleType=LegalPersonModule.class),
+	@TModel(modelType = Employee.class, modelViewType=EmployeeMV.class, moduleType=LegalPersonModule.class)
+})
 public class LegalPersonModule extends TModule {
 
 	/* (non-Javadoc)

@@ -54,7 +54,7 @@ import javafx.scene.layout.Priority;
  */
 @TForm(name = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = ICountryController.JNDI_NAME, model=Country.class)
-@TListViewPresenter(listViewMinWidth=350, listViewMaxWidth=350,
+@TListViewPresenter(
 	paginator=@TPaginator(entityClass = Country.class, serviceName = ICountryController.JNDI_NAME,
 			show=true, showSearchField=true, searchFieldName="name", 
 			orderBy = {	@TOption(text = TUsualKey.COUNTRY_CODE, value = "iso2Code"), 
@@ -67,22 +67,19 @@ allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class CountryMV extends TEntityModelView<Country> {
 
 	@TTabPane(tabs = { 
-			@TTab(closable=false, scroll=false, content = @TContent(detailForm=
-				@TDetailForm(fields={"iso2Code", "numericCode", "currencyCode","latitude"})), 
-				text = TUsualKey.MAIN), 
-			@TTab(closable=false, content = @TContent(detailForm=
-				@TDetailForm(fields={"flag"})), 
-				text = TUsualKey.FLAG)
-	})
-	private SimpleLongProperty id;
+		@TTab(text = TUsualKey.MAIN, 
+			content = @TContent(detailForm=@TDetailForm(
+			fields={"iso2Code", "capital", "populationName", "currencyCode","cctld"}))), 
+		@TTab(text = TUsualKey.FLAG,
+			content = @TContent(detailForm=@TDetailForm(fields={"flag"})))})
+	private SimpleLongProperty code;
 	
 	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO2)")
 	@TTextField(maxLength=2, required = true, node=@TNode(requestFocus=true, parse = true))
-	@THBox(	pane=@TPane(children={"iso2Code", "iso3Code", "name", "capital"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"iso2Code", "iso3Code", "name"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="iso2Code", priority=Priority.NEVER), 
 			@TPriority(field="iso3Code", priority=Priority.NEVER), 
-			@TPriority(field="name", priority=Priority.ALWAYS), 
-			@TPriority(field="capital", priority=Priority.ALWAYS)}))
+			@TPriority(field="name", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty iso2Code;
 	
 	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO3)")
@@ -95,20 +92,26 @@ public class CountryMV extends TEntityModelView<Country> {
 			
 	@TLabel(text=TUsualKey.CAPITAL)
 	@TTextField(maxLength=120, required = true)
+	@THBox(	pane=@TPane(children={"capital","numericCode", "iddCode"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="numericCode", priority=Priority.NEVER), 
+			@TPriority(field="iddCode", priority=Priority.NEVER), 
+			@TPriority(field="capital", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty capital;
 			
 	@TLabel(text = TUsualKey.NUMERIC_CODE)
 	@TNumberSpinnerField(maxValue = Long.MAX_VALUE)
-	@THBox(	pane=@TPane(children={"numericCode", "iddCode", "populationName", "totalArea", "population"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="numericCode", priority=Priority.NEVER), 
-			@TPriority(field="iddCode", priority=Priority.NEVER), 
-			@TPriority(field="populationName", priority=Priority.ALWAYS), 
-			@TPriority(field="totalArea", priority=Priority.NEVER), 
-			@TPriority(field="population", priority=Priority.NEVER)}))
 	private SimpleLongProperty numericCode;
+			
+	@TLabel(text = TUsualKey.IDD_CODE)
+	@TNumberSpinnerField(maxValue = Long.MAX_VALUE)
+	private SimpleIntegerProperty iddCode;
 			
 	@TLabel(text=TUsualKey.POPULATION_NAME)
 	@TTextField(maxLength=60)
+	@THBox(	pane=@TPane(children={"populationName", "totalArea", "population"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="populationName", priority=Priority.ALWAYS), 
+			@TPriority(field="totalArea", priority=Priority.NEVER), 
+			@TPriority(field="population", priority=Priority.NEVER)}))
 	private SimpleStringProperty populationName;
 			
 	@TLabel(text = TUsualKey.TOTAL_AREA)
@@ -119,18 +122,13 @@ public class CountryMV extends TEntityModelView<Country> {
 	@TNumberSpinnerField(maxValue = Long.MAX_VALUE)
 	private SimpleLongProperty population;
 			
-	@TLabel(text = TUsualKey.IDD_CODE)
-	@TNumberSpinnerField(maxValue = Long.MAX_VALUE)
-	private SimpleIntegerProperty iddCode;
-			
 	@TLabel(text=TUsualKey.CURRENCY_CODE)
 	@TTextField(maxLength=3)
-	@THBox(	pane=@TPane(children={"currencyCode", "currencyName", "langCode", "langName", "cctld"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"currencyCode", "currencyName", "langCode", "langName"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="currencyCode", priority=Priority.NEVER), 
 			@TPriority(field="currencyName", priority=Priority.ALWAYS), 
 			@TPriority(field="langCode", priority=Priority.NEVER), 
-			@TPriority(field="langName", priority=Priority.ALWAYS), 
-			@TPriority(field="cctld", priority=Priority.NEVER)}))
+			@TPriority(field="langName", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty currencyCode;
 			
 	@TLabel(text=TUsualKey.CURRENCY_NAME)
@@ -147,13 +145,14 @@ public class CountryMV extends TEntityModelView<Country> {
 	
 	@TLabel(text=TUsualKey.CCTLD)
 	@TTextField(maxLength=2)
+	@THBox(	pane=@TPane(children={"cctld", "latitude", "longitude"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="latitude", priority=Priority.SOMETIMES), 
+			@TPriority(field="longitude", priority=Priority.SOMETIMES), 
+			@TPriority(field="cctld", priority=Priority.NEVER)}))
 	private SimpleStringProperty cctld;
 			
 	@TLabel(text="Latitude")
 	@TTextField(maxLength=20)
-	@THBox(	pane=@TPane(children={"latitude", "longitude"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="latitude", priority=Priority.SOMETIMES), 
-			@TPriority(field="longitude", priority=Priority.SOMETIMES)}))
 	private SimpleStringProperty latitude;
 			
 	@TLabel(text="Longitude")
@@ -169,13 +168,6 @@ public class CountryMV extends TEntityModelView<Country> {
 		super(entity);
 	}
 
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
 
 	public SimpleStringProperty getIso2Code() {
 		return iso2Code;
@@ -316,6 +308,16 @@ public class CountryMV extends TEntityModelView<Country> {
 	@Override
 	public SimpleStringProperty toStringProperty() {
 		return name;
+	}
+
+
+	public SimpleLongProperty getCode() {
+		return code;
+	}
+
+
+	public void setCode(SimpleLongProperty code) {
+		this.code = code;
 	}
 
 }

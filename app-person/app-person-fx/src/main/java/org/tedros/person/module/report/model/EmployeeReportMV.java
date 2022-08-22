@@ -35,6 +35,7 @@ import org.tedros.fx.annotation.process.TReportProcess;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.layout.TRegion;
+import org.tedros.fx.builder.TReportRowFactoryCallBackBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TLayoutType;
 import org.tedros.fx.presenter.dynamic.TDynaPresenter;
@@ -56,7 +57,6 @@ import org.tedros.person.module.legal.model.StaffTypeMV;
 import org.tedros.person.module.report.action.SearchAction;
 import org.tedros.person.module.report.process.EmployeeReportProcess;
 import org.tedros.person.module.report.table.EmployeeItemMV;
-import org.tedros.person.module.report.table.EmployeeReportRowFactoryBuilder;
 import org.tedros.person.report.model.EmployeeItemModel;
 import org.tedros.person.report.model.EmployeeReportModel;
 
@@ -205,7 +205,7 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 	})
 	private SimpleStringProperty orderType;
 	
-	@TTableView(editable=true, rowFactory=EmployeeReportRowFactoryBuilder.class,
+	@TTableView(editable=true, rowFactory=TReportRowFactoryCallBackBuilder.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
 				@TTableColumn(cellValue="name", text = TUsualKey.NAME, prefWidth=20, resizable=true), 

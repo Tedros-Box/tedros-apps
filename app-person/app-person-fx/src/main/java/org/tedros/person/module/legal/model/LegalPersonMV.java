@@ -5,30 +5,12 @@ package org.tedros.person.module.legal.model;
 
 import java.util.Date;
 
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.docs.export.ModalDocumentMV;
 import org.tedros.docs.model.Document;
 import org.tedros.extension.contact.model.ContactMV;
 import org.tedros.extension.model.Contact;
-import org.tedros.location.LocatKey;
-import org.tedros.location.model.Address;
-import org.tedros.location.module.address.model.AddressMV;
-import org.tedros.person.PersonKeys;
-import org.tedros.person.domain.DomainApp;
-import org.tedros.person.ejb.controller.ILegalPersonController;
-import org.tedros.person.ejb.controller.ILegalTypeController;
-import org.tedros.person.model.Employee;
-import org.tedros.person.model.LegalPerson;
-import org.tedros.person.model.LegalType;
-import org.tedros.person.model.PersonAttributes;
-import org.tedros.person.module.legal.table.EmployeeITemMV;
-import org.tedros.person.module.legal.table.EmployeeRowFactoryBuilder;
-import org.tedros.person.module.legal.table.HiringDateCellCallBack;
-import org.tedros.person.module.legal.table.ResignationDateCellCallBack;
-import org.tedros.person.module.legal.table.StaffTypeCellCallBack;
-import org.tedros.person.module.natural.model.PersonAttributesMV;
-
-import org.tedros.core.annotation.security.TAuthorizationType;
-import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TCallbackFactory;
@@ -61,8 +43,25 @@ import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.builder.TEditModelRowFactoryCallBackBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.location.LocatKey;
+import org.tedros.location.model.Address;
+import org.tedros.location.module.address.model.AddressMV;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.ejb.controller.ILegalPersonController;
+import org.tedros.person.ejb.controller.ILegalTypeController;
+import org.tedros.person.model.Employee;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.model.LegalType;
+import org.tedros.person.model.PersonAttributes;
+import org.tedros.person.module.legal.table.EmployeeITemMV;
+import org.tedros.person.module.legal.table.HiringDateCellCallBack;
+import org.tedros.person.module.legal.table.ResignationDateCellCallBack;
+import org.tedros.person.module.legal.table.StaffTypeCellCallBack;
+import org.tedros.person.module.natural.model.PersonAttributesMV;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -160,7 +159,7 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
 	public ITObservableList<ModalDocumentMV> documents;
 
-	@TTableView(editable=true, rowFactory=EmployeeRowFactoryBuilder.class,
+	@TTableView(editable=true, rowFactory=TEditModelRowFactoryCallBackBuilder.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
 			@TTableColumn(cellValue="displayProperty", text = TUsualKey.NAME, prefWidth=20, resizable=true), 

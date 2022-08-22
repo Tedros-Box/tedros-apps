@@ -36,6 +36,7 @@ import org.tedros.fx.domain.TFileModelType;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.fx.property.TSimpleFileProperty;
 
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -53,7 +54,7 @@ public class ModalDocumentMV extends TEntityModelView<Document> {
 			content = @TContent(detailForm=@TDetailForm( fields={"code","value", "type", "file"}))),
 		@TTab(closable=false, text = TUsualKey.OBSERVATION, 
 			content = @TContent(detailForm=@TDetailForm(fields={"observation"})))})
-	private SimpleStringProperty displayProperty;
+	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.REF_CODE)
 	@TTextField(maxLength=10,  node=@TNode(requestFocus=true, parse = true))
@@ -143,9 +144,6 @@ public class ModalDocumentMV extends TEntityModelView<Document> {
 	public void setFile(TSimpleFileProperty<TFileEntity> file) {
 		this.file = file;
 	}
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
-	}
 
 	public SimpleStringProperty getName() {
 		return name;
@@ -161,6 +159,16 @@ public class ModalDocumentMV extends TEntityModelView<Document> {
 
 	public void setValue(SimpleStringProperty value) {
 		this.value = value;
+	}
+
+
+	public SimpleLongProperty getId() {
+		return id;
+	}
+
+
+	public void setId(SimpleLongProperty id) {
+		this.id = id;
 	}
 
 }
