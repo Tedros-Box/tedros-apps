@@ -16,6 +16,7 @@ import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.LegalPerson;
+import org.tedros.person.model.NaturalPerson;
 import org.tedros.person.module.legal.model.EmployeeMV;
 import org.tedros.person.module.legal.model.LegalPersonMV;
 import org.tedros.person.module.legal.model.LegalTypeMV;
@@ -31,7 +32,7 @@ moduleName = PersonKeys.MODULE_LEGAL_PERSON,
 allowedAccesses=TAuthorizationType.MODULE_ACCESS)
 @TLoadable({
 	@TModel(modelType = LegalPerson.class, modelViewType=LegalPersonMV.class, moduleType=LegalPersonModule.class),
-	@TModel(modelType = Employee.class, modelViewType=EmployeeMV.class, moduleType=LegalPersonModule.class)
+	@TModel(modelType = NaturalPerson.class, modelViewType=EmployeeMV.class, moduleType=LegalPersonModule.class)
 })
 public class LegalPersonModule extends TModule {
 
