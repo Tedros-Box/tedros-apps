@@ -33,9 +33,9 @@ public class ReportModule extends TModule {
 	@Override
 	public void tStart() {
 		super.tShowView(new TGroupView<TGroupPresenter>(this, PersonKeys.VIEW_REPORTS, 
+				new TViewItem(TDynaGroupView.class, NaturalPersonReportMV.class, PersonKeys.VIEW_REPORT_NATURAL_PERSON), 
 				new TViewItem(TDynaGroupView.class, EmployeeReportMV.class, PersonKeys.VIEW_REPORT_EMPLOYEES),
-				new TViewItem(TDynaGroupView.class, LegalPersonReportMV.class, PersonKeys.VIEW_REPORT_LEGAL_PERSON), 
-				new TViewItem(TDynaGroupView.class, NaturalPersonReportMV.class, PersonKeys.VIEW_REPORT_NATURAL_PERSON)
+				new TViewItem(TDynaGroupView.class, LegalPersonReportMV.class, PersonKeys.VIEW_REPORT_LEGAL_PERSON)
 				));
 
 	}
