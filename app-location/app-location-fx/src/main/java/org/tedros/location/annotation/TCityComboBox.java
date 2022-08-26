@@ -11,12 +11,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.tedros.location.builder.TCityComboBoxBuilder;
-import org.tedros.location.model.AdminArea;
-
+import org.tedros.api.parser.ITAnnotationParser;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.TAnnotationDefaultValue;
-import org.tedros.fx.annotation.parser.ITAnnotationParser;
 import org.tedros.fx.annotation.parser.TComboBoxParser;
 import org.tedros.fx.annotation.parser.TRequiredComboBoxParser;
 import org.tedros.fx.annotation.property.TIntegerProperty;
@@ -33,6 +30,8 @@ import org.tedros.fx.builder.NullListCellBuilder;
 import org.tedros.fx.builder.NullObservableListBuilder;
 import org.tedros.fx.control.TRequiredCheckBox;
 import org.tedros.fx.domain.TDefaultValues;
+import org.tedros.location.builder.TCityComboBoxBuilder;
+import org.tedros.location.model.AdminArea;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
