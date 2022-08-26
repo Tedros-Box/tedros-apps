@@ -32,6 +32,7 @@ moduleName = PersonKeys.MODULE_LEGAL_PERSON,
 allowedAccesses=TAuthorizationType.MODULE_ACCESS)
 @TLoadable({
 	@TModel(modelType = LegalPerson.class, modelViewType=LegalPersonMV.class, moduleType=LegalPersonModule.class),
+	@TModel(modelType = Employee.class, modelViewType=EmployeeMV.class, moduleType=LegalPersonModule.class),
 	@TModel(modelType = NaturalPerson.class, modelViewType=EmployeeMV.class, moduleType=LegalPersonModule.class)
 })
 public class LegalPersonModule extends TModule {

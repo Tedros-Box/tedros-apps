@@ -14,6 +14,7 @@ import org.tedros.fx.annotation.control.TModelViewType;
 import org.tedros.fx.annotation.control.TRadioButton;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
+import org.tedros.fx.annotation.control.TTableView.TTableViewSelectionModel;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.control.TVerticalRadioGroup;
 import org.tedros.fx.annotation.form.TForm;
@@ -55,6 +56,8 @@ import org.tedros.person.report.model.NaturalPersonReportModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.layout.Priority;
 
 
@@ -150,6 +153,7 @@ public class NaturalPersonReportMV extends TModelView<NaturalPersonReportModel>{
 	private SimpleStringProperty orderType;
 	
 	@TTableView(editable=true, rowFactory=TReportRowFactoryCallBackBuilder.class,
+		selectionModel=@TTableViewSelectionModel(selectionMode=SelectionMode.MULTIPLE, parse = true),
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
 				@TTableColumn(cellValue="name", text = TUsualKey.NAME, resizable=true)
