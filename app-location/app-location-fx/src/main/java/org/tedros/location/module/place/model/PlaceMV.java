@@ -95,7 +95,7 @@ public class PlaceMV extends TEntityModelView<Place> {
 	private SimpleStringProperty title;
 	
 	@TLabel(text=TUsualKey.TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT, required=true,
+	@TComboBoxField(required=true,
 		optionsList=@TOptionsList(serviceName = IPlaceTypeController.JNDI_NAME, 
 		optionModelViewClass=PlaceTypeMV.class,
 		entityClass=PlaceType.class))

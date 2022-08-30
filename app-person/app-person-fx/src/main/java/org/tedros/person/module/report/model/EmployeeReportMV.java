@@ -131,7 +131,7 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 	private SimpleObjectProperty<Gender> gender;
 
 	@TLabel(text=TUsualKey.OCCUPATION)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = IStaffTypeController.JNDI_NAME, 
 	optionModelViewClass=StaffTypeMV.class,
 	entityClass=StaffType.class))
@@ -141,7 +141,7 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 	private SimpleObjectProperty<StaffType> type;
 	
 	@TLabel(text=TUsualKey.EMPLOYER)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = ILegalPersonController.JNDI_NAME, 
 	optionModelViewClass=LegalPersonMV.class,
 	entityClass=LegalPerson.class))

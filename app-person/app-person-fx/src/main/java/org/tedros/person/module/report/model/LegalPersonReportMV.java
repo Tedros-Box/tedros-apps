@@ -99,7 +99,7 @@ public class LegalPersonReportMV extends TModelView<LegalPersonReportModel>{
 	private SimpleStringProperty otherName;
 	
 	@TLabel(text=TUsualKey.TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = ILegalTypeController.JNDI_NAME, 
 	optionModelViewClass=LegalTypeMV.class,
 	entityClass=LegalType.class))

@@ -44,7 +44,7 @@ public class ContactMV extends TEntityModelView<Contact> {
 	
 	@TReaderHtml
 	@TLabel(text=TUsualKey.TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT, items=TypeItemBuiler.class)
+	@TComboBoxField(items=TypeItemBuiler.class)
 	private SimpleObjectProperty<ContactType> type;
 	
 	@TReaderHtml

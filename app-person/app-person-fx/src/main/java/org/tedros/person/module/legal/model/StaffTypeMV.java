@@ -3,11 +3,6 @@
  */
 package org.tedros.person.module.legal.model;
 
-import org.tedros.person.PersonKeys;
-import org.tedros.person.domain.DomainApp;
-import org.tedros.person.ejb.controller.IStaffTypeController;
-import org.tedros.person.model.StaffType;
-
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
@@ -24,8 +19,11 @@ import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.ejb.controller.IStaffTypeController;
+import org.tedros.person.model.StaffType;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -47,8 +45,6 @@ import javafx.beans.property.SimpleStringProperty;
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class StaffTypeMV extends TEntityModelView<StaffType> {
-
-	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=120, required = true, 
@@ -62,16 +58,9 @@ public class StaffTypeMV extends TEntityModelView<StaffType> {
 	public StaffTypeMV(StaffType entity) {
 		super(entity);
 	}
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	public SimpleStringProperty getDisplayProperty() {
+	
+	@Override
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
 
