@@ -90,7 +90,7 @@ public class ServiceMV extends TEntityModelView<Service> {
 	private SimpleStringProperty name;
 	
 	@TLabel(text=TUsualKey.TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT, required=true,
+	@TComboBoxField(required=true,
 	optionsList=@TOptionsList(serviceName = IServiceTypeController.JNDI_NAME, 
 	optionModelViewClass=ServiceTypeMV.class,
 	entityClass=ServiceType.class))

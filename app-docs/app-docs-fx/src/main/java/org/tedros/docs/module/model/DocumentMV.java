@@ -110,7 +110,7 @@ public class DocumentMV extends TEntityModelView<Document> {
 	private SimpleStringProperty value;
 
 	@TLabel(text=TUsualKey.TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = IDocumentTypeController.JNDI_NAME, 
 	optionModelViewClass=DocumentTypeMV.class,
 	entityClass=DocumentType.class))
@@ -121,7 +121,7 @@ public class DocumentMV extends TEntityModelView<Document> {
 	private SimpleObjectProperty<DocumentType> type;
 	
 	@TLabel(text=TUsualKey.STATE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = IDocumentStateController.JNDI_NAME, 
 	optionModelViewClass=DocumentStateMV.class,
 	entityClass=DocumentState.class))

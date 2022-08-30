@@ -3,16 +3,9 @@
  */
 package org.tedros.person.module.legal.model;
 
-import org.tedros.person.PersonKeys;
-import org.tedros.person.ejb.controller.ILegalPersonController;
-import org.tedros.person.model.LegalPerson;
-import org.tedros.person.module.legal.table.EndActivitiesCellCallBack;
-import org.tedros.person.module.legal.table.LegalPersonItemMV;
-import org.tedros.person.module.legal.table.StartActivitiesCellCallBack;
-
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TCallbackFactory;
-import org.tedros.fx.annotation.control.TCellValueFactory;
+import org.tedros.fx.annotation.control.TCellFactory;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TLabelDefaultSetting;
 import org.tedros.fx.annotation.control.TTableColumn;
@@ -30,9 +23,14 @@ import org.tedros.fx.annotation.presenter.TSelectionModalPresenter;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TFont;
 import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.control.tablecell.TShortDateCallback;
 import org.tedros.fx.presenter.modal.behavior.TSelectionModalBehavior;
 import org.tedros.fx.presenter.modal.decorator.TSelectionModalDecorator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.ejb.controller.ILegalPersonController;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.module.legal.table.LegalPersonItemMV;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -52,14 +50,15 @@ import javafx.scene.layout.Priority;
 		decorator = @TDecorator(type=TSelectionModalDecorator.class, 
 		viewTitle=PersonKeys.TITLE_SELECT_LEGAL_PERSON)),
 	tableView=@TTableView(editable=true, 
-		columns = { @TTableColumn(cellValue="name", text = TUsualKey.CORPORATE_NAME, prefWidth=20, resizable=true), 
+		columns = { 
+			@TTableColumn(cellValue="name", text = TUsualKey.CORPORATE_NAME, prefWidth=20, resizable=true), 
 			@TTableColumn(cellValue="otherName", text = TUsualKey.TRADE_NAME, prefWidth=20, resizable=true), 
 			@TTableColumn(cellValue="startActivities", text = TUsualKey.START_ACTIVITIES, prefWidth=40, resizable=true,
-				cellValueFactory=@TCellValueFactory(parse=true, 
-				value=@TCallbackFactory(parse=true, value=StartActivitiesCellCallBack.class))),
+				cellFactory=@TCellFactory(parse = true, 
+					callBack=@TCallbackFactory(parse=true, value=TShortDateCallback.class))),
 			@TTableColumn(cellValue="endActivities", text = TUsualKey.END_ACTIVITIES, prefWidth=40, resizable=true,
-				cellValueFactory=@TCellValueFactory(parse=true, 
-				value=@TCallbackFactory(parse=true, value=EndActivitiesCellCallBack.class))),
+				cellFactory=@TCellFactory(parse = true, 
+					callBack=@TCallbackFactory(parse=true, value=TShortDateCallback.class))),
 			}), 
 	allowsMultipleSelections = false)
 public class FindLegalPersonMV extends TEntityModelView<LegalPerson> {

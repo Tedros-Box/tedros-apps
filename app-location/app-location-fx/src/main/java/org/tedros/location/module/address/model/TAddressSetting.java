@@ -8,11 +8,10 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.lang3.StringUtils;
+import org.tedros.api.descriptor.ITComponentDescriptor;
+import org.tedros.fx.form.TSetting;
 import org.tedros.location.model.Address;
 import org.tedros.location.module.place.model.MapSettingModel;
-
-import org.tedros.fx.descriptor.TComponentDescriptor;
-import org.tedros.fx.form.TSetting;
 
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Worker.State;
@@ -38,7 +37,7 @@ public class TAddressSetting extends TSetting {
 	
 	private boolean breakload = false;
 		
-	public TAddressSetting(TComponentDescriptor descriptor) {
+	public TAddressSetting(ITComponentDescriptor descriptor) {
 		super(descriptor);
 	}
 	

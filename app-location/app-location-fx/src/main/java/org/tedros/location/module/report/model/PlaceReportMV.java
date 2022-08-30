@@ -95,7 +95,7 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	private SimpleStringProperty title;
 	
 	@TLabel(text=TUsualKey.TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(
 		optionsList=@TOptionsList(serviceName = IPlaceTypeController.JNDI_NAME, 
 		optionModelViewClass=PlaceTypeMV.class,
 		entityClass=PlaceType.class))
@@ -118,7 +118,7 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	private SimpleObjectProperty<City> city;
 	
 	@TLabel(text=TUsualKey.STREET_TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(
 		optionsList=@TOptionsList(serviceName = IStreetTypeController.JNDI_NAME, 
 		optionModelViewClass=StreetTypeMV.class,
 		entityClass=StreetType.class))

@@ -116,7 +116,7 @@ public class EmployeeMV extends TEntityModelView<Employee> {
 	private SimpleObjectProperty<Date> birthDate;
 
 	@TLabel(text=TUsualKey.OCCUPATION)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = IStaffTypeController.JNDI_NAME, 
 	optionModelViewClass=StaffTypeMV.class,
 	entityClass=StaffType.class))

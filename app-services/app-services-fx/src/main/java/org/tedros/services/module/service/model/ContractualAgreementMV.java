@@ -51,7 +51,7 @@ public class ContractualAgreementMV extends TEntityModelView<ContractualAgreemen
 	private SimpleStringProperty name;
 	
 	@TLabel(text=TUsualKey.SERVICE_TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = IServiceTypeController.JNDI_NAME, 
 	optionModelViewClass=ServiceTypeMV.class,
 	entityClass=ServiceType.class))

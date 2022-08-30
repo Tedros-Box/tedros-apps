@@ -3,11 +3,6 @@
  */
 package org.tedros.person.module.legal.model;
 
-import org.tedros.person.PersonKeys;
-import org.tedros.person.domain.DomainApp;
-import org.tedros.person.ejb.controller.ILegalTypeController;
-import org.tedros.person.model.LegalType;
-
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
@@ -24,8 +19,11 @@ import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.ejb.controller.ILegalTypeController;
+import org.tedros.person.model.LegalType;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -47,9 +45,7 @@ import javafx.beans.property.SimpleStringProperty;
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class LegalTypeMV extends TEntityModelView<LegalType> {
-
-	private SimpleLongProperty id;
-
+	
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=120, required = true, 
 	node=@TNode(requestFocus=true, parse = true) )
@@ -62,16 +58,9 @@ public class LegalTypeMV extends TEntityModelView<LegalType> {
 	public LegalTypeMV(LegalType entity) {
 		super(entity);
 	}
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	public SimpleStringProperty getDisplayProperty() {
+	
+	@Override
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
 

@@ -14,6 +14,7 @@ import org.tedros.extension.model.Contact;
 import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TCallbackFactory;
+import org.tedros.fx.annotation.control.TCellFactory;
 import org.tedros.fx.annotation.control.TCellValueFactory;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
@@ -45,6 +46,7 @@ import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.builder.TEditModelRowFactoryCallBackBuilder;
 import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.control.tablecell.TShortDateCallback;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.location.LocatKey;
 import org.tedros.location.model.Address;
@@ -58,8 +60,6 @@ import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.LegalType;
 import org.tedros.person.model.PersonAttributes;
 import org.tedros.person.module.legal.table.EmployeeITemMV;
-import org.tedros.person.module.legal.table.HiringDateCellCallBack;
-import org.tedros.person.module.legal.table.ResignationDateCellCallBack;
 import org.tedros.person.module.legal.table.StaffTypeCellCallBack;
 import org.tedros.person.module.natural.model.PersonAttributesMV;
 
@@ -116,7 +116,7 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 	
 
 	@TLabel(text=TUsualKey.TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(firstItemText=TUsualKey.SELECT,
 	optionsList=@TOptionsList(serviceName = ILegalTypeController.JNDI_NAME, 
 	optionModelViewClass=LegalTypeMV.class,
 	entityClass=LegalType.class))
@@ -167,11 +167,11 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 				cellValueFactory=@TCellValueFactory(parse=true, 
 				value=@TCallbackFactory(parse=true, value=StaffTypeCellCallBack.class))), 
 			@TTableColumn(cellValue="hiringDate", text = TUsualKey.HIRING_DATE, resizable=true,
-				cellValueFactory=@TCellValueFactory(parse=true, 
-				value=@TCallbackFactory(parse=true, value=HiringDateCellCallBack.class))), 
+				cellFactory=@TCellFactory(parse = true, 
+					callBack=@TCallbackFactory(parse=true, value=TShortDateCallback.class))), 
 			@TTableColumn(cellValue="resignationDate", text = TUsualKey.RESIGNATION_DATE, resizable=true,
-				cellValueFactory=@TCellValueFactory(parse=true, 
-				value=@TCallbackFactory(parse=true, value=ResignationDateCellCallBack.class)))
+				cellFactory=@TCellFactory(parse = true, 
+					callBack=@TCallbackFactory(parse=true, value=TShortDateCallback.class))),
 	})
 	@TModelViewType(modelClass = Employee.class, modelViewClass=EmployeeITemMV.class)
 	private ITObservableList<EmployeeITemMV> staff;
@@ -195,7 +195,8 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 		this.id = id;
 	}
 
-	public SimpleStringProperty getDisplayProperty() {
+	@Override
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
 

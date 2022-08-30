@@ -74,7 +74,7 @@ public class AddressMV extends TEntityModelView<Address> {
 	private SimpleObjectProperty<City> city;
 	
 	@TLabel(text=TUsualKey.STREET_TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT, required=true,
+	@TComboBoxField(required=true,
 		optionsList=@TOptionsList(serviceName = IStreetTypeController.JNDI_NAME, 
 		optionModelViewClass=StreetTypeMV.class,
 		entityClass=StreetType.class))

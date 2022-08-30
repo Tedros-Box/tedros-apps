@@ -5,11 +5,6 @@ package org.tedros.location.model;
 
 import org.tedros.ejb.controller.IPlaceController;
 import org.tedros.ejb.controller.IPlaceTypeController;
-import org.tedros.location.LocatKey;
-import org.tedros.location.model.Place;
-import org.tedros.location.model.PlaceType;
-import org.tedros.location.module.place.model.PlaceTypeMV;
-
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TCallbackFactory;
 import org.tedros.fx.annotation.control.TCellValueFactory;
@@ -35,8 +30,9 @@ import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.modal.behavior.TSelectionModalBehavior;
 import org.tedros.fx.presenter.modal.decorator.TSelectionModalDecorator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.location.LocatKey;
+import org.tedros.location.module.place.model.PlaceTypeMV;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -72,7 +68,7 @@ public class FindPlaceMV extends TEntityModelView<Place> {
 	private SimpleStringProperty title;
 	
 	@TLabel(text=TUsualKey.TYPE)
-	@TComboBoxField(firstItemTex=TUsualKey.SELECT,
+	@TComboBoxField(
 		optionsList=@TOptionsList(serviceName = IPlaceTypeController.JNDI_NAME, 
 		optionModelViewClass=PlaceTypeMV.class,
 		entityClass=PlaceType.class))
