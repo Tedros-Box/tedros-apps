@@ -162,7 +162,7 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 	@TTableView(editable=true, rowFactory=TEditModelRowFactoryCallBackBuilder.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
-			@TTableColumn(cellValue="displayProperty", text = TUsualKey.NAME, prefWidth=20, resizable=true), 
+			@TTableColumn(cellValue="toStringProperty", text = TUsualKey.NAME, prefWidth=20, resizable=true), 
 			@TTableColumn(cellValue="type", text = TUsualKey.OCCUPATION, resizable=true,
 				cellValueFactory=@TCellValueFactory(parse=true, 
 				value=@TCallbackFactory(parse=true, value=StaffTypeCellCallBack.class))), 

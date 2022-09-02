@@ -16,6 +16,7 @@ import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.control.TVerticalRadioGroup;
+import org.tedros.fx.annotation.control.TTableView.TTableViewSelectionModel;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TAccordion;
 import org.tedros.fx.annotation.layout.TFieldSet;
@@ -51,9 +52,11 @@ import org.tedros.person.module.report.table.LegalPersonItemMV;
 import org.tedros.person.report.model.LegalPersonItemModel;
 import org.tedros.person.report.model.LegalPersonReportModel;
 
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Priority;
 
 
@@ -78,7 +81,7 @@ public class LegalPersonReportMV extends TModelView<LegalPersonReportModel>{
 				fields={"title", "orderBy"}),
 			@TTitledPane(text=TUsualKey.RESULT, node=@TNode(id="resultado",parse = true),
 				fields={"result"})})	
-	private SimpleStringProperty displayProperty;
+	private SimpleLongProperty id;
 	
 	@TVBox(	pane=@TPane(children={"name", "otherName", "interval" }), spacing=10, fillWidth=true,
 			vgrow=@TVGrow(priority={@TPriority(field="name", priority=Priority.ALWAYS), 
@@ -150,7 +153,9 @@ public class LegalPersonReportMV extends TModelView<LegalPersonReportModel>{
 	})
 	private SimpleStringProperty orderType;
 	
-	@TTableView(editable=true, rowFactory=TReportRowFactoryCallBackBuilder.class,
+	@TTableView(
+			selectionModel=@TTableViewSelectionModel(selectionMode=SelectionMode.MULTIPLE,parse = true), 
+			rowFactory=TReportRowFactoryCallBackBuilder.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
 				@TTableColumn(cellValue="name", text = TUsualKey.NAME, prefWidth=20, resizable=true), 
@@ -162,14 +167,6 @@ public class LegalPersonReportMV extends TModelView<LegalPersonReportModel>{
 	
 	public LegalPersonReportMV(LegalPersonReportModel entidade) {
 		super(entidade);
-	}
-
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
 	}
 
 	public SimpleStringProperty getTitle() {
@@ -266,6 +263,14 @@ public class LegalPersonReportMV extends TModelView<LegalPersonReportModel>{
 
 	public void setOrderType(SimpleStringProperty orderType) {
 		this.orderType = orderType;
+	}
+
+	public SimpleLongProperty getId() {
+		return id;
+	}
+
+	public void setId(SimpleLongProperty id) {
+		this.id = id;
 	}
 
 }

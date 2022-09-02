@@ -86,7 +86,8 @@ public class FindPersonMV extends TEntityModelView<Person> {
 		this.id = id;
 	}
 
-	public SimpleStringProperty getDisplayProperty() {
+	@Override
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
 
