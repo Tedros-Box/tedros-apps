@@ -40,6 +40,7 @@ import org.tedros.location.model.AdminArea;
 import org.tedros.location.model.City;
 import org.tedros.location.model.Country;
 import org.tedros.location.model.StreetType;
+import org.tedros.location.start.TConstant;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -120,7 +121,7 @@ public class AddressMV extends TEntityModelView<Address> {
 	private SimpleStringProperty logintude;
 	
 	@TWebView(prefHeight=300,
-			engine=@TWebEngine(load=TWebEngine.MODULE_FOLDER+"/geolocation/location.html"))
+			engine=@TWebEngine(load=TWebEngine.MODULE_FOLDER+"/"+TConstant.UUI+"/location.html"))
 	private SimpleStringProperty webview;
 	
 	public AddressMV(Address entity) {
