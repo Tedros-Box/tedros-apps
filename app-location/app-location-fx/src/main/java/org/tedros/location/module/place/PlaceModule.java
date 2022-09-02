@@ -5,6 +5,7 @@ package org.tedros.location.module.place;
 
 import org.tedros.location.LocatKey;
 import org.tedros.location.domain.DomainApp;
+import org.tedros.location.model.Place;
 import org.tedros.location.module.address.model.StreetTypeMV;
 import org.tedros.location.module.place.model.MapSettingMV;
 import org.tedros.location.module.place.model.PlaceMV;
@@ -12,6 +13,8 @@ import org.tedros.location.module.place.model.PlaceTypeMV;
 import org.tedros.location.module.report.model.PlaceReportMV;
 
 import org.tedros.core.TModule;
+import org.tedros.core.annotation.TLoadable;
+import org.tedros.core.annotation.TModel;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.presenter.dynamic.view.TDynaGroupView;
@@ -27,6 +30,7 @@ import org.tedros.fx.presenter.view.group.TViewItem;
 appName = LocatKey.APP_LOCATION_NAME, 
 moduleName = LocatKey.MODULE_ADMINISTRATIVE, 
 allowedAccesses=TAuthorizationType.MODULE_ACCESS)
+@TLoadable(value = { @TModel(modelType = Place.class, modelViewType = PlaceMV.class, moduleType = PlaceModule.class) })
 public class PlaceModule extends TModule {
 
 	/* (non-Javadoc)
