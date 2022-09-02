@@ -60,6 +60,7 @@ import org.tedros.fx.property.TSimpleFileProperty;
 import org.tedros.tools.annotation.TNotifyLink;
 import org.tedros.util.TDateUtil;
 
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -91,7 +92,7 @@ public class DocumentMV extends TEntityModelView<Document> {
 		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"observation"})), text = TUsualKey.OBSERVATION), 
 		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"events"})), text = TUsualKey.EVENTS)
 	})
-	private SimpleStringProperty displayProperty;
+	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.REF_CODE)
 	@TTextField(maxLength=10,  node=@TNode(requestFocus=true, parse = true))
@@ -238,10 +239,6 @@ public class DocumentMV extends TEntityModelView<Document> {
 		this.content = content;
 	}
 
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
 	public SimpleObjectProperty<Date> getInsertDate() {
 		return insertDate;
 	}
@@ -282,9 +279,14 @@ public class DocumentMV extends TEntityModelView<Document> {
 		this.value = value;
 	}
 
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
+
+	public SimpleLongProperty getId() {
+		return id;
 	}
 
+
+	public void setId(SimpleLongProperty id) {
+		this.id = id;
+	}
 
 }

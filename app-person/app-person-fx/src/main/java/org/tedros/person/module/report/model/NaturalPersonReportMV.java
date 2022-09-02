@@ -53,6 +53,7 @@ import org.tedros.person.module.report.table.NaturalPersonItemMV;
 import org.tedros.person.report.model.NaturalPersonItemModel;
 import org.tedros.person.report.model.NaturalPersonReportModel;
 
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -82,7 +83,7 @@ public class NaturalPersonReportMV extends TModelView<NaturalPersonReportModel>{
 				fields={"title", "orderBy"}),
 			@TTitledPane(text=TUsualKey.RESULT, node=@TNode(id="resultado",parse = true),
 				fields={"result"})})	
-	private SimpleStringProperty displayProperty;
+	private SimpleLongProperty id;
 	
 	@TVBox(	pane=@TPane(children={"name", "sex", "birthDate" }), spacing=10, fillWidth=true,
 			vgrow=@TVGrow(priority={@TPriority(field="name", priority=Priority.ALWAYS), 
@@ -152,7 +153,7 @@ public class NaturalPersonReportMV extends TModelView<NaturalPersonReportModel>{
 	})
 	private SimpleStringProperty orderType;
 	
-	@TTableView(editable=true, rowFactory=TReportRowFactoryCallBackBuilder.class,
+	@TTableView( rowFactory=TReportRowFactoryCallBackBuilder.class,
 		selectionModel=@TTableViewSelectionModel(selectionMode=SelectionMode.MULTIPLE, parse = true),
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
@@ -163,14 +164,6 @@ public class NaturalPersonReportMV extends TModelView<NaturalPersonReportModel>{
 	
 	public NaturalPersonReportMV(NaturalPersonReportModel entidade) {
 		super(entidade);
-	}
-	
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
 	}
 
 	public SimpleStringProperty getTitle() {
@@ -253,6 +246,14 @@ public class NaturalPersonReportMV extends TModelView<NaturalPersonReportModel>{
 
 	public void setResult(ITObservableList<NaturalPersonItemMV> result) {
 		this.result = result;
+	}
+
+	public SimpleLongProperty getId() {
+		return id;
+	}
+
+	public void setId(SimpleLongProperty id) {
+		this.id = id;
 	}
 
 }

@@ -24,8 +24,6 @@ public class EmployeeITemMV extends TEntityModelView<Employee> {
 
 	private SimpleLongProperty id;
 	
-	private SimpleStringProperty displayProperty;
-	
 	private SimpleStringProperty name;
 	
 	private SimpleStringProperty lastName;
@@ -42,7 +40,6 @@ public class EmployeeITemMV extends TEntityModelView<Employee> {
 			super.formatToString("%s, %s", lastName, name);
 		else
 			super.formatToString("%s %s", name, lastName);
-		super.registerProperty("displayProperty", displayProperty);
 	}
 
 	public SimpleLongProperty getId() {
@@ -51,19 +48,6 @@ public class EmployeeITemMV extends TEntityModelView<Employee> {
 
 	public void setId(SimpleLongProperty id) {
 		this.id = id;
-	}
-
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
-	}
-	
-	@Override
-	public SimpleStringProperty toStringProperty() {
-		return this.displayProperty;
 	}
 
 	public SimpleStringProperty getName() {

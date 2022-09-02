@@ -18,8 +18,6 @@ public class EmployeeItemMV extends TModelView<EmployeeItemModel> {
 	
 	private SimpleLongProperty id;
 	
-	private SimpleStringProperty displayProperty;
-	
 	private SimpleStringProperty name;
 	
 	private SimpleStringProperty type;
@@ -66,14 +64,6 @@ public class EmployeeItemMV extends TModelView<EmployeeItemModel> {
 
 	public void setEmployer(SimpleStringProperty employer) {
 		this.employer = employer;
-	}
-
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
 	}
 
 }

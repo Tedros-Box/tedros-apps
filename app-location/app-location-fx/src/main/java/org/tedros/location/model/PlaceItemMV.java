@@ -56,7 +56,8 @@ import javafx.beans.property.SimpleStringProperty;
 		this.address = address;
 	}
 
-	public SimpleStringProperty getDisplayProperty() {
+	@Override
+	public SimpleStringProperty toStringProperty() {
 		return title;
 	}
 

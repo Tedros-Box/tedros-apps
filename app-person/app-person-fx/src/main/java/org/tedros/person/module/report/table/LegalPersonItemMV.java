@@ -18,8 +18,6 @@ public class LegalPersonItemMV extends TModelView<LegalPersonItemModel> {
 	
 	private SimpleLongProperty id;
 	
-	private SimpleStringProperty displayProperty;
-	
 	private SimpleStringProperty name;
 	
 	private SimpleStringProperty otherName;
@@ -58,14 +56,6 @@ public class LegalPersonItemMV extends TModelView<LegalPersonItemModel> {
 
 	public void setName(SimpleStringProperty name) {
 		this.name = name;
-	}
-
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
 	}
 
 	public SimpleStringProperty getOtherName() {

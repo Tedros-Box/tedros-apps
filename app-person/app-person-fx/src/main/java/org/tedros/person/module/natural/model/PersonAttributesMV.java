@@ -65,7 +65,8 @@ public class PersonAttributesMV extends TEntityModelView<PersonAttributes> {
 	}
 
 
-	public SimpleStringProperty getDisplayProperty() {
+	@Override
+	public SimpleStringProperty toStringProperty() {
 		return name;
 	}
 

@@ -18,8 +18,6 @@ public class NaturalPersonItemMV extends TModelView<NaturalPersonItemModel> {
 	
 	private SimpleLongProperty id;
 	
-	private SimpleStringProperty displayProperty;
-	
 	private SimpleStringProperty name;
 
 	public NaturalPersonItemMV(NaturalPersonItemModel model) {
@@ -47,13 +45,4 @@ public class NaturalPersonItemMV extends TModelView<NaturalPersonItemModel> {
 	public void setName(SimpleStringProperty name) {
 		this.name = name;
 	}
-
-	public SimpleStringProperty getDisplayProperty() {
-		return displayProperty;
-	}
-
-	public void setDisplayProperty(SimpleStringProperty displayProperty) {
-		this.displayProperty = displayProperty;
-	}
-
 }
