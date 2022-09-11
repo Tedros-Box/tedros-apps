@@ -30,6 +30,7 @@
 		<class>org.tedros.location.model.Address</class>
 		<class>org.tedros.location.model.StreetType</class>
 		<class>org.tedros.location.model.PlaceType</class>
+		<class>org.tedros.person.model.PersonEvent</class>
 		
 		<properties>
 		

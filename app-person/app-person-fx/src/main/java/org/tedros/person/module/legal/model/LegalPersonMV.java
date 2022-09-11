@@ -19,7 +19,9 @@ import org.tedros.fx.annotation.control.TCellValueFactory;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
+import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
+import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TModelViewType;
 import org.tedros.fx.annotation.control.TOptionsList;
@@ -59,9 +61,11 @@ import org.tedros.person.model.Employee;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.LegalType;
 import org.tedros.person.model.PersonAttributes;
+import org.tedros.person.model.PersonAttributesMV;
+import org.tedros.person.model.PersonEvent;
+import org.tedros.person.model.PersonEventMV;
 import org.tedros.person.module.legal.table.EmployeeITemMV;
 import org.tedros.person.module.legal.table.StaffTypeCellCallBack;
-import org.tedros.person.module.natural.model.PersonAttributesMV;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -91,14 +95,16 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 
 	
 	@TTabPane(tabs = { 
-		@TTab(closable=false, text = TUsualKey.MAIN_DATA,
+		@TTab(text = TUsualKey.MAIN_DATA,
 			content = @TContent(detailForm=@TDetailForm(fields={"name","type", "address"}))),  
-		@TTab(closable=false, text = TUsualKey.STAFF,
+		@TTab(text = TUsualKey.STAFF,
 			content = @TContent(detailForm=@TDetailForm(fields={"staff"}))),
-		@TTab(closable=false, text = TUsualKey.DESCRIPTION, 
+		@TTab(text = TUsualKey.DESCRIPTION, 
 			content = @TContent(detailForm=@TDetailForm(fields={"description"}))),
-		@TTab(closable=false, text = TUsualKey.OBSERVATION, 
-			content = @TContent(detailForm=@TDetailForm(fields={"observation"})))
+		@TTab(text = TUsualKey.OBSERVATION, 
+			content = @TContent(detailForm=@TDetailForm(fields={"observation"}))), 
+		@TTab(text = TUsualKey.EVENTS,
+		content = @TContent(detailForm=@TDetailForm(fields={"events"})))
 	})
 	private SimpleLongProperty id;
 	
@@ -175,6 +181,11 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 	})
 	@TModelViewType(modelClass = Employee.class, modelViewClass=EmployeeITemMV.class)
 	private ITObservableList<EmployeeITemMV> staff;
+
+	@TFieldBox(node=@TNode(id="evdtl", parse = true))
+	@TDetailListField(entityModelViewClass = PersonEventMV.class, entityClass = PersonEvent.class)
+	@TModelViewType(modelClass=PersonEvent.class, modelViewClass=PersonEventMV.class)
+	private ITObservableList<PersonEventMV> events;
 
 	@TTextAreaField(maxLength=2000, wrapText=true)
 	private SimpleStringProperty description;
@@ -294,6 +305,14 @@ public class LegalPersonMV extends TEntityModelView<LegalPerson> {
 
 	public void setStaff(ITObservableList<EmployeeITemMV> staff) {
 		this.staff = staff;
+	}
+
+	public ITObservableList<PersonEventMV> getEvents() {
+		return events;
+	}
+
+	public void setEvents(ITObservableList<PersonEventMV> events) {
+		this.events = events;
 	}
 
 }

@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.tedros.person.domain.CivilStatus;
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
 import org.tedros.person.domain.Gender;
@@ -44,6 +45,10 @@ public class NaturalPerson extends Person {
 	@Column(length=12)
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
+	
+	@Column(length=25)
+	@Enumerated(EnumType.STRING)
+	private CivilStatus civilStatus;
 
 	public String getLastName() {
 		return lastName;
@@ -81,6 +86,14 @@ public class NaturalPerson extends Person {
 	public String toString() {
 		return (getName() != null ? "[#{label.natural.person}] "+getName() + " " : "")
 				+ (lastName != null ? lastName : "") ;
+	}
+
+	public CivilStatus getCivilStatus() {
+		return civilStatus;
+	}
+
+	public void setCivilStatus(CivilStatus civilStatus) {
+		this.civilStatus = civilStatus;
 	}
 	
 	

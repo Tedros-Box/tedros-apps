@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.person.module.natural.model;
+package org.tedros.person.model;
 
 import org.tedros.person.ejb.controller.IPersonAttributesController;
 import org.tedros.person.model.PersonAttributes;
