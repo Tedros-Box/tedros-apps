@@ -14,15 +14,21 @@ import org.tedros.docs.model.Document;
 import org.tedros.extension.contact.model.ContactMV;
 import org.tedros.extension.model.Contact;
 import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
+import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
+import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.THorizontalRadioGroup;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TModelViewType;
 import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TTab;
+import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -42,15 +48,21 @@ import org.tedros.location.LocatKey;
 import org.tedros.location.model.Address;
 import org.tedros.location.module.address.model.AddressMV;
 import org.tedros.person.PersonKeys;
+import org.tedros.person.converter.CivilStatusConverter;
 import org.tedros.person.converter.GenderConverter;
 import org.tedros.person.converter.SexConverter;
+import org.tedros.person.domain.CivilStatus;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.domain.Gender;
 import org.tedros.person.domain.Sex;
 import org.tedros.person.ejb.controller.INaturalPersonController;
 import org.tedros.person.model.NaturalPerson;
 import org.tedros.person.model.PersonAttributes;
+import org.tedros.person.model.PersonAttributesMV;
+import org.tedros.person.model.PersonEvent;
+import org.tedros.person.model.PersonEventMV;
 
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -75,6 +87,19 @@ import javafx.scene.layout.Priority;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 
+	@TTabPane(tabs = { 
+		@TTab( text = TUsualKey.MAIN_DATA,
+			content = @TContent(detailForm=@TDetailForm(fields={"name","sex", "address"}))),
+		@TTab(text = TUsualKey.DESCRIPTION, 
+			content = @TContent(detailForm=@TDetailForm(fields={"description"}))),
+		@TTab(text = TUsualKey.OBSERVATION, 
+			content = @TContent(detailForm=@TDetailForm(fields={"observation"}))), 
+		@TTab(text = TUsualKey.EVENTS,
+			content = @TContent(detailForm=@TDetailForm(fields={"events"})))
+	})
+	private SimpleLongProperty id;
+		
+	
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=120, required = true,
 		node=@TNode(requestFocus=true, parse = true))
@@ -98,9 +123,10 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 		radioButtons = { @TRadioButton(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE ),
 				@TRadioButton(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE )
 		})
-	@THBox(	pane=@TPane(children={"sex", "gender"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"sex", "gender", "civilStatus"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="sex", priority=Priority.ALWAYS), 
-			@TPriority(field="gender", priority=Priority.ALWAYS)}))
+			@TPriority(field="gender", priority=Priority.ALWAYS), 
+			@TPriority(field="civilStatus", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<Sex> sex;
 	
 	@TLabel(text=TUsualKey.GENDER)
@@ -112,17 +138,16 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 				@TRadioButton(text = TUsualKey.COMMON, userData = TUsualKey.COMMON)
 		})
 	private SimpleObjectProperty<Gender> gender;
-	
-	@TLabel(text=TUsualKey.DESCRIPTION)
-	@TTextAreaField(maxLength=2000, wrapText=true, prefRowCount=5)
-	@THBox(	pane=@TPane(children={"description", "observation"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="description", priority=Priority.ALWAYS), 
-			@TPriority(field="observation", priority=Priority.ALWAYS)}))
-	private SimpleStringProperty description;
-	
-	@TLabel(text=TUsualKey.OBSERVATION)
-	@TTextAreaField(maxLength=2000, wrapText=true, prefRowCount=5)
-	private SimpleStringProperty observation;
+
+	@TLabel(text=TUsualKey.CIVIL_STATUS)
+	@THorizontalRadioGroup(spacing= 10,
+		converter=@TConverter(parse = true, type = CivilStatusConverter.class),
+		radioButtons = { @TRadioButton(text = TUsualKey.SINGLE, userData = TUsualKey.SINGLE),
+				@TRadioButton(text = TUsualKey.MARRIED, userData = TUsualKey.MARRIED),
+				@TRadioButton(text = TUsualKey.SEPARATED, userData = TUsualKey.SEPARATED),
+				@TRadioButton(text = TUsualKey.WIDOWED, userData = TUsualKey.WIDOWED)
+		})
+	private SimpleObjectProperty<CivilStatus> civilStatus;
 	
 	@TLabel(text=LocatKey.ADDRESS)
 	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
@@ -151,6 +176,17 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 	modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
 	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
 	public ITObservableList<ModalDocumentMV> documents;
+
+	@TFieldBox(node=@TNode(id="evdtl", parse = true))
+	@TDetailListField(entityModelViewClass = PersonEventMV.class, entityClass = PersonEvent.class)
+	@TModelViewType(modelClass=PersonEvent.class, modelViewClass=PersonEventMV.class)
+	private ITObservableList<PersonEventMV> events;
+
+	@TTextAreaField(maxLength=2000, wrapText=true)
+	private SimpleStringProperty description;
+	
+	@TTextAreaField(maxLength=2000, wrapText=true)
+	private SimpleStringProperty observation;
 
 	public NaturalPersonMV(NaturalPerson entity) {
 		super(entity);
@@ -246,6 +282,30 @@ public class NaturalPersonMV extends TEntityModelView<NaturalPerson> {
 
 	public void setDocuments(ITObservableList<ModalDocumentMV> documents) {
 		this.documents = documents;
+	}
+
+	public SimpleObjectProperty<CivilStatus> getCivilStatus() {
+		return civilStatus;
+	}
+
+	public void setCivilStatus(SimpleObjectProperty<CivilStatus> civilStatus) {
+		this.civilStatus = civilStatus;
+	}
+
+	public ITObservableList<PersonEventMV> getEvents() {
+		return events;
+	}
+
+	public void setEvents(ITObservableList<PersonEventMV> events) {
+		this.events = events;
+	}
+
+	public SimpleLongProperty getId() {
+		return id;
+	}
+
+	public void setId(SimpleLongProperty id) {
+		this.id = id;
 	}
 
 }

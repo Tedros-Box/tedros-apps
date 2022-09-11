@@ -59,6 +59,12 @@ public class Person extends TReceptiveEntity {
 	@JoinColumn(name="address_id")
 	private Address address;
 	
+
+	@OneToMany(orphanRemoval=true, 
+			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="id_person", nullable=false, updatable=false)
+	private Set<PersonEvent> events;
+	
 	@OneToMany(orphanRemoval=true, 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="id_person", nullable=false, updatable=false)
@@ -150,6 +156,14 @@ public class Person extends TReceptiveEntity {
 	@Override
 	public String toString() {
 		return (name != null ?  name : "");
+	}
+
+	public Set<PersonEvent> getEvents() {
+		return events;
+	}
+
+	public void setEvents(Set<PersonEvent> events) {
+		this.events = events;
 	}
 	
 }

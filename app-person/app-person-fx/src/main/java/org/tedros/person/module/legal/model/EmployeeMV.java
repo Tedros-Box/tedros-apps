@@ -18,7 +18,9 @@ import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
+import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
+import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.THorizontalRadioGroup;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TModelViewType;
@@ -49,8 +51,10 @@ import org.tedros.location.LocatKey;
 import org.tedros.location.model.Address;
 import org.tedros.location.module.address.model.AddressMV;
 import org.tedros.person.PersonKeys;
+import org.tedros.person.converter.CivilStatusConverter;
 import org.tedros.person.converter.GenderConverter;
 import org.tedros.person.converter.SexConverter;
+import org.tedros.person.domain.CivilStatus;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.domain.Gender;
 import org.tedros.person.domain.Sex;
@@ -59,8 +63,10 @@ import org.tedros.person.ejb.controller.IStaffTypeController;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.PersonAttributes;
+import org.tedros.person.model.PersonAttributesMV;
+import org.tedros.person.model.PersonEvent;
+import org.tedros.person.model.PersonEventMV;
 import org.tedros.person.model.StaffType;
-import org.tedros.person.module.natural.model.PersonAttributesMV;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -89,12 +95,14 @@ import javafx.scene.layout.Priority;
 public class EmployeeMV extends TEntityModelView<Employee> {
 
 	@TTabPane(tabs = { 
-		@TTab(closable=false, 
-			content = @TContent(detailForm=@TDetailForm(fields={"name","type", "sex", "address"})), text = TUsualKey.MAIN_DATA), 
-		@TTab(closable=false, 
-			content = @TContent(detailForm=@TDetailForm(fields={"description"})), text = TUsualKey.DESCRIPTION),
-		@TTab(closable=false, 
-			content = @TContent(detailForm=@TDetailForm(fields={"observation"})), text = TUsualKey.OBSERVATION)
+		@TTab(text = TUsualKey.MAIN_DATA,
+			content = @TContent(detailForm=@TDetailForm(fields={"name","type", "sex", "address"}))), 
+		@TTab(text = TUsualKey.DESCRIPTION,
+			content = @TContent(detailForm=@TDetailForm(fields={"description"}))),
+		@TTab(text = TUsualKey.OBSERVATION,
+			content = @TContent(detailForm=@TDetailForm(fields={"observation"}))), 
+		@TTab(text = TUsualKey.EVENTS,
+			content = @TContent(detailForm=@TDetailForm(fields={"events"})))
 	})
 	private SimpleLongProperty id;
 	
@@ -146,9 +154,10 @@ public class EmployeeMV extends TEntityModelView<Employee> {
 		radioButtons = { @TRadioButton(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE ),
 				@TRadioButton(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE )
 		})
-	@THBox(	pane=@TPane(children={"sex", "gender"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"sex", "gender", "civilStatus"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="sex", priority=Priority.ALWAYS), 
-			@TPriority(field="gender", priority=Priority.ALWAYS)}))
+			@TPriority(field="gender", priority=Priority.ALWAYS), 
+			@TPriority(field="civilStatus", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<Sex> sex;
 	
 	@TLabel(text=TUsualKey.GENDER)
@@ -160,6 +169,16 @@ public class EmployeeMV extends TEntityModelView<Employee> {
 				@TRadioButton(text = TUsualKey.COMMON, userData = TUsualKey.COMMON)
 		})
 	private SimpleObjectProperty<Gender> gender;
+
+	@TLabel(text=TUsualKey.CIVIL_STATUS)
+	@THorizontalRadioGroup(spacing= 10,
+		converter=@TConverter(parse = true, type = CivilStatusConverter.class),
+		radioButtons = { @TRadioButton(text = TUsualKey.SINGLE, userData = TUsualKey.SINGLE),
+				@TRadioButton(text = TUsualKey.MARRIED, userData = TUsualKey.MARRIED),
+				@TRadioButton(text = TUsualKey.SEPARATED, userData = TUsualKey.SEPARATED),
+				@TRadioButton(text = TUsualKey.WIDOWED, userData = TUsualKey.WIDOWED)
+		})
+	private SimpleObjectProperty<CivilStatus> civilStatus;
 	
 	@TLabel(text=LocatKey.ADDRESS)
 	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
@@ -185,8 +204,12 @@ public class EmployeeMV extends TEntityModelView<Employee> {
 	@TEditEntityModal(modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
 	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
 	public ITObservableList<ModalDocumentMV> documents;
-	
 
+	@TFieldBox(node=@TNode(id="evdtl", parse = true))
+	@TDetailListField(entityModelViewClass = PersonEventMV.class, entityClass = PersonEvent.class)
+	@TModelViewType(modelClass=PersonEvent.class, modelViewClass=PersonEventMV.class)
+	private ITObservableList<PersonEventMV> events;
+	
 	@TTextAreaField(maxLength=2000, wrapText=true)
 	private SimpleStringProperty description;
 	
@@ -329,6 +352,22 @@ public class EmployeeMV extends TEntityModelView<Employee> {
 
 	public void setDocuments(ITObservableList<ModalDocumentMV> documents) {
 		this.documents = documents;
+	}
+
+	public SimpleObjectProperty<CivilStatus> getCivilStatus() {
+		return civilStatus;
+	}
+
+	public void setCivilStatus(SimpleObjectProperty<CivilStatus> civilStatus) {
+		this.civilStatus = civilStatus;
+	}
+
+	public ITObservableList<PersonEventMV> getEvents() {
+		return events;
+	}
+
+	public void setEvents(ITObservableList<PersonEventMV> events) {
+		this.events = events;
 	}
 
 }
