@@ -116,6 +116,7 @@ public class ContractMV extends TEntityModelView<Contract> {
 	@TLabel(text=TUsualKey.END_DATE)
 	@TDatePickerField
 	private SimpleObjectProperty<Date> endDate;
+	
 	@TLabel(text=TUsualKey.CONTRACTOR)
 	@TOneSelectionModal(height=80,
 	modelClass = Person.class, modelViewClass = FindPersonMV.class)
@@ -125,6 +126,7 @@ public class ContractMV extends TEntityModelView<Contract> {
 			@TPriority(field="agreements", priority=Priority.NEVER), 
 			@TPriority(field="documents", priority=Priority.NEVER)}))
 	public SimpleObjectProperty<FindPersonMV> contractor;
+	
 	@TLabel(text=TUsualKey.CONTRACTED)
 	@TOneSelectionModal(height=80,
 	modelClass = Person.class, modelViewClass = FindPersonMV.class)

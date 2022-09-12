@@ -30,6 +30,8 @@ public class NaturalPersonItemModel implements ITReportItemModel<NaturalPerson> 
 	
 	private String gender;
 	
+	private String civilStatus;
+	
 	private String address;
 	
 	public String contacts;
@@ -41,6 +43,8 @@ public class NaturalPersonItemModel implements ITReportItemModel<NaturalPerson> 
 	private List<Attribute> attributes;
 	
 	public List<DocumentItemModel> documents;
+	
+	private List<Event> events;
 	
 	private NaturalPerson item;
 	
@@ -59,6 +63,7 @@ public class NaturalPersonItemModel implements ITReportItemModel<NaturalPerson> 
 		this.birthDate = p.getBirthDate()!=null ? format(p.getBirthDate()) : null;
 		this.gender = p.getGender()!=null ? p.getGender().getValue() : null;
 		this.sex = p.getSex()!=null ? p.getSex().getValue() : null;
+		this.civilStatus = p.getCivilStatus()!=null ? p.getCivilStatus().getValue() : null;
 		this.observation = p.getObservation();
 		if(p.getAttributes()!=null) {
 			this.attributes =new ArrayList<>();
@@ -79,6 +84,16 @@ public class NaturalPersonItemModel implements ITReportItemModel<NaturalPerson> 
 			});
 		}else
 			this.documents = null;
+
+		if(p.getEvents()!=null) {
+			this.events =new ArrayList<>();
+			p.getEvents().stream().sorted((a,b)->{
+				return a.getInsertDate().compareTo(b.getInsertDate());
+			}).forEach(c->{
+				this.events.add(new Event(c));
+			});
+		}else
+			this.events = null;
 		
 	}
 
@@ -175,6 +190,22 @@ public class NaturalPersonItemModel implements ITReportItemModel<NaturalPerson> 
 
 	public NaturalPerson getItem() {
 		return item;
+	}
+
+	public String getCivilStatus() {
+		return civilStatus;
+	}
+
+	public void setCivilStatus(String civilStatus) {
+		this.civilStatus = civilStatus;
+	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
 	}
 
 }
