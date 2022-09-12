@@ -2,8 +2,8 @@ package org.tedros.person.start;
 
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
+import org.tedros.person.module.individual.IndividualModule;
 import org.tedros.person.module.legal.LegalPersonModule;
-import org.tedros.person.module.natural.NaturalPersonModule;
 import org.tedros.person.module.report.ReportModule;
 import org.tedros.person.resource.AppResource;
 
@@ -22,7 +22,7 @@ import org.tedros.core.annotation.security.TSecurity;
 @TApplication(name=PersonKeys.APP_PERSON, 
 universalUniqueIdentifier=TConstant.UUI,
 module = {	
-	@TModule(type=NaturalPersonModule.class,
+	@TModule(type=IndividualModule.class,
 		name=PersonKeys.MODULE_NATURAL_PERSON, 
 		menu=PersonKeys.MENU_PERSON,
 		description=PersonKeys.MODULE_DESC_NATURAL_PERSON),

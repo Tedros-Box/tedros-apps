@@ -66,6 +66,8 @@ public class NaturalPersonReportProcess extends TReportProcess<NaturalPersonRepo
 					c.setSex(l.getString(c.getSex()));
 				if(c.getGender()!=null)
 					c.setGender(l.getString(c.getGender()));
+				if(c.getCivilStatus()!=null)
+					c.setCivilStatus(l.getString(c.getCivilStatus()));
 			});
 	}
 	

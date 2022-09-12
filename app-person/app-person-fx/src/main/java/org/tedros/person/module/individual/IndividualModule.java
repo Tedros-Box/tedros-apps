@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.person.module.natural;
+package org.tedros.person.module.individual;
 
 import org.tedros.core.TModule;
 import org.tedros.core.annotation.TLoadable;
@@ -12,7 +12,7 @@ import org.tedros.fx.presenter.dynamic.view.TDynaView;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.model.NaturalPerson;
-import org.tedros.person.module.natural.model.NaturalPersonMV;
+import org.tedros.person.module.individual.model.IndividualMV;
 
 /**
  * @author Davis Gordon
@@ -23,15 +23,15 @@ appName = PersonKeys.APP_PERSON,
 moduleName = PersonKeys.MODULE_NATURAL_PERSON, 
 allowedAccesses=TAuthorizationType.MODULE_ACCESS)
 @TLoadable({
-	@TModel(modelType = NaturalPerson.class, modelViewType=NaturalPersonMV.class, moduleType=NaturalPersonModule.class)
+	@TModel(modelType = NaturalPerson.class, modelViewType=IndividualMV.class, moduleType=IndividualModule.class)
 })
-public class NaturalPersonModule extends TModule {
+public class IndividualModule extends TModule {
 
 	/* (non-Javadoc)
 	 * @see org.tedros.core.ITModule#tStart()
 	 */
 	@Override
 	public void tStart() {
-		super.tShowView(new TDynaView<NaturalPersonMV>(this, NaturalPersonMV.class));
+		super.tShowView(new TDynaView<IndividualMV>(this, IndividualMV.class));
 	}
 }

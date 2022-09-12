@@ -58,7 +58,6 @@ public class Person extends TReceptiveEntity {
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="address_id")
 	private Address address;
-	
 
 	@OneToMany(orphanRemoval=true, 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
