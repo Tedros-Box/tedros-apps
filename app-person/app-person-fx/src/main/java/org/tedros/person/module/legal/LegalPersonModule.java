@@ -20,6 +20,8 @@ import org.tedros.person.module.legal.model.EmployeeMV;
 import org.tedros.person.module.legal.model.LegalPersonMV;
 import org.tedros.person.module.legal.model.LegalTypeMV;
 import org.tedros.person.module.legal.model.StaffTypeMV;
+import org.tedros.person.module.report.model.EmployeeReportMV;
+import org.tedros.person.module.report.model.LegalPersonReportMV;
 
 /**
  * @author Davis Gordon
@@ -44,7 +46,9 @@ public class LegalPersonModule extends TModule {
 				new TViewItem(TDynaGroupView.class, LegalPersonMV.class, PersonKeys.VIEW_LEGAL_PERSON),
 				new TViewItem(TDynaGroupView.class, LegalTypeMV.class, PersonKeys.VIEW_LEGAL_TYPE), 
 				new TViewItem(TDynaGroupView.class, StaffTypeMV.class, PersonKeys.VIEW_STAFF_TYPE), 
-				new TViewItem(TDynaGroupView.class, EmployeeMV.class, PersonKeys.VIEW_EMPLOYEES)
+				new TViewItem(TDynaGroupView.class, EmployeeMV.class, PersonKeys.VIEW_EMPLOYEES),
+				new TViewItem(TDynaGroupView.class, EmployeeReportMV.class, PersonKeys.VIEW_REPORT_EMPLOYEES),
+				new TViewItem(TDynaGroupView.class, LegalPersonReportMV.class, PersonKeys.VIEW_REPORT_LEGAL_PERSON)
 				));
 
 	}
