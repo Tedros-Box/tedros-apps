@@ -1,18 +1,16 @@
 package org.tedros.person.start;
 
-import org.tedros.person.PersonKeys;
-import org.tedros.person.domain.DomainApp;
-import org.tedros.person.module.individual.IndividualModule;
-import org.tedros.person.module.legal.LegalPersonModule;
-import org.tedros.person.module.report.ReportModule;
-import org.tedros.person.resource.AppResource;
-
 import org.tedros.core.ITApplication;
 import org.tedros.core.annotation.TApplication;
 import org.tedros.core.annotation.TModule;
 import org.tedros.core.annotation.TResourceBundle;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.module.individual.IndividualModule;
+import org.tedros.person.module.legal.LegalPersonModule;
+import org.tedros.person.resource.AppResource;
 
 /**
  * The app start class.
@@ -29,11 +27,7 @@ module = {
 	@TModule(type=LegalPersonModule.class,
 		name=PersonKeys.MODULE_LEGAL_PERSON, 
 		menu=PersonKeys.MENU_PERSON, 
-		description=PersonKeys.MODULE_DESC_LEGAL_PERSON),
-	@TModule(type=ReportModule.class,
-		name=PersonKeys.MODULE_REPORTS, 
-		menu=PersonKeys.MENU_PERSON, 
-		description=PersonKeys.MODULE_DESC_REPORTS)
+		description=PersonKeys.MODULE_DESC_LEGAL_PERSON)
 
 }, packageName = "org.tedros.person")
 @TResourceBundle(resourceName={"TPerson"})
