@@ -18,10 +18,9 @@ import org.tedros.location.domain.DomainApp;
 import org.tedros.location.model.AdminArea;
 import org.tedros.location.model.City;
 import org.tedros.location.model.Country;
-import org.tedros.server.location.service.CityService;
-
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.ejb.controller.TSecureEjbController;
+import org.tedros.server.location.service.CityService;
 import org.tedros.server.result.TResult;
 import org.tedros.server.result.TResult.TState;
 import org.tedros.server.security.ITSecurity;

@@ -15,7 +15,6 @@ import org.tedros.ejb.controller.IAddressController;
 import org.tedros.location.domain.DomainApp;
 import org.tedros.location.model.Address;
 import org.tedros.server.base.service.TLocService;
-
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.ejb.controller.TSecureEjbController;
 import org.tedros.server.security.ITSecurity;

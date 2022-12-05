@@ -3,9 +3,6 @@
  */
 package org.tedros.person.model;
 
-import org.tedros.person.ejb.controller.IPersonAttributesController;
-import org.tedros.person.model.PersonAttributes;
-
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextAreaField;
@@ -18,6 +15,7 @@ import org.tedros.fx.annotation.presenter.TEditModalPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.ejb.controller.IPersonAttributesController;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

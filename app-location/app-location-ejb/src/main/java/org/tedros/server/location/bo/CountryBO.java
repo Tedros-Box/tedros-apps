@@ -7,10 +7,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.tedros.location.model.Country;
-import org.tedros.server.location.eao.CountryEAO;
-
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
+import org.tedros.server.location.eao.CountryEAO;
 
 /**
  * @author Davis Gordon

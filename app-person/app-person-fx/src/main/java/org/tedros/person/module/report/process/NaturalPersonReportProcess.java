@@ -5,15 +5,14 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.tedros.person.PersonKeys;
-import org.tedros.person.report.model.NaturalPersonReportModel;
-import org.tedros.person.resource.AppResource;
-
 import org.tedros.core.TLanguage;
-import org.tedros.server.result.TResult;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.exception.TProcessException;
 import org.tedros.fx.process.TReportProcess;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.report.model.NaturalPersonReportModel;
+import org.tedros.person.resource.AppResource;
+import org.tedros.server.result.TResult;
 
 import net.sf.jasperreports.engine.JRException;
 

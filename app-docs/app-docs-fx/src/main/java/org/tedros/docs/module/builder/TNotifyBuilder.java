@@ -5,15 +5,14 @@ package org.tedros.docs.module.builder;
 
 import java.util.Date;
 
+import org.tedros.core.context.TModuleContext;
+import org.tedros.core.context.TedrosAppManager;
+import org.tedros.core.notify.model.TNotify;
 import org.tedros.docs.TDocsKey;
 import org.tedros.docs.model.Document;
 import org.tedros.docs.module.DocumentModule;
 import org.tedros.docs.module.model.DocumentMV;
 import org.tedros.extension.model.ContactType;
-
-import org.tedros.core.context.TModuleContext;
-import org.tedros.core.context.TedrosAppManager;
-import org.tedros.core.notify.model.TNotify;
 import org.tedros.fx.builder.TGenericBuilder;
 
 /**

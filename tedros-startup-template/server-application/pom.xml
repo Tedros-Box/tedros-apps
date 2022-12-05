@@ -18,7 +18,12 @@
 	    <type>ear</type>
 	    <version>${tedros.jee}</version>
 	</dependency>
-	
+	<dependency>
+	    <groupId>org.tedros</groupId>
+	    <artifactId>app-chat-ejb-ear</artifactId>
+	    <type>ear</type>
+	    <version>${tedros.jee}</version>
+	</dependency>
 	<dependency>
 		<groupId>org.tedros</groupId>
 		 <artifactId>app-services-ejb-ear</artifactId>
@@ -297,6 +302,12 @@
 		      <deployable>
 		        <groupId>org.tedros</groupId>
 		        <artifactId>tedros-core-ejb-ear</artifactId>
+		        <type>ear</type>
+		      </deployable>
+		     
+		      <deployable>
+		        <groupId>org.tedros</groupId>
+		        <artifactId>app-chat-ejb-ear</artifactId>
 		        <type>ear</type>
 		      </deployable>
 		     

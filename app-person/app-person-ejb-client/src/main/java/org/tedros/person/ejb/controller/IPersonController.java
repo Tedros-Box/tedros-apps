@@ -6,7 +6,6 @@ package org.tedros.person.ejb.controller;
 import javax.ejb.Remote;
 
 import org.tedros.person.model.Person;
-
 import org.tedros.server.controller.ITSecureEjbController;
 
 /**

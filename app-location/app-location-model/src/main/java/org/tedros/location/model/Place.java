@@ -17,12 +17,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.tedros.common.model.TFileEntity;
 import org.tedros.extension.model.Contact;
 import org.tedros.location.domain.DomainSchema;
 import org.tedros.location.domain.DomainTables;
-
-import org.tedros.common.model.TFileEntity;
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis Gordon
@@ -30,7 +29,7 @@ import org.tedros.server.entity.TEntity;
  */
 @Entity
 @Table(name = DomainTables.place, schema = DomainSchema.schema)
-public class Place extends TEntity {
+public class Place extends TVersionEntity {
 
 	private static final long serialVersionUID = 1L;
 

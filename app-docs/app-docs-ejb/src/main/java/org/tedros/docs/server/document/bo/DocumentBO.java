@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 import org.tedros.docs.model.Document;
 import org.tedros.docs.server.document.eao.DocumentEAO;
-
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 

@@ -8,7 +8,6 @@ import org.tedros.location.model.City;
 import org.tedros.location.model.Country;
 import org.tedros.location.model.PlaceType;
 import org.tedros.location.model.StreetType;
-
 import org.tedros.server.model.TReportModel;
 
 /**

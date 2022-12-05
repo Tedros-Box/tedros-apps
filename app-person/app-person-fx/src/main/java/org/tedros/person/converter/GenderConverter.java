@@ -1,8 +1,7 @@
 package org.tedros.person.converter;
 
-import org.tedros.person.domain.Gender;
-
 import org.tedros.fx.form.TConverter;
+import org.tedros.person.domain.Gender;
 
 public class GenderConverter extends TConverter<String, Gender> {
 

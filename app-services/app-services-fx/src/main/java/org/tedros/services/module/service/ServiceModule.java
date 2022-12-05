@@ -3,13 +3,6 @@
  */
 package org.tedros.services.module.service;
 
-import org.tedros.services.ServKey;
-import org.tedros.services.domain.DomainApp;
-import org.tedros.services.module.service.model.ContractMV;
-import org.tedros.services.module.service.model.ServiceLocationMV;
-import org.tedros.services.module.service.model.ServiceMV;
-import org.tedros.services.module.service.model.ServiceTypeMV;
-
 import org.tedros.core.TModule;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
@@ -17,6 +10,12 @@ import org.tedros.fx.presenter.dynamic.view.TDynaGroupView;
 import org.tedros.fx.presenter.view.group.TGroupPresenter;
 import org.tedros.fx.presenter.view.group.TGroupView;
 import org.tedros.fx.presenter.view.group.TViewItem;
+import org.tedros.services.ServKey;
+import org.tedros.services.domain.DomainApp;
+import org.tedros.services.module.service.model.ContractMV;
+import org.tedros.services.module.service.model.ServiceLocationMV;
+import org.tedros.services.module.service.model.ServiceMV;
+import org.tedros.services.module.service.model.ServiceTypeMV;
 
 /**
  * @author Davis Gordon

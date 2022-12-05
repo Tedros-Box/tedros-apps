@@ -6,14 +6,6 @@ package org.tedros.services.module.plan.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.tedros.services.ServKey;
-import org.tedros.services.converter.StatusConverter;
-import org.tedros.services.domain.DomainApp;
-import org.tedros.services.domain.Status;
-import org.tedros.services.ejb.controller.IPlanController;
-import org.tedros.services.model.PaymentPlan;
-import org.tedros.services.model.Plan;
-
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
@@ -44,8 +36,14 @@ import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.services.ServKey;
+import org.tedros.services.converter.StatusConverter;
+import org.tedros.services.domain.DomainApp;
+import org.tedros.services.domain.Status;
+import org.tedros.services.ejb.controller.IPlanController;
+import org.tedros.services.model.PaymentPlan;
+import org.tedros.services.model.Plan;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;

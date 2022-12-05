@@ -10,10 +10,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import org.tedros.location.model.City;
-import org.tedros.server.location.bo.CityImportBO;
-
 import org.tedros.server.cdi.bo.TImportFileEntityBO;
 import org.tedros.server.ejb.service.TEjbImportService;
+import org.tedros.server.location.bo.CityImportBO;
 
 /**
  * @author Davis Gordon

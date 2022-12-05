@@ -11,10 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.tedros.server.entity.TVersionEntity;
 import org.tedros.services.domain.DomainSchema;
 import org.tedros.services.domain.DomainTables;
-
-import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon
@@ -22,7 +21,7 @@ import org.tedros.server.entity.TEntity;
  */
 @Entity
 @Table(name=DomainTables.contractual_agreement, schema=DomainSchema.schema)
-public class ContractualAgreement extends TEntity {
+public class ContractualAgreement extends TVersionEntity {
 
 	private static final long serialVersionUID = 4117114546282387246L;
 

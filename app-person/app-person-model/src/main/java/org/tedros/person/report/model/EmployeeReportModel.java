@@ -9,7 +9,6 @@ import org.tedros.person.domain.Gender;
 import org.tedros.person.domain.Sex;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.StaffType;
-
 import org.tedros.server.model.TReportModel;
 
 /**

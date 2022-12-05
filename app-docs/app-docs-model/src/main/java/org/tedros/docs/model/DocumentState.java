@@ -9,8 +9,7 @@ import javax.persistence.Table;
 
 import org.tedros.docs.domain.DomainSchema;
 import org.tedros.docs.domain.DomainTables;
-
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis Gordon
@@ -18,7 +17,7 @@ import org.tedros.server.entity.TEntity;
  */
 @Entity
 @Table(name = DomainTables.document_state, schema = DomainSchema.schema)
-public class DocumentState extends TEntity {
+public class DocumentState extends TVersionEntity {
 	
 	/**
 	 * 

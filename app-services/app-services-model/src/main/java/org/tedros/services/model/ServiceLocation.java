@@ -12,10 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.tedros.location.model.Place;
+import org.tedros.server.entity.TVersionEntity;
 import org.tedros.services.domain.DomainSchema;
 import org.tedros.services.domain.DomainTables;
-
-import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon
@@ -23,7 +22,7 @@ import org.tedros.server.entity.TEntity;
  */
 @Entity
 @Table(name=DomainTables.service_location, schema=DomainSchema.schema)
-public class ServiceLocation extends TEntity {
+public class ServiceLocation extends TVersionEntity {
 
 	private static final long serialVersionUID = -3229543266820321527L;
 	

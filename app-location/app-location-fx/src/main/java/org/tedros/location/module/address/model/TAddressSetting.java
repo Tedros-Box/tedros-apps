@@ -186,4 +186,10 @@ public class TAddressSetting extends TSetting {
 	private WebView getWebView() {
 		return super.getControl("webview");
 	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -8,11 +8,6 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import org.tedros.services.domain.DomainApp;
-import org.tedros.services.ejb.controller.IServiceLocationController;
-import org.tedros.services.model.ServiceLocation;
-import org.tedros.services.server.base.service.TServService;
-
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.ejb.controller.TSecureEjbController;
 import org.tedros.server.security.ITSecurity;
@@ -21,6 +16,10 @@ import org.tedros.server.security.TBeanPolicie;
 import org.tedros.server.security.TBeanSecurity;
 import org.tedros.server.security.TSecurityInterceptor;
 import org.tedros.server.service.ITEjbService;
+import org.tedros.services.domain.DomainApp;
+import org.tedros.services.ejb.controller.IServiceLocationController;
+import org.tedros.services.model.ServiceLocation;
+import org.tedros.services.server.base.service.TServService;
 
 /**
  * @author Davis Gordon

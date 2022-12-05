@@ -1,14 +1,13 @@
 package org.tedros.docs.start;
 
-import org.tedros.docs.domain.DomainApp;
-import org.tedros.docs.module.DocumentModule;
-
 import org.tedros.core.ITApplication;
 import org.tedros.core.annotation.TApplication;
 import org.tedros.core.annotation.TModule;
 import org.tedros.core.annotation.TResourceBundle;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.docs.domain.DomainApp;
+import org.tedros.docs.module.DocumentModule;
 
 /**
  * The app start class.
@@ -28,6 +27,12 @@ public class AppStart implements ITApplication {
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub 
+		
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
 		
 	}
 	

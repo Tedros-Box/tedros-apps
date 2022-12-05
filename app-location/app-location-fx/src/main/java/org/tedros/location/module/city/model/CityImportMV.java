@@ -3,13 +3,8 @@
  */
 package org.tedros.location.module.city.model;
 
-import org.tedros.ejb.controller.ICityImportController;
-import org.tedros.location.LocatKey;
-import org.tedros.location.model.City;
-import org.tedros.location.model.CityImport;
-import org.tedros.location.start.TConstant;
-
 import org.tedros.common.model.TFileEntity;
+import org.tedros.ejb.controller.ICityImportController;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TFileField;
@@ -33,8 +28,11 @@ import org.tedros.fx.presenter.modal.behavior.TImportFileModalBehavior;
 import org.tedros.fx.presenter.modal.decorator.TImportFileModalDecorator;
 import org.tedros.fx.presenter.model.TImportModelView;
 import org.tedros.fx.property.TSimpleFileProperty;
+import org.tedros.location.LocatKey;
+import org.tedros.location.model.City;
+import org.tedros.location.model.CityImport;
+import org.tedros.location.start.TConstant;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.text.TextAlignment;

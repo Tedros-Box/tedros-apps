@@ -23,11 +23,10 @@ import javax.persistence.UniqueConstraint;
 
 import org.tedros.docs.model.Document;
 import org.tedros.person.model.Person;
+import org.tedros.server.entity.TVersionEntity;
 import org.tedros.services.domain.DomainSchema;
 import org.tedros.services.domain.DomainTables;
 import org.tedros.services.domain.Status;
-
-import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon
@@ -35,7 +34,7 @@ import org.tedros.server.entity.TEntity;
  */
 @Entity
 @Table(name=DomainTables.contracted, schema=DomainSchema.schema)
-public class Contracted extends TEntity {
+public class Contracted extends TVersionEntity {
 
 	private static final long serialVersionUID = 6542389635444105197L;
 

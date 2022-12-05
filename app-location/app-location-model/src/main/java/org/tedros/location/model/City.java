@@ -9,12 +9,11 @@ import javax.persistence.Table;
 
 import org.tedros.location.domain.DomainSchema;
 import org.tedros.location.domain.DomainTables;
-
 import org.tedros.server.annotation.TCaseSensitive;
 import org.tedros.server.annotation.TEntityImportRule;
 import org.tedros.server.annotation.TFieldImportRule;
 import org.tedros.server.annotation.TFileType;
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis Gordon
@@ -24,7 +23,7 @@ import org.tedros.server.entity.TEntity;
 @Table(name = DomainTables.city, schema = DomainSchema.schema)
 @TEntityImportRule(description = "#{city.import.rule.desc}", 
 fileType = { TFileType.CSV, TFileType.XLS })
-public class City extends TEntity {
+public class City extends TVersionEntity {
 
 	private static final long serialVersionUID = 1L;
 

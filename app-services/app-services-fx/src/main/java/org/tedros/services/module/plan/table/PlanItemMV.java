@@ -6,10 +6,9 @@ package org.tedros.services.module.plan.table;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.services.domain.Status;
 import org.tedros.services.model.Plan;
-
-import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;

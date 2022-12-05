@@ -1,8 +1,7 @@
 package org.tedros.services.converter;
 
-import org.tedros.services.domain.Status;
-
 import org.tedros.fx.form.TConverter;
+import org.tedros.services.domain.Status;
 
 public class StatusConverter extends TConverter<String, Status> {
 

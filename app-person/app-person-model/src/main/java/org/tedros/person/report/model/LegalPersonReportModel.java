@@ -6,7 +6,6 @@ package org.tedros.person.report.model;
 import java.util.Date;
 
 import org.tedros.person.model.LegalType;
-
 import org.tedros.server.model.TReportModel;
 
 /**

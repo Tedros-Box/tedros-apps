@@ -24,4 +24,10 @@ public class AppStart implements ITApplication {
 
 	}
 
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

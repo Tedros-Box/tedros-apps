@@ -3,9 +3,8 @@
  */
 package org.tedros.location.module.report.model;
 
-import org.tedros.location.report.model.PlaceItemModel;
-
 import org.tedros.fx.presenter.model.TModelView;
+import org.tedros.location.report.model.PlaceItemModel;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

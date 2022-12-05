@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import org.tedros.person.model.NaturalPerson;
 import org.tedros.person.report.model.NaturalPersonReportModel;
 import org.tedros.person.server.eao.NaturalPersonEAO;
-
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 

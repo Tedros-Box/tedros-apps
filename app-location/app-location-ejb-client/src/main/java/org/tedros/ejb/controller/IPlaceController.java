@@ -3,7 +3,6 @@ package org.tedros.ejb.controller;
 import javax.ejb.Remote;
 
 import org.tedros.location.model.Place;
-
 import org.tedros.server.controller.ITSecureEjbController;
 
 @Remote

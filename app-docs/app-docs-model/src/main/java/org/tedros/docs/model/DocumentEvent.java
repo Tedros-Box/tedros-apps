@@ -22,8 +22,7 @@ import javax.persistence.UniqueConstraint;
 import org.tedros.docs.domain.DomainSchema;
 import org.tedros.docs.domain.DomainTables;
 import org.tedros.extension.model.Contact;
-
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis Gordon
@@ -31,7 +30,7 @@ import org.tedros.server.entity.TEntity;
  */
 @Entity
 @Table(name = DomainTables.document_event, schema = DomainSchema.schema)
-public class DocumentEvent extends TEntity {
+public class DocumentEvent extends TVersionEntity {
 	
 	private static final long serialVersionUID = -451351680126600688L;
 

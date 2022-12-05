@@ -13,12 +13,8 @@ import static org.tedros.fx.TUsualKey.CAPITAL;
 import static org.tedros.fx.TUsualKey.NAME;
 import static org.tedros.fx.TUsualKey.POPULATION;
 
-import org.tedros.ejb.controller.ICityController;
-import org.tedros.location.LocatKey;
-import org.tedros.location.domain.DomainApp;
-import org.tedros.location.model.City;
-
 import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.ejb.controller.ICityController;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TNumberSpinnerField;
@@ -38,6 +34,9 @@ import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.location.LocatKey;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.model.City;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

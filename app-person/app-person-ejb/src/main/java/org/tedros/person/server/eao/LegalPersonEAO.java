@@ -11,9 +11,7 @@ import javax.persistence.Query;
 import org.apache.commons.lang3.StringUtils;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.report.model.LegalPersonReportModel;
-
 import org.tedros.server.cdi.eao.TGenericEAO;
-import org.tedros.server.entity.ITEntity;
 
 /**
  * @author Davis Gordon

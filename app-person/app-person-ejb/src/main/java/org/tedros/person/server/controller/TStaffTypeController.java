@@ -12,7 +12,6 @@ import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IStaffTypeController;
 import org.tedros.person.model.StaffType;
 import org.tedros.person.server.base.service.TPersonService;
-
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.ejb.controller.TSecureEjbController;
 import org.tedros.server.security.ITSecurity;

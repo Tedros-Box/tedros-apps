@@ -19,11 +19,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.tedros.server.entity.TVersionEntity;
 import org.tedros.services.domain.DomainSchema;
 import org.tedros.services.domain.DomainTables;
 import org.tedros.services.domain.Status;
-
-import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon
@@ -31,7 +30,7 @@ import org.tedros.server.entity.TEntity;
  */
 @Entity
 @Table(name=DomainTables.plan, schema=DomainSchema.schema)
-public class Plan extends TEntity {
+public class Plan extends TVersionEntity {
 
 	private static final long serialVersionUID = 8033991483988619245L;
 

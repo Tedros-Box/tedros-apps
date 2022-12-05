@@ -11,7 +11,6 @@ import javax.persistence.Query;
 import org.apache.commons.lang3.StringUtils;
 import org.tedros.location.model.Place;
 import org.tedros.location.report.model.PlaceReportModel;
-
 import org.tedros.server.cdi.eao.TGenericEAO;
 
 /**

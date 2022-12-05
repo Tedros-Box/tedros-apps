@@ -6,7 +6,6 @@ package org.tedros.location.module.place.model;
 import java.util.Properties;
 
 import org.tedros.location.resource.AppResource;
-
 import org.tedros.server.model.ITModel;
 
 /**

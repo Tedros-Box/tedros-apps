@@ -11,7 +11,6 @@ import java.util.List;
 import org.tedros.docs.report.model.DocumentItemModel;
 import org.tedros.extension.model.Contact;
 import org.tedros.person.model.LegalPerson;
-
 import org.tedros.server.model.ITReportItemModel;
 
 /**

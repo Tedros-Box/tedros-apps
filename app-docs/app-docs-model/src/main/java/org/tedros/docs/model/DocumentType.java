@@ -9,8 +9,7 @@ import javax.persistence.Table;
 
 import org.tedros.docs.domain.DomainSchema;
 import org.tedros.docs.domain.DomainTables;
-
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis Gordon
@@ -18,7 +17,7 @@ import org.tedros.server.entity.TEntity;
  */
 @Entity
 @Table(name = DomainTables.document_type, schema = DomainSchema.schema)
-public class DocumentType extends TEntity {
+public class DocumentType extends TVersionEntity {
 	
 	private static final long serialVersionUID = 8489348034424401175L;
 

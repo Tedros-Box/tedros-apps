@@ -3,10 +3,6 @@
  */
 package org.tedros.location.model;
 
-import org.tedros.location.model.Address;
-import org.tedros.location.model.Place;
-import org.tedros.location.model.PlaceType;
-
 import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;

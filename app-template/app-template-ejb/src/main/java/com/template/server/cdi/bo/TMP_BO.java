@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.template.server.base.bo;
+package com.template.server.cdi.bo;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -9,7 +9,8 @@ import javax.inject.Inject;
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 import org.tedros.server.entity.ITEntity;
-import com.template.server.base.eao.TMP_EAO;
+
+import com.template.server.cdi.eao.TMP_EAO;
 
 /**
  * The CDI business object 

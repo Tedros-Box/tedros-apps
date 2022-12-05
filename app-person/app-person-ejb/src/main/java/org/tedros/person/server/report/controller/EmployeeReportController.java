@@ -14,7 +14,6 @@ import org.tedros.person.model.Employee;
 import org.tedros.person.report.model.EmployeeItemModel;
 import org.tedros.person.report.model.EmployeeReportModel;
 import org.tedros.person.server.service.EmployeeService;
-
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.result.TResult;
 import org.tedros.server.result.TResult.TState;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.template.server.base.eao;
+package com.template.server.cdi.eao;
 
 import javax.enterprise.context.Dependent;
 

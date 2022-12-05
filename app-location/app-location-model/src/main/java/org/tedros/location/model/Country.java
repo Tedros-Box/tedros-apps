@@ -12,15 +12,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.tedros.common.model.TFileEntity;
 import org.tedros.location.domain.DomainSchema;
 import org.tedros.location.domain.DomainTables;
-
-import org.tedros.common.model.TFileEntity;
 import org.tedros.server.annotation.TCaseSensitive;
 import org.tedros.server.annotation.TEntityImportRule;
 import org.tedros.server.annotation.TFieldImportRule;
 import org.tedros.server.annotation.TFileType;
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis Gordon
@@ -31,7 +30,7 @@ import org.tedros.server.entity.TEntity;
 uniqueConstraints= {@UniqueConstraint(name="countryCodeUnIdx", columnNames = { "iso2Code" })} )
 @TEntityImportRule(description = "#{country.import.rule.desc}", 
 fileType = { TFileType.CSV, TFileType.XLS })
-public class Country extends TEntity {
+public class Country extends TVersionEntity {
 
 	private static final long serialVersionUID = 1L;
 

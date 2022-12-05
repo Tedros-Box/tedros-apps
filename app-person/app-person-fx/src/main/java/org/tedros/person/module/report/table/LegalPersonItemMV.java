@@ -3,9 +3,8 @@
  */
 package org.tedros.person.module.report.table;
 
-import org.tedros.person.report.model.LegalPersonItemModel;
-
 import org.tedros.fx.presenter.model.TModelView;
+import org.tedros.person.report.model.LegalPersonItemModel;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

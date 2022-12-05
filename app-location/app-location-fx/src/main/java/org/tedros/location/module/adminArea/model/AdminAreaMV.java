@@ -9,12 +9,8 @@ import static org.tedros.core.annotation.security.TAuthorizationType.NEW;
 import static org.tedros.core.annotation.security.TAuthorizationType.SAVE;
 import static org.tedros.core.annotation.security.TAuthorizationType.VIEW_ACCESS;
 
-import org.tedros.ejb.controller.IAdminAreaController;
-import org.tedros.location.LocatKey;
-import org.tedros.location.domain.DomainApp;
-import org.tedros.location.model.AdminArea;
-
 import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.ejb.controller.IAdminAreaController;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextField;
@@ -32,8 +28,10 @@ import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.location.LocatKey;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.model.AdminArea;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
 

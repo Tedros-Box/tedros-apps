@@ -24,7 +24,6 @@ import org.tedros.person.converter.SexConverter;
 import org.tedros.person.domain.CivilStatus;
 import org.tedros.person.domain.Gender;
 import org.tedros.person.domain.Sex;
-import org.tedros.person.model.NaturalPerson;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

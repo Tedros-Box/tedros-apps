@@ -9,7 +9,6 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 
 import org.tedros.location.model.Country;
-
 import org.tedros.server.cdi.eao.TGenericEAO;
 
 /**
