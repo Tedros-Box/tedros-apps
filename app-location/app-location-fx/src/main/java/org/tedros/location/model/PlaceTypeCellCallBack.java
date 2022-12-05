@@ -1,7 +1,5 @@
 package org.tedros.location.model;
 
-import org.tedros.location.model.PlaceType;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableColumn.CellDataFeatures;

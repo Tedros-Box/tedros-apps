@@ -3,14 +3,13 @@
  */
 package org.tedros.location.module.city;
 
-import org.tedros.location.LocatKey;
-import org.tedros.location.domain.DomainApp;
-import org.tedros.location.module.city.model.CityMV;
-
 import org.tedros.core.TModule;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.presenter.dynamic.view.TDynaView;
+import org.tedros.location.LocatKey;
+import org.tedros.location.domain.DomainApp;
+import org.tedros.location.module.city.model.CityMV;
 
 /**
  * @author Davis Gordon

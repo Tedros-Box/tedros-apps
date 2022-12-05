@@ -13,10 +13,9 @@ import javax.inject.Inject;
 
 import org.tedros.location.model.Place;
 import org.tedros.location.report.model.PlaceReportModel;
-import org.tedros.server.location.bo.PlaceBO;
-
 import org.tedros.server.cdi.bo.ITGenericBO;
 import org.tedros.server.ejb.service.TEjbService;
+import org.tedros.server.location.bo.PlaceBO;
 
 /**
  * @author Davis Gordon

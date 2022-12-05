@@ -15,10 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.tedros.server.entity.TVersionEntity;
 import org.tedros.services.domain.DomainSchema;
 import org.tedros.services.domain.DomainTables;
-
-import org.tedros.server.entity.TEntity;
 
 /**
  * @author Davis Gordon
@@ -26,7 +25,7 @@ import org.tedros.server.entity.TEntity;
  */
 @Entity
 @Table(name=DomainTables.service, schema=DomainSchema.schema)
-public class Service extends TEntity {
+public class Service extends TVersionEntity {
 	
 	private static final long serialVersionUID = -264423263431230419L;
 

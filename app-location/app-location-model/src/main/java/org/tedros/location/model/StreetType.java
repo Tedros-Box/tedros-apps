@@ -9,8 +9,7 @@ import javax.persistence.Table;
 
 import org.tedros.location.domain.DomainSchema;
 import org.tedros.location.domain.DomainTables;
-
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis Gordon
@@ -18,7 +17,7 @@ import org.tedros.server.entity.TEntity;
  */
 @Entity
 @Table(name = DomainTables.streetType, schema = DomainSchema.schema)
-public class StreetType extends TEntity {
+public class StreetType extends TVersionEntity {
 
 	private static final long serialVersionUID = 1L;
 

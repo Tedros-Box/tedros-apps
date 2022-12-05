@@ -14,10 +14,9 @@ import javax.ejb.TransactionAttributeType;
 import org.tedros.ejb.controller.IPlaceController;
 import org.tedros.location.domain.DomainApp;
 import org.tedros.location.model.Place;
-import org.tedros.server.location.service.PlaceService;
-
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.ejb.controller.TSecureEjbController;
+import org.tedros.server.location.service.PlaceService;
 import org.tedros.server.security.ITSecurity;
 import org.tedros.server.security.TAccessPolicie;
 import org.tedros.server.security.TBeanPolicie;

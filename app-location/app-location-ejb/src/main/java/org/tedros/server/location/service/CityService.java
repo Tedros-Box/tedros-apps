@@ -14,10 +14,9 @@ import javax.inject.Inject;
 import org.tedros.location.model.AdminArea;
 import org.tedros.location.model.City;
 import org.tedros.location.model.Country;
-import org.tedros.server.location.bo.CityBO;
-
 import org.tedros.server.cdi.bo.ITGenericBO;
 import org.tedros.server.ejb.service.TEjbService;
+import org.tedros.server.location.bo.CityBO;
 
 /**
  * @author Davis Gordon

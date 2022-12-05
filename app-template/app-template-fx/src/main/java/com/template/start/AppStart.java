@@ -6,6 +6,7 @@ import org.tedros.core.annotation.TModule;
 import org.tedros.core.annotation.TResourceBundle;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
+
 import com.template.TMP_Key;
 import com.template.domain.DomainApp;
 import com.template.module.mymodule._MyEntity_Module;
@@ -32,6 +33,11 @@ public class AppStart implements ITApplication {
 	@Override
 	public void start() {
 		// Run at startup
+	}
+
+	@Override
+	public void stop() {
+		// Executed on exit and logout
 	}
 	
 	

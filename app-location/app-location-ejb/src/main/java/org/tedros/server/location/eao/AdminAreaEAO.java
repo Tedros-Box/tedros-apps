@@ -11,7 +11,6 @@ import javax.persistence.Query;
 
 import org.tedros.location.model.AdminArea;
 import org.tedros.location.model.Country;
-
 import org.tedros.server.cdi.eao.TGenericEAO;
 
 /**

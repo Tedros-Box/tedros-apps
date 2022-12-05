@@ -6,7 +6,6 @@ import javax.ejb.Remote;
 
 import org.tedros.location.model.AdminArea;
 import org.tedros.location.model.Country;
-
 import org.tedros.server.controller.ITSecureEjbController;
 import org.tedros.server.result.TResult;
 import org.tedros.server.security.TAccessToken;

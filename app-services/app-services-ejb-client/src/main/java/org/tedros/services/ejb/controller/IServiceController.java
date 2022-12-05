@@ -5,9 +5,8 @@ package org.tedros.services.ejb.controller;
 
 import javax.ejb.Remote;
 
-import org.tedros.services.model.Service;
-
 import org.tedros.server.controller.ITSecureEjbController;
+import org.tedros.services.model.Service;
 
 /**
  * @author Davis Gordon

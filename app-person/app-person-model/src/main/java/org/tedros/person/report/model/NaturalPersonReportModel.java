@@ -7,7 +7,6 @@ import java.util.Date;
 
 import org.tedros.person.domain.Gender;
 import org.tedros.person.domain.Sex;
-
 import org.tedros.server.model.TReportModel;
 
 /**

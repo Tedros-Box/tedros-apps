@@ -3,14 +3,6 @@
  */
 package org.tedros.person.model;
 
-import org.tedros.person.ejb.controller.IPersonController;
-import org.tedros.person.model.Employee;
-import org.tedros.person.model.LegalPerson;
-import org.tedros.person.model.NaturalPerson;
-import org.tedros.person.model.Person;
-import org.tedros.person.table.PersonCellCallBack;
-import org.tedros.person.table.PersonItemMV;
-
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TCallbackFactory;
 import org.tedros.fx.annotation.control.TCellValueFactory;
@@ -30,6 +22,9 @@ import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.modal.behavior.TSelectionModalBehavior;
 import org.tedros.fx.presenter.modal.decorator.TSelectionModalDecorator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.ejb.controller.IPersonController;
+import org.tedros.person.table.PersonCellCallBack;
+import org.tedros.person.table.PersonItemMV;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

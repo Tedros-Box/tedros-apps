@@ -10,10 +10,9 @@ import javax.inject.Inject;
 
 import org.tedros.location.model.Place;
 import org.tedros.location.report.model.PlaceReportModel;
-import org.tedros.server.location.eao.PlaceEAO;
-
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
+import org.tedros.server.location.eao.PlaceEAO;
 
 /**
  * @author Davis Gordon

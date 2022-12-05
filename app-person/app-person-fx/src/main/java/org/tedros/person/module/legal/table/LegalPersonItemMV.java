@@ -5,9 +5,8 @@ package org.tedros.person.module.legal.table;
 
 import java.util.Date;
 
-import org.tedros.person.model.LegalPerson;
-
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.model.LegalPerson;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;

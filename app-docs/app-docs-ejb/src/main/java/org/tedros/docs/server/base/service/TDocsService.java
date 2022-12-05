@@ -14,10 +14,9 @@ import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 
 import org.tedros.docs.server.base.bo.TDocsBO;
-
 import org.tedros.server.cdi.bo.ITGenericBO;
-import org.tedros.server.entity.ITEntity;
 import org.tedros.server.ejb.service.TEjbService;
+import org.tedros.server.entity.ITEntity;
 
 /**
  * DESCRIÇÃO DA CLASSE

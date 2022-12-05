@@ -6,9 +6,8 @@ package org.tedros.extension.contact.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.tedros.extension.model.ContactType;
-
 import org.tedros.core.TLanguage;
+import org.tedros.extension.model.ContactType;
 import org.tedros.fx.builder.TGenericBuilder;
 import org.tedros.fx.control.TItem;
 

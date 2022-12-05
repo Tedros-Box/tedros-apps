@@ -12,11 +12,10 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
-import org.tedros.services.server.base.bo.TServBO;
-
 import org.tedros.server.cdi.bo.ITGenericBO;
-import org.tedros.server.entity.ITEntity;
 import org.tedros.server.ejb.service.TEjbService;
+import org.tedros.server.entity.ITEntity;
+import org.tedros.services.server.base.bo.TServBO;
 
 /**
  * DESCRIÇÃO DA CLASSE

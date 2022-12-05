@@ -10,24 +10,20 @@ import java.lang.annotation.Annotation;
 import java.util.List;
 
 import org.tedros.ejb.controller.ICountryController;
-import org.tedros.location.annotation.TCountryComboBox;
-import org.tedros.location.model.Country;
-
-import org.tedros.server.entity.ITEntity;
-import org.tedros.server.result.TResult;
 import org.tedros.fx.builder.ITControlBuilder;
 import org.tedros.fx.builder.TBuilder;
 import org.tedros.fx.control.TComboBoxField;
 import org.tedros.fx.control.TItem;
-import org.tedros.fx.presenter.model.TModelView;
 import org.tedros.fx.process.TOptionsProcess;
+import org.tedros.location.annotation.TCountryComboBox;
+import org.tedros.location.model.Country;
+import org.tedros.server.entity.ITEntity;
+import org.tedros.server.result.TResult;
 
 import javafx.beans.property.Property;
 import javafx.concurrent.Worker.State;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.util.Callback;
 
 
 /**

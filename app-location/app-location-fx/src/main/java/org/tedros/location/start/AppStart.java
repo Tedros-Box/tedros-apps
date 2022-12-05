@@ -1,5 +1,11 @@
 package org.tedros.location.start;
 
+import org.tedros.core.ITApplication;
+import org.tedros.core.annotation.TApplication;
+import org.tedros.core.annotation.TModule;
+import org.tedros.core.annotation.TResourceBundle;
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.location.LocatKey;
 import org.tedros.location.domain.DomainApp;
 import org.tedros.location.module.adminArea.AdminAreaModule;
@@ -7,13 +13,6 @@ import org.tedros.location.module.city.CityModule;
 import org.tedros.location.module.country.CountryModule;
 import org.tedros.location.module.place.PlaceModule;
 import org.tedros.location.resource.AppResource;
-
-import org.tedros.core.ITApplication;
-import org.tedros.core.annotation.TApplication;
-import org.tedros.core.annotation.TModule;
-import org.tedros.core.annotation.TResourceBundle;
-import org.tedros.core.annotation.security.TAuthorizationType;
-import org.tedros.core.annotation.security.TSecurity;
 
 /**
  * The app start class.
@@ -43,6 +42,12 @@ public class AppStart implements ITApplication {
 	@Override
 	public void start() {
 		new AppResource().copyToFolder();;
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

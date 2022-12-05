@@ -4,7 +4,6 @@
 package org.tedros.location.report.model;
 
 import org.tedros.location.model.Place;
-
 import org.tedros.server.model.ITReportItemModel;
 
 /**

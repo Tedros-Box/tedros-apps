@@ -6,11 +6,10 @@ package org.tedros.person.module.legal.table;
 import java.util.Date;
 import java.util.Locale;
 
-import org.tedros.person.model.Employee;
-import org.tedros.person.model.StaffType;
-
 import org.tedros.core.TLanguage;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.model.Employee;
+import org.tedros.person.model.StaffType;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;

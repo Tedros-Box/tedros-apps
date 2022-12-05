@@ -14,7 +14,6 @@ import org.tedros.person.model.NaturalPerson;
 import org.tedros.person.report.model.NaturalPersonItemModel;
 import org.tedros.person.report.model.NaturalPersonReportModel;
 import org.tedros.person.server.service.NaturalPersonService;
-
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.result.TResult;
 import org.tedros.server.result.TResult.TState;

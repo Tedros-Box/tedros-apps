@@ -6,11 +6,10 @@ package org.tedros.services.server.base.bo;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-import org.tedros.services.server.base.eao.TServEAO;
-
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 import org.tedros.server.entity.ITEntity;
+import org.tedros.services.server.base.eao.TServEAO;
 
 /**
  * @author Davis Gordon

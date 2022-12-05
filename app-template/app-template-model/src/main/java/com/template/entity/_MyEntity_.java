@@ -7,7 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
+
 import com.template.domain.DomainSchema;
 import com.template.domain.DomainTables;
 
@@ -17,7 +18,7 @@ import com.template.domain.DomainTables;
  */
 @Entity
 @Table(name=DomainTables.mytable, schema=DomainSchema.schema)
-public class _MyEntity_ extends TEntity {
+public class _MyEntity_ extends TVersionEntity {
 
 	private static final long serialVersionUID = -8008690210025662586L;
 

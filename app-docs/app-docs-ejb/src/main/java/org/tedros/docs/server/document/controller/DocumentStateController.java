@@ -15,7 +15,6 @@ import org.tedros.docs.domain.DomainApp;
 import org.tedros.docs.ejb.controller.IDocumentStateController;
 import org.tedros.docs.model.DocumentState;
 import org.tedros.docs.server.base.service.TDocsService;
-
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.ejb.controller.TSecureEjbController;
 import org.tedros.server.security.ITSecurity;

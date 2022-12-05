@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.tedros.location.model.City;
 import org.tedros.location.model.CityImport;
 import org.tedros.server.base.bo.TLocBO;
-
 import org.tedros.server.cdi.bo.ITGenericBO;
 import org.tedros.server.cdi.bo.TImportFileEntityBO;
 

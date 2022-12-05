@@ -11,7 +11,6 @@ import javax.persistence.Query;
 import org.apache.commons.lang3.StringUtils;
 import org.tedros.person.model.NaturalPerson;
 import org.tedros.person.report.model.NaturalPersonReportModel;
-
 import org.tedros.server.cdi.eao.TGenericEAO;
 
 /**

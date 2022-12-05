@@ -39,6 +39,12 @@ public class AppStart implements ITApplication {
 	public void start() {
 		AppResource.createResource();
 	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

@@ -10,10 +10,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import org.tedros.location.model.AdminArea;
-import org.tedros.server.location.bo.AdminAreaImportBO;
-
 import org.tedros.server.cdi.bo.TImportFileEntityBO;
 import org.tedros.server.ejb.service.TEjbImportService;
+import org.tedros.server.location.bo.AdminAreaImportBO;
 
 /**
  * @author Davis Gordon

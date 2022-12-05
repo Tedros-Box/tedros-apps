@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.tedros</groupId>
     <artifactId>tedrosbox</artifactId>
-    <version>8-4.0.0</version>
+    <version>8-4.1.0</version>
   </parent>
   
   <groupId>org.tedros.archetype</groupId>
@@ -30,10 +30,10 @@
 		<app.location>8-2.0.0</app.location>
 		<app.person>8-2.0.0</app.person>
 		<app.services>8-2.0.0</app.services>
-		<tedros.box>8-4.0.0</tedros.box>
-		<tedros.fx>8-4.0.0</tedros.fx>
-		<app.settings>8-4.0.0</app.settings>
-		<tedros.jee>8-4.0.0</tedros.jee>
+		<tedros.box>8-4.1.0</tedros.box>
+		<tedros.fx>8-4.1.0</tedros.fx>
+		<app.settings>8-4.1.0</app.settings>
+		<tedros.jee>8-4.1.0</tedros.jee>
 		<java.home>C:\Program Files\Java\jdk1.8.0_102\bin</java.home>
 		
 		<junit.version>4.13</junit.version>
@@ -99,5 +99,6 @@
 	    <module>server-application</module>
 	    <module>startup-tedros-box</module>
 	    <module>startup-database</module>
+	    <module>server-chat</module>
 	</modules>
 </project>

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.template.server.controller;
+package com.template.server.ejb.controller;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -16,10 +16,11 @@ import org.tedros.server.security.TBeanPolicie;
 import org.tedros.server.security.TBeanSecurity;
 import org.tedros.server.security.TSecurityInterceptor;
 import org.tedros.server.service.ITEjbService;
+
 import com.template.domain.DomainApp;
 import com.template.ejb.controller.I_MyEntity_Controller;
 import com.template.entity._MyEntity_;
-import com.template.server.base.service.TMP_Service;
+import com.template.server.ejb.service.TMP_Service;
 
 /**
  * The controller bean

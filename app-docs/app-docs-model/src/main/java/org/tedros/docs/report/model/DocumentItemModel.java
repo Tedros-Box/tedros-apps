@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.tedros.docs.model.Document;
 import org.tedros.extension.model.Contact;
-
 import org.tedros.server.model.ITReportItemModel;
 
 /**

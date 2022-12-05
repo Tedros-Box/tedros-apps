@@ -5,18 +5,13 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.tedros.person.PersonKeys;
-import org.tedros.person.report.model.LegalPersonReportModel;
-import org.tedros.person.resource.AppResource;
-import org.tedros.person.start.TConstant;
-
 import org.tedros.core.TLanguage;
-import org.tedros.server.result.TResult;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.exception.TProcessException;
 import org.tedros.fx.process.TReportProcess;
-
-import net.sf.jasperreports.engine.JRException;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.report.model.LegalPersonReportModel;
+import org.tedros.person.resource.AppResource;
 
 public class LegalPersonReportProcess extends TReportProcess<LegalPersonReportModel> {
 
