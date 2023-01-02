@@ -24,7 +24,7 @@ import org.tedros.person.domain.DomainTables;
  */
 @Entity
 @Table(name = DomainTables.employee, schema = DomainSchema.schema)
-@DiscriminatorValue("E")
+@DiscriminatorValue("EMPLY")
 public class Employee extends NaturalPerson {
 
 	private static final long serialVersionUID = -2752532386208736142L;
@@ -80,10 +80,15 @@ public class Employee extends NaturalPerson {
 		this.employer.addEmployee(this);
 		
 	}
+	
+	@Override
+	public String getDiscriminatorDesc() {
+		return "#{label.employee}";
+	}
 
 	@Override
 	public String toString() {
-		return "[#{label.employee}] " + (type != null ? type.getName() + ", " : "")
+		return (type != null ? type.getName() + ", " : "")
 				+ (employer != null ? employer.getName() + ", " : "")
 				+ (getName() != null ?  getName() : "");
 	}

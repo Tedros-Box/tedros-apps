@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
+import org.tedros.person.model.NaturalPerson;
+
 
 /**
  * @author Davis Gordon
@@ -16,11 +18,18 @@ import org.tedros.person.domain.DomainTables;
  */
 @Entity
 @Table(name = DomainTables.customer, schema = DomainSchema.schema)
-@DiscriminatorValue("C")
+@DiscriminatorValue("CSTMR")
 public class Customer extends NaturalPerson {
 
-	private static final long serialVersionUID = -2752532386208736142L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4307441287541207752L;
 
-	private String preference;
+
+	@Override
+	public String getDiscriminatorDesc() {
+		return "#{label.customer}";
+	}
 
 }
