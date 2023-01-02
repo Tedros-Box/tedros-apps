@@ -28,7 +28,7 @@ import org.tedros.person.domain.DomainTables;
  */
 @Entity
 @Table(name = DomainTables.legal_person, schema = DomainSchema.schema)
-@DiscriminatorValue("L")
+@DiscriminatorValue("LGL_PRSN")
 public class LegalPerson extends Person {
 
 	private static final long serialVersionUID = 2331186566521960594L;
@@ -107,8 +107,13 @@ public class LegalPerson extends Person {
 	}
 
 	@Override
+	public String getDiscriminatorDesc() {
+		return "#{label.legal.person}";
+	}
+
+	@Override
 	public String toString() {
-		return (getName() != null ? "[#{label.legal.person}] "+ getName() : "");
+		return (getName() != null ? getName() : "");
 	}
 	
 	

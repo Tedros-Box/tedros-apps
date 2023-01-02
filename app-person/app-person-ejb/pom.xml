@@ -30,10 +30,18 @@
 	
 	<!-- DEPENDENCIES -->
     <dependencies>
+    
 	  	<dependency>
 	  		<groupId>org.tedros</groupId>
 	  		<artifactId>app-person-ejb-client</artifactId>
 	  		<version>8-2.0.0</version>
+	  		<scope>compile</scope>
+	  	</dependency>
+	  	
+	  	<dependency>
+	  		<groupId>org.tedros</groupId>
+	  		<artifactId>app-env-model</artifactId>
+	  		<version>8-1.0</version>
 	  		<scope>compile</scope>
 	  	</dependency>
 	  	

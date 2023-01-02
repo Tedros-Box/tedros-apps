@@ -26,7 +26,7 @@ import org.tedros.person.domain.Sex;
  */
 @Entity
 @Table(name = DomainTables.natural_person, schema = DomainSchema.schema)
-@DiscriminatorValue("N")
+@DiscriminatorValue("NTRL_PRSN")
 public class NaturalPerson extends Person {
 
 	private static final long serialVersionUID = -1790917959813402388L;
@@ -83,8 +83,13 @@ public class NaturalPerson extends Person {
 	}
 
 	@Override
+	public String getDiscriminatorDesc() {
+		return "#{label.natural.person}";
+	}
+
+	@Override
 	public String toString() {
-		return (getName() != null ? "[#{label.natural.person}] "+getName() + " " : "")
+		return (getName() != null ? getName() + " " : "")
 				+ (lastName != null ? lastName : "") ;
 	}
 

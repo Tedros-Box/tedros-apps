@@ -13,6 +13,7 @@ public interface DomainApp {
 	static final String VIEW = "VIEW";
 	static final String MODULE = "MODULE";
 	static final String FORM = "FORM";
+	static final String CUSTOMER = "CUSTOMER";
 	static final String NATURAL_PERSON = "NATURAL_PERSON";
 	static final String LEGAL_PERSON = "LEGAL_PERSON";
 	static final String TYPE = "TYPE";
@@ -22,6 +23,10 @@ public interface DomainApp {
 	static final String SEP = SEPARATOR;
 	
 	static final String MNEMONIC = "TPERSON";
+	
+	static final String CUSTOMER_MODULE_ID = MNEMONIC + SEP + CUSTOMER + SEP + MODULE;
+	static final String CUSTOMER_FORM_ID = MNEMONIC + SEP + CUSTOMER + SEP + FORM;
+	static final String CUSTOMER_VIEW_ID = MNEMONIC + SEP + CUSTOMER + SEP + VIEW;
 
 	static final String NATURAL_PERSON_FORM_ID = MNEMONIC + SEP + NATURAL_PERSON + SEP + FORM;
 	static final String NATURAL_PERSON_VIEW_ID = MNEMONIC + SEP + NATURAL_PERSON + SEP + VIEW;

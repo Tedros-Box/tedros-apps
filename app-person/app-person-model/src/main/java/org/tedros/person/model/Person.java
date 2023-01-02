@@ -19,14 +19,17 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.tedros.common.model.TFileEntity;
 import org.tedros.docs.model.Document;
 import org.tedros.extension.model.Contact;
 import org.tedros.location.model.Address;
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
+import org.tedros.server.entity.ITDiscriminable;
 import org.tedros.server.entity.TReceptiveEntity;
 
 /**
@@ -36,13 +39,13 @@ import org.tedros.server.entity.TReceptiveEntity;
 @Entity
 @Table(name = DomainTables.person, schema = DomainSchema.schema)
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="DTYPE", discriminatorType=DiscriminatorType.STRING, length=1)
+@DiscriminatorColumn(name="DTYPE", discriminatorType=DiscriminatorType.STRING, length=10)
 @DiscriminatorValue("P")
-public class Person extends TReceptiveEntity {
+public class Person extends TReceptiveEntity implements ITDiscriminable{
 
 	private static final long serialVersionUID = -1790917959813402388L;
 
-	@Column(length=1)
+	@Column(length=10)
 	private String dType;
 	
 	@Column(length=120, nullable = false)
@@ -53,6 +56,10 @@ public class Person extends TReceptiveEntity {
 	
 	@Column(length=2000)
 	private String observation;
+	
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="image_id")
+	private TFileEntity image;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="address_id")
@@ -85,7 +92,6 @@ public class Person extends TReceptiveEntity {
 	uniqueConstraints=@UniqueConstraint(name="PersonDocumentUK", 
 	columnNames = { "person_id","doc_id"}))
 	private Set<Document> documents;
-	
 	
 	public String getName() {
 		return name;
@@ -162,6 +168,25 @@ public class Person extends TReceptiveEntity {
 
 	public void setEvents(Set<PersonEvent> events) {
 		this.events = events;
+	}
+
+	/**
+	 * @return the image
+	 */
+	public TFileEntity getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(TFileEntity image) {
+		this.image = image;
+	}
+
+	@Override
+	public String getDiscriminatorDesc() {
+		return "";
 	}
 	
 }

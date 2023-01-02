@@ -12,6 +12,7 @@
 		<class>org.tedros.common.model.TByteEntity</class>
 		<class>org.tedros.person.model.Person</class>
 		<class>org.tedros.person.model.PersonEvent</class>
+ 		<class>org.tedros.person.model.Customer</class> 
 		<class>org.tedros.person.model.NaturalPerson</class>
 		<class>org.tedros.person.model.LegalPerson</class>
 		<class>org.tedros.person.model.Employee</class>
