@@ -47,7 +47,6 @@ import javafx.beans.property.SimpleLongProperty;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class CustomerMV extends NaturalPersonMV<Customer> {
 
-
 	@TTabPane(tabs = { 
 		@TTab( text = TUsualKey.MAIN_DATA,
 			content = @TContent(detailForm=@TDetailForm(fields={"lastName","sex", "address"}))),

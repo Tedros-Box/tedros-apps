@@ -16,8 +16,12 @@ import org.tedros.docs.module.DocumentModule;
  * */
 @TApplication(name="#{app.docs}", universalUniqueIdentifier=TConstant.UUI,
 module = {	
-			@TModule(type=DocumentModule.class, name="#{menu.docs}", menu="#{module.docs}",
-					description="#{module.docs.desc}")
+			@TModule(type=DocumentModule.class, 
+					name="#{menu.docs}", 
+					menu="#{module.docs}",
+					description="#{module.docs.desc}", 
+					icon=TConstant.ICONS_FOLDER+"docs.png", 
+					menuIcon=TConstant.ICONS_FOLDER+"docs_menu.png")
 
 }, packageName = "org.tedros.docs")
 @TResourceBundle(resourceName={"TDocsLang"})
