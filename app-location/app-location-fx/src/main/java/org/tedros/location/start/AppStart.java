@@ -23,16 +23,24 @@ import org.tedros.location.resource.AppResource;
 module = {	
 	@TModule(type=PlaceModule.class, name=LocatKey.MENU_PLACE, 
 		menu=LocatKey.MODULE_ADMINISTRATIVE,
-		description=LocatKey.MENU_PLACE_POPOVER),
+		description=LocatKey.MENU_PLACE_POPOVER, 
+		icon=TConstant.ICONS_FOLDER+"places.png", 
+		menuIcon=TConstant.ICONS_FOLDER+"places_menu.png"),
 	@TModule(type=AdminAreaModule.class, name=LocatKey.MENU_ADMIN_AREA, 
 		menu=LocatKey.MODULE_ADMINISTRATIVE,
-		description=LocatKey.MENU_ADMIN_AREA_POPOVER),
+		description=LocatKey.MENU_ADMIN_AREA_POPOVER, 
+		icon=TConstant.ICONS_FOLDER+"states.png", 
+		menuIcon=TConstant.ICONS_FOLDER+"states_menu.png"),
 	@TModule(type=CityModule.class, name=LocatKey.MENU_CITY,
 		menu=LocatKey.MODULE_ADMINISTRATIVE, 
-		description=LocatKey.MENU_CITY_POPOVER),
+		description=LocatKey.MENU_CITY_POPOVER, 
+		icon=TConstant.ICONS_FOLDER+"cities.png", 
+		menuIcon=TConstant.ICONS_FOLDER+"cities_menu.png"),
 	@TModule(type=CountryModule.class, name=LocatKey.MENU_COUNTRY, 
 		menu=LocatKey.MODULE_ADMINISTRATIVE,
-		description=LocatKey.MENU_COUNTRY_POPOVER)
+		description=LocatKey.MENU_COUNTRY_POPOVER, 
+		icon=TConstant.ICONS_FOLDER+"countries.png",
+		menuIcon=TConstant.ICONS_FOLDER+"countries_menu.png")
 }, packageName = "org.tedros.location")
 @TResourceBundle(resourceName={"AppLocationLang"})
 @TSecurity(id=DomainApp.MNEMONIC, appName = LocatKey.APP_LOCATION_NAME, 
