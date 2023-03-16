@@ -21,11 +21,7 @@ import org.tedros.person.model.NaturalPerson;
 @DiscriminatorValue("CSTMR")
 public class Customer extends NaturalPerson {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4307441287541207752L;
-
 
 	@Override
 	public String getDiscriminatorDesc() {
