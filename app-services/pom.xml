@@ -21,9 +21,9 @@
 		<app.docs>8-2.0.0</app.docs>
 		<app.location>8-2.0.0</app.location>
 		<app.person>8-2.0.0</app.person>
-		<tedros.fx>8-4.1.0</tedros.fx>
-		<app.settings>8-4.1.0</app.settings>
-		<tedros.jee>8-4.1.0</tedros.jee>
+		<tedros.fx>8-5.1.0</tedros.fx>
+		<app.settings>8-5.1.0</app.settings>
+		<tedros.jee>8-5.1.0</tedros.jee>
 		<javafx.version>1.8.0_261</javafx.version>
 		<java.version>1.8</java.version>
 		<maven.compiler.target>1.8</maven.compiler.target>
