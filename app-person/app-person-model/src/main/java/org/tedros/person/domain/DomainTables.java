@@ -13,7 +13,11 @@ public interface DomainTables {
 	final static String staff = "staff";
 	final static String staff_type = "staff_type";
 	final static String employee = "employee";
+	final static String voluntary = "voluntary";
 	final static String customer = "customer";
+	final static String philanthrope = "philanthrope";
+	final static String client_company = "client_company";
+	final static String member = "member";
 	final static String person_event = "person_event";
 	
 	

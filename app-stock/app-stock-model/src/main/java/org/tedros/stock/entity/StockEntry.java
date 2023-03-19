@@ -39,8 +39,9 @@ public class StockEntry extends TVersionEntity implements Stockable {
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-	
-	@Column(nullable = false)
+
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="entrytype_id", nullable=true)
 	private EntryType type;
 	
 	@ManyToOne(fetch=FetchType.EAGER)

@@ -25,6 +25,7 @@
 	
   	<!-- PROPERTIES -->
 	<properties>
+		<app.stock>8-2.0.0</app.stock>
 		<app.ext>8-2.0.0</app.ext>
 		<app.docs>8-2.0.0</app.docs>
 		<app.location>8-2.0.0</app.location>

@@ -20,6 +20,12 @@
 	</dependency>
 	<dependency>
 	    <groupId>org.tedros</groupId>
+	    <artifactId>app-stock-ejb-ear</artifactId>
+	    <type>ear</type>
+	    <version>${app.stock}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.tedros</groupId>
 	    <artifactId>app-chat-ejb-ear</artifactId>
 	    <type>ear</type>
 	    <version>${tedros.jee}</version>
@@ -174,7 +180,7 @@
 		  <configuration>
 		    <container>
 		      <containerId>tomee7x</containerId>
-		      <timeout>180000</timeout>
+		      <timeout>360000</timeout>
 		      <zipUrlInstaller>
 		        <url>https://repo.maven.apache.org/maven2/org/apache/tomee/apache-tomee/${tomee.version}/apache-tomee-${tomee.version}-webprofile.zip</url>
 		      </zipUrlInstaller>
@@ -309,6 +315,12 @@
 		        <groupId>org.tedros</groupId>
 		        <artifactId>app-chat-ejb-ear</artifactId>
 		        <type>ear</type>
+		      </deployable>
+		     
+		     <deployable>
+		        <groupId>org.tedros</groupId>
+		        <artifactId>app-stock-ejb-ear</artifactId>
+		      	<type>ear</type>
 		      </deployable>
 		     
 		     <deployable>

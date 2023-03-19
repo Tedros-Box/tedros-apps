@@ -38,10 +38,6 @@ import org.tedros.stock.domain.DomainTables;
 uniqueConstraints= {@UniqueConstraint(name="CostCenterCodeUK", columnNames = { "code" })} )
 public class CostCenter extends TVersionEntity {
 
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4019290948851607499L;
 
 	@Column(length=60)
@@ -65,7 +61,7 @@ public class CostCenter extends TVersionEntity {
 	private Date closingDate;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="address_id")
+	@JoinColumn(name="person_id")
 	private NaturalPerson responsable;
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)

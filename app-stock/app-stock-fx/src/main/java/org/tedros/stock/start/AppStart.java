@@ -9,6 +9,7 @@ import org.tedros.core.annotation.security.TSecurity;
 
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
+import org.tedros.stock.module.costcenter.CostCenterModule;
 import org.tedros.stock.module.products.ProductModule;
 
 /**
@@ -16,17 +17,21 @@ import org.tedros.stock.module.products.ProductModule;
  * 
  * @author Davis Dun
  * */
-@TApplication(name=STCKKey.APP_MY_APP, 
+@TApplication(name=STCKKey.APP_STOCK, 
 	module = {	
 		@TModule(type=ProductModule.class, 
-			name=STCKKey.MODULE_MY_APP, 
-			menu=STCKKey.MENU_MY_APP, 
-			description=STCKKey.MODULE_DESC_MY_APP)
+			name=STCKKey.MODULE_PRODUCTS, 
+			menu=STCKKey.MENU_STOCK, 
+			description=STCKKey.MODULE_DESC_PRODUCTS),
+		@TModule(type=CostCenterModule.class, 
+			name=STCKKey.MODULE_COST_CENTER, 
+			menu=STCKKey.MENU_STOCK, 
+			description=STCKKey.MODULE_DESC_COST_CENTER)
 	}, packageName = "org.tedros.stock", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"STCK"})
 @TSecurity(id=DomainApp.MNEMONIC, 
-	appName = STCKKey.APP_MY_APP, 
+	appName = STCKKey.APP_STOCK, 
 	allowedAccesses=TAuthorizationType.APP_ACCESS)
 public class AppStart implements ITApplication {
 

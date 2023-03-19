@@ -15,9 +15,21 @@ package org.tedros.stock;
  */
 public interface STCKKey {
 
-	static final String APP_MY_APP = "#{app.app_stock}";
-	static final String MENU_MY_APP = "#{menu.app_stock}";
-	static final String MODULE_DESC_MY_APP = "#{module.desc.app_stock}";
-	static final String MODULE_MY_APP = "#{module.app_stock}";
-	static final String MY_APP_MY_VIEW = "#{app_stock.my.view}";
+	static final String APP_STOCK = "#{app.stock}";
+	static final String CLOSING_DATE = "#{label.closing.date}";
+	static final String MEASURE = "#{label.measure}";
+	static final String OPENING_DATE = "#{label.opening.date}";
+	static final String RESPONSABLE = "#{label.responsable}";
+	static final String SIZE = "#{label.size}";
+	static final String TRADEMARK = "#{label.trademark}";
+	static final String UNIT_MEASURE = "#{label.unit.measure}";
+	static final String WEIGHT = "#{label.weight}";
+	static final String MENU_STOCK = "#{menu.stock}";
+	static final String MODULE_COST_CENTER = "#{module.cost.center}";
+	static final String MODULE_DESC_COST_CENTER = "#{module.desc.cost.center}";
+	static final String MODULE_DESC_PRODUCTS = "#{module.desc.products}";
+	static final String MODULE_PRODUCTS = "#{module.products}";
+	static final String TOOLTIP_SIZE = "#{tooltip.size}";
+	static final String VIEW_COST_CENTER = "#{view.cost.center}";
+	static final String VIEW_PRODUCT = "#{view.product}";
 }
