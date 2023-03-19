@@ -15,7 +15,6 @@ import org.tedros.ejb.controller.IPlaceController;
 import org.tedros.ejb.controller.IPlaceTypeController;
 import org.tedros.extension.contact.model.ContactMV;
 import org.tedros.extension.model.Contact;
-import org.tedros.extension.start.TConstant;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
@@ -52,6 +51,7 @@ import org.tedros.location.model.Address;
 import org.tedros.location.model.Place;
 import org.tedros.location.model.PlaceType;
 import org.tedros.location.module.address.model.AddressMV;
+import org.tedros.location.start.TConstant;
 import org.tedros.server.model.ITFileBaseModel;
 
 import javafx.beans.property.SimpleLongProperty;

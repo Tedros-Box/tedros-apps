@@ -40,7 +40,9 @@ public class StockOut extends TVersionEntity implements Stockable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
-	@Column(nullable = false)
+
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="outtype_id", nullable=true)
 	private OutType type;
 	
 	@ManyToOne(fetch=FetchType.EAGER)

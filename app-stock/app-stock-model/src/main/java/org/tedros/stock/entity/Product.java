@@ -5,8 +5,10 @@ package org.tedros.stock.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -70,7 +72,7 @@ public class Product extends TVersionEntity {
 	@Column
 	private Double weight;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name=DomainTables.product_images, schema=DomainSchema.schema, 
 	uniqueConstraints=@UniqueConstraint(columnNames = { "prod_id", "file_id" }),
 	joinColumns=@JoinColumn(name="prod_id"), inverseJoinColumns=@JoinColumn(name="file_id"))
