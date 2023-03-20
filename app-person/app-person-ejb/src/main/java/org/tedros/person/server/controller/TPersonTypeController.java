@@ -9,8 +9,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import org.tedros.person.domain.DomainApp;
-import org.tedros.person.ejb.controller.IPersonController;
-import org.tedros.person.model.Person;
+import org.tedros.person.ejb.controller.IPersonTypeController;
+import org.tedros.person.model.PersonType;
 import org.tedros.person.server.base.service.TPersonService;
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.ejb.controller.TSecureEjbController;
@@ -26,28 +26,27 @@ import org.tedros.server.service.ITEjbService;
  *
  */
 @TSecurityInterceptor
-@Stateless(name="IPersonController")
+@Stateless(name="IPersonTypeController")
 @TBeanSecurity({
-	@TBeanPolicie(id = DomainApp.CUSTOMER_FORM_ID, 
+	@TBeanPolicie(id = DomainApp.PERSON_TYPE_FORM_ID, 
 	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
-	@TBeanPolicie(id = DomainApp.EMPLOYEE_FORM_ID, 
+	@TBeanPolicie(id = DomainApp.STAFF_TYPE_FORM_ID, 
 	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
-	@TBeanPolicie(id = DomainApp.LEGAL_PERSON_FORM_ID, 
-	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
-	@TBeanPolicie(id = DomainApp.NATURAL_PERSON_FORM_ID, 
+	@TBeanPolicie(id = DomainApp.LEGAL_TYPE_FORM_ID, 
 	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })
 	})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class TPersonController extends TSecureEjbController<Person> implements IPersonController, ITSecurity  {
+public class TPersonTypeController extends TSecureEjbController<PersonType> 
+implements IPersonTypeController, ITSecurity  {
 
 	@EJB
-	private TPersonService<Person> serv;
+	private TPersonService<PersonType> serv;
 	
 	@EJB
 	private ITSecurityController securityController;
 	
 	@Override
-	public ITEjbService<Person> getService() {
+	public ITEjbService<PersonType> getService() {
 		return serv;
 	}
 	

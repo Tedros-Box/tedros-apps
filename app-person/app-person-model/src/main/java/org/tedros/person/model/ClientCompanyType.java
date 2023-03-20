@@ -15,14 +15,14 @@ import org.tedros.person.domain.DomainTables;
  *
  */
 @Entity
-@Table(name = DomainTables.legal_type, schema = DomainSchema.schema)
-@DiscriminatorValue("LGLPRSNTYP")
-public class LegalType extends PersonType {
+@Table(name = DomainTables.clicompany_type, schema = DomainSchema.schema)
+@DiscriminatorValue("CLNTCMPNYTYP")
+public class ClientCompanyType extends PersonType {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1455608288839677755L;
+	private static final long serialVersionUID = -5001557168053002383L;
 
 
 }

@@ -26,9 +26,9 @@ import org.tedros.server.service.ITEjbService;
  *
  */
 @TSecurityInterceptor
-@Stateless(name="IStaffTypeController")
+@Stateless(name="IStaffTypeController")/*
 @TBeanSecurity({@TBeanPolicie(id = DomainApp.STAFF_TYPE_FORM_ID, 
-policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
+policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})*/
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 public class TStaffTypeController extends TSecureEjbController<StaffType> implements IStaffTypeController, ITSecurity  {
 

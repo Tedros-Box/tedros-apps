@@ -40,13 +40,6 @@
 	  	
 	  	<dependency>
 	  		<groupId>org.tedros</groupId>
-	  		<artifactId>app-env-model</artifactId>
-	  		<version>8-1.0</version>
-	  		<scope>compile</scope>
-	  	</dependency>
-	  	
-	  	<dependency>
-	  		<groupId>org.tedros</groupId>
 	  		<artifactId>tedros-server-api</artifactId>
 	  		<version>${tedros.jee}</version>
 	  		<scope>compile</scope>

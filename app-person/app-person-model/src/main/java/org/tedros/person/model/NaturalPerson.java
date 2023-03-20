@@ -100,6 +100,46 @@ public class NaturalPerson extends Person {
 	public void setCivilStatus(CivilStatus civilStatus) {
 		this.civilStatus = civilStatus;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
+		result = prime * result + ((civilStatus == null) ? 0 : civilStatus.hashCode());
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof NaturalPerson))
+			return false;
+		if (super.equals(obj))
+			return true;
+		NaturalPerson other = (NaturalPerson) obj;
+		if (birthDate == null) {
+			if (other.birthDate != null)
+				return false;
+		} else if (!birthDate.equals(other.birthDate))
+			return false;
+		if (civilStatus != other.civilStatus)
+			return false;
+		if (gender != other.gender)
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (sex != other.sex)
+			return false;
+		return true;
+	}
 	
 	
 }

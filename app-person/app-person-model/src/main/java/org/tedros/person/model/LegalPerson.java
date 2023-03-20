@@ -12,8 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -35,10 +33,6 @@ public class LegalPerson extends Person {
 
 	@Column(length=120)
 	private String otherName;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="legal_type_id")
-	private LegalType type;
 	
 	@Column()
 	@Temporal(TemporalType.DATE)
@@ -73,15 +67,7 @@ public class LegalPerson extends Person {
 	public void setOtherName(String otherName) {
 		this.otherName = otherName;
 	}
-
-	public LegalType getType() {
-		return type;
-	}
-
-	public void setType(LegalType type) {
-		this.type = type;
-	}
-
+	
 	public Set<Employee> getStaff() {
 		return staff;
 	}
@@ -114,6 +100,49 @@ public class LegalPerson extends Person {
 	@Override
 	public String toString() {
 		return (getName() != null ? getName() : "");
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((endActivities == null) ? 0 : endActivities.hashCode());
+		result = prime * result + ((otherName == null) ? 0 : otherName.hashCode());
+		result = prime * result + ((staff == null) ? 0 : staff.hashCode());
+		result = prime * result + ((startActivities == null) ? 0 : startActivities.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof LegalPerson))
+			return false;
+		if (super.equals(obj))
+			return true;
+		LegalPerson other = (LegalPerson) obj;
+		if (endActivities == null) {
+			if (other.endActivities != null)
+				return false;
+		} else if (!endActivities.equals(other.endActivities))
+			return false;
+		if (otherName == null) {
+			if (other.otherName != null)
+				return false;
+		} else if (!otherName.equals(other.otherName))
+			return false;
+		if (staff == null) {
+			if (other.staff != null)
+				return false;
+		} else if (!staff.equals(other.staff))
+			return false;
+		if (startActivities == null) {
+			if (other.startActivities != null)
+				return false;
+		} else if (!startActivities.equals(other.startActivities))
+			return false;
+		return true;
 	}
 	
 	
