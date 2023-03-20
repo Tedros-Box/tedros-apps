@@ -17,13 +17,10 @@ import org.tedros.person.model.NaturalPerson;
  *
  */
 @Entity
-@Table(name = DomainTables.member, schema = DomainSchema.schema)
+@Table(name = DomainTables.voluntary, schema = DomainSchema.schema)
 @DiscriminatorValue("VLNTRY")
 public final class Voluntary extends NaturalPerson {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8922445186954429983L;
 
 	@Override
