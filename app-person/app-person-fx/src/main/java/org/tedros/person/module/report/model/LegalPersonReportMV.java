@@ -43,7 +43,7 @@ import org.tedros.fx.presenter.report.behavior.TDataSetReportBehavior;
 import org.tedros.fx.presenter.report.decorator.TDataSetReportDecorator;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
-import org.tedros.person.ejb.controller.ILegalTypeController;
+import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.LegalType;
 import org.tedros.person.module.legal.model.LegalTypeMV;
 import org.tedros.person.module.report.action.SearchAction;
@@ -103,7 +103,7 @@ public class LegalPersonReportMV extends TModelView<LegalPersonReportModel>{
 	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = ILegalTypeController.JNDI_NAME, 
+	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
 	optionModelViewClass=LegalTypeMV.class,
 	entityClass=LegalType.class))
 	private SimpleObjectProperty<LegalType> type;

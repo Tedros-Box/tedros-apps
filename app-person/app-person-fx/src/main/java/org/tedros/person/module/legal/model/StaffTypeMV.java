@@ -10,6 +10,10 @@ import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
@@ -22,10 +26,10 @@ import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonTypeController;
-import org.tedros.person.ejb.controller.IStaffTypeController;
 import org.tedros.person.model.StaffType;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
@@ -47,24 +51,27 @@ import javafx.beans.property.SimpleStringProperty;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class StaffTypeMV extends TEntityModelView<StaffType> {
 	
-	@TLabel(text=TUsualKey.NAME)
-	@TTextField(maxLength=120, required = true, 
+	@TLabel(text=TUsualKey.CODE)
+	@TTextField(maxLength=20,
 	node=@TNode(requestFocus=true, parse = true) )
+	@THBox(	pane=@TPane(children={"code", "name"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="code", priority=Priority.NEVER), 
+			@TPriority(field="name", priority=Priority.ALWAYS)}))
+	private SimpleStringProperty code;
+	
+	@TLabel(text=TUsualKey.NAME)
+	@TTextField(maxLength=60, required = true)
 	private SimpleStringProperty name;
 	
 	@TLabel(text=TUsualKey.DESCRIPTION)
-	@TTextAreaField(maxLength=1024, wrapText=true, prefRowCount=4)
+	@TTextAreaField(maxLength=250, wrapText=true, prefRowCount=4)
 	private SimpleStringProperty description;
 	
 	public StaffTypeMV(StaffType entity) {
 		super(entity);
+		super.formatToString("%s %s", code, name);
 	}
 	
-	@Override
-	public SimpleStringProperty toStringProperty() {
-		return name;
-	}
-
 	public SimpleStringProperty getName() {
 		return name;
 	}
@@ -79,6 +86,20 @@ public class StaffTypeMV extends TEntityModelView<StaffType> {
 
 	public void setDescription(SimpleStringProperty description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the code
+	 */
+	public SimpleStringProperty getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(SimpleStringProperty code) {
+		this.code = code;
 	}
 
 }

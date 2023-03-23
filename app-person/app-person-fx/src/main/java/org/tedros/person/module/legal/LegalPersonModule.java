@@ -16,6 +16,7 @@ import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.LegalPerson;
+import org.tedros.person.module.category.model.CategoryMV;
 import org.tedros.person.module.legal.model.EmployeeMV;
 import org.tedros.person.module.legal.model.LegalPersonMV;
 import org.tedros.person.module.legal.model.LegalTypeMV;
@@ -43,6 +44,7 @@ public class LegalPersonModule extends TModule {
 	@Override
 	public void tStart() {
 		super.tShowView(new TGroupView<TGroupPresenter>(this, PersonKeys.VIEW_LEGAL_PERSON, 
+				new TViewItem(TDynaGroupView.class, CategoryMV.class, "Category"),
 				new TViewItem(TDynaGroupView.class, LegalPersonMV.class, PersonKeys.VIEW_LEGAL_PERSON),
 				new TViewItem(TDynaGroupView.class, LegalTypeMV.class, PersonKeys.VIEW_LEGAL_TYPE), 
 				new TViewItem(TDynaGroupView.class, StaffTypeMV.class, PersonKeys.VIEW_STAFF_TYPE), 

@@ -8,8 +8,11 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
@@ -34,11 +37,15 @@ public class PersonCategory extends TVersionEntity {
 	@Column(length=250)
 	private String description;
 	
-	@OneToMany(mappedBy="category", 
-			fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name=DomainTables.personcateg_person, 
+	schema=DomainSchema.schema,
+	joinColumns=@JoinColumn(name="categ_id"), 
+	inverseJoinColumns=@JoinColumn(name="person_id"),
+	uniqueConstraints=@UniqueConstraint(name="PersonCategoriestUK", 
+	columnNames = { "person_id","categ_id"}))
 	private Set<Person> persons;
 	
-
 	public String getName() {
 		return name;
 	}
