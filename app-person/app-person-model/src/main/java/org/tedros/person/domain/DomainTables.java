@@ -4,6 +4,7 @@ public interface DomainTables {
 
 	final static String person= "person";
 	final static String person_category= "person_category";
+	final static String personcateg_person= "personcateg_person";
 	final static String person_type= "person_type";
 	final static String person_status= "person_status";
 	final static String customer_type= "customer_type";

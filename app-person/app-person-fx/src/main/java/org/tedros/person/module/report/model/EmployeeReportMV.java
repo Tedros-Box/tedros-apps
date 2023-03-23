@@ -50,7 +50,7 @@ import org.tedros.person.domain.DomainApp;
 import org.tedros.person.domain.Gender;
 import org.tedros.person.domain.Sex;
 import org.tedros.person.ejb.controller.ILegalPersonController;
-import org.tedros.person.ejb.controller.IStaffTypeController;
+import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.StaffType;
 import org.tedros.person.module.legal.model.LegalPersonMV;
@@ -135,7 +135,7 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 
 	@TLabel(text=TUsualKey.OCCUPATION)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IStaffTypeController.JNDI_NAME, 
+	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
 	optionModelViewClass=StaffTypeMV.class,
 	entityClass=StaffType.class))
 	@THBox(	pane=@TPane(children={"type", "employer"}), spacing=10, fillHeight=true,

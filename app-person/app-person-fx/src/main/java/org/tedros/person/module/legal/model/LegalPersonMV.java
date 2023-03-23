@@ -43,7 +43,7 @@ import org.tedros.fx.control.tablecell.TShortDateCallback;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.ILegalPersonController;
-import org.tedros.person.ejb.controller.ILegalTypeController;
+import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.LegalType;
@@ -102,10 +102,11 @@ public class LegalPersonMV extends PersonMV<LegalPerson> {
 
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(firstItemText=TUsualKey.SELECT,
-	optionsList=@TOptionsList(serviceName = ILegalTypeController.JNDI_NAME, 
+	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
 	optionModelViewClass=LegalTypeMV.class,
 	entityClass=LegalType.class))
-	@THBox(	pane=@TPane(children={"type", "startActivities", "endActivities"}), spacing=10, fillHeight=true,
+	@THBox(	 spacing=10, fillHeight=true,
+	pane=@TPane(children={"type", "startActivities", "endActivities"}),
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.ALWAYS), 
 			@TPriority(field="startActivities", priority=Priority.ALWAYS), 
 			@TPriority(field="endActivities", priority=Priority.ALWAYS)}))

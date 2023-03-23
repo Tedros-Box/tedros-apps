@@ -10,6 +10,10 @@ import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
@@ -21,10 +25,11 @@ import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
-import org.tedros.person.ejb.controller.ILegalTypeController;
+import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.LegalType;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
@@ -32,9 +37,9 @@ import javafx.beans.property.SimpleStringProperty;
  */
 
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
-@TEjbService(serviceName = ILegalTypeController.JNDI_NAME, model=LegalType.class)
+@TEjbService(serviceName = IPersonTypeController.JNDI_NAME, model=LegalType.class)
 @TListViewPresenter(
-		paginator=@TPaginator(entityClass = LegalType.class, serviceName = ILegalTypeController.JNDI_NAME,
+		paginator=@TPaginator(entityClass = LegalType.class, serviceName = IPersonTypeController.JNDI_NAME,
 		show=true, showSearchField=true, searchFieldName="name", 
 		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
 		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_LEGAL_TYPE,
@@ -46,24 +51,28 @@ import javafx.beans.property.SimpleStringProperty;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class LegalTypeMV extends TEntityModelView<LegalType> {
 	
+	@TLabel(text=TUsualKey.CODE)
+	@TTextField(maxLength=20,
+	node=@TNode(requestFocus=true, parse = true) )
+	@THBox(	pane=@TPane(children={"code", "name"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="code", priority=Priority.NEVER), 
+			@TPriority(field="name", priority=Priority.ALWAYS)}))
+	private SimpleStringProperty code;
+	
 	@TLabel(text=TUsualKey.NAME)
-	@TTextField(maxLength=120, required = true, 
+	@TTextField(maxLength=60, required = true, 
 	node=@TNode(requestFocus=true, parse = true) )
 	private SimpleStringProperty name;
 	
 	@TLabel(text=TUsualKey.DESCRIPTION)
-	@TTextAreaField(maxLength=1024, wrapText=true, prefRowCount=4)
+	@TTextAreaField(maxLength=250, wrapText=true, prefRowCount=4)
 	private SimpleStringProperty description;
 	
 	public LegalTypeMV(LegalType entity) {
 		super(entity);
+		super.formatToString("%s %s", code, name);
 	}
 	
-	@Override
-	public SimpleStringProperty toStringProperty() {
-		return name;
-	}
-
 	public SimpleStringProperty getName() {
 		return name;
 	}
@@ -78,6 +87,20 @@ public class LegalTypeMV extends TEntityModelView<LegalType> {
 
 	public void setDescription(SimpleStringProperty description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the code
+	 */
+	public SimpleStringProperty getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(SimpleStringProperty code) {
+		this.code = code;
 	}
 
 }

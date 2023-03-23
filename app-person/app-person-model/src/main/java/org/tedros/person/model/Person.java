@@ -65,9 +65,8 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 	@JoinColumn(name="status_id")
 	private PersonStatus status;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="category_id")
-	private PersonCategory category;
+	@ManyToMany(fetch=FetchType.EAGER, mappedBy="persons")
+	private Set<PersonCategory> categories;
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="image_id")
@@ -217,12 +216,12 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 		this.status = status;
 	}
 
-	public PersonCategory getCategory() {
-		return category;
+	public Set<PersonCategory> getCategories() {
+		return categories;
 	}
 
-	public void setCategory(PersonCategory category) {
-		this.category = category;
+	public void setCategories(Set<PersonCategory> categories) {
+		this.categories = categories;
 	}
 
 	@Override
@@ -231,7 +230,7 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 		int result = super.hashCode();
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((attributes == null) ? 0 : attributes.hashCode());
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
+		result = prime * result + ((categories == null) ? 0 : categories.hashCode());
 		result = prime * result + ((contacts == null) ? 0 : contacts.hashCode());
 		result = prime * result + ((dType == null) ? 0 : dType.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
@@ -264,10 +263,10 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 				return false;
 		} else if (!attributes.equals(other.attributes))
 			return false;
-		if (category == null) {
-			if (other.category != null)
+		if (categories == null) {
+			if (other.categories != null)
 				return false;
-		} else if (!category.equals(other.category))
+		} else if (!categories.equals(other.categories))
 			return false;
 		if (contacts == null) {
 			if (other.contacts != null)
