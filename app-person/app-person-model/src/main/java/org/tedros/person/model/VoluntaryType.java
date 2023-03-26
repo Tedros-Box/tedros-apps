@@ -17,7 +17,7 @@ import org.tedros.person.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.voluntary_type, schema = DomainSchema.schema)
 @DiscriminatorValue("VLNTRYTYP")
-public class VoluntaryType extends PersonType {
+public class VoluntaryType extends NaturalType {
 
 	/**
 	 * 

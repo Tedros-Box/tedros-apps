@@ -16,9 +16,11 @@ import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.LegalPerson;
-import org.tedros.person.model.LegalTypeMV;
 import org.tedros.person.module.company.model.CompanyMV;
+import org.tedros.person.module.company.model.CompanyStatusMV;
 import org.tedros.person.module.company.model.EmployeeMV;
+import org.tedros.person.module.company.model.EmployeeStatusMV;
+import org.tedros.person.module.company.model.CompanyTypeMV;
 import org.tedros.person.module.company.model.StaffTypeMV;
 import org.tedros.person.module.report.model.EmployeeReportMV;
 import org.tedros.person.module.report.model.LegalPersonReportMV;
@@ -44,9 +46,11 @@ public class LegalPersonModule extends TModule {
 	public void tStart() {
 		super.tShowView(new TGroupView<TGroupPresenter>(this, PersonKeys.VIEW_LEGAL_PERSON, 
 				new TViewItem(TDynaGroupView.class, CompanyMV.class, PersonKeys.VIEW_LEGAL_PERSON),
-				new TViewItem(TDynaGroupView.class, LegalTypeMV.class, PersonKeys.VIEW_LEGAL_TYPE), 
+				new TViewItem(TDynaGroupView.class, CompanyTypeMV.class, PersonKeys.VIEW_LEGAL_TYPE),
+				new TViewItem(TDynaGroupView.class, CompanyStatusMV.class, PersonKeys.VIEW_LEGAL_STATUS), 
+				new TViewItem(TDynaGroupView.class, EmployeeMV.class, PersonKeys.VIEW_EMPLOYEES), 
 				new TViewItem(TDynaGroupView.class, StaffTypeMV.class, PersonKeys.VIEW_STAFF_TYPE), 
-				new TViewItem(TDynaGroupView.class, EmployeeMV.class, PersonKeys.VIEW_EMPLOYEES),
+				new TViewItem(TDynaGroupView.class, EmployeeStatusMV.class, PersonKeys.VIEW_EMPLOYEE_STATUS), 
 				new TViewItem(TDynaGroupView.class, EmployeeReportMV.class, PersonKeys.VIEW_REPORT_EMPLOYEES),
 				new TViewItem(TDynaGroupView.class, LegalPersonReportMV.class, PersonKeys.VIEW_REPORT_LEGAL_PERSON)
 				));

@@ -17,7 +17,7 @@ import org.tedros.person.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.staff_type, schema = DomainSchema.schema)
 @DiscriminatorValue("STFFTYP")
-public class StaffType extends PersonType {
+public class StaffType extends NaturalType {
 
 	private static final long serialVersionUID = 1572494036678538055L;
 

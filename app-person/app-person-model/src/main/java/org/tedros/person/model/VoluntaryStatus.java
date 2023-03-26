@@ -17,7 +17,7 @@ import org.tedros.person.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.voluntary_status, schema = DomainSchema.schema)
 @DiscriminatorValue("VLNTRYSTTS")
-public class VoluntaryStatus extends PersonStatus {
+public class VoluntaryStatus extends NaturalStatus {
 
 	/**
 	 * 

@@ -17,7 +17,7 @@ import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonTypeController;
-import org.tedros.person.model.PersonTypeMV;
+import org.tedros.person.model.NaturalTypeMV;
 import org.tedros.person.model.StaffType;
 
 /**
@@ -36,9 +36,9 @@ import org.tedros.person.model.StaffType;
 	behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.STAFF_TYPE_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_LEGAL_PERSON, viewName = PersonKeys.VIEW_STAFF_TYPE,
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
+	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
-public class StaffTypeMV extends PersonTypeMV<StaffType> {
+public class StaffTypeMV extends NaturalTypeMV<StaffType> {
 	
 	public StaffTypeMV(StaffType entity) {
 		super(entity);

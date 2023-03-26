@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.person.module.customer.model;
+package org.tedros.person.module.company.model;
 
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
@@ -17,7 +17,7 @@ import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonTypeController;
-import org.tedros.person.model.ClientCompanyType;
+import org.tedros.person.model.LegalType;
 import org.tedros.person.model.LegalTypeMV;
 
 /**
@@ -25,23 +25,22 @@ import org.tedros.person.model.LegalTypeMV;
  *
  */
 
-@TForm(name = "", showBreadcrumBar=false, scroll=false)
-@TEjbService(serviceName = IPersonTypeController.JNDI_NAME, model=ClientCompanyType.class)
+@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TEjbService(serviceName = IPersonTypeController.JNDI_NAME, model=LegalType.class)
 @TListViewPresenter(
-		paginator=@TPaginator(entityClass = ClientCompanyType.class, serviceName = IPersonTypeController.JNDI_NAME,
+		paginator=@TPaginator(entityClass = LegalType.class, serviceName = IPersonTypeController.JNDI_NAME,
 		show=true, showSearchField=true, searchFieldName="name", 
 		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
-		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_CLIENT_COMPANY_TYPE,
+		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_LEGAL_TYPE,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false)))
-@TSecurity(id=DomainApp.CLIENT_COMPANY_TYPE_FORM_ID, appName = PersonKeys.APP_PERSON,
-	moduleName = PersonKeys.MODULE_CUSTOMER, viewName = PersonKeys.VIEW_CLIENT_COMPANY_TYPE,
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT,
+@TSecurity(id=DomainApp.LEGAL_TYPE_FORM_ID, appName = PersonKeys.APP_PERSON,
+	moduleName = PersonKeys.MODULE_LEGAL_PERSON, viewName = PersonKeys.VIEW_LEGAL_TYPE,
+	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
-public class ClientCompanyTypeMV extends LegalTypeMV<ClientCompanyType> {
-
-	public ClientCompanyTypeMV(ClientCompanyType entity) {
+public class CompanyTypeMV extends LegalTypeMV<LegalType> {
+	
+	public CompanyTypeMV(LegalType entity) {
 		super(entity);
 	}
-
 }

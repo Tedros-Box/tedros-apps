@@ -18,7 +18,7 @@ import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.CustomerType;
-import org.tedros.person.model.PersonTypeMV;
+import org.tedros.person.model.NaturalTypeMV;
 
 /**
  * @author Davis Gordon
@@ -38,7 +38,7 @@ import org.tedros.person.model.PersonTypeMV;
 	moduleName = PersonKeys.MODULE_CUSTOMER, viewName = PersonKeys.VIEW_CUSTOMER_TYPE,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT,
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
-public class CustomerTypeMV extends PersonTypeMV<CustomerType> {
+public class CustomerTypeMV extends NaturalTypeMV<CustomerType> {
 
 	public CustomerTypeMV(CustomerType entity) {
 		super(entity);

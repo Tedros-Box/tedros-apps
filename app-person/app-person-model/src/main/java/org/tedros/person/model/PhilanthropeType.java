@@ -17,7 +17,7 @@ import org.tedros.person.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.philanthrope_type, schema = DomainSchema.schema)
 @DiscriminatorValue("PHLNTHRPTYP")
-public class PhilanthropeType extends PersonType {
+public class PhilanthropeType extends NaturalType {
 
 	/**
 	 * 
