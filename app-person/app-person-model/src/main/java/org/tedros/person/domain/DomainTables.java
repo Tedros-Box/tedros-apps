@@ -10,6 +10,8 @@ public interface DomainTables {
 	final static String customer_type= "customer_type";
 	final static String customer_status= "customer_status";
 	final static String natural_person = "natural_person";
+	final static String natural_type = "natural_type";
+	final static String natural_status = "natural_status";
 	final static String legal_person = "legal_person";
 	final static String legal_type = "legal_type";
 	final static String legal_status = "legal_status";

@@ -17,7 +17,7 @@ import org.tedros.person.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.member_type, schema = DomainSchema.schema)
 @DiscriminatorValue("MMBRTYP")
-public class MemberType extends PersonType {
+public class MemberType extends NaturalType {
 
 	/**
 	 * 

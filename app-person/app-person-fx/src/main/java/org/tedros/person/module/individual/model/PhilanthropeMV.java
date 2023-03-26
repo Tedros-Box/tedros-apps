@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.person.module.customer.model;
+package org.tedros.person.module.individual.model;
 
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
@@ -30,103 +30,90 @@ import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.ejb.controller.IPersonStatusController;
 import org.tedros.person.ejb.controller.IPersonTypeController;
-import org.tedros.person.model.ClientCompany;
-import org.tedros.person.model.ClientCompanyStatus;
-import org.tedros.person.model.ClientCompanyType;
-import org.tedros.person.model.LegalPersonMV;
+import org.tedros.person.model.Philanthrope;
+import org.tedros.person.model.PhilanthropeStatus;
+import org.tedros.person.model.PhilanthropeType;
+import org.tedros.person.model.NaturalPersonMV;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
  *
  */
-
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
-@TEjbService(serviceName = IPersonController.JNDI_NAME, model=ClientCompany.class)
+@TEjbService(serviceName = IPersonController.JNDI_NAME, model=Philanthrope.class)
 @TListViewPresenter(
-	paginator=@TPaginator(entityClass = ClientCompany.class, serviceName = IPersonController.JNDI_NAME,
+		paginator=@TPaginator(entityClass = Philanthrope.class, serviceName = IPersonController.JNDI_NAME,
 		show=true, showSearchField=true, searchFieldName="name", 
-		orderBy = {	@TOption(text = TUsualKey.CORPORATE_NAME , value = "name"),
-				@TOption(text = TUsualKey.TRADE_NAME , value = "otherName")}),
-	presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_CLIENT_COMPANY,
+		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name"),
+					@TOption(text = TUsualKey.LAST_NAME, value = "lastName")}),
+		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_PHILANTHROPE,
 		buildModesRadioButton=false),
-		behavior=@TBehavior(runNewActionAfterSave=false)))
-@TSecurity(id=DomainApp.CLIENT_COMPANY_FORM_ID, appName = PersonKeys.APP_PERSON,
-	moduleName = PersonKeys.MODULE_CUSTOMER, viewName = PersonKeys.VIEW_CLIENT_COMPANY,
+	behavior=@TBehavior(runNewActionAfterSave=false)))
+@TSecurity(id=DomainApp.PHILANTHROPE_FORM_ID, appName = PersonKeys.APP_PERSON,
+	moduleName = PersonKeys.MODULE_NATURAL_PERSON, viewName = PersonKeys.VIEW_PHILANTHROPE,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
-public class ClientCompanyMV extends  LegalPersonMV<ClientCompany> {
+public class PhilanthropeMV extends NaturalPersonMV<Philanthrope> {
 
 	@TTabPane(tabs = { 
-		@TTab(text = TUsualKey.MAIN_DATA,
-			content = @TContent(detailForm=@TDetailForm(fields={"otherName","type", "address"}))),
+		@TTab( text = TUsualKey.MAIN_DATA,
+			content = @TContent(detailForm=@TDetailForm(fields={"lastName","sex", "type", "address"}))),
 		@TTab(text = TUsualKey.DESCRIPTION, 
 			content = @TContent(detailForm=@TDetailForm(fields={"description"}))),
 		@TTab(text = TUsualKey.OBSERVATION, 
 			content = @TContent(detailForm=@TDetailForm(fields={"observation"}))), 
 		@TTab(text = TUsualKey.EVENTS,
-		content = @TContent(detailForm=@TDetailForm(fields={"events"})))
+			content = @TContent(detailForm=@TDetailForm(fields={"events"})))
 	})
 	private SimpleLongProperty id;
-	
+
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
-	optionModelViewClass=ClientCompanyTypeMV.class,
-	entityClass=ClientCompanyType.class))
+	optionModelViewClass=PhilanthropeTypeMV.class,
+	entityClass=PhilanthropeType.class))
 	@THBox(	spacing=10, fillHeight=true,
 			pane=@TPane(children={"type", "status"}), 
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
 			@TPriority(field="status", priority=Priority.NEVER)}))
-	private SimpleObjectProperty<ClientCompanyType> type;
+	private SimpleObjectProperty<PhilanthropeType> type;
 	
 	@TLabel(text=TUsualKey.STATUS)
 	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = IPersonStatusController.JNDI_NAME, 
-	optionModelViewClass=ClientCompanyStatusMV.class,
-	entityClass=ClientCompanyStatus.class))
-	private SimpleObjectProperty<ClientCompanyStatus> status;
+	optionModelViewClass=PhilanthropeStatusMV.class,
+	entityClass=PhilanthropeStatus.class))
+	private SimpleObjectProperty<PhilanthropeStatus> status;
 	
-	public ClientCompanyMV(ClientCompany entity) {
+	public PhilanthropeMV(Philanthrope entity) {
 		super(entity);
 	}
 
-	/**
-	 * @return the id
-	 */
 	public SimpleLongProperty getId() {
 		return id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(SimpleLongProperty id) {
 		this.id = id;
 	}
 
-	@Override
-	public SimpleStringProperty toStringProperty() {
-		return name;
-	}
-
-	public SimpleObjectProperty<ClientCompanyType> getType() {
+	public SimpleObjectProperty<PhilanthropeType> getType() {
 		return type;
 	}
 
-	public void setType(SimpleObjectProperty<ClientCompanyType> type) {
+	public void setType(SimpleObjectProperty<PhilanthropeType> type) {
 		this.type = type;
 	}
 
-	public SimpleObjectProperty<ClientCompanyStatus> getStatus() {
+	public SimpleObjectProperty<PhilanthropeStatus> getStatus() {
 		return status;
 	}
 
-	public void setStatus(SimpleObjectProperty<ClientCompanyStatus> status) {
+	public void setStatus(SimpleObjectProperty<PhilanthropeStatus> status) {
 		this.status = status;
 	}
 

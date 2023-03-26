@@ -32,8 +32,10 @@ import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IEmployeeController;
+import org.tedros.person.ejb.controller.IPersonStatusController;
 import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.Employee;
+import org.tedros.person.model.EmployeeStatus;
 import org.tedros.person.model.FindLegalPersonMV;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.NaturalPersonMV;
@@ -60,7 +62,7 @@ import javafx.scene.layout.Priority;
 	behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.EMPLOYEE_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_LEGAL_PERSON, viewName = PersonKeys.VIEW_EMPLOYEES,
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
+	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class EmployeeMV extends NaturalPersonMV<Employee> {
 
@@ -82,12 +84,20 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 	optionModelViewClass=StaffTypeMV.class,
 	entityClass=StaffType.class))
 	@THBox(	spacing=10, fillHeight=true,
-			pane=@TPane(children={"type", "hiringDate", "resignationDate", "employer"}), 
-	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.ALWAYS), 
-			@TPriority(field="hiringDate", priority=Priority.ALWAYS), 
-			@TPriority(field="resignationDate", priority=Priority.ALWAYS), 
-			@TPriority(field="employer", priority=Priority.ALWAYS)}))
+			pane=@TPane(children={"type", "status", "hiringDate", "resignationDate", "employer"}), 
+	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
+			@TPriority(field="status", priority=Priority.NEVER), 
+			@TPriority(field="hiringDate", priority=Priority.NEVER), 
+			@TPriority(field="resignationDate", priority=Priority.NEVER), 
+			@TPriority(field="employer", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<StaffType> type;
+	
+	@TLabel(text=TUsualKey.STATUS)
+	@TComboBoxField(
+	optionsList=@TOptionsList(serviceName = IPersonStatusController.JNDI_NAME, 
+	optionModelViewClass=EmployeeStatusMV.class,
+	entityClass=EmployeeStatus.class))
+	private SimpleObjectProperty<EmployeeStatus> status;
 	
 	@TLabel(text=TUsualKey.HIRING_DATE)
 	@TDatePickerField
@@ -144,6 +154,14 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 
 	public void setEmployer(SimpleObjectProperty<LegalPerson> employer) {
 		this.employer = employer;
+	}
+
+	public SimpleObjectProperty<EmployeeStatus> getStatus() {
+		return status;
+	}
+
+	public void setStatus(SimpleObjectProperty<EmployeeStatus> status) {
+		this.status = status;
 	}
 
 }

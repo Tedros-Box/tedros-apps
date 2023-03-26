@@ -53,6 +53,8 @@
 		<class>org.tedros.person.model.Voluntary</class>
 		<class>org.tedros.person.model.VoluntaryStatus</class>
 		<class>org.tedros.person.model.VoluntaryType</class>
+		<class>org.tedros.person.model.NaturalType</class>
+		<class>org.tedros.person.model.NaturalStatus</class>
 		
 		<properties>
 		

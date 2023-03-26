@@ -48,6 +48,8 @@ public interface PersonKeys {
 	static final String VIEW_MEMBER_STATUS = "#{view.member.status}";
 	static final String VIEW_MEMBER_TYPE = "#{view.member.type}";
 	static final String VIEW_NATURAL_PERSON = "#{view.natural.person}";
+	static final String VIEW_NATURAL_PERSON_STATUS = "#{view.natural.person.status}";
+	static final String VIEW_NATURAL_PERSON_TYPE = "#{view.natural.person.type}";
 	static final String VIEW_PERSON_CATEGORY = "#{view.person.category}";
 	static final String VIEW_PHILANTHROPE = "#{view.philanthrope}";
 	static final String VIEW_PHILANTHROPE_STATUS = "#{view.philanthrope.status}";

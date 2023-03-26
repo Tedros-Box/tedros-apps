@@ -45,7 +45,7 @@ import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.LegalType;
-import org.tedros.person.model.LegalTypeMV;
+import org.tedros.person.module.company.model.CompanyTypeMV;
 import org.tedros.person.module.report.action.SearchAction;
 import org.tedros.person.module.report.process.LegalPersonReportProcess;
 import org.tedros.person.module.report.table.LegalPersonItemMV;
@@ -104,7 +104,7 @@ public class LegalPersonReportMV extends TModelView<LegalPersonReportModel>{
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
-	optionModelViewClass=LegalTypeMV.class,
+	optionModelViewClass=CompanyTypeMV.class,
 	entityClass=LegalType.class))
 	private SimpleObjectProperty<LegalType> type;
 	

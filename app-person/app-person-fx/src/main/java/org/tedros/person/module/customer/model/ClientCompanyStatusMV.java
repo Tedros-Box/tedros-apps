@@ -18,7 +18,7 @@ import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonStatusController;
 import org.tedros.person.model.ClientCompanyStatus;
-import org.tedros.person.model.PersonStatusMV;
+import org.tedros.person.model.LegalStatusMV;
 
 /**
  * @author Davis Gordon
@@ -38,7 +38,7 @@ import org.tedros.person.model.PersonStatusMV;
 	moduleName = PersonKeys.MODULE_CUSTOMER, viewName = PersonKeys.VIEW_CLIENT_COMPANY_STATUS,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT,
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
-public class ClientCompanyStatusMV extends PersonStatusMV<ClientCompanyStatus> {
+public class ClientCompanyStatusMV extends LegalStatusMV<ClientCompanyStatus> {
 
 	public ClientCompanyStatusMV(ClientCompanyStatus entity) {
 		super(entity);

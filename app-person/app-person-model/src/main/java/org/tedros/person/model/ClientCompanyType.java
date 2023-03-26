@@ -17,7 +17,7 @@ import org.tedros.person.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.clicompany_type, schema = DomainSchema.schema)
 @DiscriminatorValue("CLNTCMPNYTYP")
-public class ClientCompanyType extends PersonType {
+public class ClientCompanyType extends LegalType {
 
 	/**
 	 * 
