@@ -14,6 +14,7 @@
   <description>The startup project to load, run and package the main class</description>
   
   <dependencies>
+  
   	<dependency>
 	  	<groupId>org.tedros</groupId>
 	  	<artifactId>tedros-box</artifactId>

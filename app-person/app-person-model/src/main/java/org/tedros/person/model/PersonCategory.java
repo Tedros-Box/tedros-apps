@@ -37,7 +37,7 @@ public class PersonCategory extends TVersionEntity {
 	@Column(length=250)
 	private String description;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name=DomainTables.personcateg_person, 
 	schema=DomainSchema.schema,
 	joinColumns=@JoinColumn(name="categ_id"), 
@@ -92,10 +92,10 @@ public class PersonCategory extends TVersionEntity {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (!super.equals(obj))
+			return false;
 		if (!(obj instanceof PersonCategory))
 			return false;
-		if (super.equals(obj))
-			return true;
 		PersonCategory other = (PersonCategory) obj;
 		if (code == null) {
 			if (other.code != null)
@@ -120,6 +120,4 @@ public class PersonCategory extends TVersionEntity {
 		return true;
 	}
 
-
-	
 }

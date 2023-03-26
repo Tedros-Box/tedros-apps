@@ -11,7 +11,7 @@ import javax.ejb.TransactionAttributeType;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonCategoryController;
 import org.tedros.person.model.PersonCategory;
-import org.tedros.person.server.base.service.TPersonService;
+import org.tedros.person.server.service.PersonCategoryService;
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.ejb.controller.TSecureEjbController;
 import org.tedros.server.security.ITSecurity;
@@ -27,14 +27,14 @@ import org.tedros.server.service.ITEjbService;
  */
 @TSecurityInterceptor
 @Stateless(name="IPersonCategoryController")
-@TBeanSecurity({@TBeanPolicie(id = DomainApp.PERSON_STATUS_FORM_ID, 
+@TBeanSecurity({@TBeanPolicie(id = DomainApp.PERSON_CATEGORY_FORM_ID, 
 policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 public class TPersonCategoryController extends TSecureEjbController<PersonCategory> 
 implements IPersonCategoryController, ITSecurity  {
 
 	@EJB
-	private TPersonService<PersonCategory> serv;
+	private PersonCategoryService serv;
 	
 	@EJB
 	private ITSecurityController securityController;

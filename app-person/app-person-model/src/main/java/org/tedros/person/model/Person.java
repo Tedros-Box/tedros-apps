@@ -65,9 +65,6 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 	@JoinColumn(name="status_id")
 	private PersonStatus status;
 	
-	@ManyToMany(fetch=FetchType.EAGER, mappedBy="persons")
-	private Set<PersonCategory> categories;
-	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="image_id")
 	private TFileEntity image;
@@ -216,21 +213,12 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 		this.status = status;
 	}
 
-	public Set<PersonCategory> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Set<PersonCategory> categories) {
-		this.categories = categories;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((attributes == null) ? 0 : attributes.hashCode());
-		result = prime * result + ((categories == null) ? 0 : categories.hashCode());
 		result = prime * result + ((contacts == null) ? 0 : contacts.hashCode());
 		result = prime * result + ((dType == null) ? 0 : dType.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
@@ -248,10 +236,10 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (!super.equals(obj))
+			return false;
 		if (!(obj instanceof Person))
 			return false;
-		if (super.equals(obj))
-			return true;
 		Person other = (Person) obj;
 		if (address == null) {
 			if (other.address != null)
@@ -262,11 +250,6 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 			if (other.attributes != null)
 				return false;
 		} else if (!attributes.equals(other.attributes))
-			return false;
-		if (categories == null) {
-			if (other.categories != null)
-				return false;
-		} else if (!categories.equals(other.categories))
 			return false;
 		if (contacts == null) {
 			if (other.contacts != null)
@@ -321,6 +304,4 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 		return true;
 	}
 
-
-	
 }

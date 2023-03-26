@@ -3,10 +3,6 @@
  */
 package org.tedros.person.table;
 
-import org.tedros.fx.TUsualKey;
-import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.person.model.ClientCompany;
 import org.tedros.person.model.Customer;
@@ -30,47 +26,60 @@ public class PersonTV extends TEntityModelView<Person> {
 
 	private SimpleLongProperty id;
 	
-	@TLabel(text=TUsualKey.NAME)
-	@TTextField(maxLength=120, 
-		node=@TNode(requestFocus=true, parse = true))
 	private SimpleStringProperty name;
+
+	private SimpleStringProperty label;
 	
 	public PersonTV(Person entity) {
 		super(entity);
+		init(entity);
 	}
 	
 	public PersonTV(LegalPerson entity) {
 		super(entity);
+		init(entity);
 	}
 	
 	public PersonTV(NaturalPerson entity) {
 		super(entity);
+		init(entity);
 	}
 	
 	public PersonTV(Employee entity) {
 		super(entity);
+		init(entity);
 	}
 
 	public PersonTV(ClientCompany entity) {
 		super(entity);
+		init(entity);
 	}
 
 	public PersonTV(Customer entity) {
 		super(entity);
+		init(entity);
 	}
 	
 	public PersonTV(Member entity) {
 		super(entity);
+		init(entity);
 	}
 
 	public PersonTV(Voluntary entity) {
 		super(entity);
+		init(entity);
 	}
 
 	public PersonTV(Philanthrope entity) {
 		super(entity);
+		init(entity);
 	}
 
+	private void init(Person p) {
+		super.registerProperty("label", label);
+		label.setValue(p.toString());
+	}
+	
 	public SimpleLongProperty getId() {
 		return id;
 	}
@@ -90,6 +99,14 @@ public class PersonTV extends TEntityModelView<Person> {
 
 	public void setName(SimpleStringProperty name) {
 		this.name = name;
+	}
+
+	public SimpleStringProperty getLabel() {
+		return label;
+	}
+
+	public void setLabel(SimpleStringProperty label) {
+		this.label = label;
 	}
 
 }

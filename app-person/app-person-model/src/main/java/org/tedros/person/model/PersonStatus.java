@@ -76,10 +76,10 @@ public class PersonStatus extends TVersionEntity {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (!super.equals(obj))
+			return false;
 		if (!(obj instanceof PersonStatus))
 			return false;
-		if (super.equals(obj))
-			return true;
 		PersonStatus other = (PersonStatus) obj;
 		if (code == null) {
 			if (other.code != null)
