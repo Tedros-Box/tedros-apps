@@ -117,10 +117,10 @@ public class NaturalPerson extends Person {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (!super.equals(obj))
+			return false;
 		if (!(obj instanceof NaturalPerson))
 			return false;
-		if (super.equals(obj))
-			return true;
 		NaturalPerson other = (NaturalPerson) obj;
 		if (birthDate == null) {
 			if (other.birthDate != null)
@@ -140,6 +140,5 @@ public class NaturalPerson extends Person {
 			return false;
 		return true;
 	}
-	
-	
+
 }

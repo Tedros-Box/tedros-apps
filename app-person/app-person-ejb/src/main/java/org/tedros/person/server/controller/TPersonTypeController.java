@@ -28,13 +28,23 @@ import org.tedros.server.service.ITEjbService;
 @TSecurityInterceptor
 @Stateless(name="IPersonTypeController")
 @TBeanSecurity({
-	@TBeanPolicie(id = DomainApp.PERSON_TYPE_FORM_ID, 
+	@TBeanPolicie(id = DomainApp.CUSTOMER_TYPE_FORM_ID, 
 	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
-	@TBeanPolicie(id = DomainApp.STAFF_TYPE_FORM_ID, 
+	@TBeanPolicie(id = DomainApp.CLIENT_COMPANY_TYPE_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.NATURAL_PERSON_TYPE_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.MEMBER_TYPE_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.VOLUNTARY_TYPE_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.PHILANTHROPE_TYPE_FORM_ID, 
 	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
 	@TBeanPolicie(id = DomainApp.LEGAL_TYPE_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.STAFF_TYPE_FORM_ID, 
 	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })
-	})
+})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 public class TPersonTypeController extends TSecureEjbController<PersonType> 
 implements IPersonTypeController, ITSecurity  {

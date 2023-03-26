@@ -27,8 +27,24 @@ import org.tedros.server.service.ITEjbService;
  */
 @TSecurityInterceptor
 @Stateless(name="IPersonStatusController")
-@TBeanSecurity({@TBeanPolicie(id = DomainApp.PERSON_STATUS_FORM_ID, 
-policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
+@TBeanSecurity({
+	@TBeanPolicie(id = DomainApp.CUSTOMER_STATUS_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.CLIENT_COMPANY_STATUS_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.NATURAL_PERSON_STATUS_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.MEMBER_STATUS_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.VOLUNTARY_STATUS_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.PHILANTHROPE_STATUS_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.LEGAL_STATUS_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.EMPLOYEE_STATUS_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })
+})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 public class TPersonStatusController extends TSecureEjbController<PersonStatus> 
 implements IPersonStatusController, ITSecurity  {

@@ -95,10 +95,10 @@ public class Employee extends NaturalPerson {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (!super.equals(obj))
+			return false;
 		if (!(obj instanceof Employee))
 			return false;
-		if (super.equals(obj))
-			return true;
 		Employee other = (Employee) obj;
 		if (employer == null) {
 			if (other.employer != null)
@@ -117,4 +117,5 @@ public class Employee extends NaturalPerson {
 			return false;
 		return true;
 	}
+
 }

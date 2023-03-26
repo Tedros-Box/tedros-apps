@@ -53,8 +53,8 @@ import org.tedros.person.ejb.controller.ILegalPersonController;
 import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.StaffType;
-import org.tedros.person.module.legal.model.LegalPersonMV;
-import org.tedros.person.module.legal.model.StaffTypeMV;
+import org.tedros.person.module.company.model.CompanyMV;
+import org.tedros.person.module.company.model.StaffTypeMV;
 import org.tedros.person.module.report.action.SearchAction;
 import org.tedros.person.module.report.process.EmployeeReportProcess;
 import org.tedros.person.module.report.table.EmployeeItemMV;
@@ -146,7 +146,7 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 	@TLabel(text=TUsualKey.EMPLOYER)
 	@TComboBoxField(
 	optionsList=@TOptionsList(serviceName = ILegalPersonController.JNDI_NAME, 
-	optionModelViewClass=LegalPersonMV.class,
+	optionModelViewClass=CompanyMV.class,
 	entityClass=LegalPerson.class))
 	private SimpleObjectProperty<LegalPerson> employer;
 	

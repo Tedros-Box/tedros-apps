@@ -35,6 +35,14 @@ import org.tedros.server.service.ITEjbService;
 	@TBeanPolicie(id = DomainApp.LEGAL_PERSON_FORM_ID, 
 	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
 	@TBeanPolicie(id = DomainApp.NATURAL_PERSON_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.CLIENT_COMPANY_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.MEMBER_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.VOLUNTARY_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.PHILANTHROPE_FORM_ID, 
 	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })
 	})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)

@@ -1,4 +1,4 @@
-package org.tedros.person.module.legal.table;
+package org.tedros.person.module.company.table;
 
 import java.util.Date;
 

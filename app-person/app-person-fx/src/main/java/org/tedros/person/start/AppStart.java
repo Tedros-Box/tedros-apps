@@ -8,9 +8,10 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
+import org.tedros.person.module.category.CategoryModule;
+import org.tedros.person.module.company.LegalPersonModule;
 import org.tedros.person.module.customer.CustomerModule;
 import org.tedros.person.module.individual.IndividualModule;
-import org.tedros.person.module.legal.LegalPersonModule;
 import org.tedros.person.resource.AppResource;
 
 /**
@@ -38,7 +39,11 @@ module = {
 		menu=PersonKeys.MENU_PERSON, 
 		description=PersonKeys.MODULE_DESC_CUSTOMER,
 		icon=TConstant.ICONS_FOLDER + "customer.png", 
-		menuIcon=TConstant.ICONS_FOLDER + "customer_menu.png")
+		menuIcon=TConstant.ICONS_FOLDER + "customer_menu.png"),
+	@TModule(type=CategoryModule.class,
+	name=PersonKeys.MODULE_PERSON_CATEGORIES, 
+	menu=PersonKeys.MENU_PERSON, 
+	description=PersonKeys.MODULE_DESC_PERSON_CATEGORIES)
 
 }, packageName = "org.tedros.person")
 @TResourceBundle(resourceName={"TPerson"})

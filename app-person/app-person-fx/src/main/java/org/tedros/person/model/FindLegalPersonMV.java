@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.person.module.legal.model;
+package org.tedros.person.model;
 
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TCallbackFactory;
@@ -30,7 +30,7 @@ import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.ejb.controller.ILegalPersonController;
 import org.tedros.person.model.LegalPerson;
-import org.tedros.person.module.legal.table.LegalPersonItemMV;
+import org.tedros.person.module.company.table.LegalPersonItemMV;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;

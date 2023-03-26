@@ -117,10 +117,10 @@ public class LegalPerson extends Person {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (!super.equals(obj))
+			return false;
 		if (!(obj instanceof LegalPerson))
 			return false;
-		if (super.equals(obj))
-			return true;
 		LegalPerson other = (LegalPerson) obj;
 		if (endActivities == null) {
 			if (other.endActivities != null)
@@ -144,7 +144,5 @@ public class LegalPerson extends Person {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

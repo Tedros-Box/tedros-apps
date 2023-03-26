@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.person.module.legal.model;
+package org.tedros.person.module.company.model;
 
 import java.util.Date;
 
@@ -34,6 +34,7 @@ import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IEmployeeController;
 import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.Employee;
+import org.tedros.person.model.FindLegalPersonMV;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.NaturalPersonMV;
 import org.tedros.person.model.StaffType;
