@@ -158,6 +158,11 @@ public class Product extends TVersionEntity {
 	}
 
 	@Override
+	public String toString() {
+		return (name != null ? name : "");
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
@@ -177,10 +182,10 @@ public class Product extends TVersionEntity {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (!super.equals(obj))
+			return false;
 		if (!(obj instanceof Product))
 			return false;
-		if (super.equals(obj))
-			return true;
 		Product other = (Product) obj;
 		if (code == null) {
 			if (other.code != null)
@@ -228,11 +233,6 @@ public class Product extends TVersionEntity {
 		} else if (!weight.equals(other.weight))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return (name != null ? name : "");
 	}
 
 }

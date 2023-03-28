@@ -39,7 +39,6 @@ public class StockOut extends TVersionEntity implements Stockable {
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-	
 
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="outtype_id", nullable=true)
@@ -123,10 +122,10 @@ public class StockOut extends TVersionEntity implements Stockable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (!super.equals(obj))
+			return false;
 		if (!(obj instanceof StockOut))
 			return false;
-		if (super.equals(obj))
-			return true;
 		StockOut other = (StockOut) obj;
 		if (costCenter == null) {
 			if (other.costCenter != null)
@@ -160,5 +159,4 @@ public class StockOut extends TVersionEntity implements Stockable {
 			return false;
 		return true;
 	}
-
 }

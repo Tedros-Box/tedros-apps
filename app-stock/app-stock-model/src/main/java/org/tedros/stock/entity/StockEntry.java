@@ -122,10 +122,10 @@ public class StockEntry extends TVersionEntity implements Stockable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (!super.equals(obj))
+			return false;
 		if (!(obj instanceof StockEntry))
 			return false;
-		if (super.equals(obj))
-			return true;
 		StockEntry other = (StockEntry) obj;
 		if (costCenter == null) {
 			if (other.costCenter != null)
@@ -159,4 +159,5 @@ public class StockEntry extends TVersionEntity implements Stockable {
 			return false;
 		return true;
 	}
+
 }

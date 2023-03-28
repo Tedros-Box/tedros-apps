@@ -13,13 +13,14 @@ import org.tedros.docs.model.Document;
 import org.tedros.extension.contact.model.ContactMV;
 import org.tedros.extension.model.Contact;
 import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TAutoCompleteEntity;
+import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFileField;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOneSelectionModal;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
@@ -30,6 +31,8 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.layout.TVBox;
+import org.tedros.fx.annotation.layout.TVGrow;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
@@ -47,8 +50,9 @@ import org.tedros.fx.property.TSimpleFileProperty;
 import org.tedros.location.LocatKey;
 import org.tedros.location.model.Address;
 import org.tedros.location.module.address.model.AddressMV;
-import org.tedros.person.model.FindPersonMV;
+import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.Person;
+import org.tedros.person.table.PersonTV;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.ejb.controller.ICostCenterController;
@@ -57,6 +61,7 @@ import org.tedros.stock.entity.CostCenter;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Orientation;
 import javafx.scene.layout.Priority;
 
 /**
@@ -82,7 +87,8 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 		tabs = { 
 			@TTab(text = TUsualKey.MAIN_DATA, 
 				content = @TContent(detailForm=@TDetailForm(
-						fields = {"code", "description", "responsable"}))),
+						orientation=Orientation.HORIZONTAL,
+						fields = {"description", "address"}))),
 			@TTab(text = TUsualKey.OBSERVATION, 
 				content = @TContent(detailForm=@TDetailForm(
 					fields = {"observation"}))),
@@ -91,19 +97,38 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 						fields = {"image"}))) })
 	private SimpleLongProperty id;
 	
+	@TLabel(text=TUsualKey.DESCRIPTION)
+	@TTextAreaField(wrapText=true)
+	@TVBox(	spacing=10, fillWidth=true,
+	pane=@TPane(children={"code", "responsable", "description"}), 
+	vgrow=@TVGrow(priority={@TPriority(field="code", priority=Priority.ALWAYS), 
+			@TPriority(field="responsable", priority=Priority.ALWAYS), 
+			@TPriority(field="description", priority=Priority.ALWAYS)}))
+	private SimpleStringProperty description;
+	
 	@TLabel(text=TUsualKey.CODE)
 	@TTextField(maxLength=60,
 	node=@TNode(requestFocus=true, parse = true) )
-	@THBox(	pane=@TPane(children={"code", "name", "openingDate", "closingDate"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"code", "name"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="code", priority=Priority.NEVER), 
-			@TPriority(field="name", priority=Priority.ALWAYS), 
-			@TPriority(field="openingDate", priority=Priority.NEVER), 
-			@TPriority(field="closingDate", priority=Priority.NEVER)}))
+			@TPriority(field="name", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty code;
 	
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=120, required = true)
 	private SimpleStringProperty name;
+	
+	@TLabel(text=STCKKey.RESPONSABLE)
+	@TAutoCompleteEntity(modelViewType=PersonTV.class, 
+	startSearchAt=2, showMaxItems=30,
+	entries = @TEntry(entityType = Person.class, field = "name", 
+	service = IPersonController.JNDI_NAME))
+	@THBox(spacing=10, fillHeight=true,	
+	pane=@TPane(children={"responsable", "openingDate", "closingDate"}),
+	hgrow=@THGrow(priority={@TPriority(field="responsable", priority=Priority.ALWAYS), 
+			@TPriority(field="openingDate", priority=Priority.NEVER), 
+			@TPriority(field="closingDate", priority=Priority.NEVER)}))
+	private SimpleObjectProperty<PersonTV> responsable;
 	
 	@TLabel(text=STCKKey.OPENING_DATE)
 	@TDatePickerField(dateFormat=DateTimeFormatBuilder.class)
@@ -113,29 +138,25 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	@TDatePickerField(dateFormat=DateTimeFormatBuilder.class)
 	private SimpleObjectProperty<Date> closingDate;
 	
-	@TLabel(text=STCKKey.RESPONSABLE)
-	@TOneSelectionModal(height=80,
-	modelClass = Person.class, modelViewClass = FindPersonMV.class)
-	@THBox(	pane=@TPane(children={"responsable", "address", "contacts", "documents"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="address", priority=Priority.ALWAYS), 
-			@TPriority(field="responsable", priority=Priority.ALWAYS), 
+	@TLabel(text=LocatKey.ADDRESS)
+	@TEditEntityModal(height=80, 
+	modelClass = Address.class, modelViewClass=AddressMV.class)
+	@TVBox(	spacing=10, fillWidth=true,
+	pane=@TPane(children={"address", "contacts", "documents"}), 
+	vgrow=@TVGrow(priority={@TPriority(field="address", priority=Priority.ALWAYS), 
 			@TPriority(field="contacts", priority=Priority.ALWAYS), 
 			@TPriority(field="documents", priority=Priority.ALWAYS)}))
-	public SimpleObjectProperty<FindPersonMV> responsable;
-	
-	@TLabel(text=LocatKey.ADDRESS)
-	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
 	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
 	protected SimpleObjectProperty<AddressMV> address;
 	
 	@TLabel(text=TUsualKey.CONTACTS)
-	@TEditEntityModal(modalHeight=400, modalWidth=600,
+	@TEditEntityModal(height=80, modalHeight=400, modalWidth=600,
 	modelClass = Contact.class, modelViewClass=ContactMV.class)
 	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
 	protected ITObservableList<ContactMV> contacts;
 	
 	@TLabel(text=TUsualKey.DOCUMENTS)
-	@TEditEntityModal(modalHeight=490, modalWidth=700,
+	@TEditEntityModal(height=80, modalHeight=490, modalWidth=700,
 	modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
 	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
 	protected ITObservableList<ModalDocumentMV> documents;
@@ -145,12 +166,7 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	extensions= {TFileExtension.ALL_IMAGES}, showFilePath=true, showImage=true)
 	@TModelViewType(modelClass=TFileEntity.class)
 	private TSimpleFileProperty<TFileEntity> image;
-	
-	@TLabel(text=TUsualKey.DESCRIPTION)
-	@TTextAreaField(wrapText=true)
-	private SimpleStringProperty description;
 
-	//@TLabel(text=TUsualKey.OBSERVATION)
 	@TTextAreaField(wrapText=true)
 	private SimpleStringProperty observation;
 
@@ -211,12 +227,12 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	}
 
 
-	public SimpleObjectProperty<FindPersonMV> getResponsable() {
+	public SimpleObjectProperty<PersonTV> getResponsable() {
 		return responsable;
 	}
 
 
-	public void setResponsable(SimpleObjectProperty<FindPersonMV> responsable) {
+	public void setResponsable(SimpleObjectProperty<PersonTV> responsable) {
 		this.responsable = responsable;
 	}
 

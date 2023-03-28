@@ -47,42 +47,29 @@ public class StockConfig extends TVersionEntity {
 	@JoinColumn(name="conf_id")
 	private List<StockConfigItem> items;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((costCenter == null) ? 0 : costCenter.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((items == null) ? 0 : items.hashCode());
-		return result;
+	public CostCenter getCostCenter() {
+		return costCenter;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof StockConfig))
-			return false;
-		if (super.equals(obj))
-			return true;
-		StockConfig other = (StockConfig) obj;
-		if (costCenter == null) {
-			if (other.costCenter != null)
-				return false;
-		} else if (!costCenter.equals(other.costCenter))
-			return false;
-		if (date == null) {
-			if (other.date != null)
-				return false;
-		} else if (!date.equals(other.date))
-			return false;
-		if (items == null) {
-			if (other.items != null)
-				return false;
-		} else if (!items.equals(other.items))
-			return false;
-		return true;
+	public void setCostCenter(CostCenter costCenter) {
+		this.costCenter = costCenter;
 	}
-	
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public List<StockConfigItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<StockConfigItem> items) {
+		this.items = items;
+	}
+
 
 }
