@@ -29,7 +29,7 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 	@TLabel(text=STCKKey.VIEW_COST_CENTER)
 	@TAutoCompleteEntity(modelViewType=CostCenterTV.class, 
 	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = CostCenter.class, field = "name", 
+	entries = @TEntry(entityType = CostCenter.class, fields = "name", 
 	service = ICostCenterController.JNDI_NAME))
 	private SimpleObjectProperty<CostCenter> costCenter;
 
