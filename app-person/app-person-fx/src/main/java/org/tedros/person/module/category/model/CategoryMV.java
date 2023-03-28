@@ -122,7 +122,7 @@ public class CategoryMV extends TEntityModelView<PersonCategory> {
 
 	@TAutoCompleteEntity(modelViewType=PersonTV.class, 
 		startSearchAt=2, showMaxItems=30,
-		entries = @TEntry(entityType = Person.class, field = "name", 
+		entries = @TEntry(entityType = Person.class, fields = "name", 
 		service = IPersonController.JNDI_NAME))
 	@THBox(	pane=@TPane(children={"item", "addBtn"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="item", priority=Priority.NEVER), 

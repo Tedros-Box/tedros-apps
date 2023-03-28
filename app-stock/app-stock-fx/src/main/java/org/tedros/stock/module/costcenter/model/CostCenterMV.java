@@ -51,6 +51,7 @@ import org.tedros.location.LocatKey;
 import org.tedros.location.model.Address;
 import org.tedros.location.module.address.model.AddressMV;
 import org.tedros.person.ejb.controller.IPersonController;
+import org.tedros.person.model.NaturalPerson;
 import org.tedros.person.model.Person;
 import org.tedros.person.table.PersonTV;
 import org.tedros.stock.STCKKey;
@@ -121,7 +122,7 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	@TLabel(text=STCKKey.RESPONSABLE)
 	@TAutoCompleteEntity(modelViewType=PersonTV.class, 
 	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = Person.class, field = "name", 
+	entries = @TEntry(entityType = NaturalPerson.class, fields = {"name","lastName"}, 
 	service = IPersonController.JNDI_NAME))
 	@THBox(spacing=10, fillHeight=true,	
 	pane=@TPane(children={"responsable", "openingDate", "closingDate"}),
