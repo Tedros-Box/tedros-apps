@@ -58,5 +58,42 @@ public class StockConfigItem extends TEntity  {
 		this.minimumAmount = minimumAmount;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+		result = prime * result + ((minimumAmount == null) ? 0 : minimumAmount.hashCode());
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof StockConfigItem))
+			return false;
+		StockConfigItem other = (StockConfigItem) obj;
+		if (amount == null) {
+			if (other.amount != null)
+				return false;
+		} else if (!amount.equals(other.amount))
+			return false;
+		if (minimumAmount == null) {
+			if (other.minimumAmount != null)
+				return false;
+		} else if (!minimumAmount.equals(other.minimumAmount))
+			return false;
+		if (product == null) {
+			if (other.product != null)
+				return false;
+		} else if (!product.equals(other.product))
+			return false;
+		return true;
+	}
+
 	
 }
