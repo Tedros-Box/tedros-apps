@@ -52,7 +52,6 @@ import org.tedros.location.model.Address;
 import org.tedros.location.module.address.model.AddressMV;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.NaturalPerson;
-import org.tedros.person.model.Person;
 import org.tedros.person.table.PersonTV;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;

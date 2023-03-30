@@ -18,7 +18,9 @@ public interface STCKKey {
 	static final String APP_STOCK = "#{app.stock}";
 	static final String CLOSING_DATE = "#{label.closing.date}";
 	static final String MEASURE = "#{label.measure}";
+	static final String MINIMUN_AMOUNT = "#{label.minimun.amount}";
 	static final String OPENING_DATE = "#{label.opening.date}";
+	static final String PRODUCT = "#{label.product}";
 	static final String RESPONSABLE = "#{label.responsable}";
 	static final String SIZE = "#{label.size}";
 	static final String TRADEMARK = "#{label.trademark}";
@@ -32,4 +34,5 @@ public interface STCKKey {
 	static final String TOOLTIP_SIZE = "#{tooltip.size}";
 	static final String VIEW_COST_CENTER = "#{view.cost.center}";
 	static final String VIEW_PRODUCT = "#{view.product}";
+	static final String VIEW_STOCK_CONFIG = "#{view.stock.config}";
 }
