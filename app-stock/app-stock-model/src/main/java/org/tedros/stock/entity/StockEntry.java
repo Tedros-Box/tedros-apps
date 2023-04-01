@@ -52,9 +52,9 @@ public class StockEntry extends TVersionEntity implements Stockable {
 	private String observation;
 	
 	@OneToMany(fetch = FetchType.EAGER, 
+			mappedBy="entry",
 			orphanRemoval=true, 
 			cascade={CascadeType.ALL})
-	@JoinColumn(name="entry_id")
 	private List<StockItem> items;
 
 	public CostCenter getCostCenter() {

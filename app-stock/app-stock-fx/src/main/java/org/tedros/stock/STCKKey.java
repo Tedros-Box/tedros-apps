@@ -4,11 +4,11 @@
 package org.tedros.stock;
 
 /**
- * The language  resource key domain
+ * The language resource key domain
  * 
- * Run the org.tedros.fx.util.LanguageKeysBuilder to create the constants from your language resource.
- * Type the resource name without the locale, for example to read the App_en.properties just  
- * type App
+ * Run the org.tedros.fx.util.LanguageKeysBuilder to create the constants from
+ * your language resource. Type the resource name without the locale, for
+ * example to read the App_en.properties just type App
  * 
  * @author Davis Dun
  *
@@ -30,6 +30,8 @@ public interface STCKKey {
 	static final String MODULE_COST_CENTER = "#{module.cost.center}";
 	static final String MODULE_DESC_COST_CENTER = "#{module.desc.cost.center}";
 	static final String MODULE_DESC_PRODUCTS = "#{module.desc.products}";
+	static final String MODULE_INVENTORY = "#{module.inventory}";
+	static final String MODULE_INVENTORY_DESC = "#{module.inventory.desc}";
 	static final String MODULE_PRODUCTS = "#{module.products}";
 	static final String TOOLTIP_SIZE = "#{tooltip.size}";
 	static final String VIEW_COST_CENTER = "#{view.cost.center}";

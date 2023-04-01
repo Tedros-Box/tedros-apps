@@ -17,15 +17,16 @@ import org.tedros.stock.module.costcenter.model.CostCenterMV;
 /**
  * @author Davis Gordon
  *
- */@TSecurity(id=DomainApp.COST_CENTER_MODULE_ID, 
-		 appName = STCKKey.APP_STOCK, 
-		 moduleName = STCKKey.MODULE_COST_CENTER, 
-		 allowedAccesses=TAuthorizationType.MODULE_ACCESS)
-		 @TLoadable({
-		 	@TModel(modelType = CostCenter.class, 
-		 			modelViewType=CostCenterMV.class,
-		 			moduleType=CostCenterModule.class)
-		 })
+ */
+@TSecurity(id=DomainApp.COST_CENTER_MODULE_ID, 
+	appName = STCKKey.APP_STOCK, 
+	moduleName = STCKKey.MODULE_COST_CENTER, 
+	allowedAccesses=TAuthorizationType.MODULE_ACCESS)
+@TLoadable({
+	@TModel(modelType = CostCenter.class, 
+		 modelViewType=CostCenterMV.class,
+		 moduleType=CostCenterModule.class)
+})
 public class CostCenterModule extends TModule {
 
 	/* (non-Javadoc)

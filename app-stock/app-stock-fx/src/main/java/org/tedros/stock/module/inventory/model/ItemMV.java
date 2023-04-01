@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.stock.module.config.model;
+package org.tedros.stock.module.inventory.model;
 
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
@@ -12,6 +12,10 @@ import org.tedros.fx.annotation.control.TDoubleField;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.presenter.model.TEntityModelView;
@@ -20,10 +24,10 @@ import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.entity.StockConfigItem;
 import org.tedros.stock.table.ProductCallBack;
-import org.tedros.stock.table.ProductTV;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
@@ -42,10 +46,14 @@ public class ItemMV extends TEntityModelView<StockConfigItem> {
 
 
 	@TLabel(text=STCKKey.PRODUCT)
-	@TAutoCompleteEntity(modelViewType=ProductTV.class, 
+	@TAutoCompleteEntity(required=true,
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = Product.class, fields = {"code", "name"}, 
 	service = IProductController.JNDI_NAME))
+	@THBox(	pane=@TPane(children={"product", "amount", "minimumAmount"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="product", priority=Priority.NEVER), 
+			@TPriority(field="amount", priority=Priority.NEVER), 
+			@TPriority(field="minimumAmount", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<Product> product;
 	
 	@TLabel(text=TUsualKey.AMOUNT)
