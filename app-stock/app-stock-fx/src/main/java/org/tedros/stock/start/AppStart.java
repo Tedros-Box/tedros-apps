@@ -6,10 +6,10 @@ import org.tedros.core.annotation.TModule;
 import org.tedros.core.annotation.TResourceBundle;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
-
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.module.costcenter.CostCenterModule;
+import org.tedros.stock.module.inventory.InventoryModule;
 import org.tedros.stock.module.products.ProductModule;
 
 /**
@@ -26,7 +26,11 @@ import org.tedros.stock.module.products.ProductModule;
 		@TModule(type=CostCenterModule.class, 
 			name=STCKKey.MODULE_COST_CENTER, 
 			menu=STCKKey.MENU_STOCK, 
-			description=STCKKey.MODULE_DESC_COST_CENTER)
+			description=STCKKey.MODULE_DESC_COST_CENTER),
+		@TModule(type=InventoryModule.class, 
+		name=STCKKey.MODULE_INVENTORY, 
+		menu=STCKKey.MENU_STOCK, 
+		description=STCKKey.MODULE_INVENTORY_DESC)
 	}, packageName = "org.tedros.stock", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"STCK"})

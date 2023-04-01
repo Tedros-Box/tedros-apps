@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.stock.module.config.model;
+package org.tedros.stock.module.inventory.model;
 
 import java.util.Date;
 
@@ -16,14 +16,16 @@ import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TModelViewType;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.builder.DateTimeFormatBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.presenter.model.TEntityModelView;
@@ -34,9 +36,9 @@ import org.tedros.stock.ejb.controller.IStockConfigController;
 import org.tedros.stock.entity.CostCenter;
 import org.tedros.stock.entity.StockConfig;
 import org.tedros.stock.entity.StockConfigItem;
-import org.tedros.stock.module.costcenter.table.CostCenterTV;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
@@ -45,23 +47,23 @@ import javafx.beans.property.SimpleObjectProperty;
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IStockConfigController.JNDI_NAME, model=StockConfig.class)
 @TListViewPresenter(
-	paginator=@TPaginator(entityClass = StockConfig.class, serviceName = IStockConfigController.JNDI_NAME,
-		show=true, showSearchField=true, searchFieldName="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=STCKKey.VIEW_STOCK_CONFIG,
 		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))/*
+	behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.STOCK_CONFIG_FORM_ID, appName = STCKKey.APP_STOCK,
-	moduleName = STCKKey.MODULE_PRODUCTS, viewName = STCKKey.VIEW_STOCK_CONFIG,
+	moduleName = STCKKey.MODULE_INVENTORY, viewName = STCKKey.VIEW_STOCK_CONFIG,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})*/
+					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ConfigMV extends TEntityModelView<StockConfig> {
 
 	@TLabel(text=STCKKey.VIEW_COST_CENTER)
-	@TAutoCompleteEntity(modelViewType=CostCenterTV.class, 
+	@TAutoCompleteEntity(
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = CostCenter.class, fields = "name", 
 	service = ICostCenterController.JNDI_NAME))
+	@THBox(	pane=@TPane(children={"costCenter", "date"}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="costCenter", priority=Priority.NEVER), 
+			@TPriority(field="date", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<CostCenter> costCenter;
 
 	@TLabel(text=TUsualKey.DATE_TIME)
@@ -75,6 +77,7 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 	
 	public ConfigMV(StockConfig entity) {
 		super(entity);
+		super.formatToString("%s", costCenter);
 	}
 
 	public SimpleObjectProperty<CostCenter> getCostCenter() {

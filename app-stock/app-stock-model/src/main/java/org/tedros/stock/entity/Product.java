@@ -159,7 +159,7 @@ public class Product extends TVersionEntity {
 
 	@Override
 	public String toString() {
-		return (name != null ? name : "");
+		return  (code != null ? code + " " : "") + (name != null ? name : "");
 	}
 
 	@Override
