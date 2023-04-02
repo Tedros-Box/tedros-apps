@@ -17,9 +17,9 @@ import org.tedros.server.security.TBeanSecurity;
 import org.tedros.server.security.TSecurityInterceptor;
 import org.tedros.server.service.ITEjbService;
 import org.tedros.stock.domain.DomainApp;
-import org.tedros.stock.ejb.controller.ICostCenterController;
-import org.tedros.stock.entity.CostCenter;
-import org.tedros.stock.server.ejb.service.STCKService;
+import org.tedros.stock.ejb.controller.IStockEventController;
+import org.tedros.stock.entity.StockEvent;
+import org.tedros.stock.server.ejb.service.StockEventService;
 
 /**
  * The controller bean
@@ -28,20 +28,24 @@ import org.tedros.stock.server.ejb.service.STCKService;
  *
  */
 @TSecurityInterceptor
-@Stateless(name="ICostCenterController")
-@TBeanSecurity({@TBeanPolicie(id = DomainApp.COST_CENTER_FORM_ID, 
-policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
+@Stateless(name="IStockEventController")
+@TBeanSecurity({
+	@TBeanPolicie(id = DomainApp.STOCK_ENTRY_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS }),
+	@TBeanPolicie(id = DomainApp.STOCK_OUT_FORM_ID, 
+	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })
+	})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class TCostCenterController extends TSecureEjbController<CostCenter> implements ICostCenterController, ITSecurity  {
+public class TStockEventController extends TSecureEjbController<StockEvent> implements IStockEventController, ITSecurity  {
 
 	@EJB
-	private STCKService<CostCenter> serv;
+	private StockEventService serv;
 	
 	@EJB
 	private ITSecurityController securityController;
 	
 	@Override
-	public ITEjbService<CostCenter> getService() {
+	public ITEjbService<StockEvent> getService() {
 		return serv;
 	}
 	
@@ -49,5 +53,4 @@ public class TCostCenterController extends TSecureEjbController<CostCenter> impl
 	public ITSecurityController getSecurityController() {
 		return securityController;
 	}
-	
 }

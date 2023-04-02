@@ -42,7 +42,7 @@ columns =
 		@TTableColumn(text = TUsualKey.AMOUNT, cellValue="amount"), 
 		@TTableColumn(text = STCKKey.MINIMUN_AMOUNT, cellValue="minimumAmount"), 
 	}))
-public class ItemMV extends TEntityModelView<StockConfigItem> {
+public class ConfigItemMV extends TEntityModelView<StockConfigItem> {
 
 
 	@TLabel(text=STCKKey.PRODUCT)
@@ -64,7 +64,7 @@ public class ItemMV extends TEntityModelView<StockConfigItem> {
 	@TDoubleField()
 	private SimpleDoubleProperty minimumAmount;
 	
-	public ItemMV(StockConfigItem entity) {
+	public ConfigItemMV(StockConfigItem entity) {
 		super(entity);
 	}
 

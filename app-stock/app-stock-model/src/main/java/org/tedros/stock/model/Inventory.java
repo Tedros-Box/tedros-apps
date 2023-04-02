@@ -3,14 +3,13 @@
  */
 package org.tedros.stock.model;
 
-import org.tedros.server.model.ITModel;
+import org.tedros.server.model.ITReportItemModel;
 
 /**
  * @author Davis Gordon
  *
  */
-public class Inventory implements ITModel {
-	
+public class Inventory implements ITReportItemModel<Inventory>  {
 	
 	private static final long serialVersionUID = 3727717064033502648L;
 	
@@ -18,10 +17,8 @@ public class Inventory implements ITModel {
 	private String code;
 	private String name;
 	private Double amount;
+	private Double minAmount = 0D;
 
-	/**
-	 * 
-	 */
 	public Inventory() {
 	}
 
@@ -63,6 +60,19 @@ public class Inventory implements ITModel {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	@Override
+	public Inventory getModel() {
+		return this;
+	}
+
+	public Double getMinAmount() {
+		return minAmount;
+	}
+
+	public void setMinAmount(Double minAmount) {
+		this.minAmount = minAmount;
 	}
 
 }
