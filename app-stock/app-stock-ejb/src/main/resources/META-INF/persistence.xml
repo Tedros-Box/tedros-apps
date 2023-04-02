@@ -73,6 +73,7 @@
 		<class>org.tedros.stock.entity.OutType</class>
 		<class>org.tedros.stock.entity.StockConfig</class>
 		<class>org.tedros.stock.entity.StockConfigItem</class>
+		<class>org.tedros.stock.entity.StockEvent</class>
 		<class>org.tedros.stock.entity.StockEntry</class>
 		<class>org.tedros.stock.entity.StockOut</class>
 		<class>org.tedros.stock.entity.StockItem</class>

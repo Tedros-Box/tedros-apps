@@ -32,13 +32,9 @@ public class StockItem extends TEntity implements StockableItem {
 	private Double amount;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="entry_id")
-	private StockEntry entry;
+	@JoinColumn(name="event_id")
+	private StockEvent event;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="out_id")
-	private StockOut out;
-
 	public Product getProduct() {
 		return product;
 	}
@@ -55,20 +51,12 @@ public class StockItem extends TEntity implements StockableItem {
 		this.amount = amount;
 	}
 
-	public StockEntry getEntry() {
-		return entry;
+	public StockEvent getEvent() {
+		return event;
 	}
 
-	public void setEntry(StockEntry entry) {
-		this.entry = entry;
-	}
-
-	public StockOut getOut() {
-		return out;
-	}
-
-	public void setOut(StockOut out) {
-		this.out = out;
+	public void setEvent(StockEvent event) {
+		this.event = event;
 	}
 
 	@Override
@@ -82,8 +70,7 @@ public class StockItem extends TEntity implements StockableItem {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
-		result = prime * result + ((entry == null) ? 0 : entry.hashCode());
-		result = prime * result + ((out == null) ? 0 : out.hashCode());
+		//result = prime * result + ((event == null) ? 0 : event.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		return result;
 	}
@@ -102,15 +89,10 @@ public class StockItem extends TEntity implements StockableItem {
 				return false;
 		} else if (!amount.equals(other.amount))
 			return false;
-		if (entry == null) {
-			if (other.entry != null)
+		if (event == null) {
+			if (other.event != null)
 				return false;
-		} else if (!entry.equals(other.entry))
-			return false;
-		if (out == null) {
-			if (other.out != null)
-				return false;
-		} else if (!out.equals(other.out))
+		} else if (!event.equals(other.event))
 			return false;
 		if (product == null) {
 			if (other.product != null)
@@ -119,5 +101,6 @@ public class StockItem extends TEntity implements StockableItem {
 			return false;
 		return true;
 	}
+
 
 }

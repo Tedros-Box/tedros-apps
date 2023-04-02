@@ -11,6 +11,7 @@ import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.module.costcenter.CostCenterModule;
 import org.tedros.stock.module.inventory.InventoryModule;
 import org.tedros.stock.module.products.ProductModule;
+import org.tedros.stock.resource.AppResource;
 
 /**
  * The app start class.
@@ -41,7 +42,7 @@ public class AppStart implements ITApplication {
 
 	@Override
 	public void start() {
-		// Run at startup
+		AppResource.createResource();
 	}
 
 	@Override

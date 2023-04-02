@@ -8,11 +8,12 @@ import java.util.Date;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TAutoCompleteEntity;
+import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TOneSelectionModal;
 import org.tedros.fx.annotation.control.TOptionsList;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
@@ -31,12 +32,11 @@ import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
-import org.tedros.person.ejb.controller.IEmployeeController;
+import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.ejb.controller.IPersonStatusController;
 import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.EmployeeStatus;
-import org.tedros.person.model.FindLegalPersonMV;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.NaturalPersonMV;
 import org.tedros.person.model.StaffType;
@@ -51,9 +51,9 @@ import javafx.scene.layout.Priority;
  */
 
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
-@TEjbService(serviceName = IEmployeeController.JNDI_NAME, model=Employee.class)
+@TEjbService(serviceName = IPersonController.JNDI_NAME, model=Employee.class)
 @TListViewPresenter(
-		paginator=@TPaginator(entityClass = Employee.class, serviceName = IEmployeeController.JNDI_NAME,
+		paginator=@TPaginator(entityClass = Employee.class, serviceName = IPersonController.JNDI_NAME,
 		show=true, showSearchField=true, searchFieldName="name", 
 		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name"),
 				@TOption(text = TUsualKey.LAST_NAME , value = "lastName")}),
@@ -108,8 +108,11 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 	private SimpleObjectProperty<Date> resignationDate;
 	
 	@TLabel(text=TUsualKey.EMPLOYER)
-	@TOneSelectionModal(modelClass = LegalPerson.class, modelViewClass = FindLegalPersonMV.class, 
-	width=300, height=50, required=true)
+	@TAutoCompleteEntity(required=true,
+	startSearchAt=2, showMaxItems=30,
+	entries = @TEntry(entityType = LegalPerson.class, 
+	fields = {"name","otherName"}, 
+	service = IPersonController.JNDI_NAME))
 	private SimpleObjectProperty<LegalPerson> employer;
 	
 	public EmployeeMV(Employee entity) {

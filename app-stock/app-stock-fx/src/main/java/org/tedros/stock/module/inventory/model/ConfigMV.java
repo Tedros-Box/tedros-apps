@@ -56,7 +56,7 @@ import javafx.scene.layout.Priority;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ConfigMV extends TEntityModelView<StockConfig> {
 
-	@TLabel(text=STCKKey.VIEW_COST_CENTER)
+	@TLabel(text=STCKKey.COST_CENTER)
 	@TAutoCompleteEntity(
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = CostCenter.class, fields = "name", 
@@ -71,9 +71,9 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 	private SimpleObjectProperty<Date> date;
 	
 	@TFieldBox(node=@TNode(id="evdtl", parse = true))
-	@TDetailListField(entityModelViewClass = ItemMV.class, entityClass = StockConfigItem.class)
-	@TModelViewType(modelClass=StockConfigItem.class, modelViewClass=ItemMV.class)
-	private ITObservableList<ItemMV> items;
+	@TDetailListField(entityModelViewClass = ConfigItemMV.class, entityClass = StockConfigItem.class)
+	@TModelViewType(modelClass=StockConfigItem.class, modelViewClass=ConfigItemMV.class)
+	private ITObservableList<ConfigItemMV> items;
 	
 	public ConfigMV(StockConfig entity) {
 		super(entity);
@@ -96,11 +96,11 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 		this.date = date;
 	}
 
-	public ITObservableList<ItemMV> getItems() {
+	public ITObservableList<ConfigItemMV> getItems() {
 		return items;
 	}
 
-	public void setItems(ITObservableList<ItemMV> items) {
+	public void setItems(ITObservableList<ConfigItemMV> items) {
 		this.items = items;
 	}
 

@@ -85,7 +85,7 @@ public class Employee extends NaturalPerson {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((employer == null) ? 0 : employer.hashCode());
+		//result = prime * result + ((employer == null) ? 0 : employer.hashCode());
 		result = prime * result + ((hiringDate == null) ? 0 : hiringDate.hashCode());
 		result = prime * result + ((resignationDate == null) ? 0 : resignationDate.hashCode());
 		return result;
