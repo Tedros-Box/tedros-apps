@@ -31,6 +31,9 @@ public class StockConfigItem extends TEntity  {
 	@Column
 	private Boolean notify;
 
+	@Column
+	private Boolean allowNegativeStock;
+	
 	@Column(nullable = false)
 	private Double minimumAmount;
 	
@@ -57,11 +60,20 @@ public class StockConfigItem extends TEntity  {
 	public void setNotify(Boolean notify) {
 		this.notify = notify;
 	}
+	
+	public Boolean getAllowNegativeStock() {
+		return allowNegativeStock;
+	}
+
+	public void setAllowNegativeStock(Boolean allowNegativeStock) {
+		this.allowNegativeStock = allowNegativeStock;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((allowNegativeStock == null) ? 0 : allowNegativeStock.hashCode());
 		result = prime * result + ((minimumAmount == null) ? 0 : minimumAmount.hashCode());
 		result = prime * result + ((notify == null) ? 0 : notify.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
@@ -77,6 +89,11 @@ public class StockConfigItem extends TEntity  {
 		if (!(obj instanceof StockConfigItem))
 			return false;
 		StockConfigItem other = (StockConfigItem) obj;
+		if (allowNegativeStock == null) {
+			if (other.allowNegativeStock != null)
+				return false;
+		} else if (!allowNegativeStock.equals(other.allowNegativeStock))
+			return false;
 		if (minimumAmount == null) {
 			if (other.minimumAmount != null)
 				return false;

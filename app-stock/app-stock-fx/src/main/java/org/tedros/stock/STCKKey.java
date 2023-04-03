@@ -17,6 +17,7 @@ public interface STCKKey {
 
 	static final String APP_STOCK = "#{app.stock}";
 	static final String ALL = "#{label.all}";
+	static final String ALLOW_NEGATIVE_STOCK = "#{label.allow.negative.stock}";
 	static final String CLOSING_DATE = "#{label.closing.date}";
 	static final String COST_CENTER = "#{label.cost.center}";
 	static final String MEASURE = "#{label.measure}";

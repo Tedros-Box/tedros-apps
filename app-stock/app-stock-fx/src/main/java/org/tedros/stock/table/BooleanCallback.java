@@ -6,7 +6,6 @@ package org.tedros.stock.table;
 import org.tedros.core.TLanguage;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.control.TTableCell;
-import org.tedros.stock.entity.Product;
 
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;

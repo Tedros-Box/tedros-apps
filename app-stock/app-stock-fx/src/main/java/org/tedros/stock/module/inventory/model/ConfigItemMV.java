@@ -20,6 +20,7 @@ import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.control.TLabeled;
+import org.tedros.fx.domain.TZeroValidation;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.ejb.controller.IProductController;
@@ -45,7 +46,10 @@ columns =
 		@TTableColumn(text = STCKKey.MINIMUN_AMOUNT, cellValue="minimumAmount"), 
 		@TTableColumn(text = STCKKey.NOTIFY_RESPONSABLE, cellValue="notify", 
 				cellFactory=@TCellFactory(parse = true, 
-				callBack=@TCallbackFactory(parse=true, value=BooleanCallback.class)))
+				callBack=@TCallbackFactory(parse=true, value=BooleanCallback.class))), 
+		@TTableColumn(text = STCKKey.ALLOW_NEGATIVE_STOCK, cellValue="allowNegativeStock", 
+		cellFactory=@TCellFactory(parse = true, 
+		callBack=@TCallbackFactory(parse=true, value=BooleanCallback.class)))
 	}))
 public class ConfigItemMV extends TEntityModelView<StockConfigItem> {
 
@@ -55,20 +59,23 @@ public class ConfigItemMV extends TEntityModelView<StockConfigItem> {
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = Product.class, fields = {"code", "name"}, 
 	service = IProductController.JNDI_NAME))
-	@THBox(	pane=@TPane(children={"product", "minimumAmount", "notify"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"product", "minimumAmount", "notify", "allowNegativeStock"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="product", priority=Priority.NEVER), 
 			@TPriority(field="notify", priority=Priority.ALWAYS), 
 			@TPriority(field="minimumAmount", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<Product> product;
 	
 	@TLabel(text=STCKKey.MINIMUN_AMOUNT)
-	@TDoubleField()
+	@TDoubleField(zeroValidation=TZeroValidation.GREATHER_THAN_ZERO)
 	private SimpleDoubleProperty minimumAmount;
 	
-	@TLabel(text=TUsualKey.AMOUNT)
 	@TCheckBoxField(labeled = 
 	@TLabeled(text=STCKKey.NOTIFY_RESPONSABLE, parse = true))
 	private SimpleObjectProperty<Boolean> notify;
+
+	@TCheckBoxField(labeled = 
+	@TLabeled(text=STCKKey.ALLOW_NEGATIVE_STOCK, parse = true))
+	private SimpleObjectProperty<Boolean> allowNegativeStock;
 	
 	public ConfigItemMV(StockConfigItem entity) {
 		super(entity);
@@ -96,6 +103,14 @@ public class ConfigItemMV extends TEntityModelView<StockConfigItem> {
 
 	public void setNotify(SimpleObjectProperty<Boolean> notify) {
 		this.notify = notify;
+	}
+
+	public SimpleObjectProperty<Boolean> getAllowNegativeStock() {
+		return allowNegativeStock;
+	}
+
+	public void setAllowNegativeStock(SimpleObjectProperty<Boolean> allowNegativeStock) {
+		this.allowNegativeStock = allowNegativeStock;
 	}
 
 }

@@ -25,7 +25,7 @@ public class InventoryEAO extends TGenericEAO<StockItem> {
 
 	
 	@SuppressWarnings("unchecked")
-	public List<Inventory> calculate(CostCenter cc, Date date, Product product, String orderBy, String asc){
+	public List<Inventory> calculate(CostCenter cc, Date date, List<Product> products, String orderBy, String asc){
 		
 		StringBuilder sb = new StringBuilder("select ");
 		sb.append("p.id, p.code, p.name, ")
@@ -40,8 +40,8 @@ public class InventoryEAO extends TGenericEAO<StockItem> {
 			sb.append("and e.costCenter = :cc ");
 		if(date!=null)
 			sb.append("and e.date <= :dt ");
-		if(product!=null)
-			sb.append("and p.id = :prod ");
+		if(products!=null)
+			sb.append("and i.product in :prod ");
 		
 		sb.append("group by p.id, p.code, p.name ");
 		
@@ -59,8 +59,8 @@ public class InventoryEAO extends TGenericEAO<StockItem> {
 			qry.setParameter("cc", cc);
 		if(date!=null)
 			qry.setParameter("dt", date);
-		if(product!=null)
-			qry.setParameter("prod", product.getId());
+		if(products!=null)
+			qry.setParameter("prod", products);
 		
 		List<Inventory> res = new ArrayList<>();
 		List<Object[]> l = qry.getResultList();
