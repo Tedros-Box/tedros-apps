@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import org.tedros.person.model.Person;
 import org.tedros.server.entity.TVersionEntity;
 import org.tedros.stock.domain.DomainSchema;
 import org.tedros.stock.domain.DomainTables;
@@ -28,7 +29,7 @@ import org.tedros.stock.domain.DomainTables;
  */
 @Entity
 @Table(name = DomainTables.stock_config, schema = DomainSchema.schema, 
-uniqueConstraints= {@UniqueConstraint(name="stockConfigUK",columnNames = { "cc_id", "date" })})
+uniqueConstraints= {@UniqueConstraint(name="stockConfigUK",columnNames = {"cc_id"})})
 public class StockConfig extends TVersionEntity {
 
 	private static final long serialVersionUID = 4605036500373444451L;
@@ -36,10 +37,10 @@ public class StockConfig extends TVersionEntity {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="cc_id", nullable=false)
 	private CostCenter costCenter;
-	
-	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;
+
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="person_id", nullable=true)
+	private Person responsable;
 	
 	@OneToMany(fetch = FetchType.EAGER, 
 			orphanRemoval=true, 
@@ -54,21 +55,58 @@ public class StockConfig extends TVersionEntity {
 	public void setCostCenter(CostCenter costCenter) {
 		this.costCenter = costCenter;
 	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
+	
 	public List<StockConfigItem> getItems() {
 		return items;
 	}
 
 	public void setItems(List<StockConfigItem> items) {
 		this.items = items;
+	}
+
+	public Person getResponsable() {
+		return responsable;
+	}
+
+	public void setResponsable(Person responsable) {
+		this.responsable = responsable;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((costCenter == null) ? 0 : costCenter.hashCode());
+		result = prime * result + ((items == null) ? 0 : items.hashCode());
+		result = prime * result + ((responsable == null) ? 0 : responsable.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof StockConfig))
+			return false;
+		StockConfig other = (StockConfig) obj;
+		if (costCenter == null) {
+			if (other.costCenter != null)
+				return false;
+		} else if (!costCenter.equals(other.costCenter))
+			return false;
+		if (items == null) {
+			if (other.items != null)
+				return false;
+		} else if (!items.equals(other.items))
+			return false;
+		if (responsable == null) {
+			if (other.responsable != null)
+				return false;
+		} else if (!responsable.equals(other.responsable))
+			return false;
+		return true;
 	}
 
 
