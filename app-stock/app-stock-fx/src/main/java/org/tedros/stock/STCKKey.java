@@ -15,12 +15,13 @@ package org.tedros.stock;
  */
 public interface STCKKey {
 
-	static final String ALL = "#{label.all}";
 	static final String APP_STOCK = "#{app.stock}";
+	static final String ALL = "#{label.all}";
 	static final String CLOSING_DATE = "#{label.closing.date}";
 	static final String COST_CENTER = "#{label.cost.center}";
 	static final String MEASURE = "#{label.measure}";
 	static final String MINIMUN_AMOUNT = "#{label.minimun.amount}";
+	static final String NOTIFY_RESPONSABLE = "#{label.notify.responsable}";
 	static final String OPENING_DATE = "#{label.opening.date}";
 	static final String PRODUCT = "#{label.product}";
 	static final String PRODUCTS = "#{label.products}";

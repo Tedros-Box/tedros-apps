@@ -28,8 +28,8 @@ public class StockConfigItem extends TEntity  {
 	@JoinColumn(name="prod_id", nullable=false)
 	private Product product;
 	
-	@Column(nullable = false)
-	private Double amount;
+	@Column
+	private Boolean notify;
 
 	@Column(nullable = false)
 	private Double minimumAmount;
@@ -42,14 +42,6 @@ public class StockConfigItem extends TEntity  {
 		this.product = product;
 	}
 
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
 	public Double getMinimumAmount() {
 		return minimumAmount;
 	}
@@ -58,12 +50,20 @@ public class StockConfigItem extends TEntity  {
 		this.minimumAmount = minimumAmount;
 	}
 
+	public Boolean getNotify() {
+		return notify;
+	}
+
+	public void setNotify(Boolean notify) {
+		this.notify = notify;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
 		result = prime * result + ((minimumAmount == null) ? 0 : minimumAmount.hashCode());
+		result = prime * result + ((notify == null) ? 0 : notify.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		return result;
 	}
@@ -77,15 +77,15 @@ public class StockConfigItem extends TEntity  {
 		if (!(obj instanceof StockConfigItem))
 			return false;
 		StockConfigItem other = (StockConfigItem) obj;
-		if (amount == null) {
-			if (other.amount != null)
-				return false;
-		} else if (!amount.equals(other.amount))
-			return false;
 		if (minimumAmount == null) {
 			if (other.minimumAmount != null)
 				return false;
 		} else if (!minimumAmount.equals(other.minimumAmount))
+			return false;
+		if (notify == null) {
+			if (other.notify != null)
+				return false;
+		} else if (!notify.equals(other.notify))
 			return false;
 		if (product == null) {
 			if (other.product != null)
