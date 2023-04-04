@@ -89,11 +89,6 @@ public class StockItem extends TEntity implements StockableItem {
 				return false;
 		} else if (!amount.equals(other.amount))
 			return false;
-		if (event == null) {
-			if (other.event != null)
-				return false;
-		} else if (!event.equals(other.event))
-			return false;
 		if (product == null) {
 			if (other.product != null)
 				return false;

@@ -78,7 +78,8 @@ public class Employee extends NaturalPerson {
 	public String toString() {
 		return (getType() != null ? getType().getName() + ", " : "")
 				+ (employer != null ? employer.getName() + ", " : "")
-				+ (getName() != null ?  getName() : "");
+				+ (getName() != null ?  getName() : "")
+				+ (getLastName() != null ?  " " + getLastName() : "");
 	}
 
 	@Override

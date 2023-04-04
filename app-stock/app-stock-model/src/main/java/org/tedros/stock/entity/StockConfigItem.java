@@ -29,10 +29,10 @@ public class StockConfigItem extends TEntity  {
 	private Product product;
 	
 	@Column
-	private Boolean notify;
+	private Boolean notify = false;
 
 	@Column
-	private Boolean allowNegativeStock;
+	private Boolean allowNegativeStock = false;
 	
 	@Column(nullable = false)
 	private Double minimumAmount;
