@@ -6,9 +6,7 @@ package org.tedros.stock.server.cdi.bo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -49,7 +47,7 @@ public class StockEventBO extends TGenericBO<StockEvent> {
 		return eao;
 	}
 	
-	public void validate(StockOut ev) {
+	public String validate(StockOut ev) throws TBusinessException{
 		StockConfig cfg = null;
 		try {
 			StockConfig ex = new StockConfig();
@@ -57,37 +55,52 @@ public class StockEventBO extends TGenericBO<StockEvent> {
 			cfg = cfgBo.find(ex);
 		}catch(Exception ex) {}
 			
-		Stream<StockItem> s = ev.getItems().stream();
+		//Stream<StockItem> s = ev.getItems().stream();
 		// get a list of config items from output products
 		List<StockConfigItem> citems = cfg != null 
 				? cfg.getItems().stream()
 				.filter(p->{
-					return s.anyMatch(x -> x.getProduct().equals(p.getProduct()));
+					return ev.getItems().stream()
+							.anyMatch(x -> x.getProduct().equals(p.getProduct()));
 				}).collect(Collectors.toList())
 					: new ArrayList<>();
 		// get the inventory list from output products
 		List<Product> prods = new ArrayList<>();
-		s.forEach(p->prods.add(p.getProduct()));
+		ev.getItems().forEach(p->prods.add(p.getProduct()));
 		List<Inventory> iLst = invEao.calculate(ev.getCostCenter(), null, prods, null, null);
 		
-		StringBuilder sbExc = new StringBuilder();
-		Stream<Inventory> is = iLst.stream();
-		Stream<StockConfigItem> cs = citems.stream();
+
+		StringBuilder sbWarn = new StringBuilder("");
+		StringBuilder sbExc = new StringBuilder("");
+		//Stream<Inventory> is = iLst.stream();
+		//Stream<StockConfigItem> cs = citems.stream();
 		// validate minimum amount
-		s.forEach(si->{
-			Optional<StockConfigItem> cOp = cs
+		ev.getItems().stream().forEach(si->{
+			
+			Optional<StockConfigItem> cOp = citems.stream()
 			.filter(x->x.getProduct().equals(si.getProduct()))
 			.findFirst();
 			StockConfigItem i = cOp.isPresent() ? cOp.get() : null;
 			
 			Boolean allowNeg = i!=null ? i.getAllowNegativeStock() : false;
-			Optional<Inventory> op = is.filter(p->{
+			Optional<Inventory> op = iLst.stream().filter(p->{
 				return p.getProdId().equals(si.getProduct().getId());
 			}).findFirst();
 			
-			Double output = op.isPresent() 
-					? op.get().getAmount() - si.getAmount() 
-							: - si.getAmount();
+			Double current = 0D;
+			if(op.isPresent()) {
+				current = op.get().getAmount();
+				if(!si.isNew()) {
+					try {
+						StockItem svItem = invEao.findById(si);
+						current += svItem.getAmount();
+					} catch (Exception e) {}
+				}
+			}
+			Double output = current - si.getAmount();
+					
+			if(i!=null && i.getMinimumAmount()>=output)
+				sbWarn.append(si.getProduct().toString()+" #{reach.minimum.amount}\n");
 			
 			if((allowNeg==null || !allowNeg) && output<0)
 				sbExc.append(si.getProduct().toString()+" #{with.insufficient.stock}\n");
@@ -95,6 +108,8 @@ public class StockEventBO extends TGenericBO<StockEvent> {
 		
 		if(sbExc.length()>0)
 			throw new TBusinessException(sbExc.toString());
+		
+		return sbWarn.toString();
 		
 	}
 }

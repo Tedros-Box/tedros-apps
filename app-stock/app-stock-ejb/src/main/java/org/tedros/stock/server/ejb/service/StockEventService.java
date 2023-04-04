@@ -14,7 +14,9 @@ import javax.inject.Inject;
 
 import org.tedros.server.cdi.bo.ITGenericBO;
 import org.tedros.server.ejb.service.TEjbService;
+import org.tedros.server.exception.TBusinessException;
 import org.tedros.stock.entity.StockEvent;
+import org.tedros.stock.entity.StockOut;
 import org.tedros.stock.server.cdi.bo.StockEventBO;
 
 /**
@@ -34,5 +36,9 @@ public class StockEventService extends TEjbService<StockEvent>  {
 	@Override
 	public ITGenericBO<StockEvent> getBussinesObject() {
 		return bo;
+	}
+	
+	public String validate(StockOut ev) throws TBusinessException{
+		return bo.validate(ev);
 	}
 }

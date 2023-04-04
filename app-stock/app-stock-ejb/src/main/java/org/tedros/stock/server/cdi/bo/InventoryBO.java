@@ -43,16 +43,16 @@ public class InventoryBO extends TGenericBO<StockItem> {
 	
 	public List<Inventory> calculate(CostCenter cc, Date date, Product product, String orderBy, String asc){
 		
-		List<Inventory> l = eao.calculate(cc, date, Arrays.asList(product), orderBy, asc);	
+		List<Inventory> l = eao.calculate(cc, date, product!=null?Arrays.asList(product):null, orderBy, asc);	
 		
 		StockConfig cfg = new StockConfig();
 		cfg.setCostCenter(cc);
 		try {
 			cfg = cfgBo.find(cfg);
 			if(cfg!=null) {
-				Stream<Inventory> s = l.stream();
+				//Stream<Inventory> s = l.stream();
 				cfg.getItems().forEach(i->{
-					Optional<Inventory> op = s.filter(p->{
+					Optional<Inventory> op = l.stream().filter(p->{
 						return p.getProdId().equals(i.getProduct().getId());
 					}).findFirst();
 					if(op.isPresent())
