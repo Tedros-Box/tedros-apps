@@ -41,6 +41,7 @@ public interface STCKKey {
 	static final String MODULE_PRODUCTS = "#{module.products}";
 	static final String REACH_MINIMUM_AMOUNT = "#{reach.minimum.amount}";
 	static final String TITLE_REPORT_INVENTORY = "#{title.report.inventory}";
+	static final String TITLE_REPORT_PRODUCT = "#{title.report.product}";
 	static final String TOOLTIP_SIZE = "#{tooltip.size}";
 	static final String VIEW_COST_CENTER = "#{view.cost.center}";
 	static final String VIEW_ENTRY_TYPE = "#{view.entry.type}";
@@ -48,6 +49,7 @@ public interface STCKKey {
 	static final String VIEW_INVENTORY_REPORT = "#{view.inventory.report}";
 	static final String VIEW_OUT_TYPE = "#{view.out.type}";
 	static final String VIEW_PRODUCT = "#{view.product}";
+	static final String VIEW_PRODUCT_REPORT = "#{view.product.report}";
 	static final String VIEW_STOCK_CONFIG = "#{view.stock.config}";
 	static final String VIEW_STOCK_ENTRY = "#{view.stock.entry}";
 	static final String VIEW_STOCK_OUT = "#{view.stock.out}";

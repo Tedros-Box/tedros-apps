@@ -6,8 +6,11 @@
  */
 package org.tedros.stock.server.ejb.service;
 
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import javax.ejb.ConcurrencyManagement;
+import javax.ejb.ConcurrencyManagementType;
+import javax.ejb.Lock;
+import javax.ejb.LockType;
+import javax.ejb.Singleton;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
@@ -25,8 +28,12 @@ import org.tedros.stock.server.cdi.bo.StockEventBO;
  * @author Davis Dun
  *
  */
-@LocalBean
-@Stateless(name="StockEventService")
+/*@LocalBean
+@Stateless(name="StockEventService")*/
+
+@Singleton
+@Lock(LockType.READ) 
+@ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 public class StockEventService extends TEjbService<StockEvent>  {
 	
@@ -38,7 +45,28 @@ public class StockEventService extends TEjbService<StockEvent>  {
 		return bo;
 	}
 	
+	@Lock(LockType.WRITE) 
 	public String validate(StockOut ev) throws TBusinessException{
 		return bo.validate(ev);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.tedros.server.ejb.service.TEjbService#save(org.tedros.server.entity.ITEntity)
+	 */
+	@Lock(LockType.WRITE) 
+	@Override
+	public StockEvent save(StockEvent entidade) throws Exception {
+		// TODO Auto-generated method stub
+		return super.save(entidade);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.tedros.server.ejb.service.TEjbService#remove(org.tedros.server.entity.ITEntity)
+	 */
+	@Lock(LockType.WRITE) 
+	@Override
+	public void remove(StockEvent entidade) throws Exception {
+		// TODO Auto-generated method stub
+		super.remove(entidade);
 	}
 }

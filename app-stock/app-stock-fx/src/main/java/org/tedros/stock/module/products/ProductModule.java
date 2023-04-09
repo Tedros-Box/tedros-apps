@@ -8,11 +8,15 @@ import org.tedros.core.annotation.TLoadable;
 import org.tedros.core.annotation.TModel;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
-import org.tedros.fx.presenter.dynamic.view.TDynaView;
+import org.tedros.fx.presenter.dynamic.view.TDynaGroupView;
+import org.tedros.fx.presenter.view.group.TGroupPresenter;
+import org.tedros.fx.presenter.view.group.TGroupView;
+import org.tedros.fx.presenter.view.group.TViewItem;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.module.products.model.ProductMV;
+import org.tedros.stock.module.report.model.ProductReportMV;
 
 /**
  * @author Davis Dun
@@ -34,7 +38,10 @@ public class ProductModule extends TModule {
 	 */
 	@Override
 	public void tStart() {
-		super.tShowView(new TDynaView<>(this, ProductMV.class));
+		super.tShowView(new TGroupView<TGroupPresenter>(this, STCKKey.MODULE_PRODUCTS, 
+				new TViewItem(TDynaGroupView.class, ProductMV.class, STCKKey.VIEW_PRODUCT), 
+				new TViewItem(TDynaGroupView.class, ProductReportMV.class, STCKKey.VIEW_PRODUCT_REPORT)
+				));
 	}
 
 }
