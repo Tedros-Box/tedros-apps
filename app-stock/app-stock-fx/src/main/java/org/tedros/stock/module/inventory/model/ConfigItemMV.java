@@ -3,7 +3,6 @@
  */
 package org.tedros.stock.module.inventory.model;
 
-import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TCallbackFactory;

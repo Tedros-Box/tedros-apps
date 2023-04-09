@@ -54,8 +54,7 @@ public class StockEventBO extends TGenericBO<StockEvent> {
 			ex.setCostCenter(ev.getCostCenter());
 			cfg = cfgBo.find(ex);
 		}catch(Exception ex) {}
-			
-		//Stream<StockItem> s = ev.getItems().stream();
+		
 		// get a list of config items from output products
 		List<StockConfigItem> citems = cfg != null 
 				? cfg.getItems().stream()
@@ -64,17 +63,16 @@ public class StockEventBO extends TGenericBO<StockEvent> {
 							.anyMatch(x -> x.getProduct().equals(p.getProduct()));
 				}).collect(Collectors.toList())
 					: new ArrayList<>();
+				
 		// get the inventory list from output products
 		List<Product> prods = new ArrayList<>();
 		ev.getItems().forEach(p->prods.add(p.getProduct()));
 		List<Inventory> iLst = invEao.calculate(ev.getCostCenter(), null, prods, null, null);
 		
-
 		StringBuilder sbWarn = new StringBuilder("");
 		StringBuilder sbExc = new StringBuilder("");
-		//Stream<Inventory> is = iLst.stream();
-		//Stream<StockConfigItem> cs = citems.stream();
-		// validate minimum amount
+		
+		// validate 
 		ev.getItems().stream().forEach(si->{
 			
 			Optional<StockConfigItem> cOp = citems.stream()

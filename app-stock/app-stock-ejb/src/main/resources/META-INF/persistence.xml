@@ -9,6 +9,8 @@
 		<jta-data-source>tedrosDataSource</jta-data-source>
 		
 		
+		<class>org.tedros.core.notify.model.TNotify</class>
+		<class>org.tedros.core.notify.model.TNotifyLog</class>
 		<class>org.tedros.common.model.TFileEntity</class>
 		<class>org.tedros.common.model.TByteEntity</class>
 		
@@ -55,17 +57,7 @@
 		<class>org.tedros.person.model.VoluntaryStatus</class>
 		<class>org.tedros.person.model.VoluntaryType</class>
 		<class>org.tedros.person.model.NaturalType</class>
-		<class>org.tedros.person.model.NaturalStatus</class>
-		
-		<class>org.tedros.services.model.Contracted</class>
-		<class>org.tedros.services.model.Contractor</class>
-		<class>org.tedros.services.model.PaymentPlan</class>
-		<class>org.tedros.services.model.Plan</class>
-		<class>org.tedros.services.model.Service</class>
-		<class>org.tedros.services.model.ServiceLocation</class>
-		<class>org.tedros.services.model.ServiceType</class>
-		<class>org.tedros.services.model.Contract</class>
-		<class>org.tedros.services.model.ContractualAgreement</class>
+		<class>org.tedros.person.model.NaturalStatus</class> 
 		
 		<class>org.tedros.stock.entity.Product</class>
 		<class>org.tedros.stock.entity.CostCenter</class>

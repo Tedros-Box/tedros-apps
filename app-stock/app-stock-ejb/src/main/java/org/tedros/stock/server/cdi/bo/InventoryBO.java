@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -50,7 +49,6 @@ public class InventoryBO extends TGenericBO<StockItem> {
 		try {
 			cfg = cfgBo.find(cfg);
 			if(cfg!=null) {
-				//Stream<Inventory> s = l.stream();
 				cfg.getItems().forEach(i->{
 					Optional<Inventory> op = l.stream().filter(p->{
 						return p.getProdId().equals(i.getProduct().getId());

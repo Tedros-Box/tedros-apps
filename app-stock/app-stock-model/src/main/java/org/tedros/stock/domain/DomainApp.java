@@ -22,11 +22,14 @@ public interface DomainApp {
 	static final String STOCK_ENTRY = "STOCK_ENTRY";
 	static final String STOCK_OUT = "STOCK_OUT";
 	static final String INVENTORY_REPORT = "INVENTORY_REPORT";
+	static final String PRODUCT_REPORT = "PRODUCT_REPORT";
 	static final String SEP = SEPARATOR;
 	
 	static final String MNEMONIC = "STCK";
 
-
+	static final String PRODUCT_REPORT_FORM_ID = MNEMONIC + SEP + PRODUCT_REPORT + SEP + FORM;
+	static final String PRODUCT_REPORT_VIEW_ID = MNEMONIC + SEP + PRODUCT_REPORT + SEP + VIEW;
+	
 	static final String INVENTORY_REPORT_FORM_ID = MNEMONIC + SEP + INVENTORY_REPORT + SEP + FORM;
 	static final String INVENTORY_REPORT_VIEW_ID = MNEMONIC + SEP + INVENTORY_REPORT + SEP + VIEW;
 	

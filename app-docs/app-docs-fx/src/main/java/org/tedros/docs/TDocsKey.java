@@ -8,7 +8,7 @@ package org.tedros.docs;
  *
  */
 public interface TDocsKey {
-	
+
 	static final String APP_DOCS = "#{app.docs}";
 	static final String FORM_DOCS_STATE = "#{form.docs.state}";
 	static final String FORM_DOCS_TYPE = "#{form.docs.type}";
@@ -18,8 +18,6 @@ public interface TDocsKey {
 	static final String CODE = "#{label.code}";
 	static final String CONTENT = "#{label.content}";
 	static final String DATE = "#{label.date}";
-	static final String DATE_INSERT = "#{label.date.insert}";
-	static final String DATE_UPDATE = "#{label.date.update}";
 	static final String DESCRIPTION = "#{label.description}";
 	static final String DOCS_TYPE = "#{label.docs.type}";
 	static final String DOCUMENT = "#{label.document}";

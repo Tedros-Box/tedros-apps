@@ -22,16 +22,28 @@ public class AppResource {
 	private static final String FOLDER = TConstant.UUI;
 	public static final String APP_MODULE_PATH = TedrosFolder.MODULE_FOLDER.getFullPath()+FOLDER+File.separator;
 	private static final String INVENTORY_JASPER ="inventory.jasper";
-	//private static final String LEGALPERSON_JASPER ="legal_person.jasper";
+	private static final String PRODUCT_JASPER ="products.jasper";
 	//private static final String NATURALPERSON_JASPER ="natural_person.jasper";
 	
 	private static final String[] FILES = {
-			INVENTORY_JASPER, "inventory.jrxml"
+			INVENTORY_JASPER, "inventory.jrxml", 
+			PRODUCT_JASPER, "products.jrxml", 
+			"subrep_images.jasper", "subrep_images.jrxml", 
+			"subrep_textarea.jasper", "subrep_textarea.jrxml"
 			};
 	/**
 	 * 
 	 */
 	public AppResource() {
+	}
+	
+	public static InputStream getProductJasperInputStream() throws FileNotFoundException {
+		File f = new File(APP_MODULE_PATH+PRODUCT_JASPER);
+		if(f.isFile()) {
+			return new FileInputStream(f);
+		}
+		
+		return null;
 	}
 	
 	public static InputStream getInventoryJasperInputStream() throws FileNotFoundException {
