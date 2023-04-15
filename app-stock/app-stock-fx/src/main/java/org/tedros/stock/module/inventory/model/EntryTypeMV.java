@@ -12,12 +12,14 @@ import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.view.TAiAssistant;
 import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.ejb.controller.IEventTypeController;
 import org.tedros.stock.entity.EntryType;
+import org.tedros.stock.module.inventory.assistant.EntryTypeJson;
 
 /**
  * @author Davis Gordon
@@ -26,12 +28,13 @@ import org.tedros.stock.entity.EntryType;
 @TForm(name = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IEventTypeController.JNDI_NAME, model=EntryType.class)
 @TListViewPresenter(
+		aiAssistant=@TAiAssistant(jsonModel = EntryTypeJson.class, modelViewClass = EntryTypeMV.class, show=true),
 		paginator=@TPaginator(entityClass = EntryType.class, serviceName = IEventTypeController.JNDI_NAME,
 		show=true, showSearchField=true, searchFieldName="name", 
 		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
 		presenter=@TPresenter(decorator = @TDecorator(viewTitle=STCKKey.VIEW_ENTRY_TYPE,
 		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))
+	behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.ENTRY_TYPE_FORM_ID, appName = STCKKey.APP_STOCK,
 	moduleName = STCKKey.MODULE_INVENTORY, viewName = STCKKey.VIEW_ENTRY_TYPE,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 

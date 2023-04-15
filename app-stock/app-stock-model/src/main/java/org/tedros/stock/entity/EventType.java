@@ -55,7 +55,6 @@ public class EventType extends TVersionEntity {
 	 */
 	public EventType(Long id, Integer versionNum, Date lastUpdate, Date insertDate) {
 		super(id, versionNum, lastUpdate, insertDate);
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getName() {
