@@ -20,4 +20,9 @@ public class EntryTypeJson extends TJsonModel<EntryType> {
 	public EntryTypeJson() {
 		super.addData(new EntryType());
 	}
+
+	@Override
+	public Class<EntryType> getModelType() {
+		return EntryType.class;
+	}
 }

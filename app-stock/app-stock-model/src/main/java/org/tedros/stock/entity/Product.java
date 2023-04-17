@@ -17,8 +17,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.tedros.common.model.TFileEntity;
 import org.tedros.server.annotation.TCaseSensitive;
-import org.tedros.server.annotation.TEntityImportRule;
-import org.tedros.server.annotation.TFieldImportRule;
+import org.tedros.server.annotation.TImportInfo;
+import org.tedros.server.annotation.TField;
 import org.tedros.server.annotation.TFileType;
 import org.tedros.server.entity.TVersionEntity;
 import org.tedros.stock.domain.DomainSchema;
@@ -31,7 +31,7 @@ import org.tedros.stock.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.product, schema = DomainSchema.schema, 
 uniqueConstraints= {@UniqueConstraint(name="prodCodeUK", columnNames = { "code" })} )
-@TEntityImportRule(description = "Regras para importar um arquivo para a tabela de produtos ", 
+@TImportInfo(description = "Regras para importar um arquivo para a tabela de produtos ", 
 fileType = { TFileType.CSV, TFileType.XLS })
 public class Product extends TVersionEntity {
 
@@ -39,14 +39,14 @@ public class Product extends TVersionEntity {
 	private static final long serialVersionUID = -4590169775657544834L;
 
 	@Column(length=60)
-	@TFieldImportRule(required = false, 
-		description = "Codigo do produto", column = "Codigo", 
+	@TField(required = false, 
+		label = "Codigo do produto", column = "Codigo", 
 		numberType=Integer.class, example="22")
 	private String code;
 	
 	@Column(length=120, nullable = false)
-	@TFieldImportRule(required = true, 
-	description = "Nome do produto", column = "Nome Produto",
+	@TField(required = true, 
+	label = "Nome do produto", column = "Nome Produto",
 	example="Arroz")
 	private String name;
 	
@@ -57,8 +57,8 @@ public class Product extends TVersionEntity {
 	private String trademark;
 	
 	@Column(length=20)
-	@TFieldImportRule(required = true, 
-	description = "Unidade medida", column = "Unidade Medida",
+	@TField(required = true, 
+	label = "Unidade medida", column = "Unidade Medida",
 	example="KG", caseSensitive=TCaseSensitive.UPPER, 
 	possibleValues= {"KG", "LT", "UNID","PCT","ML","GR"})
 	private String unitMeasure;

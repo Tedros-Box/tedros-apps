@@ -14,6 +14,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import org.tedros.server.annotation.TField;
 import org.tedros.server.entity.TVersionEntity;
 import org.tedros.stock.domain.DomainSchema;
 import org.tedros.stock.domain.DomainTables;
@@ -33,12 +34,15 @@ public class EventType extends TVersionEntity {
 	private static final long serialVersionUID = 7550169881094984766L;
 
 	@Column(length=20)
+	@TField(label = "#{label.code}", maxLength=20)
 	private String code;
 	
 	@Column(length=40, nullable = false)
+	@TField(label = "#{label.name}", maxLength=40, required=true)
 	private String name;
 	
 	@Column(length=200)
+	@TField(label = "#{label.description}", maxLength=200)
 	private String description;
 	
 	/**
