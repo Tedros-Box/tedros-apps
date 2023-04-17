@@ -16,8 +16,8 @@ import org.tedros.common.model.TFileEntity;
 import org.tedros.location.domain.DomainSchema;
 import org.tedros.location.domain.DomainTables;
 import org.tedros.server.annotation.TCaseSensitive;
-import org.tedros.server.annotation.TEntityImportRule;
-import org.tedros.server.annotation.TFieldImportRule;
+import org.tedros.server.annotation.TImportInfo;
+import org.tedros.server.annotation.TField;
 import org.tedros.server.annotation.TFileType;
 import org.tedros.server.entity.TVersionEntity;
 
@@ -28,105 +28,105 @@ import org.tedros.server.entity.TVersionEntity;
 @Entity
 @Table(name = DomainTables.country, schema = DomainSchema.schema, 
 uniqueConstraints= {@UniqueConstraint(name="countryCodeUnIdx", columnNames = { "iso2Code" })} )
-@TEntityImportRule(description = "#{country.import.rule.desc}", 
+@TImportInfo(description = "#{country.import.rule.desc}", 
 fileType = { TFileType.CSV, TFileType.XLS })
 public class Country extends TVersionEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=2, nullable=false)
-	@TFieldImportRule(required = true, 
-	description = "#{label.country.code} (ISO2)", column = "iso2", 
+	@TField(required = true, 
+	label = "#{label.country.code} (ISO2)", column = "iso2", 
 	example="BR", caseSensitive=TCaseSensitive.UPPER, maxLength=2)
 	private String iso2Code;
 	
 	@Column(length=60, nullable=false)
-	@TFieldImportRule(required = true, 
-	description = "#{label.name}", column = "name", 
+	@TField(required = true, 
+	label = "#{label.name}", column = "name", 
 	example="Brazil", maxLength=60)
 	private String name;
 	
 	@Column(length=3, nullable=false)
-	@TFieldImportRule(required = true, 
-	description = "#{label.country.code} (ISO3)", column = "iso3", 
+	@TField(required = true, 
+	label = "#{label.country.code} (ISO3)", column = "iso3", 
 	example="BRA", caseSensitive=TCaseSensitive.UPPER, maxLength=3)
 	private String iso3Code;
 	
 	@Column
-	@TFieldImportRule(required = false, 
-	description = "#{label.numeric.code}", column = "numeric_code", 
+	@TField(required = false, 
+	label = "#{label.numeric.code}", column = "numeric_code", 
 	example="76", numberType=Long.class)
 	private Long numericCode;
 	
 	@Column(length=120, nullable=false)
-	@TFieldImportRule(required = true, 
-	description = "#{label.capital}", column = "capital", 
+	@TField(required = true, 
+	label = "#{label.capital}", column = "capital", 
 	example="Brasilia", maxLength=120)
 	private String capital;
 	
 	@Column(length=60)
-	@TFieldImportRule(required = false, 
-	description = "#{label.population.name}", column = "population_name", 
+	@TField(required = false, 
+	label = "#{label.population.name}", column = "population_name", 
 	example="Brazilians", maxLength=60)
 	private String populationName;
 	
 	@Column
-	@TFieldImportRule(required = false, 
-	description = "#{label.total.area}", column = "total_area", 
+	@TField(required = false, 
+	label = "#{label.total.area}", column = "total_area", 
 	example="8514877", numberType=Long.class)
 	private Long totalArea;
 	
 	@Column
-	@TFieldImportRule(required = false, 
-	description = "#{label.population}", column = "population", 
+	@TField(required = false, 
+	label = "#{label.population}", column = "population", 
 	example="212559417", numberType=Long.class)
 	private Long population;
 	
 	@Column
-	@TFieldImportRule(required = false, 
-	description = "#{label.idd.code}", column = "idd_code", 
+	@TField(required = false, 
+	label = "#{label.idd.code}", column = "idd_code", 
 	example="55", numberType=Integer.class)
 	private Integer iddCode;
 	
 	@Column(length=3)
-	@TFieldImportRule(required = false, 
-	description = "#{label.currency.code}", column = "currency_code", 
+	@TField(required = false, 
+	label = "#{label.currency.code}", column = "currency_code", 
 	example="BRL", maxLength=3)
 	private String currencyCode;
 	
 	@Column(length=60)
-	@TFieldImportRule(required = false, 
-	description = "#{label.currency.name}", column = "currency_name", 
+	@TField(required = false, 
+	label = "#{label.currency.name}", column = "currency_name", 
 	example="Brazilian Real", maxLength=60)
 	private String currencyName;
 	
 	@Column(length=2)
-	@TFieldImportRule(required = false, 
-	description = "#{label.lang.code}", column = "lang_code", 
+	@TField(required = false, 
+	label = "#{label.lang.code}", column = "lang_code", 
 	example="PT", caseSensitive=TCaseSensitive.UPPER, maxLength=2)
 	private String langCode;
 	
 	@Column(length=60)
-	@TFieldImportRule(required = false, 
-	description = "#{label.lang.name}", column = "lang_name", 
+	@TField(required = false, 
+	label = "#{label.lang.name}", column = "lang_name", 
 	example="Portuguese", caseSensitive=TCaseSensitive.UPPER, maxLength=60)
 	private String langName;
 	
 	@Column(length=2)
-	@TFieldImportRule(required = false, 
-	description = "#{label.cctld}", column = "cctld", 
+	@TField(required = false, 
+	label = "#{label.cctld}", column = "cctld", 
 	example="br", caseSensitive=TCaseSensitive.LOWER, maxLength=2)
 	private String cctld;
 	
 	@Column(length=20)
-	@TFieldImportRule(required = false, 
-	description = "Latitude", column = "latitude", 
+	@TField(required = false, 
+	label = "Latitude", column = "latitude", 
 	example="-14.235004",  maxLength=20)
 	private String latitude;
 	
 	@Column(length=20)
-	@TFieldImportRule(required = false, 
-	description = "Longitude", column = "longitude", 
+	@TField(required = false, 
+	label = "Longitude", column = "longitude", 
 	example="-51.92528",  maxLength=20)
 	private String longitude;
 	

@@ -10,8 +10,8 @@ import javax.persistence.Table;
 import org.tedros.location.domain.DomainSchema;
 import org.tedros.location.domain.DomainTables;
 import org.tedros.server.annotation.TCaseSensitive;
-import org.tedros.server.annotation.TEntityImportRule;
-import org.tedros.server.annotation.TFieldImportRule;
+import org.tedros.server.annotation.TImportInfo;
+import org.tedros.server.annotation.TField;
 import org.tedros.server.annotation.TFileType;
 import org.tedros.server.entity.TVersionEntity;
 
@@ -21,52 +21,52 @@ import org.tedros.server.entity.TVersionEntity;
  */
 @Entity
 @Table(name = DomainTables.city, schema = DomainSchema.schema)
-@TEntityImportRule(description = "#{city.import.rule.desc}", 
+@TImportInfo(description = "#{city.import.rule.desc}", 
 fileType = { TFileType.CSV, TFileType.XLS })
 public class City extends TVersionEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=2, nullable=false)
-	@TFieldImportRule(required = true, 
-	description = "#{label.country.code} (ISO2)", column = "country_iso2", 
+	@TField(required = true, 
+	label = "#{label.country.code} (ISO2)", column = "country_iso2", 
 	example="BR", caseSensitive=TCaseSensitive.UPPER, maxLength=2)
 	private String countryIso2Code;
 	
 	@Column(length=120, nullable=false)
-	@TFieldImportRule(required = true, 
-	description = "#{label.name}", column = "name", 
+	@TField(required = true, 
+	label = "#{label.name}", column = "name", 
 	example="São Paulo", maxLength=120)
 	private String name;
 	
 	@Column(length=10, nullable=true)
-	@TFieldImportRule(required = false, 
-	description = "#{label.capital}", column = "capital", 
+	@TField(required = false, 
+	label = "#{label.capital}", column = "capital", 
 	example="admin",possibleValues= {"admin","primary","minor"},  maxLength=10)
 	private String capital;
 	
 
 	@Column(length=120, nullable=true)
-	@TFieldImportRule(required = false, 
-	description = "#{label.admin.area}", column = "admin_name", 
+	@TField(required = false, 
+	label = "#{label.admin.area}", column = "admin_name", 
 	example="São Paulo",  maxLength=120)
 	private String adminArea;
 	
 	@Column
-	@TFieldImportRule(required = false, 
-	description = "#{label.population}", column = "population", 
+	@TField(required = false, 
+	label = "#{label.population}", column = "population", 
 	example="212559417", numberType=Long.class)
 	private Long population;
 	
 	@Column(length=20)
-	@TFieldImportRule(required = false, 
-	description = "Latitude", column = "lat", 
+	@TField(required = false, 
+	label = "Latitude", column = "lat", 
 	example="-14.235004",  maxLength=20)
 	private String latitude;
 	
 	@Column(length=20)
-	@TFieldImportRule(required = false, 
-	description = "Longitude", column = "lng", 
+	@TField(required = false, 
+	label = "Longitude", column = "lng", 
 	example="-51.92528",  maxLength=20)
 	private String longitude;
 

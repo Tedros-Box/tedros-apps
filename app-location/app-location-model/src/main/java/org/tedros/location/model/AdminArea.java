@@ -10,8 +10,8 @@ import javax.persistence.Table;
 import org.tedros.location.domain.DomainSchema;
 import org.tedros.location.domain.DomainTables;
 import org.tedros.server.annotation.TCaseSensitive;
-import org.tedros.server.annotation.TEntityImportRule;
-import org.tedros.server.annotation.TFieldImportRule;
+import org.tedros.server.annotation.TImportInfo;
+import org.tedros.server.annotation.TField;
 import org.tedros.server.annotation.TFileType;
 import org.tedros.server.entity.TVersionEntity;
 
@@ -21,21 +21,21 @@ import org.tedros.server.entity.TVersionEntity;
  */
 @Entity
 @Table(name = DomainTables.adminArea, schema = DomainSchema.schema)
-@TEntityImportRule(description = "#{city.import.rule.desc}", 
+@TImportInfo(description = "#{city.import.rule.desc}", 
 fileType = { TFileType.CSV, TFileType.XLS })
 public class AdminArea extends TVersionEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Column(length=2, nullable=false)
-	@TFieldImportRule(required = true, 
-	description = "#{label.country.code} (ISO2)", column = "country_iso2", 
+	@TField(required = true, 
+	label = "#{label.country.code} (ISO2)", column = "country_iso2", 
 	example="BR", caseSensitive=TCaseSensitive.UPPER, maxLength=2)
 	private String countryIso2Code;
 	
 	@Column(length=120, nullable=false)
-	@TFieldImportRule(required = true, 
-	description = "#{label.name}", column = "name", 
+	@TField(required = true, 
+	label = "#{label.name}", column = "name", 
 	example="São Paulo", maxLength=120)
 	private String name;
 	
