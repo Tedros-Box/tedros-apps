@@ -28,13 +28,13 @@ import org.tedros.stock.module.inventory.assistant.EntryTypeJson;
 @TForm(name = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IEventTypeController.JNDI_NAME, model=EntryType.class)
 @TListViewPresenter(
-		aiAssistant=@TAiAssistant(jsonModel = EntryTypeJson.class, modelViewClass = EntryTypeMV.class, show=true),
-		paginator=@TPaginator(entityClass = EntryType.class, serviceName = IEventTypeController.JNDI_NAME,
+	aiAssistant=@TAiAssistant(jsonModel = EntryTypeJson.class, modelViewClass = EntryTypeMV.class, show=true),
+	paginator=@TPaginator(entityClass = EntryType.class, serviceName = IEventTypeController.JNDI_NAME,
 		show=true, showSearchField=true, searchFieldName="name", 
 		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
-		presenter=@TPresenter(decorator = @TDecorator(viewTitle=STCKKey.VIEW_ENTRY_TYPE,
-		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false)))
+	presenter=@TPresenter(
+		decorator=@TDecorator(viewTitle=STCKKey.VIEW_ENTRY_TYPE, buildModesRadioButton=false),
+		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.ENTRY_TYPE_FORM_ID, appName = STCKKey.APP_STOCK,
 	moduleName = STCKKey.MODULE_INVENTORY, viewName = STCKKey.VIEW_ENTRY_TYPE,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
