@@ -20,6 +20,8 @@ import javax.persistence.TemporalType;
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Davis Gordon
  *
@@ -42,6 +44,7 @@ public class LegalPerson extends Person {
 	@Temporal(TemporalType.DATE)
 	private Date endActivities;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="employer", 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	public Set<Employee> staff;
