@@ -6,7 +6,9 @@ package org.tedros.stock.module.products.model;
 import org.tedros.common.model.TFileEntity;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.control.TBarcodeGenerator;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDoubleField;
 import org.tedros.fx.annotation.control.TFieldBox;
@@ -71,8 +73,11 @@ public class ProductMV extends TEntityModelView<Product> {
 	tabs = { 
 			@TTab(text = TUsualKey.MAIN_DATA, 
 				content = @TContent(detailForm=@TDetailForm(fields = {"code", "unitMeasure", "description"}))),
+			@TTab(text = TFxKey.BARCODE, 
+				content = @TContent(detailForm=@TDetailForm(fields = {"barcode"}))),
 			@TTab(text = TUsualKey.PICTURES, 
-				content = @TContent(detailForm=@TDetailForm(fields = {"images"}))) })
+			content = @TContent(detailForm=@TDetailForm(fields = {"images"})))  
+			})
 	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.CODE)
@@ -118,6 +123,9 @@ public class ProductMV extends TEntityModelView<Product> {
 	@TLabel(text=TUsualKey.DESCRIPTION)
 	@TTextAreaField(wrapText=true)
 	private SimpleStringProperty description;
+	
+	@TBarcodeGenerator
+	private SimpleStringProperty barcode;
 	
 	@TFieldBox(node=@TNode(id="img", parse = true))
 	@TSelectImageField(source=TEnvironment.LOCAL, 
@@ -208,5 +216,19 @@ public class ProductMV extends TEntityModelView<Product> {
 
 	public void setImages(ITObservableList<ITFileBaseModel> images) {
 		this.images = images;
+	}
+
+	/**
+	 * @return the barcode
+	 */
+	public SimpleStringProperty getBarcode() {
+		return barcode;
+	}
+
+	/**
+	 * @param barcode the barcode to set
+	 */
+	public void setBarcode(SimpleStringProperty barcode) {
+		this.barcode = barcode;
 	}
 }
