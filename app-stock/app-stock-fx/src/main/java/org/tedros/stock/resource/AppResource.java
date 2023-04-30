@@ -23,7 +23,6 @@ public class AppResource {
 	public static final String APP_MODULE_PATH = TedrosFolder.MODULE_FOLDER.getFullPath()+FOLDER+File.separator;
 	private static final String INVENTORY_JASPER ="inventory.jasper";
 	private static final String PRODUCT_JASPER ="products.jasper";
-	//private static final String NATURALPERSON_JASPER ="natural_person.jasper";
 	
 	private static final String[] FILES = {
 			INVENTORY_JASPER, "inventory.jrxml", 
@@ -36,6 +35,7 @@ public class AppResource {
 	 */
 	public AppResource() {
 	}
+
 	
 	public static InputStream getProductJasperInputStream() throws FileNotFoundException {
 		File f = new File(APP_MODULE_PATH+PRODUCT_JASPER);
