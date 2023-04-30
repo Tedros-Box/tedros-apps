@@ -12,9 +12,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.tedros.common.model.TBarcode;
 import org.tedros.common.model.TFileEntity;
 import org.tedros.server.annotation.TCaseSensitive;
 import org.tedros.server.annotation.TImportInfo;
@@ -71,6 +73,12 @@ public class Product extends TVersionEntity {
 	
 	@Column
 	private Double weight;
+	
+	@OneToOne(cascade=CascadeType.ALL, 
+			fetch=FetchType.EAGER, 
+			optional=true)
+	@JoinColumn(name="barcode_id")
+	private TBarcode barcode;
 	
 	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name=DomainTables.product_images, schema=DomainSchema.schema, 
@@ -162,10 +170,29 @@ public class Product extends TVersionEntity {
 		return  (code != null ? code + " " : "") + (name != null ? name : "");
 	}
 
+	
+	/**
+	 * @return the barcode
+	 */
+	public TBarcode getBarcode() {
+		return barcode;
+	}
+
+	/**
+	 * @param barcode the barcode to set
+	 */
+	public void setBarcode(TBarcode barcode) {
+		this.barcode = barcode;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((barcode == null) ? 0 : barcode.hashCode());
 		result = prime * result + ((code == null) ? 0 : code.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((images == null) ? 0 : images.hashCode());
@@ -178,6 +205,9 @@ public class Product extends TVersionEntity {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -187,6 +217,11 @@ public class Product extends TVersionEntity {
 		if (!(obj instanceof Product))
 			return false;
 		Product other = (Product) obj;
+		if (barcode == null) {
+			if (other.barcode != null)
+				return false;
+		} else if (!barcode.equals(other.barcode))
+			return false;
 		if (code == null) {
 			if (other.code != null)
 				return false;

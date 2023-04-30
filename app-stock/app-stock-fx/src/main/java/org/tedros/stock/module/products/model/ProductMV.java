@@ -3,6 +3,7 @@
  */
 package org.tedros.stock.module.products.model;
 
+import org.tedros.common.model.TBarcode;
 import org.tedros.common.model.TFileEntity;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
@@ -46,6 +47,7 @@ import org.tedros.stock.start.TConstant;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
 
@@ -61,7 +63,8 @@ import javafx.scene.layout.Priority;
 		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=STCKKey.VIEW_PRODUCT,
 		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))
+	behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, 
+	saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.PRODUCT_FORM_ID, appName = STCKKey.APP_STOCK,
 	moduleName = STCKKey.MODULE_PRODUCTS, viewName = STCKKey.VIEW_PRODUCT,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
@@ -124,8 +127,10 @@ public class ProductMV extends TEntityModelView<Product> {
 	@TTextAreaField(wrapText=true)
 	private SimpleStringProperty description;
 	
-	@TBarcodeGenerator
-	private SimpleStringProperty barcode;
+
+	@TLabel(text=TFxKey.BARCODE, show=false)
+	@TBarcodeGenerator(modelType = TBarcode.class, required=true)
+	private SimpleObjectProperty<TBarcode> barcode;
 	
 	@TFieldBox(node=@TNode(id="img", parse = true))
 	@TSelectImageField(source=TEnvironment.LOCAL, 
@@ -221,14 +226,14 @@ public class ProductMV extends TEntityModelView<Product> {
 	/**
 	 * @return the barcode
 	 */
-	public SimpleStringProperty getBarcode() {
+	public SimpleObjectProperty<TBarcode> getBarcode() {
 		return barcode;
 	}
 
 	/**
 	 * @param barcode the barcode to set
 	 */
-	public void setBarcode(SimpleStringProperty barcode) {
+	public void setBarcode(SimpleObjectProperty<TBarcode> barcode) {
 		this.barcode = barcode;
 	}
 }
