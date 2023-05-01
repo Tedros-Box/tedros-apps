@@ -7,6 +7,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.tedros.server.annotation.TModelInfo;
 import org.tedros.stock.domain.DomainSchema;
 import org.tedros.stock.domain.DomainTables;
 
@@ -15,6 +16,7 @@ import org.tedros.stock.domain.DomainTables;
  *
  */
 @Entity
+@TModelInfo("#{stck.info.outtype}")
 @Table(name = DomainTables.out_type, schema = DomainSchema.schema)
 @DiscriminatorValue("OUT")
 public class OutType extends EventType {
