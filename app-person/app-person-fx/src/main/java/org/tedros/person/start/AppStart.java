@@ -41,9 +41,11 @@ module = {
 		icon=TConstant.ICONS_FOLDER + "customer.png", 
 		menuIcon=TConstant.ICONS_FOLDER + "customer_menu.png"),
 	@TModule(type=CategoryModule.class,
-	name=PersonKeys.MODULE_PERSON_CATEGORIES, 
-	menu=PersonKeys.MENU_PERSON, 
-	description=PersonKeys.MODULE_DESC_PERSON_CATEGORIES)
+		name=PersonKeys.MODULE_PERSON_CATEGORIES, 
+		menu=PersonKeys.MENU_PERSON, 
+		description=PersonKeys.MODULE_DESC_PERSON_CATEGORIES,
+		icon=TConstant.ICONS_FOLDER + "person_category.png", 
+		menuIcon=TConstant.ICONS_FOLDER + "person_category_menu.png")
 
 }, packageName = "org.tedros.person")
 @TResourceBundle(resourceName={"TPerson"})
