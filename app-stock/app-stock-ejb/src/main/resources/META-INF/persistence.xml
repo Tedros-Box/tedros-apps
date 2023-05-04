@@ -15,8 +15,9 @@
 		<class>org.tedros.common.model.TBarcode</class>
 		<class>org.tedros.common.model.TByteEntity</class>
 		
-		<class>org.tedros.docs.model.Document</class>
 		<class>org.tedros.extension.model.Contact</class>
+		
+		<class>org.tedros.docs.model.Document</class>
 		<class>org.tedros.docs.model.DocumentEvent</class>
 		<class>org.tedros.docs.model.DocumentState</class>
 		<class>org.tedros.docs.model.DocumentType</class>
