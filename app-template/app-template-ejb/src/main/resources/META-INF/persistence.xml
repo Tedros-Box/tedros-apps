@@ -8,17 +8,11 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>tedrosDataSource</jta-data-source>
 		
-		
+		<class>org.tedros.core.notify.model.TNotify</class>
+		<class>org.tedros.core.notify.model.TNotifyLog</class>
 		<class>org.tedros.common.model.TFileEntity</class>
+		<class>org.tedros.common.model.TBarcode</class>
 		<class>org.tedros.common.model.TByteEntity</class>
-		<class>org.tedros.person.model.Person</class>
-		<class>org.tedros.person.model.PersonEvent</class>
-		<class>org.tedros.person.model.NaturalPerson</class>
-		<class>org.tedros.person.model.LegalPerson</class>
-		<class>org.tedros.person.model.Employee</class>
-		<class>org.tedros.person.model.LegalType</class>
-		<class>org.tedros.person.model.PersonAttributes</class>
-		<class>org.tedros.person.model.StaffType</class>
 		
 		<class>org.tedros.docs.model.Document</class>
 		<class>org.tedros.extension.model.Contact</class>
@@ -34,6 +28,37 @@
 		<class>org.tedros.location.model.StreetType</class>
 		<class>org.tedros.location.model.PlaceType</class>
 		
+		<class>org.tedros.person.model.Person</class>
+		<class>org.tedros.person.model.NaturalPerson</class>
+		<class>org.tedros.person.model.LegalPerson</class>
+		<class>org.tedros.person.model.Employee</class>
+		<class>org.tedros.person.model.Customer</class>
+		<class>org.tedros.person.model.LegalType</class>
+		<class>org.tedros.person.model.PersonAttributes</class>
+		<class>org.tedros.person.model.PersonEvent</class>
+		<class>org.tedros.person.model.ClientCompany</class>
+		<class>org.tedros.person.model.ClientCompanyStatus</class>
+		<class>org.tedros.person.model.ClientCompanyType</class>
+		<class>org.tedros.person.model.CustomerStatus</class>
+		<class>org.tedros.person.model.CustomerType</class>
+		<class>org.tedros.person.model.EmployeeStatus</class>
+		<class>org.tedros.person.model.LegalStatus</class>
+		<class>org.tedros.person.model.Member</class>
+		<class>org.tedros.person.model.MemberStatus</class>
+		<class>org.tedros.person.model.MemberType</class>
+		<class>org.tedros.person.model.PersonCategory</class>
+		<class>org.tedros.person.model.PersonStatus</class>
+		<class>org.tedros.person.model.PersonType</class>
+		<class>org.tedros.person.model.Philanthrope</class>
+		<class>org.tedros.person.model.PhilanthropeStatus</class>
+		<class>org.tedros.person.model.PhilanthropeType</class>
+		<class>org.tedros.person.model.StaffType</class>
+		<class>org.tedros.person.model.Voluntary</class>
+		<class>org.tedros.person.model.VoluntaryStatus</class>
+		<class>org.tedros.person.model.VoluntaryType</class>
+		<class>org.tedros.person.model.NaturalType</class>
+		<class>org.tedros.person.model.NaturalStatus</class> 
+		
 		<class>org.tedros.services.model.Contracted</class>
 		<class>org.tedros.services.model.Contractor</class>
 		<class>org.tedros.services.model.PaymentPlan</class>
@@ -43,6 +68,18 @@
 		<class>org.tedros.services.model.ServiceType</class>
 		<class>org.tedros.services.model.Contract</class>
 		<class>org.tedros.services.model.ContractualAgreement</class>
+		
+		<class>org.tedros.stock.entity.Product</class>
+		<class>org.tedros.stock.entity.CostCenter</class>
+		<class>org.tedros.stock.entity.EntryType</class>
+		<class>org.tedros.stock.entity.OutType</class>
+		<class>org.tedros.stock.entity.StockConfig</class>
+		<class>org.tedros.stock.entity.StockConfigItem</class>
+		<class>org.tedros.stock.entity.StockEvent</class>
+		<class>org.tedros.stock.entity.StockEntry</class>
+		<class>org.tedros.stock.entity.StockOut</class>
+		<class>org.tedros.stock.entity.StockItem</class>
+		<class>org.tedros.stock.entity.EventType</class>
 		
 		<class>com.template.entity._MyEntity_</class>
 		
