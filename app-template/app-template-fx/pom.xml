@@ -21,6 +21,12 @@
 	  		<version>${app.services}</version>
 	  	</dependency>
   	
+		<dependency>
+			<groupId>org.tedros</groupId>
+			<artifactId>app-stock-fx</artifactId>
+			<version>${app.stock}</version>
+		</dependency>
+  	
 	  	<dependency>
 	  		<groupId>org.tedros</groupId>
 	  		<artifactId>tedros-fx-api</artifactId>
