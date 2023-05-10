@@ -5,6 +5,7 @@ package org.tedros.stock.module.inventory.model;
 
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TDetailListField;
@@ -53,7 +54,7 @@ import javafx.scene.layout.Priority;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ConfigMV extends TEntityModelView<StockConfig> {
 
-	@TLabel(text=STCKKey.COST_CENTER)
+	@TLabel(text=TUsualKey.COST_CENTER)
 	@TAutoCompleteEntity(
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = CostCenter.class, fields = "name", 
@@ -63,7 +64,7 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 			@TPriority(field="responsable", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<CostCenter> costCenter;
 
-	@TLabel(text=STCKKey.RESPONSABLE)
+	@TLabel(text=TUsualKey.RESPONSABLE)
 	@TAutoCompleteEntity(
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = Employee.class, fields = {"name","lastName"}, 

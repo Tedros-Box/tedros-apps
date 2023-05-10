@@ -4,7 +4,9 @@
 package org.tedros.samples.module.sale.model;
 
 import java.util.Date;
+import java.util.Locale;
 
+import org.tedros.core.TLanguage;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
@@ -39,6 +41,7 @@ import org.tedros.fx.annotation.scene.layout.TRegion;
 import org.tedros.fx.annotation.text.TText;
 import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.builder.DateTimeFormatBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.domain.TLabelPosition;
@@ -60,7 +63,6 @@ import org.tedros.sample.entity.SaleStatus;
 import org.tedros.sample.entity.SaleType;
 import org.tedros.samples.SmplsKey;
 import org.tedros.samples.module.sale.setting.SaleSetting;
-import org.tedros.stock.STCKKey;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -74,7 +76,7 @@ import javafx.scene.layout.Priority;
 @TSetting(SaleSetting.class)
 @TForm(name = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = ISaleController.JNDI_NAME, model=Sale.class)
-@TListViewPresenter(
+@TListViewPresenter(listViewMinWidth=400,
 	paginator=@TPaginator(entityClass = Sale.class, serviceName = ISaleController.JNDI_NAME,
 		show=true, showSearchField=false,  
 		orderBy = {	@TOption(text = TUsualKey.DATE , value = "date")}),
@@ -89,18 +91,21 @@ public class SaleMV extends TEntityModelView<Sale> {
 	
 	@TLabel(text="Total: ", position=TLabelPosition.LEFT)
 	@TText(textStyle = TTextStyle.LARGE)
+	@TFieldBox(node=@TNode(id=TFieldBox.INFO, parse = true))
 	private SimpleStringProperty total;
 	
 	@TTabPane(tabs = { 
 		@TTab( text = TUsualKey.MAIN_DATA, 
 			content = @TContent(detailForm=@TDetailForm(fields={"date","customer"}))),
-		@TTab(text =  STCKKey.PRODUCTS, 
+		@TTab(text =  TUsualKey.PRODUCTS, 
 			content = @TContent(detailForm=@TDetailForm(fields={"items"})))
 	})
 	private SimpleLongProperty id;
 		
-	@TLabel(text=TUsualKey.DATE)
-	@TDatePickerField
+
+	@TLabel(text=TUsualKey.DATE_TIME)
+	@TDatePickerField(required=true, 
+	dateFormat=DateTimeFormatBuilder.class)
 	@THBox(	spacing=10, fillHeight=true,
 		pane=@TPane(children={"date", "type", "status", "seller"}), 
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
@@ -128,16 +133,17 @@ public class SaleMV extends TEntityModelView<Sale> {
 	private SimpleObjectProperty<Employee> seller;
 	
 	@TLabel(text=PersonKeys.CUSTOMER)
-	@TOneSelectionModal(height=80,
+	@TOneSelectionModal(height=40,
 	modelClass = Person.class, modelViewClass = FindPersonMV.class)
 	@THBox(	spacing=10, fillHeight=true,
 		pane=@TPane(children={"customer", "deliveryAddress"}), 
 	hgrow=@THGrow(priority={@TPriority(field="customer", priority=Priority.NEVER), 
 		@TPriority(field="deliveryAddress", priority=Priority.NEVER)}))
-	private SimpleObjectProperty<Person> customer;
+	@TModelViewType(modelClass = Person.class, modelViewClass=FindPersonMV.class)
+	private SimpleObjectProperty<FindPersonMV> customer;
 	
 	@TLabel(text=LocatKey.ADDRESS)
-	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
+	@TEditEntityModal(height=40,modelClass = Address.class, modelViewClass=AddressMV.class)
 	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
 	private SimpleObjectProperty<AddressMV> deliveryAddress;
 
@@ -149,6 +155,12 @@ public class SaleMV extends TEntityModelView<Sale> {
 	
 	public SaleMV(Sale entity) {
 		super(entity);
+		if(entity.isNew())
+			date.setValue(new Date());
+		String dtf = TLanguage.getLocale().equals(new Locale("pt"))
+				? "em %3$td/%3$tm/%3$tY às %3$tT"
+						: "on %3$tm-%3$td-%3$tY at %3$tT";
+		super.formatToString("%s, %s "+dtf, customer, type, date);
 	}
 
 	/**
@@ -168,14 +180,14 @@ public class SaleMV extends TEntityModelView<Sale> {
 	/**
 	 * @return the customer
 	 */
-	public SimpleObjectProperty<Person> getCustomer() {
+	public SimpleObjectProperty<FindPersonMV> getCustomer() {
 		return customer;
 	}
 
 	/**
 	 * @param customer the customer to set
 	 */
-	public void setCustomer(SimpleObjectProperty<Person> customer) {
+	public void setCustomer(SimpleObjectProperty<FindPersonMV> customer) {
 		this.customer = customer;
 	}
 
