@@ -58,11 +58,11 @@ public class ProductReportProcess extends TReportProcess<ProductReportModel> {
 		params.put("hCode", l.getString(TUsualKey.CODE));
 		params.put("hProduct", l.getString(TUsualKey.NAME));
 		params.put("hName", l.getString(TUsualKey.NAME));
-		params.put("hTrademark", l.getString(STCKKey.TRADEMARK));
-		params.put("hUnitMeasure", l.getString(STCKKey.UNIT_MEASURE));
-		params.put("hMeasure",  l.getString(STCKKey.MEASURE));
-		params.put("hSize",  l.getString(STCKKey.SIZE));
-		params.put("hWeight",  l.getString(STCKKey.WEIGHT));
+		params.put("hTrademark", l.getString(TUsualKey.TRADEMARK));
+		params.put("hUnitMeasure", l.getString(TUsualKey.UNIT_MEASURE));
+		params.put("hMeasure",  l.getString(TUsualKey.MEASURE));
+		params.put("hSize",  l.getString(TUsualKey.SIZE));
+		params.put("hWeight",  l.getString(TUsualKey.WEIGHT));
 		params.put("hDesc",  l.getString(TUsualKey.DESCRIPTION));
 		params.put("hImages",  l.getString(TUsualKey.IMAGE));
 		params.put("report_title", l.getString(STCKKey.TITLE_REPORT_PRODUCT));

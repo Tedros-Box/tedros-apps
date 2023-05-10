@@ -57,7 +57,7 @@ public class StockOutMV extends StockEventMV<StockOut> {
 	@TTabPane(tabs = { 
 		@TTab( text = TUsualKey.MAIN_DATA, scroll=false, 
 			content = @TContent(detailForm=@TDetailForm(fields={"type","observation" }))),
-		@TTab(text = STCKKey.PRODUCTS, 
+		@TTab(text = TUsualKey.PRODUCTS, 
 			content = @TContent(detailForm=@TDetailForm(fields={"items"})))
 	})
 	private SimpleLongProperty id;

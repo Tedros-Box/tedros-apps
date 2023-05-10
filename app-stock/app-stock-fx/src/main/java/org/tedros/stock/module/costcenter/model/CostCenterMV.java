@@ -118,7 +118,7 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	@TTextField(maxLength=120, required = true)
 	private SimpleStringProperty name;
 	
-	@TLabel(text=STCKKey.RESPONSABLE)
+	@TLabel(text=TUsualKey.RESPONSABLE)
 	@TAutoCompleteEntity(modelViewType=PersonTV.class, 
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = NaturalPerson.class, fields = {"name","lastName"}, 
@@ -130,11 +130,11 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 			@TPriority(field="closingDate", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<PersonTV> responsable;
 	
-	@TLabel(text=STCKKey.OPENING_DATE)
+	@TLabel(text=TUsualKey.OPENING_DATE)
 	@TDatePickerField(dateFormat=DateTimeFormatBuilder.class)
 	private SimpleObjectProperty<Date> openingDate;
 
-	@TLabel(text=STCKKey.CLOSING_DATE)
+	@TLabel(text=TUsualKey.CLOSING_DATE)
 	@TDatePickerField(dateFormat=DateTimeFormatBuilder.class)
 	private SimpleObjectProperty<Date> closingDate;
 	

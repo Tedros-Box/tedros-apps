@@ -87,7 +87,7 @@ public class ProductReportMV extends TModelView<ProductReportModel>{
 	@TTextField(maxLength=120)
 	private SimpleStringProperty name;
 
-	@TLabel(text=STCKKey.TRADEMARK)
+	@TLabel(text=TUsualKey.TRADEMARK)
 	@TTextField(maxLength=120)
 	private SimpleStringProperty trademark;
 	
@@ -116,7 +116,7 @@ public class ProductReportMV extends TModelView<ProductReportModel>{
 		columns = { 
 				@TTableColumn(cellValue="code", text = TUsualKey.CODE, resizable=true), 
 				@TTableColumn(cellValue="name", text = TUsualKey.NAME, resizable=true), 
-				@TTableColumn(cellValue="trademark", text = STCKKey.TRADEMARK, resizable=true)
+				@TTableColumn(cellValue="trademark", text = TUsualKey.TRADEMARK, resizable=true)
 			})
 	@TModelViewType(modelClass=ProductItem.class, modelViewClass=ProductItemTV.class)
 	private ITObservableList<ProductItemTV> result;

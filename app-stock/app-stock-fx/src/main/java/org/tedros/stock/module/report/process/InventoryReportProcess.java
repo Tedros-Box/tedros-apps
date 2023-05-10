@@ -30,12 +30,12 @@ public class InventoryReportProcess extends TReportProcess<InventoryReportModel>
 		params.put("hCode", l.getString(TUsualKey.CODE));
 		params.put("hProduct", l.getString(TUsualKey.NAME));
 		params.put("hAmount", l.getString(TUsualKey.AMOUNT));
-		params.put("hDate", l.getString(STCKKey.UNTIL_DATE));
-		params.put("hCostCenter", l.getString(STCKKey.COST_CENTER));
+		params.put("hDate", l.getString(TUsualKey.UNTIL_DATE));
+		params.put("hCostCenter", l.getString(TUsualKey.COST_CENTER));
 		params.put("vDate", format(getModel().getDate()));
 		params.put("vCostCenter", getModel().getCostCenter()!=null 
 				? getModel().getCostCenter().getName()
-						: l.getString(STCKKey.ALL));
+						: l.getString(TUsualKey.ALL));
 		params.put("report_title", l.getString(STCKKey.TITLE_REPORT_INVENTORY));
 		return params;
 	}
@@ -45,7 +45,7 @@ public class InventoryReportProcess extends TReportProcess<InventoryReportModel>
 			return DateFormat
 					.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, TLanguage.getLocale())
 					.format(dt);
-		return TLanguage.getInstance().getString(STCKKey.ALL);
+		return TLanguage.getInstance().getString(TUsualKey.ALL);
 	}
 	
 	protected InputStream getJasperInputStream() {

@@ -23,7 +23,6 @@ import org.tedros.sample.domain.DomainApp;
 import org.tedros.sample.ejb.controller.IProductPriceController;
 import org.tedros.sample.entity.ProductPrice;
 import org.tedros.samples.SmplsKey;
-import org.tedros.stock.STCKKey;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
 
@@ -45,7 +44,7 @@ import javafx.beans.property.SimpleObjectProperty;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class PriceMV extends TEntityModelView<ProductPrice> {
 
-	@TLabel(text=STCKKey.PRODUCT)
+	@TLabel(text=TUsualKey.PRODUCT)
 	@TAutoCompleteEntity(required=true, control=@TControl(maxWidth=250, parse = true),
 		entries = @TEntry(entityType = Product.class, 
 			fields = { "code", "name" }, service = IProductController.JNDI_NAME))

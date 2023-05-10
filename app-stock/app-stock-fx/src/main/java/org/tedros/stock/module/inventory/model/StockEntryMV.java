@@ -57,7 +57,7 @@ public class StockEntryMV extends StockEventMV<StockEntry> {
 	@TTabPane(tabs = { 
 		@TTab( text = TUsualKey.MAIN_DATA, 
 			content = @TContent(detailForm=@TDetailForm(fields={"type","observation"}))),
-		@TTab(text =  STCKKey.PRODUCTS, 
+		@TTab(text =  TUsualKey.PRODUCTS, 
 			content = @TContent(detailForm=@TDetailForm(fields={"items"})))
 	})
 	private SimpleLongProperty id;

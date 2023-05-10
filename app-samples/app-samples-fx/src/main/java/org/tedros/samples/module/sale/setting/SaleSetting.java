@@ -5,7 +5,6 @@ package org.tedros.samples.module.sale.setting;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.util.Currency;
 import java.util.Locale;
 
 import org.tedros.api.descriptor.ITComponentDescriptor;
@@ -17,7 +16,6 @@ import org.tedros.fx.form.TSetting;
 import org.tedros.samples.module.sale.model.SaleItemMV;
 import org.tedros.samples.module.sale.model.SaleMV;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.WeakChangeListener;
 import javafx.scene.text.Text;
@@ -46,12 +44,13 @@ public class SaleSetting extends TSetting {
 	@Override
 	public void run() {
 		SaleMV m = super.getModelView();
-		//Getting the property from model view
+		//Getting the items property from model view
 		ITObservableList<SaleItemMV> items = m.getItems();
 		ChangeListener<Number> itemsChl = (a,o,n)->{
 			calcTotal(items);
 		};
 		repo.add("itemsChl", itemsChl);
+		// Listen for any changes made in any SaleItemMV instances on the list
 		items.tHashCodeProperty().addListener(new WeakChangeListener<>(itemsChl));
 		
 		calcTotal(items);

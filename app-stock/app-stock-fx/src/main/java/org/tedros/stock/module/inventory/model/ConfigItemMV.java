@@ -3,6 +3,7 @@
  */
 package org.tedros.stock.module.inventory.model;
 
+import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TCallbackFactory;
@@ -21,7 +22,6 @@ import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.control.TLabeled;
 import org.tedros.fx.domain.TZeroValidation;
 import org.tedros.fx.presenter.model.TEntityModelView;
-import org.tedros.stock.STCKKey;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.entity.StockConfigItem;
@@ -39,21 +39,21 @@ import javafx.scene.layout.Priority;
 @TDetailTableViewPresenter(tableView = @TTableView(
 control=@TControl(maxHeight=250,parse = true),
 columns = 
-	{ @TTableColumn(text = STCKKey.PRODUCT, cellValue="product", 
+	{ @TTableColumn(text = TUsualKey.PRODUCT, cellValue="product", 
 			cellFactory=@TCellFactory(parse = true, 
 			callBack=@TCallbackFactory(parse=true, value=ProductCallBack.class))), 
-		@TTableColumn(text = STCKKey.MINIMUN_AMOUNT, cellValue="minimumAmount"), 
-		@TTableColumn(text = STCKKey.NOTIFY_RESPONSABLE, cellValue="notify", 
+		@TTableColumn(text = TUsualKey.MINIMUN_AMOUNT, cellValue="minimumAmount"), 
+		@TTableColumn(text = TUsualKey.NOTIFY_RESPONSABLE, cellValue="notify", 
 				cellFactory=@TCellFactory(parse = true, 
 				callBack=@TCallbackFactory(parse=true, value=BooleanCallback.class))), 
-		@TTableColumn(text = STCKKey.ALLOW_NEGATIVE_STOCK, cellValue="allowNegativeStock", 
+		@TTableColumn(text = TUsualKey.ALLOW_NEGATIVE_STOCK, cellValue="allowNegativeStock", 
 		cellFactory=@TCellFactory(parse = true, 
 		callBack=@TCallbackFactory(parse=true, value=BooleanCallback.class)))
 	}))
 public class ConfigItemMV extends TEntityModelView<StockConfigItem> {
 
 
-	@TLabel(text=STCKKey.PRODUCT)
+	@TLabel(text=TUsualKey.PRODUCT)
 	@TAutoCompleteEntity(required=true,
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = Product.class, fields = {"code", "name"}, 
@@ -64,16 +64,16 @@ public class ConfigItemMV extends TEntityModelView<StockConfigItem> {
 			@TPriority(field="minimumAmount", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<Product> product;
 	
-	@TLabel(text=STCKKey.MINIMUN_AMOUNT)
+	@TLabel(text=TUsualKey.MINIMUN_AMOUNT)
 	@TDoubleField(zeroValidation=TZeroValidation.GREATHER_THAN_ZERO)
 	private SimpleDoubleProperty minimumAmount;
 	
 	@TCheckBoxField(labeled = 
-	@TLabeled(text=STCKKey.NOTIFY_RESPONSABLE, parse = true))
+	@TLabeled(text=TUsualKey.NOTIFY_RESPONSABLE, parse = true))
 	private SimpleObjectProperty<Boolean> notify;
 
 	@TCheckBoxField(labeled = 
-	@TLabeled(text=STCKKey.ALLOW_NEGATIVE_STOCK, parse = true))
+	@TLabeled(text=TUsualKey.ALLOW_NEGATIVE_STOCK, parse = true))
 	private SimpleObjectProperty<Boolean> allowNegativeStock;
 	
 	public ConfigItemMV(StockConfigItem entity) {

@@ -4,6 +4,7 @@
 package org.tedros.samples.module.sale.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
@@ -30,7 +31,6 @@ import org.tedros.sample.entity.SaleItem;
 import org.tedros.samples.SmplsKey;
 import org.tedros.samples.module.sale.setting.SaleItemSetting;
 import org.tedros.samples.module.sale.trigger.SetPriceTrigger;
-import org.tedros.stock.STCKKey;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.table.ProductCallBack;
@@ -45,20 +45,21 @@ import javafx.scene.layout.Priority;
  *
  */
 @TSetting(SaleItemSetting.class)
-@TDetailTableViewPresenter(tableView = @TTableView(
-control=@TControl(parse = true),
-columns = 
-	{ @TTableColumn(text = STCKKey.PRODUCT, cellValue="product", 
-			cellFactory=@TCellFactory(parse = true, 
-			callBack=@TCallbackFactory(parse=true, value=ProductCallBack.class))), 
-		@TTableColumn(text = SmplsKey.UNIT_PRICE, cellValue="unitPrice"), 
-		@TTableColumn(text = TUsualKey.AMOUNT, cellValue="amount"), 
-		@TTableColumn(text = TUsualKey.DISCOUNT, cellValue="rebate"), 
-		@TTableColumn(text = "Total", cellValue="total")
-	}))
+@TDetailTableViewPresenter(
+	tableView = @TTableView(
+		control=@TControl(maxHeight=300, parse = true),
+		columns = 
+		{ @TTableColumn(text = TUsualKey.PRODUCT, cellValue="product", 
+				cellFactory=@TCellFactory(parse = true, 
+				callBack=@TCallbackFactory(parse=true, value=ProductCallBack.class))), 
+			@TTableColumn(text = SmplsKey.UNIT_PRICE, cellValue="unitPrice"), 
+			@TTableColumn(text = TUsualKey.AMOUNT, cellValue="amount"), 
+			@TTableColumn(text = TUsualKey.DISCOUNT, cellValue="rebate"), 
+			@TTableColumn(text = "Total", cellValue="total")
+		}))
 public class SaleItemMV extends TEntityModelView<SaleItem> {
 
-	@TLabel(text=STCKKey.PRODUCT)
+	@TLabel(text=TUsualKey.PRODUCT)
 	@TAutoCompleteEntity(required=true, control=@TControl(maxWidth=250, parse = true),
 		entries = @TEntry(entityType = Product.class, 
 			fields = { "code", "name" }, service = IProductController.JNDI_NAME))
@@ -96,6 +97,26 @@ public class SaleItemMV extends TEntityModelView<SaleItem> {
 		// TableView only can see registered 
 		// property fields.
 		super.registerProperty("total", total);
+		calcTotal();
+	}
+	
+	public void reload(SaleItem entity) {
+		super.reload(entity);
+		calcTotal();
+	}
+	
+	public void calcTotal() {
+
+		BigDecimal t = unitPrice.getValue()!=null ? unitPrice.getValue() : BigDecimal.ZERO;
+		Integer q = amount.getValue()!=null ? amount.getValue() : 0;
+		Double r = rebate.getValue()!=null ? rebate.getValue() : 0;
+		
+		BigDecimal m = t.multiply(new BigDecimal(q));
+		BigDecimal v = m.multiply(new BigDecimal(r));
+		v = v.divide(new BigDecimal(100), 2, RoundingMode.UNNECESSARY);
+		m = m.subtract(v);
+
+		total.setValue(m);
 	}
 
 	/**

@@ -21,7 +21,6 @@ import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.Employee;
-import org.tedros.stock.STCKKey;
 import org.tedros.stock.ejb.controller.ICostCenterController;
 import org.tedros.stock.entity.CostCenter;
 import org.tedros.stock.entity.StockEvent;
@@ -37,7 +36,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class StockEventMV<E extends StockEvent> extends TEntityModelView<E> {
 
 
-	@TLabel(text=STCKKey.COST_CENTER)
+	@TLabel(text=TUsualKey.COST_CENTER)
 	@TAutoCompleteEntity(required=true,
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = CostCenter.class, fields = "name", 
@@ -49,7 +48,7 @@ public class StockEventMV<E extends StockEvent> extends TEntityModelView<E> {
 	dateFormat=DateTimeFormatBuilder.class)
 	protected SimpleObjectProperty<Date> date;
 	
-	@TLabel(text=STCKKey.RESPONSABLE)
+	@TLabel(text=TUsualKey.RESPONSABLE)
 	@TAutoCompleteEntity(
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = Employee.class, fields = {"name","lastName"}, 

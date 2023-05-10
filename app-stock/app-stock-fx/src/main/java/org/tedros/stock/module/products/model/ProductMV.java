@@ -96,11 +96,11 @@ public class ProductMV extends TEntityModelView<Product> {
 	@TTextField(maxLength=120, required = true)
 	private SimpleStringProperty name;
 
-	@TLabel(text=STCKKey.TRADEMARK)
+	@TLabel(text=TUsualKey.TRADEMARK)
 	@TTextField(maxLength=120)
 	private SimpleStringProperty trademark;
 
-	@TLabel(text=STCKKey.UNIT_MEASURE)
+	@TLabel(text=TUsualKey.UNIT_MEASURE)
 	@TTextField(maxLength=20)
 	@THBox(	pane=@TPane(children={"unitMeasure", "measure", "size", "weight"}), 
 	spacing=10, fillHeight=true,
@@ -110,16 +110,16 @@ public class ProductMV extends TEntityModelView<Product> {
 			@TPriority(field="weight", priority=Priority.NEVER)}))
 	private SimpleStringProperty unitMeasure;
 	
-	@TLabel(text=STCKKey.MEASURE)
+	@TLabel(text=TUsualKey.MEASURE)
 	@TDoubleField()
 	private SimpleDoubleProperty measure;
 	
-	@TLabel(text=STCKKey.SIZE)
+	@TLabel(text=TUsualKey.SIZE)
 	@TTextField(maxLength=15,
 	control=@TControl(tooltip=STCKKey.TOOLTIP_SIZE, parse = true) )
 	private SimpleStringProperty size;
 	
-	@TLabel(text=STCKKey.WEIGHT)
+	@TLabel(text=TUsualKey.WEIGHT)
 	@TDoubleField()
 	private SimpleDoubleProperty weight;
 	

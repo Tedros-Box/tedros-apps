@@ -19,7 +19,6 @@ import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.presenter.model.TEntityModelView;
-import org.tedros.stock.STCKKey;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.entity.StockItem;
@@ -36,7 +35,7 @@ import javafx.scene.layout.Priority;
 @TDetailTableViewPresenter(tableView = @TTableView(
 control=@TControl(parse = true),
 columns = 
-	{ @TTableColumn(text = STCKKey.PRODUCT, cellValue="product", 
+	{ @TTableColumn(text = TUsualKey.PRODUCT, cellValue="product", 
 			cellFactory=@TCellFactory(parse = true, 
 			callBack=@TCallbackFactory(parse=true, value=ProductCallBack.class))), 
 		@TTableColumn(text = TUsualKey.AMOUNT, cellValue="amount")
@@ -44,7 +43,7 @@ columns =
 public class EventItemMV extends TEntityModelView<StockItem> {
 
 
-	@TLabel(text=STCKKey.PRODUCT)
+	@TLabel(text=TUsualKey.PRODUCT)
 	@TAutoCompleteEntity(required=true,
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = Product.class, fields = {"code", "name"}, 

@@ -81,7 +81,7 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 				fields={"result"})})	
 	private SimpleLongProperty id;
 	
-	@TLabel(text=STCKKey.COST_CENTER)
+	@TLabel(text=TUsualKey.COST_CENTER)
 	@TAutoCompleteEntity(
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = CostCenter.class, fields = "name", 
@@ -93,12 +93,12 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 		@TPriority(field="date", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<CostCenter> costCenter;
 	
-	@TLabel(text=STCKKey.UNTIL_DATE)
+	@TLabel(text=TUsualKey.UNTIL_DATE)
 	@TDatePickerField(
 	dateFormat=DateTimeFormatBuilder.class)
 	private SimpleObjectProperty<Date> date;
 	
-	@TLabel(text=STCKKey.PRODUCT)
+	@TLabel(text=TUsualKey.PRODUCT)
 	@TAutoCompleteEntity(
 	startSearchAt=2, showMaxItems=30,
 	entries = @TEntry(entityType = Product.class, fields = {"code", "name"}, 
