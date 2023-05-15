@@ -5,8 +5,8 @@ package org.tedros.stock.model;
 
 import java.util.Date;
 
+import org.tedros.person.model.CostCenter;
 import org.tedros.server.model.TReportModel;
-import org.tedros.stock.entity.CostCenter;
 import org.tedros.stock.entity.Product;
 
 /**

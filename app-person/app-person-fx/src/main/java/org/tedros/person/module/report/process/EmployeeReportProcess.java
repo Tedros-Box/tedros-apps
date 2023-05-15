@@ -33,6 +33,7 @@ public class EmployeeReportProcess extends TReportProcess<EmployeeReportModel> {
 		params.put("hHirDt", l.getString(TUsualKey.HIRING_DATE));
 		params.put("hResDt", l.getString(TUsualKey.RESIGNATION_DATE));
 		params.put("hEmployer", l.getString(TUsualKey.EMPLOYER));
+		params.put("hCostCenter", l.getString(TUsualKey.COST_CENTER));
 		params.put("hSex", l.getString(TUsualKey.SEX));
 		params.put("hGender", l.getString(TUsualKey.GENDER));
 		params.put("hDocs", l.getString(TUsualKey.DOCUMENTS));

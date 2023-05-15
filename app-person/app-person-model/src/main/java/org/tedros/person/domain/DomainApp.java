@@ -22,6 +22,7 @@ public interface DomainApp {
 	static final String CUSTOMER = "CUSTOMER";
 	static final String NATURAL_PERSON = "NATURAL_PERSON";
 	static final String LEGAL_PERSON = "LEGAL_PERSON";
+	static final String COST_CENTER = "COST_CENTER";
 	static final String TYPE = "TYPE";
 	static final String STATUS = "STATUS";
 	static final String STAFF = "STAFF";
@@ -107,6 +108,9 @@ public interface DomainApp {
 	static final String LEGAL_TYPE_FORM_ID = MNEMONIC + SEP + LEGAL_PERSON + SEP + TYPE + SEP + FORM;
 	static final String LEGAL_TYPE_VIEW_ID = MNEMONIC + SEP + LEGAL_PERSON + SEP + TYPE + SEP  + VIEW;
 
+	static final String COST_CENTER_FORM_ID = MNEMONIC + SEP + COST_CENTER + SEP + FORM;
+	static final String COST_CENTER_VIEW_ID = MNEMONIC + SEP + COST_CENTER + SEP + VIEW;
+	
 	static final String LEGAL_STATUS_FORM_ID = MNEMONIC + SEP + LEGAL_PERSON + SEP + STATUS + SEP + FORM;
 	static final String LEGAL_STATUS_VIEW_ID = MNEMONIC + SEP + LEGAL_PERSON + SEP + STATUS + SEP  + VIEW;
 	

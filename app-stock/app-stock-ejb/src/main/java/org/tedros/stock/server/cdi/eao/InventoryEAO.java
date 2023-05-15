@@ -10,8 +10,8 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.Query;
 
+import org.tedros.person.model.CostCenter;
 import org.tedros.server.cdi.eao.TGenericEAO;
-import org.tedros.stock.entity.CostCenter;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.entity.StockItem;
 import org.tedros.stock.model.Inventory;

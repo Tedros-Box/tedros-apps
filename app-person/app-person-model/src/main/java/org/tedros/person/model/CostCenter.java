@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.stock.entity;
+package org.tedros.person.model;
 
 import java.util.Date;
 import java.util.Set;
@@ -24,10 +24,9 @@ import org.tedros.common.model.TFileEntity;
 import org.tedros.docs.model.Document;
 import org.tedros.extension.model.Contact;
 import org.tedros.location.model.Address;
-import org.tedros.person.model.NaturalPerson;
+import org.tedros.person.domain.DomainSchema;
+import org.tedros.person.domain.DomainTables;
 import org.tedros.server.entity.TVersionEntity;
-import org.tedros.stock.domain.DomainSchema;
-import org.tedros.stock.domain.DomainTables;
 
 /**
  * @author Davis Gordon
@@ -35,7 +34,7 @@ import org.tedros.stock.domain.DomainTables;
  */
 @Entity
 @Table(name = DomainTables.cost_center, schema = DomainSchema.schema, 
-uniqueConstraints= {@UniqueConstraint(name="CostCenterCodeUK", columnNames = { "code" })} )
+uniqueConstraints= {@UniqueConstraint(columnNames = { "code" })} )
 public class CostCenter extends TVersionEntity {
 
 	private static final long serialVersionUID = 4019290948851607499L;
@@ -63,6 +62,10 @@ public class CostCenter extends TVersionEntity {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="person_id")
 	private NaturalPerson responsable;
+	
+	@ManyToOne(fetch=FetchType.EAGER, optional=false)
+	@JoinColumn(name="legalPerson_id", nullable=false)
+	private LegalPerson legalPerson;
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="image_id")
@@ -201,6 +204,23 @@ public class CostCenter extends TVersionEntity {
 		return (name != null ? name : "");
 	}
 
+	/**
+	 * @return the legalPerson
+	 */
+	public LegalPerson getLegalPerson() {
+		return legalPerson;
+	}
+
+	/**
+	 * @param legalPerson the legalPerson to set
+	 */
+	public void setLegalPerson(LegalPerson legalPerson) {
+		this.legalPerson = legalPerson;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -212,20 +232,24 @@ public class CostCenter extends TVersionEntity {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((documents == null) ? 0 : documents.hashCode());
 		result = prime * result + ((image == null) ? 0 : image.hashCode());
+		result = prime * result + ((legalPerson == null) ? 0 : legalPerson.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((observation == null) ? 0 : observation.hashCode());
 		result = prime * result + ((openingDate == null) ? 0 : openingDate.hashCode());
-		result = prime * result + ((responsable == null) ? 0 : responsable.hashCode());
+		//result = prime * result + ((responsable == null) ? 0 : responsable.hashCode());
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof CostCenter))
+		if (getClass() != obj.getClass())
 			return false;
 		CostCenter other = (CostCenter) obj;
 		if (address == null) {
@@ -262,6 +286,11 @@ public class CostCenter extends TVersionEntity {
 			if (other.image != null)
 				return false;
 		} else if (!image.equals(other.image))
+			return false;
+		if (legalPerson == null) {
+			if (other.legalPerson != null)
+				return false;
+		} else if (!legalPerson.equals(other.legalPerson))
 			return false;
 		if (name == null) {
 			if (other.name != null)

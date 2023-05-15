@@ -27,7 +27,7 @@ public class SetPriceTrigger extends TTrigger<Product> {
 	}
 
 	@Override
-	public void run(Product value) {
+	public void run(TEvent event, Product value, Product old) {
 		ProductPrice ex = new ProductPrice();
 		ex.setProduct(value);
 		TEntityProcess<ProductPrice> prc = 

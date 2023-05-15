@@ -19,10 +19,10 @@ import org.tedros.fx.annotation.scene.layout.TRegion;
 import org.tedros.fx.builder.DateTimeFormatBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.ejb.controller.ICostCenterController;
 import org.tedros.person.ejb.controller.IPersonController;
+import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.Employee;
-import org.tedros.stock.ejb.controller.ICostCenterController;
-import org.tedros.stock.entity.CostCenter;
 import org.tedros.stock.entity.StockEvent;
 import org.tedros.stock.entity.StockItem;
 

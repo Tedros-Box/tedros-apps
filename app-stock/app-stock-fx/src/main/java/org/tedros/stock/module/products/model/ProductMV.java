@@ -71,7 +71,6 @@ import javafx.scene.layout.Priority;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ProductMV extends TEntityModelView<Product> {
 
-
 	@TTabPane(
 	tabs = { 
 			@TTab(text = TUsualKey.MAIN_DATA, 

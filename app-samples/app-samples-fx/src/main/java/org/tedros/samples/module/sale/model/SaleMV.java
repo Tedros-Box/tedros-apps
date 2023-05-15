@@ -49,8 +49,9 @@ import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.location.LocatKey;
 import org.tedros.location.model.Address;
 import org.tedros.location.module.address.model.AddressMV;
-import org.tedros.person.PersonKeys;
+import org.tedros.person.ejb.controller.ICostCenterController;
 import org.tedros.person.ejb.controller.IEmployeeController;
+import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.FindPersonMV;
 import org.tedros.person.model.Person;
@@ -107,13 +108,21 @@ public class SaleMV extends TEntityModelView<Sale> {
 	@TDatePickerField(required=true, 
 	dateFormat=DateTimeFormatBuilder.class)
 	@THBox(	spacing=10, fillHeight=true,
-		pane=@TPane(children={"date", "type", "status", "seller"}), 
+		pane=@TPane(children={"date", "costCenter", "type", "status", "seller"}), 
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
 			@TPriority(field="status", priority=Priority.NEVER),
+			@TPriority(field="costCenter", priority=Priority.NEVER),
 		@TPriority(field="seller", priority=Priority.NEVER),
 		@TPriority(field="date", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<Date> date;
 
+	@TLabel(text=TUsualKey.COST_CENTER)
+	@TAutoCompleteEntity(required=true,
+	startSearchAt=2, showMaxItems=30,
+	entries = @TEntry(entityType = CostCenter.class, fields = "name", 
+	service = ICostCenterController.JNDI_NAME))
+	protected SimpleObjectProperty<CostCenter> costCenter;
+	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(required=true,
 	optionsList=@TOptionsList(serviceName = IGenericDomainController.JNDI_NAME, 
@@ -132,7 +141,7 @@ public class SaleMV extends TEntityModelView<Sale> {
 			fields = { "name" }, service = IEmployeeController.JNDI_NAME))
 	private SimpleObjectProperty<Employee> seller;
 	
-	@TLabel(text=PersonKeys.CUSTOMER)
+	@TLabel(text=TUsualKey.CUSTOMER)
 	@TOneSelectionModal(height=40,
 	modelClass = Person.class, modelViewClass = FindPersonMV.class)
 	@THBox(	spacing=10, fillHeight=true,
@@ -287,6 +296,14 @@ public class SaleMV extends TEntityModelView<Sale> {
 	 */
 	public void setTotal(SimpleStringProperty total) {
 		this.total = total;
+	}
+
+	public SimpleObjectProperty<CostCenter> getCostCenter() {
+		return costCenter;
+	}
+
+	public void setCostCenter(SimpleObjectProperty<CostCenter> costCenter) {
+		this.costCenter = costCenter;
 	}
 
 }

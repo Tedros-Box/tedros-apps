@@ -17,6 +17,7 @@ import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TOptionsList;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
@@ -40,6 +41,8 @@ import org.tedros.person.model.EmployeeStatus;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.NaturalPersonMV;
 import org.tedros.person.model.StaffType;
+import org.tedros.person.module.company.table.CostCenterTV;
+import org.tedros.person.trigger.FilterCostCenterTrigger;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -57,9 +60,9 @@ import javafx.scene.layout.Priority;
 		show=true, showSearchField=true, searchFieldName="name", 
 		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name"),
 				@TOption(text = TUsualKey.LAST_NAME , value = "lastName")}),
-		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_EMPLOYEES,
-		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))
+		presenter=@TPresenter(
+			decorator = @TDecorator(viewTitle=PersonKeys.VIEW_EMPLOYEES, buildModesRadioButton=false),
+			behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.EMPLOYEE_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_LEGAL_PERSON, viewName = PersonKeys.VIEW_EMPLOYEES,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
@@ -84,12 +87,14 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 	optionModelViewClass=StaffTypeMV.class,
 	entityClass=StaffType.class))
 	@THBox(	spacing=10, fillHeight=true,
-			pane=@TPane(children={"type", "status", "hiringDate", "resignationDate", "employer"}), 
-	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
+			pane=@TPane(children={"type", "status", "hiringDate", "resignationDate", "employer", "costCenter"}), 
+	hgrow=@THGrow(priority={
+			@TPriority(field="costCenter", priority=Priority.ALWAYS), 
+			@TPriority(field="employer", priority=Priority.ALWAYS),
+			@TPriority(field="type", priority=Priority.NEVER), 
 			@TPriority(field="status", priority=Priority.NEVER), 
 			@TPriority(field="hiringDate", priority=Priority.NEVER), 
-			@TPriority(field="resignationDate", priority=Priority.NEVER), 
-			@TPriority(field="employer", priority=Priority.NEVER)}))
+			@TPriority(field="resignationDate", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<StaffType> type;
 	
 	@TLabel(text=TUsualKey.STATUS)
@@ -113,7 +118,13 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 	entries = @TEntry(entityType = LegalPerson.class, 
 	fields = {"name","otherName"}, 
 	service = IPersonController.JNDI_NAME))
+	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
+	targetFieldName="costCenter", runAfterFormBuild=true)
 	private SimpleObjectProperty<LegalPerson> employer;
+	
+	@TLabel(text=TUsualKey.COST_CENTER)
+	@TComboBoxField()
+	private SimpleObjectProperty<CostCenterTV> costCenter;
 	
 	public EmployeeMV(Employee entity) {
 		super(entity);
@@ -165,6 +176,20 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 
 	public void setStatus(SimpleObjectProperty<EmployeeStatus> status) {
 		this.status = status;
+	}
+
+	/**
+	 * @return the costCenter
+	 */
+	public SimpleObjectProperty<CostCenterTV> getCostCenter() {
+		return costCenter;
+	}
+
+	/**
+	 * @param costCenter the costCenter to set
+	 */
+	public void setCostCenter(SimpleObjectProperty<CostCenterTV> costCenter) {
+		this.costCenter = costCenter;
 	}
 
 }

@@ -25,13 +25,13 @@ import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.ejb.controller.ICostCenterController;
 import org.tedros.person.ejb.controller.IPersonController;
+import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.Employee;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
-import org.tedros.stock.ejb.controller.ICostCenterController;
 import org.tedros.stock.ejb.controller.IStockConfigController;
-import org.tedros.stock.entity.CostCenter;
 import org.tedros.stock.entity.StockConfig;
 import org.tedros.stock.entity.StockConfigItem;
 

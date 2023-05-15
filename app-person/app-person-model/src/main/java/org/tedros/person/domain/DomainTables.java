@@ -2,6 +2,9 @@ package org.tedros.person.domain;
 
 public interface DomainTables {
 
+	static final String cost_center = "cost_center";
+	static final String costcenter_contact = "costcenter_contact";
+	static final String costcenter_document = "costcenter_document";
 	final static String person= "person";
 	final static String person_category= "person_category";
 	final static String personcateg_person= "personcateg_person";

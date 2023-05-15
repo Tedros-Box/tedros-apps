@@ -3,6 +3,7 @@ package org.tedros.stock.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.tedros.person.model.CostCenter;
 import org.tedros.server.entity.ITEntity;
 
 public interface Stockable extends ITEntity{
