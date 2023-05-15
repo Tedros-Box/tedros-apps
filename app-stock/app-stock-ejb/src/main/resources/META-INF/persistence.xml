@@ -33,6 +33,7 @@
 		<class>org.tedros.person.model.Person</class>
 		<class>org.tedros.person.model.NaturalPerson</class>
 		<class>org.tedros.person.model.LegalPerson</class>
+		<class>org.tedros.person.model.CostCenter</class>
 		<class>org.tedros.person.model.Employee</class>
 		<class>org.tedros.person.model.Customer</class>
 		<class>org.tedros.person.model.LegalType</class>
@@ -62,7 +63,6 @@
 		<class>org.tedros.person.model.NaturalStatus</class> 
 		
 		<class>org.tedros.stock.entity.Product</class>
-		<class>org.tedros.stock.entity.CostCenter</class>
 		<class>org.tedros.stock.entity.EntryType</class>
 		<class>org.tedros.stock.entity.OutType</class>
 		<class>org.tedros.stock.entity.StockConfig</class>

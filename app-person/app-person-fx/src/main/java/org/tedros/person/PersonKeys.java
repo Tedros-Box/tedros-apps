@@ -11,7 +11,6 @@ public interface PersonKeys {
 
 	static final String APP_PERSON = "#{app.person}";
 	static final String FORM_REPORT = "#{form.report}";
-	static final String CUSTOMER = "#{label.customer}";
 	static final String MENU_PERSON = "#{menu.person}";
 	static final String MODULE_CUSTOMER = "#{module.customer}";
 	static final String MODULE_DESC_CUSTOMER = "#{module.desc.customer}";
@@ -36,6 +35,7 @@ public interface PersonKeys {
 	static final String VIEW_CLIENT_COMPANY = "#{view.client.company}";
 	static final String VIEW_CLIENT_COMPANY_STATUS = "#{view.client.company.status}";
 	static final String VIEW_CLIENT_COMPANY_TYPE = "#{view.client.company.type}";
+	static final String VIEW_COST_CENTER = "#{view.cost.center}";
 	static final String VIEW_CUSTOMER_STATUS = "#{view.customer.status}";
 	static final String VIEW_CUSTOMER_TYPE = "#{view.customer.type}";
 	static final String VIEW_CUSTOMERS = "#{view.customers}";

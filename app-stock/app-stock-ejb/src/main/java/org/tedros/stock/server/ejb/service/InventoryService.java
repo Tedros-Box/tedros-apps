@@ -15,9 +15,9 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
+import org.tedros.person.model.CostCenter;
 import org.tedros.server.cdi.bo.ITGenericBO;
 import org.tedros.server.ejb.service.TEjbService;
-import org.tedros.stock.entity.CostCenter;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.entity.StockItem;
 import org.tedros.stock.model.Inventory;

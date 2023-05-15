@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.tedros.stock.module.costcenter.table;
+package org.tedros.person.module.company.table;
 
 import java.util.Date;
 
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.model.CostCenter;
 import org.tedros.person.table.PersonTV;
-import org.tedros.stock.entity.CostCenter;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

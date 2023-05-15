@@ -40,6 +40,10 @@ public class Employee extends NaturalPerson {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_employer")
 	private LegalPerson employer;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="id_cc")
+	private CostCenter costCenter;
 
 	public Date getHiringDate() {
 		return hiringDate;
@@ -65,7 +69,8 @@ public class Employee extends NaturalPerson {
 		if(this.employer!=null)
 			this.employer.removeEmployee(this);
 		this.employer = employer;
-		this.employer.addEmployee(this);
+		if(this.employer!=null)
+			this.employer.addEmployee(this);
 		
 	}
 
@@ -82,25 +87,51 @@ public class Employee extends NaturalPerson {
 				+ (getLastName() != null ?  " " + getLastName() : "");
 	}
 
+	/**
+	 * @return the costCenter
+	 */
+	public CostCenter getCostCenter() {
+		return costCenter;
+	}
+
+	/**
+	 * @param costCenter the costCenter to set
+	 */
+	public void setCostCenter(CostCenter costCenter) {
+		this.costCenter = costCenter;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		//result = prime * result + ((employer == null) ? 0 : employer.hashCode());
+		result = prime * result + ((costCenter == null) ? 0 : costCenter.hashCode());
+		result = prime * result + ((employer == null) ? 0 : employer.hashCode());
 		result = prime * result + ((hiringDate == null) ? 0 : hiringDate.hashCode());
 		result = prime * result + ((resignationDate == null) ? 0 : resignationDate.hashCode());
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Employee))
+		if (getClass() != obj.getClass())
 			return false;
 		Employee other = (Employee) obj;
+		if (costCenter == null) {
+			if (other.costCenter != null)
+				return false;
+		} else if (!costCenter.equals(other.costCenter))
+			return false;
 		if (employer == null) {
 			if (other.employer != null)
 				return false;

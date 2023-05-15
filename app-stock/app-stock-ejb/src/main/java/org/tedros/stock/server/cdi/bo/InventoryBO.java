@@ -11,9 +11,9 @@ import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+import org.tedros.person.model.CostCenter;
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
-import org.tedros.stock.entity.CostCenter;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.entity.StockConfig;
 import org.tedros.stock.entity.StockItem;

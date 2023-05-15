@@ -71,9 +71,9 @@ import javafx.scene.layout.Priority;
 		show=true, showSearchField=true, searchFieldName="name", 
 		orderBy = {	@TOption(text = TUsualKey.CORPORATE_NAME , value = "name"),
 				@TOption(text = TUsualKey.TRADE_NAME , value = "otherName")}),
-	presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_LEGAL_PERSON,
-		buildModesRadioButton=false),
-		behavior=@TBehavior(runNewActionAfterSave=false)))
+	presenter=@TPresenter(
+		decorator = @TDecorator(viewTitle=PersonKeys.VIEW_LEGAL_PERSON , buildModesRadioButton=false),
+		behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.LEGAL_PERSON_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_LEGAL_PERSON, viewName = PersonKeys.VIEW_LEGAL_PERSON,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 

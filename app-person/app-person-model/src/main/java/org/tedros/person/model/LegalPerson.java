@@ -111,7 +111,7 @@ public class LegalPerson extends Person {
 		int result = super.hashCode();
 		result = prime * result + ((endActivities == null) ? 0 : endActivities.hashCode());
 		result = prime * result + ((otherName == null) ? 0 : otherName.hashCode());
-		result = prime * result + ((staff == null) ? 0 : staff.hashCode());
+		//result = prime * result + ((staff == null) ? 0 : staff.hashCode());
 		result = prime * result + ((startActivities == null) ? 0 : startActivities.hashCode());
 		return result;
 	}

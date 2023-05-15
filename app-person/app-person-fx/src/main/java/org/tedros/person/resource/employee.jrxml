@@ -34,7 +34,8 @@
 	<parameter name="hValue" class="java.lang.String"/>
 	<parameter name="hState" class="java.lang.String"/>
 	<parameter name="hFile" class="java.lang.String"/>
-	<parameter name="parameter5" class="java.lang.String"/>
+	<parameter name="hCostCenter" class="java.lang.String"/>
+	<parameter name="parameter1" class="java.lang.String"/>
 	<field name="type" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
@@ -49,6 +50,7 @@
 	<field name="attributes" class="java.util.List"/>
 	<field name="employer" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
+	<field name="costCenter" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -154,7 +156,7 @@
 				<textFieldExpression><![CDATA[$P{hEmployer}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="86" y="0" width="469" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bbc813f7-e3b8-41a3-9bef-0c2f5b9955e1"/>
+				<reportElement mode="Transparent" x="86" y="0" width="202" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bbc813f7-e3b8-41a3-9bef-0c2f5b9955e1"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
 					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -243,6 +245,23 @@
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="288" y="0" width="75" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9f47673e-ab47-4064-854a-5c55c3988101"/>
+				<box rightPadding="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hCostCenter}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="363" y="0" width="192" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="31d091de-a31f-43de-abb6-48de56362936"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{costCenter}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="19">

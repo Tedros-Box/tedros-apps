@@ -1,13 +1,12 @@
 /**
  * 
  */
-package org.tedros.stock.ejb.controller;
+package org.tedros.person.ejb.controller;
 
 import javax.ejb.Remote;
 
+import org.tedros.person.model.CostCenter;
 import org.tedros.server.controller.ITSecureEjbController;
-
-import org.tedros.stock.entity.CostCenter;
 
 /**
  * @author Davis Dun

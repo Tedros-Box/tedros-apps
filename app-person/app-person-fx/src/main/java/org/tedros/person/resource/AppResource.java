@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
+import org.tedros.person.start.TConstant;
 import org.tedros.util.TedrosFolder;
 
 /**
@@ -18,7 +19,7 @@ import org.tedros.util.TedrosFolder;
  */
 public class AppResource {
 
-	private static final String FOLDER ="person";
+	private static final String FOLDER = TConstant.UUI;
 	public static final String APP_MODULE_PATH = TedrosFolder.MODULE_FOLDER.getFullPath()+FOLDER+File.separator;
 	private static final String EMPLOYEE_JASPER ="employee.jasper";
 	private static final String LEGALPERSON_JASPER ="legal_person.jasper";

@@ -21,6 +21,7 @@ import org.tedros.person.module.company.model.CompanyStatusMV;
 import org.tedros.person.module.company.model.EmployeeMV;
 import org.tedros.person.module.company.model.EmployeeStatusMV;
 import org.tedros.person.module.company.model.CompanyTypeMV;
+import org.tedros.person.module.company.model.CostCenterMV;
 import org.tedros.person.module.company.model.StaffTypeMV;
 import org.tedros.person.module.report.model.EmployeeReportMV;
 import org.tedros.person.module.report.model.LegalPersonReportMV;
@@ -48,6 +49,7 @@ public class LegalPersonModule extends TModule {
 				new TViewItem(TDynaGroupView.class, CompanyMV.class, PersonKeys.VIEW_LEGAL_PERSON),
 				new TViewItem(TDynaGroupView.class, CompanyTypeMV.class, PersonKeys.VIEW_LEGAL_TYPE),
 				new TViewItem(TDynaGroupView.class, CompanyStatusMV.class, PersonKeys.VIEW_LEGAL_STATUS), 
+				new TViewItem(TDynaGroupView.class, CostCenterMV.class, PersonKeys.VIEW_COST_CENTER),
 				new TViewItem(TDynaGroupView.class, EmployeeMV.class, PersonKeys.VIEW_EMPLOYEES), 
 				new TViewItem(TDynaGroupView.class, StaffTypeMV.class, PersonKeys.VIEW_STAFF_TYPE), 
 				new TViewItem(TDynaGroupView.class, EmployeeStatusMV.class, PersonKeys.VIEW_EMPLOYEE_STATUS), 

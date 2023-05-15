@@ -31,6 +31,9 @@ public class NaturalPerson extends Person {
 
 	private static final long serialVersionUID = -1790917959813402388L;
 
+	@Column
+	private Long tedrosUserId;
+	
 	@Column(length=60)
 	private String lastName;
 	
@@ -101,6 +104,14 @@ public class NaturalPerson extends Person {
 		this.civilStatus = civilStatus;
 	}
 
+	public Long getTedrosUserId() {
+		return tedrosUserId;
+	}
+
+	public void setTedrosUserId(Long tedrosUserId) {
+		this.tedrosUserId = tedrosUserId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -110,6 +121,7 @@ public class NaturalPerson extends Person {
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
+		result = prime * result + ((tedrosUserId == null) ? 0 : tedrosUserId.hashCode());
 		return result;
 	}
 
@@ -119,7 +131,7 @@ public class NaturalPerson extends Person {
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof NaturalPerson))
+		if (getClass() != obj.getClass())
 			return false;
 		NaturalPerson other = (NaturalPerson) obj;
 		if (birthDate == null) {
@@ -137,6 +149,11 @@ public class NaturalPerson extends Person {
 		} else if (!lastName.equals(other.lastName))
 			return false;
 		if (sex != other.sex)
+			return false;
+		if (tedrosUserId == null) {
+			if (other.tedrosUserId != null)
+				return false;
+		} else if (!tedrosUserId.equals(other.tedrosUserId))
 			return false;
 		return true;
 	}

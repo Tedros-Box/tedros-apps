@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.tedros.location.model.Address;
+import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.Person;
 import org.tedros.sample.domain.DomainSchema;
@@ -37,6 +38,10 @@ public class Sale extends TVersionEntity {
 	@Column(nullable = false)
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date date;
+
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="cc_id", nullable=false)
+	private CostCenter costCenter;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="customer_id", nullable=false)
@@ -63,6 +68,14 @@ public class Sale extends TVersionEntity {
 			orphanRemoval=true)
 	@JoinColumn(name="sale_id")
 	private List<SaleItem> items;
+
+	public CostCenter getCostCenter() {
+		return costCenter;
+	}
+
+	public void setCostCenter(CostCenter costCenter) {
+		this.costCenter = costCenter;
+	}
 
 	/**
 	 * @return the date
@@ -162,13 +175,11 @@ public class Sale extends TVersionEntity {
 		this.items = items;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((costCenter == null) ? 0 : costCenter.hashCode());
 		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((deliveryAddress == null) ? 0 : deliveryAddress.hashCode());
@@ -179,18 +190,20 @@ public class Sale extends TVersionEntity {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Sale))
+		if (getClass() != obj.getClass())
 			return false;
 		Sale other = (Sale) obj;
+		if (costCenter == null) {
+			if (other.costCenter != null)
+				return false;
+		} else if (!costCenter.equals(other.costCenter))
+			return false;
 		if (customer == null) {
 			if (other.customer != null)
 				return false;

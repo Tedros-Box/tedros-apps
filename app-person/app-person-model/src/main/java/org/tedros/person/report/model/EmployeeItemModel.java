@@ -29,6 +29,8 @@ public class EmployeeItemModel implements ITReportItemModel<Employee> {
 	
 	private String employer;
 	
+	private String costCenter;
+	
 	private String birthDate;
 	
 	private String sex;
@@ -65,6 +67,7 @@ public class EmployeeItemModel implements ITReportItemModel<Employee> {
 		this.contacts = Contact.toStringList(p.getContacts());
 		this.description = p.getDescription();
 		this.employer = p.getEmployer()!=null ? p.getEmployer().getName() : null;
+		this.costCenter = p.getCostCenter()!=null ? p.getCostCenter().getName() : null;
 		this.birthDate = p.getBirthDate()!=null ? format(p.getBirthDate()) : null;
 		this.hiringDate = p.getHiringDate()!=null ? format(p.getHiringDate()) : null;
 		this.resignationDate = p.getResignationDate()!=null ? format(p.getResignationDate()) : null;
@@ -218,6 +221,20 @@ public class EmployeeItemModel implements ITReportItemModel<Employee> {
 
 	public Employee getItem() {
 		return item;
+	}
+
+	/**
+	 * @return the costCenter
+	 */
+	public String getCostCenter() {
+		return costCenter;
+	}
+
+	/**
+	 * @param costCenter the costCenter to set
+	 */
+	public void setCostCenter(String costCenter) {
+		this.costCenter = costCenter;
 	}
 
 }

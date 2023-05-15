@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.stock.module.costcenter.model;
+package org.tedros.person.module.company.model;
 
 import java.util.Date;
 
@@ -50,13 +50,14 @@ import org.tedros.fx.property.TSimpleFileProperty;
 import org.tedros.location.LocatKey;
 import org.tedros.location.model.Address;
 import org.tedros.location.module.address.model.AddressMV;
+import org.tedros.person.PersonKeys;
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.ejb.controller.ICostCenterController;
 import org.tedros.person.ejb.controller.IPersonController;
+import org.tedros.person.model.CostCenter;
+import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.NaturalPerson;
 import org.tedros.person.table.PersonTV;
-import org.tedros.stock.STCKKey;
-import org.tedros.stock.domain.DomainApp;
-import org.tedros.stock.ejb.controller.ICostCenterController;
-import org.tedros.stock.entity.CostCenter;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -74,11 +75,11 @@ import javafx.scene.layout.Priority;
 	paginator=@TPaginator(entityClass = CostCenter.class, serviceName = ICostCenterController.JNDI_NAME,
 		show=true, showSearchField=true, searchFieldName="name", 
 		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
-	presenter=@TPresenter(decorator = @TDecorator(viewTitle=STCKKey.VIEW_COST_CENTER,
-		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))
-@TSecurity(id=DomainApp.COST_CENTER_FORM_ID, appName = STCKKey.APP_STOCK,
-	moduleName = STCKKey.MODULE_COST_CENTER, viewName = STCKKey.VIEW_COST_CENTER,
+	presenter=@TPresenter(
+		decorator = @TDecorator(viewTitle=PersonKeys.VIEW_COST_CENTER, buildModesRadioButton=false),
+		behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
+@TSecurity(id=DomainApp.COST_CENTER_FORM_ID, appName = PersonKeys.APP_PERSON,
+	moduleName = PersonKeys.MODULE_LEGAL_PERSON, viewName = PersonKeys.VIEW_COST_CENTER,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class CostCenterMV extends TEntityModelView<CostCenter> {
@@ -124,11 +125,18 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	entries = @TEntry(entityType = NaturalPerson.class, fields = {"name","lastName"}, 
 	service = IPersonController.JNDI_NAME))
 	@THBox(spacing=10, fillHeight=true,	
-	pane=@TPane(children={"responsable", "openingDate", "closingDate"}),
-	hgrow=@THGrow(priority={@TPriority(field="responsable", priority=Priority.ALWAYS), 
+	pane=@TPane(children={"responsable", "legalPerson", "openingDate", "closingDate"}),
+	hgrow=@THGrow(priority={@TPriority(field="responsable", priority=Priority.ALWAYS),
+			@TPriority(field="legalPerson", priority=Priority.ALWAYS), 
 			@TPriority(field="openingDate", priority=Priority.NEVER), 
 			@TPriority(field="closingDate", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<PersonTV> responsable;
+
+	@TLabel(text=TUsualKey.LEGAL_PERSON)
+	@TAutoCompleteEntity(required=true, 
+			entries = @TEntry(entityType = LegalPerson.class, fields = {"name","otherName"}, 
+			service = IPersonController.JNDI_NAME))
+	private SimpleObjectProperty<LegalPerson> legalPerson;
 	
 	@TLabel(text=TUsualKey.OPENING_DATE)
 	@TDatePickerField(dateFormat=DateTimeFormatBuilder.class)
@@ -294,6 +302,22 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 
 	public void setObservation(SimpleStringProperty observation) {
 		this.observation = observation;
+	}
+
+
+	/**
+	 * @return the legalPerson
+	 */
+	public SimpleObjectProperty<LegalPerson> getLegalPerson() {
+		return legalPerson;
+	}
+
+
+	/**
+	 * @param legalPerson the legalPerson to set
+	 */
+	public void setLegalPerson(SimpleObjectProperty<LegalPerson> legalPerson) {
+		this.legalPerson = legalPerson;
 	}
 
 }

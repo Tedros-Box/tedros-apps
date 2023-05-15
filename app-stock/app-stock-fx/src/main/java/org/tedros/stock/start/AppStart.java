@@ -8,7 +8,6 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
-import org.tedros.stock.module.costcenter.CostCenterModule;
 import org.tedros.stock.module.inventory.InventoryModule;
 import org.tedros.stock.module.products.ProductModule;
 import org.tedros.stock.resource.AppResource;
@@ -26,12 +25,6 @@ import org.tedros.stock.resource.AppResource;
 			description=STCKKey.MODULE_DESC_PRODUCTS,
 			icon=TConstant.ICONS_FOLDER + "product.png", 
 			menuIcon=TConstant.ICONS_FOLDER + "product_menu.png"),
-		@TModule(type=CostCenterModule.class, 
-			name=STCKKey.MODULE_COST_CENTER, 
-			menu=STCKKey.MENU_STOCK, 
-			description=STCKKey.MODULE_DESC_COST_CENTER,
-			icon=TConstant.ICONS_FOLDER + "costcenter.png", 
-			menuIcon=TConstant.ICONS_FOLDER + "costcenter_menu.png"),
 		@TModule(type=InventoryModule.class, 
 		name=STCKKey.MODULE_INVENTORY, 
 		menu=STCKKey.MENU_STOCK, 

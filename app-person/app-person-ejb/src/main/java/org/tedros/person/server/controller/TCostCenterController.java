@@ -1,13 +1,17 @@
 /**
  * 
  */
-package org.tedros.stock.server.ejb.controller;
+package org.tedros.person.server.controller;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
+import org.tedros.person.domain.DomainApp;
+import org.tedros.person.ejb.controller.ICostCenterController;
+import org.tedros.person.model.CostCenter;
+import org.tedros.person.server.base.service.TPersonService;
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.ejb.controller.TSecureEjbController;
 import org.tedros.server.security.ITSecurity;
@@ -16,10 +20,6 @@ import org.tedros.server.security.TBeanPolicie;
 import org.tedros.server.security.TBeanSecurity;
 import org.tedros.server.security.TSecurityInterceptor;
 import org.tedros.server.service.ITEjbService;
-import org.tedros.stock.domain.DomainApp;
-import org.tedros.stock.ejb.controller.ICostCenterController;
-import org.tedros.stock.entity.CostCenter;
-import org.tedros.stock.server.ejb.service.STCKService;
 
 /**
  * The controller bean
@@ -35,7 +35,7 @@ policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 public class TCostCenterController extends TSecureEjbController<CostCenter> implements ICostCenterController, ITSecurity  {
 
 	@EJB
-	private STCKService<CostCenter> serv;
+	private TPersonService<CostCenter> serv;
 	
 	@EJB
 	private ITSecurityController securityController;
