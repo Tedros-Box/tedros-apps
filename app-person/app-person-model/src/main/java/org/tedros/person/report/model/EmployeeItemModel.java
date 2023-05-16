@@ -66,7 +66,7 @@ public class EmployeeItemModel implements ITReportItemModel<Employee> {
 		this.address = p.getAddress()!=null ? p.getAddress().toString() : null;
 		this.contacts = Contact.toStringList(p.getContacts());
 		this.description = p.getDescription();
-		this.employer = p.getEmployer()!=null ? p.getEmployer().getName() : null;
+		this.employer = p.getLegalPerson()!=null ? p.getLegalPerson().getName() : null;
 		this.costCenter = p.getCostCenter()!=null ? p.getCostCenter().getName() : null;
 		this.birthDate = p.getBirthDate()!=null ? format(p.getBirthDate()) : null;
 		this.hiringDate = p.getHiringDate()!=null ? format(p.getHiringDate()) : null;

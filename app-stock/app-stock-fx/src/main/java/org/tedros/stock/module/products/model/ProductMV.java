@@ -128,7 +128,7 @@ public class ProductMV extends TEntityModelView<Product> {
 	
 
 	@TLabel(text=TFxKey.BARCODE, show=false)
-	@TBarcodeGenerator(modelType = TBarcode.class, required=true)
+	@TBarcodeGenerator(modelType = TBarcode.class, required=false)
 	private SimpleObjectProperty<TBarcode> barcode;
 	
 	@TFieldBox(node=@TNode(id="img", parse = true))

@@ -87,10 +87,10 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 	optionModelViewClass=StaffTypeMV.class,
 	entityClass=StaffType.class))
 	@THBox(	spacing=10, fillHeight=true,
-			pane=@TPane(children={"type", "status", "hiringDate", "resignationDate", "employer", "costCenter"}), 
+			pane=@TPane(children={"type", "status", "hiringDate", "resignationDate", "legalPerson", "costCenter"}), 
 	hgrow=@THGrow(priority={
 			@TPriority(field="costCenter", priority=Priority.ALWAYS), 
-			@TPriority(field="employer", priority=Priority.ALWAYS),
+			@TPriority(field="legalPerson", priority=Priority.ALWAYS),
 			@TPriority(field="type", priority=Priority.NEVER), 
 			@TPriority(field="status", priority=Priority.NEVER), 
 			@TPriority(field="hiringDate", priority=Priority.NEVER), 
@@ -120,7 +120,7 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 	service = IPersonController.JNDI_NAME))
 	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
 	targetFieldName="costCenter", runAfterFormBuild=true)
-	private SimpleObjectProperty<LegalPerson> employer;
+	private SimpleObjectProperty<LegalPerson> legalPerson;
 	
 	@TLabel(text=TUsualKey.COST_CENTER)
 	@TComboBoxField()
@@ -162,14 +162,6 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 		this.resignationDate = resignationDate;
 	}
 
-	public SimpleObjectProperty<LegalPerson> getEmployer() {
-		return employer;
-	}
-
-	public void setEmployer(SimpleObjectProperty<LegalPerson> employer) {
-		this.employer = employer;
-	}
-
 	public SimpleObjectProperty<EmployeeStatus> getStatus() {
 		return status;
 	}
@@ -190,6 +182,20 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 	 */
 	public void setCostCenter(SimpleObjectProperty<CostCenterTV> costCenter) {
 		this.costCenter = costCenter;
+	}
+
+	/**
+	 * @return the legalPerson
+	 */
+	public SimpleObjectProperty<LegalPerson> getLegalPerson() {
+		return legalPerson;
+	}
+
+	/**
+	 * @param legalPerson the legalPerson to set
+	 */
+	public void setLegalPerson(SimpleObjectProperty<LegalPerson> legalPerson) {
+		this.legalPerson = legalPerson;
 	}
 
 }

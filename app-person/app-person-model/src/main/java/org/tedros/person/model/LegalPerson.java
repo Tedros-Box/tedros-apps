@@ -45,7 +45,7 @@ public class LegalPerson extends Person {
 	private Date endActivities;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="employer", 
+	@OneToMany(mappedBy="legalPerson", 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	public Set<Employee> staff;
 	

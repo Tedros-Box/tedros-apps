@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.tedros.person.model.CostCenter;
+import org.tedros.person.model.ICostCenterAccounting;
+import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.Person;
 import org.tedros.server.entity.TVersionEntity;
 import org.tedros.stock.domain.DomainSchema;
@@ -26,13 +28,18 @@ import org.tedros.stock.domain.DomainTables;
  */
 @Entity
 @Table(name = DomainTables.stock_config, schema = DomainSchema.schema, 
-uniqueConstraints= {@UniqueConstraint(name="stockConfigUK",columnNames = {"cc_id"})})
-public class StockConfig extends TVersionEntity {
+uniqueConstraints= {@UniqueConstraint(name="stockConfigUK",
+columnNames = {"legal_person_id", "cost_center_id"})})
+public class StockConfig extends TVersionEntity implements ICostCenterAccounting{
 
 	private static final long serialVersionUID = 4605036500373444451L;
 
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="cc_id", nullable=false)
+	@JoinColumn(name="legal_person_id", nullable=false)
+	private LegalPerson legalPerson;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="cost_center_id", nullable=false)
 	private CostCenter costCenter;
 
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -69,23 +76,44 @@ public class StockConfig extends TVersionEntity {
 		this.responsable = responsable;
 	}
 
+	/**
+	 * @return the legalPerson
+	 */
+	public LegalPerson getLegalPerson() {
+		return legalPerson;
+	}
+
+	/**
+	 * @param legalPerson the legalPerson to set
+	 */
+	public void setLegalPerson(LegalPerson legalPerson) {
+		this.legalPerson = legalPerson;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((costCenter == null) ? 0 : costCenter.hashCode());
 		result = prime * result + ((items == null) ? 0 : items.hashCode());
+		result = prime * result + ((legalPerson == null) ? 0 : legalPerson.hashCode());
 		result = prime * result + ((responsable == null) ? 0 : responsable.hashCode());
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof StockConfig))
+		if (getClass() != obj.getClass())
 			return false;
 		StockConfig other = (StockConfig) obj;
 		if (costCenter == null) {
@@ -98,12 +126,25 @@ public class StockConfig extends TVersionEntity {
 				return false;
 		} else if (!items.equals(other.items))
 			return false;
+		if (legalPerson == null) {
+			if (other.legalPerson != null)
+				return false;
+		} else if (!legalPerson.equals(other.legalPerson))
+			return false;
 		if (responsable == null) {
 			if (other.responsable != null)
 				return false;
 		} else if (!responsable.equals(other.responsable))
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return legalPerson + ", " + costCenter;
 	}
 
 
