@@ -25,7 +25,7 @@ import org.tedros.person.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.employee, schema = DomainSchema.schema)
 @DiscriminatorValue("EMPLY")
-public class Employee extends NaturalPerson {
+public class Employee extends NaturalPerson implements ICostCenterAccounting {
 
 	private static final long serialVersionUID = -2752532386208736142L;
 	
@@ -38,11 +38,11 @@ public class Employee extends NaturalPerson {
 	private Date resignationDate;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="id_employer")
-	private LegalPerson employer;
+	@JoinColumn(name="legal_person_id")
+	private LegalPerson legalPerson;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="id_cc")
+	@JoinColumn(name="cost_center_id")
 	private CostCenter costCenter;
 
 	public Date getHiringDate() {
@@ -61,16 +61,16 @@ public class Employee extends NaturalPerson {
 		this.resignationDate = resignationDate;
 	}
 
-	public LegalPerson getEmployer() {
-		return employer;
+	public LegalPerson getLegalPerson() {
+		return this.legalPerson;
 	}
 
-	public void setEmployer(LegalPerson employer) {
-		if(this.employer!=null)
-			this.employer.removeEmployee(this);
-		this.employer = employer;
-		if(this.employer!=null)
-			this.employer.addEmployee(this);
+	public void setLegalPerson(LegalPerson legalPerson) {
+		if(this.legalPerson!=null)
+			this.legalPerson.removeEmployee(this);
+		this.legalPerson = legalPerson;
+		if(this.legalPerson!=null)
+			this.legalPerson.addEmployee(this);
 		
 	}
 
@@ -82,21 +82,23 @@ public class Employee extends NaturalPerson {
 	@Override
 	public String toString() {
 		return (getType() != null ? getType().getName() + ", " : "")
-				+ (employer != null ? employer.getName() + ", " : "")
+				+ (getLegalPerson() != null ? getLegalPerson().getName() + ", " : "")
 				+ (getName() != null ?  getName() : "")
 				+ (getLastName() != null ?  " " + getLastName() : "");
 	}
 
-	/**
-	 * @return the costCenter
+	/* (non-Javadoc)
+	 * @see org.tedros.person.model.ICostCenterAccounting#getCostCenter()
 	 */
+	@Override
 	public CostCenter getCostCenter() {
 		return costCenter;
 	}
 
-	/**
-	 * @param costCenter the costCenter to set
+	/* (non-Javadoc)
+	 * @see org.tedros.person.model.ICostCenterAccounting#setCostCenter(org.tedros.person.model.CostCenter)
 	 */
+	@Override
 	public void setCostCenter(CostCenter costCenter) {
 		this.costCenter = costCenter;
 	}
@@ -109,7 +111,7 @@ public class Employee extends NaturalPerson {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((costCenter == null) ? 0 : costCenter.hashCode());
-		result = prime * result + ((employer == null) ? 0 : employer.hashCode());
+		result = prime * result + ((legalPerson == null) ? 0 : legalPerson.hashCode());
 		result = prime * result + ((hiringDate == null) ? 0 : hiringDate.hashCode());
 		result = prime * result + ((resignationDate == null) ? 0 : resignationDate.hashCode());
 		return result;
@@ -132,10 +134,10 @@ public class Employee extends NaturalPerson {
 				return false;
 		} else if (!costCenter.equals(other.costCenter))
 			return false;
-		if (employer == null) {
-			if (other.employer != null)
+		if (legalPerson == null) {
+			if (other.legalPerson != null)
 				return false;
-		} else if (!employer.equals(other.employer))
+		} else if (!legalPerson.equals(other.legalPerson))
 			return false;
 		if (hiringDate == null) {
 			if (other.hiringDate != null)

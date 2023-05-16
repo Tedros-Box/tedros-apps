@@ -8,21 +8,24 @@ import java.util.Date;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
+import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TModelViewType;
 import org.tedros.fx.annotation.control.TTextAreaField;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.layout.TRegion;
 import org.tedros.fx.builder.DateTimeFormatBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.presenter.model.TEntityModelView;
-import org.tedros.person.ejb.controller.ICostCenterController;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.Employee;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.trigger.FilterCostCenterTrigger;
 import org.tedros.stock.entity.StockEvent;
 import org.tedros.stock.entity.StockItem;
 
@@ -36,11 +39,18 @@ import javafx.beans.property.SimpleStringProperty;
 public class StockEventMV<E extends StockEvent> extends TEntityModelView<E> {
 
 
-	@TLabel(text=TUsualKey.COST_CENTER)
+	@TLabel(text=TUsualKey.LEGAL_PERSON)
 	@TAutoCompleteEntity(required=true,
 	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = CostCenter.class, fields = "name", 
-	service = ICostCenterController.JNDI_NAME))
+	entries = @TEntry(entityType = LegalPerson.class, 
+	fields = {"name","otherName"}, 
+	service = IPersonController.JNDI_NAME))
+	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
+	targetFieldName="costCenter", runAfterFormBuild=true)
+	protected SimpleObjectProperty<LegalPerson> legalPerson;
+	
+	@TLabel(text=TUsualKey.COST_CENTER)
+	@TComboBoxField()
 	protected SimpleObjectProperty<CostCenter> costCenter;
 	
 	@TLabel(text=TUsualKey.DATE_TIME)
@@ -71,46 +81,5 @@ public class StockEventMV<E extends StockEvent> extends TEntityModelView<E> {
 	public StockEventMV(E entity) {
 		super(entity);
 	}
-
-	public SimpleObjectProperty<CostCenter> getCostCenter() {
-		return costCenter;
-	}
-
-	public void setCostCenter(SimpleObjectProperty<CostCenter> costCenter) {
-		this.costCenter = costCenter;
-	}
-
-	public SimpleObjectProperty<Date> getDate() {
-		return date;
-	}
-
-	public void setDate(SimpleObjectProperty<Date> date) {
-		this.date = date;
-	}
-
-	public SimpleObjectProperty<Employee> getResponsable() {
-		return responsable;
-	}
-
-	public void setResponsable(SimpleObjectProperty<Employee> responsable) {
-		this.responsable = responsable;
-	}
-
-	public ITObservableList<EventItemMV> getItems() {
-		return items;
-	}
-
-	public void setItems(ITObservableList<EventItemMV> items) {
-		this.items = items;
-	}
-
-	public SimpleStringProperty getObservation() {
-		return observation;
-	}
-
-	public void setObservation(SimpleStringProperty observation) {
-		this.observation = observation;
-	}
-
 
 }

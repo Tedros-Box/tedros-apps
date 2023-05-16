@@ -36,7 +36,7 @@ public class TestCopyChanges {
 		emp.setInsertDate(new Date());
 		emp.setContacts(cts);
 		Employee src = new Employee();
-		src.setEmployer(emp);
+		src.setLegalPerson(emp);
 		src.setName("Nando");
 		src.setLastName("Dun");
 		src.setBirthDate(new Date());
@@ -53,7 +53,7 @@ public class TestCopyChanges {
 		c2.setName("Poly");
 		c2.setType(ContactType.EMAIL);
 		c2.setValue("poly.dun@gmail.com");
-		tgt.getEmployer().getContacts().add(c2);
+		tgt.getLegalPerson().getContacts().add(c2);
 		
 		TBeanUtil.copyChanges(tgt, src);
 		System.out.println("_-------------");

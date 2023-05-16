@@ -68,8 +68,9 @@ public class StockEntryMV extends StockEventMV<StockEntry> {
 	optionModelViewClass=EntryTypeMV.class,
 	entityClass=EntryType.class))
 	@THBox(	spacing=10, fillHeight=true,
-			pane=@TPane(children={"costCenter", "date", "responsable", "type"}), 
+			pane=@TPane(children={"legalPerson", "costCenter", "date", "responsable", "type"}), 
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
+			@TPriority(field="legalPerson", priority=Priority.NEVER), 
 			@TPriority(field="responsable", priority=Priority.NEVER), 
 			@TPriority(field="costCenter", priority=Priority.NEVER), 
 			@TPriority(field="date", priority=Priority.NEVER)}))
@@ -80,25 +81,9 @@ public class StockEntryMV extends StockEventMV<StockEntry> {
 		if(entity.isNew())
 			date.setValue(new Date());
 		String dtf = TLanguage.getLocale().equals(new Locale("pt"))
-				? "em %3$td/%3$tm/%3$tY às %3$tT"
-						: "on %3$tm-%3$td-%3$tY at %3$tT";
-		super.formatToString("%s, %s "+dtf, costCenter, type, date);
-	}
-
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	public SimpleObjectProperty<EntryType> getType() {
-		return type;
-	}
-
-	public void setType(SimpleObjectProperty<EntryType> type) {
-		this.type = type;
+				? "em %4$td/%4$tm/%4$tY às %4$tT"
+						: "on %4$tm-%4$td-%4$tY at %4$tT";
+		super.formatToString("%s [%s], %s "+dtf, legalPerson, costCenter, type, date);
 	}
 
 }

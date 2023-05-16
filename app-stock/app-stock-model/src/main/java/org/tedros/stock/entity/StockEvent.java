@@ -23,6 +23,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.tedros.person.model.CostCenter;
+import org.tedros.person.model.ICostCenterAccounting;
+import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.Person;
 import org.tedros.server.entity.TVersionEntity;
 import org.tedros.stock.domain.DomainSchema;
@@ -38,15 +40,19 @@ import org.tedros.stock.domain.DomainTables;
 @DiscriminatorColumn(name="DTYPE", length=10, 
 discriminatorType=DiscriminatorType.STRING)
 @DiscriminatorValue("EVENT")
-public class StockEvent extends TVersionEntity implements Stockable {
+public class StockEvent extends TVersionEntity implements ICostCenterAccounting, Stockable {
 
 	private static final long serialVersionUID = -996146247037445307L;
 
 	@Column(length=10)
 	private String dType;
+
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="legal_person_id", nullable=false)
+	private LegalPerson legalPerson;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="cc_id", nullable=false)
+	@JoinColumn(name="cost_center_id", nullable=false)
 	private CostCenter costCenter;
 	
 	@Column(nullable = false)
@@ -126,32 +132,59 @@ public class StockEvent extends TVersionEntity implements Stockable {
 		this.dType = dType;
 	}
 
+	/**
+	 * @return the legalPerson
+	 */
+	public LegalPerson getLegalPerson() {
+		return legalPerson;
+	}
+
+	/**
+	 * @param legalPerson the legalPerson to set
+	 */
+	public void setLegalPerson(LegalPerson legalPerson) {
+		this.legalPerson = legalPerson;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((costCenter == null) ? 0 : costCenter.hashCode());
+		result = prime * result + ((dType == null) ? 0 : dType.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((items == null) ? 0 : items.hashCode());
+		result = prime * result + ((legalPerson == null) ? 0 : legalPerson.hashCode());
 		result = prime * result + ((observation == null) ? 0 : observation.hashCode());
 		result = prime * result + ((responsable == null) ? 0 : responsable.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof StockEvent))
+		if (getClass() != obj.getClass())
 			return false;
 		StockEvent other = (StockEvent) obj;
 		if (costCenter == null) {
 			if (other.costCenter != null)
 				return false;
 		} else if (!costCenter.equals(other.costCenter))
+			return false;
+		if (dType == null) {
+			if (other.dType != null)
+				return false;
+		} else if (!dType.equals(other.dType))
 			return false;
 		if (date == null) {
 			if (other.date != null)
@@ -162,6 +195,11 @@ public class StockEvent extends TVersionEntity implements Stockable {
 			if (other.items != null)
 				return false;
 		} else if (!items.equals(other.items))
+			return false;
+		if (legalPerson == null) {
+			if (other.legalPerson != null)
+				return false;
+		} else if (!legalPerson.equals(other.legalPerson))
 			return false;
 		if (observation == null) {
 			if (other.observation != null)
@@ -179,6 +217,17 @@ public class StockEvent extends TVersionEntity implements Stockable {
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return (type != null ? type + ", " : "")
+				+ (date != null ? date + ", " : "")
+				+ (legalPerson != null ? legalPerson + ", " : "")
+				+ (costCenter != null ?  costCenter : "");
 	}
 
 }
