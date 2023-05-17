@@ -50,9 +50,9 @@ import javafx.scene.layout.Priority;
 @TEjbService(serviceName = ICityController.JNDI_NAME, model=City.class)
 @TListViewPresenter(listViewMinWidth=350, listViewMaxWidth=350,
 	paginator=@TPaginator(entityClass = City.class, serviceName=ICityController.JNDI_NAME,
-			show=true, showSearchField=true, searchFieldName="name", 
-			orderBy = {	@TOption(text = TUsualKey.COUNTRY_CODE, value = "countryIso2Code"), 
-						@TOption(text = TUsualKey.NAME, value = "name")}),
+			show=true, showSearch=true, searchField="name", 
+			orderBy = {	@TOption(text = TUsualKey.COUNTRY_CODE, field = "countryIso2Code"), 
+						@TOption(text = TUsualKey.NAME, field = "name")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=LocatKey.VIEW_CITY, buildImportButton=true),
 	behavior=@TBehavior(importModelViewClass=CityImportMV.class, runNewActionAfterSave=true)))
 @TSecurity(	id=DomainApp.CITY_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,

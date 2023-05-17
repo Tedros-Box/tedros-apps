@@ -27,6 +27,9 @@ import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.view.TOption;
+import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.annotation.view.TPaginator.TJoin;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.ejb.controller.IEventTypeController;
@@ -45,9 +48,16 @@ import javafx.scene.layout.Priority;
 @TForm(name = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IStockEventController.JNDI_NAME, model=StockEntry.class)
 @TListViewPresenter(listViewMinWidth=350,
-	presenter=@TPresenter(decorator = @TDecorator(viewTitle=STCKKey.VIEW_STOCK_ENTRY,
-		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))
+	paginator=@TPaginator(entityClass = StockEntry.class, serviceName = IStockEventController.JNDI_NAME,
+		show=true, showSearch=true, searchField="name", fieldAlias="cc",
+		join = { @TJoin(field = "legalPerson", joinAlias = "lp"),
+				 @TJoin(field = "costCenter",  joinAlias = "cc")},
+		orderBy = {	@TOption(text = TUsualKey.DATE , field = "date"),
+					@TOption(text = TUsualKey.COST_CENTER , field = "name", alias="cc"),
+					@TOption(text = TUsualKey.LEGAL_PERSON , field = "name", alias="lp")}),
+	presenter=@TPresenter(
+		decorator = @TDecorator(viewTitle=STCKKey.VIEW_STOCK_ENTRY, buildModesRadioButton=false),
+		behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.STOCK_ENTRY_FORM_ID, appName = STCKKey.APP_STOCK,
 	moduleName = STCKKey.MODULE_INVENTORY, viewName = STCKKey.VIEW_STOCK_ENTRY,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 

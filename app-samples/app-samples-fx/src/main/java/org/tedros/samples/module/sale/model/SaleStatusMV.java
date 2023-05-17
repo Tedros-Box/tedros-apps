@@ -31,8 +31,8 @@ import org.tedros.samples.module.sale.assistant.SaleStatusJson;
 @TListViewPresenter(
 	aiAssistant=@TAiAssistant(jsonModel = SaleStatusJson.class, modelViewClass = SaleStatusMV.class, show=true),
 	paginator=@TPaginator(entityClass = SaleStatus.class, serviceName = IGenericDomainController.JNDI_NAME,
-		show=true, showSearchField=true, searchFieldName="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
+		show=true, showSearch=true, searchField="name", 
+		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=SmplsKey.VIEW_SALES_STATUS,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false, saveAllModels=true)))

@@ -79,8 +79,8 @@ import javafx.scene.layout.Priority;
 @TEjbService(serviceName = ISaleController.JNDI_NAME, model=Sale.class)
 @TListViewPresenter(listViewMinWidth=400,
 	paginator=@TPaginator(entityClass = Sale.class, serviceName = ISaleController.JNDI_NAME,
-		show=true, showSearchField=false,  
-		orderBy = {	@TOption(text = TUsualKey.DATE , value = "date")}),
+		show=true, showSearch=false,  
+		orderBy = {	@TOption(text = TUsualKey.DATE , field = "date")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=SmplsKey.VIEW_SALES,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false, saveAllModels=true)))

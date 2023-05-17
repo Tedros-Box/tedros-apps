@@ -33,8 +33,8 @@ import javafx.beans.property.SimpleObjectProperty;
 @TEjbService(serviceName = IProductPriceController.JNDI_NAME, model=ProductPrice.class)
 @TListViewPresenter(
 	paginator=@TPaginator(entityClass = ProductPrice.class, serviceName = IProductPriceController.JNDI_NAME,
-		show=true, showSearchField=false, 
-		orderBy = {	@TOption(text = TUsualKey.NAME , value = "product")}),
+		show=true, showSearch=false, 
+		orderBy = {	@TOption(text = TUsualKey.NAME , field = "product")}),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=SmplsKey.VIEW_PRICE, buildModesRadioButton=false),
 		behavior=@TBehavior(runNewActionAfterSave=true, saveOnlyChangedModels=false, saveAllModels=true)))
