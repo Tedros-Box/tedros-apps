@@ -49,9 +49,9 @@ import javafx.scene.layout.Priority;
 @TEjbService(serviceName = IPersonController.JNDI_NAME, model=ClientCompany.class)
 @TListViewPresenter(
 	paginator=@TPaginator(entityClass = ClientCompany.class, serviceName = IPersonController.JNDI_NAME,
-		show=true, showSearchField=true, searchFieldName="name", 
-		orderBy = {	@TOption(text = TUsualKey.CORPORATE_NAME , value = "name"),
-				@TOption(text = TUsualKey.TRADE_NAME , value = "otherName")}),
+		show=true, showSearch=true, searchField="name", 
+		orderBy = {	@TOption(text = TUsualKey.CORPORATE_NAME , field = "name"),
+				@TOption(text = TUsualKey.TRADE_NAME , field = "otherName")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_CLIENT_COMPANY,
 		buildModesRadioButton=false),
 		behavior=@TBehavior(runNewActionAfterSave=false)))

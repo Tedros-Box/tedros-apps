@@ -30,8 +30,8 @@ import org.tedros.stock.module.inventory.assistant.EntryTypeJson;
 @TListViewPresenter(
 	aiAssistant=@TAiAssistant(jsonModel = EntryTypeJson.class, modelViewClass = EntryTypeMV.class, show=true),
 	paginator=@TPaginator(entityClass = EntryType.class, serviceName = IEventTypeController.JNDI_NAME,
-		show=true, showSearchField=true, searchFieldName="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
+		show=true, showSearch=true, searchField="name", 
+		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
 	presenter=@TPresenter(
 		decorator=@TDecorator(viewTitle=STCKKey.VIEW_ENTRY_TYPE, buildModesRadioButton=false),
 		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false)))

@@ -29,8 +29,8 @@ import org.tedros.person.model.LegalTypeMV;
 @TEjbService(serviceName = IPersonTypeController.JNDI_NAME, model=ClientCompanyType.class)
 @TListViewPresenter(
 		paginator=@TPaginator(entityClass = ClientCompanyType.class, serviceName = IPersonTypeController.JNDI_NAME,
-		show=true, showSearchField=true, searchFieldName="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
+		show=true, showSearch=true, searchField="name", 
+		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
 		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_CLIENT_COMPANY_TYPE,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false)))

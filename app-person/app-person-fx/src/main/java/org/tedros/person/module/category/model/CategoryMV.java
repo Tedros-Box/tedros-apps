@@ -73,8 +73,8 @@ import javafx.scene.text.TextAlignment;
 @TEjbService(serviceName = IPersonCategoryController.JNDI_NAME, model=PersonCategory.class)
 @TListViewPresenter(
 		paginator=@TPaginator(entityClass = PersonCategory.class, serviceName = IPersonCategoryController.JNDI_NAME,
-		show=true, showSearchField=true, searchFieldName="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
+		show=true, showSearch=true, searchField="name", 
+		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
 		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_PERSON_CATEGORY,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false)))

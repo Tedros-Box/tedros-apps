@@ -35,8 +35,8 @@ import javafx.beans.property.SimpleStringProperty;
 @TEjbService(serviceName = I_MyEntity_Controller.JNDI_NAME, model=_MyEntity_.class)
 @TListViewPresenter(
 	paginator=@TPaginator(entityClass = _MyEntity_.class, serviceName = I_MyEntity_Controller.JNDI_NAME,
-		show=true, showSearchField=true, searchFieldName="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
+		show=true, showSearch=true, searchField="name", 
+		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=TMP_Key.MY_APP_MY_VIEW,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false)))

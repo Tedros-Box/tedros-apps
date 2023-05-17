@@ -68,8 +68,8 @@ import javafx.scene.layout.Priority;
 @TListViewPresenter(
 	paginator=@TPaginator(entityClass = Place.class, 
 		serviceName = IPlaceController.JNDI_NAME,
-		show=true, showSearchField=true, searchFieldName="title", 
-		orderBy = {	@TOption(text = TUsualKey.TITLE, value = "title")}),
+		show=true, showSearch=true, searchField="title", 
+		orderBy = {	@TOption(text = TUsualKey.TITLE, field = "title")}),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=LocatKey.VIEW_PLACE),
 		behavior = @TBehavior(saveOnlyChangedModels=false, saveAllModels=false)))

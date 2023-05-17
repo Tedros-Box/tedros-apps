@@ -29,8 +29,8 @@ import org.tedros.person.model.NaturalStatusMV;
 @TEjbService(serviceName = IPersonStatusController.JNDI_NAME, model=PhilanthropeStatus.class)
 @TListViewPresenter(
 		paginator=@TPaginator(entityClass = PhilanthropeStatus.class, serviceName = IPersonStatusController.JNDI_NAME,
-		show=true, showSearchField=true, searchFieldName="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , value = "name")}),
+		show=true, showSearch=true, searchField="name", 
+		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
 		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_PHILANTHROPE_STATUS,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=true)))

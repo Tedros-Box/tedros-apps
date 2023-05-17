@@ -43,9 +43,9 @@ import javafx.scene.layout.Priority;
 @TEjbService(serviceName = IAdminAreaController.JNDI_NAME, model=AdminArea.class)
 @TListViewPresenter(listViewMinWidth=350, listViewMaxWidth=350,
 	paginator=@TPaginator(entityClass = AdminArea.class, serviceName = IAdminAreaController.JNDI_NAME,
-			show=true, showSearchField=true, searchFieldName="name", 
-			orderBy = {	@TOption(text = TUsualKey.COUNTRY_CODE, value = "countryIso2Code"), 
-						@TOption(text = TUsualKey.NAME, value = "name")}),
+			show=true, showSearch=true, searchField="name", 
+			orderBy = {	@TOption(text = TUsualKey.COUNTRY_CODE, field = "countryIso2Code"), 
+						@TOption(text = TUsualKey.NAME, field = "name")}),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=LocatKey.VIEW_ADMIN_AREA, buildImportButton=true),
 	behavior=@TBehavior(importModelViewClass=AdminAreaImportMV.class, runNewActionAfterSave=true)))
 @TSecurity(	id=DomainApp.ADMIN_AREA_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
