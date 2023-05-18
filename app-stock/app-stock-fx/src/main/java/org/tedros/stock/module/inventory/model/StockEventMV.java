@@ -50,7 +50,7 @@ public class StockEventMV<E extends StockEvent> extends TEntityModelView<E> {
 	protected SimpleObjectProperty<LegalPerson> legalPerson;
 	
 	@TLabel(text=TUsualKey.COST_CENTER)
-	@TComboBoxField()
+	@TComboBoxField(required=true)
 	protected SimpleObjectProperty<CostCenter> costCenter;
 	
 	@TLabel(text=TUsualKey.DATE_TIME)
@@ -65,6 +65,7 @@ public class StockEventMV<E extends StockEvent> extends TEntityModelView<E> {
 	service = IPersonController.JNDI_NAME))
 	protected SimpleObjectProperty<Employee> responsable;
 
+	@TLabel(text=TUsualKey.PRODUCTS, show=false)
 	@TFieldBox(node=@TNode(id="evdtl", parse = true))
 	@TDetailListField(required=true, region=@TRegion(maxHeight=500, parse = false),
 	entityModelViewClass = EventItemMV.class, entityClass = StockItem.class)

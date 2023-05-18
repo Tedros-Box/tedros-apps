@@ -26,6 +26,7 @@ import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
 import org.tedros.fx.annotation.scene.control.TControl;
+import org.tedros.fx.domain.TZeroValidation;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.sample.entity.SaleItem;
 import org.tedros.samples.SmplsKey;
@@ -74,15 +75,17 @@ public class SaleItemMV extends TEntityModelView<SaleItem> {
 	private SimpleObjectProperty<Product> product;
 	
 	@TLabel(text=SmplsKey.UNIT_PRICE)
-	@TBigDecimalField(control=@TControl(maxWidth=250, parse = true))
+	@TBigDecimalField(zeroValidation=TZeroValidation.GREATHER_THAN_ZERO, 
+	control=@TControl(maxWidth=80, parse = true))
 	private SimpleObjectProperty<BigDecimal> unitPrice;
 	
 	@TLabel(text=TUsualKey.AMOUNT)
-	@TIntegerField
+	@TIntegerField(zeroValidation=TZeroValidation.GREATHER_THAN_ZERO, 
+	control=@TControl(maxWidth=80, parse = true))
 	private SimpleIntegerProperty amount;
 	
 	@TLabel(text=TUsualKey.DISCOUNT)
-	@TDoubleField
+	@TDoubleField(control=@TControl(maxWidth=80, parse = true))
 	private SimpleDoubleProperty rebate;
 
 	@TLabel(text="Total")
@@ -118,61 +121,12 @@ public class SaleItemMV extends TEntityModelView<SaleItem> {
 
 		total.setValue(m);
 	}
-
-	/**
-	 * @return the product
-	 */
-	public SimpleObjectProperty<Product> getProduct() {
-		return product;
-	}
-
-	/**
-	 * @param product the product to set
-	 */
-	public void setProduct(SimpleObjectProperty<Product> product) {
-		this.product = product;
-	}
-
+	
 	/**
 	 * @return the unitPrice
 	 */
 	public SimpleObjectProperty<BigDecimal> getUnitPrice() {
 		return unitPrice;
-	}
-
-	/**
-	 * @param unitPrice the unitPrice to set
-	 */
-	public void setUnitPrice(SimpleObjectProperty<BigDecimal> unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-
-	/**
-	 * @return the amount
-	 */
-	public SimpleIntegerProperty getAmount() {
-		return amount;
-	}
-
-	/**
-	 * @param amount the amount to set
-	 */
-	public void setAmount(SimpleIntegerProperty amount) {
-		this.amount = amount;
-	}
-
-	/**
-	 * @return the rebate
-	 */
-	public SimpleDoubleProperty getRebate() {
-		return rebate;
-	}
-
-	/**
-	 * @param rebate the rebate to set
-	 */
-	public void setRebate(SimpleDoubleProperty rebate) {
-		this.rebate = rebate;
 	}
 
 	/**
@@ -182,11 +136,5 @@ public class SaleItemMV extends TEntityModelView<SaleItem> {
 		return total;
 	}
 
-	/**
-	 * @param total the total to set
-	 */
-	public void setTotal(SimpleObjectProperty<BigDecimal> total) {
-		this.total = total;
-	}
 
 }

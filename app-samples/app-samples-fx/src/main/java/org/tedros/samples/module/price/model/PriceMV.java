@@ -61,7 +61,7 @@ public class PriceMV extends TEntityModelView<ProductPrice> {
 	protected SimpleObjectProperty<LegalPerson> legalPerson;
 	
 	@TLabel(text=TUsualKey.COST_CENTER)
-	@TComboBoxField()
+	@TComboBoxField(required=true)
 	protected SimpleObjectProperty<CostCenter> costCenter;
 	
 	@TLabel(text=TUsualKey.PRODUCT)

@@ -72,7 +72,7 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 	private SimpleObjectProperty<LegalPerson> legalPerson;
 	
 	@TLabel(text=TUsualKey.COST_CENTER)
-	@TComboBoxField()
+	@TComboBoxField(required=true)
 	private SimpleObjectProperty<CostCenter> costCenter;
 
 	@TLabel(text=TUsualKey.RESPONSABLE)
@@ -82,8 +82,10 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 	service = IPersonController.JNDI_NAME))
 	protected SimpleObjectProperty<Employee> responsable;
 	
+	@TLabel(text=TUsualKey.PRODUCTS, show=false)
 	@TFieldBox(node=@TNode(id="evdtl", parse = true))
-	@TDetailListField(entityModelViewClass = ConfigItemMV.class, entityClass = StockConfigItem.class)
+	@TDetailListField(required=true, 
+	entityModelViewClass = ConfigItemMV.class, entityClass = StockConfigItem.class)
 	@TModelViewType(modelClass=StockConfigItem.class, modelViewClass=ConfigItemMV.class)
 	private ITObservableList<ConfigItemMV> items;
 	
