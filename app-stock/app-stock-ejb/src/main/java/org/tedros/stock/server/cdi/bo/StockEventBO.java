@@ -67,7 +67,7 @@ public class StockEventBO extends TGenericBO<StockEvent> {
 		// get the inventory list from output products
 		List<Product> prods = new ArrayList<>();
 		ev.getItems().forEach(p->prods.add(p.getProduct()));
-		List<Inventory> iLst = invEao.calculate(ev.getCostCenter(), null, prods, null, null);
+		List<Inventory> iLst = invEao.calculate(ev.getLegalPerson(), ev.getCostCenter(), null, prods, null, null);
 		
 		StringBuilder sbWarn = new StringBuilder("");
 		StringBuilder sbExc = new StringBuilder("");

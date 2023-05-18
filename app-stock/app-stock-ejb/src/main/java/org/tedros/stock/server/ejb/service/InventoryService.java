@@ -16,6 +16,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import org.tedros.person.model.CostCenter;
+import org.tedros.person.model.LegalPerson;
 import org.tedros.server.cdi.bo.ITGenericBO;
 import org.tedros.server.ejb.service.TEjbService;
 import org.tedros.stock.entity.Product;
@@ -42,7 +43,7 @@ public class InventoryService extends TEjbService<StockItem>  {
 		return bo;
 	}
 
-	public List<Inventory> calculate(CostCenter cc, Date date, Product product, String orderBy, String asc){
-		return bo.calculate(cc, date, product, orderBy, asc);
+	public List<Inventory> calculate(LegalPerson lp, CostCenter cc, Date date, Product product, String orderBy, String asc){
+		return bo.calculate(lp, cc, date, product, orderBy, asc);
 	}
 }

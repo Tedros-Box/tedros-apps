@@ -47,7 +47,7 @@ public class InventoryReportController implements IInventoryReportController, IT
 		@TMethodPolicie(policie = {TActionPolicie.SEARCH})})
 	public TResult<InventoryReportModel> process(TAccessToken token, InventoryReportModel m) {
 		try{
-			List<Inventory> lst = serv.calculate(m.getCostCenter(), m.getDate(), m.getProduct(), 
+			List<Inventory> lst = serv.calculate(m.getLegalPerson(), m.getCostCenter(), m.getDate(), m.getProduct(), 
 					m.getOrderBy(), m.getOrderType());
 			if(lst!=null){
 				m.setResult(lst);

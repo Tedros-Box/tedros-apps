@@ -32,6 +32,7 @@ public class InventoryReportProcess extends TReportProcess<InventoryReportModel>
 		params.put("hAmount", l.getString(TUsualKey.AMOUNT));
 		params.put("hDate", l.getString(TUsualKey.UNTIL_DATE));
 		params.put("hCostCenter", l.getString(TUsualKey.COST_CENTER));
+		params.put("hLegalPerson", l.getString(TUsualKey.LEGAL_PERSON));
 		params.put("vDate", format(getModel().getDate()));
 		params.put("vCostCenter", getModel().getCostCenter()!=null 
 				? getModel().getCostCenter().getName()

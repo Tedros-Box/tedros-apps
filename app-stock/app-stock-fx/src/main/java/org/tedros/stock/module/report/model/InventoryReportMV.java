@@ -7,6 +7,7 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
+import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TLabel;
@@ -14,6 +15,7 @@ import org.tedros.fx.annotation.control.TModelViewType;
 import org.tedros.fx.annotation.control.TRadioButton;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.control.TTableView.TTableViewSelectionModel;
 import org.tedros.fx.annotation.control.TVerticalRadioGroup;
 import org.tedros.fx.annotation.form.TForm;
@@ -40,8 +42,11 @@ import org.tedros.fx.presenter.model.TModelView;
 import org.tedros.fx.presenter.report.behavior.TDataSetReportBehavior;
 import org.tedros.fx.presenter.report.decorator.TDataSetReportDecorator;
 import org.tedros.person.ejb.controller.ICostCenterController;
+import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.CostCenter;
+import org.tedros.person.model.LegalPerson;
 import org.tedros.person.module.report.action.SearchAction;
+import org.tedros.person.trigger.FilterCostCenterTrigger;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.ejb.controller.IProductController;
@@ -76,21 +81,27 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 		panes={
 			@TTitledPane(text=TUsualKey.FILTERS, node=@TNode(id="filtro",parse = true), 
 				expanded=true, layoutType=TLayoutType.HBOX,
-				fields={"costCenter", "orderBy"}),
+				fields={"legalPerson", "orderBy"}),
 			@TTitledPane(text=TUsualKey.RESULT, node=@TNode(id="resultado",parse = true),
 				fields={"result"})})	
 	private SimpleLongProperty id;
 	
-	@TLabel(text=TUsualKey.COST_CENTER)
-	@TAutoCompleteEntity(
-	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = CostCenter.class, fields = "name", 
-	service = ICostCenterController.JNDI_NAME))
-	@THBox(	spacing=10, fillHeight=true,
-		pane=@TPane(children={"costCenter", "date", "product"}), 
+	@TLabel(text=TUsualKey.LEGAL_PERSON)
+	@TAutoCompleteEntity(startSearchAt=2, showMaxItems=30,
+	entries = @TEntry(entityType = LegalPerson.class, 
+	fields = {"name","otherName"}, 
+	service = IPersonController.JNDI_NAME))
+	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
+	targetFieldName="costCenter", runAfterFormBuild=true)
+	@THBox(	pane=@TPane(children={"legalPerson", "costCenter", "date", "product"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="product", priority=Priority.NEVER), 
-		@TPriority(field="costCenter", priority=Priority.NEVER), 
-		@TPriority(field="date", priority=Priority.NEVER)}))
+			@TPriority(field="costCenter", priority=Priority.NEVER), 
+			@TPriority(field="date", priority=Priority.NEVER),
+			@TPriority(field="legalPerson", priority=Priority.NEVER)}))
+	private SimpleObjectProperty<LegalPerson> legalPerson;
+	
+	@TLabel(text=TUsualKey.COST_CENTER)
+	@TComboBoxField()
 	private SimpleObjectProperty<CostCenter> costCenter;
 	
 	@TLabel(text=TUsualKey.UNTIL_DATE)
@@ -127,6 +138,8 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 			rowFactory=TReportRowFactoryCallBackBuilder.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
+				@TTableColumn(cellValue="legalPerson", text = TUsualKey.LEGAL_PERSON, prefWidth=20, resizable=true), 
+				@TTableColumn(cellValue="costCenter", text = TUsualKey.COST_CENTER, prefWidth=20, resizable=true), 
 				@TTableColumn(cellValue="code", text = TUsualKey.CODE, prefWidth=20, resizable=true), 
 				@TTableColumn(cellValue="name", text = TUsualKey.NAME, resizable=true), 
 				@TTableColumn(cellValue="amount", text = TUsualKey.AMOUNT, resizable=true)
@@ -138,60 +151,5 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 		super(entidade);
 	}
 
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	public SimpleObjectProperty<CostCenter> getCostCenter() {
-		return costCenter;
-	}
-
-	public void setCostCenter(SimpleObjectProperty<CostCenter> costCenter) {
-		this.costCenter = costCenter;
-	}
-
-	public SimpleObjectProperty<Date> getDate() {
-		return date;
-	}
-
-	public void setDate(SimpleObjectProperty<Date> date) {
-		this.date = date;
-	}
-
-	public SimpleObjectProperty<Product> getProduct() {
-		return product;
-	}
-
-	public void setProduct(SimpleObjectProperty<Product> product) {
-		this.product = product;
-	}
-
-	public SimpleStringProperty getOrderBy() {
-		return orderBy;
-	}
-
-	public void setOrderBy(SimpleStringProperty orderBy) {
-		this.orderBy = orderBy;
-	}
-
-	public SimpleStringProperty getOrderType() {
-		return orderType;
-	}
-
-	public void setOrderType(SimpleStringProperty orderType) {
-		this.orderType = orderType;
-	}
-
-	public ITObservableList<InventoryTV> getResult() {
-		return result;
-	}
-
-	public void setResult(ITObservableList<InventoryTV> result) {
-		this.result = result;
-	}
 
 }
