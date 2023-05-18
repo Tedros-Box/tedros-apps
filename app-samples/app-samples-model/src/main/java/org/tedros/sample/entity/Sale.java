@@ -20,6 +20,8 @@ import javax.persistence.TemporalType;
 import org.tedros.location.model.Address;
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.Employee;
+import org.tedros.person.model.ICostCenterAccounting;
+import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.Person;
 import org.tedros.sample.domain.DomainSchema;
 import org.tedros.sample.domain.DomainTables;
@@ -31,7 +33,7 @@ import org.tedros.server.entity.TVersionEntity;
  */
 @Entity
 @Table(name=DomainTables.sale, schema=DomainSchema.schema)
-public class Sale extends TVersionEntity {
+public class Sale extends TVersionEntity implements ICostCenterAccounting{
 
 	private static final long serialVersionUID = -8008690210025662586L;
 
@@ -40,7 +42,11 @@ public class Sale extends TVersionEntity {
 	private Date date;
 
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="cc_id", nullable=false)
+	@JoinColumn(name="legal_person_id", nullable=false)
+	private LegalPerson legalPerson;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="cost_center_id", nullable=false)
 	private CostCenter costCenter;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -175,6 +181,23 @@ public class Sale extends TVersionEntity {
 		this.items = items;
 	}
 
+	/**
+	 * @return the legalPerson
+	 */
+	public LegalPerson getLegalPerson() {
+		return legalPerson;
+	}
+
+	/**
+	 * @param legalPerson the legalPerson to set
+	 */
+	public void setLegalPerson(LegalPerson legalPerson) {
+		this.legalPerson = legalPerson;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -184,12 +207,16 @@ public class Sale extends TVersionEntity {
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((deliveryAddress == null) ? 0 : deliveryAddress.hashCode());
 		result = prime * result + ((items == null) ? 0 : items.hashCode());
+		result = prime * result + ((legalPerson == null) ? 0 : legalPerson.hashCode());
 		result = prime * result + ((seller == null) ? 0 : seller.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -224,6 +251,11 @@ public class Sale extends TVersionEntity {
 				return false;
 		} else if (!items.equals(other.items))
 			return false;
+		if (legalPerson == null) {
+			if (other.legalPerson != null)
+				return false;
+		} else if (!legalPerson.equals(other.legalPerson))
+			return false;
 		if (seller == null) {
 			if (other.seller != null)
 				return false;
@@ -240,6 +272,17 @@ public class Sale extends TVersionEntity {
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return (legalPerson != null ?  legalPerson : "")
+				+ (costCenter != null ? " [" + costCenter + "]" : "")
+				+ (customer != null ? ", " + customer : "") 
+				+ (date != null ? ", " + date : "");
 	}
 
 	

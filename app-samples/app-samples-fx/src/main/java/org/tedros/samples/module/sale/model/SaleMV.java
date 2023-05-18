@@ -24,6 +24,7 @@ import org.tedros.fx.annotation.control.TOneSelectionModal;
 import org.tedros.fx.annotation.control.TOptionsList;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.form.TSetting;
@@ -41,6 +42,7 @@ import org.tedros.fx.annotation.scene.layout.TRegion;
 import org.tedros.fx.annotation.text.TText;
 import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.annotation.view.TPaginator.TJoin;
 import org.tedros.fx.builder.DateTimeFormatBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.control.TText.TTextStyle;
@@ -49,12 +51,14 @@ import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.location.LocatKey;
 import org.tedros.location.model.Address;
 import org.tedros.location.module.address.model.AddressMV;
-import org.tedros.person.ejb.controller.ICostCenterController;
 import org.tedros.person.ejb.controller.IEmployeeController;
+import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.FindPersonMV;
+import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.Person;
+import org.tedros.person.trigger.FilterCostCenterTrigger;
 import org.tedros.sample.domain.DomainApp;
 import org.tedros.sample.ejb.controller.IGenericDomainController;
 import org.tedros.sample.ejb.controller.ISaleController;
@@ -79,11 +83,17 @@ import javafx.scene.layout.Priority;
 @TEjbService(serviceName = ISaleController.JNDI_NAME, model=Sale.class)
 @TListViewPresenter(listViewMinWidth=400,
 	paginator=@TPaginator(entityClass = Sale.class, serviceName = ISaleController.JNDI_NAME,
-		show=true, showSearch=false,  
-		orderBy = {	@TOption(text = TUsualKey.DATE , field = "date")}),
-	presenter=@TPresenter(decorator = @TDecorator(viewTitle=SmplsKey.VIEW_SALES,
-		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false, saveAllModels=true)))
+		show=true, showSearch=true, searchField="name", fieldAlias="cs",
+		join = { @TJoin(field = "customer", joinAlias = "cs"),
+				@TJoin(field = "legalPerson",  joinAlias = "lp"),
+				@TJoin(field = "costCenter",  joinAlias = "cc")},
+		orderBy = {	@TOption(text = TUsualKey.DATE , field = "date"),
+				@TOption(text = TUsualKey.CUSTOMER , field = "name", alias="cs"),
+				@TOption(text = TUsualKey.COST_CENTER , field = "name", alias="cc"),
+				@TOption(text = TUsualKey.LEGAL_PERSON , field = "name", alias="lp")}),
+	presenter=@TPresenter(
+		decorator = @TDecorator(viewTitle=SmplsKey.VIEW_SALES, buildModesRadioButton=false),
+		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false, saveAllModels=true)))
 @TSecurity(id=DomainApp.SALE_FORM_ID, appName = SmplsKey.APP_SAMPLES,
 	moduleName = SmplsKey.MODULE_SALES, viewName = SmplsKey.VIEW_SALES,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
@@ -97,36 +107,44 @@ public class SaleMV extends TEntityModelView<Sale> {
 	
 	@TTabPane(tabs = { 
 		@TTab( text = TUsualKey.MAIN_DATA, 
-			content = @TContent(detailForm=@TDetailForm(fields={"date","customer"}))),
+			content = @TContent(detailForm=@TDetailForm(fields={"date","type", "customer"}))),
 		@TTab(text =  TUsualKey.PRODUCTS, 
 			content = @TContent(detailForm=@TDetailForm(fields={"items"})))
 	})
 	private SimpleLongProperty id;
 		
-
 	@TLabel(text=TUsualKey.DATE_TIME)
 	@TDatePickerField(required=true, 
 	dateFormat=DateTimeFormatBuilder.class)
 	@THBox(	spacing=10, fillHeight=true,
-		pane=@TPane(children={"date", "costCenter", "type", "status", "seller"}), 
-	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
-			@TPriority(field="status", priority=Priority.NEVER),
-			@TPriority(field="costCenter", priority=Priority.NEVER),
-		@TPriority(field="seller", priority=Priority.NEVER),
-		@TPriority(field="date", priority=Priority.NEVER)}))
+		pane=@TPane(children={"date", "legalPerson", "costCenter"}), 
+	hgrow=@THGrow(priority={@TPriority(field="date", priority=Priority.NEVER), 
+			@TPriority(field="legalPerson", priority=Priority.NEVER),
+			@TPriority(field="costCenter", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<Date> date;
 
-	@TLabel(text=TUsualKey.COST_CENTER)
+	@TLabel(text=TUsualKey.LEGAL_PERSON)
 	@TAutoCompleteEntity(required=true,
 	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = CostCenter.class, fields = "name", 
-	service = ICostCenterController.JNDI_NAME))
-	protected SimpleObjectProperty<CostCenter> costCenter;
+	entries = @TEntry(entityType = LegalPerson.class, 
+	fields = {"name","otherName"}, 
+	service = IPersonController.JNDI_NAME))
+	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
+	targetFieldName="costCenter", runAfterFormBuild=true)
+	protected SimpleObjectProperty<LegalPerson> legalPerson;
+	
+	@TLabel(text=TUsualKey.COST_CENTER)
+	@TComboBoxField()protected SimpleObjectProperty<CostCenter> costCenter;
 	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(required=true,
 	optionsList=@TOptionsList(serviceName = IGenericDomainController.JNDI_NAME, 
 	entityClass=SaleType.class))
+	@THBox(	spacing=10, fillHeight=true,
+		pane=@TPane(children={"type", "status", "seller"}), 
+	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
+			@TPriority(field="status", priority=Priority.NEVER),
+		@TPriority(field="seller", priority=Priority.NEVER)}))
 	private SimpleObjectProperty<SaleType> type;
 	
 	@TLabel(text=TUsualKey.STATUS)
@@ -167,9 +185,9 @@ public class SaleMV extends TEntityModelView<Sale> {
 		if(entity.isNew())
 			date.setValue(new Date());
 		String dtf = TLanguage.getLocale().equals(new Locale("pt"))
-				? "em %3$td/%3$tm/%3$tY às %3$tT"
-						: "on %3$tm-%3$td-%3$tY at %3$tT";
-		super.formatToString("%s, %s "+dtf, customer, type, date);
+				? "em %5$td/%5$tm/%5$tY às %5$tT"
+						: "on %5$tm-%5$td-%5$tY at %5$tT";
+		super.formatToString("%s [%s], %s, %s "+dtf, legalPerson, costCenter, customer, type, date);
 	}
 
 	/**
@@ -304,6 +322,20 @@ public class SaleMV extends TEntityModelView<Sale> {
 
 	public void setCostCenter(SimpleObjectProperty<CostCenter> costCenter) {
 		this.costCenter = costCenter;
+	}
+
+	/**
+	 * @return the legalPerson
+	 */
+	public SimpleObjectProperty<LegalPerson> getLegalPerson() {
+		return legalPerson;
+	}
+
+	/**
+	 * @param legalPerson the legalPerson to set
+	 */
+	public void setLegalPerson(SimpleObjectProperty<LegalPerson> legalPerson) {
+		this.legalPerson = legalPerson;
 	}
 
 }

@@ -8,7 +8,9 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TBigDecimalField;
+import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
@@ -19,6 +21,10 @@ import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.view.TOption;
 import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.ejb.controller.IPersonController;
+import org.tedros.person.model.CostCenter;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.trigger.FilterCostCenterTrigger;
 import org.tedros.sample.domain.DomainApp;
 import org.tedros.sample.ejb.controller.IProductPriceController;
 import org.tedros.sample.entity.ProductPrice;
@@ -44,47 +50,32 @@ import javafx.beans.property.SimpleObjectProperty;
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class PriceMV extends TEntityModelView<ProductPrice> {
 
+	@TLabel(text=TUsualKey.LEGAL_PERSON)
+	@TAutoCompleteEntity(required=true,
+	startSearchAt=2, showMaxItems=30,
+	entries = @TEntry(entityType = LegalPerson.class, 
+	fields = {"name","otherName"}, 
+	service = IPersonController.JNDI_NAME))
+	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
+	targetFieldName="costCenter", runAfterFormBuild=true)
+	protected SimpleObjectProperty<LegalPerson> legalPerson;
+	
+	@TLabel(text=TUsualKey.COST_CENTER)
+	@TComboBoxField()
+	protected SimpleObjectProperty<CostCenter> costCenter;
+	
 	@TLabel(text=TUsualKey.PRODUCT)
 	@TAutoCompleteEntity(required=true, control=@TControl(maxWidth=250, parse = true),
 		entries = @TEntry(entityType = Product.class, 
 			fields = { "code", "name" }, service = IProductController.JNDI_NAME))
-	private SimpleObjectProperty<Product> product;
+	protected SimpleObjectProperty<Product> product;
 	
 	@TLabel(text=SmplsKey.UNIT_PRICE)
 	@TBigDecimalField(control=@TControl(maxWidth=250, parse = true))
-	private SimpleObjectProperty<BigDecimal> unitPrice;
+	protected SimpleObjectProperty<BigDecimal> unitPrice;
 	
 	public PriceMV(ProductPrice entity) {
 		super(entity);
-		super.formatToString("%s (%s)", product, unitPrice);
+		super.formatToString("%s [%s], %s (%s)", legalPerson, costCenter, product, unitPrice);
 	}
-
-	/**
-	 * @return the product
-	 */
-	public SimpleObjectProperty<Product> getProduct() {
-		return product;
-	}
-
-	/**
-	 * @param product the product to set
-	 */
-	public void setProduct(SimpleObjectProperty<Product> product) {
-		this.product = product;
-	}
-
-	/**
-	 * @return the unitPrice
-	 */
-	public SimpleObjectProperty<BigDecimal> getUnitPrice() {
-		return unitPrice;
-	}
-
-	/**
-	 * @param unitPrice the unitPrice to set
-	 */
-	public void setUnitPrice(SimpleObjectProperty<BigDecimal> unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-
 }

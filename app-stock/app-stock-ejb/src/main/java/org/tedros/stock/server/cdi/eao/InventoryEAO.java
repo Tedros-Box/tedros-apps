@@ -60,6 +60,8 @@ public class InventoryEAO extends TGenericEAO<StockItem> {
 		
 		Query qry = super.getEntityManager().createQuery(sb.toString());
 
+		if(lp!=null)
+			qry.setParameter("lp", lp);
 		if(cc!=null)
 			qry.setParameter("cc", cc);
 		if(date!=null)
