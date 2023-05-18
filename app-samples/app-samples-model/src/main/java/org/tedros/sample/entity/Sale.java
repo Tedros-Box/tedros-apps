@@ -58,7 +58,7 @@ public class Sale extends TVersionEntity implements ICostCenterAccounting{
 	private Employee seller;
 	
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="address_id", nullable=false)
+	@JoinColumn(name="address_id")
 	private Address deliveryAddress;
 
 	@ManyToOne(fetch=FetchType.EAGER)

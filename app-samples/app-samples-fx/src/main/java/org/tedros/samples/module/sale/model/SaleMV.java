@@ -134,7 +134,8 @@ public class SaleMV extends TEntityModelView<Sale> {
 	protected SimpleObjectProperty<LegalPerson> legalPerson;
 	
 	@TLabel(text=TUsualKey.COST_CENTER)
-	@TComboBoxField()protected SimpleObjectProperty<CostCenter> costCenter;
+	@TComboBoxField(required=true)
+	private SimpleObjectProperty<CostCenter> costCenter;
 	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(required=true,
@@ -160,7 +161,7 @@ public class SaleMV extends TEntityModelView<Sale> {
 	private SimpleObjectProperty<Employee> seller;
 	
 	@TLabel(text=TUsualKey.CUSTOMER)
-	@TOneSelectionModal(height=40,
+	@TOneSelectionModal(height=40, required=true,
 	modelClass = Person.class, modelViewClass = FindPersonMV.class)
 	@THBox(	spacing=10, fillHeight=true,
 		pane=@TPane(children={"customer", "deliveryAddress"}), 
@@ -174,6 +175,7 @@ public class SaleMV extends TEntityModelView<Sale> {
 	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
 	private SimpleObjectProperty<AddressMV> deliveryAddress;
 
+	@TLabel(text=TUsualKey.PRODUCTS, show=false)
 	@TFieldBox(node=@TNode(id="saleitem", parse = true))
 	@TDetailListField(required=true, region=@TRegion(maxHeight=500, parse = false),
 	entityModelViewClass = SaleItemMV.class, entityClass = SaleItem.class)
@@ -191,104 +193,6 @@ public class SaleMV extends TEntityModelView<Sale> {
 	}
 
 	/**
-	 * @return the date
-	 */
-	public SimpleObjectProperty<Date> getDate() {
-		return date;
-	}
-
-	/**
-	 * @param date the date to set
-	 */
-	public void setDate(SimpleObjectProperty<Date> date) {
-		this.date = date;
-	}
-
-	/**
-	 * @return the customer
-	 */
-	public SimpleObjectProperty<FindPersonMV> getCustomer() {
-		return customer;
-	}
-
-	/**
-	 * @param customer the customer to set
-	 */
-	public void setCustomer(SimpleObjectProperty<FindPersonMV> customer) {
-		this.customer = customer;
-	}
-
-	/**
-	 * @return the seller
-	 */
-	public SimpleObjectProperty<Employee> getSeller() {
-		return seller;
-	}
-
-	/**
-	 * @param seller the seller to set
-	 */
-	public void setSeller(SimpleObjectProperty<Employee> seller) {
-		this.seller = seller;
-	}
-
-	/**
-	 * @return the type
-	 */
-	public SimpleObjectProperty<SaleType> getType() {
-		return type;
-	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(SimpleObjectProperty<SaleType> type) {
-		this.type = type;
-	}
-
-	/**
-	 * @return the status
-	 */
-	public SimpleObjectProperty<SaleStatus> getStatus() {
-		return status;
-	}
-
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(SimpleObjectProperty<SaleStatus> status) {
-		this.status = status;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the deliveryAddress
-	 */
-	public SimpleObjectProperty<AddressMV> getDeliveryAddress() {
-		return deliveryAddress;
-	}
-
-	/**
-	 * @param deliveryAddress the deliveryAddress to set
-	 */
-	public void setDeliveryAddress(SimpleObjectProperty<AddressMV> deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
-	}
-
-	/**
 	 * @return the items
 	 */
 	public ITObservableList<SaleItemMV> getItems() {
@@ -296,46 +200,10 @@ public class SaleMV extends TEntityModelView<Sale> {
 	}
 
 	/**
-	 * @param items the items to set
-	 */
-	public void setItems(ITObservableList<SaleItemMV> items) {
-		this.items = items;
-	}
-
-	/**
 	 * @return the total
 	 */
 	public SimpleStringProperty getTotal() {
 		return total;
-	}
-
-	/**
-	 * @param total the total to set
-	 */
-	public void setTotal(SimpleStringProperty total) {
-		this.total = total;
-	}
-
-	public SimpleObjectProperty<CostCenter> getCostCenter() {
-		return costCenter;
-	}
-
-	public void setCostCenter(SimpleObjectProperty<CostCenter> costCenter) {
-		this.costCenter = costCenter;
-	}
-
-	/**
-	 * @return the legalPerson
-	 */
-	public SimpleObjectProperty<LegalPerson> getLegalPerson() {
-		return legalPerson;
-	}
-
-	/**
-	 * @param legalPerson the legalPerson to set
-	 */
-	public void setLegalPerson(SimpleObjectProperty<LegalPerson> legalPerson) {
-		this.legalPerson = legalPerson;
 	}
 
 }

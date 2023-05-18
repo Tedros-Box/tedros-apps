@@ -16,8 +16,14 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.scene.control.TControl;
+import org.tedros.fx.presenter.dynamic.TDynaPresenter;
+import org.tedros.fx.presenter.entity.behavior.TDetailFieldBehavior;
+import org.tedros.fx.presenter.entity.decorator.TDetailFieldDecorator;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
@@ -32,14 +38,19 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TDetailTableViewPresenter(tableView = @TTableView(
-control=@TControl(parse = true),
-columns = 
-	{ @TTableColumn(text = TUsualKey.PRODUCT, cellValue="product", 
-			cellFactory=@TCellFactory(parse = true, 
-			callBack=@TCallbackFactory(parse=true, value=ProductCallBack.class))), 
-		@TTableColumn(text = TUsualKey.AMOUNT, cellValue="amount")
-	}))
+@TDetailTableViewPresenter(
+	presenter = @TPresenter(	
+		behavior = @TBehavior(type = TDetailFieldBehavior.class), 
+		decorator = @TDecorator(type = TDetailFieldDecorator.class, 
+			viewTitle=TUsualKey.PRODUCTS), type = TDynaPresenter.class),
+	tableView = @TTableView(
+		control=@TControl(parse = true),
+		columns = {
+			@TTableColumn(text = TUsualKey.PRODUCT, cellValue="product", 
+				cellFactory=@TCellFactory(parse = true, 
+					callBack=@TCallbackFactory(parse=true, value=ProductCallBack.class))), 
+			@TTableColumn(text = TUsualKey.AMOUNT, cellValue="amount")
+		}))
 public class EventItemMV extends TEntityModelView<StockItem> {
 
 

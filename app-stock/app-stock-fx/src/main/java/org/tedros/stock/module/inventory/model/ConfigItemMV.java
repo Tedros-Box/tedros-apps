@@ -17,10 +17,16 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.presenter.TBehavior;
+import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
+import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.control.TLabeled;
 import org.tedros.fx.domain.TZeroValidation;
+import org.tedros.fx.presenter.dynamic.TDynaPresenter;
+import org.tedros.fx.presenter.entity.behavior.TDetailFieldBehavior;
+import org.tedros.fx.presenter.entity.decorator.TDetailFieldDecorator;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
@@ -36,20 +42,25 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TDetailTableViewPresenter(tableView = @TTableView(
-control=@TControl(maxHeight=250,parse = true),
-columns = 
-	{ @TTableColumn(text = TUsualKey.PRODUCT, cellValue="product", 
+@TDetailTableViewPresenter(
+	presenter = @TPresenter(	
+			behavior = @TBehavior(type = TDetailFieldBehavior.class), 
+			decorator = @TDecorator(type = TDetailFieldDecorator.class, 
+				viewTitle=TUsualKey.PRODUCTS), type = TDynaPresenter.class),
+	tableView = @TTableView(
+		control=@TControl(maxHeight=250,parse = true),
+		columns = {
+		@TTableColumn(text = TUsualKey.PRODUCT, cellValue="product", 
 			cellFactory=@TCellFactory(parse = true, 
-			callBack=@TCallbackFactory(parse=true, value=ProductCallBack.class))), 
+				callBack=@TCallbackFactory(parse=true, value=ProductCallBack.class))), 
 		@TTableColumn(text = TUsualKey.MINIMUN_AMOUNT, cellValue="minimumAmount"), 
 		@TTableColumn(text = TUsualKey.NOTIFY_RESPONSABLE, cellValue="notify", 
-				cellFactory=@TCellFactory(parse = true, 
+			cellFactory=@TCellFactory(parse = true, 
 				callBack=@TCallbackFactory(parse=true, value=BooleanCallback.class))), 
 		@TTableColumn(text = TUsualKey.ALLOW_NEGATIVE_STOCK, cellValue="allowNegativeStock", 
-		cellFactory=@TCellFactory(parse = true, 
-		callBack=@TCallbackFactory(parse=true, value=BooleanCallback.class)))
-	}))
+			cellFactory=@TCellFactory(parse = true, 
+				callBack=@TCallbackFactory(parse=true, value=BooleanCallback.class)))
+		}))
 public class ConfigItemMV extends TEntityModelView<StockConfigItem> {
 
 
