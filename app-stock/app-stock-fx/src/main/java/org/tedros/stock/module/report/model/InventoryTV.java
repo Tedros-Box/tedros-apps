@@ -15,6 +15,8 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class InventoryTV extends TModelView<Inventory> {
 
+	private SimpleStringProperty legalPerson;
+	private SimpleStringProperty costCenter;
 	private SimpleStringProperty code;
 	private SimpleStringProperty name;
 	private SimpleDoubleProperty amount;
@@ -45,6 +47,34 @@ public class InventoryTV extends TModelView<Inventory> {
 
 	public void setAmount(SimpleDoubleProperty amount) {
 		this.amount = amount;
+	}
+
+	/**
+	 * @return the legalPerson
+	 */
+	public SimpleStringProperty getLegalPerson() {
+		return legalPerson;
+	}
+
+	/**
+	 * @param legalPerson the legalPerson to set
+	 */
+	public void setLegalPerson(SimpleStringProperty legalPerson) {
+		this.legalPerson = legalPerson;
+	}
+
+	/**
+	 * @return the costCenter
+	 */
+	public SimpleStringProperty getCostCenter() {
+		return costCenter;
+	}
+
+	/**
+	 * @param costCenter the costCenter to set
+	 */
+	public void setCostCenter(SimpleStringProperty costCenter) {
+		this.costCenter = costCenter;
 	}
 
 }

@@ -108,7 +108,7 @@ public class InventoryTimer {
 												String email = c.getValue();
 												cfg.getItems().forEach(i->{
 													if(i.getNotify()!=null && i.getNotify()) {
-														List<Inventory> invs = invEao.calculate(cfg.getCostCenter(), null,
+														List<Inventory> invs = invEao.calculate(cfg.getLegalPerson(), cfg.getCostCenter(), null,
 																Arrays.asList(i.getProduct()), null, null);
 														if(invs.size()>0) {
 															Inventory inv = invs.get(0);
@@ -119,6 +119,7 @@ public class InventoryTimer {
 																sb.append(i.getProduct().toString()+" ");
 																sb.append("reached the minimum amount in stock!");
 																sb.append("<hr>");
+																sb.append("Company: ").append(cc.getLegalPerson().getName()).append("<br>");
 																sb.append("Cost center: ").append(cc.getName()).append("<br>");
 																sb.append("Minimum amount acceptable: ").append(i.getMinimumAmount()).append("<br>");
 																sb.append("Current amount in stock: ").append(inv.getAmount());

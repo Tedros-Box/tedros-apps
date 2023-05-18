@@ -12,6 +12,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.tedros.person.model.CostCenter;
+import org.tedros.person.model.LegalPerson;
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 import org.tedros.stock.entity.Product;
@@ -40,9 +41,9 @@ public class InventoryBO extends TGenericBO<StockItem> {
 		return eao;
 	}
 	
-	public List<Inventory> calculate(CostCenter cc, Date date, Product product, String orderBy, String asc){
+	public List<Inventory> calculate(LegalPerson lp, CostCenter cc, Date date, Product product, String orderBy, String asc){
 		
-		List<Inventory> l = eao.calculate(cc, date, product!=null?Arrays.asList(product):null, orderBy, asc);	
+		List<Inventory> l = eao.calculate(lp, cc, date, product!=null?Arrays.asList(product):null, orderBy, asc);	
 		
 		StockConfig cfg = new StockConfig();
 		cfg.setCostCenter(cc);

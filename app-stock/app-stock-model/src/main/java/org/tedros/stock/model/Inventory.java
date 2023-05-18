@@ -14,6 +14,8 @@ public class Inventory implements ITReportItemModel<Inventory>  {
 	private static final long serialVersionUID = 3727717064033502648L;
 	
 	private Long prodId;
+	private String legalPerson;
+	private String costCenter;
 	private String code;
 	private String name;
 	private Double amount;
@@ -22,8 +24,10 @@ public class Inventory implements ITReportItemModel<Inventory>  {
 	public Inventory() {
 	}
 
-	public Inventory(Long prodId, String code, String name, Double amount) {
+	public Inventory(String legalPerson, String costCenter, Long prodId, String code, String name, Double amount) {
 		super();
+		this.legalPerson = legalPerson;
+		this.costCenter = costCenter;
 		this.prodId = prodId;
 		this.code = code;
 		this.name = name;
@@ -73,6 +77,34 @@ public class Inventory implements ITReportItemModel<Inventory>  {
 
 	public void setMinAmount(Double minAmount) {
 		this.minAmount = minAmount;
+	}
+
+	/**
+	 * @return the legalPerson
+	 */
+	public String getLegalPerson() {
+		return legalPerson;
+	}
+
+	/**
+	 * @param legalPerson the legalPerson to set
+	 */
+	public void setLegalPerson(String legalPerson) {
+		this.legalPerson = legalPerson;
+	}
+
+	/**
+	 * @return the costCenter
+	 */
+	public String getCostCenter() {
+		return costCenter;
+	}
+
+	/**
+	 * @param costCenter the costCenter to set
+	 */
+	public void setCostCenter(String costCenter) {
+		this.costCenter = costCenter;
 	}
 
 }
