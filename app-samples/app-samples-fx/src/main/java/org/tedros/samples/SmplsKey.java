@@ -28,6 +28,7 @@ public interface SmplsKey {
 	static final String MODULE_ORDERS = "#{module.orders}";
 	static final String MODULE_PRICE = "#{module.price}";
 	static final String MODULE_SALES = "#{module.sales}";
+	static final String MSG_SELECT_COST_CENTER = "#{msg.select.cost.center}";
 	static final String VIEW_ORDER_STATUS = "#{view.order.status}";
 	static final String VIEW_ORDERS = "#{view.orders}";
 	static final String VIEW_PRICE = "#{view.price}";

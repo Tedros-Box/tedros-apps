@@ -60,9 +60,9 @@ public class FilterCostCenterTrigger extends TTrigger<LegalPerson> {
 											&& entity.getCostCenter().equals(c)) {
 										cmb.getSelectionModel().select(cc);
 									}
-									if(cmb.getSelectionModel().isEmpty())
-										((Property)mv.getProperty("costCenter")).setValue(null);
 								});
+								if(cmb.getSelectionModel().isEmpty())
+									((Property)mv.getProperty("costCenter")).setValue(null);
 							}
 						}
 					}

@@ -81,9 +81,10 @@ import javafx.scene.layout.Priority;
 @TSetting(SaleSetting.class)
 @TForm(name = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = ISaleController.JNDI_NAME, model=Sale.class)
-@TListViewPresenter(listViewMinWidth=400,
+@TListViewPresenter(listViewMinWidth=450,
 	paginator=@TPaginator(entityClass = Sale.class, serviceName = ISaleController.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", fieldAlias="cs",
+		show=true, showSearch=true,  promptText=TUsualKey.CUSTOMER,
+		searchField="name", fieldAlias="cs",
 		join = { @TJoin(field = "customer", joinAlias = "cs"),
 				@TJoin(field = "legalPerson",  joinAlias = "lp"),
 				@TJoin(field = "costCenter",  joinAlias = "cc")},
@@ -93,7 +94,7 @@ import javafx.scene.layout.Priority;
 				@TOption(text = TUsualKey.LEGAL_PERSON , field = "name", alias="lp")}),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=SmplsKey.VIEW_SALES, buildModesRadioButton=false),
-		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false, saveAllModels=true)))
+		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false, saveAllModels=false)))
 @TSecurity(id=DomainApp.SALE_FORM_ID, appName = SmplsKey.APP_SAMPLES,
 	moduleName = SmplsKey.MODULE_SALES, viewName = SmplsKey.VIEW_SALES,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
@@ -204,6 +205,20 @@ public class SaleMV extends TEntityModelView<Sale> {
 	 */
 	public SimpleStringProperty getTotal() {
 		return total;
+	}
+
+	/**
+	 * @return the legalPerson
+	 */
+	public SimpleObjectProperty<LegalPerson> getLegalPerson() {
+		return legalPerson;
+	}
+
+	/**
+	 * @return the costCenter
+	 */
+	public SimpleObjectProperty<CostCenter> getCostCenter() {
+		return costCenter;
 	}
 
 }
