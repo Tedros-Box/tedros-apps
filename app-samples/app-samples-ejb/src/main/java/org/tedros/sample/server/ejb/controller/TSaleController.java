@@ -8,18 +8,25 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import org.tedros.server.ejb.controller.ITSecurityController;
-import org.tedros.server.ejb.controller.TSecureEjbController;
-import org.tedros.server.security.ITSecurity;
-import org.tedros.server.security.TAccessPolicie;
-import org.tedros.server.security.TBeanPolicie;
-import org.tedros.server.security.TBeanSecurity;
-import org.tedros.server.security.TSecurityInterceptor;
-import org.tedros.server.service.ITEjbService;
 import org.tedros.sample.domain.DomainApp;
 import org.tedros.sample.ejb.controller.ISaleController;
 import org.tedros.sample.entity.Sale;
-import org.tedros.sample.server.ejb.service.SmplsService;
+import org.tedros.sample.server.ejb.service.SaleService;
+import org.tedros.server.ejb.controller.ITSecurityController;
+import org.tedros.server.ejb.controller.TSecureEjbController;
+import org.tedros.server.result.TResult;
+import org.tedros.server.result.TResult.TState;
+import org.tedros.server.security.ITSecurity;
+import org.tedros.server.security.TAccessPolicie;
+import org.tedros.server.security.TAccessToken;
+import org.tedros.server.security.TActionPolicie;
+import org.tedros.server.security.TBeanPolicie;
+import org.tedros.server.security.TBeanSecurity;
+import org.tedros.server.security.TMethodPolicie;
+import org.tedros.server.security.TMethodSecurity;
+import org.tedros.server.security.TSecurityInterceptor;
+import org.tedros.server.service.ITEjbService;
+import org.tedros.stock.ejb.support.IInventorySupport;
 
 /**
  * The controller bean
@@ -35,7 +42,10 @@ policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 public class TSaleController extends TSecureEjbController<Sale> implements ISaleController, ITSecurity  {
 
 	@EJB
-	private SmplsService<Sale> serv;
+	private SaleService serv;
+	
+	@EJB
+	private IInventorySupport sup;
 	
 	@EJB
 	private ITSecurityController securityController;
@@ -48,5 +58,18 @@ public class TSaleController extends TSecureEjbController<Sale> implements ISale
 	@Override
 	public ITSecurityController getSecurityController() {
 		return securityController;
+	}
+	
+	@Override
+	@TMethodSecurity({@TMethodPolicie(policie = {TActionPolicie.SAVE, TActionPolicie.NEW})})
+	public TResult<Sale> save(TAccessToken token, Sale e) {
+		try{
+			Sale s = serv.save(token, e);
+			processEntity(token, s);
+			return new TResult<>(TState.SUCCESS, s);
+		}catch(Exception ex){
+			return processException(token, e, ex);
+		}
+
 	}
 }
