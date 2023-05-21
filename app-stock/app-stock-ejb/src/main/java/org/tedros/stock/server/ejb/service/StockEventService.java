@@ -28,9 +28,6 @@ import org.tedros.stock.server.cdi.bo.StockEventBO;
  * @author Davis Dun
  *
  */
-/*@LocalBean
-@Stateless(name="StockEventService")*/
-
 @Singleton
 @Lock(LockType.READ) 
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
@@ -53,20 +50,20 @@ public class StockEventService extends TEjbService<StockEvent>  {
 	/* (non-Javadoc)
 	 * @see org.tedros.server.ejb.service.TEjbService#save(org.tedros.server.entity.ITEntity)
 	 */
-	@Lock(LockType.WRITE) 
 	@Override
-	public StockEvent save(StockEvent entidade) throws Exception {
-		// TODO Auto-generated method stub
-		return super.save(entidade);
+	@Lock(LockType.WRITE) 
+	@TransactionAttribute(value = TransactionAttributeType.REQUIRED)
+	public StockEvent save(StockEvent ev) throws Exception {
+		return bo.save(ev);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.tedros.server.ejb.service.TEjbService#remove(org.tedros.server.entity.ITEntity)
 	 */
-	@Lock(LockType.WRITE) 
 	@Override
-	public void remove(StockEvent entidade) throws Exception {
-		// TODO Auto-generated method stub
-		super.remove(entidade);
+	@Lock(LockType.WRITE) 
+	@TransactionAttribute(value = TransactionAttributeType.REQUIRED)
+	public void remove(StockEvent ev) throws Exception {
+		bo.remove(ev);
 	}
 }

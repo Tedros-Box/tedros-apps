@@ -20,6 +20,7 @@ public class Inventory implements ITReportItemModel<Inventory>  {
 	private String name;
 	private Double amount;
 	private Double minAmount = 0D;
+	private Boolean allowNegativeStock = false;
 
 	public Inventory() {
 	}
@@ -105,6 +106,20 @@ public class Inventory implements ITReportItemModel<Inventory>  {
 	 */
 	public void setCostCenter(String costCenter) {
 		this.costCenter = costCenter;
+	}
+
+	/**
+	 * @return the allowNegativeStock
+	 */
+	public Boolean getAllowNegativeStock() {
+		return allowNegativeStock;
+	}
+
+	/**
+	 * @param allowNegativeStock the allowNegativeStock to set
+	 */
+	public void setAllowNegativeStock(Boolean allowNegativeStock) {
+		this.allowNegativeStock = allowNegativeStock;
 	}
 
 }

@@ -37,9 +37,13 @@ public class SaleService extends TEjbService<Sale>  {
 		return bo;
 	}
 	 
-	
+	@TransactionAttribute(value = TransactionAttributeType.REQUIRED)
 	public Sale save(TAccessToken token, Sale entidade) throws Exception {
 		return bo.save(token, entidade);
 	}
 
+	@TransactionAttribute(value = TransactionAttributeType.REQUIRED)
+	public void remove(TAccessToken token, Sale entidade) throws Exception {
+		bo.remove(token, entidade);
+	}
 }

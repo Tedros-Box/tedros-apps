@@ -10,9 +10,9 @@ import javax.ejb.Remote;
 
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.LegalPerson;
+import org.tedros.person.model.Person;
 import org.tedros.server.security.TAccessToken;
 import org.tedros.stock.entity.Product;
-import org.tedros.stock.entity.StockEvent;
 import org.tedros.stock.model.Inventory;
 
 /**
@@ -22,7 +22,8 @@ import org.tedros.stock.model.Inventory;
 @Remote
 public interface IInventorySupport {
 
-	void addEvent(TAccessToken token, StockEvent e);
+	String addEvent(TAccessToken token, LegalPerson lp, CostCenter cc, Person resp, Date date, 
+			List<TItem> items, List<TItem> oldItems);
 	
 	List<Inventory> calculate(TAccessToken token, LegalPerson lp, CostCenter cc, Date date, Product product);	
 }
