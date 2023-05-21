@@ -50,12 +50,15 @@ public class InventoryBO extends TGenericBO<StockItem> {
 		try {
 			cfg = cfgBo.find(cfg);
 			if(cfg!=null) {
-				cfg.getItems().forEach(i->{
-					Optional<Inventory> op = l.stream().filter(p->{
-						return p.getProdId().equals(i.getProduct().getId());
-					}).findFirst();
-					if(op.isPresent())
-						op.get().setMinAmount(i.getMinimumAmount());
+				cfg.getItems()
+				.forEach(i->{
+					l.stream()
+					.filter(p-> p.getProdId().equals(i.getProduct().getId()))
+					.findFirst()
+					.ifPresent(c->{
+						c.setMinAmount(i.getMinimumAmount());
+						c.setAllowNegativeStock(i.getAllowNegativeStock());
+					});
 				});
 			}
 		} catch (Exception e) {

@@ -5,6 +5,7 @@ package org.tedros.sample.server.cdi.bo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -16,9 +17,8 @@ import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 import org.tedros.server.security.TAccessToken;
 import org.tedros.stock.ejb.support.IInventorySupport;
-import org.tedros.stock.entity.StockEntry;
-import org.tedros.stock.entity.StockItem;
-import org.tedros.stock.entity.StockOut;
+import org.tedros.stock.ejb.support.TItem;
+import org.tedros.stock.ejb.support.TItem.TEvent;
 
 /**
  * The CDI business object 
@@ -33,7 +33,7 @@ public class SaleBO extends TGenericBO<Sale> {
 	private SmplsEAO<Sale> eao;
 	
 	@EJB
-	private IInventorySupport sup;
+	private IInventorySupport support;
 	
 	
 	@Override
@@ -43,28 +43,44 @@ public class SaleBO extends TGenericBO<Sale> {
 
 	public Sale save(TAccessToken token, Sale e) throws Exception {
 		
-		
+		List<TItem> oldItems = new ArrayList<>();
+		List<TItem> currItems = new ArrayList<>();
 		if(e.isNew()) {
-			StockOut out = new StockOut();
-			out.setDate(new Date());
-			out.setLegalPerson(e.getLegalPerson());
-			out.setCostCenter(e.getCostCenter());
-			out.setResponsable(e.getSeller());
-			out.setItems(new ArrayList<>());
-			e.getItems().forEach(si->{
-				StockItem i = new StockItem();
-				i.setProduct(si.getProduct());
-				i.setAmount(new Double(si.getAmount()));
-				i.setEvent(out);
-				out.getItems().add(i);
+			e.getItems().forEach(i->{
+				currItems.add(new TItem(i.getProduct(), new Double(i.getAmount())));
 			});
-			sup.addEvent(token, out);
+		}else {
+			Sale old = super.findById(e);
+			old.getItems().forEach(i->{
+				oldItems.add(new TItem(i.getId(), i.getProduct(), new Double(i.getAmount())));
+			});
+			e.getItems().forEach(i->{
+				currItems.add(new TItem(i.getId(), i.getProduct(), new Double(i.getAmount())));
+			});
 		}
-		
-		return super.save(e);
+		try {
+			support.addEvent(token, e.getLegalPerson(), e.getCostCenter(), e.getSeller(), new Date(), currItems, oldItems);
+			return super.save(e);
+		}catch(Exception ex) {
+			throw ex;
+		}
 	}
 	
-	
+	public void remove(TAccessToken token, Sale e) throws Exception {
+		List<TItem> currItems = new ArrayList<>();
+		Sale current = super.findById(e);
+		current.getItems().forEach(i->{
+			TItem item = new TItem(i.getId(), i.getProduct(), new Double(i.getAmount()));
+			item.setEvent(TEvent.ENTRY);
+			currItems.add(item);
+		});
+		try {
+			support.addEvent(token, e.getLegalPerson(), e.getCostCenter(), e.getSeller(), new Date(), currItems, null);
+			super.remove(e);
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
 	
 	
 	

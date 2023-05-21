@@ -26,7 +26,6 @@ import org.tedros.server.security.TMethodPolicie;
 import org.tedros.server.security.TMethodSecurity;
 import org.tedros.server.security.TSecurityInterceptor;
 import org.tedros.server.service.ITEjbService;
-import org.tedros.stock.ejb.support.IInventorySupport;
 
 /**
  * The controller bean
@@ -44,8 +43,6 @@ public class TSaleController extends TSecureEjbController<Sale> implements ISale
 	@EJB
 	private SaleService serv;
 	
-	@EJB
-	private IInventorySupport sup;
 	
 	@EJB
 	private ITSecurityController securityController;
@@ -61,7 +58,8 @@ public class TSaleController extends TSecureEjbController<Sale> implements ISale
 	}
 	
 	@Override
-	@TMethodSecurity({@TMethodPolicie(policie = {TActionPolicie.SAVE, TActionPolicie.NEW})})
+	@TMethodSecurity({
+	@TMethodPolicie(policie = {TActionPolicie.SAVE, TActionPolicie.NEW})})
 	public TResult<Sale> save(TAccessToken token, Sale e) {
 		try{
 			Sale s = serv.save(token, e);
@@ -70,6 +68,18 @@ public class TSaleController extends TSecureEjbController<Sale> implements ISale
 		}catch(Exception ex){
 			return processException(token, e, ex);
 		}
-
+	}
+	
+	@Override
+	@TMethodSecurity({
+	@TMethodPolicie(policie = {TActionPolicie.DELETE}, id = "")})
+	public TResult<Sale> remove(TAccessToken token, Sale entity) {
+		try{
+			serv.remove(token, entity);
+			return new TResult<>(TState.SUCCESS);
+			
+		}catch(Exception e){
+			return processException(token, entity, e);
+		}
 	}
 }
