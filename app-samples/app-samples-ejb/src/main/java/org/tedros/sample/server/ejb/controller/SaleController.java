@@ -38,7 +38,7 @@ import org.tedros.server.service.ITEjbService;
 @TBeanSecurity({@TBeanPolicie(id = DomainApp.SALE_FORM_ID, 
 policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class TSaleController extends TSecureEjbController<Sale> implements ISaleController, ITSecurity  {
+public class SaleController extends TSecureEjbController<Sale> implements ISaleController, ITSecurity  {
 
 	@EJB
 	private SaleService serv;

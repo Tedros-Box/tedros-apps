@@ -1,0 +1,65 @@
+package org.tedros.samples.module.order.action;
+
+import java.util.Date;
+import java.util.List;
+
+import org.tedros.core.context.TLoader;
+import org.tedros.core.context.TModuleContext;
+import org.tedros.core.context.TedrosAppManager;
+import org.tedros.core.context.TedrosModuleLoader;
+import org.tedros.core.message.TMessage;
+import org.tedros.core.message.TMessageType;
+import org.tedros.fx.builder.TBaseEventHandlerBuilder;
+import org.tedros.fx.presenter.dynamic.TDynaPresenter;
+import org.tedros.fx.presenter.entity.behavior.TMasterCrudViewBehavior;
+import org.tedros.sample.entity.Order;
+import org.tedros.sample.entity.Sale;
+import org.tedros.samples.SmplsKey;
+import org.tedros.samples.module.order.OrderModule;
+import org.tedros.samples.module.order.model.OrderMV;
+import org.tedros.samples.module.sale.SaleModule;
+import org.tedros.samples.module.sale.model.SaleMV;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+public class CreateSaleEvent extends TBaseEventHandlerBuilder<ActionEvent> {
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public EventHandler<ActionEvent> build() {
+		return ev->{
+			super.getComponentDescriptor();
+			TDynaPresenter<OrderMV> p = (TDynaPresenter<OrderMV>) super.getComponentDescriptor().getForm().gettPresenter();
+			TMasterCrudViewBehavior<OrderMV, Order> b = 
+					(TMasterCrudViewBehavior<OrderMV, Order>) p.getBehavior();
+			Order order = b.getModelView().getEntity();
+			if(order.isNew()) {
+				b.addMessage(new TMessage(TMessageType.WARNING, SmplsKey.MSG_SAVE_FIRST));
+				return;
+			}
+			
+			if(order.getSale()==null) {
+				TModuleContext ct = TedrosAppManager.getInstance().getModuleContext(OrderModule.class);
+				
+				Sale sale = new Sale(new Date(), order);
+				sale.setIntegratedAppUUID(ct.getModuleDescriptor().getApplicationUUID());
+				sale.setIntegratedModulePath(ct.getModuleDescriptor().getPathKeys());
+				sale.setIntegratedViewName(SmplsKey.VIEW_ORDERS);
+				sale.setIntegratedDate(new Date());
+				sale.setIntegratedEntityId(order.getId());
+				sale.setIntegratedModelView(b.getModelView().getClass().getName());
+				
+				List<TLoader> l = TedrosModuleLoader.getInstance()
+						.getLoader(sale);
+				l.get(0).loadInModule();
+			}else {
+				TModuleContext ct = TedrosAppManager.getInstance().getModuleContext(SaleModule.class);
+				TedrosAppManager.getInstance()
+				.loadInModule(ct.getModuleDescriptor().getPathKeys(), new SaleMV(order.getSale()));
+				
+			}
+		};
+	}
+
+}

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.samples.module.sale.setting;
+package org.tedros.samples.module.order.setting;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -13,9 +13,12 @@ import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.repository.TRepository;
 import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.control.TButton;
 import org.tedros.fx.form.TSetting;
-import org.tedros.samples.module.sale.model.SaleItemMV;
-import org.tedros.samples.module.sale.model.SaleMV;
+import org.tedros.samples.SmplsKey;
+import org.tedros.samples.module.order.model.OrderItemMV;
+import org.tedros.samples.module.order.model.OrderMV;
+import org.tedros.samples.start.TConstant;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.WeakChangeListener;
@@ -25,14 +28,14 @@ import javafx.scene.text.Text;
  * @author Davis Gordon
  *
  */
-public class SaleSetting extends TSetting {
+public class OrderSetting extends TSetting {
 
 	private TRepository repo;
 	
 	/**
 	 * @param descriptor
 	 */
-	public SaleSetting(ITComponentDescriptor descriptor) {
+	public OrderSetting(ITComponentDescriptor descriptor) {
 		super(descriptor);
 		this.repo = new TRepository();
 	}
@@ -44,25 +47,30 @@ public class SaleSetting extends TSetting {
 
 	@Override
 	public void run() {
-		SaleMV m = super.getModelView();
+		OrderMV m = super.getModelView();
 		if(m.getEntity().isNew())
 			m.getDate().setValue(new Date());
+		if(m.getEntity().getSale()!=null) {
+			TButton btn = super.getControl("createSale");
+			btn.setText(TLanguage.getInstance(TConstant.UUI)
+					.getString(SmplsKey.BTN_OPEN_SALE_RECORD));
+		}
 		//Getting the items property from model view
-		ITObservableList<SaleItemMV> items = m.getItems();
+		ITObservableList<OrderItemMV> items = m.getItems();
 		ChangeListener<Number> itemsChl = (a,o,n)->{
 			calcTotal(items);
 		};
 		repo.add("itemsChl", itemsChl);
-		// Listen for any changes made in any SaleItemMV instances on the list
+		// Listen for any changes made in any OrderItemMV instances on the list
 		items.tHashCodeProperty().addListener(new WeakChangeListener<>(itemsChl));
 		
 		calcTotal(items);
 		
 	}
 
-	private void calcTotal(ITObservableList<SaleItemMV> items) {
+	private void calcTotal(ITObservableList<OrderItemMV> items) {
 		BigDecimal v = BigDecimal.ZERO;
-		for(SaleItemMV i : items)
+		for(OrderItemMV i : items)
 			if(i.getTotal().getValue()!=null)
 				v = v.add(i.getTotal().getValue());
 		Locale l = new Locale(TLanguage.getLocale().toLanguageTag(), TedrosContext.getCountryIso2());
