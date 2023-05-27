@@ -86,7 +86,7 @@ public class PriceMV extends TEntityModelView<ProductPrice> {
 			fields = { "code", "name" }, service = IProductController.JNDI_NAME))
 	protected SimpleObjectProperty<Product> product;
 	
-	@TLabel(text=SmplsKey.UNIT_PRICE)
+	@TLabel(text=TUsualKey.UNIT_PRICE)
 	@TBigDecimalField(control=@TControl(maxWidth=100, parse = true))
 	protected SimpleObjectProperty<BigDecimal> unitPrice;
 	

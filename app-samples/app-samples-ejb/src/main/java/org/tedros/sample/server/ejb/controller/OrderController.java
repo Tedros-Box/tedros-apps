@@ -32,7 +32,7 @@ import org.tedros.sample.server.ejb.service.SmplsService;
 @TBeanSecurity({@TBeanPolicie(id = DomainApp.ORDER_FORM_ID, 
 policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class TOrderController extends TSecureEjbController<Order> implements IOrderController, ITSecurity  {
+public class OrderController extends TSecureEjbController<Order> implements IOrderController, ITSecurity  {
 
 	@EJB
 	private SmplsService<Order> serv;

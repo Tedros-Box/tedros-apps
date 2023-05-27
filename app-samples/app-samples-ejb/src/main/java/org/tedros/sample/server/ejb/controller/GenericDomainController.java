@@ -38,7 +38,7 @@ import org.tedros.sample.server.ejb.service.SmplsService;
 	policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })
 })
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class TGenericDomainController extends TSecureEjbController<GenericDomain> implements IGenericDomainController, ITSecurity  {
+public class GenericDomainController extends TSecureEjbController<GenericDomain> implements IGenericDomainController, ITSecurity  {
 
 	@EJB
 	private SmplsService<GenericDomain> serv;

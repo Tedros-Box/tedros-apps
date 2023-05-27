@@ -44,6 +44,18 @@ public class SaleItem extends TVersionEntity {
 	@Column
 	private Double rebate;
 
+	public SaleItem() {
+		
+	}
+	
+	public SaleItem(OrderItem i) {
+		super();
+		this.product = i.getProduct();
+		this.amount = i.getAmount();
+		this.unitPrice = i.getUnitPrice();
+	}
+
+
 	/**
 	 * @return the product
 	 */

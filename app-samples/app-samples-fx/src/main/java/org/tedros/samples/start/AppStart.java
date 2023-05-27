@@ -8,6 +8,7 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.sample.domain.DomainApp;
 import org.tedros.samples.SmplsKey;
+import org.tedros.samples.module.order.OrderModule;
 import org.tedros.samples.module.price.PriceModule;
 import org.tedros.samples.module.sale.SaleModule;
 
@@ -22,6 +23,10 @@ import org.tedros.samples.module.sale.SaleModule;
 		name=SmplsKey.MODULE_SALES, 
 		menu=SmplsKey.MENU_CRUD_VIEWS, 
 		description=SmplsKey.MODULE_DESC_SALES),
+		@TModule(type=OrderModule.class, 
+		name=SmplsKey.MODULE_ORDERS, 
+		menu=SmplsKey.MENU_CRUD_VIEWS, 
+		description=SmplsKey.MODULE_DESC_ORDERS),
 		@TModule(type=PriceModule.class, 
 		name=SmplsKey.MODULE_PRICE, 
 		menu=SmplsKey.MENU_CRUD_VIEWS, 

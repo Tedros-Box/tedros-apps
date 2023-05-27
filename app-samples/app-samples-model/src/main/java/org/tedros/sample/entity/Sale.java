@@ -3,6 +3,7 @@
  */
 package org.tedros.sample.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +27,7 @@ import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.Person;
 import org.tedros.sample.domain.DomainSchema;
 import org.tedros.sample.domain.DomainTables;
-import org.tedros.server.entity.TVersionEntity;
+import org.tedros.server.entity.TReceptiveEntity;
 
 /**
  * @author Davis
@@ -33,7 +35,7 @@ import org.tedros.server.entity.TVersionEntity;
  */
 @Entity
 @Table(name=DomainTables.sale, schema=DomainSchema.schema)
-public class Sale extends TVersionEntity implements ICostCenterAccounting{
+public class Sale extends TReceptiveEntity implements ICostCenterAccounting{
 
 	private static final long serialVersionUID = -8008690210025662586L;
 
@@ -69,11 +71,38 @@ public class Sale extends TVersionEntity implements ICostCenterAccounting{
 	@JoinColumn(name="sale_status_id")
 	private SaleStatus status;
 	
+	@OneToOne(fetch=FetchType.EAGER, 
+			cascade= {CascadeType.PERSIST})
+	@JoinColumn(name="order_id", updatable=false)
+	private Order order;
+	
 	@OneToMany(fetch=FetchType.EAGER, 
 			cascade=CascadeType.ALL,
 			orphanRemoval=true)
 	@JoinColumn(name="sale_id")
 	private List<SaleItem> items;
+
+	public Sale() {
+		
+	}
+	
+	
+	public Sale(Date date, Order o) {
+		super();
+		o.setSale(this);
+		this.order = o;
+		this.date = date;
+		this.legalPerson = o.getLegalPerson();
+		this.costCenter = o.getCostCenter();
+		this.customer = o.getCustomer();
+		this.seller = o.getSeller();
+		this.deliveryAddress = o.getDeliveryAddress();
+		this.items = new ArrayList<>();
+		o.getItems().forEach(i->{
+			this.items.add(new SaleItem(i));
+		});
+	}
+
 
 	public CostCenter getCostCenter() {
 		return costCenter;
@@ -194,6 +223,22 @@ public class Sale extends TVersionEntity implements ICostCenterAccounting{
 	public void setLegalPerson(LegalPerson legalPerson) {
 		this.legalPerson = legalPerson;
 	}
+
+	/**
+	 * @return the order
+	 */
+	public Order getOrder() {
+		return order;
+	}
+
+
+	/**
+	 * @param order the order to set
+	 */
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()

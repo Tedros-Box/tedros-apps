@@ -17,6 +17,7 @@ public interface DomainApp {
 	static final String SALE = "SALE";
 	static final String SALE_STATUS = "SALE_STATUS";
 	static final String SALE_TYPE = "SALE_TYPE";
+	static final String SALE_EVENT_CONFIG = "SALE_EVENT_CONFIG";
 	static final String ORDER = "ORDER";
 	static final String ORDER_STATUS = "ORDER_STATUS";
 	static final String PRODUCT_PRICE = "PRODUCT_PRICE";
@@ -27,6 +28,9 @@ public interface DomainApp {
 	static final String SALE_MODULE_ID = MNEMONIC + SEP + SALE + SEP + MODULE;
 	static final String SALE_FORM_ID = MNEMONIC + SEP + SALE + SEP + FORM;
 	static final String SALE_VIEW_ID = MNEMONIC + SEP + SALE + SEP + VIEW;
+	
+	static final String SALE_EVENT_CONFIG_FORM_ID = MNEMONIC + SEP + SALE_EVENT_CONFIG + SEP + FORM;
+	static final String SALE_EVENT_CONFIG_VIEW_ID = MNEMONIC + SEP + SALE_EVENT_CONFIG + SEP + VIEW;
 
 	static final String SALE_TYPE_MODULE_ID = MNEMONIC + SEP + SALE_TYPE + SEP + MODULE;
 	static final String SALE_TYPE_FORM_ID = MNEMONIC + SEP + SALE_TYPE + SEP + FORM;

@@ -90,6 +90,7 @@
 		<class>org.tedros.sample.entity.SaleItem</class>
 		<class>org.tedros.sample.entity.SaleStatus</class>
 		<class>org.tedros.sample.entity.SaleType</class>
+		<class>org.tedros.sample.entity.SaleEventConfig</class>
 		
 		<properties>
 		
