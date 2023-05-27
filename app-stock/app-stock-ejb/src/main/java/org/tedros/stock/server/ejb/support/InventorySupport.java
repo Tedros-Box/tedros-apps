@@ -29,6 +29,8 @@ import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.ejb.support.IInventorySupport;
 import org.tedros.stock.ejb.support.TItem;
 import org.tedros.stock.ejb.support.TItem.TEvent;
+import org.tedros.stock.entity.EntryType;
+import org.tedros.stock.entity.OutType;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.entity.StockEntry;
 import org.tedros.stock.entity.StockItem;
@@ -66,22 +68,25 @@ public class InventorySupport implements IInventorySupport, ITSecurity {
 	}
 
 	@TMethodSecurity({@TMethodPolicie(policie = {TActionPolicie.SAVE, TActionPolicie.NEW})})
-    public String addEvent(TAccessToken token, LegalPerson lp, CostCenter cc, Person resp, Date date, 
+    public String updateStock(TAccessToken token, LegalPerson legalPerson, CostCenter costCenter, Person resp, Date date, 
+    		EntryType entryType, OutType outType,
 			List<TItem> items, List<TItem> oldItems){
         try {
         	
         	StockOut out = new StockOut();
 			out.setDate(new Date());
-			out.setLegalPerson(lp);
-			out.setCostCenter(cc);
+			out.setLegalPerson(legalPerson);
+			out.setCostCenter(costCenter);
 			out.setResponsable(resp);
+			out.setType(outType);
 			out.setItems(new ArrayList<>());
 			
         	StockEntry in = new StockEntry();
 			in.setDate(new Date());
-			in.setLegalPerson(lp);
-			in.setCostCenter(cc);
+			in.setLegalPerson(legalPerson);
+			in.setCostCenter(costCenter);
 			in.setResponsable(resp);
+			in.setType(entryType);
 			in.setItems(new ArrayList<>());
 			
         	List<TItem> res = analyse(items, oldItems);
@@ -146,8 +151,8 @@ public class InventorySupport implements IInventorySupport, ITSecurity {
 
 	@TMethodSecurity({
 		@TMethodPolicie(policie = {TActionPolicie.EDIT, TActionPolicie.READ, TActionPolicie.SEARCH})})
-	public List<Inventory> calculate(TAccessToken token, LegalPerson lp, CostCenter cc, Date date, Product product){
-		return invServ.calculate(lp, cc, date, product, null, null);
+	public List<Inventory> calculate(TAccessToken token, LegalPerson legalPerson, CostCenter costCenter, Date date, Product product){
+		return invServ.calculate(legalPerson, costCenter, date, product, null, null);
 	}
 	
 	private String processException(Exception e) {
