@@ -14,19 +14,20 @@
 		<class>org.tedros.common.model.TBarcode</class>
 		<class>org.tedros.common.model.TByteEntity</class>
 		
-		<class>org.tedros.docs.model.Document</class>
 		<class>org.tedros.extension.model.Contact</class>
-		<class>org.tedros.docs.model.DocumentEvent</class>
-		<class>org.tedros.docs.model.DocumentState</class>
-		<class>org.tedros.docs.model.DocumentType</class>
+		<class>org.tedros.extension.model.Document</class>
+		<class>org.tedros.extension.model.DocumentEvent</class>
+		<class>org.tedros.extension.model.DocumentStatus</class>
+		<class>org.tedros.extension.model.DocumentType</class>
+		<class>org.tedros.extension.model.ExtensionDomain</class>
 		
-		<class>org.tedros.location.model.Country</class>
-		<class>org.tedros.location.model.City</class>
-		<class>org.tedros.location.model.AdminArea</class>
-		<class>org.tedros.location.model.Place</class>
-		<class>org.tedros.location.model.Address</class>
-		<class>org.tedros.location.model.StreetType</class>
-		<class>org.tedros.location.model.PlaceType</class>
+		<class>org.tedros.extension.model.Country</class>
+		<class>org.tedros.extension.model.City</class>
+		<class>org.tedros.extension.model.AdminArea</class>
+		<class>org.tedros.extension.model.Place</class>
+		<class>org.tedros.extension.model.Address</class>
+		<class>org.tedros.extension.model.StreetType</class>
+		<class>org.tedros.extension.model.PlaceType</class>
 		
 		<class>org.tedros.person.model.Person</class>
 		<class>org.tedros.person.model.NaturalPerson</class>

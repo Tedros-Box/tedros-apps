@@ -30,10 +30,10 @@ import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.ejb.controller.IPersonStatusController;
 import org.tedros.person.ejb.controller.IPersonTypeController;
+import org.tedros.person.model.NaturalPersonMV;
 import org.tedros.person.model.Voluntary;
 import org.tedros.person.model.VoluntaryStatus;
 import org.tedros.person.model.VoluntaryType;
-import org.tedros.person.model.NaturalPersonMV;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;

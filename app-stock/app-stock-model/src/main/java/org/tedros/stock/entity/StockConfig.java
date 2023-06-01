@@ -5,6 +5,7 @@ package org.tedros.stock.entity;
 
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,6 +28,7 @@ import org.tedros.stock.domain.DomainTables;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.stock_config, schema = DomainSchema.schema, 
 uniqueConstraints= {@UniqueConstraint(name="stockConfigUK",
 columnNames = {"legal_person_id", "cost_center_id"})})

@@ -36,6 +36,8 @@ public class FilterCostCenterTrigger extends TTrigger<LegalPerson> {
 	public void run(TEvent event, LegalPerson value, LegalPerson old) {
 		TComboBoxField cmb = (TComboBoxField) super.getTarget().gettControl();
 		if(value!=null) {
+			if(!(old==null || !value.getId().equals(old.getId())))
+				return;
 			TEntityProcess<CostCenter> p = 
 					new TEntityProcess<CostCenter>(CostCenter.class, ICostCenterController.JNDI_NAME) {};
 			p.stateProperty().addListener((a,o,n)->{

@@ -9,7 +9,6 @@ import javax.persistence.Table;
 
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
-import org.tedros.person.model.NaturalPerson;
 
 
 /**

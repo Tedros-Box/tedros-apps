@@ -45,20 +45,6 @@
 	
 	<dependency>
 		<groupId>org.tedros</groupId>
-		 <artifactId>app-location-ejb-ear</artifactId>
-		 <type>ear</type>
-		<version>${app.location}</version>
-	</dependency> 
-	
-	<dependency>
-		<groupId>org.tedros</groupId>
-		 <artifactId>app-docs-ejb-ear</artifactId>
-		 <type>ear</type>
-		<version>${app.docs}</version>
-	</dependency> 
-	
-	<dependency>
-		<groupId>org.tedros</groupId>
 		 <artifactId>app-person-ejb-ear</artifactId>
 		 <type>ear</type>
 		<version>${app.person}</version>
@@ -334,28 +320,16 @@
 		        <artifactId>app-stock-ejb-ear</artifactId>
 		      	<type>ear</type>
 		      </deployable>
-		     <!-- 
+		     
 		     <deployable>
 		        <groupId>org.tedros</groupId>
 		        <artifactId>app-services-ejb-ear</artifactId>
 		      	<type>ear</type>
-		      </deployable> -->
+		      </deployable> 
 		      
 		     <deployable>
 		        <groupId>org.tedros</groupId>
 		        <artifactId>app-person-ejb-ear</artifactId>
-		      	<type>ear</type>
-		      </deployable>
-		      <!-- 
-		     <deployable>
-		        <groupId>org.tedros</groupId>
-		        <artifactId>app-location-ejb-ear</artifactId>
-		      	<type>ear</type>
-		      </deployable>
-		      
-		      <deployable>
-		        <groupId>org.tedros</groupId>
-		        <artifactId>app-docs-ejb-ear</artifactId>
 		      	<type>ear</type>
 		      </deployable>
 		      
@@ -363,7 +337,8 @@
 		        <groupId>org.tedros</groupId>
 		        <artifactId>app-extensions-ejb-ear</artifactId>
 		      	<type>ear</type>
-		      </deployable>  -->
+		      </deployable> 
+		      
 		    </deployables>
 		    <packager>
 		      <outputLocation>${project.build.directory}/tomcat-packaged</outputLocation>

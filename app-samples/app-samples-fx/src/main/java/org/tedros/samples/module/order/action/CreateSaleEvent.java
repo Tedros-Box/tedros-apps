@@ -3,22 +3,27 @@ package org.tedros.samples.module.order.action;
 import java.util.Date;
 import java.util.List;
 
+import javax.naming.NamingException;
+
 import org.tedros.core.context.TLoader;
 import org.tedros.core.context.TModuleContext;
 import org.tedros.core.context.TedrosAppManager;
+import org.tedros.core.context.TedrosContext;
 import org.tedros.core.context.TedrosModuleLoader;
 import org.tedros.core.message.TMessage;
 import org.tedros.core.message.TMessageType;
+import org.tedros.core.service.remote.ServiceLocator;
 import org.tedros.fx.builder.TBaseEventHandlerBuilder;
 import org.tedros.fx.presenter.dynamic.TDynaPresenter;
 import org.tedros.fx.presenter.entity.behavior.TMasterCrudViewBehavior;
+import org.tedros.sample.ejb.controller.IOrderController;
 import org.tedros.sample.entity.Order;
 import org.tedros.sample.entity.Sale;
 import org.tedros.samples.SmplsKey;
 import org.tedros.samples.module.order.OrderModule;
 import org.tedros.samples.module.order.model.OrderMV;
-import org.tedros.samples.module.sale.SaleModule;
-import org.tedros.samples.module.sale.model.SaleMV;
+import org.tedros.server.result.TResult;
+import org.tedros.server.result.TResult.TState;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,11 +43,11 @@ public class CreateSaleEvent extends TBaseEventHandlerBuilder<ActionEvent> {
 				b.addMessage(new TMessage(TMessageType.WARNING, SmplsKey.MSG_SAVE_FIRST));
 				return;
 			}
-			
-			if(order.getSale()==null) {
+			Sale sale = order.getSale();
+			if(sale==null) {
 				TModuleContext ct = TedrosAppManager.getInstance().getModuleContext(OrderModule.class);
 				
-				Sale sale = new Sale(new Date(), order);
+				sale = new Sale(new Date(), order);
 				sale.setIntegratedAppUUID(ct.getModuleDescriptor().getApplicationUUID());
 				sale.setIntegratedModulePath(ct.getModuleDescriptor().getPathKeys());
 				sale.setIntegratedViewName(SmplsKey.VIEW_ORDERS);
@@ -50,16 +55,40 @@ public class CreateSaleEvent extends TBaseEventHandlerBuilder<ActionEvent> {
 				sale.setIntegratedEntityId(order.getId());
 				sale.setIntegratedModelView(b.getModelView().getClass().getName());
 				
-				List<TLoader> l = TedrosModuleLoader.getInstance()
-						.getLoader(sale);
-				l.get(0).loadInModule();
+				saveAndLoadInModule(b, order);
 			}else {
-				TModuleContext ct = TedrosAppManager.getInstance().getModuleContext(SaleModule.class);
-				TedrosAppManager.getInstance()
-				.loadInModule(ct.getModuleDescriptor().getPathKeys(), new SaleMV(order.getSale()));
-				
+				if(sale.isNew())
+					saveAndLoadInModule(b, order);
+				else
+					loadInModule(sale);
 			}
 		};
+	}
+
+	private void saveAndLoadInModule(TMasterCrudViewBehavior<OrderMV, Order> b, Order order) {
+		ServiceLocator loc = ServiceLocator.getInstance();
+		try {
+			IOrderController serv = loc.lookup(IOrderController.JNDI_NAME);
+			TResult<Order> res = serv.save(TedrosContext.getLoggedUser().getAccessToken(), order);
+			if(res.getState().equals(TState.SUCCESS)) {
+				Order saved = res.getValue();
+				b.getModelView().reload(saved);
+				loadInModule(saved.getSale());
+			}else {
+				b.addMessage(new TMessage(TMessageType.ERROR, res.getMessage()));
+			}
+		} catch (NamingException e) {
+			e.printStackTrace();
+			b.addMessage(new TMessage(TMessageType.ERROR, e.getMessage()));
+		}finally {
+			loc.close();
+		}
+	}
+
+	private void loadInModule(Sale sale) {
+		List<TLoader> l = TedrosModuleLoader.getInstance()
+			.getLoader(sale);
+		l.get(0).loadInModule();
 	}
 
 }

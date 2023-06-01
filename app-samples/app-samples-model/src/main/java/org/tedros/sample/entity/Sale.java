@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.tedros.location.model.Address;
+import org.tedros.extension.model.Address;
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.ICostCenterAccounting;
@@ -72,7 +72,7 @@ public class Sale extends TReceptiveEntity implements ICostCenterAccounting{
 	private SaleStatus status;
 	
 	@OneToOne(fetch=FetchType.EAGER, 
-			cascade= {CascadeType.PERSIST})
+			cascade= {CascadeType.MERGE})
 	@JoinColumn(name="order_id", updatable=false)
 	private Order order;
 	

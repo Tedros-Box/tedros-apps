@@ -17,8 +17,8 @@ import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonStatusController;
-import org.tedros.person.model.PhilanthropeStatus;
 import org.tedros.person.model.NaturalStatusMV;
+import org.tedros.person.model.PhilanthropeStatus;
 
 /**
  * @author Davis Gordon

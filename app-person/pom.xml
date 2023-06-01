@@ -18,8 +18,6 @@
   	<!-- PROPERTIES -->
 	<properties>
 		<app.ext>8-2.0.0</app.ext>
-		<app.docs>8-2.0.0</app.docs>
-		<app.location>8-2.0.0</app.location>
 		<tedros.fx>8-5.1.0</tedros.fx>
 		<app.settings>8-5.1.0</app.settings>
 		<tedros.jee>8-5.1.0</tedros.jee>

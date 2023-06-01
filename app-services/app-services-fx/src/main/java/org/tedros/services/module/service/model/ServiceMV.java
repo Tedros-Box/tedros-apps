@@ -5,7 +5,7 @@ package org.tedros.services.module.service.model;
 
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
-import org.tedros.docs.export.ModalDocumentMV;
+import org.tedros.extension.model.ModalDocumentMV;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;

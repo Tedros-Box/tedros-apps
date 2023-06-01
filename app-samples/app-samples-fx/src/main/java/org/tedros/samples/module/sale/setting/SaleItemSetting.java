@@ -4,7 +4,6 @@
 package org.tedros.samples.module.sale.setting;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import org.tedros.api.descriptor.ITComponentDescriptor;
 import org.tedros.core.repository.TRepository;

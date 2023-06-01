@@ -3,10 +3,13 @@
  */
 package org.tedros.person.model;
 
-import org.tedros.docs.export.ModalDocumentMV;
-import org.tedros.docs.model.Document;
-import org.tedros.extension.contact.model.ContactMV;
+import org.tedros.extension.LocatKey;
+import org.tedros.extension.model.Address;
+import org.tedros.extension.model.AddressMV;
 import org.tedros.extension.model.Contact;
+import org.tedros.extension.model.ContactMV;
+import org.tedros.extension.model.Document;
+import org.tedros.extension.model.ModalDocumentMV;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
@@ -22,9 +25,6 @@ import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.presenter.model.TEntityModelView;
-import org.tedros.location.LocatKey;
-import org.tedros.location.model.Address;
-import org.tedros.location.module.address.model.AddressMV;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

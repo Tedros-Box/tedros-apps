@@ -8,10 +8,13 @@ import java.util.Date;
 import org.tedros.common.model.TFileEntity;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
-import org.tedros.docs.export.ModalDocumentMV;
-import org.tedros.docs.model.Document;
-import org.tedros.extension.contact.model.ContactMV;
+import org.tedros.extension.LocatKey;
+import org.tedros.extension.model.Address;
+import org.tedros.extension.model.AddressMV;
 import org.tedros.extension.model.Contact;
+import org.tedros.extension.model.ContactMV;
+import org.tedros.extension.model.Document;
+import org.tedros.extension.model.ModalDocumentMV;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
@@ -46,10 +49,8 @@ import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TFileExtension;
 import org.tedros.fx.domain.TFileModelType;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.presenter.model.TFormatter;
 import org.tedros.fx.property.TSimpleFileProperty;
-import org.tedros.location.LocatKey;
-import org.tedros.location.model.Address;
-import org.tedros.location.module.address.model.AddressMV;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.ICostCenterController;
@@ -181,7 +182,13 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	
 	public CostCenterMV(CostCenter entity) {
 		super(entity);
-		super.formatToString("%s %s", code, name);
+		super.formatToString(TFormatter.create()
+				.add("%s", legalPerson)
+				.add(code, obj->{
+					return " "+obj.toString();
+				})
+				.add(" %s", name)
+			);
 	}
 
 
