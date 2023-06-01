@@ -21,14 +21,8 @@
   		
 	  	<dependency>
 	  		<groupId>org.tedros</groupId>
-	  		<artifactId>app-docs-model</artifactId>
-	  		<version>${app.docs}</version>
-	  	</dependency>
-	  	
-	  	<dependency>
-	  		<groupId>org.tedros</groupId>
-	  		<artifactId>app-location-model</artifactId>
-	  		<version>${app.location}</version>
+	  		<artifactId>app-extensions-model</artifactId>
+	  		<version>${app.ext}</version>
 	  	</dependency>
 	  	
 	  	<dependency>

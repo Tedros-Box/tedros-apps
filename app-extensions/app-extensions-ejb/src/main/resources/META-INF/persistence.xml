@@ -7,9 +7,23 @@
 		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>tedrosDataSource</jta-data-source>
-		<class>org.tedros.extension.model.Contact</class>
+		
 		<class>org.tedros.common.model.TFileEntity</class>
 		<class>org.tedros.common.model.TByteEntity</class>
+		<class>org.tedros.extension.model.Contact</class>
+		<class>org.tedros.extension.model.Document</class>
+		<class>org.tedros.extension.model.DocumentEvent</class>
+		<class>org.tedros.extension.model.DocumentStatus</class>
+		<class>org.tedros.extension.model.DocumentType</class>
+		<class>org.tedros.extension.model.ExtensionDomain</class>
+		
+		<class>org.tedros.extension.model.Country</class>
+		<class>org.tedros.extension.model.City</class>
+		<class>org.tedros.extension.model.AdminArea</class>
+		<class>org.tedros.extension.model.Place</class>
+		<class>org.tedros.extension.model.Address</class>
+		<class>org.tedros.extension.model.StreetType</class>
+		<class>org.tedros.extension.model.PlaceType</class>
 		
 		<properties>
 		

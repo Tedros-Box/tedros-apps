@@ -22,14 +22,8 @@
 	  	
 	  	<dependency>
 	  		<groupId>org.tedros</groupId>
-	  		<artifactId>app-location-fx</artifactId>
-	  		<version>${app.location}</version>
-	  	</dependency>
-	  	
-	  	<dependency>
-	  		<groupId>org.tedros</groupId>
-	  		<artifactId>app-docs-fx</artifactId>
-	  		<version>${app.docs}</version>
+	  		<artifactId>app-extensions-fx</artifactId>
+	  		<version>${app.ext}</version>
 	  	</dependency>
 	  	
 	  	<dependency>

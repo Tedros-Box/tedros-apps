@@ -21,9 +21,9 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.tedros.common.model.TFileEntity;
-import org.tedros.docs.model.Document;
+import org.tedros.extension.model.Address;
 import org.tedros.extension.model.Contact;
-import org.tedros.location.model.Address;
+import org.tedros.extension.model.Document;
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
 import org.tedros.server.entity.TVersionEntity;

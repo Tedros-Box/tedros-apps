@@ -22,7 +22,7 @@
 		<class>org.tedros.docs.model.Document</class>
 		<class>org.tedros.extension.model.Contact</class>
 		<class>org.tedros.docs.model.DocumentEvent</class>
-		<class>org.tedros.docs.model.DocumentState</class>
+		<class>org.tedros.docs.model.DocumentStatus</class>
 		<class>org.tedros.docs.model.DocumentType</class>
 		
 		<class>org.tedros.location.model.Country</class>

@@ -5,6 +5,7 @@ package org.tedros.person.model;
 
 import java.util.Date;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import org.tedros.person.domain.DomainTables;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.employee, schema = DomainSchema.schema)
 @DiscriminatorValue("EMPLY")
 public class Employee extends NaturalPerson implements ICostCenterAccounting {

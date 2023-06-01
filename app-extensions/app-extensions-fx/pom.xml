@@ -22,6 +22,13 @@
 	  	
 	  	<dependency>
 	  		<groupId>org.tedros</groupId>
+	  		<artifactId>tedros-box-app-settings</artifactId>
+	  		<version>${app.settings}</version>
+	  		<scope>compile</scope>
+	  	</dependency>
+	  	
+	  	<dependency>
+	  		<groupId>org.tedros</groupId>
 	  		<artifactId>app-extensions-ejb-client</artifactId>
 	  		<version>8-2.0.0</version>
 	  	</dependency>

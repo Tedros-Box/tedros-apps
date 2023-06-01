@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.tedros.docs.report.model.DocumentItemModel;
 import org.tedros.extension.model.Contact;
+import org.tedros.extension.report.model.DocumentItemModel;
 import org.tedros.person.model.NaturalPerson;
 import org.tedros.server.model.ITReportItemModel;
 

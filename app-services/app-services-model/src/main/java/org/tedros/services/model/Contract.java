@@ -22,7 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-import org.tedros.docs.model.Document;
+import org.tedros.extension.model.Document;
 import org.tedros.person.model.Person;
 import org.tedros.server.entity.TVersionEntity;
 import org.tedros.services.domain.DomainSchema;

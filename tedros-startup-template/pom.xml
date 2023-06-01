@@ -28,8 +28,6 @@
 		<app.samples>8-2.0.0</app.samples>
 		<app.stock>8-2.0.0</app.stock>
 		<app.ext>8-2.0.0</app.ext>
-		<app.docs>8-2.0.0</app.docs>
-		<app.location>8-2.0.0</app.location>
 		<app.person>8-2.0.0</app.person>
 		<app.services>8-2.0.0</app.services>
 		<tedros.box>8-5.1.0</tedros.box>

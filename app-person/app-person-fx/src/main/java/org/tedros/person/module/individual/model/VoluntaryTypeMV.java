@@ -17,8 +17,8 @@ import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonTypeController;
-import org.tedros.person.model.VoluntaryType;
 import org.tedros.person.model.NaturalTypeMV;
+import org.tedros.person.model.VoluntaryType;
 
 /**
  * @author Davis Gordon

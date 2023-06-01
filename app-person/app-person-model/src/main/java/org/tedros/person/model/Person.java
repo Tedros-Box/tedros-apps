@@ -5,6 +5,7 @@ package org.tedros.person.model;
 
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -24,9 +25,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.tedros.common.model.TFileEntity;
-import org.tedros.docs.model.Document;
+import org.tedros.extension.model.Address;
 import org.tedros.extension.model.Contact;
-import org.tedros.location.model.Address;
+import org.tedros.extension.model.Document;
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
 import org.tedros.server.entity.ITDiscriminable;
@@ -37,6 +38,7 @@ import org.tedros.server.entity.TReceptiveEntity;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.person, schema = DomainSchema.schema)
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="DTYPE", discriminatorType=DiscriminatorType.STRING, length=10)

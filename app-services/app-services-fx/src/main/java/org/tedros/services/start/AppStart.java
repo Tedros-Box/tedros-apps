@@ -6,7 +6,6 @@ import org.tedros.core.annotation.TModule;
 import org.tedros.core.annotation.TResourceBundle;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
-import org.tedros.location.start.TConstant;
 import org.tedros.services.ServKey;
 import org.tedros.services.domain.DomainApp;
 import org.tedros.services.module.plan.PlanModule;

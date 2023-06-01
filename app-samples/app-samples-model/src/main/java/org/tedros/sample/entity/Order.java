@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.tedros.location.model.Address;
+import org.tedros.extension.model.Address;
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.ICostCenterAccounting;
@@ -66,7 +66,9 @@ public class Order extends TVersionEntity implements ICostCenterAccounting {
 	@JoinColumn(name="ord_status_id")
 	private OrderStatus status;
 
-	@OneToOne(fetch=FetchType.EAGER, mappedBy="order")
+	@OneToOne(fetch=FetchType.EAGER, 
+			cascade=CascadeType.MERGE,
+			mappedBy="order")
 	private Sale sale;
 	
 	@OneToMany(fetch=FetchType.EAGER, 
