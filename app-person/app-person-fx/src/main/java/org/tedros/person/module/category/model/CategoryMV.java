@@ -8,7 +8,6 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
-import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TButtonField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TFieldBox;
@@ -32,18 +31,20 @@ import org.tedros.fx.annotation.layout.THBox.TMargin;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.control.TInsets;
 import org.tedros.fx.annotation.scene.control.TLabeled;
 import org.tedros.fx.annotation.text.TText;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.builder.TEditModelRowFactoryCallBackBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.control.TText.TTextStyle;
@@ -55,6 +56,7 @@ import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.Person;
 import org.tedros.person.model.PersonCategory;
 import org.tedros.person.table.PersonTV;
+import org.tedros.server.query.TCompareOp;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -72,9 +74,11 @@ import javafx.scene.text.TextAlignment;
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IPersonCategoryController.JNDI_NAME, model=PersonCategory.class)
 @TListViewPresenter(
-		paginator=@TPaginator(entityClass = PersonCategory.class, serviceName = IPersonCategoryController.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
+		page=@TPage(serviceName = IPersonCategoryController.JNDI_NAME,
+		query = @TQuery(entity=PersonCategory.class, condition= {
+				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME)},
+			orderBy= {@TOrder(label = TUsualKey.NAME, field = "name")}
+				),showSearch=true, showOrderBy=true),
 		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_PERSON_CATEGORY,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false)))
@@ -114,7 +118,7 @@ public class CategoryMV extends TEntityModelView<PersonCategory> {
 	@TTextAreaField(wrapText=true)
 	private SimpleStringProperty description;
 	
-	@TFieldBox(alignment=Pos.CENTER_LEFT, node=@TNode(id="t-fieldbox-title", 
+	@TFieldBox(alignment=Pos.CENTER_LEFT, node=@TNode(id=TFieldBox.TITLE, 
 	effect=@TEffect(dropShadow=@TDropShadow, parse = true), parse = true))
 	@TText(text=PersonKeys.TEXT_CATEGORY, textAlignment=TextAlignment.LEFT, 
 		textStyle=TTextStyle.LARGE)
@@ -122,8 +126,9 @@ public class CategoryMV extends TEntityModelView<PersonCategory> {
 
 	@TAutoCompleteEntity(modelViewType=PersonTV.class, 
 		startSearchAt=2, showMaxItems=30,
-		entries = @TEntry(entityType = Person.class, fields = "name", 
-		service = IPersonController.JNDI_NAME))
+		service = IPersonController.JNDI_NAME,
+		query = @TQuery(entity = Person.class, 
+		condition = {@TCondition(field = "name", operator=TCompareOp.LIKE)}))
 	@THBox(	pane=@TPane(children={"item", "addBtn"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="item", priority=Priority.NEVER), 
 			@TPriority(field="addBtn", priority=Priority.NEVER)}))

@@ -6,15 +6,18 @@ package org.tedros.stock.module.inventory.model;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.assistant.TAiAssistant;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
-import org.tedros.fx.annotation.view.TAiAssistant;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
+import org.tedros.server.query.TCompareOp;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.ejb.controller.IEventTypeController;
@@ -29,9 +32,11 @@ import org.tedros.stock.module.inventory.assistant.EntryTypeJson;
 @TEjbService(serviceName = IEventTypeController.JNDI_NAME, model=EntryType.class)
 @TListViewPresenter(
 	aiAssistant=@TAiAssistant(jsonModel = EntryTypeJson.class, modelViewClass = EntryTypeMV.class, show=true),
-	paginator=@TPaginator(entityClass = EntryType.class, serviceName = IEventTypeController.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
+	page=@TPage(serviceName = IEventTypeController.JNDI_NAME,
+		query = @TQuery(entity=EntryType.class, condition= {
+				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME)},
+			orderBy= {@TOrder(label = TUsualKey.NAME, field = "name")}
+		),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(
 		decorator=@TDecorator(viewTitle=STCKKey.VIEW_ENTRY_TYPE, buildModesRadioButton=false),
 		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false)))

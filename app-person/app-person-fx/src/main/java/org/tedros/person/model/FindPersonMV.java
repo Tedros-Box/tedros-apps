@@ -12,13 +12,14 @@ import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.presenter.TSelectionModalPresenter;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TFont;
-import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.modal.behavior.TSelectionModalBehavior;
 import org.tedros.fx.presenter.modal.decorator.TSelectionModalDecorator;
 import org.tedros.fx.presenter.model.TEntityModelView;
@@ -37,7 +38,8 @@ import javafx.beans.property.SimpleStringProperty;
 @TForm(name = "")
 @TLabelDefaultSetting(font=@TFont(size=12))
 @TSelectionModalPresenter(
-	paginator=@TPaginator(entityClass = Person.class, modelViewClass=PersonItemMV.class, 
+	paginator=@TPage(query=@TQuery(entity=Person.class), 
+		modelView=PersonItemMV.class, 
 		serviceName = IPersonController.JNDI_NAME),
 	presenter=@TPresenter(behavior = @TBehavior(type = TSelectionModalBehavior.class), 
 		decorator = @TDecorator(type=TSelectionModalDecorator.class, 

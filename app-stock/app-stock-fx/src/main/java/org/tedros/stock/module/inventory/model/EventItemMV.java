@@ -5,7 +5,6 @@ package org.tedros.stock.module.inventory.model;
 
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
-import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TCallbackFactory;
 import org.tedros.fx.annotation.control.TCellFactory;
 import org.tedros.fx.annotation.control.TDoubleField;
@@ -20,11 +19,15 @@ import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.presenter.dynamic.TDynaPresenter;
 import org.tedros.fx.presenter.entity.behavior.TDetailFieldBehavior;
 import org.tedros.fx.presenter.entity.decorator.TDetailFieldDecorator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.server.query.TCompareOp;
+import org.tedros.server.query.TLogicOp;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.entity.StockItem;
@@ -55,10 +58,14 @@ public class EventItemMV extends TEntityModelView<StockItem> {
 
 
 	@TLabel(text=TUsualKey.PRODUCT)
-	@TAutoCompleteEntity(required=true,
-	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = Product.class, fields = {"code", "name"}, 
-	service = IProductController.JNDI_NAME))
+	@TAutoCompleteEntity(required=true, 
+	control=@TControl(maxWidth=250, parse = true),
+	startSearchAt=3, showMaxItems=30,
+	service = IProductController.JNDI_NAME,
+	query = @TQuery(entity = Product.class, 
+		condition = {
+			@TCondition(field = "name", operator=TCompareOp.LIKE),
+			@TCondition(logicOp=TLogicOp.OR, field = "code", operator=TCompareOp.LIKE)}))
 	@THBox(	pane=@TPane(children={"product", "amount"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="product", priority=Priority.NEVER), 
 			@TPriority(field="amount", priority=Priority.NEVER)}))

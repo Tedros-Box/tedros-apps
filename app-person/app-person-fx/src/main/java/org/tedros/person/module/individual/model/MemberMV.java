@@ -18,13 +18,15 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonController;
@@ -34,6 +36,7 @@ import org.tedros.person.model.Member;
 import org.tedros.person.model.MemberStatus;
 import org.tedros.person.model.MemberType;
 import org.tedros.person.model.NaturalPersonMV;
+import org.tedros.server.query.TCompareOp;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -46,10 +49,13 @@ import javafx.scene.layout.Priority;
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IPersonController.JNDI_NAME, model=Member.class)
 @TListViewPresenter(
-		paginator=@TPaginator(entityClass = Member.class, serviceName = IPersonController.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name"),
-					@TOption(text = TUsualKey.LAST_NAME, field = "lastName")}),
+		page=@TPage(serviceName = IPersonController.JNDI_NAME,
+		query = @TQuery(entity=Member.class, condition= {
+				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME),
+				@TCondition(field = "lastName", operator=TCompareOp.LIKE, label=TUsualKey.LAST_NAME)},
+			orderBy= {@TOrder(label = TUsualKey.NAME, field = "name"),
+					@TOrder(label = TUsualKey.LAST_NAME, field = "lastName")}
+				),showSearch=true, showOrderBy=true),
 		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_MEMBER,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false)))

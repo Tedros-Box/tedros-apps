@@ -9,7 +9,6 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
-import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
@@ -24,13 +23,15 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonController;
@@ -43,6 +44,8 @@ import org.tedros.person.model.NaturalPersonMV;
 import org.tedros.person.model.StaffType;
 import org.tedros.person.module.company.table.CostCenterTV;
 import org.tedros.person.trigger.FilterCostCenterTrigger;
+import org.tedros.server.query.TCompareOp;
+import org.tedros.server.query.TLogicOp;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -56,10 +59,13 @@ import javafx.scene.layout.Priority;
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IPersonController.JNDI_NAME, model=Employee.class)
 @TListViewPresenter(
-		paginator=@TPaginator(entityClass = Employee.class, serviceName = IPersonController.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name"),
-				@TOption(text = TUsualKey.LAST_NAME , field = "lastName")}),
+		page=@TPage(serviceName = IPersonController.JNDI_NAME,
+		query = @TQuery(entity=Employee.class, condition= {
+				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME),
+				@TCondition(field = "lastName", operator=TCompareOp.LIKE, label=TUsualKey.LAST_NAME)},
+			orderBy= {@TOrder(label = TUsualKey.NAME, field = "name"),
+					@TOrder(label = TUsualKey.LAST_NAME, field = "lastName")}
+				),showSearch=true, showOrderBy=true),
 		presenter=@TPresenter(
 			decorator = @TDecorator(viewTitle=PersonKeys.VIEW_EMPLOYEES, buildModesRadioButton=false),
 			behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
@@ -113,11 +119,14 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 	private SimpleObjectProperty<Date> resignationDate;
 	
 	@TLabel(text=TUsualKey.EMPLOYER)
-	@TAutoCompleteEntity(required=true,
-	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = LegalPerson.class, 
-	fields = {"name","otherName"}, 
-	service = IPersonController.JNDI_NAME))
+	@TAutoCompleteEntity(required=true, 
+	startSearchAt=3, showMaxItems=30,
+	service = IPersonController.JNDI_NAME,
+	query = @TQuery(entity = LegalPerson.class, 
+		condition = {
+			@TCondition(field = "name", operator=TCompareOp.LIKE),
+			@TCondition(logicOp=TLogicOp.OR, field = "otherName", 
+			operator=TCompareOp.LIKE)}))
 	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
 	targetFieldName="costCenter", runAfterFormBuild=true)
 	private SimpleObjectProperty<LegalPerson> legalPerson;

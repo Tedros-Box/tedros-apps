@@ -11,7 +11,6 @@ import org.tedros.core.controller.TUserController;
 import org.tedros.core.security.model.TUser;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
-import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.THorizontalRadioGroup;
@@ -23,6 +22,8 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.person.converter.CivilStatusConverter;
 import org.tedros.person.converter.GenderConverter;
 import org.tedros.person.converter.SexConverter;
@@ -30,6 +31,8 @@ import org.tedros.person.domain.CivilStatus;
 import org.tedros.person.domain.Gender;
 import org.tedros.person.domain.Sex;
 import org.tedros.person.trigger.TedrosUserTrigger;
+import org.tedros.server.query.TCompareOp;
+import org.tedros.server.query.TLogicOp;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -56,9 +59,11 @@ public class NaturalPersonMV<P extends NaturalPerson> extends PersonMV<P> {
 
 	@TLabel(text=TUsualKey.USER + " Tedros")
 	@TAutoCompleteEntity(
-			entries = @TEntry(entityType = TUser.class, 
-			fields = { "name", "login" }, 
-			service = TUserController.JNDI_NAME))
+			service = TUserController.JNDI_NAME,
+			query = @TQuery(entity = TUser.class, 
+			condition = {
+					@TCondition(field = "name", operator=TCompareOp.LIKE), 
+					@TCondition(logicOp=TLogicOp.OR, field = "login", operator=TCompareOp.LIKE)}))
 	@TTrigger(triggerClass = TedrosUserTrigger.class, runAfterFormBuild=true)
 	private SimpleObjectProperty<TUser> tedrosUser;
 	

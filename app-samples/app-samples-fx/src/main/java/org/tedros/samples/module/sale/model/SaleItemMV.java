@@ -8,7 +8,6 @@ import java.math.RoundingMode;
 
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
-import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TBigDecimalField;
 import org.tedros.fx.annotation.control.TCallbackFactory;
 import org.tedros.fx.annotation.control.TCellFactory;
@@ -25,12 +24,16 @@ import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.domain.TZeroValidation;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.sample.entity.SaleItem;
 import org.tedros.samples.module.sale.setting.SaleItemSetting;
 import org.tedros.samples.module.sale.trigger.SetPriceTrigger;
+import org.tedros.server.query.TCompareOp;
+import org.tedros.server.query.TLogicOp;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.table.ProductCallBack;
@@ -60,9 +63,14 @@ import javafx.scene.layout.Priority;
 public class SaleItemMV extends TEntityModelView<SaleItem> {
 
 	@TLabel(text=TUsualKey.PRODUCT)
-	@TAutoCompleteEntity(required=true, control=@TControl(maxWidth=250, parse = true),
-		entries = @TEntry(entityType = Product.class, 
-			fields = { "code", "name" }, service = IProductController.JNDI_NAME))
+	@TAutoCompleteEntity(required=true, 
+	control=@TControl(maxWidth=250, parse = true),
+	startSearchAt=3, showMaxItems=30,
+	service = IProductController.JNDI_NAME,
+	query = @TQuery(entity = Product.class, 
+		condition = {
+			@TCondition(field = "name", operator=TCompareOp.LIKE),
+			@TCondition(logicOp=TLogicOp.OR, field = "code", operator=TCompareOp.LIKE)}))
 	@TTrigger(triggerClass = SetPriceTrigger.class, targetFieldName="unitPrice") // Trigger example
 	@THBox(	spacing=10, fillHeight=true,
 		pane=@TPane(children={"product", "unitPrice", "amount", "rebate", "total"}), 

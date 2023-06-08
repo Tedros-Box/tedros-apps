@@ -8,15 +8,14 @@ import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TComboBoxField;
-import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TModelViewType;
 import org.tedros.fx.annotation.control.TRadioButton;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
-import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.control.TTableView.TTableViewSelectionModel;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.control.TVerticalRadioGroup;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TAccordion;
@@ -30,6 +29,8 @@ import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TReportProcess;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.layout.TRegion;
@@ -41,12 +42,13 @@ import org.tedros.fx.presenter.dynamic.TDynaPresenter;
 import org.tedros.fx.presenter.model.TModelView;
 import org.tedros.fx.presenter.report.behavior.TDataSetReportBehavior;
 import org.tedros.fx.presenter.report.decorator.TDataSetReportDecorator;
-import org.tedros.person.ejb.controller.ICostCenterController;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.module.report.action.SearchAction;
 import org.tedros.person.trigger.FilterCostCenterTrigger;
+import org.tedros.server.query.TCompareOp;
+import org.tedros.server.query.TLogicOp;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.ejb.controller.IProductController;
@@ -87,10 +89,14 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.LEGAL_PERSON)
-	@TAutoCompleteEntity(startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = LegalPerson.class, 
-	fields = {"name","otherName"}, 
-	service = IPersonController.JNDI_NAME))
+	@TAutoCompleteEntity(
+	startSearchAt=3, showMaxItems=30,
+	service = IPersonController.JNDI_NAME,
+	query = @TQuery(entity = LegalPerson.class, 
+		condition = {
+			@TCondition(field = "name", operator=TCompareOp.LIKE),
+			@TCondition(logicOp=TLogicOp.OR, field = "otherName", 
+			operator=TCompareOp.LIKE)}))
 	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
 	targetFieldName="costCenter", runAfterFormBuild=true)
 	@THBox(	pane=@TPane(children={"legalPerson", "costCenter", "date", "product"}), spacing=10, fillHeight=true,
@@ -110,10 +116,13 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 	private SimpleObjectProperty<Date> date;
 	
 	@TLabel(text=TUsualKey.PRODUCT)
-	@TAutoCompleteEntity(
-	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = Product.class, fields = {"code", "name"}, 
-	service = IProductController.JNDI_NAME))
+	@TAutoCompleteEntity(showMaxItems=30,
+	service = IProductController.JNDI_NAME,
+	query = @TQuery(entity = Product.class, 
+		condition = {
+			@TCondition(field = "name", operator=TCompareOp.LIKE),
+			@TCondition(logicOp=TLogicOp.OR, field = "code", 
+			operator=TCompareOp.LIKE)}))
 	private SimpleObjectProperty<Product> product;
 	
 	@TLabel(text=TFxKey.SORT_BY)

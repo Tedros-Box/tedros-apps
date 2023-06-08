@@ -11,6 +11,7 @@ import org.tedros.extension.ejb.controller.IExtensionDomainController;
 import org.tedros.extension.model.DocumentStatus;
 import org.tedros.extension.model.ExtensionDomainMV;
 import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.assistant.TAiAssistant;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextAreaField;
@@ -27,7 +28,6 @@ import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TText;
-import org.tedros.fx.annotation.view.TAiAssistant;
 import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.presenter.model.TFormatter;
 

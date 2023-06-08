@@ -26,9 +26,11 @@
 		<class>org.tedros.extension.model.StreetType</class>
 		<class>org.tedros.extension.model.PlaceType</class>
 		
+		
 		<class>org.tedros.person.model.Person</class>
 		<class>org.tedros.person.model.NaturalPerson</class>
 		<class>org.tedros.person.model.LegalPerson</class>
+		<class>org.tedros.person.model.CostCenter</class>
 		<class>org.tedros.person.model.Employee</class>
 		<class>org.tedros.person.model.Customer</class>
 		<class>org.tedros.person.model.LegalType</class>
@@ -72,7 +74,7 @@
 		  <property name="javax.persistence.retrieveMode" value="BYPASS"/>
 	      <property name="javax.persistence.storeMode" value="BYPASS"/>
 	      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
-	      <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+	    <!--   <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/> -->
 	      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
 	      <property name="eclipselink.logging.level" value="OFF"/>
           <property name="eclipselink.logging.exceptions" value="true"/>

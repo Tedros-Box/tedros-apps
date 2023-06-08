@@ -5,7 +5,6 @@ package org.tedros.stock.module.inventory.model;
 
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
-import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TCallbackFactory;
 import org.tedros.fx.annotation.control.TCellFactory;
 import org.tedros.fx.annotation.control.TCheckBoxField;
@@ -21,6 +20,8 @@ import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.control.TLabeled;
 import org.tedros.fx.domain.TZeroValidation;
@@ -28,6 +29,8 @@ import org.tedros.fx.presenter.dynamic.TDynaPresenter;
 import org.tedros.fx.presenter.entity.behavior.TDetailFieldBehavior;
 import org.tedros.fx.presenter.entity.decorator.TDetailFieldDecorator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.server.query.TCompareOp;
+import org.tedros.server.query.TLogicOp;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.entity.StockConfigItem;
@@ -65,11 +68,15 @@ public class ConfigItemMV extends TEntityModelView<StockConfigItem> {
 
 
 	@TLabel(text=TUsualKey.PRODUCT)
-	@TAutoCompleteEntity(required=true,
-	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = Product.class, fields = {"code", "name"}, 
-	service = IProductController.JNDI_NAME))
-	@THBox(	pane=@TPane(children={"product", "minimumAmount", "notify", "allowNegativeStock"}), spacing=10, fillHeight=true,
+	@TAutoCompleteEntity(required=true, 
+	startSearchAt=3, showMaxItems=30,
+	service = IProductController.JNDI_NAME,
+	query = @TQuery(entity = Product.class, 
+		condition = {
+			@TCondition(field = "name", operator=TCompareOp.LIKE),
+			@TCondition(logicOp=TLogicOp.OR, field = "code", operator=TCompareOp.LIKE)}))
+	@THBox(	pane=@TPane(children={"product", "minimumAmount", "notify", "allowNegativeStock"}), 
+	spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="product", priority=Priority.NEVER), 
 			@TPriority(field="notify", priority=Priority.ALWAYS), 
 			@TPriority(field="minimumAmount", priority=Priority.NEVER)}))

@@ -17,7 +17,6 @@ import org.tedros.extension.model.Document;
 import org.tedros.extension.model.ModalDocumentMV;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
-import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
@@ -36,14 +35,16 @@ import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.layout.TVBox;
 import org.tedros.fx.annotation.layout.TVGrow;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.builder.DateTimeFormatBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TFileExtension;
@@ -57,8 +58,10 @@ import org.tedros.person.ejb.controller.ICostCenterController;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.LegalPerson;
-import org.tedros.person.model.NaturalPerson;
+import org.tedros.person.model.Person;
 import org.tedros.person.table.PersonTV;
+import org.tedros.server.query.TCompareOp;
+import org.tedros.server.query.TLogicOp;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -73,9 +76,11 @@ import javafx.scene.layout.Priority;
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = ICostCenterController.JNDI_NAME, model=CostCenter.class)
 @TListViewPresenter(
-	paginator=@TPaginator(entityClass = CostCenter.class, serviceName = ICostCenterController.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
+	page=@TPage(serviceName = ICostCenterController.JNDI_NAME,
+	query = @TQuery(entity=CostCenter.class, condition= {
+			@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME)},
+		orderBy= {@TOrder(label = TUsualKey.NAME, field = "name")}
+			),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=PersonKeys.VIEW_COST_CENTER, buildModesRadioButton=false),
 		behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
@@ -123,8 +128,11 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	@TLabel(text=TUsualKey.RESPONSABLE)
 	@TAutoCompleteEntity(modelViewType=PersonTV.class, 
 	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = NaturalPerson.class, fields = {"name","lastName"}, 
-	service = IPersonController.JNDI_NAME))
+	service = IPersonController.JNDI_NAME,
+	query = @TQuery(entity = Person.class, 
+	condition = {
+		@TCondition(field = "name", operator=TCompareOp.LIKE),
+		@TCondition(logicOp=TLogicOp.OR, field = "lastName", operator=TCompareOp.LIKE)}))
 	@THBox(spacing=10, fillHeight=true,	
 	pane=@TPane(children={"responsable", "legalPerson", "openingDate", "closingDate"}),
 	hgrow=@THGrow(priority={@TPriority(field="responsable", priority=Priority.ALWAYS),
@@ -135,8 +143,12 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 
 	@TLabel(text=TUsualKey.LEGAL_PERSON)
 	@TAutoCompleteEntity(required=true, 
-			entries = @TEntry(entityType = LegalPerson.class, fields = {"name","otherName"}, 
-			service = IPersonController.JNDI_NAME))
+	startSearchAt=3, showMaxItems=30,
+	service = IPersonController.JNDI_NAME,
+	query = @TQuery(entity = LegalPerson.class, 
+		condition = {
+			@TCondition(field = "name", operator=TCompareOp.LIKE),
+			@TCondition(logicOp=TLogicOp.OR, field = "otherName", operator=TCompareOp.LIKE)}))
 	private SimpleObjectProperty<LegalPerson> legalPerson;
 	
 	@TLabel(text=TUsualKey.OPENING_DATE)
