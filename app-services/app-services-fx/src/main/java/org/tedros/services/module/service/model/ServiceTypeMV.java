@@ -10,15 +10,18 @@ import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.server.query.TCompareOp;
 import org.tedros.services.ServKey;
 import org.tedros.services.domain.DomainApp;
 import org.tedros.services.ejb.controller.IServiceTypeController;
@@ -33,9 +36,11 @@ import javafx.beans.property.SimpleStringProperty;
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IServiceTypeController.JNDI_NAME, model=ServiceType.class)
 @TListViewPresenter(
-	paginator=@TPaginator(entityClass = ServiceType.class, serviceName = IServiceTypeController.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
+	page=@TPage(serviceName = IServiceTypeController.JNDI_NAME,
+		query = @TQuery(entity=ServiceType.class, condition= {
+				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME)},
+			orderBy= {@TOrder(label = TUsualKey.NAME, field = "name")}
+				),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=ServKey.VIEW_SERVICE_TYPE,
 		buildModesRadioButton=false),
 	behavior=@TBehavior(runNewActionAfterSave=false)))

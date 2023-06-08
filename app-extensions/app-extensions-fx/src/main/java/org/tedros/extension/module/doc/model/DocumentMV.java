@@ -42,20 +42,23 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TFileExtension;
 import org.tedros.fx.domain.TFileModelType;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.fx.property.TSimpleFileProperty;
+import org.tedros.server.query.TCompareOp;
 import org.tedros.tools.annotation.TNotifyLink;
 import org.tedros.util.TDateUtil;
 
@@ -71,10 +74,13 @@ import javafx.scene.layout.Priority;
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IDocumentController.JNDI_NAME, model=Document.class)
 @TListViewPresenter(
-	paginator=@TPaginator(entityClass = Document.class, serviceName = IDocumentController.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", 
-		orderBy = {	@TOption(text = TUsualKey.REF_CODE, field = "code"),
-					@TOption(text = TUsualKey.NAME, field = "name")}),
+	page=@TPage(serviceName = IDocumentController.JNDI_NAME,
+	query = @TQuery(entity=Document.class, condition= {
+			@TCondition(field = "code", operator=TCompareOp.EQUAL, label=TUsualKey.REF_CODE),
+			@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME)},
+		orderBy= {@TOrder(label = TUsualKey.REF_CODE, field = "code"),
+				@TOrder(label = TUsualKey.NAME, field = "name")}
+			),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=ExtKey.VIEW_DOCS, buildModesRadioButton=false),
 		behavior=@TBehavior(runNewActionAfterSave=false)))

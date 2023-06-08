@@ -6,7 +6,6 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
-import org.tedros.fx.annotation.control.TAutoCompleteEntity.TEntry;
 import org.tedros.fx.annotation.control.TBigDecimalField;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TLabel;
@@ -16,15 +15,17 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TJoin;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
-import org.tedros.fx.annotation.view.TPaginator.TJoin;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.CostCenter;
@@ -34,6 +35,8 @@ import org.tedros.sample.domain.DomainApp;
 import org.tedros.sample.ejb.controller.IProductPriceController;
 import org.tedros.sample.entity.ProductPrice;
 import org.tedros.samples.SmplsKey;
+import org.tedros.server.query.TCompareOp;
+import org.tedros.server.query.TLogicOp;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
 
@@ -44,14 +47,18 @@ import javafx.scene.layout.Priority;
 @TForm(name = SmplsKey.FORM_PRICE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IProductPriceController.JNDI_NAME, model=ProductPrice.class)
 @TListViewPresenter(
-	paginator=@TPaginator(entityClass = ProductPrice.class, serviceName = IProductPriceController.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", fieldAlias="p",
-		join = { @TJoin(field = "product", joinAlias = "p"),
+	page=@TPage(serviceName = IProductPriceController.JNDI_NAME,
+		query = @TQuery(entity=ProductPrice.class, 
+			condition= { 
+				@TCondition(field = "name", alias="p", operator=TCompareOp.LIKE, label=TUsualKey.PRODUCT),
+				@TCondition(field = "name", alias="lp", operator=TCompareOp.LIKE, label=TUsualKey.LEGAL_PERSON)},
+			join = { @TJoin(field = "product", joinAlias = "p"),
 				@TJoin(field = "legalPerson",  joinAlias = "lp"),
 				@TJoin(field = "costCenter",  joinAlias = "cc")},
-		orderBy = { @TOption(text = TUsualKey.PRODUCT , field = "name", alias="p"),
-				@TOption(text = TUsualKey.COST_CENTER , field = "name", alias="cc"),
-				@TOption(text = TUsualKey.LEGAL_PERSON , field = "name", alias="lp")}),
+			orderBy= { @TOrder(label = TUsualKey.PRODUCT , field = "name", alias="p"),
+				@TOrder(label = TUsualKey.COST_CENTER , field = "name", alias="cc"),
+				@TOrder(label = TUsualKey.LEGAL_PERSON , field = "name", alias="lp")}
+				),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=SmplsKey.VIEW_PRICE, buildModesRadioButton=false),
 		behavior=@TBehavior(runNewActionAfterSave=true, saveOnlyChangedModels=false, saveAllModels=false)))
@@ -62,11 +69,14 @@ import javafx.scene.layout.Priority;
 public class PriceMV extends TEntityModelView<ProductPrice> {
 
 	@TLabel(text=TUsualKey.LEGAL_PERSON)
-	@TAutoCompleteEntity(required=true,
-	startSearchAt=2, showMaxItems=30,
-	entries = @TEntry(entityType = LegalPerson.class, 
-	fields = {"name","otherName"}, 
-	service = IPersonController.JNDI_NAME))
+	@TAutoCompleteEntity(required=true, 
+	startSearchAt=3, showMaxItems=30,
+	service = IPersonController.JNDI_NAME,
+	query = @TQuery(entity = LegalPerson.class, 
+		condition = {
+			@TCondition(field = "name", operator=TCompareOp.LIKE),
+			@TCondition(logicOp=TLogicOp.OR, field = "otherName", 
+			operator=TCompareOp.LIKE)}))
 	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
 	targetFieldName="costCenter", runAfterFormBuild=true)
 	@THBox(	pane=@TPane(children={"legalPerson", "costCenter", "product", "unitPrice"}), spacing=10, fillHeight=true,
@@ -81,9 +91,15 @@ public class PriceMV extends TEntityModelView<ProductPrice> {
 	protected SimpleObjectProperty<CostCenter> costCenter;
 	
 	@TLabel(text=TUsualKey.PRODUCT)
-	@TAutoCompleteEntity(required=true, control=@TControl(maxWidth=250, parse = true),
-		entries = @TEntry(entityType = Product.class, 
-			fields = { "code", "name" }, service = IProductController.JNDI_NAME))
+	@TAutoCompleteEntity(required=true, 
+	control=@TControl(maxWidth=250, parse = true),
+	startSearchAt=3, showMaxItems=30,
+	service = IProductController.JNDI_NAME,
+	query = @TQuery(entity = Product.class, 
+		condition = {
+			@TCondition(field = "name", operator=TCompareOp.LIKE),
+			@TCondition(logicOp=TLogicOp.OR, field = "code", 
+			operator=TCompareOp.LIKE)}))
 	protected SimpleObjectProperty<Product> product;
 	
 	@TLabel(text=TUsualKey.UNIT_PRICE)

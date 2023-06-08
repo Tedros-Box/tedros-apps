@@ -18,24 +18,30 @@ import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
-import org.tedros.fx.annotation.view.TPaginator.TJoin;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TJoin;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
+import org.tedros.fx.annotation.query.TTemporal;
+import org.tedros.server.query.TCompareOp;
 import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.ejb.controller.IEventTypeController;
 import org.tedros.stock.ejb.controller.IStockEventController;
 import org.tedros.stock.entity.OutType;
 import org.tedros.stock.entity.StockOut;
+import org.tedros.stock.module.inventory.setting.ResponsableSetting;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -45,16 +51,21 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
+@TSetting(ResponsableSetting.class)
 @TForm(name = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IStockEventController.JNDI_NAME, model=StockOut.class)
 @TListViewPresenter(listViewMinWidth=350,
-	paginator=@TPaginator(entityClass = StockOut.class, serviceName = IStockEventController.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", fieldAlias="cc",
-		join = { @TJoin(field = "legalPerson", joinAlias = "lp"),
+	page=@TPage(serviceName = IStockEventController.JNDI_NAME,
+		query = @TQuery(entity=StockOut.class, 
+			condition= { 
+				@TCondition(field = "date", operator=TCompareOp.GREATER_EQ_THAN, label=TUsualKey.DATE, temporal=TTemporal.DATE),
+				@TCondition(field = "name", alias="lp", operator=TCompareOp.LIKE, label=TUsualKey.LEGAL_PERSON)},
+			join = {@TJoin(field = "legalPerson",  joinAlias = "lp"),
 				@TJoin(field = "costCenter",  joinAlias = "cc")},
-		orderBy = {	@TOption(text = TUsualKey.DATE , field = "date"),
-				@TOption(text = TUsualKey.COST_CENTER , field = "name", alias="cc"),
-				@TOption(text = TUsualKey.LEGAL_PERSON , field = "name", alias="lp")}),
+			orderBy= { @TOrder(label = TUsualKey.DATE , field = "date"),
+				@TOrder(label = TUsualKey.COST_CENTER , field = "name", alias="cc"),
+				@TOrder(label = TUsualKey.LEGAL_PERSON , field = "name", alias="lp")}
+				),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=STCKKey.VIEW_STOCK_OUT, buildModesRadioButton=false),
 		behavior=@TBehavior(runNewActionAfterSave=false)))

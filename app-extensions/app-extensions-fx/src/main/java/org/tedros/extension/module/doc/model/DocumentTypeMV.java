@@ -8,11 +8,17 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.extension.ExtKey;
 import org.tedros.extension.domain.DomainApp;
 import org.tedros.extension.ejb.controller.IExtensionDomainController;
+import org.tedros.extension.model.DocType;
 import org.tedros.extension.model.DocumentType;
 import org.tedros.extension.model.ExtensionDomainMV;
+import org.tedros.extension.module.doc.converter.DocTypeConverter;
 import org.tedros.fx.TUsualKey;
+import org.tedros.fx.annotation.assistant.TAiAssistant;
+import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TFieldBox;
+import org.tedros.fx.annotation.control.THorizontalRadioGroup;
 import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TRadioButton;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
@@ -27,10 +33,10 @@ import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TText;
-import org.tedros.fx.annotation.view.TAiAssistant;
 import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.presenter.model.TFormatter;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
@@ -65,11 +71,20 @@ public class DocumentTypeMV extends ExtensionDomainMV<DocumentType> {
 			hgrow=@THGrow(priority={
 					@TPriority(field="code", priority=Priority.NEVER),
 					@TPriority(field="name", priority=Priority.ALWAYS)}))
-	protected SimpleStringProperty code;
+	private SimpleStringProperty code;
+
+	@TLabel(text=TUsualKey.TYPE)
+	@THorizontalRadioGroup(spacing= 10,
+		converter=@TConverter(parse = true, type = DocTypeConverter.class),
+		radioButtons = { @TRadioButton(text = TUsualKey.TAX_NUMBER, userData = TUsualKey.TAX_NUMBER ),
+				@TRadioButton(text = TUsualKey.ID_NUMBER, userData = TUsualKey.ID_NUMBER ),
+				@TRadioButton(text = TUsualKey.OTHER, userData = TUsualKey.OTHER )
+		})
+	private SimpleObjectProperty<DocType> docType;
 	
 	@TLabel(text=TUsualKey.DESCRIPTION)
 	@TTextAreaField(maxLength=250)
-	protected SimpleStringProperty description;
+	private SimpleStringProperty description;
 	
 	public DocumentTypeMV(DocumentType entity) {
 		super(entity);

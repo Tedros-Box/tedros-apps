@@ -25,13 +25,14 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.presenter.TSelectionModalPresenter;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TFont;
-import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.control.tablecell.TCurrencyCallback;
 import org.tedros.fx.control.tablecell.TShortDateCallback;
 import org.tedros.fx.presenter.modal.behavior.TSelectionModalBehavior;
@@ -57,7 +58,7 @@ import javafx.scene.layout.Priority;
 @TForm(name = ServKey.VIEW_PLAN)
 @TLabelDefaultSetting(font=@TFont(size=12))
 @TSelectionModalPresenter(
-	paginator=@TPaginator(entityClass = Plan.class, modelViewClass=PlanItemMV.class, 
+	paginator=@TPage(query=@TQuery(entity = Plan.class), modelView=PlanItemMV.class, 
 		serviceName = IPlanController.JNDI_NAME),
 	presenter=@TPresenter(behavior = @TBehavior(type = TSelectionModalBehavior.class), 
 		decorator = @TDecorator(type=TSelectionModalDecorator.class, viewTitle=ServKey.VIEW_PLAN)),

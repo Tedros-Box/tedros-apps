@@ -12,13 +12,21 @@ import org.tedros.api.descriptor.ITComponentDescriptor;
 import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.repository.TRepository;
+import org.tedros.extension.model.Address;
+import org.tedros.extension.model.AddressMV;
 import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.control.TAutoCompleteEntity;
 import org.tedros.fx.control.TButton;
+import org.tedros.fx.control.TComboBoxField;
 import org.tedros.fx.form.TSetting;
+import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.person.model.NaturalPerson;
 import org.tedros.samples.SmplsKey;
 import org.tedros.samples.module.order.model.OrderItemMV;
 import org.tedros.samples.module.order.model.OrderMV;
 import org.tedros.samples.start.TConstant;
+import org.tedros.server.entity.TEntity;
+import org.tedros.server.query.TBlock;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.WeakChangeListener;
@@ -45,6 +53,7 @@ public class OrderSetting extends TSetting {
 		repo.clear();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void run() {
 		OrderMV m = super.getModelView();
@@ -55,6 +64,55 @@ public class OrderSetting extends TSetting {
 			btn.setText(TLanguage.getInstance(TConstant.UUI)
 					.getString(SmplsKey.BTN_OPEN_SALE_RECORD));
 		}
+		
+
+		TAutoCompleteEntity cf = super.getControl("customer");
+		ChangeListener<TEntity> cChl = (a,o,n) -> {
+			if(n!=null) {
+				NaturalPerson np = (NaturalPerson) n;
+				if(np.getAddress()!=null) {
+					Address addr = new Address(np.getAddress());
+					m.getDeliveryAddress().setValue(new AddressMV(addr));
+				}
+			}else
+				m.getDeliveryAddress().setValue(null);
+		};
+		repo.add("cChl",cChl);
+		cf.tSelectedItemProperty().addListener(new WeakChangeListener<>(cChl));
+		
+		
+		TAutoCompleteEntity lpf = super.getControl("legalPerson");
+		ChangeListener<TEntity> lpChl = (a,o,n) -> {
+			TAutoCompleteEntity sf = super.getControl("seller");
+			sf.setText(null);
+			sf.gettSelect().getConditions().forEach(c->{
+				TBlock b = (TBlock) c;
+				if(b.getCondition().getField().equals("legalPerson"))
+					b.getCondition().setValue(n);
+			});
+		};
+		repo.add("lpChl", lpChl);
+		lpf.tSelectedItemProperty().addListener(new WeakChangeListener<>(lpChl));
+		
+		TComboBoxField ccf = super.getControl("costCenter");
+		ChangeListener ccChl = (a,o,n) -> {
+			TAutoCompleteEntity sf = super.getControl("seller");
+			sf.setText(null);
+			sf.gettSelect().getConditions().forEach(c->{
+				TBlock b = (TBlock) c;
+				if(b.getCondition().getField().equals("costCenter")) {
+					TEntity e = n instanceof TEntityModelView 
+							? (TEntity) ((TEntityModelView) n).getEntity() 
+									: n instanceof TEntity 
+									? (TEntity) n
+											: null;
+					b.getCondition().setValue(e);
+				}
+			});
+		};
+		repo.add("ccChl", ccChl);
+		ccf.valueProperty().addListener(new WeakChangeListener<>(ccChl));
+		
 		//Getting the items property from model view
 		ITObservableList<OrderItemMV> items = m.getItems();
 		ChangeListener<Number> itemsChl = (a,o,n)->{

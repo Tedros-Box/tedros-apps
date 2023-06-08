@@ -41,18 +41,21 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TEnvironment;
 import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.server.model.ITFileBaseModel;
+import org.tedros.server.query.TCompareOp;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -66,10 +69,11 @@ import javafx.scene.layout.Priority;
 @TForm(name = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IPlaceController.JNDI_NAME, model=Place.class)
 @TListViewPresenter(
-	paginator=@TPaginator(entityClass = Place.class, 
-		serviceName = IPlaceController.JNDI_NAME,
-		show=true, showSearch=true, searchField="title", 
-		orderBy = {	@TOption(text = TUsualKey.TITLE, field = "title")}),
+	page=@TPage(serviceName = IPlaceController.JNDI_NAME,
+	query = @TQuery(entity=Place.class, condition= {
+			@TCondition(field = "title", operator=TCompareOp.LIKE, label=TUsualKey.TITLE)},
+		orderBy= {@TOrder(label = TUsualKey.TITLE, field = "title")}
+			),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=LocatKey.VIEW_PLACE),
 		behavior = @TBehavior(saveOnlyChangedModels=false, saveAllModels=false)))

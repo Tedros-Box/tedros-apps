@@ -22,15 +22,18 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.server.query.TCompareOp;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -42,10 +45,13 @@ import javafx.scene.layout.Priority;
 @TForm(name = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IAdminAreaController.JNDI_NAME, model=AdminArea.class)
 @TListViewPresenter(listViewMinWidth=350, listViewMaxWidth=350,
-	paginator=@TPaginator(entityClass = AdminArea.class, serviceName = IAdminAreaController.JNDI_NAME,
-			show=true, showSearch=true, searchField="name", 
-			orderBy = {	@TOption(text = TUsualKey.COUNTRY_CODE, field = "countryIso2Code"), 
-						@TOption(text = TUsualKey.NAME, field = "name")}),
+	page=@TPage(serviceName = IAdminAreaController.JNDI_NAME,
+		query = @TQuery(entity=AdminArea.class, condition= {
+				@TCondition(field = "countryIso2Code", operator=TCompareOp.EQUAL, label=TUsualKey.COUNTRY_CODE),
+				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME)},
+			orderBy= {@TOrder(label = TUsualKey.COUNTRY_CODE, field = "countryIso2Code"),
+					@TOrder(label = TUsualKey.NAME, field = "name")}
+				),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=LocatKey.VIEW_ADMIN_AREA, buildImportButton=true),
 	behavior=@TBehavior(importModelViewClass=AdminAreaImportMV.class, runNewActionAfterSave=true)))
 @TSecurity(	id=DomainApp.ADMIN_AREA_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,

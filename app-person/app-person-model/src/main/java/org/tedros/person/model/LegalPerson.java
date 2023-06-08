@@ -135,11 +135,6 @@ public class LegalPerson extends Person {
 				return false;
 		} else if (!otherName.equals(other.otherName))
 			return false;
-		if (staff == null) {
-			if (other.staff != null)
-				return false;
-		} else if (!staff.equals(other.staff))
-			return false;
 		if (startActivities == null) {
 			if (other.startActivities != null)
 				return false;

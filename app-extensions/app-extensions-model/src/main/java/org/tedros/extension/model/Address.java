@@ -56,6 +56,24 @@ public class Address extends TVersionEntity {
 
 	@Column(length=15)
 	private String logintude;
+	
+
+	public Address() {
+		
+	}
+
+	public Address(Address address) {
+		this.streetType = address.streetType;
+		this.publicPlace = address.publicPlace;
+		this.complement = address.complement;
+		this.neighborhood = address.neighborhood;
+		this.country = address.country;
+		this.adminArea = address.adminArea;
+		this.city = address.city;
+		this.code = address.code;
+		this.latitude = address.latitude;
+		this.logintude = address.logintude;
+	}
 
 	public StreetType getStreetType() {
 		return streetType;

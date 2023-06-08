@@ -10,15 +10,18 @@ import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TCondition;
+import org.tedros.fx.annotation.query.TOrder;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.annotation.view.TOption;
-import org.tedros.fx.annotation.view.TPaginator;
 import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.server.query.TCompareOp;
 
 import com.template.TMP_Key;
 import com.template.domain.DomainApp;
@@ -34,12 +37,14 @@ import javafx.beans.property.SimpleStringProperty;
 @TForm(name = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = I_MyEntity_Controller.JNDI_NAME, model=_MyEntity_.class)
 @TListViewPresenter(
-	paginator=@TPaginator(entityClass = _MyEntity_.class, serviceName = I_MyEntity_Controller.JNDI_NAME,
-		show=true, showSearch=true, searchField="name", 
-		orderBy = {	@TOption(text = TUsualKey.NAME , field = "name")}),
+	page=@TPage(serviceName = I_MyEntity_Controller.JNDI_NAME,
+		query = @TQuery(entity=_MyEntity_.class, condition= {
+				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME)},
+			orderBy= {@TOrder(label = TUsualKey.NAME, field = "name")}
+		),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=TMP_Key.MY_APP_MY_VIEW,
 		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))
+		behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.MY_ENTITY__FORM_ID, appName = TMP_Key.APP_MY_APP,
 	moduleName = TMP_Key.MODULE_MY_APP, viewName = TMP_Key.MY_APP_MY_VIEW,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
