@@ -60,7 +60,7 @@ public class CreateSaleEvent extends TBaseEventHandlerBuilder<ActionEvent> {
 				if(sale.isNew())
 					saveAndLoadInModule(b, order);
 				else
-					loadInModule(sale);
+					loadInModule(sale.getId());
 			}
 		};
 	}
@@ -73,19 +73,23 @@ public class CreateSaleEvent extends TBaseEventHandlerBuilder<ActionEvent> {
 			if(res.getState().equals(TState.SUCCESS)) {
 				Order saved = res.getValue();
 				b.getModelView().reload(saved);
-				loadInModule(saved.getSale());
+				loadInModule(saved.getSale().getId());
 			}else {
+				order.setSale(null);
 				b.addMessage(new TMessage(TMessageType.ERROR, res.getMessage()));
 			}
 		} catch (NamingException e) {
 			e.printStackTrace();
+			order.setSale(null);
 			b.addMessage(new TMessage(TMessageType.ERROR, e.getMessage()));
 		}finally {
 			loc.close();
 		}
 	}
 
-	private void loadInModule(Sale sale) {
+	private void loadInModule(Long id) {
+		Sale sale = new Sale();
+		sale.setId(id);
 		List<TLoader> l = TedrosModuleLoader.getInstance()
 			.getLoader(sale);
 		l.get(0).loadInModule();

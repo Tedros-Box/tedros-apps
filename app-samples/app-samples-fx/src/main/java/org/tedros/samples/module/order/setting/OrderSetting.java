@@ -19,7 +19,7 @@ import org.tedros.fx.control.TAutoCompleteEntity;
 import org.tedros.fx.control.TButton;
 import org.tedros.fx.control.TComboBoxField;
 import org.tedros.fx.form.TSetting;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.model.NaturalPerson;
 import org.tedros.samples.SmplsKey;
 import org.tedros.samples.module.order.model.OrderItemMV;

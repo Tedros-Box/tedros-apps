@@ -34,7 +34,7 @@ import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TText;
 import org.tedros.fx.control.TText.TTextStyle;
-import org.tedros.fx.presenter.model.TFormatter;
+import org.tedros.fx.model.TFormatter;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

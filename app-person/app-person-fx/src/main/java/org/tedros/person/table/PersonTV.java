@@ -3,7 +3,7 @@
  */
 package org.tedros.person.table;
 
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.model.ClientCompany;
 import org.tedros.person.model.Customer;
 import org.tedros.person.model.Employee;

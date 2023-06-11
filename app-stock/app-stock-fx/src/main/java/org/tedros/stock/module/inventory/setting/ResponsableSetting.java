@@ -8,7 +8,7 @@ import org.tedros.core.repository.TRepository;
 import org.tedros.fx.control.TAutoCompleteEntity;
 import org.tedros.fx.control.TComboBoxField;
 import org.tedros.fx.form.TSetting;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.server.entity.TEntity;
 import org.tedros.server.query.TBlock;
 

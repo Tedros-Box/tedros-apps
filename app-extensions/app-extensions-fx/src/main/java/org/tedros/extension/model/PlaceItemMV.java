@@ -6,7 +6,7 @@ package org.tedros.extension.model;
 import org.tedros.extension.model.Address;
 import org.tedros.extension.model.Place;
 import org.tedros.extension.model.PlaceType;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;

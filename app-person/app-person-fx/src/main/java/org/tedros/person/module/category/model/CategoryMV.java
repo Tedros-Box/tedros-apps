@@ -48,7 +48,7 @@ import org.tedros.fx.annotation.text.TText;
 import org.tedros.fx.builder.TEditModelRowFactoryCallBackBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.control.TText.TTextStyle;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
 import org.tedros.person.ejb.controller.IPersonCategoryController;

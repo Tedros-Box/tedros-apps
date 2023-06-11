@@ -3,7 +3,7 @@
  */
 package org.tedros.stock.module.report.model;
 
-import org.tedros.fx.presenter.model.TModelView;
+import org.tedros.fx.model.TModelView;
 import org.tedros.stock.model.Inventory;
 
 import javafx.beans.property.SimpleDoubleProperty;

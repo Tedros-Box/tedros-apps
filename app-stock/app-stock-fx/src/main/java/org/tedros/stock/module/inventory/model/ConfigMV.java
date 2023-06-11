@@ -28,7 +28,7 @@ import org.tedros.fx.annotation.query.TCondition;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.collections.ITObservableList;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.ejb.controller.IEmployeeController;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.CostCenter;

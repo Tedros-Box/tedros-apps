@@ -30,9 +30,9 @@ import org.tedros.fx.annotation.presenter.TSelectionModalPresenter;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TFont;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.fx.presenter.modal.behavior.TSelectionModalBehavior;
 import org.tedros.fx.presenter.modal.decorator.TSelectionModalDecorator;
-import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -45,7 +45,7 @@ import javafx.scene.layout.Priority;
 @TForm(name = LocatKey.VIEW_PLACE)
 @TLabelDefaultSetting(font=@TFont(size=12))
 @TSelectionModalPresenter(
-	paginator=@TPage(query = @TQuery(entity=Place.class), 
+	page=@TPage(query = @TQuery(entity=Place.class), 
 		modelView=PlaceItemMV.class, 
 		serviceName = IPlaceController.JNDI_NAME),
 	presenter=@TPresenter(

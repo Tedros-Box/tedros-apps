@@ -27,8 +27,8 @@ import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
 import org.tedros.fx.annotation.query.TCondition;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
-import org.tedros.fx.domain.TZeroValidation;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.domain.TValidateNumber;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.sample.entity.SaleItem;
 import org.tedros.samples.module.sale.setting.SaleItemSetting;
 import org.tedros.samples.module.sale.trigger.SetPriceTrigger;
@@ -82,12 +82,12 @@ public class SaleItemMV extends TEntityModelView<SaleItem> {
 	private SimpleObjectProperty<Product> product;
 	
 	@TLabel(text=TUsualKey.UNIT_PRICE)
-	@TBigDecimalField(zeroValidation=TZeroValidation.GREATHER_THAN_ZERO, 
+	@TBigDecimalField(validate=TValidateNumber.GREATHER_THAN_ZERO, 
 	control=@TControl(maxWidth=80, parse = true))
 	private SimpleObjectProperty<BigDecimal> unitPrice;
 	
 	@TLabel(text=TUsualKey.AMOUNT)
-	@TIntegerField(zeroValidation=TZeroValidation.GREATHER_THAN_ZERO, 
+	@TIntegerField(validate=TValidateNumber.GREATHER_THAN_ZERO, 
 	control=@TControl(maxWidth=80, parse = true))
 	private SimpleIntegerProperty amount;
 	

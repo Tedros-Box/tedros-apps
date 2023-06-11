@@ -57,9 +57,9 @@ import org.tedros.fx.builder.DateTimeFormatBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.domain.TLabelPosition;
-import org.tedros.fx.presenter.model.TEntityModelView;
-import org.tedros.fx.presenter.model.TFormatter;
-import org.tedros.fx.presenter.paginator.converter.TStringToLong;
+import org.tedros.fx.model.TEntityModelView;
+import org.tedros.fx.model.TFormatter;
+import org.tedros.fx.presenter.page.converter.TStringToLong;
 import org.tedros.person.ejb.controller.IEmployeeController;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.CostCenter;
@@ -104,9 +104,9 @@ import javafx.scene.layout.Priority;
 	page=@TPage(serviceName = ISaleController.JNDI_NAME,
 		query = @TQuery(entity=Sale.class, 
 			join = { @TJoin(field = "customer", joinAlias = "cs"),
-				@TJoin(field = "type",  joinAlias = "tp"),
 				@TJoin(field = "legalPerson",  joinAlias = "lp"),
-				@TJoin(field = "costCenter",  joinAlias = "cc")},
+				@TJoin(field = "costCenter",  joinAlias = "cc"),
+				@TJoin(type=TJoinType.LEFT, field = "type",  joinAlias = "tp")},
 			condition= { 
 				@TCondition(field = "name", alias="cs", operator=TCompareOp.LIKE, label=TUsualKey.CUSTOMER),
 				@TCondition(field = "id", operator=TCompareOp.EQUAL, label=TUsualKey.CODE, converter=TStringToLong.class),

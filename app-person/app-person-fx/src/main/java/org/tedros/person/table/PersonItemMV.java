@@ -3,7 +3,7 @@
  */
 package org.tedros.person.table;
 
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.model.Person;
 
 import javafx.beans.property.SimpleLongProperty;

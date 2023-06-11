@@ -4,7 +4,7 @@
 package org.tedros.stock.module.inventory.builder;
 
 import org.tedros.fx.builder.TGenericBuilder;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.model.LegalPerson;
 
 import javafx.beans.property.ObjectProperty;

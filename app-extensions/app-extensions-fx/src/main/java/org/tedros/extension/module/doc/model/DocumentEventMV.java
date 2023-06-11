@@ -36,9 +36,9 @@ import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.builder.DateTimeFormatBuilder;
 import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.fx.presenter.entity.behavior.TDetailCrudViewBehavior;
 import org.tedros.fx.presenter.entity.decorator.TDetailCrudViewDecorator;
-import org.tedros.fx.presenter.model.TEntityModelView;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;

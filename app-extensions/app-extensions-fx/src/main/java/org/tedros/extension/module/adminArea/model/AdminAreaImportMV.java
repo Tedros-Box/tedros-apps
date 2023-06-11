@@ -31,9 +31,9 @@ import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.domain.TFileModelType;
 import org.tedros.fx.domain.THtmlConstant;
 import org.tedros.fx.domain.TStyleParameter;
+import org.tedros.fx.model.TImportModelView;
 import org.tedros.fx.presenter.modal.behavior.TImportFileModalBehavior;
 import org.tedros.fx.presenter.modal.decorator.TImportFileModalDecorator;
-import org.tedros.fx.presenter.model.TImportModelView;
 import org.tedros.fx.property.TSimpleFileProperty;
 
 import javafx.beans.property.SimpleStringProperty;

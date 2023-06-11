@@ -35,9 +35,9 @@ import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TFont;
 import org.tedros.fx.control.tablecell.TCurrencyCallback;
 import org.tedros.fx.control.tablecell.TShortDateCallback;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.fx.presenter.modal.behavior.TSelectionModalBehavior;
 import org.tedros.fx.presenter.modal.decorator.TSelectionModalDecorator;
-import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.services.ServKey;
 import org.tedros.services.converter.StatusConverter;
 import org.tedros.services.domain.Status;
@@ -58,7 +58,7 @@ import javafx.scene.layout.Priority;
 @TForm(name = ServKey.VIEW_PLAN)
 @TLabelDefaultSetting(font=@TFont(size=12))
 @TSelectionModalPresenter(
-	paginator=@TPage(query=@TQuery(entity = Plan.class), modelView=PlanItemMV.class, 
+	page=@TPage(query=@TQuery(entity = Plan.class), modelView=PlanItemMV.class, 
 		serviceName = IPlanController.JNDI_NAME),
 	presenter=@TPresenter(behavior = @TBehavior(type = TSelectionModalBehavior.class), 
 		decorator = @TDecorator(type=TSelectionModalDecorator.class, viewTitle=ServKey.VIEW_PLAN)),

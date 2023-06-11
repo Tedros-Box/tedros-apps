@@ -15,7 +15,7 @@ import org.tedros.api.parser.ITAnnotationParser;
 import org.tedros.extension.component.builder.TAdminAreaComboBoxBuilder;
 import org.tedros.extension.model.AdminArea;
 import org.tedros.fx.TUsualKey;
-import org.tedros.fx.annotation.TAnnotationDefaultValue;
+import org.tedros.fx.annotation.TDefaultValue;
 import org.tedros.fx.annotation.parser.TComboBoxParser;
 import org.tedros.fx.annotation.parser.TRequiredComboBoxParser;
 import org.tedros.fx.annotation.property.TIntegerProperty;
@@ -204,7 +204,7 @@ public @interface TAdminAreaComboBox  {
 	*  to increase or decrease the height of the popup.
 	* </pre>
 	**/
-	public int visibleRowCount() default TAnnotationDefaultValue.DEFAULT_INT_VALUE_IDENTIFICATION;
+	public int visibleRowCount() default TDefaultValue.DEFAULT_INT_VALUE_IDENTIFICATION;
 	
 	/**
 	 * <pre>

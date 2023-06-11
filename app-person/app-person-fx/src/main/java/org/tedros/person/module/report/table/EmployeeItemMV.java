@@ -3,7 +3,7 @@
  */
 package org.tedros.person.module.report.table;
 
-import org.tedros.fx.presenter.model.TModelView;
+import org.tedros.fx.model.TModelView;
 import org.tedros.person.report.model.EmployeeItemModel;
 
 import javafx.beans.property.SimpleLongProperty;

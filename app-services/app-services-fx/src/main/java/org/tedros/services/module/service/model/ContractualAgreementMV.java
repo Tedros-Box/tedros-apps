@@ -20,8 +20,8 @@ import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TEditModalPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.domain.TZeroValidation;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.domain.TValidateNumber;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.services.ejb.controller.IContractualAgreementController;
 import org.tedros.services.ejb.controller.IServiceTypeController;
 import org.tedros.services.model.ContractualAgreement;
@@ -58,7 +58,7 @@ public class ContractualAgreementMV extends TEntityModelView<ContractualAgreemen
 	private SimpleObjectProperty<ServiceType> serviceType;
 
 	@TLabel(text=TUsualKey.AMOUNT)
-	@TIntegerField(zeroValidation=TZeroValidation.NONE)
+	@TIntegerField(validate=TValidateNumber.NONE)
 	private SimpleIntegerProperty amount;
 	
 	@TLabel(text=TUsualKey.VALUE)

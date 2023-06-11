@@ -22,6 +22,7 @@ public interface SmplsKey {
 	static final String FORM_PRICE = "#{form.price}";
 	static final String FORM_SALES_STATUS = "#{form.sales.status}";
 	static final String FORM_SALES_TYPE = "#{form.sales.type}";
+	static final String EUROPEAN_COUNTRY = "#{label.european.country}";
 	static final String MENU_CRUD_VIEWS = "#{menu.crud.views}";
 	static final String MODEL_INFO_ORDER_STATUS = "#{model.info.order.status}";
 	static final String MODEL_INFO_SALE_STATUS = "#{model.info.sale.status}";
@@ -34,6 +35,12 @@ public interface SmplsKey {
 	static final String MODULE_SALES = "#{module.sales}";
 	static final String MSG_SAVE_FIRST = "#{msg.save.first}";
 	static final String MSG_SELECT_COST_CENTER = "#{msg.select.cost.center}";
+	static final String OPT_ALLEY = "#{opt.alley}";
+	static final String OPT_AVENUE = "#{opt.avenue}";
+	static final String OPT_BOULEVARD = "#{opt.boulevard}";
+	static final String OPT_LANE = "#{opt.lane}";
+	static final String OPT_ROAD = "#{opt.road}";
+	static final String OPT_STREET = "#{opt.street}";
 	static final String TEXT_STOCK_ENTRY_EVENT = "#{text.stock.entry.event}";
 	static final String TEXT_STOCK_OUT_EVENT = "#{text.stock.out.event}";
 	static final String TEXT_UPDATE_STOCK = "#{text.update.stock}";
