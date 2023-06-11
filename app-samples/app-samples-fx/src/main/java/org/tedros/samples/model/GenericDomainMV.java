@@ -8,7 +8,7 @@ import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.sample.entity.GenericDomain;
 
 import javafx.beans.property.SimpleStringProperty;

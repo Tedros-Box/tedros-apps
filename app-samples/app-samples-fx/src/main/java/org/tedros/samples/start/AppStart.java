@@ -8,6 +8,8 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.sample.domain.DomainApp;
 import org.tedros.samples.SmplsKey;
+import org.tedros.samples.module.forms.AdvancedControlModule;
+import org.tedros.samples.module.forms.BasicControlModule;
 import org.tedros.samples.module.order.OrderModule;
 import org.tedros.samples.module.price.PriceModule;
 import org.tedros.samples.module.sale.SaleModule;
@@ -30,7 +32,15 @@ import org.tedros.samples.module.sale.SaleModule;
 		@TModule(type=PriceModule.class, 
 		name=SmplsKey.MODULE_PRICE, 
 		menu=SmplsKey.MENU_CRUD_VIEWS, 
-		description=SmplsKey.MODULE_DESC_PRICE)
+		description=SmplsKey.MODULE_DESC_PRICE),
+		@TModule(type=BasicControlModule.class, 
+		name="Basic Controls", 
+		menu="Samples", 
+		description="Basic field controls"),
+		@TModule(type=AdvancedControlModule.class, 
+		name="Advanced Controls", 
+		menu="Samples", 
+		description="Advanced field controls")
 	}, packageName = "org.tedros.samples", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"Smpls"})

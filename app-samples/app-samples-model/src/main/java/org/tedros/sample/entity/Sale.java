@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,7 @@ import org.tedros.server.entity.TReceptiveEntity;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name=DomainTables.sale, schema=DomainSchema.schema)
 public class Sale extends TReceptiveEntity implements ICostCenterAccounting{
 

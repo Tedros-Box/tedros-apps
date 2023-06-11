@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.tedros.core.TLanguage;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.model.Employee;
 import org.tedros.person.model.StaffType;
 

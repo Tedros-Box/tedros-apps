@@ -44,7 +44,7 @@ import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.collections.ITObservableList;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.model.FindPersonMV;
 import org.tedros.person.model.Person;
 import org.tedros.server.query.TCompareOp;

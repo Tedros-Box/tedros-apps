@@ -3,7 +3,7 @@
  */
 package org.tedros.stock.table;
 
-import org.tedros.fx.presenter.model.TModelView;
+import org.tedros.fx.model.TModelView;
 import org.tedros.stock.model.ProductItem;
 
 import javafx.beans.property.SimpleStringProperty;

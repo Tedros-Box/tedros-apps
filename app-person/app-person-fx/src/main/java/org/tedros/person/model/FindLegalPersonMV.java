@@ -25,9 +25,9 @@ import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TFont;
 import org.tedros.fx.control.tablecell.TShortDateCallback;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.fx.presenter.modal.behavior.TSelectionModalBehavior;
 import org.tedros.fx.presenter.modal.decorator.TSelectionModalDecorator;
-import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.ejb.controller.ILegalPersonController;
 import org.tedros.person.module.company.table.LegalPersonItemMV;
@@ -44,7 +44,7 @@ import javafx.scene.layout.Priority;
 @TForm(name = PersonKeys.TITLE_SELECT_LEGAL_PERSON)
 @TLabelDefaultSetting(font=@TFont(size=12))
 @TSelectionModalPresenter(
-	paginator=@TPage(query=@TQuery(entity=LegalPerson.class), 
+	page=@TPage(query=@TQuery(entity=LegalPerson.class), 
 		modelView=LegalPersonItemMV.class, 
 		serviceName = ILegalPersonController.JNDI_NAME),
 	presenter=@TPresenter(behavior = @TBehavior(type = TSelectionModalBehavior.class), 

@@ -19,7 +19,7 @@ import org.tedros.fx.annotation.presenter.TEditModalPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.reader.TReaderHtml;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

@@ -26,7 +26,7 @@ import org.tedros.fx.annotation.query.TJoin;
 import org.tedros.fx.annotation.query.TOrder;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.LegalPerson;

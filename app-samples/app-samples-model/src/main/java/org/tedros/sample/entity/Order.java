@@ -6,6 +6,7 @@ package org.tedros.sample.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,6 +34,7 @@ import org.tedros.server.entity.TVersionEntity;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name=DomainTables.order, schema=DomainSchema.schema)
 public class Order extends TVersionEntity implements ICostCenterAccounting {
 

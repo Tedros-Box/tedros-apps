@@ -23,7 +23,7 @@ import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.control.tablecell.TMediumDateTimeCallback;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleObjectProperty;

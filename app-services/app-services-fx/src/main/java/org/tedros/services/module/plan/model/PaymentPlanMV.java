@@ -9,8 +9,8 @@ import org.tedros.fx.annotation.control.TIntegerField;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.presenter.TEditModalPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
-import org.tedros.fx.domain.TZeroValidation;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.domain.TValidateNumber;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.services.ejb.controller.IPaymentPlanController;
 import org.tedros.services.model.PaymentPlan;
 
@@ -26,7 +26,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class PaymentPlanMV extends TEntityModelView<PaymentPlan> {
 
 	@TLabel(text=TUsualKey.AMOUNT)
-	@TIntegerField(zeroValidation=TZeroValidation.GREATHER_THAN_ZERO)
+	@TIntegerField(validate=TValidateNumber.GREATHER_THAN_ZERO)
 	private SimpleIntegerProperty amount;
 	
 	@TLabel(text=TUsualKey.DISCOUNT)

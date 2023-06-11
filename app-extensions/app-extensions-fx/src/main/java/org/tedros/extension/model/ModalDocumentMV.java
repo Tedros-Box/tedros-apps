@@ -32,7 +32,7 @@ import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.domain.TFileExtension;
 import org.tedros.fx.domain.TFileModelType;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.fx.property.TSimpleFileProperty;
 
 import javafx.beans.property.SimpleLongProperty;

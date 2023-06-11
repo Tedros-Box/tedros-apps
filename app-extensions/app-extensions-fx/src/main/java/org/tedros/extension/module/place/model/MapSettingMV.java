@@ -17,9 +17,9 @@ import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TText;
 import org.tedros.fx.control.TText.TTextStyle;
+import org.tedros.fx.model.TModelView;
 import org.tedros.fx.presenter.entity.behavior.TSaveViewBehavior;
 import org.tedros.fx.presenter.entity.decorator.TSaveViewDecorator;
-import org.tedros.fx.presenter.model.TModelView;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;

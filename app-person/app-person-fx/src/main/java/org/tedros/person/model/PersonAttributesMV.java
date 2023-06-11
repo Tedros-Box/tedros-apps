@@ -14,7 +14,7 @@ import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TEditModalPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.ejb.controller.IPersonAttributesController;
 
 import javafx.beans.property.SimpleLongProperty;

@@ -39,7 +39,7 @@ import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TEnvironment;
-import org.tedros.fx.presenter.model.TEntityModelView;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.server.model.ITFileBaseModel;
 import org.tedros.server.query.TCompareOp;
 import org.tedros.stock.STCKKey;

@@ -24,11 +24,11 @@ import org.tedros.fx.annotation.query.TCondition;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.control.TLabeled;
-import org.tedros.fx.domain.TZeroValidation;
+import org.tedros.fx.domain.TValidateNumber;
+import org.tedros.fx.model.TEntityModelView;
 import org.tedros.fx.presenter.dynamic.TDynaPresenter;
 import org.tedros.fx.presenter.entity.behavior.TDetailFieldBehavior;
 import org.tedros.fx.presenter.entity.decorator.TDetailFieldDecorator;
-import org.tedros.fx.presenter.model.TEntityModelView;
 import org.tedros.server.query.TCompareOp;
 import org.tedros.server.query.TLogicOp;
 import org.tedros.stock.ejb.controller.IProductController;
@@ -83,7 +83,7 @@ public class ConfigItemMV extends TEntityModelView<StockConfigItem> {
 	private SimpleObjectProperty<Product> product;
 	
 	@TLabel(text=TUsualKey.MINIMUN_AMOUNT)
-	@TDoubleField(zeroValidation=TZeroValidation.GREATHER_THAN_ZERO)
+	@TDoubleField(validate=TValidateNumber.GREATHER_THAN_ZERO)
 	private SimpleDoubleProperty minimumAmount;
 	
 	@TCheckBoxField(labeled = 
