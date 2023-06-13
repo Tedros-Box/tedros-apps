@@ -13,7 +13,7 @@ import org.tedros.fx.annotation.control.TCellValueFactory;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TLabelDefaultSetting;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTextField;
@@ -73,9 +73,8 @@ public class FindPlaceMV extends TEntityModelView<Place> {
 	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(
-		optionsList=@TOptionsList(serviceName = IExtensionDomainController.JNDI_NAME, 
-		optionModelViewClass=PlaceTypeMV.class,
-		entityClass=PlaceType.class))
+		process=@TProcess(service = IExtensionDomainController.JNDI_NAME, 
+		modelView=PlaceTypeMV.class, query=@TQuery(entity=PlaceType.class)))
 	private SimpleObjectProperty<PlaceType> type;
 	
 	public FindPlaceMV(Place entity) {

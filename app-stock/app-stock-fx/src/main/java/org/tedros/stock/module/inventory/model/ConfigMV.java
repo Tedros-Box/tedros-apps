@@ -11,7 +11,7 @@ import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.form.TSetting;
@@ -105,8 +105,8 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 	@TLabel(text=TUsualKey.PRODUCTS, show=false)
 	@TFieldBox(node=@TNode(id="evdtl", parse = true))
 	@TDetailListField(required=true, 
-	entityModelViewClass = ConfigItemMV.class, entityClass = StockConfigItem.class)
-	@TModelViewType(modelClass=StockConfigItem.class, modelViewClass=ConfigItemMV.class)
+	modelView = ConfigItemMV.class, entity = StockConfigItem.class)
+	@TGenericType(model=StockConfigItem.class, modelView=ConfigItemMV.class)
 	private ITObservableList<ConfigItemMV> items;
 	
 	public ConfigMV(StockConfig entity) {

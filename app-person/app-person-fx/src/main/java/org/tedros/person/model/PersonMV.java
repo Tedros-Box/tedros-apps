@@ -15,7 +15,7 @@ import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.layout.THBox;
@@ -43,8 +43,8 @@ public class PersonMV<P extends Person> extends TEntityModelView<P> {
 	protected SimpleStringProperty name;
 	
 	@TLabel(text=LocatKey.ADDRESS)
-	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class)
-	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
+	@TEditEntityModal(model = Address.class, modelView=AddressMV.class)
+	@TGenericType(model = Address.class, modelView=AddressMV.class)
 	@THBox(	pane=@TPane(children={"address", "contacts", "documents", "attributes"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="address", priority=Priority.ALWAYS), 
 			@TPriority(field="contacts", priority=Priority.ALWAYS), 
@@ -54,25 +54,25 @@ public class PersonMV<P extends Person> extends TEntityModelView<P> {
 	
 	@TLabel(text=TUsualKey.ATTRIBUTES)
 	@TEditEntityModal(modalHeight=400, modalWidth=600,
-	modelClass = PersonAttributes.class, modelViewClass=PersonAttributesMV.class)
-	@TModelViewType(modelClass = PersonAttributes.class, modelViewClass=PersonAttributesMV.class)
+	model = PersonAttributes.class, modelView=PersonAttributesMV.class)
+	@TGenericType(model = PersonAttributes.class, modelView=PersonAttributesMV.class)
 	protected ITObservableList<PersonAttributesMV> attributes;
 	
 	@TLabel(text=TUsualKey.CONTACTS)
 	@TEditEntityModal(modalHeight=400, modalWidth=600,
-	modelClass = Contact.class, modelViewClass=ContactMV.class)
-	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
+	model = Contact.class, modelView=ContactMV.class)
+	@TGenericType(model = Contact.class, modelView=ContactMV.class)
 	protected ITObservableList<ContactMV> contacts;
 	
 	@TLabel(text=TUsualKey.DOCUMENTS)
 	@TEditEntityModal(modalHeight=490, modalWidth=700,
-	modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
-	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
+	model = Document.class, modelView=ModalDocumentMV.class)
+	@TGenericType(model=Document.class, modelView=ModalDocumentMV.class)
 	protected ITObservableList<ModalDocumentMV> documents;
 
 	@TFieldBox(node=@TNode(id="evdtl", parse = true))
-	@TDetailListField(entityModelViewClass = PersonEventMV.class, entityClass = PersonEvent.class)
-	@TModelViewType(modelClass=PersonEvent.class, modelViewClass=PersonEventMV.class)
+	@TDetailListField(modelView = PersonEventMV.class, entity = PersonEvent.class)
+	@TGenericType(model=PersonEvent.class, modelView=PersonEventMV.class)
 	protected ITObservableList<PersonEventMV> events;
 
 	@TTextAreaField(maxLength=2000, wrapText=true)

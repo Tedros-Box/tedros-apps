@@ -13,7 +13,7 @@ import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTrigger;
@@ -89,9 +89,8 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 
 	@TLabel(text=TUsualKey.OCCUPATION)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
-	optionModelViewClass=StaffTypeMV.class,
-	entityClass=StaffType.class))
+	process=@TProcess(service = IPersonTypeController.JNDI_NAME, 
+	modelView=StaffTypeMV.class, query=@TQuery(entity=StaffType.class)))
 	@THBox(	spacing=10, fillHeight=true,
 			pane=@TPane(children={"type", "status", "hiringDate", "resignationDate", "legalPerson", "costCenter"}), 
 	hgrow=@THGrow(priority={
@@ -105,9 +104,8 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 	
 	@TLabel(text=TUsualKey.STATUS)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IPersonStatusController.JNDI_NAME, 
-	optionModelViewClass=EmployeeStatusMV.class,
-	entityClass=EmployeeStatus.class))
+	process=@TProcess(service = IPersonStatusController.JNDI_NAME, 
+	modelView=EmployeeStatusMV.class, query=@TQuery(entity=EmployeeStatus.class)))
 	private SimpleObjectProperty<EmployeeStatus> status;
 	
 	@TLabel(text=TUsualKey.HIRING_DATE)

@@ -16,8 +16,8 @@ import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTableColumn;
@@ -102,9 +102,8 @@ public class CompanyMV extends LegalPersonMV<LegalPerson> {
 	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(firstItemText=TUsualKey.SELECT,
-	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
-	optionModelViewClass=LegalTypeMV.class,
-	entityClass=LegalType.class))
+	process=@TProcess(service = IPersonTypeController.JNDI_NAME, 
+	modelView=LegalTypeMV.class, query=@TQuery(entity=LegalType.class)))
 	@THBox(	 spacing=10, fillHeight=true,
 	pane=@TPane(children={"type", "status", "startActivities", "endActivities"}),
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
@@ -115,9 +114,8 @@ public class CompanyMV extends LegalPersonMV<LegalPerson> {
 	
 	@TLabel(text=TUsualKey.STATUS)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IPersonStatusController.JNDI_NAME, 
-	optionModelViewClass=LegalStatusMV.class,
-	entityClass=LegalStatus.class))
+	process=@TProcess(service = IPersonStatusController.JNDI_NAME, 
+	modelView=LegalStatusMV.class, query=@TQuery(entity=LegalStatus.class)))
 	private SimpleObjectProperty<LegalStatus> status;
 	
 	@TLabel(text=TUsualKey.START_ACTIVITIES)
@@ -142,7 +140,7 @@ public class CompanyMV extends LegalPersonMV<LegalPerson> {
 				cellFactory=@TCellFactory(parse = true, 
 					callBack=@TCallbackFactory(parse=true, value=TShortDateCallback.class))),
 	})
-	@TModelViewType(modelClass = Employee.class, modelViewClass=EmployeeITemMV.class)
+	@TGenericType(model = Employee.class, modelView=EmployeeITemMV.class)
 	protected ITObservableList<EmployeeITemMV> staff;
 	public CompanyMV(LegalPerson entity) {
 		super(entity);

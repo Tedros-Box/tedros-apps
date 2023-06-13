@@ -10,13 +10,13 @@ import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTableView.TTableViewSelectionModel;
 import org.tedros.fx.annotation.control.TTrigger;
-import org.tedros.fx.annotation.control.TVerticalRadioGroup;
+import org.tedros.fx.annotation.control.TVRadioGroup;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TAccordion;
 import org.tedros.fx.annotation.layout.TFieldSet;
@@ -129,16 +129,16 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 	@TFieldSet(fields = { "orderBy", "orderType" }, 
 		region=@TRegion(maxWidth=600, parse = true),
 		legend =TUsualKey.RESULT_ORDER)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TUsualKey.NAME, userData="p.name"),  
-					@TRadioButton(text=TUsualKey.CODE, userData="p.code")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TUsualKey.NAME, userData="p.name"),  
+					@TRadio(text=TUsualKey.CODE, userData="p.code")
 	})
 	private SimpleStringProperty orderBy;
 	
 	@TLabel(text=TFxKey.SORT_TYPE)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TFxKey.SORT_BY_ASC, userData="asc"), 
-					@TRadioButton(text=TFxKey.SORT_BY_DESC, userData="desc")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TFxKey.SORT_BY_ASC, userData="asc"), 
+					@TRadio(text=TFxKey.SORT_BY_DESC, userData="desc")
 	})
 	private SimpleStringProperty orderType;
 	
@@ -153,7 +153,7 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 				@TTableColumn(cellValue="name", text = TUsualKey.NAME, resizable=true), 
 				@TTableColumn(cellValue="amount", text = TUsualKey.AMOUNT, resizable=true)
 			})
-	@TModelViewType(modelClass=Inventory.class, modelViewClass=InventoryTV.class)
+	@TGenericType(model=Inventory.class, modelView=InventoryTV.class)
 	private ITObservableList<InventoryTV> result;
 	
 	public InventoryReportMV(InventoryReportModel entidade) {

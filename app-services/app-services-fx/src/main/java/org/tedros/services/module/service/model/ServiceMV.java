@@ -10,9 +10,9 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TMultipleSelectionModal;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
@@ -96,9 +96,8 @@ public class ServiceMV extends TEntityModelView<Service> {
 	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(required=true,
-	optionsList=@TOptionsList(serviceName = IServiceTypeController.JNDI_NAME, 
-	optionModelViewClass=ServiceTypeMV.class,
-	entityClass=ServiceType.class))
+	process=@TProcess(service = IServiceTypeController.JNDI_NAME, 
+	modelView=ServiceTypeMV.class, query=@TQuery(entity=ServiceType.class)))
 	private SimpleObjectProperty<ServiceType> type;
 	
 	@TLabel(text=TUsualKey.DESCRIPTION)
@@ -107,8 +106,8 @@ public class ServiceMV extends TEntityModelView<Service> {
 	
 	@TLabel(text=TUsualKey.PLANS)
 	@TMultipleSelectionModal(height=100,
-	modelClass = Plan.class, modelViewClass = FindPlanMV.class)
-	@TModelViewType(modelClass=Plan.class, modelViewClass=ModalDocumentMV.class)
+	model = Plan.class, modelView = FindPlanMV.class)
+	@TGenericType(model=Plan.class, modelView=ModalDocumentMV.class)
 	public ITObservableList<Plan> plans;
 	
 	@TTextAreaField(maxLength=1024, wrapText=true)

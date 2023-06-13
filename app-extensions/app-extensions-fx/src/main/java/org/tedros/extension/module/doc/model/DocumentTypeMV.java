@@ -16,9 +16,9 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.assistant.TAiAssistant;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TFieldBox;
-import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.THRadioGroup;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
@@ -74,11 +74,11 @@ public class DocumentTypeMV extends ExtensionDomainMV<DocumentType> {
 	private SimpleStringProperty code;
 
 	@TLabel(text=TUsualKey.TYPE)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 		converter=@TConverter(parse = true, type = DocTypeConverter.class),
-		radioButtons = { @TRadioButton(text = TUsualKey.TAX_NUMBER, userData = TUsualKey.TAX_NUMBER ),
-				@TRadioButton(text = TUsualKey.ID_NUMBER, userData = TUsualKey.ID_NUMBER ),
-				@TRadioButton(text = TUsualKey.OTHER, userData = TUsualKey.OTHER )
+		radio = { @TRadio(text = TUsualKey.TAX_NUMBER, userData = TUsualKey.TAX_NUMBER ),
+				@TRadio(text = TUsualKey.ID_NUMBER, userData = TUsualKey.ID_NUMBER ),
+				@TRadio(text = TUsualKey.OTHER, userData = TUsualKey.OTHER )
 		})
 	private SimpleObjectProperty<DocType> docType;
 	

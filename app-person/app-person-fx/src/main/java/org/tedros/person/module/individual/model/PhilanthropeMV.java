@@ -9,7 +9,7 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.form.TDetailForm;
@@ -79,9 +79,8 @@ public class PhilanthropeMV extends NaturalPersonMV<Philanthrope> {
 
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
-	optionModelViewClass=PhilanthropeTypeMV.class,
-	entityClass=PhilanthropeType.class))
+	process=@TProcess(service = IPersonTypeController.JNDI_NAME, 
+	modelView=PhilanthropeTypeMV.class, query=@TQuery(entity=PhilanthropeType.class)))
 	@THBox(	spacing=10, fillHeight=true,
 			pane=@TPane(children={"type", "status"}), 
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
@@ -90,9 +89,8 @@ public class PhilanthropeMV extends NaturalPersonMV<Philanthrope> {
 	
 	@TLabel(text=TUsualKey.STATUS)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IPersonStatusController.JNDI_NAME, 
-	optionModelViewClass=PhilanthropeStatusMV.class,
-	entityClass=PhilanthropeStatus.class))
+	process=@TProcess(service = IPersonStatusController.JNDI_NAME, 
+	modelView=PhilanthropeStatusMV.class, query=@TQuery(entity=PhilanthropeStatus.class)))
 	private SimpleObjectProperty<PhilanthropeStatus> status;
 	
 	public PhilanthropeMV(Philanthrope entity) {

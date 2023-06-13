@@ -12,7 +12,7 @@ import org.tedros.fx.annotation.control.TButtonField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTableColumn;
@@ -146,7 +146,7 @@ public class CategoryMV extends TEntityModelView<PersonCategory> {
 		columns = { 
 			@TTableColumn(cellValue="label", text = TUsualKey.NAME)
 	})
-	@TModelViewType(modelClass=Person.class, modelViewClass=PersonTV.class)
+	@TGenericType(model=Person.class, modelView=PersonTV.class)
 	private ITObservableList<PersonTV> persons;
 
 	@TButtonField(labeled = 

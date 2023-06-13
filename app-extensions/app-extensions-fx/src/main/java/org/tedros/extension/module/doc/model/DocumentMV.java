@@ -28,8 +28,8 @@ import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TFileField;
 import org.tedros.fx.annotation.control.THTMLEditor;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TShowField.TField;
 import org.tedros.fx.annotation.control.TTab;
@@ -117,9 +117,8 @@ public class DocumentMV extends TEntityModelView<Document> {
 
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IExtensionDomainController.JNDI_NAME, 
-	optionModelViewClass=DocumentTypeMV.class,
-	entityClass=DocumentType.class))
+	process=@TProcess(service = IExtensionDomainController.JNDI_NAME, 
+	modelView=DocumentTypeMV.class, query=@TQuery(entity=DocumentType.class)))
 	@THBox(	pane=@TPane(children={"type","status"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={
 			@TPriority(field="type", priority=Priority.NEVER),
@@ -128,14 +127,13 @@ public class DocumentMV extends TEntityModelView<Document> {
 	
 	@TLabel(text=TUsualKey.STATE)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IExtensionDomainController.JNDI_NAME, 
-	optionModelViewClass=DocumentStatusMV.class,
-	entityClass=DocumentStatus.class))
+	process=@TProcess(service = IExtensionDomainController.JNDI_NAME, 
+	modelView=DocumentStatusMV.class, query=@TQuery(entity=DocumentStatus.class)))
 	private SimpleObjectProperty<DocumentStatus> status;
 	
 	@TLabel(text=TUsualKey.CONTACTS)
-	@TEditEntityModal(height=100, modelClass = Contact.class, modelViewClass=ContactMV.class)
-	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
+	@TEditEntityModal(height=100, model = Contact.class, modelView=ContactMV.class)
+	@TGenericType(model = Contact.class, modelView=ContactMV.class)
 	@THBox(	pane=@TPane(children={"contacts","file"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="contacts", priority=Priority.NEVER), 
 			@TPriority(field="file", priority=Priority.ALWAYS)}))
@@ -144,7 +142,7 @@ public class DocumentMV extends TEntityModelView<Document> {
 	@TLabel(text=TUsualKey.FILE)
 	@TFileField(propertyValueType=TFileModelType.ENTITY, preLoadFileBytes=true,
 	extensions= {TFileExtension.ALL_FILES}, showFilePath=true)
-	@TModelViewType(modelClass=TFileEntity.class)
+	@TGenericType(model=TFileEntity.class)
 	private TSimpleFileProperty<TFileEntity> file;
 	
 	@TLabel(text="#{label.date.insert}")
@@ -166,8 +164,8 @@ public class DocumentMV extends TEntityModelView<Document> {
 	private SimpleStringProperty observation;
 	
 	@TFieldBox(node=@TNode(id="evdtl", parse = true))
-	@TDetailListField(entityModelViewClass = DocumentEventMV.class, entityClass = DocumentEvent.class)
-	@TModelViewType(modelClass=DocumentEvent.class, modelViewClass=DocumentEventMV.class)
+	@TDetailListField(modelView = DocumentEventMV.class, entity = DocumentEvent.class)
+	@TGenericType(model=DocumentEvent.class, modelView=DocumentEventMV.class)
 	private ITObservableList<DocumentEventMV> events;
 	
 	@THTMLEditor(showActionsToolBar=true,

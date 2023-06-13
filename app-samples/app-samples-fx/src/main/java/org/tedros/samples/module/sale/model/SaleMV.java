@@ -23,8 +23,8 @@ import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TIntegratedLinkField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TShowField.TField;
 import org.tedros.fx.annotation.control.TTab;
@@ -154,8 +154,8 @@ public class SaleMV extends TEntityModelView<Sale> {
 	private SimpleLongProperty tabPane;
 
 	@TLabel(text=LocatKey.ADDRESS)
-	@TEditEntityModal(height=40,modelClass = Address.class, modelViewClass=AddressMV.class)
-	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
+	@TEditEntityModal(height=40,model = Address.class, modelView=AddressMV.class)
+	@TGenericType(model = Address.class, modelView=AddressMV.class)
 	@THBox(	spacing=10, fillHeight=true,
 		pane=@TPane(children={"vbox", "deliveryAddress"}), 
 	hgrow=@THGrow(priority={@TPriority(field="vbox", priority=Priority.ALWAYS), 
@@ -202,14 +202,14 @@ public class SaleMV extends TEntityModelView<Sale> {
 
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(required=true,
-	optionsList=@TOptionsList(serviceName = IGenericDomainController.JNDI_NAME, 
-	entityClass=SaleType.class))
+	process=@TProcess(service = IGenericDomainController.JNDI_NAME, 
+			 query=@TQuery(entity=SaleType.class)))
 	private SimpleObjectProperty<SaleType> type;
 	
 	@TLabel(text=TUsualKey.STATUS)
 	@TComboBoxField(required=true,
-	optionsList=@TOptionsList(serviceName = IGenericDomainController.JNDI_NAME, 
-	entityClass=SaleStatus.class))
+	process=@TProcess(service = IGenericDomainController.JNDI_NAME, 
+			 query=@TQuery(entity=SaleStatus.class)))
 	private SimpleObjectProperty<SaleStatus> status;
 	
 	@TLabel(text=TUsualKey.LEGAL_PERSON)
@@ -253,8 +253,8 @@ public class SaleMV extends TEntityModelView<Sale> {
 	@TLabel(text=TUsualKey.PRODUCTS, show=false)
 	@TFieldBox(node=@TNode(id="saleitem", parse = true))
 	@TDetailListField(required=true, region=@TRegion(maxHeight=500, parse = false),
-	entityModelViewClass = SaleItemMV.class, entityClass = SaleItem.class)
-	@TModelViewType(modelClass=SaleItem.class, modelViewClass=SaleItemMV.class)
+	modelView = SaleItemMV.class, entity = SaleItem.class)
+	@TGenericType(model=SaleItem.class, modelView=SaleItemMV.class)
 	private ITObservableList<SaleItemMV> items;
 
 	@TLabel(text=TFxKey.INTEGRATED_BY)

@@ -22,8 +22,8 @@ import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TShowField.TField;
 import org.tedros.fx.annotation.control.TTab;
@@ -160,8 +160,8 @@ public class OrderMV extends TEntityModelView<Order> {
 	private SimpleLongProperty tabPane;
 
 	@TLabel(text=LocatKey.ADDRESS)
-	@TEditEntityModal(height=40,modelClass = Address.class, modelViewClass=AddressMV.class)
-	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
+	@TEditEntityModal(height=40,model = Address.class, modelView=AddressMV.class)
+	@TGenericType(model = Address.class, modelView=AddressMV.class)
 	@THBox(	spacing=10, fillHeight=true,
 		pane=@TPane(children={"vbox", "deliveryAddress"}), 
 	hgrow=@THGrow(priority={@TPriority(field="vbox", priority=Priority.ALWAYS), 
@@ -207,8 +207,8 @@ public class OrderMV extends TEntityModelView<Order> {
 	
 	@TLabel(text=TUsualKey.STATUS)
 	@TComboBoxField(required=true,
-	optionsList=@TOptionsList(serviceName = IGenericDomainController.JNDI_NAME, 
-	entityClass=OrderStatus.class))
+	process=@TProcess(service = IGenericDomainController.JNDI_NAME, 
+			 query=@TQuery(entity=OrderStatus.class)))
 	private SimpleObjectProperty<OrderStatus> status;
 
 	@TLabel(text=TUsualKey.LEGAL_PERSON)
@@ -252,8 +252,8 @@ public class OrderMV extends TEntityModelView<Order> {
 	@TLabel(text=TUsualKey.PRODUCTS, show=false)
 	@TFieldBox(node=@TNode(id="Orderitem", parse = true))
 	@TDetailListField(required=true, region=@TRegion(maxHeight=500, parse = false),
-	entityModelViewClass = OrderItemMV.class, entityClass = OrderItem.class)
-	@TModelViewType(modelClass=OrderItem.class, modelViewClass=OrderItemMV.class)
+	modelView = OrderItemMV.class, entity = OrderItem.class)
+	@TGenericType(model=OrderItem.class, modelView=OrderItemMV.class)
 	private ITObservableList<OrderItemMV> items;
 	
 	@SuppressWarnings("rawtypes")

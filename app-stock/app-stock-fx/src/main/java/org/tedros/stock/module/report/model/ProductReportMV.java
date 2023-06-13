@@ -5,14 +5,14 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTableView.TTableViewSelectionModel;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.control.TTextInputControl;
-import org.tedros.fx.annotation.control.TVerticalRadioGroup;
+import org.tedros.fx.annotation.control.TVRadioGroup;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TAccordion;
 import org.tedros.fx.annotation.layout.TFieldSet;
@@ -95,16 +95,16 @@ public class ProductReportMV extends TModelView<ProductReportModel>{
 	@TFieldSet(fields = { "orderBy", "orderType" }, 
 		region=@TRegion(maxWidth=600, parse = true),
 		legend =TUsualKey.RESULT_ORDER)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TUsualKey.NAME, userData="p.name"),  
-					@TRadioButton(text=TUsualKey.CODE, userData="p.code")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TUsualKey.NAME, userData="p.name"),  
+					@TRadio(text=TUsualKey.CODE, userData="p.code")
 	})
 	private SimpleStringProperty orderBy;
 	
 	@TLabel(text=TFxKey.SORT_TYPE)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TFxKey.SORT_BY_ASC, userData="asc"), 
-					@TRadioButton(text=TFxKey.SORT_BY_DESC, userData="desc")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TFxKey.SORT_BY_ASC, userData="asc"), 
+					@TRadio(text=TFxKey.SORT_BY_DESC, userData="desc")
 	})
 	private SimpleStringProperty orderType;
 	
@@ -118,7 +118,7 @@ public class ProductReportMV extends TModelView<ProductReportModel>{
 				@TTableColumn(cellValue="name", text = TUsualKey.NAME, resizable=true), 
 				@TTableColumn(cellValue="trademark", text = TUsualKey.TRADEMARK, resizable=true)
 			})
-	@TModelViewType(modelClass=ProductItem.class, modelViewClass=ProductItemTV.class)
+	@TGenericType(model=ProductItem.class, modelView=ProductItemTV.class)
 	private ITObservableList<ProductItemTV> result;
 	
 	public ProductReportMV(ProductReportModel entidade) {

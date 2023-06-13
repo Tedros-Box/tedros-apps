@@ -16,8 +16,8 @@ import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TFileField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
@@ -29,6 +29,7 @@ import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TEditModalPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.domain.TFileExtension;
 import org.tedros.fx.domain.TFileModelType;
@@ -73,9 +74,8 @@ public class ModalDocumentMV extends TEntityModelView<Document> {
 
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IExtensionDomainController.JNDI_NAME, 
-	optionModelViewClass=DocumentTypeMV.class,
-	entityClass=DocumentType.class))
+	process=@TProcess(service = IExtensionDomainController.JNDI_NAME, 
+	modelView=DocumentTypeMV.class, query=@TQuery(entity=DocumentType.class)))
 	@THBox(	pane=@TPane(children={"type","status"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={
 			@TPriority(field="type", priority=Priority.NEVER),
@@ -84,16 +84,15 @@ public class ModalDocumentMV extends TEntityModelView<Document> {
 	
 	@TLabel(text=TUsualKey.STATUS)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IExtensionDomainController.JNDI_NAME, 
-	optionModelViewClass=DocumentStatusMV.class,
-	entityClass=DocumentStatus.class))
+	process=@TProcess(service = IExtensionDomainController.JNDI_NAME, 
+	modelView=DocumentStatusMV.class, query=@TQuery(entity=DocumentStatus.class)))
 	private SimpleObjectProperty<DocumentStatus> status;
 	
 
 	@TLabel(text=TUsualKey.FILE)
 	@TFileField(propertyValueType=TFileModelType.ENTITY, preLoadFileBytes=true,
 	extensions= {TFileExtension.ALL_FILES}, showFilePath=true)
-	@TModelViewType(modelClass=TFileEntity.class)
+	@TGenericType(model=TFileEntity.class)
 	private TSimpleFileProperty<TFileEntity> file;
 	
 	@TTextAreaField(wrapText=true)

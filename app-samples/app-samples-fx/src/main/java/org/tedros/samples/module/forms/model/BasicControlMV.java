@@ -16,18 +16,18 @@ import org.tedros.fx.annotation.control.TColorPickerField;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TDoubleField;
 import org.tedros.fx.annotation.control.TFieldBox;
-import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.THRadioGroup;
 import org.tedros.fx.annotation.control.TIntegerField;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TLongField;
 import org.tedros.fx.annotation.control.TMaskField;
 import org.tedros.fx.annotation.control.TNumberSpinnerField;
 import org.tedros.fx.annotation.control.TPasswordField;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TSliderField;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.control.TVerticalRadioGroup;
+import org.tedros.fx.annotation.control.TVRadioGroup;
 import org.tedros.fx.annotation.layout.TFlowPane;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.presenter.TBehavior;
@@ -134,16 +134,16 @@ public class BasicControlMV extends TModelView<FieldModel> {
 	//private SimpleStringProperty htmlField;
 	
 	@TLabel(text="Horizontal Radio Group ("+TUsualKey.SEX+")")
-	@THorizontalRadioGroup(radioButtons = { 
-			@TRadioButton(text = TUsualKey.MASCULINE, userData = "male"),
-			@TRadioButton(text = TUsualKey.FEMININE, userData = "female")
+	@THRadioGroup(radio = { 
+			@TRadio(text = TUsualKey.MASCULINE, userData = "male"),
+			@TRadio(text = TUsualKey.FEMININE, userData = "female")
 			})
 	private SimpleStringProperty horRadioButtonField;
 	
 	@TLabel(text="Vertical Radio Group ("+TUsualKey.SEX+")")
-	@TVerticalRadioGroup(radioButtons = { 
-			@TRadioButton(text = TUsualKey.MASCULINE, userData = "male"),
-			@TRadioButton(text = TUsualKey.FEMININE, userData = "female")
+	@TVRadioGroup(radio = { 
+			@TRadio(text = TUsualKey.MASCULINE, userData = "male"),
+			@TRadio(text = TUsualKey.FEMININE, userData = "female")
 			})
 	private SimpleStringProperty verRadioButtonField;
 	

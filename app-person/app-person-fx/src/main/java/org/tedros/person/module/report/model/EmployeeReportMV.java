@@ -9,16 +9,16 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
-import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.THRadioGroup;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOptionsList;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TProcess;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTableView.TTableViewSelectionModel;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.control.TVerticalRadioGroup;
+import org.tedros.fx.annotation.control.TVRadioGroup;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TAccordion;
 import org.tedros.fx.annotation.layout.TFieldSet;
@@ -33,6 +33,7 @@ import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TReportProcess;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.layout.TRegion;
@@ -112,10 +113,10 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 	private SimpleStringProperty lastName;
 	
 	@TLabel(text=TUsualKey.SEX)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 		converter=@TConverter(parse = true, type = SexConverter.class),
-		radioButtons = { @TRadioButton(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE ),
-				@TRadioButton(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE )
+		radio = { @TRadio(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE ),
+				@TRadio(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE )
 		})
 	@THBox(	pane=@TPane(children={"sex", "gender"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="sex", priority=Priority.ALWAYS), 
@@ -123,20 +124,19 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 	private SimpleObjectProperty<Sex> sex;
 	
 	@TLabel(text=TUsualKey.GENDER)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 		converter=@TConverter(parse = true, type = GenderConverter.class),
-		radioButtons = { @TRadioButton(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE),
-				@TRadioButton(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE),
-				@TRadioButton(text = TUsualKey.NEUTER, userData = TUsualKey.NEUTER),
-				@TRadioButton(text = TUsualKey.COMMON, userData = TUsualKey.COMMON)
+		radio = { @TRadio(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE),
+				@TRadio(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE),
+				@TRadio(text = TUsualKey.NEUTER, userData = TUsualKey.NEUTER),
+				@TRadio(text = TUsualKey.COMMON, userData = TUsualKey.COMMON)
 		})
 	private SimpleObjectProperty<Gender> gender;
 
 	@TLabel(text=TUsualKey.OCCUPATION)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
-	optionModelViewClass=StaffTypeMV.class,
-	entityClass=StaffType.class))
+	process=@TProcess(service = IPersonTypeController.JNDI_NAME, 
+	modelView=StaffTypeMV.class, query=@TQuery(entity=StaffType.class)))
 	@THBox(	pane=@TPane(children={"type", "employer"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.ALWAYS), 
 			@TPriority(field="employer", priority=Priority.ALWAYS)}))
@@ -144,9 +144,8 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 	
 	@TLabel(text=TUsualKey.EMPLOYER)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = ILegalPersonController.JNDI_NAME, 
-	optionModelViewClass=CompanyMV.class,
-	entityClass=LegalPerson.class))
+	process=@TProcess(service = ILegalPersonController.JNDI_NAME, 
+	modelView=CompanyMV.class, query=@TQuery(entity=LegalPerson.class)))
 	private SimpleObjectProperty<LegalPerson> employer;
 	
 	@THBox(pane=@TPane(children={"birthDate", "hiringDate", "resignationDate"}), spacing=10, fillHeight=true,
@@ -192,18 +191,18 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 	@TFieldSet(fields = { "orderBy", "orderType" }, 
 		region=@TRegion(maxWidth=600, parse = true),
 		legend =TUsualKey.RESULT_ORDER)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TUsualKey.NAME, userData="e.name"),  
-					@TRadioButton(text=TUsualKey.OCCUPATION, userData="t.name"), 
-					@TRadioButton(text=TUsualKey.EMPLOYER, userData="a.name"), 
-					@TRadioButton(text=TUsualKey.SEX, userData="e.sex")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TUsualKey.NAME, userData="e.name"),  
+					@TRadio(text=TUsualKey.OCCUPATION, userData="t.name"), 
+					@TRadio(text=TUsualKey.EMPLOYER, userData="a.name"), 
+					@TRadio(text=TUsualKey.SEX, userData="e.sex")
 	})
 	private SimpleStringProperty orderBy;
 	
 	@TLabel(text=TFxKey.SORT_TYPE)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TFxKey.SORT_BY_ASC, userData="asc"), 
-					@TRadioButton(text=TFxKey.SORT_BY_DESC, userData="desc")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TFxKey.SORT_BY_ASC, userData="asc"), 
+					@TRadio(text=TFxKey.SORT_BY_DESC, userData="desc")
 	})
 	private SimpleStringProperty orderType;
 	
@@ -216,7 +215,7 @@ public class EmployeeReportMV extends TModelView<EmployeeReportModel>{
 				@TTableColumn(cellValue="type", text = TUsualKey.OCCUPATION, resizable=true), 
 				@TTableColumn(cellValue="employer", text = TUsualKey.EMPLOYER, resizable=true)
 			})
-	@TModelViewType(modelClass=EmployeeItemModel.class, modelViewClass=EmployeeItemMV.class)
+	@TGenericType(model=EmployeeItemModel.class, modelView=EmployeeItemMV.class)
 	private ITObservableList<EmployeeItemMV> result;
 	
 	public EmployeeReportMV(EmployeeReportModel entidade) {
