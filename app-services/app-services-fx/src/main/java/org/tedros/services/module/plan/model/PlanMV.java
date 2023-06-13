@@ -13,10 +13,10 @@ import org.tedros.fx.annotation.control.TBigDecimalField;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
-import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.THRadioGroup;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
@@ -86,12 +86,12 @@ public class PlanMV extends TEntityModelView<Plan> {
 
 	@TLabel(text=TUsualKey.PAYMENT_PLANS)
 	@TEditEntityModal(modalHeight=380, modalWidth=480,
-		modelClass = PaymentPlan.class, modelViewClass=PaymentPlanMV.class)
+		model = PaymentPlan.class, modelView=PaymentPlanMV.class)
 	@TVBox(	pane=@TPane(children={"registrationFee","beginDate","payments"}), spacing=10, fillWidth=true,
 	vgrow=@TVGrow(priority={@TPriority(field="payments", priority=Priority.NEVER), 
 			@TPriority(field="registrationFee", priority=Priority.NEVER), 
 			@TPriority(field="beginDate", priority=Priority.NEVER)}))
-	@TModelViewType(modelClass = PaymentPlan.class, modelViewClass=PaymentPlanMV.class)
+	@TGenericType(model = PaymentPlan.class, modelView=PaymentPlanMV.class)
 	private ITObservableList<PaymentPlanMV> payments;
 	
 	@TLabel(text=TUsualKey.REGISTRATION_FEE)
@@ -117,11 +117,11 @@ public class PlanMV extends TEntityModelView<Plan> {
 	private SimpleObjectProperty<Date> endDate;
 
 	@TLabel(text=TUsualKey.STATUS)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 	converter=@TConverter(parse = true, type = StatusConverter.class),
-	radioButtons = { @TRadioButton(text = TUsualKey.ENABLED, userData = TUsualKey.ENABLED),
-			@TRadioButton(text = TUsualKey.DISABLED, userData = TUsualKey.DISABLED),
-			@TRadioButton(text = TUsualKey.SUSPENDED, userData = TUsualKey.SUSPENDED)
+	radio = { @TRadio(text = TUsualKey.ENABLED, userData = TUsualKey.ENABLED),
+			@TRadio(text = TUsualKey.DISABLED, userData = TUsualKey.DISABLED),
+			@TRadio(text = TUsualKey.SUSPENDED, userData = TUsualKey.SUSPENDED)
 	})
 	private SimpleObjectProperty<Status> status;
 	

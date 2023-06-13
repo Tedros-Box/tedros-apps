@@ -22,6 +22,8 @@ public interface SmplsKey {
 	static final String FORM_PRICE = "#{form.price}";
 	static final String FORM_SALES_STATUS = "#{form.sales.status}";
 	static final String FORM_SALES_TYPE = "#{form.sales.type}";
+	static final String COUNTRIES = "#{label.countries}";
+	static final String EUROPEAN_COUNTRIES = "#{label.european.countries}";
 	static final String EUROPEAN_COUNTRY = "#{label.european.country}";
 	static final String MENU_CRUD_VIEWS = "#{menu.crud.views}";
 	static final String MODEL_INFO_ORDER_STATUS = "#{model.info.order.status}";

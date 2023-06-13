@@ -6,11 +6,12 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TCheckBoxField;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TLabeled;
 import org.tedros.fx.domain.TLabelPosition;
 import org.tedros.fx.model.TEntityModelView;
@@ -47,16 +48,14 @@ public class SaleEventConfigMV extends TEntityModelView<SaleEventConfig> {
 	
 	@TLabel(text=SmplsKey.TEXT_STOCK_OUT_EVENT, position=TLabelPosition.LEFT)
 	@TComboBoxField(required=true,
-	optionsList=@TOptionsList(serviceName = IEventTypeController.JNDI_NAME, 
-	optionModelViewClass=OutTypeMV.class,
-	entityClass=OutType.class))
+	process=@TProcess(service = IEventTypeController.JNDI_NAME, 
+	modelView=OutTypeMV.class, query=@TQuery(entity=OutType.class)))
 	private SimpleObjectProperty<OutType> outType;
 
 	@TLabel(text=SmplsKey.TEXT_STOCK_ENTRY_EVENT, position=TLabelPosition.LEFT)
 	@TComboBoxField(required=true,
-	optionsList=@TOptionsList(serviceName = IEventTypeController.JNDI_NAME, 
-	optionModelViewClass=EntryTypeMV.class,
-	entityClass=EntryType.class))
+	process=@TProcess(service = IEventTypeController.JNDI_NAME, 
+	modelView=EntryTypeMV.class, query=@TQuery(entity=EntryType.class)))
 	private SimpleObjectProperty<EntryType> entryType;
 	
 	public SaleEventConfigMV(SaleEventConfig entity) {

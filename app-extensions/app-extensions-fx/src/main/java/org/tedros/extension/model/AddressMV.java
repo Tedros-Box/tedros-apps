@@ -21,7 +21,7 @@ import org.tedros.extension.start.TConstant;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.control.TTextInputControl;
 import org.tedros.fx.annotation.form.TSetting;
@@ -31,6 +31,7 @@ import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TEditModalPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.web.TWebEngine;
@@ -71,9 +72,8 @@ public class AddressMV extends TEntityModelView<Address> {
 	
 	@TLabel(text=TUsualKey.STREET_TYPE)
 	@TComboBoxField(required=true,
-		optionsList=@TOptionsList(serviceName = IExtensionDomainController.JNDI_NAME, 
-		optionModelViewClass=StreetTypeMV.class,
-		entityClass=StreetType.class))
+		process=@TProcess(service = IExtensionDomainController.JNDI_NAME, 
+		modelView=StreetTypeMV.class, query=@TQuery(entity=StreetType.class)))
 	@THBox(	pane=@TPane(children={"streetType", "publicPlace", "complement", "neighborhood", "code"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="streetType", priority=Priority.SOMETIMES), 
 			@TPriority(field="publicPlace", priority=Priority.ALWAYS),

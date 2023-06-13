@@ -14,7 +14,7 @@ import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDoubleField;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TSelectImageField;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
@@ -139,7 +139,7 @@ public class ProductMV extends TEntityModelView<Product> {
 	@TFieldBox(node=@TNode(id="img", parse = true))
 	@TSelectImageField(source=TEnvironment.LOCAL, 
 	target=TEnvironment.REMOTE, remoteOwner=TConstant.UUI)
-	@TModelViewType(modelClass = TFileEntity.class)
+	@TGenericType(model = TFileEntity.class)
 	private ITObservableList<ITFileBaseModel> images;
 	
 	public ProductMV(Product entity) {

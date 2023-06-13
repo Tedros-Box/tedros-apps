@@ -15,7 +15,7 @@ import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.THTMLEditor;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
@@ -80,8 +80,8 @@ public class DocumentEventMV extends TEntityModelView<DocumentEvent> {
 	private SimpleObjectProperty<Date> dateEvent;
 	
 	@TLabel(text=TUsualKey.CONTACTS)
-	@TEditEntityModal(height=60, modelClass = Contact.class, modelViewClass=ContactMV.class)
-	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
+	@TEditEntityModal(height=60, model = Contact.class, modelView=ContactMV.class)
+	@TGenericType(model = Contact.class, modelView=ContactMV.class)
 	private ITObservableList<ContactMV> contacts;
 	
 	@TLabel(text=TUsualKey.DESCRIPTION)

@@ -9,14 +9,14 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOptionsList;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TProcess;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTableView.TTableViewSelectionModel;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.control.TVerticalRadioGroup;
+import org.tedros.fx.annotation.control.TVRadioGroup;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TAccordion;
 import org.tedros.fx.annotation.layout.TFieldSet;
@@ -31,6 +31,7 @@ import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TReportProcess;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.layout.TRegion;
@@ -103,9 +104,8 @@ public class LegalPersonReportMV extends TModelView<LegalPersonReportModel>{
 	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
-	optionModelViewClass=CompanyTypeMV.class,
-	entityClass=LegalType.class))
+	process=@TProcess(service = IPersonTypeController.JNDI_NAME, 
+	modelView=CompanyTypeMV.class, query=@TQuery(entity=LegalType.class)))
 	private SimpleObjectProperty<LegalType> type;
 	
 	@THBox(pane=@TPane(children={"startActivities", "endActivities"}), spacing=10, fillHeight=true,
@@ -139,17 +139,17 @@ public class LegalPersonReportMV extends TModelView<LegalPersonReportModel>{
 	@TFieldSet(fields = { "orderBy", "orderType" }, 
 		region=@TRegion(maxWidth=600, parse = true),
 		legend =TUsualKey.RESULT_ORDER)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TUsualKey.NAME, userData="e.name"),  
-					@TRadioButton(text=TUsualKey.TRADE_NAME, userData="e.otherName"), 
-					@TRadioButton(text=TUsualKey.TYPE, userData="t.name")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TUsualKey.NAME, userData="e.name"),  
+					@TRadio(text=TUsualKey.TRADE_NAME, userData="e.otherName"), 
+					@TRadio(text=TUsualKey.TYPE, userData="t.name")
 	})
 	private SimpleStringProperty orderBy;
 	
 	@TLabel(text=TFxKey.SORT_TYPE)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TFxKey.SORT_BY_ASC, userData="asc"), 
-					@TRadioButton(text=TFxKey.SORT_BY_DESC, userData="desc")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TFxKey.SORT_BY_ASC, userData="asc"), 
+					@TRadio(text=TFxKey.SORT_BY_DESC, userData="desc")
 	})
 	private SimpleStringProperty orderType;
 	
@@ -162,7 +162,7 @@ public class LegalPersonReportMV extends TModelView<LegalPersonReportModel>{
 				@TTableColumn(cellValue="otherName", text = TUsualKey.TRADE_NAME, resizable=true), 
 				@TTableColumn(cellValue="type", text = TUsualKey.TYPE, resizable=true)
 			})
-	@TModelViewType(modelClass=LegalPersonItemModel.class, modelViewClass=LegalPersonItemMV.class)
+	@TGenericType(model=LegalPersonItemModel.class, modelView=LegalPersonItemMV.class)
 	private ITObservableList<LegalPersonItemMV> result;
 	
 	public LegalPersonReportMV(LegalPersonReportModel entidade) {

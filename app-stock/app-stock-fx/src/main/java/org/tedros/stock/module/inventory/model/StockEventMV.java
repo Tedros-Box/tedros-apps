@@ -12,7 +12,7 @@ import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.query.TCondition;
@@ -85,8 +85,8 @@ public class StockEventMV<E extends StockEvent> extends TEntityModelView<E> {
 	@TLabel(text=TUsualKey.PRODUCTS, show=false)
 	@TFieldBox(node=@TNode(id="evdtl", parse = true))
 	@TDetailListField(required=true, region=@TRegion(maxHeight=500, parse = false),
-	entityModelViewClass = EventItemMV.class, entityClass = StockItem.class)
-	@TModelViewType(modelClass=StockItem.class, modelViewClass=EventItemMV.class)
+	modelView = EventItemMV.class, entity = StockItem.class)
+	@TGenericType(model=StockItem.class, modelView=EventItemMV.class)
 	protected ITObservableList<EventItemMV> items;
 
 	@TLabel(text=TUsualKey.OBSERVATION)

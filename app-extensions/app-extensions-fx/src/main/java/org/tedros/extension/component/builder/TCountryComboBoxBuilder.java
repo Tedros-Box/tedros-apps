@@ -7,7 +7,6 @@
 package org.tedros.extension.component.builder;
 
 import java.lang.annotation.Annotation;
-import java.util.List;
 
 import org.tedros.extension.component.annotation.TCountryComboBox;
 import org.tedros.extension.ejb.controller.ICountryController;
@@ -16,12 +15,12 @@ import org.tedros.fx.builder.ITControlBuilder;
 import org.tedros.fx.builder.TBuilder;
 import org.tedros.fx.control.TComboBoxField;
 import org.tedros.fx.control.TItem;
-import org.tedros.fx.process.TOptionsProcess;
+import org.tedros.fx.helper.TLoadListHelper;
+import org.tedros.fx.process.TEntityProcess;
 import org.tedros.server.entity.ITEntity;
-import org.tedros.server.result.TResult;
+import org.tedros.server.query.TSelect;
 
 import javafx.beans.property.Property;
-import javafx.concurrent.Worker.State;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
@@ -67,29 +66,16 @@ implements ITControlBuilder<org.tedros.fx.control.TComboBoxField, Property<Objec
 		callParser(tAnnotation, (ComboBox) control);
 		
 		final Class<? extends ITEntity> eClass = Country.class;
-		final String serviceName = ICountryController.JNDI_NAME;
+		final String service = ICountryController.JNDI_NAME;
 		
-		final TOptionsProcess process = new TOptionsProcess(eClass, serviceName) {};
-	
-		process.stateProperty().addListener((arg0, arg1, arg2) -> {
-				
-			if(arg2.equals(State.SUCCEEDED)){
-				List<TResult<Object>> resultados = (List<TResult<Object>>) process.getValue();
-				if(resultados!=null && resultados.size()>0){
-					TResult result = resultados.get(0);
-					if(result.getValue()!=null && result.getValue() instanceof List<?>){
-						List<Country> lst = (List<Country>) result.getValue();
-						control.getItems().addAll(lst);
-						
-						//Country value = (Country) attrProperty.getValue();
-						//control.setValue(value);
-					}
-				}
-			}
-		});
+		TSelect sel = new TSelect(eClass);
+		sel.addOrderBy("name");
 		
-		process.list();
-		process.startProcess();
+		TLoadListHelper.load(control.getItems(), service, eClass, null, TEntityProcess.class, sel, 
+				ok->{
+					//if(attrProperty!=null)
+					//	control.setValue(attrProperty.getValue());
+				});
 		
 		if(attrProperty!=null)
 			control.setValue(attrProperty.getValue());

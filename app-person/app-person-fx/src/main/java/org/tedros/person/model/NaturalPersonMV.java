@@ -13,9 +13,9 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
-import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.THRadioGroup;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.layout.THBox;
@@ -68,10 +68,10 @@ public class NaturalPersonMV<P extends NaturalPerson> extends PersonMV<P> {
 	private SimpleObjectProperty<TUser> tedrosUser;
 	
 	@TLabel(text=TUsualKey.SEX)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 		converter=@TConverter(parse = true, type = SexConverter.class),
-		radioButtons = { @TRadioButton(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE ),
-				@TRadioButton(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE )
+		radio = { @TRadio(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE ),
+				@TRadio(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE )
 		})
 	@THBox(	pane=@TPane(children={"sex", "gender", "civilStatus"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="sex", priority=Priority.ALWAYS), 
@@ -80,22 +80,22 @@ public class NaturalPersonMV<P extends NaturalPerson> extends PersonMV<P> {
 	protected SimpleObjectProperty<Sex> sex;
 	
 	@TLabel(text=TUsualKey.GENDER)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 		converter=@TConverter(parse = true, type = GenderConverter.class),
-		radioButtons = { @TRadioButton(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE),
-				@TRadioButton(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE),
-				@TRadioButton(text = TUsualKey.NEUTER, userData = TUsualKey.NEUTER),
-				@TRadioButton(text = TUsualKey.COMMON, userData = TUsualKey.COMMON)
+		radio = { @TRadio(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE),
+				@TRadio(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE),
+				@TRadio(text = TUsualKey.NEUTER, userData = TUsualKey.NEUTER),
+				@TRadio(text = TUsualKey.COMMON, userData = TUsualKey.COMMON)
 		})
 	protected SimpleObjectProperty<Gender> gender;
 
 	@TLabel(text=TUsualKey.CIVIL_STATUS)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 		converter=@TConverter(parse = true, type = CivilStatusConverter.class),
-		radioButtons = { @TRadioButton(text = TUsualKey.SINGLE, userData = TUsualKey.SINGLE),
-				@TRadioButton(text = TUsualKey.MARRIED, userData = TUsualKey.MARRIED),
-				@TRadioButton(text = TUsualKey.SEPARATED, userData = TUsualKey.SEPARATED),
-				@TRadioButton(text = TUsualKey.WIDOWED, userData = TUsualKey.WIDOWED)
+		radio = { @TRadio(text = TUsualKey.SINGLE, userData = TUsualKey.SINGLE),
+				@TRadio(text = TUsualKey.MARRIED, userData = TUsualKey.MARRIED),
+				@TRadio(text = TUsualKey.SEPARATED, userData = TUsualKey.SEPARATED),
+				@TRadio(text = TUsualKey.WIDOWED, userData = TUsualKey.WIDOWED)
 		})
 	protected SimpleObjectProperty<CivilStatus> civilStatus;
 	

@@ -26,13 +26,13 @@ import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOptionsList;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TProcess;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.control.TVerticalRadioGroup;
+import org.tedros.fx.annotation.control.TVRadioGroup;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TAccordion;
 import org.tedros.fx.annotation.layout.TFieldSet;
@@ -47,6 +47,7 @@ import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TReportProcess;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.layout.TRegion;
@@ -95,9 +96,8 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(
-		optionsList=@TOptionsList(serviceName = IExtensionDomainController.JNDI_NAME, 
-		optionModelViewClass=PlaceTypeMV.class,
-		entityClass=PlaceType.class))
+		process=@TProcess(service = IExtensionDomainController.JNDI_NAME, 
+		modelView=PlaceTypeMV.class, query=@TQuery(entity=PlaceType.class)))
 	private SimpleObjectProperty<PlaceType> type;
 	
 	@TLabel(text=TUsualKey.COUNTRY)
@@ -118,9 +118,8 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	
 	@TLabel(text=TUsualKey.STREET_TYPE)
 	@TComboBoxField(
-		optionsList=@TOptionsList(serviceName = IExtensionDomainController.JNDI_NAME, 
-		optionModelViewClass=StreetTypeMV.class,
-		entityClass=StreetType.class))
+		process=@TProcess(service = IExtensionDomainController.JNDI_NAME, 
+		modelView=StreetTypeMV.class, query=@TQuery(entity=StreetType.class)))
 	@THBox(	pane=@TPane(children={"streetType", "publicPlace", "code"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="streetType", priority=Priority.SOMETIMES), 
 			@TPriority(field="publicPlace", priority=Priority.ALWAYS), 
@@ -139,20 +138,20 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	@TFieldSet(fields = { "orderBy", "orderType" }, 
 		region=@TRegion(maxWidth=600, parse = true),
 		legend = TUsualKey.RESULT_ORDER)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TUsualKey.TITLE, userData="e.title"), 
-					@TRadioButton(text=TUsualKey.TYPE, userData="t.name"), 
-					@TRadioButton(text=TUsualKey.COUNTRY, userData="c.name"), 
-					@TRadioButton(text=TUsualKey.ADMIN_AREA, userData="aa.name"), 
-					@TRadioButton(text=TUsualKey.CITY, userData="ct.name"), 
-					@TRadioButton(text=TUsualKey.CODE, userData="a.code")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TUsualKey.TITLE, userData="e.title"), 
+					@TRadio(text=TUsualKey.TYPE, userData="t.name"), 
+					@TRadio(text=TUsualKey.COUNTRY, userData="c.name"), 
+					@TRadio(text=TUsualKey.ADMIN_AREA, userData="aa.name"), 
+					@TRadio(text=TUsualKey.CITY, userData="ct.name"), 
+					@TRadio(text=TUsualKey.CODE, userData="a.code")
 	})
 	private SimpleStringProperty orderBy;
 	
 	@TLabel(text=TFxKey.SORT_TYPE)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TFxKey.SORT_BY_ASC, userData="asc"), 
-					@TRadioButton(text=TFxKey.SORT_BY_DESC, userData="desc")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TFxKey.SORT_BY_ASC, userData="asc"), 
+					@TRadio(text=TFxKey.SORT_BY_DESC, userData="desc")
 	})
 	private SimpleStringProperty orderType;
 	
@@ -163,7 +162,7 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 						@TTableColumn(cellValue="country", text = TUsualKey.COUNTRY, resizable=true), 
 						@TTableColumn(cellValue="address", text = TUsualKey.ADDRESS, resizable=true)
 			})
-	@TModelViewType(modelClass=PlaceItemModel.class, modelViewClass=PlaceItemMV.class)
+	@TGenericType(model=PlaceItemModel.class, modelView=PlaceItemMV.class)
 	private ITObservableList<PlaceItemMV> result;
 	
 	public PlaceReportMV(PlaceReportModel entidade) {

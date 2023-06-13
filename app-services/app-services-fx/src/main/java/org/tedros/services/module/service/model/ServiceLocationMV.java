@@ -10,7 +10,7 @@ import org.tedros.extension.model.FindPlaceMV;
 import org.tedros.extension.model.Place;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TOneSelectionModal;
+import org.tedros.fx.annotation.control.TSingleSelectionModal;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
@@ -65,8 +65,8 @@ public class ServiceLocationMV extends TEntityModelView<ServiceLocation> {
 	private SimpleStringProperty description;
 	
 	@TLabel(text=LocatKey.VIEW_PLACE)
-	@TOneSelectionModal(height=50,
-		modelClass = Place.class, modelViewClass = FindPlaceMV.class)
+	@TSingleSelectionModal(height=50,
+		model = Place.class, modelView = FindPlaceMV.class)
 	private SimpleObjectProperty<Place> place;
 	
 	public ServiceLocationMV(ServiceLocation entity) {

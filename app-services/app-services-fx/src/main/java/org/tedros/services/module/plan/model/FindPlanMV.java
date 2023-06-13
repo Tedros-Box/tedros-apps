@@ -13,10 +13,10 @@ import org.tedros.fx.annotation.control.TCellFactory;
 import org.tedros.fx.annotation.control.TCellValueFactory;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
-import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.THRadioGroup;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TLabelDefaultSetting;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTextField;
@@ -112,11 +112,11 @@ public class FindPlanMV extends TEntityModelView<Plan> {
 	private SimpleObjectProperty<Date> endDate;
 
 	@TLabel(text=TUsualKey.STATUS)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 	converter=@TConverter(parse = true, type = StatusConverter.class),
-	radioButtons = { @TRadioButton(text = TUsualKey.ENABLED, userData = TUsualKey.ENABLED),
-			@TRadioButton(text = TUsualKey.DISABLED, userData = TUsualKey.DISABLED),
-			@TRadioButton(text = TUsualKey.SUSPENDED, userData = TUsualKey.SUSPENDED)
+	radio = { @TRadio(text = TUsualKey.ENABLED, userData = TUsualKey.ENABLED),
+			@TRadio(text = TUsualKey.DISABLED, userData = TUsualKey.DISABLED),
+			@TRadio(text = TUsualKey.SUSPENDED, userData = TUsualKey.SUSPENDED)
 	})
 	private SimpleObjectProperty<Status> status;
 	

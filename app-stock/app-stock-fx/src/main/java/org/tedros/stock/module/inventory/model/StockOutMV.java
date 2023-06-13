@@ -13,7 +13,7 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.form.TDetailForm;
@@ -85,9 +85,8 @@ public class StockOutMV extends StockEventMV<StockOut> {
 
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(required=true,
-	optionsList=@TOptionsList(serviceName = IEventTypeController.JNDI_NAME, 
-	optionModelViewClass=OutTypeMV.class,
-	entityClass=OutType.class))
+	process=@TProcess(service = IEventTypeController.JNDI_NAME, 
+	modelView=OutTypeMV.class, query=@TQuery(entity=OutType.class)))
 	@THBox(	spacing=10, fillHeight=true,
 		pane=@TPane(children={"legalPerson", "costCenter", "date", "responsable", "type"}), 
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 

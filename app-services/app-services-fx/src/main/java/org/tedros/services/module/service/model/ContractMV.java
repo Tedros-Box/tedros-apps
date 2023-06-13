@@ -15,11 +15,11 @@ import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.THTMLEditor;
-import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.THRadioGroup;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOneSelectionModal;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TSingleSelectionModal;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TShowField.TField;
 import org.tedros.fx.annotation.control.TTab;
@@ -123,8 +123,8 @@ public class ContractMV extends TEntityModelView<Contract> {
 	private SimpleObjectProperty<Date> endDate;
 	
 	@TLabel(text=TUsualKey.CONTRACTOR)
-	@TOneSelectionModal(height=80,
-	modelClass = Person.class, modelViewClass = FindPersonMV.class)
+	@TSingleSelectionModal(height=80,
+	model = Person.class, modelView = FindPersonMV.class)
 	@THBox(	pane=@TPane(children={"contractor","contracted", "agreements", "documents"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="contractor", priority=Priority.NEVER), 
 			@TPriority(field="contracted", priority=Priority.NEVER), 
@@ -133,28 +133,28 @@ public class ContractMV extends TEntityModelView<Contract> {
 	public SimpleObjectProperty<FindPersonMV> contractor;
 	
 	@TLabel(text=TUsualKey.CONTRACTED)
-	@TOneSelectionModal(height=80,
-	modelClass = Person.class, modelViewClass = FindPersonMV.class)
+	@TSingleSelectionModal(height=80,
+	model = Person.class, modelView = FindPersonMV.class)
 	public SimpleObjectProperty<FindPersonMV> contracted;
 	
 	@TLabel(text=TUsualKey.AGREEMENTS)
 	@TEditEntityModal(modalHeight=400, modalWidth=600, height=80,
-	modelClass = ContractualAgreement.class, modelViewClass=ContractualAgreementMV.class)
-	@TModelViewType(modelClass = ContractualAgreement.class, modelViewClass=ContractualAgreementMV.class)
+	model = ContractualAgreement.class, modelView=ContractualAgreementMV.class)
+	@TGenericType(model = ContractualAgreement.class, modelView=ContractualAgreementMV.class)
 	private ITObservableList<ContractualAgreementMV> agreements;
 	
 	@TLabel(text=TUsualKey.DOCUMENTS)
 	@TEditEntityModal(modalHeight=490, modalWidth=700, height=80,
-	modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
-	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
+	model = Document.class, modelView=ModalDocumentMV.class)
+	@TGenericType(model=Document.class, modelView=ModalDocumentMV.class)
 	public ITObservableList<ModalDocumentMV> documents;
 	
 	@TLabel(text=TUsualKey.STATUS)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 	converter=@TConverter(parse = true, type = StatusConverter.class),
-	radioButtons = { @TRadioButton(text = TUsualKey.ENABLED, userData = TUsualKey.ENABLED),
-			@TRadioButton(text = TUsualKey.DISABLED, userData = TUsualKey.DISABLED),
-			@TRadioButton(text = TUsualKey.SUSPENDED, userData = TUsualKey.SUSPENDED)
+	radio = { @TRadio(text = TUsualKey.ENABLED, userData = TUsualKey.ENABLED),
+			@TRadio(text = TUsualKey.DISABLED, userData = TUsualKey.DISABLED),
+			@TRadio(text = TUsualKey.SUSPENDED, userData = TUsualKey.SUSPENDED)
 	})
 	@THBox(	pane=@TPane(children={"status","insertDate","lastUpdate"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="insertDate", priority=Priority.NEVER), 

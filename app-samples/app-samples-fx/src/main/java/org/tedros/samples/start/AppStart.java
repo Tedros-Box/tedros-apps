@@ -10,6 +10,7 @@ import org.tedros.sample.domain.DomainApp;
 import org.tedros.samples.SmplsKey;
 import org.tedros.samples.module.forms.AdvancedControlModule;
 import org.tedros.samples.module.forms.BasicControlModule;
+import org.tedros.samples.module.forms.FileControlModule;
 import org.tedros.samples.module.order.OrderModule;
 import org.tedros.samples.module.price.PriceModule;
 import org.tedros.samples.module.sale.SaleModule;
@@ -40,7 +41,11 @@ import org.tedros.samples.module.sale.SaleModule;
 		@TModule(type=AdvancedControlModule.class, 
 		name="Advanced Controls", 
 		menu="Samples", 
-		description="Advanced field controls")
+		description="Advanced field controls"),
+		@TModule(type=FileControlModule.class, 
+		name="File Controls", 
+		menu="Samples", 
+		description="File field controls")
 	}, packageName = "org.tedros.samples", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"Smpls"})

@@ -11,7 +11,7 @@ import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TDoubleField;
 import org.tedros.fx.annotation.control.TIntegerField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -19,6 +19,7 @@ import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.presenter.TEditModalPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
+import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.domain.TValidateNumber;
 import org.tedros.fx.model.TEntityModelView;
@@ -52,9 +53,8 @@ public class ContractualAgreementMV extends TEntityModelView<ContractualAgreemen
 	
 	@TLabel(text=TUsualKey.SERVICE_TYPE)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IServiceTypeController.JNDI_NAME, 
-	optionModelViewClass=ServiceTypeMV.class,
-	entityClass=ServiceType.class))
+	process=@TProcess(service = IServiceTypeController.JNDI_NAME, 
+	modelView=ServiceTypeMV.class, query=@TQuery(entity=ServiceType.class)))
 	private SimpleObjectProperty<ServiceType> serviceType;
 
 	@TLabel(text=TUsualKey.AMOUNT)

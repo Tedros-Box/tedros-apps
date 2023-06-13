@@ -9,7 +9,7 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.form.TDetailForm;
@@ -81,9 +81,8 @@ public class IndividualMV extends NaturalPersonMV<NaturalPerson> {
 
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IPersonTypeController.JNDI_NAME, 
-	optionModelViewClass=NaturalTypeMV.class,
-	entityClass=NaturalType.class))
+	process=@TProcess(service = IPersonTypeController.JNDI_NAME, 
+	modelView=NaturalTypeMV.class, query=@TQuery(entity=NaturalType.class)))
 	@THBox(	spacing=10, fillHeight=true,
 			pane=@TPane(children={"type", "status"}), 
 	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
@@ -92,9 +91,8 @@ public class IndividualMV extends NaturalPersonMV<NaturalPerson> {
 	
 	@TLabel(text=TUsualKey.STATUS)
 	@TComboBoxField(
-	optionsList=@TOptionsList(serviceName = IPersonStatusController.JNDI_NAME, 
-	optionModelViewClass=NaturalStatusMV.class,
-	entityClass=NaturalStatus.class))
+	process=@TProcess(service = IPersonStatusController.JNDI_NAME, 
+	modelView=NaturalStatusMV.class, query=@TQuery(entity=NaturalStatus.class)))
 	private SimpleObjectProperty<NaturalStatus> status;
 	
 	public IndividualMV(NaturalPerson entity) {

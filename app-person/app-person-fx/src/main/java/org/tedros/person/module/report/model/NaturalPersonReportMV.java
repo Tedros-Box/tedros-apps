@@ -8,15 +8,15 @@ import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
-import org.tedros.fx.annotation.control.THorizontalRadioGroup;
+import org.tedros.fx.annotation.control.THRadioGroup;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TRadioButton;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTableView.TTableViewSelectionModel;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.control.TVerticalRadioGroup;
+import org.tedros.fx.annotation.control.TVRadioGroup;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TAccordion;
 import org.tedros.fx.annotation.layout.TFieldSet;
@@ -103,10 +103,10 @@ public class NaturalPersonReportMV extends TModelView<NaturalPersonReportModel>{
 	private SimpleStringProperty lastName;
 	
 	@TLabel(text=TUsualKey.SEX)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 		converter=@TConverter(parse = true, type = SexConverter.class),
-		radioButtons = { @TRadioButton(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE ),
-				@TRadioButton(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE )
+		radio = { @TRadio(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE ),
+				@TRadio(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE )
 		})
 	@THBox(	pane=@TPane(children={"sex", "gender"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="sex", priority=Priority.ALWAYS), 
@@ -114,12 +114,12 @@ public class NaturalPersonReportMV extends TModelView<NaturalPersonReportModel>{
 	private SimpleObjectProperty<Sex> sex;
 	
 	@TLabel(text=TUsualKey.GENDER)
-	@THorizontalRadioGroup(spacing= 10,
+	@THRadioGroup(spacing= 10,
 		converter=@TConverter(parse = true, type = GenderConverter.class),
-		radioButtons = { @TRadioButton(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE),
-				@TRadioButton(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE),
-				@TRadioButton(text = TUsualKey.NEUTER, userData = TUsualKey.NEUTER),
-				@TRadioButton(text = TUsualKey.COMMON, userData = TUsualKey.COMMON)
+		radio = { @TRadio(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE),
+				@TRadio(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE),
+				@TRadio(text = TUsualKey.NEUTER, userData = TUsualKey.NEUTER),
+				@TRadio(text = TUsualKey.COMMON, userData = TUsualKey.COMMON)
 		})
 	private SimpleObjectProperty<Gender> gender;
 
@@ -138,17 +138,17 @@ public class NaturalPersonReportMV extends TModelView<NaturalPersonReportModel>{
 	@TFieldSet(fields = { "orderBy", "orderType" }, 
 		region=@TRegion(maxWidth=600, parse = true),
 		legend =TUsualKey.RESULT_ORDER)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TUsualKey.NAME, userData="e.name"),  
-					@TRadioButton(text=TUsualKey.LAST_NAME, userData="e.lastName"),
-					@TRadioButton(text=TUsualKey.SEX, userData="e.sex")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TUsualKey.NAME, userData="e.name"),  
+					@TRadio(text=TUsualKey.LAST_NAME, userData="e.lastName"),
+					@TRadio(text=TUsualKey.SEX, userData="e.sex")
 	})
 	private SimpleStringProperty orderBy;
 	
 	@TLabel(text=TFxKey.SORT_TYPE)
-	@TVerticalRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
-	radioButtons = {@TRadioButton(text=TFxKey.SORT_BY_ASC, userData="asc"), 
-					@TRadioButton(text=TFxKey.SORT_BY_DESC, userData="desc")
+	@TVRadioGroup(alignment=Pos.TOP_LEFT, spacing=4,
+	radio = {@TRadio(text=TFxKey.SORT_BY_ASC, userData="asc"), 
+					@TRadio(text=TFxKey.SORT_BY_DESC, userData="desc")
 	})
 	private SimpleStringProperty orderType;
 	
@@ -158,7 +158,7 @@ public class NaturalPersonReportMV extends TModelView<NaturalPersonReportModel>{
 		columns = { 
 				@TTableColumn(cellValue="name", text = TUsualKey.NAME, resizable=true)
 			})
-	@TModelViewType(modelClass=NaturalPersonItemModel.class, modelViewClass=NaturalPersonItemMV.class)
+	@TGenericType(model=NaturalPersonItemModel.class, modelView=NaturalPersonItemMV.class)
 	private ITObservableList<NaturalPersonItemMV> result;
 	
 	public NaturalPersonReportMV(NaturalPersonReportModel entidade) {

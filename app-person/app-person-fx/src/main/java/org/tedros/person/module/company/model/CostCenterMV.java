@@ -22,7 +22,7 @@ import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFileField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
@@ -161,31 +161,31 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	
 	@TLabel(text=LocatKey.ADDRESS)
 	@TEditEntityModal(height=80, 
-	modelClass = Address.class, modelViewClass=AddressMV.class)
+	model = Address.class, modelView=AddressMV.class)
 	@TVBox(	spacing=10, fillWidth=true,
 	pane=@TPane(children={"address", "contacts", "documents"}), 
 	vgrow=@TVGrow(priority={@TPriority(field="address", priority=Priority.ALWAYS), 
 			@TPriority(field="contacts", priority=Priority.ALWAYS), 
 			@TPriority(field="documents", priority=Priority.ALWAYS)}))
-	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
+	@TGenericType(model = Address.class, modelView=AddressMV.class)
 	protected SimpleObjectProperty<AddressMV> address;
 	
 	@TLabel(text=TUsualKey.CONTACTS)
 	@TEditEntityModal(height=80, modalHeight=400, modalWidth=600,
-	modelClass = Contact.class, modelViewClass=ContactMV.class)
-	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
+	model = Contact.class, modelView=ContactMV.class)
+	@TGenericType(model = Contact.class, modelView=ContactMV.class)
 	protected ITObservableList<ContactMV> contacts;
 	
 	@TLabel(text=TUsualKey.DOCUMENTS)
 	@TEditEntityModal(height=80, modalHeight=490, modalWidth=700,
-	modelClass = Document.class, modelViewClass=ModalDocumentMV.class)
-	@TModelViewType(modelClass=Document.class, modelViewClass=ModalDocumentMV.class)
+	model = Document.class, modelView=ModalDocumentMV.class)
+	@TGenericType(model=Document.class, modelView=ModalDocumentMV.class)
 	protected ITObservableList<ModalDocumentMV> documents;
 	
 	@TLabel(text=TUsualKey.IMAGE)
 	@TFileField(propertyValueType=TFileModelType.ENTITY, preLoadFileBytes=true,
 	extensions= {TFileExtension.ALL_IMAGES}, showFilePath=true, showImage=true)
-	@TModelViewType(modelClass=TFileEntity.class)
+	@TGenericType(model=TFileEntity.class)
 	private TSimpleFileProperty<TFileEntity> image;
 
 	@TTextAreaField(wrapText=true)

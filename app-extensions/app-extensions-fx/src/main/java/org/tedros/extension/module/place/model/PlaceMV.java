@@ -28,8 +28,8 @@ import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TModelViewType;
-import org.tedros.fx.annotation.control.TOptionsList;
+import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TSelectImageField;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
@@ -99,9 +99,8 @@ public class PlaceMV extends TEntityModelView<Place> {
 	
 	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(required=true,
-		optionsList=@TOptionsList(serviceName = IExtensionDomainController.JNDI_NAME, 
-		optionModelViewClass=PlaceTypeMV.class,
-		entityClass=PlaceType.class))
+		process=@TProcess(service = IExtensionDomainController.JNDI_NAME, 
+		modelView=PlaceTypeMV.class, query=@TQuery(entity=PlaceType.class)))
 	private SimpleObjectProperty<PlaceType> type;
 	
 	@TLabel(text=TUsualKey.DESCRIPTION)
@@ -113,18 +112,18 @@ public class PlaceMV extends TEntityModelView<Place> {
 	private SimpleStringProperty description;
 	
 	@TLabel(text=TUsualKey.ADDRESS)
-	@TEditEntityModal(modelClass = Address.class, modelViewClass=AddressMV.class, required=true)
-	@TModelViewType(modelClass = Address.class, modelViewClass=AddressMV.class)
+	@TEditEntityModal(model = Address.class, modelView=AddressMV.class, required=true)
+	@TGenericType(model = Address.class, modelView=AddressMV.class)
 	private SimpleObjectProperty<AddressMV> address;
 	
 	@TLabel(text=TUsualKey.CONTACTS)
-	@TEditEntityModal(modelClass = Contact.class, modelViewClass=ContactMV.class)
-	@TModelViewType(modelClass = Contact.class, modelViewClass=ContactMV.class)
+	@TEditEntityModal(model = Contact.class, modelView=ContactMV.class)
+	@TGenericType(model = Contact.class, modelView=ContactMV.class)
 	private ITObservableList<ContactMV> contacts;
 	
 	@TFieldBox(node=@TNode(id="img", parse = true))
 	@TSelectImageField(source=TEnvironment.LOCAL, target=TEnvironment.REMOTE, remoteOwner=TConstant.UUI)
-	@TModelViewType(modelClass = TFileEntity.class)
+	@TGenericType(model = TFileEntity.class)
 	private ITObservableList<ITFileBaseModel> pictures;
 	
 	public PlaceMV(Place entity) {
