@@ -10,17 +10,15 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TBarcodeGenerator;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDoubleField;
 import org.tedros.fx.annotation.control.TFieldBox;
-import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TSelectImageField;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -58,7 +56,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Dun
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IProductController.JNDI_NAME, model=Product.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = IProductController.JNDI_NAME,
@@ -78,12 +76,9 @@ public class ProductMV extends TEntityModelView<Product> {
 
 	@TTabPane(
 	tabs = { 
-			@TTab(text = TUsualKey.MAIN_DATA, 
-				content = @TContent(detailForm=@TDetailForm(fields = {"code", "unitMeasure", "description"}))),
-			@TTab(text = TFxKey.BARCODE, 
-				content = @TContent(detailForm=@TDetailForm(fields = {"barcode"}))),
-			@TTab(text = TUsualKey.PICTURES, 
-			content = @TContent(detailForm=@TDetailForm(fields = {"images"})))  
+			@TTab(text = TUsualKey.MAIN_DATA, fields = {"code", "unitMeasure", "description"}),
+			@TTab(text = TFxKey.BARCODE, fields = {"barcode"}),
+			@TTab(text = TUsualKey.PICTURES, fields = {"images"})
 			})
 	private SimpleLongProperty id;
 	

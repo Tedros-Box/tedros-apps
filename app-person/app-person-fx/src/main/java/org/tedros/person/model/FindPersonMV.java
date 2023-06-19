@@ -35,7 +35,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  */
 
-@TForm(name = "")
+@TForm(header = "")
 @TLabelDefaultSetting(font=@TFont(size=12))
 @TSelectionModalPresenter(
 	page=@TPage(query=@TQuery(entity=Person.class), 

@@ -54,7 +54,7 @@ import javafx.scene.layout.Priority;
  *
  */
 @TSetting(ResponsableSetting.class)
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IStockConfigController.JNDI_NAME, model=StockConfig.class)
 @TListViewPresenter(
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=STCKKey.VIEW_STOCK_CONFIG,

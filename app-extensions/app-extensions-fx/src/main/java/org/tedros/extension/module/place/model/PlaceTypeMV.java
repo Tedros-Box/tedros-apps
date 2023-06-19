@@ -35,7 +35,7 @@ import javafx.scene.text.TextAlignment;
  * @author Davis Gordon
  *
  */
-@TForm(name = LocatKey.FORM_PLACE_TYPE, showBreadcrumBar=true, scroll=false)
+@TForm(header = LocatKey.FORM_PLACE_TYPE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IExtensionDomainController.JNDI_NAME, model=PlaceType.class)
 @TListViewPresenter(
 	aiAssistant=@TAiAssistant(jsonModel = PlaceTypeJsonModel.class, show=true,

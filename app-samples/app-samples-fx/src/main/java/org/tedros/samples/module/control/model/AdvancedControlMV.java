@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.samples.module.forms.model;
+package org.tedros.samples.module.control.model;
 
 import org.tedros.extension.ejb.controller.ICountryController;
 import org.tedros.extension.model.Country;
@@ -9,6 +9,8 @@ import org.tedros.extension.module.country.model.CountryMV;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TAutoCompleteTextField;
+import org.tedros.fx.annotation.control.TCallbackFactory;
+import org.tedros.fx.annotation.control.TCellFactory;
 import org.tedros.fx.annotation.control.TAutoCompleteTextField.TEntry;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TFieldBox;
@@ -17,6 +19,10 @@ import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TListViewField;
 import org.tedros.fx.annotation.control.TPickListField;
 import org.tedros.fx.annotation.control.TProcess;
+import org.tedros.fx.annotation.control.TTab;
+import org.tedros.fx.annotation.control.TTabPane;
+import org.tedros.fx.annotation.control.TTableColumn;
+import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.layout.TFlowPane;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.presenter.TBehavior;
@@ -30,12 +36,13 @@ import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.text.TText;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.control.TText.TTextStyle;
+import org.tedros.fx.control.tablecell.TMediumDateTimeCallback;
 import org.tedros.fx.model.TModelView;
 import org.tedros.fx.presenter.model.behavior.TViewBehavior;
 import org.tedros.fx.presenter.model.decorator.TViewDecorator;
 import org.tedros.samples.SmplsKey;
-import org.tedros.samples.module.forms.builder.CountriesListBuilder;
-import org.tedros.samples.module.forms.builder.CountriesObservableListBuilder;
+import org.tedros.samples.module.control.builder.CountriesListBuilder;
+import org.tedros.samples.module.control.builder.CountriesObservableListBuilder;
 import org.tedros.server.query.TCompareOp;
 
 import javafx.beans.property.SimpleObjectProperty;
@@ -46,14 +53,20 @@ import javafx.scene.control.SelectionMode;
  * @author Davis Gordon
  *
  */
-@TPresenter(decorator=@TDecorator(type=TViewDecorator.class, 
-viewTitle="Advanced components"),
-behavior=@TBehavior(type=TViewBehavior.class))
+@TPresenter(modelClass=FieldModel.class,
+	decorator=@TDecorator(type=TViewDecorator.class, viewTitle="Advanced components"),
+	behavior=@TBehavior(type=TViewBehavior.class))
 public class AdvancedControlMV extends TModelView<FieldModel> {
 	
 	@TText(textStyle = TTextStyle.LARGE, text="Samples of advanced components")
 	@TFieldBox(node=@TNode(parse = true, id=TFieldBox.TITLE))
 	private SimpleStringProperty header;
+	
+	@TTabPane(tabs = { 
+			@TTab(fields = { "autoCompleteTextField", "listview0", "picklistview0" }, text = "Input controls"),
+			@TTab(fields = { "list0" }, text = "Table View") 	
+		})
+	private SimpleStringProperty tab;
 	
 	@TLabel(text="Auto Complete (Static entries): "+TUsualKey.STREET_TYPE)
 	@TAutoCompleteTextField(
@@ -122,6 +135,19 @@ public class AdvancedControlMV extends TModelView<FieldModel> {
 		query = @TQuery(entity = Country.class, orderBy=@TOrder(field="name"))))
 	@TGenericType(model = Country.class)
 	private ITObservableList<CountryMV> picklistview1;
+	
+	@TTableView(columns = { 
+			@TTableColumn(text = "Field string0", cellValue="string0"),
+			@TTableColumn(text = "Field integer0", cellValue="integer0"),
+			@TTableColumn(text = "Field long0", cellValue="long0"),
+			@TTableColumn(text = "Field double0", cellValue="double0"),
+			@TTableColumn(text = "Field date0", cellValue="date0", 
+					cellFactory=@TCellFactory(parse = true, 
+					callBack=@TCallbackFactory(parse=true, value=TMediumDateTimeCallback.class))),
+			@TTableColumn(text = "Field detail0", cellValue="detail0")
+	})
+	@TGenericType(model = MasterModel.class, modelView=MasterMV.class)
+	private ITObservableList<MasterMV> list0;
 
 	public AdvancedControlMV(FieldModel model) {
 		super(model);

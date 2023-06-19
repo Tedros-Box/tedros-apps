@@ -10,23 +10,21 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.extension.model.Document;
 import org.tedros.extension.model.ModalDocumentMV;
 import org.tedros.fx.TUsualKey;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
-import org.tedros.fx.annotation.control.THTMLEditor;
-import org.tedros.fx.annotation.control.THRadioGroup;
-import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TGenericType;
-import org.tedros.fx.annotation.control.TSingleSelectionModal;
+import org.tedros.fx.annotation.control.THRadioGroup;
+import org.tedros.fx.annotation.control.THTMLEditor;
+import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TShowField.TField;
+import org.tedros.fx.annotation.control.TSingleSelectionModal;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -44,6 +42,7 @@ import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.domain.TTimeStyle;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.person.model.FindPersonMV;
 import org.tedros.person.model.Person;
@@ -55,7 +54,6 @@ import org.tedros.services.domain.Status;
 import org.tedros.services.ejb.controller.IContractController;
 import org.tedros.services.model.Contract;
 import org.tedros.services.model.ContractualAgreement;
-import org.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -66,7 +64,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IContractController.JNDI_NAME, model=Contract.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = IContractController.JNDI_NAME,
@@ -81,18 +79,15 @@ import javafx.scene.layout.Priority;
 	behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.CONTRACT_FORM_ID, appName = ServKey.APP_SERVICE,
 	moduleName = ServKey.MODULE_SERVICES, viewName = ServKey.VIEW_CONTRACT,
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
+	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT,
+		TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ContractMV extends TEntityModelView<Contract> {
 
 	@TTabPane(tabs = { 
 			@TTab(closable=false, text = TUsualKey.MAIN_DATA, scroll=false,
-				content = @TContent(detailForm=@TDetailForm(
-						fields={"code","description", "contractor","status"}))), 
-			@TTab(closable=false, text = TUsualKey.CONTENT, 
-				content = @TContent(detailForm=@TDetailForm(fields={"content"}))),  
-			@TTab(closable=false, text = TUsualKey.OBSERVATION, 
-				content = @TContent(detailForm=@TDetailForm(fields={"observation"})))
+				fields={"code","description", "contractor","status"}), 
+			@TTab(closable=false, text = TUsualKey.CONTENT, fields={"content"}),  
+			@TTab(closable=false, text = TUsualKey.OBSERVATION, fields={"observation"})
 		})
 	private SimpleLongProperty id;
 	
@@ -163,11 +158,11 @@ public class ContractMV extends TEntityModelView<Contract> {
 	private SimpleObjectProperty<Status> status;
 	
 	@TLabel(text=TUsualKey.DATE_INSERT)
-	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
+	@TShowField(fields= {@TField(timeStyle=TTimeStyle.SHORT)})
 	private SimpleObjectProperty<Date> insertDate;
 	
 	@TLabel(text=TUsualKey.DATE_UPDATE)
-	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
+	@TShowField(fields= {@TField(timeStyle=TTimeStyle.SHORT)})
 	private SimpleObjectProperty<Date> lastUpdate;
 	
 	
@@ -183,124 +178,5 @@ public class ContractMV extends TEntityModelView<Contract> {
 		super.formatToString("%s %s", code, name);
 	}
 
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	public SimpleStringProperty getCode() {
-		return code;
-	}
-
-	public void setCode(SimpleStringProperty code) {
-		this.code = code;
-	}
-
-	public SimpleStringProperty getName() {
-		return name;
-	}
-
-	public void setName(SimpleStringProperty name) {
-		this.name = name;
-	}
-
-	public SimpleStringProperty getDescription() {
-		return description;
-	}
-
-	public void setDescription(SimpleStringProperty description) {
-		this.description = description;
-	}
-
-	public SimpleObjectProperty<FindPersonMV> getContractor() {
-		return contractor;
-	}
-
-	public void setContractor(SimpleObjectProperty<FindPersonMV> contractor) {
-		this.contractor = contractor;
-	}
-
-	public SimpleObjectProperty<Date> getBeginDate() {
-		return beginDate;
-	}
-
-	public void setBeginDate(SimpleObjectProperty<Date> beginDate) {
-		this.beginDate = beginDate;
-	}
-
-	public SimpleObjectProperty<Date> getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(SimpleObjectProperty<Date> endDate) {
-		this.endDate = endDate;
-	}
-
-	public ITObservableList<ContractualAgreementMV> getAgreements() {
-		return agreements;
-	}
-
-	public void setAgreements(ITObservableList<ContractualAgreementMV> agreements) {
-		this.agreements = agreements;
-	}
-
-	public ITObservableList<ModalDocumentMV> getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(ITObservableList<ModalDocumentMV> documents) {
-		this.documents = documents;
-	}
-
-	public SimpleObjectProperty<Status> getStatus() {
-		return status;
-	}
-
-	public void setStatus(SimpleObjectProperty<Status> status) {
-		this.status = status;
-	}
-
-	public SimpleStringProperty getObservation() {
-		return observation;
-	}
-
-	public void setObservation(SimpleStringProperty observation) {
-		this.observation = observation;
-	}
-
-	public SimpleObjectProperty<FindPersonMV> getContracted() {
-		return contracted;
-	}
-
-	public void setContracted(SimpleObjectProperty<FindPersonMV> contracted) {
-		this.contracted = contracted;
-	}
-
-	public SimpleObjectProperty<Date> getInsertDate() {
-		return insertDate;
-	}
-
-	public void setInsertDate(SimpleObjectProperty<Date> insertDate) {
-		this.insertDate = insertDate;
-	}
-
-	public SimpleObjectProperty<Date> getLastUpdate() {
-		return lastUpdate;
-	}
-
-	public void setLastUpdate(SimpleObjectProperty<Date> lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
-	public SimpleStringProperty getContent() {
-		return content;
-	}
-
-	public void setContent(SimpleStringProperty content) {
-		this.content = content;
-	}
 
 }

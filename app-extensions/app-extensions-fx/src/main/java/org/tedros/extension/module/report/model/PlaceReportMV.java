@@ -65,7 +65,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 
 
-@TForm(name = LocatKey.FORM_REPO_PLACE, showBreadcrumBar=true, editCssId="")
+@TForm(header = LocatKey.FORM_REPO_PLACE, showBreadcrumBar=true, editCssId="")
 @TReportProcess(type=PlaceReportProcess.class, model = PlaceReportModel.class)
 @TPresenter(type = TDynaPresenter.class,
 			behavior = @TBehavior(type = TDataSetReportBehavior.class, 

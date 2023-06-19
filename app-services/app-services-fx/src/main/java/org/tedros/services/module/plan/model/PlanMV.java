@@ -55,7 +55,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IPlanController.JNDI_NAME, model=Plan.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = IPlanController.JNDI_NAME,
@@ -68,8 +68,8 @@ import javafx.scene.layout.Priority;
 	behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.PLAN_FORM_ID, appName = ServKey.APP_SERVICE,
 	moduleName = ServKey.MODULE_PLANS, viewName = ServKey.VIEW_PLAN,
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
+	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
+		TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class PlanMV extends TEntityModelView<Plan> {
 
 	@TLabel(text=TUsualKey.NAME)
@@ -128,71 +128,6 @@ public class PlanMV extends TEntityModelView<Plan> {
 	
 	public PlanMV(Plan entity) {
 		super(entity);
-	}
-
-	public SimpleStringProperty getName() {
-		return name;
-	}
-
-	public void setName(SimpleStringProperty name) {
-		this.name = name;
-	}
-
-	public SimpleStringProperty getDescription() {
-		return description;
-	}
-
-	public void setDescription(SimpleStringProperty description) {
-		this.description = description;
-	}
-
-	public SimpleObjectProperty<BigDecimal> getRegistrationFee() {
-		return registrationFee;
-	}
-
-	public void setRegistrationFee(SimpleObjectProperty<BigDecimal> registrationFee) {
-		this.registrationFee = registrationFee;
-	}
-
-	public SimpleObjectProperty<BigDecimal> getValue() {
-		return value;
-	}
-
-	public void setValue(SimpleObjectProperty<BigDecimal> value) {
-		this.value = value;
-	}
-
-
-	public ITObservableList<PaymentPlanMV> getPayments() {
-		return payments;
-	}
-
-	public void setPayments(ITObservableList<PaymentPlanMV> payments) {
-		this.payments = payments;
-	}
-
-	public SimpleObjectProperty<Date> getBeginDate() {
-		return beginDate;
-	}
-
-	public void setBeginDate(SimpleObjectProperty<Date> beginDate) {
-		this.beginDate = beginDate;
-	}
-
-	public SimpleObjectProperty<Date> getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(SimpleObjectProperty<Date> endDate) {
-		this.endDate = endDate;
-	}
-
-	public SimpleObjectProperty<Status> getStatus() {
-		return status;
-	}
-
-	public void setStatus(SimpleObjectProperty<Status> status) {
-		this.status = status;
 	}
 
 	@Override

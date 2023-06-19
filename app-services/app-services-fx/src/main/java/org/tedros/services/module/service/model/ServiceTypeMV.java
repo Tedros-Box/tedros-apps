@@ -33,7 +33,7 @@ import javafx.beans.property.SimpleStringProperty;
  * @author Davis Gordon
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IServiceTypeController.JNDI_NAME, model=ServiceType.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = IServiceTypeController.JNDI_NAME,
@@ -46,8 +46,8 @@ import javafx.beans.property.SimpleStringProperty;
 	behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.SERVICE_TYPE_FORM_ID, appName = ServKey.APP_SERVICE,
 	moduleName = ServKey.MODULE_SERVICES, viewName = ServKey.VIEW_SERVICE_TYPE,
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
+	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
+		TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ServiceTypeMV extends TEntityModelView<ServiceType> {
 
 	@TLabel(text=TUsualKey.NAME)
@@ -66,21 +66,5 @@ public class ServiceTypeMV extends TEntityModelView<ServiceType> {
 	@Override
 	public SimpleStringProperty toStringProperty() {
 		return name;
-	}
-	
-	public SimpleStringProperty getName() {
-		return name;
-	}
-
-	public void setName(SimpleStringProperty name) {
-		this.name = name;
-	}
-
-	public SimpleStringProperty getDescription() {
-		return description;
-	}
-
-	public void setDescription(SimpleStringProperty description) {
-		this.description = description;
 	}
 }

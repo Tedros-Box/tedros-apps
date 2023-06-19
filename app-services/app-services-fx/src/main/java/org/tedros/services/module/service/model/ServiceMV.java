@@ -8,16 +8,14 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.extension.model.ModalDocumentMV;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
-import org.tedros.fx.annotation.control.TContent;
-import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TMultipleSelectionModal;
 import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -54,7 +52,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IServiceController.JNDI_NAME, model=Service.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = IServiceController.JNDI_NAME,
@@ -69,15 +67,14 @@ import javafx.scene.layout.Priority;
 	behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.SERVICE_FORM_ID, appName = ServKey.APP_SERVICE,
 	moduleName = ServKey.MODULE_SERVICES, viewName = ServKey.VIEW_SERVICE,
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
-					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
+	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT,  
+		TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ServiceMV extends TEntityModelView<Service> {
 
 	@TTabPane(tabs = { 
 			@TTab(closable=false, text = TUsualKey.MAIN_DATA, scroll=false,
-				content = @TContent(detailForm=@TDetailForm(fields={"code","description", "plans"}))),  
-			@TTab(closable=false, text = TUsualKey.OBSERVATION, 
-				content = @TContent(detailForm=@TDetailForm(fields={"observation"})))
+					fields={"code","description", "plans"}),  
+			@TTab(closable=false, text = TUsualKey.OBSERVATION, fields={"observation"})
 		})
 	private SimpleLongProperty id;
 	
@@ -118,59 +115,4 @@ public class ServiceMV extends TEntityModelView<Service> {
 		super.formatToString("%s %s", code, name);
 	}
 
-	public SimpleLongProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleLongProperty id) {
-		this.id = id;
-	}
-
-	public SimpleStringProperty getName() {
-		return name;
-	}
-
-	public void setName(SimpleStringProperty name) {
-		this.name = name;
-	}
-
-	public SimpleStringProperty getDescription() {
-		return description;
-	}
-
-	public void setDescription(SimpleStringProperty description) {
-		this.description = description;
-	}
-
-	public SimpleStringProperty getCode() {
-		return code;
-	}
-
-	public void setCode(SimpleStringProperty code) {
-		this.code = code;
-	}
-
-	public SimpleStringProperty getObservation() {
-		return observation;
-	}
-
-	public void setObservation(SimpleStringProperty observation) {
-		this.observation = observation;
-	}
-
-	public ITObservableList<Plan> getPlans() {
-		return plans;
-	}
-
-	public void setPlans(ITObservableList<Plan> plans) {
-		this.plans = plans;
-	}
-
-	public SimpleObjectProperty<ServiceType> getType() {
-		return type;
-	}
-
-	public void setType(SimpleObjectProperty<ServiceType> type) {
-		this.type = type;
-	}
 }

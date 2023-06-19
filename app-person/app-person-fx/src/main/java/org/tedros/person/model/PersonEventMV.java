@@ -23,8 +23,8 @@ import org.tedros.fx.annotation.presenter.TDetailTableViewPresenter;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.control.tablecell.TMediumDateTimeCallback;
+import org.tedros.fx.domain.TTimeStyle;
 import org.tedros.fx.model.TEntityModelView;
-import org.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -53,7 +53,7 @@ public class PersonEventMV extends TEntityModelView<PersonEvent> {
 	private SimpleStringProperty name;
 
 	@TLabel(text="#{label.date.insert}")
-	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
+	@TShowField(fields= {@TField(timeStyle=TTimeStyle.SHORT)})
 	private SimpleObjectProperty<Date> insertDate;
 
 	@TLabel(text="#{label.description}")

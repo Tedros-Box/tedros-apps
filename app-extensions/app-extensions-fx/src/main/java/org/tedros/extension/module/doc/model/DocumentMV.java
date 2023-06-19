@@ -21,14 +21,13 @@ import org.tedros.extension.model.DocumentType;
 import org.tedros.extension.module.doc.helper.TNotifyBuilder;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TFileField;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.THTMLEditor;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TShowField.TField;
@@ -36,7 +35,6 @@ import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -56,6 +54,7 @@ import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TFileExtension;
 import org.tedros.fx.domain.TFileModelType;
+import org.tedros.fx.domain.TTimeStyle;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.fx.property.TSimpleFileProperty;
 import org.tedros.server.query.TCompareOp;
@@ -71,7 +70,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IDocumentController.JNDI_NAME, model=Document.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = IDocumentController.JNDI_NAME,
@@ -91,11 +90,11 @@ allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT,
 public class DocumentMV extends TEntityModelView<Document> {
 	
 	@TTabPane(tabs = { 
-		@TTab(closable=false, 
-			content = @TContent(detailForm=@TDetailForm(fields={"code","value", "type", "contacts", "insertDate"})), text = TUsualKey.MAIN_DATA), 
-		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"content"})), text = TUsualKey.CONTENT), 
-		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"observation"})), text = TUsualKey.OBSERVATION), 
-		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"events"})), text = TUsualKey.EVENTS)
+		@TTab(closable=false, fields={"code","value", "type", "contacts", "insertDate"}, 
+				text = TUsualKey.MAIN_DATA), 
+		@TTab(closable=false, fields={"content"}, text = TUsualKey.CONTENT), 
+		@TTab(closable=false, fields={"observation"}, text = TUsualKey.OBSERVATION), 
+		@TTab(closable=false, fields={"events"}, text = TUsualKey.EVENTS)
 	})
 	private SimpleLongProperty id;
 	
@@ -145,16 +144,16 @@ public class DocumentMV extends TEntityModelView<Document> {
 	@TGenericType(model=TFileEntity.class)
 	private TSimpleFileProperty<TFileEntity> file;
 	
-	@TLabel(text="#{label.date.insert}")
-	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
+	@TLabel(text=TUsualKey.DATE_INSERT)
+	@TShowField(fields= {@TField(format=TDateUtil.DDMMYYYY_HHMM)})
 	@THBox(	pane=@TPane(children={"insertDate","lastUpdate", "notification"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="insertDate", priority=Priority.NEVER), 
 						@TPriority(field="lastUpdate", priority=Priority.NEVER), 
 						@TPriority(field="notification", priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<Date> insertDate;
 	
-	@TLabel(text="#{label.date.update}")
-	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
+	@TLabel(text=TUsualKey.DATE_UPDATE)
+	@TShowField(fields= {@TField(timeStyle=TTimeStyle.SHORT)})
 	private SimpleObjectProperty<Date> lastUpdate;
 	
 	@TNotifyLink(entityBuilder = TNotifyBuilder.class)

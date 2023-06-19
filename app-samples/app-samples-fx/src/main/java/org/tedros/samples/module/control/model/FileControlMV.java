@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.samples.module.forms.model;
+package org.tedros.samples.module.control.model;
 
 import java.io.File;
 
@@ -10,8 +10,8 @@ import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TFileField;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TSelectImageField;
-import org.tedros.fx.annotation.layout.TFlowPane;
-import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.control.TTab;
+import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TPresenter;
@@ -35,9 +35,9 @@ import javafx.beans.property.SimpleStringProperty;
  * @author Davis Gordon
  *
  */
-@TPresenter(decorator=@TDecorator(type=TViewDecorator.class, 
-viewTitle="File components"),
-behavior=@TBehavior(type=TViewBehavior.class))
+@TPresenter(modelClass=FieldModel.class,
+	decorator=@TDecorator(type=TViewDecorator.class, viewTitle="File components"),
+	behavior=@TBehavior(type=TViewBehavior.class))
 public class FileControlMV extends TModelView<FieldModel> {
 	
 	@TText(textStyle = TTextStyle.LARGE, text="Samples of file components")
@@ -46,8 +46,9 @@ public class FileControlMV extends TModelView<FieldModel> {
 	
 	@TLabel(text="Select folder")
 	@TDirectoryField
-	@TFlowPane(hgap=20,
-	pane=@TPane(children={"dirField","fileField"}))
+	@TTabPane(tabs = { 
+		@TTab(fields = { "dirField","fileField" }, text = "Choose Folder/File"),
+		@TTab(fields = { "selectImgField" }, text = "Select Images")})
 	private SimpleObjectProperty<File> dirField;
 
 	@TLabel(text="Select file")

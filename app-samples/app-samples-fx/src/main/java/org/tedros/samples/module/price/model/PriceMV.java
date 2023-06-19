@@ -44,7 +44,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.Priority;
 
 
-@TForm(name = SmplsKey.FORM_PRICE, showBreadcrumBar=true, scroll=false)
+@TForm(header = SmplsKey.FORM_PRICE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IProductPriceController.JNDI_NAME, model=ProductPrice.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = IProductPriceController.JNDI_NAME,

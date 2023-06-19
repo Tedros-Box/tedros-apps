@@ -24,18 +24,16 @@ import org.tedros.extension.model.PlaceType;
 import org.tedros.extension.start.TConstant;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFieldBox;
-import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TSelectImageField;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -66,7 +64,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
+@TForm(header = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IPlaceController.JNDI_NAME, model=Place.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = IPlaceController.JNDI_NAME,
@@ -82,12 +80,9 @@ moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_PLACE,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class PlaceMV extends TEntityModelView<Place> {
 
-	@TTabPane(
-	tabs = { 
-			@TTab(text = TUsualKey.MAIN_DATA, 
-				content = @TContent(detailForm=@TDetailForm(fields = {"title", "description"}))),
-			@TTab(text = TUsualKey.PICTURES, 
-				content = @TContent(detailForm=@TDetailForm(fields = {"pictures"}))) })
+	@TTabPane(tabs = { 
+		@TTab(text = TUsualKey.MAIN_DATA, fields = {"title", "description"}),
+		@TTab(text = TUsualKey.PICTURES, fields = {"pictures"})})
 	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.TITLE)

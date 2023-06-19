@@ -11,12 +11,10 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.THBox;
@@ -52,7 +50,7 @@ import javafx.scene.layout.Priority;
  *
  */
 @TSetting(ResponsableSetting.class)
-@TForm(name = "", showBreadcrumBar=false, scroll=false)
+@TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IStockEventController.JNDI_NAME, model=StockEntry.class)
 @TListViewPresenter(listViewMinWidth=350,
 	page=@TPage(serviceName = IStockEventController.JNDI_NAME,
@@ -76,10 +74,8 @@ import javafx.scene.layout.Priority;
 public class StockEntryMV extends StockEventMV<StockEntry> {
 
 	@TTabPane(tabs = { 
-		@TTab( text = TUsualKey.MAIN_DATA, 
-			content = @TContent(detailForm=@TDetailForm(fields={"type","observation"}))),
-		@TTab(text =  TUsualKey.PRODUCTS, 
-			content = @TContent(detailForm=@TDetailForm(fields={"items"})))
+		@TTab( text = TUsualKey.MAIN_DATA, fields={"type","observation"}),
+		@TTab(text =  TUsualKey.PRODUCTS, fields={"items"})
 	})
 	private SimpleLongProperty id;
 	

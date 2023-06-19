@@ -55,7 +55,7 @@ import javafx.scene.layout.Priority;
  *
  */
 
-@TForm(name = ServKey.VIEW_PLAN)
+@TForm(header = ServKey.VIEW_PLAN)
 @TLabelDefaultSetting(font=@TFont(size=12))
 @TSelectionModalPresenter(
 	page=@TPage(query=@TQuery(entity = Plan.class), modelView=PlanItemMV.class, 
@@ -123,54 +123,6 @@ public class FindPlanMV extends TEntityModelView<Plan> {
 	
 	public FindPlanMV(Plan entity) {
 		super(entity);
-	}
-
-	public SimpleStringProperty getName() {
-		return name;
-	}
-
-	public void setName(SimpleStringProperty name) {
-		this.name = name;
-	}
-
-	public SimpleObjectProperty<BigDecimal> getRegistrationFee() {
-		return registrationFee;
-	}
-
-	public void setRegistrationFee(SimpleObjectProperty<BigDecimal> registrationFee) {
-		this.registrationFee = registrationFee;
-	}
-
-	public SimpleObjectProperty<BigDecimal> getValue() {
-		return value;
-	}
-
-	public void setValue(SimpleObjectProperty<BigDecimal> value) {
-		this.value = value;
-	}
-
-	public SimpleObjectProperty<Date> getBeginDate() {
-		return beginDate;
-	}
-
-	public void setBeginDate(SimpleObjectProperty<Date> beginDate) {
-		this.beginDate = beginDate;
-	}
-
-	public SimpleObjectProperty<Date> getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(SimpleObjectProperty<Date> endDate) {
-		this.endDate = endDate;
-	}
-
-	public SimpleObjectProperty<Status> getStatus() {
-		return status;
-	}
-
-	public void setStatus(SimpleObjectProperty<Status> status) {
-		this.status = status;
 	}
 
 	@Override

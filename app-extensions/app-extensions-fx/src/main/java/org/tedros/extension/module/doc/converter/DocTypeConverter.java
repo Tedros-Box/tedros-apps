@@ -1,7 +1,7 @@
 package org.tedros.extension.module.doc.converter;
 
 import org.tedros.extension.model.DocType;
-import org.tedros.fx.form.TConverter;
+import org.tedros.fx.converter.TConverter;
 
 public class DocTypeConverter extends TConverter<String, DocType> {
 

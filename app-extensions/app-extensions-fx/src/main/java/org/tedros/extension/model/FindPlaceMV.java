@@ -42,7 +42,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = LocatKey.VIEW_PLACE)
+@TForm(header = LocatKey.VIEW_PLACE)
 @TLabelDefaultSetting(font=@TFont(size=12))
 @TSelectionModalPresenter(
 	page=@TPage(query = @TQuery(entity=Place.class), 

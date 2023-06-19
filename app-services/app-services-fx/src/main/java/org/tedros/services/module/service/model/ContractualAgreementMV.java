@@ -73,46 +73,6 @@ public class ContractualAgreementMV extends TEntityModelView<ContractualAgreemen
 		super(entity);
 	}
 
-	public SimpleStringProperty getName() {
-		return name;
-	}
-
-	public void setName(SimpleStringProperty name) {
-		this.name = name;
-	}
-
-	public SimpleObjectProperty<ServiceType> getServiceType() {
-		return serviceType;
-	}
-
-	public void setServiceType(SimpleObjectProperty<ServiceType> serviceType) {
-		this.serviceType = serviceType;
-	}
-
-	public SimpleIntegerProperty getAmount() {
-		return amount;
-	}
-
-	public void setAmount(SimpleIntegerProperty amount) {
-		this.amount = amount;
-	}
-
-	public SimpleObjectProperty<BigDecimal> getValue() {
-		return value;
-	}
-
-	public void setValue(SimpleObjectProperty<BigDecimal> value) {
-		this.value = value;
-	}
-
-	public SimpleDoubleProperty getPercentage() {
-		return percentage;
-	}
-
-	public void setPercentage(SimpleDoubleProperty percentage) {
-		this.percentage = percentage;
-	}
-
 	@Override
 	public SimpleStringProperty toStringProperty() {
 		return name;

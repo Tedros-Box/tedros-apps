@@ -8,9 +8,8 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.sample.domain.DomainApp;
 import org.tedros.samples.SmplsKey;
-import org.tedros.samples.module.forms.AdvancedControlModule;
-import org.tedros.samples.module.forms.BasicControlModule;
-import org.tedros.samples.module.forms.FileControlModule;
+import org.tedros.samples.module.control.ControlSampleModule;
+import org.tedros.samples.module.entity.EntitySampleModule;
 import org.tedros.samples.module.order.OrderModule;
 import org.tedros.samples.module.price.PriceModule;
 import org.tedros.samples.module.sale.SaleModule;
@@ -34,18 +33,26 @@ import org.tedros.samples.module.sale.SaleModule;
 		name=SmplsKey.MODULE_PRICE, 
 		menu=SmplsKey.MENU_CRUD_VIEWS, 
 		description=SmplsKey.MODULE_DESC_PRICE),
-		@TModule(type=BasicControlModule.class, 
-		name="Basic Controls", 
+		@TModule(type=ControlSampleModule.class, 
+		name="Control Samples", 
 		menu="Samples", 
-		description="Basic field controls"),
-		@TModule(type=AdvancedControlModule.class, 
-		name="Advanced Controls", 
+		description="Control samples"),
+		@TModule(type=EntitySampleModule.class, 
+		name="Entity samples", 
 		menu="Samples", 
-		description="Advanced field controls"),
+		description="Entity Samples")/*,
 		@TModule(type=FileControlModule.class, 
 		name="File Controls", 
 		menu="Samples", 
-		description="File field controls")
+		description="File field controls"),
+		@TModule(type=ReaderControlModule.class, 
+		name="Reader Controls", 
+		menu="Samples", 
+		description="Reader field controls"),
+		@TModule(type=WebControlModule.class, 
+		name="Web Controls", 
+		menu="Samples", 
+		description="Web controls")*/
 	}, packageName = "org.tedros.samples", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"Smpls"})

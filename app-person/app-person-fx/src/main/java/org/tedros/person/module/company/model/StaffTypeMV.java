@@ -28,7 +28,7 @@ import org.tedros.server.query.TCompareOp;
  *
  */
 
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IPersonTypeController.JNDI_NAME, model=StaffType.class)
 @TListViewPresenter(
 		page=@TPage(serviceName = IPersonTypeController.JNDI_NAME,

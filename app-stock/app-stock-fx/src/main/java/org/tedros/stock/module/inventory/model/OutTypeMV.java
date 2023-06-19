@@ -28,7 +28,7 @@ import org.tedros.stock.module.inventory.assistant.OutTypeJson;
  * @author Davis Gordon
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=false)
+@TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IEventTypeController.JNDI_NAME, model=OutType.class)
 @TListViewPresenter(
 	aiAssistant=@TAiAssistant(jsonModel = OutTypeJson.class, modelViewClass = OutTypeMV.class, show=true),

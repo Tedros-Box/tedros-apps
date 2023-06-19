@@ -40,7 +40,7 @@ import javafx.scene.text.TextAlignment;
  * @author Davis Gordon
  *
  */
-@TForm(name = ExtKey.FORM_DOCS_STATE, showBreadcrumBar=true, scroll=false)
+@TForm(header = ExtKey.FORM_DOCS_STATE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IExtensionDomainController.JNDI_NAME, model=DocumentStatus.class)
 @TListViewPresenter(
 	aiAssistant=@TAiAssistant(jsonModel = DocumentStatusJsonModel.class, show=true,

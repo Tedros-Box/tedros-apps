@@ -21,9 +21,11 @@ public interface DomainApp {
 	static final String ORDER = "ORDER";
 	static final String ORDER_STATUS = "ORDER_STATUS";
 	static final String PRODUCT_PRICE = "PRODUCT_PRICE";
+	static final String SAMPLE_A = "SAMPLE_A";
+	static final String SAMPLE_B = "SAMPLE_B";
 	static final String SEP = SEPARATOR;
 	
-	static final String MNEMONIC = "Smpls";
+	static final String MNEMONIC = "SMPL";
 
 	static final String SALE_MODULE_ID = MNEMONIC + SEP + SALE + SEP + MODULE;
 	static final String SALE_FORM_ID = MNEMONIC + SEP + SALE + SEP + FORM;
@@ -52,6 +54,12 @@ public interface DomainApp {
 	static final String PRODUCT_PRICE_FORM_ID = MNEMONIC + SEP + PRODUCT_PRICE + SEP + FORM;
 	static final String PRODUCT_PRICE_VIEW_ID = MNEMONIC + SEP + PRODUCT_PRICE + SEP + VIEW;
 
+	static final String SAMPLE_A_MODULE_ID = MNEMONIC + SEP + SAMPLE_A + SEP + MODULE;
+	static final String SAMPLE_A_FORM_ID = MNEMONIC + SEP + SAMPLE_A + SEP + FORM;
+	static final String SAMPLE_A_VIEW_ID = MNEMONIC + SEP + SAMPLE_A + SEP + VIEW;
 
+	static final String SAMPLE_B_MODULE_ID = MNEMONIC + SEP + SAMPLE_B + SEP + MODULE;
+	static final String SAMPLE_B_FORM_ID = MNEMONIC + SEP + SAMPLE_B + SEP + FORM;
+	static final String SAMPLE_B_VIEW_ID = MNEMONIC + SEP + SAMPLE_B + SEP + VIEW;
 
 }

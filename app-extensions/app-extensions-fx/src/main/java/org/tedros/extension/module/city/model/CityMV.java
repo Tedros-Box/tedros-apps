@@ -49,7 +49,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
+@TForm(header = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = ICityController.JNDI_NAME, model=City.class)
 @TListViewPresenter(listViewMinWidth=350, listViewMaxWidth=350,
 	page=@TPage(serviceName = ICityController.JNDI_NAME,

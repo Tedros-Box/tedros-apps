@@ -9,10 +9,9 @@ import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TButtonField;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TFieldBox;
-import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTableColumn;
@@ -22,7 +21,6 @@ import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.effect.TDropShadow;
 import org.tedros.fx.annotation.effect.TEffect;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.TFieldInset;
@@ -71,7 +69,7 @@ import javafx.scene.text.TextAlignment;
  *
  */
 @TSetting(CategorySetting.class)
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IPersonCategoryController.JNDI_NAME, model=PersonCategory.class)
 @TListViewPresenter(
 		page=@TPage(serviceName = IPersonCategoryController.JNDI_NAME,
@@ -90,12 +88,8 @@ public class CategoryMV extends TEntityModelView<PersonCategory> {
 
 	@TTabPane(
 		tabs = { 
-			@TTab(text = TUsualKey.MAIN_DATA, 
-				content = @TContent(detailForm=@TDetailForm(
-						fields = {"code", "description"}))),
-			@TTab(text = TUsualKey.ADDITIONAL_DATA, 
-				content = @TContent(detailForm=@TDetailForm(
-					fields = {"listHeader", "item", "persons", "remBtn"})))})
+			@TTab(text = TUsualKey.MAIN_DATA,fields = {"code", "description"}),
+			@TTab(text = TUsualKey.ADDITIONAL_DATA, fields = {"listHeader", "item", "persons", "remBtn"})})
 	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.CODE)

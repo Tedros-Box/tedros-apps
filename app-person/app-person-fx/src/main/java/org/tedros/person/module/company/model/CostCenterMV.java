@@ -17,17 +17,15 @@ import org.tedros.extension.model.Document;
 import org.tedros.extension.model.ModalDocumentMV;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFileField;
-import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -66,14 +64,13 @@ import org.tedros.server.query.TLogicOp;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.geometry.Orientation;
 import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = ICostCenterController.JNDI_NAME, model=CostCenter.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = ICostCenterController.JNDI_NAME,
@@ -92,16 +89,9 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 
 	@TTabPane(
 		tabs = { 
-			@TTab(text = TUsualKey.MAIN_DATA, 
-				content = @TContent(detailForm=@TDetailForm(
-						orientation=Orientation.HORIZONTAL,
-						fields = {"description", "address"}))),
-			@TTab(text = TUsualKey.OBSERVATION, 
-				content = @TContent(detailForm=@TDetailForm(
-					fields = {"observation"}))),
-			@TTab(text = TUsualKey.PICTURES, 
-				content = @TContent(detailForm=@TDetailForm(
-						fields = {"image"}))) })
+			@TTab(text = TUsualKey.MAIN_DATA, fields = {"description", "address"}),
+			@TTab(text = TUsualKey.OBSERVATION, fields = {"observation"}),
+			@TTab(text = TUsualKey.PICTURES, fields = {"image"})})
 	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.DESCRIPTION)
