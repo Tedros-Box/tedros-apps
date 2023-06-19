@@ -41,7 +41,7 @@ import javafx.scene.layout.Priority;
  *
  */
 
-@TForm(name = PersonKeys.TITLE_SELECT_LEGAL_PERSON)
+@TForm(header = PersonKeys.TITLE_SELECT_LEGAL_PERSON)
 @TLabelDefaultSetting(font=@TFont(size=12))
 @TSelectionModalPresenter(
 	page=@TPage(query=@TQuery(entity=LegalPerson.class), 

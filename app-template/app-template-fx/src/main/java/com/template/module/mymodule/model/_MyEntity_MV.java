@@ -34,7 +34,7 @@ import javafx.beans.property.SimpleStringProperty;
  * @author myname
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = I_MyEntity_Controller.JNDI_NAME, model=_MyEntity_.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = I_MyEntity_Controller.JNDI_NAME,

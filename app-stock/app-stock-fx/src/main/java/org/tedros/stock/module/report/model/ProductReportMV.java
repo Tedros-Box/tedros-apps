@@ -49,7 +49,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Priority;
 
 
-@TForm(name = "", showBreadcrumBar=false, editCssId="")
+@TForm(header = "", showBreadcrumBar=false, editCssId="")
 @TReportProcess(type=ProductReportProcess.class, model = ProductReportModel.class)
 @TPresenter(type = TDynaPresenter.class,
 	behavior = @TBehavior(type = TDataSetReportBehavior.class, 

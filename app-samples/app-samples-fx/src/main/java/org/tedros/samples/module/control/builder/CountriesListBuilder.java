@@ -1,27 +1,26 @@
 /**
  * 
  */
-package org.tedros.samples.module.forms.builder;
+package org.tedros.samples.module.control.builder;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import org.tedros.core.TLanguage;
+import org.tedros.fx.builder.ITGenericBuilder;
 import org.tedros.fx.builder.TGenericBuilder;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * @author Davis Gordon
  *
  */
-@SuppressWarnings("rawtypes")
-public class CountriesObservableListBuilder extends TGenericBuilder<ObservableList> {
+public class CountriesListBuilder extends TGenericBuilder<List<String>> {
 
 	@Override
-	public ObservableList<String> build() {
+	public List<String> build() {
 		return TLanguage.getLocale().equals(new Locale("en")) 
-				? FXCollections.observableArrayList("Albania", "Andorra", "Austria", "Belarus", "Belgium", 
+				? Arrays.asList("Albania", "Andorra", "Austria", "Belarus", "Belgium", 
 					"Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", 
 					"Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", 
 					"Iceland", "Ireland", "Italy", "Kosovo", "Latvia", "Liechtenstein", "Lithuania", 
@@ -30,7 +29,7 @@ public class CountriesObservableListBuilder extends TGenericBuilder<ObservableLi
 					"San Marino", "Serbia", "Slovakia", "Slovenia", "Spain", "Sweden", 
 					"Switzerland", "Ukraine", "United Kingdom", "Vatican City")
 				
-				:  FXCollections.observableArrayList("Albânia", "Andorra", "Áustria", "Bélgica", "Bielorrússia", 
+				: Arrays.asList("Albânia", "Andorra", "Áustria", "Bélgica", "Bielorrússia", 
 						"Bósnia e Herzegovina", "Bulgária", "Croácia", "Chipre", "República Checa", 
 						"Dinamarca", "Estônia", "Finlândia", "França", "Alemanha", "Grécia", 
 						"Hungria", "Islândia", "Irlanda", "Itália", "Kosovo", "Letônia", "Liechtenstein", 

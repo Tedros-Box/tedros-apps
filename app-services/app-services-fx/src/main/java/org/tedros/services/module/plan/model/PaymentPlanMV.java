@@ -37,21 +37,4 @@ public class PaymentPlanMV extends TEntityModelView<PaymentPlan> {
 		super(entity);
 		super.formatToString("%d > %.2f%%", amount, discount);
 	}
-
-	public SimpleIntegerProperty getAmount() {
-		return amount;
-	}
-
-	public void setAmount(SimpleIntegerProperty amount) {
-		this.amount = amount;
-	}
-
-	public SimpleDoubleProperty getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(SimpleDoubleProperty discount) {
-		this.discount = discount;
-	}
-
 }

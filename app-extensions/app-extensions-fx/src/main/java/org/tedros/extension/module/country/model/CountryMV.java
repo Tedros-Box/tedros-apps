@@ -15,7 +15,6 @@ import org.tedros.extension.domain.DomainApp;
 import org.tedros.extension.ejb.controller.ICountryController;
 import org.tedros.extension.model.Country;
 import org.tedros.fx.TUsualKey;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TNumberSpinnerField;
@@ -23,7 +22,6 @@ import org.tedros.fx.annotation.control.TSelectImageField;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -54,7 +52,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
+@TForm(header = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = ICountryController.JNDI_NAME, model=Country.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = ICountryController.JNDI_NAME,
@@ -73,10 +71,8 @@ public class CountryMV extends TEntityModelView<Country> {
 
 	@TTabPane(tabs = { 
 		@TTab(text = TUsualKey.MAIN, 
-			content = @TContent(detailForm=@TDetailForm(
-			fields={"iso2Code", "capital", "populationName", "currencyCode","cctld"}))), 
-		@TTab(text = TUsualKey.FLAG,
-			content = @TContent(detailForm=@TDetailForm(fields={"flag"})))})
+				fields={"iso2Code", "capital", "populationName", "currencyCode","cctld"}), 
+		@TTab(text = TUsualKey.FLAG, fields={"flag"})})
 	private SimpleLongProperty code;
 	
 	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO2)")

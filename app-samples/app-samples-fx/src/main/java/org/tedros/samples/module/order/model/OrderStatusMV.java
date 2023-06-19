@@ -29,7 +29,7 @@ import org.tedros.server.query.TCompareOp;
  * @author Davis
  *
  */
-@TForm(name = SmplsKey.FORM_ORDER_STATUS, showBreadcrumBar=true, scroll=false)
+@TForm(header = SmplsKey.FORM_ORDER_STATUS, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IGenericDomainController.JNDI_NAME, model=OrderStatus.class)
 @TListViewPresenter(
 	aiAssistant=@TAiAssistant(jsonModel = OrderStatusJson.class, modelViewClass = OrderStatusMV.class, show=true),

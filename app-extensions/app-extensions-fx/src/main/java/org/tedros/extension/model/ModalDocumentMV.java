@@ -6,23 +6,18 @@ package org.tedros.extension.model;
 import org.tedros.common.model.TFileEntity;
 import org.tedros.extension.ejb.controller.IDocumentController;
 import org.tedros.extension.ejb.controller.IExtensionDomainController;
-import org.tedros.extension.model.Document;
-import org.tedros.extension.model.DocumentStatus;
-import org.tedros.extension.model.DocumentType;
 import org.tedros.extension.module.doc.model.DocumentStatusMV;
 import org.tedros.extension.module.doc.model.DocumentTypeMV;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TFileField;
-import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
@@ -50,10 +45,9 @@ import javafx.scene.layout.Priority;
 public class ModalDocumentMV extends TEntityModelView<Document> {
 	
 	@TTabPane(tabs = { 
-		@TTab(closable=false, scroll=false, text = TUsualKey.MAIN_DATA,
-			content = @TContent(detailForm=@TDetailForm( fields={"code","value", "type", "file"}))),
-		@TTab(closable=false, text = TUsualKey.OBSERVATION, 
-			content = @TContent(detailForm=@TDetailForm(fields={"observation"})))})
+		@TTab(closable=false, scroll=false, text = TUsualKey.MAIN_DATA, 
+				fields={"code","value", "type", "file"}),
+		@TTab(closable=false, text = TUsualKey.OBSERVATION, fields={"observation"})})
 	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.REF_CODE)

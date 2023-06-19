@@ -92,6 +92,9 @@
 		<class>org.tedros.sample.entity.SaleStatus</class>
 		<class>org.tedros.sample.entity.SaleType</class>
 		<class>org.tedros.sample.entity.SaleEventConfig</class>
+		<class>org.tedros.sample.entity.SampleA</class>
+		<class>org.tedros.sample.entity.SampleB</class>
+		<class>org.tedros.sample.entity.SampleC</class>
 		
 		<properties>
 		

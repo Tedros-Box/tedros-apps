@@ -1,6 +1,6 @@
 package org.tedros.person.converter;
 
-import org.tedros.fx.form.TConverter;
+import org.tedros.fx.converter.TConverter;
 import org.tedros.person.domain.CivilStatus;
 
 public class CivilStatusConverter extends TConverter<String, CivilStatus> {

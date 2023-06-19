@@ -16,21 +16,19 @@ import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TComboBoxField;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFieldBox;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TIntegratedLinkField;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TShowField.TField;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTrigger;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.THBox;
@@ -57,6 +55,7 @@ import org.tedros.fx.builder.DateTimeFormatBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.domain.TLabelPosition;
+import org.tedros.fx.domain.TTimeStyle;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.fx.model.TFormatter;
 import org.tedros.fx.presenter.page.converter.TStringToLong;
@@ -85,7 +84,6 @@ import org.tedros.server.query.TJoinType;
 import org.tedros.server.query.TLogicOp;
 import org.tedros.stock.module.inventory.builder.CostCenterValBuilder;
 import org.tedros.stock.module.inventory.builder.LegalPersonValBuilder;
-import org.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -98,7 +96,7 @@ import javafx.scene.layout.Priority;
  *
  */
 @TSetting(SaleSetting.class)
-@TForm(name = "", showBreadcrumBar=false, scroll=false)
+@TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = ISaleController.JNDI_NAME, model=Sale.class)
 @TListViewPresenter(listViewMinWidth=450,
 	page=@TPage(serviceName = ISaleController.JNDI_NAME,
@@ -146,10 +144,8 @@ public class SaleMV extends TEntityModelView<Sale> {
 	private SimpleObjectProperty<Order> order;
 	
 	@TTabPane(tabs = { 
-		@TTab( text = TUsualKey.MAIN_DATA, 
-			content = @TContent(detailForm=@TDetailForm(fields={"deliveryAddress"}))),
-		@TTab(text =  TUsualKey.PRODUCTS, 
-			content = @TContent(detailForm=@TDetailForm(fields={"items"})))
+		@TTab( text = TUsualKey.MAIN_DATA, fields={"deliveryAddress"}),
+		@TTab(text =  TUsualKey.PRODUCTS, fields={"items"})
 	})
 	private SimpleLongProperty tabPane;
 
@@ -266,7 +262,7 @@ public class SaleMV extends TEntityModelView<Sale> {
 	private SimpleStringProperty integratedViewName;
 	
 	@TLabel(text=TFxKey.INTEGRATED_DATE)
-	@TShowField(fields= {@TField(pattern=TDateUtil.DDMMYYYY_HHMM)})
+	@TShowField(fields= {@TField(timeStyle=TTimeStyle.SHORT)})
 	private SimpleObjectProperty<Date> integratedDate;
 	
 	@TLabel(text=TFxKey.INTEGRATED_LINK)

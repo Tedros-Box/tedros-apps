@@ -16,20 +16,18 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TButtonField;
 import org.tedros.fx.annotation.control.TComboBoxField;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFieldBox;
-import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TShowField.TField;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTrigger;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.THBox;
@@ -98,7 +96,7 @@ import javafx.scene.layout.Priority;
  *
  */
 @TSetting(OrderSetting.class)
-@TForm(name = "", showBreadcrumBar=false, scroll=false)
+@TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IOrderController.JNDI_NAME, model=Order.class)
 @TListViewPresenter(listViewMinWidth=450,
 	page=@TPage(serviceName = IOrderController.JNDI_NAME,
@@ -152,10 +150,8 @@ public class OrderMV extends TEntityModelView<Order> {
 	private SimpleStringProperty createSale;
 	
 	@TTabPane(tabs = { 
-		@TTab( text = TUsualKey.MAIN_DATA, 
-			content = @TContent(detailForm=@TDetailForm(fields={"deliveryAddress"}))),
-		@TTab(text =  TUsualKey.PRODUCTS, 
-			content = @TContent(detailForm=@TDetailForm(fields={"items"})))
+		@TTab( text = TUsualKey.MAIN_DATA, fields={"deliveryAddress"}),
+		@TTab(text =  TUsualKey.PRODUCTS, fields={"items"})
 	})
 	private SimpleLongProperty tabPane;
 

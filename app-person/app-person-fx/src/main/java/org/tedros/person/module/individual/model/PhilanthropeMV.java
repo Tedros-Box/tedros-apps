@@ -7,12 +7,10 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -46,7 +44,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IPersonController.JNDI_NAME, model=Philanthrope.class)
 @TListViewPresenter(
 		page=@TPage(serviceName = IPersonController.JNDI_NAME,
@@ -66,14 +64,10 @@ import javafx.scene.layout.Priority;
 public class PhilanthropeMV extends NaturalPersonMV<Philanthrope> {
 
 	@TTabPane(tabs = { 
-		@TTab( text = TUsualKey.MAIN_DATA,
-			content = @TContent(detailForm=@TDetailForm(fields={"lastName","sex", "type", "address"}))),
-		@TTab(text = TUsualKey.DESCRIPTION, 
-			content = @TContent(detailForm=@TDetailForm(fields={"description"}))),
-		@TTab(text = TUsualKey.OBSERVATION, 
-			content = @TContent(detailForm=@TDetailForm(fields={"observation"}))), 
-		@TTab(text = TUsualKey.EVENTS,
-			content = @TContent(detailForm=@TDetailForm(fields={"events"})))
+		@TTab( text = TUsualKey.MAIN_DATA,fields={"lastName","sex", "type", "address"}),
+		@TTab(text = TUsualKey.DESCRIPTION, fields={"description"}),
+		@TTab(text = TUsualKey.OBSERVATION, fields={"observation"}), 
+		@TTab(text = TUsualKey.EVENTS,fields={"events"})
 	})
 	private SimpleLongProperty id;
 

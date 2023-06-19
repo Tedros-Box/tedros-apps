@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.samples.module.forms.model;
+package org.tedros.samples.module.control.model;
 
 import java.awt.Color;
 import java.math.BigDecimal;
@@ -54,9 +54,9 @@ import javafx.beans.property.SimpleStringProperty;
  * @author Davis Gordon
  *
  */
-@TPresenter(decorator=@TDecorator(type=TViewDecorator.class, 
-viewTitle="Basic components"),
-behavior=@TBehavior(type=TViewBehavior.class))
+@TPresenter(modelClass=FieldModel.class,
+	decorator=@TDecorator(type=TViewDecorator.class, viewTitle="Basic components"),
+	behavior=@TBehavior(type=TViewBehavior.class))
 public class BasicControlMV extends TModelView<FieldModel> {
 	
 	@TText(textStyle = TTextStyle.LARGE, text="Samples of Field Components")

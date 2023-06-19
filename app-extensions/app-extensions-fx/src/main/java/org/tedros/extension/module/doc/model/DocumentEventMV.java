@@ -10,17 +10,15 @@ import org.tedros.extension.model.Contact;
 import org.tedros.extension.model.ContactMV;
 import org.tedros.extension.model.DocumentEvent;
 import org.tedros.fx.TUsualKey;
-import org.tedros.fx.annotation.control.TContent;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.THTMLEditor;
 import org.tedros.fx.annotation.control.TLabel;
-import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
-import org.tedros.fx.annotation.form.TDetailForm;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -49,7 +47,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=false)
+@TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TDetailListViewPresenter(presenter=@TPresenter(
 behavior = @TBehavior(type = TDetailCrudViewBehavior.class), 
 decorator = @TDecorator(type = TDetailCrudViewDecorator.class, 
@@ -57,8 +55,8 @@ buildModesRadioButton=false, viewTitle=ExtKey.VIEW_DOCS_EVENT)))
 public class DocumentEventMV extends TEntityModelView<DocumentEvent> {
 	
 	@TTabPane(tabs = { 
-		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"hboxPane"})), text = "#{label.main.data}"), 
-		@TTab(closable=false, content = @TContent(detailForm=@TDetailForm(fields={"content"})), text = "#{label.content}")
+		@TTab(closable=false, fields={"hboxPane"}, text = TUsualKey.MAIN_DATA), 
+		@TTab(closable=false, fields={"content"}, text = TUsualKey.CONTENT)
 	})
 	private SimpleLongProperty id;
 	

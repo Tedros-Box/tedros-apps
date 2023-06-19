@@ -38,7 +38,7 @@ import javafx.beans.property.SimpleStringProperty;
  * @author Davis Gordon
  *
  */
-@TForm(name = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=true)
 @TEjbService(serviceName = IServiceLocationController.JNDI_NAME, model=ServiceLocation.class)
 @TListViewPresenter(
 	page=@TPage(serviceName = IServiceLocationController.JNDI_NAME,
@@ -51,7 +51,7 @@ import javafx.beans.property.SimpleStringProperty;
 	behavior=@TBehavior(runNewActionAfterSave=false)))
 @TSecurity(id=DomainApp.SERVICE_LOCATION_FORM_ID, appName = ServKey.APP_SERVICE,
 	moduleName = ServKey.MODULE_SERVICES, viewName = ServKey.VIEW_SERVICE_LOCATION,
-	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.READ, 
+	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT,
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class ServiceLocationMV extends TEntityModelView<ServiceLocation> {
 
@@ -78,27 +78,4 @@ public class ServiceLocationMV extends TEntityModelView<ServiceLocation> {
 		return name;
 	}
 
-	public SimpleStringProperty getName() {
-		return name;
-	}
-
-	public void setName(SimpleStringProperty name) {
-		this.name = name;
-	}
-
-	public SimpleStringProperty getDescription() {
-		return description;
-	}
-
-	public void setDescription(SimpleStringProperty description) {
-		this.description = description;
-	}
-
-	public SimpleObjectProperty<Place> getPlace() {
-		return place;
-	}
-
-	public void setPlace(SimpleObjectProperty<Place> place) {
-		this.place = place;
-	}
 }
