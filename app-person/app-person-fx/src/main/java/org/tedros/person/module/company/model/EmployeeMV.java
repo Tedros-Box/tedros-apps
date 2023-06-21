@@ -119,7 +119,7 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 			@TCondition(field = "name", operator=TCompareOp.LIKE),
 			@TCondition(logicOp=TLogicOp.OR, field = "otherName", 
 			operator=TCompareOp.LIKE)}))
-	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
+	@TTrigger(type = FilterCostCenterTrigger.class, 
 	targetFieldName="costCenter", runAfterFormBuild=true)
 	private SimpleObjectProperty<LegalPerson> legalPerson;
 	

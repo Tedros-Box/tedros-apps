@@ -71,7 +71,7 @@ public class SaleItemMV extends TEntityModelView<SaleItem> {
 		condition = {
 			@TCondition(field = "name", operator=TCompareOp.LIKE),
 			@TCondition(logicOp=TLogicOp.OR, field = "code", operator=TCompareOp.LIKE)}))
-	@TTrigger(triggerClass = SetPriceTrigger.class, targetFieldName="unitPrice") // Trigger example
+	@TTrigger(type = SetPriceTrigger.class, targetFieldName="unitPrice") // Trigger example
 	@THBox(	spacing=10, fillHeight=true,
 		pane=@TPane(children={"product", "unitPrice", "amount", "rebate", "total"}), 
 	hgrow=@THGrow(priority={@TPriority(field="product", priority=Priority.NEVER), 

@@ -64,7 +64,7 @@ public class NaturalPersonMV<P extends NaturalPerson> extends PersonMV<P> {
 			condition = {
 					@TCondition(field = "name", operator=TCompareOp.LIKE), 
 					@TCondition(logicOp=TLogicOp.OR, field = "login", operator=TCompareOp.LIKE)}))
-	@TTrigger(triggerClass = TedrosUserTrigger.class, runAfterFormBuild=true)
+	@TTrigger(type = TedrosUserTrigger.class, runAfterFormBuild=true)
 	private SimpleObjectProperty<TUser> tedrosUser;
 	
 	@TLabel(text=TUsualKey.SEX)

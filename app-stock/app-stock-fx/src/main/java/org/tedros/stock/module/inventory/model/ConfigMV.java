@@ -75,7 +75,7 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 			@TCondition(field = "name", operator=TCompareOp.LIKE),
 			@TCondition(logicOp=TLogicOp.OR, field = "otherName", 
 			operator=TCompareOp.LIKE)}))
-	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
+	@TTrigger(type = FilterCostCenterTrigger.class, 
 	targetFieldName="costCenter", runAfterFormBuild=true)
 	@THBox(	pane=@TPane(children={"legalPerson", "costCenter", "responsable"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="costCenter", priority=Priority.NEVER), 

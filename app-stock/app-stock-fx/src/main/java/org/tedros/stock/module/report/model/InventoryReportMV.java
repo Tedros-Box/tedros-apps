@@ -97,7 +97,7 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 			@TCondition(field = "name", operator=TCompareOp.LIKE),
 			@TCondition(logicOp=TLogicOp.OR, field = "otherName", 
 			operator=TCompareOp.LIKE)}))
-	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
+	@TTrigger(type = FilterCostCenterTrigger.class, 
 	targetFieldName="costCenter", runAfterFormBuild=true)
 	@THBox(	pane=@TPane(children={"legalPerson", "costCenter", "date", "product"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="product", priority=Priority.NEVER), 
