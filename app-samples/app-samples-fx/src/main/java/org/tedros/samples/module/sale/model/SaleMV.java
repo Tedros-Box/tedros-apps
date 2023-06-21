@@ -217,7 +217,7 @@ public class SaleMV extends TEntityModelView<Sale> {
 			@TCondition(field = "name", operator=TCompareOp.LIKE),
 			@TCondition(logicOp=TLogicOp.OR, field = "otherName", 
 			operator=TCompareOp.LIKE)}))
-	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
+	@TTrigger(type = FilterCostCenterTrigger.class, 
 	targetFieldName="costCenter", runAfterFormBuild=true)
 	@THBox(	spacing=10, fillHeight=true,
 	pane=@TPane(children={"legalPerson", "costCenter", "seller"}), 

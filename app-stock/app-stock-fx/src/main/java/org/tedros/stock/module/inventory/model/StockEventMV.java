@@ -54,7 +54,7 @@ public class StockEventMV<E extends StockEvent> extends TEntityModelView<E> {
 			@TCondition(field = "name", operator=TCompareOp.LIKE),
 			@TCondition(logicOp=TLogicOp.OR, field = "otherName", 
 			operator=TCompareOp.LIKE)}))
-	@TTrigger(triggerClass = FilterCostCenterTrigger.class, 
+	@TTrigger(type = FilterCostCenterTrigger.class, 
 	targetFieldName="costCenter", runAfterFormBuild=true)
 	protected SimpleObjectProperty<LegalPerson> legalPerson;
 	
