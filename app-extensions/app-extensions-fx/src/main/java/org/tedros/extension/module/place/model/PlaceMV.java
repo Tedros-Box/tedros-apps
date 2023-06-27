@@ -76,7 +76,7 @@ import javafx.scene.layout.Priority;
 		decorator = @TDecorator(viewTitle=LocatKey.VIEW_PLACE),
 		behavior = @TBehavior(saveOnlyChangedModels=false, saveAllModels=false)))
 @TSecurity(id=DomainApp.PLACE_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
-moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_PLACE,
+moduleName = LocatKey.MODULE_PLACES, viewName = LocatKey.VIEW_PLACE,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class PlaceMV extends TEntityModelView<Place> {
 

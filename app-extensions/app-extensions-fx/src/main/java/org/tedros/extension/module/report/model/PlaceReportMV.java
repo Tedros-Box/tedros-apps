@@ -73,7 +73,7 @@ import javafx.scene.layout.Priority;
 			decorator = @TDecorator(type = TDataSetReportDecorator.class, 
 									viewTitle=LocatKey.VIEW_REPO_PLACE))
 @TSecurity(	id=DomainApp.PLACE_REPORT_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
-moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_ADDRESS,
+moduleName = LocatKey.MODULE_PLACES, viewName = LocatKey.VIEW_ADDRESS,
 allowedAccesses={VIEW_ACCESS, EXPORT, SEARCH})
 public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	

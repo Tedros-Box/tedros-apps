@@ -26,7 +26,7 @@ import javafx.beans.property.SimpleStringProperty;
  * @author Davis Gordon
  *
  */
-@TPresenter(modelClass=WebModel.class,
+@TPresenter(model=WebModel.class,
 	decorator=@TDecorator(type=TViewDecorator.class, viewTitle="Web components"),
 	behavior=@TBehavior(type=TViewBehavior.class))
 public class WebControlMV extends TModelView<WebModel> {

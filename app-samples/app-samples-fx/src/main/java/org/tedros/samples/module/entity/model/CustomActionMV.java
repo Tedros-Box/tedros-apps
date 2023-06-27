@@ -73,11 +73,6 @@ public class CustomActionMV extends TEntityModelView<SampleB> {
 	adminAreaField="adminArea")
 	private SimpleObjectProperty<City> city;
 	
-	@TText(textStyle = TTextStyle.LARGE, text="Here we can see who created this entity and open it")
-	@TFieldBox(alignment=Pos.CENTER_LEFT,
-	node=@TNode(id=TFieldBox.TITLE, parse = true))
-	private SimpleStringProperty text1;
-	
 	@TLabel(text=TFxKey.INTEGRATED_BY)
 	@TShowField()
 	@TFlowPane(pane=@TPane(

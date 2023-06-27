@@ -50,7 +50,7 @@ import javafx.scene.layout.Priority;
 @TSetting(TAddressSetting.class)
 @TEjbService(serviceName = IAddressController.JNDI_NAME, model=Address.class)
 @TSecurity(	id=DomainApp.ADDRESS_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
-moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_ADDRESS,
+moduleName = LocatKey.MODULE_PLACES, viewName = LocatKey.VIEW_ADDRESS,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class AddressMV extends TEntityModelView<Address> {
 	

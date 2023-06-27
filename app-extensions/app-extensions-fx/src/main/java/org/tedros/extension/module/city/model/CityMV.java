@@ -64,7 +64,7 @@ import javafx.scene.layout.Priority;
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=LocatKey.VIEW_CITY, buildImportButton=true),
 	behavior=@TBehavior(importModelViewClass=CityImportMV.class, runNewActionAfterSave=true)))
 @TSecurity(	id=DomainApp.CITY_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
-moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_CITY,
+moduleName = LocatKey.MODULE_CITIES, viewName = LocatKey.VIEW_CITY,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class CityMV extends TEntityModelView<City> {
 	

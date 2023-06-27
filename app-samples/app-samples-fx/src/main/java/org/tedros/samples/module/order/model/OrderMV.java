@@ -9,7 +9,6 @@ import java.util.Date;
 import org.tedros.core.TLanguage;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
-import org.tedros.extension.LocatKey;
 import org.tedros.extension.model.Address;
 import org.tedros.extension.model.AddressMV;
 import org.tedros.fx.TUsualKey;
@@ -155,7 +154,7 @@ public class OrderMV extends TEntityModelView<Order> {
 	})
 	private SimpleLongProperty tabPane;
 
-	@TLabel(text=LocatKey.ADDRESS)
+	@TLabel(text=TUsualKey.ADDRESS)
 	@TEditEntityModal(height=40,model = Address.class, modelView=AddressMV.class)
 	@TGenericType(model = Address.class, modelView=AddressMV.class)
 	@THBox(	spacing=10, fillHeight=true,

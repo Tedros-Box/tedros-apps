@@ -53,7 +53,7 @@ import javafx.scene.control.SelectionMode;
  * @author Davis Gordon
  *
  */
-@TPresenter(modelClass=FieldModel.class,
+@TPresenter(model=FieldModel.class,
 	decorator=@TDecorator(type=TViewDecorator.class, viewTitle="Advanced components"),
 	behavior=@TBehavior(type=TViewBehavior.class))
 public class AdvancedControlMV extends TModelView<FieldModel> {

@@ -55,7 +55,7 @@ import javafx.scene.layout.Priority;
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=LocatKey.VIEW_ADMIN_AREA, buildImportButton=true),
 	behavior=@TBehavior(importModelViewClass=AdminAreaImportMV.class, runNewActionAfterSave=true)))
 @TSecurity(	id=DomainApp.ADMIN_AREA_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
-moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_ADMIN_AREA,
+moduleName = LocatKey.MODULE_ADMIN_AREA, viewName = LocatKey.VIEW_ADMIN_AREA,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class AdminAreaMV extends TEntityModelView<AdminArea> {
 	

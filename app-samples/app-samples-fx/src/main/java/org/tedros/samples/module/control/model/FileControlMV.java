@@ -35,7 +35,7 @@ import javafx.beans.property.SimpleStringProperty;
  * @author Davis Gordon
  *
  */
-@TPresenter(modelClass=FieldModel.class,
+@TPresenter(model=FieldModel.class,
 	decorator=@TDecorator(type=TViewDecorator.class, viewTitle="File components"),
 	behavior=@TBehavior(type=TViewBehavior.class))
 public class FileControlMV extends TModelView<FieldModel> {
