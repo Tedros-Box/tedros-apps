@@ -36,7 +36,7 @@ import javafx.beans.property.SimpleStringProperty;
  * @author Davis Gordon
  *
  */
-@TPresenter(modelClass=FieldModel.class,
+@TPresenter(model=FieldModel.class,
 	decorator=@TDecorator(type=TViewDecorator.class, viewTitle="Reader components"),
 	behavior=@TBehavior(type=TViewBehavior.class))
 public class ReaderControlMV extends TModelView<FieldModel> {

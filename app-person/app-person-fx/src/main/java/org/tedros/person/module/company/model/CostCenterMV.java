@@ -8,7 +8,6 @@ import java.util.Date;
 import org.tedros.common.model.TFileEntity;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
-import org.tedros.extension.LocatKey;
 import org.tedros.extension.model.Address;
 import org.tedros.extension.model.AddressMV;
 import org.tedros.extension.model.Contact;
@@ -149,7 +148,7 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	@TDatePickerField(dateFormat=DateTimeFormatBuilder.class)
 	private SimpleObjectProperty<Date> closingDate;
 	
-	@TLabel(text=LocatKey.ADDRESS)
+	@TLabel(text=TUsualKey.ADDRESS)
 	@TEditEntityModal(height=80, 
 	model = Address.class, modelView=AddressMV.class)
 	@TVBox(	spacing=10, fillWidth=true,

@@ -13,9 +13,11 @@ import org.tedros.fx.presenter.view.group.TViewItem;
 import org.tedros.sample.domain.DomainApp;
 import org.tedros.samples.SmplsKey;
 import org.tedros.samples.module.entity.model.CustomActionMV;
+import org.tedros.samples.module.entity.model.CustomDecoratorMV;
 import org.tedros.samples.module.entity.model.IntegratedMV;
 import org.tedros.samples.module.entity.model.MasterDetailMV;
 import org.tedros.samples.module.entity.model.PageSearchMV;
+import org.tedros.samples.module.entity.model.SettingSampleMV;
 
 /**
  * @author Davis Gordon
@@ -37,8 +39,9 @@ public class EntitySampleModule extends TModule {
 				new TViewItem(TDynaGroupView.class, MasterDetailMV.class, "Edit master/detail entity"),
 				new TViewItem(TDynaGroupView.class, PageSearchMV.class, "Page and search entities"),
 				new TViewItem(TDynaGroupView.class, IntegratedMV.class, "Integrated entity sample"),
-				new TViewItem(TDynaGroupView.class, CustomActionMV.class, "Custom action sample")/*,
-				new TViewItem(TDynaGroupView.class, ReaderControlMV.class, "Reader Controls")*/
+				new TViewItem(TDynaGroupView.class, CustomActionMV.class, "Custom action sample"),
+				new TViewItem(TDynaGroupView.class, SettingSampleMV.class, "Setting sample"),
+				new TViewItem(TDynaGroupView.class, CustomDecoratorMV.class, "Custom decorator sample")
 				));;
 	}
 

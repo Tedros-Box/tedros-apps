@@ -65,7 +65,7 @@ import javafx.scene.layout.Priority;
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=LocatKey.VIEW_COUNTRY, buildImportButton=true),
 	behavior=@TBehavior(importModelViewClass=CountryImportMV.class, runNewActionAfterSave=true)))
 @TSecurity(	id=DomainApp.COUNTRY_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
-moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_COUNTRY,
+moduleName = LocatKey.MODULE_COUNTRIES, viewName = LocatKey.VIEW_COUNTRY,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class CountryMV extends TEntityModelView<Country> {
 

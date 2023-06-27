@@ -4,8 +4,8 @@
 package org.tedros.samples.module.sale;
 
 import org.tedros.core.TModule;
-import org.tedros.core.annotation.TLoadable;
-import org.tedros.core.annotation.TModel;
+import org.tedros.core.annotation.TView;
+import org.tedros.core.annotation.TItem;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.presenter.dynamic.view.TDynaGroupView;
@@ -24,10 +24,9 @@ import org.tedros.samples.module.sale.model.SaleTypeMV;
  * @author Davis
  *
  */
-@TLoadable(value = { 
-		@TModel(modelType = Sale.class, 
-				modelViewType = SaleMV.class, 
-				moduleType = SaleModule.class)})
+@TView(items = { 
+	@TItem(title=SmplsKey.VIEW_SALES,
+	model = Sale.class, modelView = SaleMV.class)})
 @TSecurity(id=DomainApp.SALE_MODULE_ID, 
 appName = SmplsKey.APP_SAMPLES, 
 moduleName = SmplsKey.MODULE_SALES, 

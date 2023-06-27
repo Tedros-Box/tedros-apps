@@ -3,7 +3,6 @@
  */
 package org.tedros.person.model;
 
-import org.tedros.extension.LocatKey;
 import org.tedros.extension.model.Address;
 import org.tedros.extension.model.AddressMV;
 import org.tedros.extension.model.Contact;
@@ -14,8 +13,8 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
 import org.tedros.fx.annotation.control.TFieldBox;
-import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.layout.THBox;
@@ -42,7 +41,7 @@ public class PersonMV<P extends Person> extends TEntityModelView<P> {
 		node=@TNode(requestFocus=true, parse = true))
 	protected SimpleStringProperty name;
 	
-	@TLabel(text=LocatKey.ADDRESS)
+	@TLabel(text=TUsualKey.ADDRESS)
 	@TEditEntityModal(model = Address.class, modelView=AddressMV.class)
 	@TGenericType(model = Address.class, modelView=AddressMV.class)
 	@THBox(	pane=@TPane(children={"address", "contacts", "documents", "attributes"}), spacing=10, fillHeight=true,

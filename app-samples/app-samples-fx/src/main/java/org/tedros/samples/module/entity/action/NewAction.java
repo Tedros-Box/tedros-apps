@@ -3,8 +3,6 @@
  */
 package org.tedros.samples.module.entity.action;
 
-import java.util.concurrent.TimeUnit;
-
 import org.tedros.core.message.TMessage;
 import org.tedros.core.message.TMessageType;
 import org.tedros.fx.control.action.TPresenterAction;

@@ -44,7 +44,7 @@ import javafx.scene.text.TextAlignment;
 		decorator = @TDecorator(viewTitle=LocatKey.VIEW_PLACE_TYPE),
 		behavior=@TBehavior(runNewActionAfterSave=true)))
 @TSecurity(	id=DomainApp.PLACE_TYPE_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
-moduleName = LocatKey.MODULE_ADMINISTRATIVE, viewName = LocatKey.VIEW_PLACE_TYPE,
+moduleName = LocatKey.MODULE_PLACES, viewName = LocatKey.VIEW_PLACE_TYPE,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class PlaceTypeMV extends ExtensionDomainMV<PlaceType> {
 
