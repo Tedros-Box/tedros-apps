@@ -5,6 +5,7 @@ package org.tedros.extension.module.doc.model;
 
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.core.model.TFormatter;
 import org.tedros.extension.ExtKey;
 import org.tedros.extension.domain.DomainApp;
 import org.tedros.extension.ejb.controller.IExtensionDomainController;
@@ -29,7 +30,6 @@ import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.text.TText;
 import org.tedros.fx.control.TText.TTextStyle;
-import org.tedros.fx.model.TFormatter;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;

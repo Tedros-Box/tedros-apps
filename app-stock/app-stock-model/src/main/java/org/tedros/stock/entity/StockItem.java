@@ -14,23 +14,31 @@ import org.tedros.server.entity.TEntity;
 import org.tedros.stock.domain.DomainSchema;
 import org.tedros.stock.domain.DomainTables;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 /**
  * @author Davis Gordon
  *
  */
 @Entity
 @Table(name = DomainTables.stock_item, schema = DomainSchema.schema)
+@JsonClassDescription("Stock item with the amount of product")
 public class StockItem extends TEntity implements StockableItem {
 
 	private static final long serialVersionUID = -3216481324029671441L;
 
+	@JsonPropertyDescription("The product")
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="prod_id", nullable=false)
 	private Product product;
 	
+	@JsonPropertyDescription("Amount of product")
 	@Column(nullable = false)
 	private Double amount;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="event_id")
 	private StockEvent event;

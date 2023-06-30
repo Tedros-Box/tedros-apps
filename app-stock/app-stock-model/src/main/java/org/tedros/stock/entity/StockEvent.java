@@ -30,6 +30,9 @@ import org.tedros.server.entity.TVersionEntity;
 import org.tedros.stock.domain.DomainSchema;
 import org.tedros.stock.domain.DomainTables;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 /**
  * @author Davis Gordon
  *
@@ -47,10 +50,13 @@ public class StockEvent extends TVersionEntity implements ICostCenterAccounting,
 	@Column(length=10)
 	private String dType;
 
+
+	@JsonPropertyDescription("The legal person, owner")
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="legal_person_id", nullable=false)
 	private LegalPerson legalPerson;
-	
+
+	@JsonPropertyDescription("The cost center of product stock")
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="cost_center_id", nullable=false)
 	private CostCenter costCenter;
@@ -59,10 +65,13 @@ public class StockEvent extends TVersionEntity implements ICostCenterAccounting,
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
+	@JsonPropertyDescription("The entry/output event type")
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="type_id", nullable=true)
 	private EventType type;
 	
+
+	@JsonPropertyDescription("The person responsible for this")
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="person_id", nullable=true)
 	private Person responsable;
@@ -70,6 +79,7 @@ public class StockEvent extends TVersionEntity implements ICostCenterAccounting,
 	@Column()
 	private String observation;
 	
+	@JsonPropertyDescription("List of items")
 	@OneToMany(fetch = FetchType.EAGER, 
 			mappedBy="event",
 			orphanRemoval=true, 
