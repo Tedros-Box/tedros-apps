@@ -19,12 +19,16 @@ import javax.persistence.UniqueConstraint;
 import org.tedros.common.model.TBarcode;
 import org.tedros.common.model.TFileEntity;
 import org.tedros.server.annotation.TCaseSensitive;
-import org.tedros.server.annotation.TImportInfo;
 import org.tedros.server.annotation.TField;
 import org.tedros.server.annotation.TFileType;
+import org.tedros.server.annotation.TImportInfo;
 import org.tedros.server.entity.TVersionEntity;
 import org.tedros.stock.domain.DomainSchema;
 import org.tedros.stock.domain.DomainTables;
+
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Davis Gordon
@@ -35,6 +39,7 @@ import org.tedros.stock.domain.DomainTables;
 uniqueConstraints= {@UniqueConstraint(name="prodCodeUK", columnNames = { "code" })} )
 @TImportInfo(description = "Regras para importar um arquivo para a tabela de produtos ", 
 fileType = { TFileType.CSV, TFileType.XLS })
+@JsonClassDescription("a stockable product")
 public class Product extends TVersionEntity {
 
 	
@@ -44,18 +49,22 @@ public class Product extends TVersionEntity {
 	@TField(required = false, 
 		label = "Codigo do produto", column = "Codigo", 
 		numberType=Integer.class, example="22")
+	@JsonProperty
 	private String code;
 	
 	@Column(length=120, nullable = false)
 	@TField(required = true, 
 	label = "Nome do produto", column = "Nome Produto",
 	example="Arroz")
+	@JsonProperty(required=true)
 	private String name;
 	
 	@Column
+	@JsonProperty
 	private String description;
 	
 	@Column(length=120)
+	@JsonProperty
 	private String trademark;
 	
 	@Column(length=20)
@@ -63,23 +72,27 @@ public class Product extends TVersionEntity {
 	label = "Unidade medida", column = "Unidade Medida",
 	example="KG", caseSensitive=TCaseSensitive.UPPER, 
 	possibleValues= {"KG", "LT", "UNID","PCT","ML","GR"})
+	@JsonIgnore
 	private String unitMeasure;
 	
-	@Column
+	@Column @JsonIgnore
 	private Double measure;
 	
 	@Column(length=15)
+	@JsonIgnore
 	private String size;
 	
-	@Column
+	@Column @JsonIgnore
 	private Double weight;
 	
+	@JsonIgnore
 	@OneToOne(cascade=CascadeType.ALL, 
 			fetch=FetchType.EAGER, 
 			optional=true)
 	@JoinColumn(name="barcode_id")
 	private TBarcode barcode;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name=DomainTables.product_images, schema=DomainSchema.schema, 
 	uniqueConstraints=@UniqueConstraint(columnNames = { "prod_id", "file_id" }),

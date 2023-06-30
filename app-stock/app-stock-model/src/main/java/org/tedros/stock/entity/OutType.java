@@ -11,6 +11,8 @@ import org.tedros.server.annotation.TModelInfo;
 import org.tedros.stock.domain.DomainSchema;
 import org.tedros.stock.domain.DomainTables;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+
 /**
  * @author Davis Gordon
  *
@@ -19,6 +21,7 @@ import org.tedros.stock.domain.DomainTables;
 @TModelInfo("#{stck.info.outtype}")
 @Table(name = DomainTables.out_type, schema = DomainSchema.schema)
 @DiscriminatorValue("OUT")
+@JsonClassDescription("Stock output type")
 public class OutType extends EventType {
 
 	/**

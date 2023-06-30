@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import org.tedros.stock.domain.DomainSchema;
 import org.tedros.stock.domain.DomainTables;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+
 /**
  * @author Davis Gordon
  *
@@ -17,6 +19,7 @@ import org.tedros.stock.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.stock_out, schema = DomainSchema.schema)
 @DiscriminatorValue("OUT")
+@JsonClassDescription("Product stock output event")
 public class StockOut extends StockEvent {
 
 	/**
