@@ -23,12 +23,17 @@ import org.tedros.extension.domain.DomainSchema;
 import org.tedros.extension.domain.DomainTables;
 import org.tedros.server.entity.TVersionEntity;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 /**
  * @author Davis Gordon
  *
  */
 @Entity
 @Table(name = DomainTables.document, schema = DomainSchema.schema)
+@JsonClassDescription("A document, can be ID number, fiscal number, contract or other type")
 public class Document extends TVersionEntity {
 	
 	private static final long serialVersionUID = -2382651197866734106L;
@@ -56,6 +61,7 @@ public class Document extends TVersionEntity {
 	@Column()
 	private String content;
 
+	@JsonIgnore
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="file_id")
 	private TFileEntity file;
@@ -69,6 +75,7 @@ public class Document extends TVersionEntity {
 	columnNames = { "doc_id","contact_id"}))
 	public Set<Contact> contacts;
 	
+	@JsonPropertyDescription("added events")
 	@OneToMany(mappedBy="document", fetch=FetchType.EAGER)
 	private Set<DocumentEvent> events;
 	

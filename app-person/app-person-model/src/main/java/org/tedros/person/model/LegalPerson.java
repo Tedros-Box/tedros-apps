@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = DomainTables.legal_person, schema = DomainSchema.schema)
 @DiscriminatorValue("LGL_PRSN")
+@JsonClassDescription("A legal person")
 public class LegalPerson extends Person {
 
 	private static final long serialVersionUID = 2331186566521960594L;

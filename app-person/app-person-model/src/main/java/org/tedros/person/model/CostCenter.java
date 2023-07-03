@@ -28,6 +28,9 @@ import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
 import org.tedros.server.entity.TVersionEntity;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Davis Gordon
  *
@@ -35,6 +38,7 @@ import org.tedros.server.entity.TVersionEntity;
 @Entity
 @Table(name = DomainTables.cost_center, schema = DomainSchema.schema, 
 uniqueConstraints= {@UniqueConstraint(columnNames = { "code" })} )
+@JsonClassDescription("Cost center")
 public class CostCenter extends TVersionEntity {
 
 	private static final long serialVersionUID = 4019290948851607499L;
@@ -67,6 +71,7 @@ public class CostCenter extends TVersionEntity {
 	@JoinColumn(name="legalPerson_id", nullable=false)
 	private LegalPerson legalPerson;
 	
+	@JsonIgnore
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="image_id")
 	private TFileEntity image;
