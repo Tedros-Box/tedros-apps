@@ -33,6 +33,9 @@ import org.tedros.person.domain.DomainTables;
 import org.tedros.server.entity.ITDiscriminable;
 import org.tedros.server.entity.TReceptiveEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 /**
  * @author Davis Gordon
  *
@@ -47,6 +50,7 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 
 	private static final long serialVersionUID = -1790917959813402388L;
 
+	@JsonIgnore
 	@Column(length=10)
 	private String dType;
 	
@@ -59,32 +63,39 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 	@Column(length=2000)
 	private String observation;
 	
+	@JsonPropertyDescription("The person type")
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="type_id")
 	private PersonType type;
 
+	@JsonPropertyDescription("The person status")
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="status_id")
 	private PersonStatus status;
 	
+	@JsonIgnore
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="image_id")
 	private TFileEntity image;
 	
+	@JsonPropertyDescription("The person address")
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="address_id")
 	private Address address;
 
+	@JsonPropertyDescription("Added Events")
 	@OneToMany(orphanRemoval=true, 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="id_person", nullable=false, updatable=false)
 	private Set<PersonEvent> events;
 	
+	@JsonPropertyDescription("Additional attributes")
 	@OneToMany(orphanRemoval=true, 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="id_person", nullable=false, updatable=false)
 	private Set<PersonAttributes> attributes;
 	
+	@JsonPropertyDescription("Contacts (e-mail, fax, phone, mobile number and others")
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name=DomainTables.person_contact, 
 	schema=DomainSchema.schema,
@@ -94,6 +105,7 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 	columnNames = { "person_id","contact_id"}))
 	private Set<Contact> contacts;
 	
+	@JsonPropertyDescription("Documents (ID number, Fiscal number, contracts and others)")
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name=DomainTables.person_document, 
 	schema=DomainSchema.schema,

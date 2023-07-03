@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+
 
 /**
  * @author Davis Gordon
@@ -18,6 +20,7 @@ import org.tedros.person.domain.DomainTables;
 @Entity
 @Table(name = DomainTables.philanthrope, schema = DomainSchema.schema)
 @DiscriminatorValue("PHLNTHRP")
+@JsonClassDescription("A Philanthrope")
 public final class Philanthrope extends NaturalPerson {
 
 	/**

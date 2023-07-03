@@ -20,6 +20,9 @@ import org.tedros.person.domain.DomainTables;
 import org.tedros.person.domain.Gender;
 import org.tedros.person.domain.Sex;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Davis Gordon
  *
@@ -27,11 +30,13 @@ import org.tedros.person.domain.Sex;
 @Entity
 @Table(name = DomainTables.natural_person, schema = DomainSchema.schema)
 @DiscriminatorValue("NTRL_PRSN")
+@JsonClassDescription("A natural person")
 public class NaturalPerson extends Person {
 
 	private static final long serialVersionUID = -1790917959813402388L;
 
 	@Column
+	@JsonIgnore
 	private Long tedrosUserId;
 	
 	@Column(length=60)

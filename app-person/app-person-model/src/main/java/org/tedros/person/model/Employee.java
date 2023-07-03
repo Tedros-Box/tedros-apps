@@ -19,6 +19,8 @@ import javax.persistence.TemporalType;
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+
 /**
  * @author Davis Gordon
  *
@@ -27,6 +29,7 @@ import org.tedros.person.domain.DomainTables;
 @Cacheable(false)
 @Table(name = DomainTables.employee, schema = DomainSchema.schema)
 @DiscriminatorValue("EMPLY")
+@JsonClassDescription("A employee")
 public class Employee extends NaturalPerson implements ICostCenterAccounting {
 
 	private static final long serialVersionUID = -2752532386208736142L;
