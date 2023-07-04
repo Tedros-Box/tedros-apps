@@ -1,5 +1,9 @@
 # Tedros 
+![Tedros](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/tedrosbox.png)
+
 Com o Tedros frakework é possível desenvolver aplicações integradas de forma fácil e rápida. Desenvolva aplicações ricas em uma topologia cliente servidor com todas as soluções do Java EE, Java FX e ChatGpt.
+
+![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/teros2.png)
 
 Pre-requisitos:
  - Java 8
@@ -188,4 +192,4 @@ public class AppStart implements ITApplication {
 ```
 
 Printscreen da tela:
-![View](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/productprice.png)
+![View](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/producprice.png)
