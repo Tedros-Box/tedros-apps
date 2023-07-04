@@ -11,7 +11,7 @@
   - Maven 3+
 
 **See on Wiki:**
-- [Setting up the development environment](https://github.com/Tedros-Box/tedros-apps/wiki/Configura%C3%A7%C3%A3o)
+- [Setting up the development environment](https://github.com/Tedros-Box/tedros-apps/wiki/Configure)
 - [Starting the system](https://github.com/Tedros-Box/tedros-apps/wiki/Inicializa%C3%A7%C3%A3o)
 
 Code examples can be found in the app-samples project, below we will demonstrate how to develop a CRUD for the ProductPrice.java entity
