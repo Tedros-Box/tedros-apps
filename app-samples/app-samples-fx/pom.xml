@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.tedros</groupId>
 		<artifactId>app-samples</artifactId>
-		<version>8-2.0.0</version>
+		<version>8-2.2.0</version>
 	</parent>
 
 	<artifactId>app-samples-fx</artifactId>
@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>org.tedros</groupId>
 			<artifactId>app-samples-ejb-client</artifactId>
-			<version>8-2.0.0</version>
+			<version>8-2.2.0</version>
 		</dependency>
 
 	</dependencies>
@@ -76,4 +76,12 @@
 		</resources>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>Tedros-Box</id>
+			<name>GitHub Tedros Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/tedros-box/package</url>
+			<uniqueVersion>false</uniqueVersion>
+		</repository>
+	</distributionManagement>
 </project>
