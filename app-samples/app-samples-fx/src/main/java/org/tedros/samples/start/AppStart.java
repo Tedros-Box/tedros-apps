@@ -40,19 +40,7 @@ import org.tedros.samples.module.sale.SaleModule;
 		@TModule(type=EntitySampleModule.class, 
 		name="Entity samples", 
 		menu="Samples", 
-		description="Entity Samples")/*,
-		@TModule(type=FileControlModule.class, 
-		name="File Controls", 
-		menu="Samples", 
-		description="File field controls"),
-		@TModule(type=ReaderControlModule.class, 
-		name="Reader Controls", 
-		menu="Samples", 
-		description="Reader field controls"),
-		@TModule(type=WebControlModule.class, 
-		name="Web Controls", 
-		menu="Samples", 
-		description="Web controls")*/
+		description="Entity Samples")
 	}, packageName = "org.tedros.samples", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"Smpls"})
@@ -70,6 +58,4 @@ public class AppStart implements ITApplication {
 	public void stop() {
 		// Executed on exit and logout
 	}
-	
-	
 }

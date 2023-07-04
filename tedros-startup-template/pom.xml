@@ -4,12 +4,12 @@
   <parent>
     <groupId>org.tedros</groupId>
     <artifactId>tedrosbox</artifactId>
-    <version>8-5.1.0</version>
+    <version>8-5.2.0</version>
   </parent>
   
   <groupId>org.tedros.archetype</groupId>
   <artifactId>tedros-startup-template</artifactId>
-  <version>8-0.0.0</version>
+  <version>8-2.2.0</version>
   
   <packaging>pom</packaging>
   <name>The Tedros Box startup, database and application server projects</name>
@@ -25,15 +25,15 @@
 	
   	<!-- PROPERTIES -->
 	<properties>
-		<app.samples>8-2.0.0</app.samples>
-		<app.stock>8-2.0.0</app.stock>
-		<app.ext>8-2.0.0</app.ext>
-		<app.person>8-2.0.0</app.person>
-		<app.services>8-2.0.0</app.services>
-		<tedros.box>8-5.1.0</tedros.box>
-		<tedros.fx>8-5.1.0</tedros.fx>
-		<app.settings>8-5.1.0</app.settings>
-		<tedros.jee>8-5.1.0</tedros.jee>
+		<app.samples>8-2.2.0</app.samples>
+		<app.stock>8-2.2.0</app.stock>
+		<app.ext>8-2.2.0</app.ext>
+		<app.person>8-2.2.0</app.person>
+		<app.services>8-2.2.0</app.services>
+		<tedros.box>8-5.2.0</tedros.box>
+		<tedros.fx>8-5.2.0</tedros.fx>
+		<app.settings>8-5.2.0</app.settings>
+		<tedros.jee>8-5.2.0</tedros.jee>
 		<java.home>C:\Program Files\Java\jdk1.8.0_102\bin</java.home>
 		
 		<junit.version>4.13</junit.version>
