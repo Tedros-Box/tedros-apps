@@ -186,3 +186,6 @@ public class AppStart implements ITApplication {
 	}
 }
 ```
+
+Printscreen da tela:
+![View](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/productprice.png)
