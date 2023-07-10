@@ -1,111 +1,111 @@
-
 # Tedros
+|[Português](https://github.com/Tedros-Box/tedros-apps/blob/master/README-pt.md)|
 
-O Tedros é um poderoso framework de desenvolvimento de aplicativos para o sistema Tedros. Com uma ampla gama de funcionalidades e tecnologias avançadas, o Tedros permite criar aplicativos robustos, escaláveis, internacionalizados, ricas e inteligentes de forma declarativa e rápida, sem muitas complicações. Foque no business core a ser desenvolvido o Tedros foi desenhado para gerenciar e integrar os aplicativos entre si e com a inteligencia artificial e visando este cenário foi desenvolvido alguns aplicativos base para dar suporte que podem ser customizados e integrados de acordo com a necessidade do cliente.
+Tedros is a powerful application development framework for the Tedros system. With a wide range of features and advanced technologies, Tedros allows you to create robust, scalable, internationalized, rich and intelligent applications declaratively and quickly, without many complications. Focus on the business core to be developed, Tedros was designed to manage and integrate applications with each other and with artificial intelligence and aiming at this scenario, some base applications were developed to support that can be customized and integrated according to the customer's needs.
 
-Uma das características mais impressionantes do Tedros é o seu chat com a inteligência artificial chamado Teros. É possível criar funções que dão acesso à inteligência artificial, gerando inúmeras possibilidades de interação.
+One of the most impressive features of Tedros is its chat with the artificial intelligence called Teros. It is possible to create functions that give access to artificial intelligence, generating countless possibilities for interaction.
 
-1. Fazer perguntas: Você pode fazer perguntas para obter informações ou esclarecer dúvidas sobre diversos assuntos.
+1. Ask questions: You can ask questions to obtain information or clarify doubts about various subjects.
 
-2. Obter respostas: O Teros fornecerá respostas relevantes e úteis para as suas perguntas, com base no conhecimento e nas capacidades da inteligência artificial.
+2. Get answers: Teros will provide relevant and useful answers to your questions based on knowledge and capabilities of artificial intelligence.
 
-3. Solicitar criação de imagens: É possível pedir ao Teros para criar imagens específicas de acordo com as suas necessidades.
+3. Request creation of images: You can ask Teros to create specific images according to your needs.
 
-4. Explorar funcionalidades: O Teros pode fornecer informações sobre as funcionalidades disponíveis no sistema Tedros e como utilizá-las.
+4. Explore features: Teros can provide you with information about features available in the Tedros system and how to use them.
 
-5. Obter suporte técnico: O Teros pode ajudar a solucionar problemas técnicos e fornecer orientações passo a passo para resolver questões relacionadas ao sistema.
+5. Get technical support: Teros can help troubleshoot technical issues and provide step-by-step guidance to resolve system-related issues.
 
-6. Realizar tarefas automatizadas: O Teros pode executar tarefas automatizadas, como realizar transações, enviar notificações ou executar ações específicas no sistema.
+6. Perform automated tasks: Teros can perform automated tasks such as performing transactions, sending notifications or performing specific actions on the system.
 
-Essas são apenas algumas das ações que você pode realizar no sistema Tedros através do chat com a inteligência artificial Teros. O Teros está pronto para ajudar e fornecer suporte em diversas áreas, tornando a interação com o sistema mais eficiente e intuitiva.
+These are just some of the actions you can perform on the Tedros system through chat with the Teros artificial intelligence. Teros is ready to help and provide support in several areas, making interaction with the system more efficient and intuitive.
 
-Se o usuário tiver alguma dúvida específica ou precisar de ajuda com alguma funcionalidade em particular, basta fazer a pergunta ao Teros e ele estará pronto para ajudar!
+If the user has a specific question or needs help with a particular feature, just ask Teros the question and he's ready to help!
 
-Abaixo segue lista de funcionalidades disponibilizadas pelos aplicativos base e que podem ser integrados e customizados.
+Below is a list of features provided by base applications that can be integrated and customized.
 
-1. Ferramentas de Temas:
-   - Escolher um tema para o Tedros
-   - Alterar as cores dos painéis, textos, botões e formulários
-   - Alterar a imagem de fundo
+1. Theme Tools:
+    - Choose a theme for Tedros
+    - Change the colors of panels, texts, buttons and forms
+    - Change the background image
 
-2. Preferências:
-   - Gerenciar as propriedades principais do sistema
-   - Gerenciar os tipos de Mime dos arquivos
+2. Preferences:
+    - Manage key system properties
+    - Manage Mime types of files
 
-3. Usuários:
-   - Carregar todas as políticas de autorização
-   - Gerenciar perfis de usuário
-   - Gerenciar usuários do sistema
+3. Users:
+    - Load all authorization policies
+    - Manage user profiles
+    - Manage system users
 
-4. Notificações:
-   - Gerenciar notificações por e-mail (Agendadas, Enviadas ou na Fila)
+4. Notifications:
+    - Manage email notifications (Scheduled, Sent or Queued)
 
-5. Teros (Inteligência Artificial):
-   - Descrever uma imagem para ser criada pela inteligência artificial
-   - Fazer perguntas para a inteligência artificial
-   - Conversar com a inteligência artificial
+5. Teros (Artificial Intelligence):
+    - Describe an image to be created by artificial intelligence
+    - Ask questions to artificial intelligence
+    - Chat with artificial intelligence
 
-6. Produtos e Inventário:
-   - Gerenciar o catálogo de produtos
-   - Criar relatórios de produtos
-   - Configurar o estoque de produtos
-   - Registrar entradas e saídas de produtos no estoque
-   - Gerenciar tipos de entrada e saída de produtos
-   - Criar relatórios de inventário
+6. Products and Inventory:
+    - Manage the product catalog
+    - Create product reports
+    - Configure product inventory
+    - Record entries and exits of products in stock
+    - Manage input and output types of products
+    - Create inventory reports
 
-7. Suporte:
-   - Gerenciar documentos
-   - Gerenciar tipos de documentos
-   - Gerenciar estados de documentos
-   - Gerenciar locais (lugares, áreas administrativas, cidades e países)
-   - Gerenciar pessoas físicas e jurídicas
-   - Gerenciar tipos de pessoas físicas e jurídicas
-   - Gerenciar situações de pessoas físicas e jurídicas
-   - Gerenciar membros e tipos de membros
-   - Gerenciar situações de membros
-   - Gerenciar filantropos e tipos de filantropos
-   - Gerenciar situações de filantropos
-   - Gerenciar voluntários e tipos de voluntários
-   - Gerenciar situações de voluntários
-   - Gerenciar clientes e tipos de clientes
-   - Gerenciar situações de clientes
-   - Gerenciar categorias de pessoas
+7. Support:
+    - Manage documents
+    - Manage document types
+    - Manage document states
+    - Manage locations (places, administrative areas, cities and countries)
+    - Manage individuals and legal entities
+    - Manage types of natural and legal persons
+    - Manage situations of individuals and legal entities
+    - Manage members and member types
+    - Manage member statuses
+    - Manage philanthropists and types of philanthropists
+    - Manage philanthropist situations
+    - Manage volunteers and types of volunteers
+    - Manage volunteer situations
+    - Manage customers and customer types
+    - Manage customer situations
+    - Manage categories of people
 
-[Acesse a documentação na Wiki para obter mais informações sobre como configurar o ambiente de desenvolvimento e explorar todas as funcionalidades disponíveis.](https://github.com/Tedros-Box/tedros-apps/wiki) 
+[Go to the documentation on the Wiki for more information on setting up the development environment and exploring all available functionality.](https://github.com/Tedros-Box/tedros-apps/wiki)
 
-**Log in**
+**Login**
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/tedrosbox.png)
 
-**Tela pricipal com menu lateral aberto**
+**Main screen with open side menu**
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/menu.png)
 
 **Teros**
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/teros3.png)
 
-**Exemplo de uma view simples com pesquisa e paginacão**
+**Example of a simple view with search and pagination**
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/producprice.png)
 
-**Exemplo de relatório gerado, o logotipo pode ser alterado nas preferencias**
+**Example of generated report, logo can be changed in preferences**
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/pf_rel2.png)
 
 
-# Use Case
+# use case
 
-O sistema Tedros esta em plena utilização pela ONG [Social Movement](http://www.somossocial.org.br)
+The Tedros system is in full use by the NGO [Social Movement](http://www.somossocial.org.br)
 
-Esta ONG começou durante a pandemia do Covid-19 que resultou no aumento da fome,  por conta do  lock-down, em muitas pessoas vulneráveis e moradores de rua que dependiam das doações de comida de restaurantes e de pessoas comuns, foi então que um grupo de amigos começaram a preparar refeições em casa e distribui-las nas ruas. A iniciativa deu certo e eles cresceram em voluntários, doações e refeições distribuídas. Com este crescimento veio a necessidade de seguir um processo de trabalho que os ajudassem no gerenciamento das ações, doações, entrada e saída de produtos em estoque, recrutamento e controle dos voluntários, mailing, termos de adesão e das informações do web site. Com o Tedros foi desenvolvida uma solução completa que atendesse a todas as necessidades do então projeto chamado Covid Sem Fome e de forma rápida e gradual a solução foi desenvolvida sem muito esforço, ouve varias iterações e mudanças nos aplicativos e no sistema foram 27 versões no total, mas todas foram realizadas de forma rápida e sem muitas complicações. Quando o projeto foi registrado oficialmente como uma ONG e com um novo nome, processo e web site a refatoração dos aplicativos e do web site foi realizado sem muito esforço e complicação e hoje no momento em que escrevo isto **todo o sistema  encontra-se funcional e estável sem intervenções a +1,5 anos**.
+This NGO started during the coronavirus pandemic Covid-19 that resulted in increased hunger, due to the lockdown, in many vulnerable people and homeless people who depended on food donations from restaurants and ordinary people, it was then that a group of friends started to prepare meals in home and distribute them on the streets. The initiative worked and they grew in volunteers, donations and distributed meals. With this growth came the need to follow a work process that would help them manage actions, donations, entry and exit of products in stock, recruitment and control of volunteers, mailing, terms of membership and information on the web site. With Tedros, a complete solution was developed that met all the needs of the then project called Covid Sem Fome and quickly and gradually the solution was developed without much effort, there were several iterations and changes in the applications and in the system, there were 27 versions in total , but they were all done quickly and without too many complications. When the project was officially registered as an NGO and with a new name, process and website the refactoring of the applications and the website was carried out without much effort and complication and today as I write this **the entire system is in functional and stable without interventions for +1.5 years**.
 
-O web site da ONG esta integrado aos serviços na camada  de negócios dos aplicativos do  sistema Tedros que é utilizado pelos diversos colaboradores da ONG, cada um com o perfil e permissões adequados a sua atribuição. 
+The NGO's website is integrated with the services at the business layer of the Tedros system applications, which are used by the various NGO employees, each with the appropriate profile and permissions for their role.
 
-Segue alguns prints do Tedros e aplicativos feitos para a ONG.
+Here are some prints of Tedros and applications made for the NGO.
 
-Tela do aplicativo da ONG:
-![Tela 1](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos1.png)
+NGO app screen:
+![Screen 1](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos1.png)
 
-![Tela 3](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos3.png)
+![Screen 3](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos3.png)
 
-![Tela 4](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos4.png)
+![Screen 4](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos4.png)
 
-![Tela 5](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos5.png)
+![Screen 5](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos5.png)
 
-![Tela 6](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos6.png)
+![Screen 6](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos6.png)
