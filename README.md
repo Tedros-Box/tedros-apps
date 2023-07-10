@@ -44,6 +44,43 @@ These are just some of the actions you can perform on the Tedros system through 
 
 If the user has a specific question or needs help with a particular feature, just ask Teros the question and he's ready to help!
 
+** Create a function and that's it **
+```java
+/**
+ * This function provides data on product prices 
+ * to artificial intelligence
+ * 
+ * @author Davis Gordon
+ *
+ */
+public class ListProductPriceAiFunction extends TFunction<Empty> {
+
+	public ListProductPriceAiFunction() {
+		super("list_products_price", "Lists all products price", Empty.class, 
+				v->{
+					ServiceLocator loc = ServiceLocator.getInstance();
+					try {
+						IProductPriceController serv = loc.lookup(IProductPriceController.JNDI_NAME);
+						TResult<List<ProductPrice>> res = serv
+							.listAll(TedrosContext.getLoggedUser().getAccessToken(), ProductPrice.class);
+						
+						if(res.getState().equals(TState.SUCCESS) && !res.getValue().isEmpty()) {
+							List<Price> lst = new ArrayList<>();
+							res.getValue().forEach(p-> lst.add(new Price(p)));
+							return new Response("The products price list", lst);
+						}
+					} catch (NamingException e) {
+						e.printStackTrace();
+					}finally {
+						loc.close();
+					}
+					
+					return new Response("No data found");
+				});
+	}
+}
+```
+
 Below is a list of features provided by base applications that can be integrated and customized.
 
 1. Theme Tools:
