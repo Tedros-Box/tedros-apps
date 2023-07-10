@@ -3,6 +3,30 @@
 
 O Tedros é um poderoso framework de desenvolvimento de aplicativos para o sistema Tedros. Com uma ampla gama de funcionalidades e tecnologias avançadas, o Tedros permite criar aplicativos robustos, escaláveis, internacionalizados, ricas e inteligentes de forma declarativa e rápida, sem muitas complicações. Foque no business core a ser desenvolvido o Tedros foi desenhado para gerenciar e integrar os aplicativos entre si e com a inteligencia artificial e visando este cenário foi desenvolvido alguns aplicativos base para dar suporte que podem ser customizados e integrados de acordo com a necessidade do cliente.
 
+
+**Declarativo**
+```java
+@TSelectionModalPresenter(allowsMultipleSelections = true, 
+	page = @TPage(modelView=ChatUserMV.class, 
+		serviceName = IChatUserController.JNDI_NAME, query = 
+		@TQuery(entity=ChatUser.class)),
+	tableView = @TTableView(columns = { 
+		@TTableColumn(text = TUsualKey.NAME, cellValue="name")}))
+public class ChatUserMV extends TEntityModelView<ChatUser> {
+
+	@TLabel(text=TUsualKey.NAME)
+	@TTextField
+	private SimpleStringProperty name;
+	
+	private SimpleStringProperty profiles;
+	
+	public ChatUserMV(ChatUser entity) {
+		super(entity);
+		super.formatToString("%s", name);
+	}
+}
+```
+
 Uma das características mais impressionantes do Tedros é o seu chat com a inteligência artificial chamado Teros. É possível criar funções que dão acesso à inteligência artificial, gerando inúmeras possibilidades de interação.
 
 1. Fazer perguntas: Você pode fazer perguntas para obter informações ou esclarecer dúvidas sobre diversos assuntos.
@@ -20,6 +44,43 @@ Uma das características mais impressionantes do Tedros é o seu chat com a inte
 Essas são apenas algumas das ações que você pode realizar no sistema Tedros através do chat com a inteligência artificial Teros. O Teros está pronto para ajudar e fornecer suporte em diversas áreas, tornando a interação com o sistema mais eficiente e intuitiva.
 
 Se o usuário tiver alguma dúvida específica ou precisar de ajuda com alguma funcionalidade em particular, basta fazer a pergunta ao Teros e ele estará pronto para ajudar!
+
+**Crie uma função e pronto**
+```java
+/**
+ * This function provides data on product prices 
+ * to artificial intelligence
+ * 
+ * @author Davis Gordon
+ *
+ */
+public class ListProductPriceAiFunction extends TFunction<Empty> {
+
+	public ListProductPriceAiFunction() {
+		super("list_products_price", "Lists all products price", Empty.class, 
+			v->{
+				ServiceLocator loc = ServiceLocator.getInstance();
+				try {
+					IProductPriceController serv = loc.lookup(IProductPriceController.JNDI_NAME);
+					TResult<List<ProductPrice>> res = serv
+						.listAll(TedrosContext.getLoggedUser().getAccessToken(), ProductPrice.class);
+					
+					if(res.getState().equals(TState.SUCCESS) && !res.getValue().isEmpty()) {
+						List<Price> lst = new ArrayList<>();
+						res.getValue().forEach(p-> lst.add(new Price(p)));
+						return new Response("The products price list", lst);
+					}
+				} catch (NamingException e) {
+					e.printStackTrace();
+				}finally {
+					loc.close();
+				}
+				
+				return new Response("No data found");
+		});
+	}
+}
+```
 
 Abaixo segue lista de funcionalidades disponibilizadas pelos aplicativos base e que podem ser integrados e customizados.
 
