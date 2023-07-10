@@ -1,7 +1,7 @@
 
 # Tedros
 
-O Tedros é um poderoso framework de desenvolvimento de aplicativos para o sistema Tedros. Com uma ampla gama de funcionalidades e tecnologias avançadas, o Tedros permite criar aplicativos robustos e escaláveis, ricas e inteligentes de forma declarativa e rápida, sem muitas complicações. Foque no business core o Tedros foi desenhado para gerenciar e integrar os aplicativos entre si e com a inteligencia artificial   e visando este cenário foi desenvolvido alguns aplicativos base para dar suporte que podem ser customizados e integrados de acordo com a necessidade do cliente.
+O Tedros é um poderoso framework de desenvolvimento de aplicativos para o sistema Tedros. Com uma ampla gama de funcionalidades e tecnologias avançadas, o Tedros permite criar aplicativos robustos, escaláveis, internacionalizados, ricas e inteligentes de forma declarativa e rápida, sem muitas complicações. Foque no business core a ser desenvolvido o Tedros foi desenhado para gerenciar e integrar os aplicativos entre si e com a inteligencia artificial e visando este cenário foi desenvolvido alguns aplicativos base para dar suporte que podem ser customizados e integrados de acordo com a necessidade do cliente.
 
 Uma das características mais impressionantes do Tedros é o seu chat com a inteligência artificial chamado Teros. É possível criar funções que dão acesso à inteligência artificial, gerando inúmeras possibilidades de interação.
 
@@ -83,7 +83,7 @@ Abaixo segue lista de funcionalidades disponibilizadas pelos aplicativos base e 
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/teros3.png)
 
 **Exemplo de uma view simples com pesquisa e paginacão**
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/productprice.png)
+![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/producprice.png)
 
 **Exemplo de relatório gerado, o logotipo pode ser alterado nas preferencias**
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/pf_rel2.png)
