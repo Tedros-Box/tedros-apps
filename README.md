@@ -58,7 +58,7 @@ public class ListProductPriceAiFunction extends TFunction<Empty> {
 	public ListProductPriceAiFunction() {
 		super("list_products_price", "Lists all products price", Empty.class, 
 			v->{
-			ServiceLocator loc = ServiceLocator.getInstance();
+				ServiceLocator loc = ServiceLocator.getInstance();
 				try {
 					IProductPriceController serv = loc.lookup(IProductPriceController.JNDI_NAME);
 					TResult<List<ProductPrice>> res = serv
