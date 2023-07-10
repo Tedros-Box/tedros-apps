@@ -44,7 +44,7 @@ These are just some of the actions you can perform on the Tedros system through 
 
 If the user has a specific question or needs help with a particular feature, just ask Teros the question and he's ready to help!
 
-** Create a function and that's it **
+**Create a function and that's it**
 ```java
 /**
  * This function provides data on product prices 
