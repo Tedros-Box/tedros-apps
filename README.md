@@ -1,11 +1,9 @@
 
 # Tedros
 
-## O Tedros é um poderoso framework de desenvolvimento de aplicativos para o sistema Tedros. Com uma ampla gama de funcionalidades e tecnologias avançadas, o Tedros permite criar aplicativos robustos e escaláveis.
+O Tedros é um poderoso framework de desenvolvimento de aplicativos para o sistema Tedros. Com uma ampla gama de funcionalidades e tecnologias avançadas, o Tedros permite criar aplicativos robustos e escaláveis.
 
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/tedrosbox.png)
-
-## Uma das características mais impressionantes do Tedros é o seu chat com a inteligência artificial chamado Teros. Com o Teros, é possível criar um chatbot com funções que dão acesso à inteligência artificial, gerando inúmeras possibilidades de interação.
+Uma das características mais impressionantes do Tedros é o seu chat com a inteligência artificial chamado Teros. Com o Teros, é possível criar um chatbot com funções que dão acesso à inteligência artificial, gerando inúmeras possibilidades de interação.
 
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/teros3.png)
 
@@ -21,4 +19,4 @@ Outras funcionalidades do Tedros incluem o gerenciamento de produtos e inventár
 
 Com a integração do chatbot do Teros, você pode criar um assistente virtual que responda a perguntas frequentes dos usuários, forneça informações sobre produtos, faça recomendações personalizadas e até mesmo realize transações. Além disso, o chatbot do Teros pode ser utilizado para suporte técnico, vendas e muito mais.
 
-Acesse a documentação na [Wiki](https://github.com/Tedros-Box/tedros-apps/wiki) para obter mais informações sobre como configurar o ambiente de desenvolvimento e explorar todas as funcionalidades disponíveis.
+[Acesse a documentação na Wiki para obter mais informações sobre como configurar o ambiente de desenvolvimento e explorar todas as funcionalidades disponíveis.](https://github.com/Tedros-Box/tedros-apps/wiki) 
