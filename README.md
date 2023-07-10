@@ -57,26 +57,26 @@ public class ListProductPriceAiFunction extends TFunction<Empty> {
 
 	public ListProductPriceAiFunction() {
 		super("list_products_price", "Lists all products price", Empty.class, 
-				v->{
-					ServiceLocator loc = ServiceLocator.getInstance();
-					try {
-						IProductPriceController serv = loc.lookup(IProductPriceController.JNDI_NAME);
-						TResult<List<ProductPrice>> res = serv
-							.listAll(TedrosContext.getLoggedUser().getAccessToken(), ProductPrice.class);
-						
-						if(res.getState().equals(TState.SUCCESS) && !res.getValue().isEmpty()) {
-							List<Price> lst = new ArrayList<>();
-							res.getValue().forEach(p-> lst.add(new Price(p)));
-							return new Response("The products price list", lst);
-						}
-					} catch (NamingException e) {
-						e.printStackTrace();
-					}finally {
-						loc.close();
-					}
+			v->{
+			ServiceLocator loc = ServiceLocator.getInstance();
+				try {
+					IProductPriceController serv = loc.lookup(IProductPriceController.JNDI_NAME);
+					TResult<List<ProductPrice>> res = serv
+						.listAll(TedrosContext.getLoggedUser().getAccessToken(), ProductPrice.class);
 					
-					return new Response("No data found");
-				});
+					if(res.getState().equals(TState.SUCCESS) && !res.getValue().isEmpty()) {
+						List<Price> lst = new ArrayList<>();
+						res.getValue().forEach(p-> lst.add(new Price(p)));
+						return new Response("The products price list", lst);
+					}
+				} catch (NamingException e) {
+					e.printStackTrace();
+				}finally {
+					loc.close();
+				}
+				
+				return new Response("No data found");
+		});
 	}
 }
 ```
