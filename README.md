@@ -3,6 +3,29 @@
 
 Tedros is a powerful application development framework for the Tedros system. With a wide range of features and advanced technologies, Tedros allows you to create robust, scalable, internationalized, rich and intelligent applications declaratively and quickly, without many complications. Focus on the business core to be developed, Tedros was designed to manage and integrate applications with each other and with artificial intelligence and aiming at this scenario, some base applications were developed to support that can be customized and integrated according to the customer's needs.
 
+**Declaratively**
+```java
+@TSelectionModalPresenter(allowsMultipleSelections = true, 
+	page = @TPage(modelView=ChatUserMV.class, 
+		serviceName = IChatUserController.JNDI_NAME, query = 
+		@TQuery(entity=ChatUser.class)),
+	tableView = @TTableView(columns = { 
+		@TTableColumn(text = TUsualKey.NAME, cellValue="name")}))
+public class ChatUserMV extends TEntityModelView<ChatUser> {
+
+	@TLabel(text=TUsualKey.NAME)
+	@TTextField
+	private SimpleStringProperty name;
+	
+	private SimpleStringProperty profiles;
+	
+	public ChatUserMV(ChatUser entity) {
+		super(entity);
+		super.formatToString("%s", name);
+	}
+}
+```
+
 One of the most impressive features of Tedros is its chat with the artificial intelligence called Teros. It is possible to create functions that give access to artificial intelligence, generating countless possibilities for interaction.
 
 1. Ask questions: You can ask questions to obtain information or clarify doubts about various subjects.
