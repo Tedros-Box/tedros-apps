@@ -170,3 +170,8 @@ Tela do aplicativo da ONG:
 ![Tela 5](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos5.png)
 
 ![Tela 6](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos6.png)
+
+
+# Contato
+Email: tedrosbox@gmail.com
+[LinkedIn](https://www.linkedin.com/in/davis-gordon-dun/)
