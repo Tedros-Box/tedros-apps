@@ -169,3 +169,8 @@ NGO app screen:
 ![Screen 5](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos5.png)
 
 ![Screen 6](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos6.png)
+
+
+# Contact:
+Email: tedrosbox@gmail.com
+[LinkedIn](https://www.linkedin.com/in/davis-gordon-dun/)
