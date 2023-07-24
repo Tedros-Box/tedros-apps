@@ -5,7 +5,6 @@ package org.tedros.services.module.service.model;
 
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
-import org.tedros.extension.model.ModalDocumentMV;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TGenericType;
@@ -104,7 +103,7 @@ public class ServiceMV extends TEntityModelView<Service> {
 	@TLabel(text=TUsualKey.PLANS)
 	@TMultipleSelectionModal(height=100,
 	model = Plan.class, modelView = FindPlanMV.class)
-	@TGenericType(model=Plan.class, modelView=ModalDocumentMV.class)
+	@TGenericType(model=Plan.class, modelView=FindPlanMV.class)
 	public ITObservableList<Plan> plans;
 	
 	@TTextAreaField(maxLength=1024, wrapText=true)

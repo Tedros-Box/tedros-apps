@@ -15,6 +15,7 @@ import org.tedros.extension.model.Contact;
 import org.tedros.extension.model.ContactMV;
 import org.tedros.extension.model.Document;
 import org.tedros.extension.model.ModalDocumentMV;
+import org.tedros.extension.module.doc.trigger.DocumentTrigger;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TDatePickerField;
@@ -26,6 +27,7 @@ import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -63,6 +65,7 @@ import org.tedros.server.query.TLogicOp;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Orientation;
 import javafx.scene.layout.Priority;
 
 /**
@@ -88,7 +91,8 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 
 	@TTabPane(
 		tabs = { 
-			@TTab(text = TUsualKey.MAIN_DATA, fields = {"description", "address"}),
+			@TTab(text = TUsualKey.MAIN_DATA, orientation=Orientation.HORIZONTAL, 
+					fields = {"description", "address"}),
 			@TTab(text = TUsualKey.OBSERVATION, fields = {"observation"}),
 			@TTab(text = TUsualKey.PICTURES, fields = {"image"})})
 	private SimpleLongProperty id;
@@ -97,8 +101,8 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	@TTextAreaField(wrapText=true)
 	@TVBox(	spacing=10, fillWidth=true,
 	pane=@TPane(children={"code", "responsable", "description"}), 
-	vgrow=@TVGrow(priority={@TPriority(field="code", priority=Priority.ALWAYS), 
-			@TPriority(field="responsable", priority=Priority.ALWAYS), 
+	vgrow=@TVGrow(priority={@TPriority(field="code", priority=Priority.NEVER), 
+			@TPriority(field="responsable", priority=Priority.NEVER), 
 			@TPriority(field="description", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty description;
 	
@@ -168,6 +172,7 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	@TLabel(text=TUsualKey.DOCUMENTS)
 	@TEditEntityModal(height=80, modalHeight=490, modalWidth=700,
 	model = Document.class, modelView=ModalDocumentMV.class)
+	@TTrigger(type = DocumentTrigger.class)
 	@TGenericType(model=Document.class, modelView=ModalDocumentMV.class)
 	protected ITObservableList<ModalDocumentMV> documents;
 	
@@ -180,14 +185,11 @@ public class CostCenterMV extends TEntityModelView<CostCenter> {
 	@TTextAreaField(wrapText=true)
 	private SimpleStringProperty observation;
 
-	
 	public CostCenterMV(CostCenter entity) {
 		super(entity);
 		super.formatToString(TFormatter.create()
 				.add("%s", legalPerson)
-				.add(code, obj->{
-					return " "+obj.toString();
-				})
+				.add(code, obj->" "+obj.toString())
 				.add(" %s", name)
 			);
 	}

@@ -13,7 +13,7 @@ import org.tedros.person.ejb.controller.ILegalPersonReportController;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.report.model.LegalPersonItemModel;
 import org.tedros.person.report.model.LegalPersonReportModel;
-import org.tedros.person.server.service.LegalPersonService;
+import org.tedros.person.server.ejb.service.LegalPersonService;
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.result.TResult;
 import org.tedros.server.result.TResult.TState;

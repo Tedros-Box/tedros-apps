@@ -13,7 +13,7 @@ import org.tedros.server.controller.ITSecureEjbController;
  *
  */
 @Remote
-public interface IPersonController extends ITSecureEjbController<Person> {
+public interface IPersonController<E extends Person> extends ITSecureEjbController<E> {
 
 	static final String JNDI_NAME = "IPersonControllerRemote";
 		

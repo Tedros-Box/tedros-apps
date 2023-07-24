@@ -5,6 +5,7 @@ package org.tedros.extension.module.doc.helper;
 
 import java.util.Date;
 
+import org.tedros.core.TLanguage;
 import org.tedros.core.context.TModuleContext;
 import org.tedros.core.context.TedrosAppManager;
 import org.tedros.core.notify.model.TNotify;
@@ -13,6 +14,7 @@ import org.tedros.extension.model.ContactType;
 import org.tedros.extension.model.Document;
 import org.tedros.extension.module.doc.DocumentModule;
 import org.tedros.extension.module.doc.model.DocumentMV;
+import org.tedros.fx.TUsualKey;
 import org.tedros.fx.builder.TGenericBuilder;
 
 /**
@@ -43,8 +45,15 @@ public class TNotifyBuilder extends TGenericBuilder<TNotify> {
 		if(d.getFile()!=null)
 			n.setFile(d.getFile());
 		
+		StringBuilder sb = new StringBuilder("");
+		sb.append(TLanguage.getInstance().getString(TUsualKey.NAME)+": "+d.getName()+"<hr>");
 		if(d.getContent()!=null)
-			n.setContent(d.getContent());
+			sb.append(d.getContent()+"<hr>");
+		if(d.getValue()!=null)
+			sb.append(TLanguage.getInstance().getString(TUsualKey.ADDITIONAL_DATA)+": "+d.getValue());
+		
+		if(!"".equals(sb.toString()))
+			n.setContent(sb.toString());
 		
 		if(d.getName()!=null)
 			n.setSubject(d.getName());

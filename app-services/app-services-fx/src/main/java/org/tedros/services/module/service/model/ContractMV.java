@@ -9,6 +9,7 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.extension.model.Document;
 import org.tedros.extension.model.ModalDocumentMV;
+import org.tedros.extension.module.doc.trigger.DocumentTrigger;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TDatePickerField;
@@ -25,6 +26,7 @@ import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -141,6 +143,7 @@ public class ContractMV extends TEntityModelView<Contract> {
 	@TLabel(text=TUsualKey.DOCUMENTS)
 	@TEditEntityModal(modalHeight=490, modalWidth=700, height=80,
 	model = Document.class, modelView=ModalDocumentMV.class)
+	@TTrigger(type = DocumentTrigger.class)
 	@TGenericType(model=Document.class, modelView=ModalDocumentMV.class)
 	public ITObservableList<ModalDocumentMV> documents;
 	

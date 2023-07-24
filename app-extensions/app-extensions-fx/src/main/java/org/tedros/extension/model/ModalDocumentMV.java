@@ -3,11 +3,15 @@
  */
 package org.tedros.extension.model;
 
+import java.util.Date;
+
 import org.tedros.common.model.TFileEntity;
+import org.tedros.core.model.TFormatter;
 import org.tedros.extension.ejb.controller.IDocumentController;
 import org.tedros.extension.ejb.controller.IExtensionDomainController;
 import org.tedros.extension.module.doc.model.DocumentStatusMV;
 import org.tedros.extension.module.doc.model.DocumentTypeMV;
+import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TFileField;
@@ -94,8 +98,12 @@ public class ModalDocumentMV extends TEntityModelView<Document> {
 	
 	public ModalDocumentMV(Document entity) {
 		super(entity);
-		super.formatToString("%s %s", code, name);
+		if(entity.isNew())
+			entity.setInsertDate(new Date());
+		super.formatToString(TFormatter.create()
+				.add(code, o->o.toString()+" ")
+				.add(name, o->o.toString()+" ")
+				.add(value, o->o.toString()));
 	}
-
 
 }

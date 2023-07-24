@@ -17,7 +17,6 @@ import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.page.TPage;
-import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
@@ -27,7 +26,7 @@ import org.tedros.fx.annotation.query.TOrder;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.person.PersonKeys;
 import org.tedros.person.domain.DomainApp;
-import org.tedros.person.ejb.controller.ICustomerController;
+import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.ejb.controller.IPersonStatusController;
 import org.tedros.person.ejb.controller.IPersonTypeController;
 import org.tedros.person.model.Customer;
@@ -46,18 +45,16 @@ import javafx.scene.layout.Priority;
  */
 
 @TForm(header = "", showBreadcrumBar=false, scroll=true)
-@TEjbService(serviceName = ICustomerController.JNDI_NAME, model=Customer.class)
+@TEjbService(serviceName = IPersonController.JNDI_NAME, model=Customer.class)
 @TListViewPresenter(
-		page=@TPage(serviceName = ICustomerController.JNDI_NAME,
+		page=@TPage(serviceName = IPersonController.JNDI_NAME,
 		query = @TQuery(entity=Customer.class, condition= {
 				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME),
 				@TCondition(field = "lastName", operator=TCompareOp.LIKE, label=TUsualKey.LAST_NAME)},
 			orderBy= {@TOrder(label = TUsualKey.NAME, field = "name"),
 					@TOrder(label = TUsualKey.LAST_NAME, field = "lastName")}
 				),showSearch=true, showOrderBy=true),
-		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_CUSTOMERS,
-		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))
+		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_CUSTOMERS)))
 @TSecurity(id=DomainApp.CUSTOMER_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_CUSTOMER, viewName = PersonKeys.VIEW_CUSTOMERS,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
