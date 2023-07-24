@@ -9,6 +9,7 @@ import org.tedros.extension.model.Contact;
 import org.tedros.extension.model.ContactMV;
 import org.tedros.extension.model.Document;
 import org.tedros.extension.model.ModalDocumentMV;
+import org.tedros.extension.module.doc.trigger.DocumentTrigger;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TEditEntityModal;
@@ -17,6 +18,7 @@ import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
@@ -66,6 +68,7 @@ public class PersonMV<P extends Person> extends TEntityModelView<P> {
 	@TLabel(text=TUsualKey.DOCUMENTS)
 	@TEditEntityModal(modalHeight=490, modalWidth=700,
 	model = Document.class, modelView=ModalDocumentMV.class)
+	@TTrigger(type = DocumentTrigger.class)
 	@TGenericType(model=Document.class, modelView=ModalDocumentMV.class)
 	protected ITObservableList<ModalDocumentMV> documents;
 

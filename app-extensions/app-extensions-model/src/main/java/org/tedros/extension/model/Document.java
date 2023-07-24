@@ -21,6 +21,7 @@ import javax.persistence.UniqueConstraint;
 import org.tedros.common.model.TFileEntity;
 import org.tedros.extension.domain.DomainSchema;
 import org.tedros.extension.domain.DomainTables;
+import org.tedros.server.entity.TReceptiveEntity;
 import org.tedros.server.entity.TVersionEntity;
 
 import com.fasterxml.jackson.annotation.JsonClassDescription;
@@ -34,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 @Entity
 @Table(name = DomainTables.document, schema = DomainSchema.schema)
 @JsonClassDescription("A document, can be ID number, fiscal number, contract or other type")
-public class Document extends TVersionEntity {
+public class Document extends TReceptiveEntity {
 	
 	private static final long serialVersionUID = -2382651197866734106L;
 

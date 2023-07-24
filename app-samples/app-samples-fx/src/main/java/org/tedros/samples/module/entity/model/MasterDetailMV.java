@@ -9,6 +9,7 @@ import org.tedros.extension.model.Contact;
 import org.tedros.extension.model.ContactMV;
 import org.tedros.extension.model.Document;
 import org.tedros.extension.model.ModalDocumentMV;
+import org.tedros.extension.module.doc.trigger.DocumentTrigger;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TDetailField;
@@ -138,6 +139,7 @@ public class MasterDetailMV extends TEntityModelView<SampleA> {
 	@TEditEntityModal(height=70,
 	modalHeight=490, modalWidth=700,
 	model = Document.class, modelView=ModalDocumentMV.class)
+	@TTrigger(type = DocumentTrigger.class)
 	@TGenericType(model=Document.class, modelView=ModalDocumentMV.class)
 	protected ITObservableList<ModalDocumentMV> documents;
 
