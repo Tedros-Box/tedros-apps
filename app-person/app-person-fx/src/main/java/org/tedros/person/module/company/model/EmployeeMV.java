@@ -74,7 +74,7 @@ import javafx.scene.layout.Priority;
 public class EmployeeMV extends NaturalPersonMV<Employee> {
 
 	@TTabPane(tabs = { 
-		@TTab(text = TUsualKey.MAIN_DATA, fields={"lastName","type", "sex", "address"}), 
+		@TTab(text = TUsualKey.MAIN_DATA, scroll=false, fields={"lastName","type", "sex", "address"}), 
 		@TTab(text = TUsualKey.DESCRIPTION,fields={"description"}),
 		@TTab(text = TUsualKey.OBSERVATION,fields={"observation"}), 
 		@TTab(text = TUsualKey.EVENTS,fields={"events"})

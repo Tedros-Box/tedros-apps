@@ -59,8 +59,6 @@
 		<class>org.tedros.person.model.NaturalType</class>
 		<class>org.tedros.person.model.NaturalStatus</class>
 		
-		<class>org.tedros.services.model.Contracted</class>
-		<class>org.tedros.services.model.Contractor</class>
 		<class>org.tedros.services.model.PaymentPlan</class>
 		<class>org.tedros.services.model.Plan</class>
 		<class>org.tedros.services.model.Service</class>

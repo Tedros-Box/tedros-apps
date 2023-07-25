@@ -11,7 +11,6 @@ import org.tedros.extension.ejb.controller.IDocumentController;
 import org.tedros.extension.ejb.controller.IExtensionDomainController;
 import org.tedros.extension.module.doc.model.DocumentStatusMV;
 import org.tedros.extension.module.doc.model.DocumentTypeMV;
-import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TFileField;

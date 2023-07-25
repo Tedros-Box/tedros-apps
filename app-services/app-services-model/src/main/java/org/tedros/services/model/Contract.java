@@ -29,12 +29,16 @@ import org.tedros.services.domain.DomainSchema;
 import org.tedros.services.domain.DomainTables;
 import org.tedros.services.domain.Status;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 /**
  * @author Davis Gordon
  *
  */
 @Entity
 @Table(name=DomainTables.contract, schema=DomainSchema.schema)
+@JsonClassDescription("service contract")
 public class Contract extends TVersionEntity {
 
 	private static final long serialVersionUID = 1295508432603341688L;
@@ -65,6 +69,7 @@ public class Contract extends TVersionEntity {
 	@OneToMany(orphanRemoval=true, 
 			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="id_contract", nullable=false, updatable=false)
+	@JsonPropertyDescription("contractual agreements on payment amounts")
 	private Set<ContractualAgreement> agreements;
 	
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
@@ -78,6 +83,7 @@ public class Contract extends TVersionEntity {
 	
 	@Column
 	@Enumerated(EnumType.STRING)
+	@JsonPropertyDescription("contract status can be ENABLED, DISABLED, or SUSPENDED")
 	private Status status;
 	
 	@Column

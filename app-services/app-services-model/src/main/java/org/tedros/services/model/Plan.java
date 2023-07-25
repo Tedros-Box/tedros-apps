@@ -24,12 +24,16 @@ import org.tedros.services.domain.DomainSchema;
 import org.tedros.services.domain.DomainTables;
 import org.tedros.services.domain.Status;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 /**
  * @author Davis Gordon
  *
  */
 @Entity
 @Table(name=DomainTables.plan, schema=DomainSchema.schema)
+@JsonClassDescription("payment plan")
 public class Plan extends TVersionEntity {
 
 	private static final long serialVersionUID = 8033991483988619245L;
@@ -53,13 +57,13 @@ public class Plan extends TVersionEntity {
 	
 	@Column
 	@Enumerated(EnumType.STRING)
+	@JsonPropertyDescription("contract status can be ENABLED, DISABLED, or SUSPENDED")
 	private Status status;
 	
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date beginDate;
 	
-
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
