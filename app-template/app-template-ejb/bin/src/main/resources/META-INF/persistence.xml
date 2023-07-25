@@ -33,8 +33,6 @@
 		<class>org.tedros.location.model.StreetType</class>
 		<class>org.tedros.location.model.PlaceType</class>
 		
-		<class>org.tedros.services.model.Contracted</class>
-		<class>org.tedros.services.model.Contractor</class>
 		<class>org.tedros.services.model.PaymentPlan</class>
 		<class>org.tedros.services.model.Plan</class>
 		<class>org.tedros.services.model.Service</class>

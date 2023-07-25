@@ -11,12 +11,15 @@ import org.tedros.server.entity.TVersionEntity;
 import org.tedros.services.domain.DomainSchema;
 import org.tedros.services.domain.DomainTables;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+
 /**
  * @author Davis Gordon
  *
  */
 @Entity
 @Table(name=DomainTables.service_type, schema=DomainSchema.schema)
+@JsonClassDescription("service type")
 public class ServiceType extends TVersionEntity {
 
 	private static final long serialVersionUID = -8008690210025662586L;

@@ -19,12 +19,16 @@ import org.tedros.server.entity.TVersionEntity;
 import org.tedros.services.domain.DomainSchema;
 import org.tedros.services.domain.DomainTables;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 /**
  * @author Davis Gordon
  *
  */
 @Entity
 @Table(name=DomainTables.service, schema=DomainSchema.schema)
+@JsonClassDescription("service to be provided")
 public class Service extends TVersionEntity {
 	
 	private static final long serialVersionUID = -264423263431230419L;
@@ -52,6 +56,7 @@ public class Service extends TVersionEntity {
 	inverseJoinColumns=@JoinColumn(name="plan_id"),
 	uniqueConstraints=@UniqueConstraint(name="ServPlanUK", 
 	columnNames = { "serv_id","plan_id"}))
+	@JsonPropertyDescription("payment plans")
 	private Set<Plan> plans;
 
 	public String getCode() {
