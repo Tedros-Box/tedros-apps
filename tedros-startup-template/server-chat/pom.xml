@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.tedros.archetype</groupId>
     <artifactId>tedros-startup-template</artifactId>
-    <version>8-2.2.0</version>
+    <version>8-2.2.1</version>
   </parent>
   <artifactId>server-chat</artifactId>
   <name>Chat Socket Server</name>
