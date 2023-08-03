@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.tedros</groupId>
 		<artifactId>app-samples</artifactId>
-		<version>8-2.2.0</version>
+		<version>8-2.2.1</version>
 	</parent>
 
 	<!-- MODULE INFO -->
@@ -36,14 +36,14 @@
 		<dependency>
 			<groupId>org.tedros</groupId>
 			<artifactId>app-stock-ejb-client</artifactId>
-			<version>8-2.2.0</version>
+			<version>8-2.2.1</version>
 			<scope>compile</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.tedros</groupId>
 			<artifactId>app-samples-ejb-client</artifactId>
-			<version>8-2.2.0</version>
+			<version>8-2.2.1</version>
 			<scope>compile</scope>
 		</dependency>
 
