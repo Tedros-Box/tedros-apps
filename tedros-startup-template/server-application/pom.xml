@@ -14,6 +14,12 @@
   <dependencies>
 	<dependency>
 	    <groupId>org.tedros</groupId>
+	    <artifactId>tedros-webapp</artifactId>
+	    <type>war</type>
+	    <version>8-5.2.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.tedros</groupId>
 	    <artifactId>tedros-core-ejb-ear</artifactId>
 	    <type>ear</type>
 	    <version>${tedros.jee}</version>
@@ -337,6 +343,12 @@
 		        <groupId>org.tedros</groupId>
 		        <artifactId>app-extensions-ejb-ear</artifactId>
 		      	<type>ear</type>
+		      </deployable> 
+		      
+		     <deployable>
+		        <groupId>org.tedros</groupId>
+		        <artifactId>tedros-webapp</artifactId>
+		      	<type>war</type>
 		      </deployable> 
 		      
 		    </deployables>

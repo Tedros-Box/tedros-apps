@@ -25,7 +25,7 @@ public class EmployeeEAO extends TGenericEAO<Employee> {
 		
 		StringBuffer sbf = new StringBuffer("select distinct e from Employee e ");
 		sbf.append("left join e.type t ");
-		sbf.append("left join e.employer a ");
+		sbf.append("left join e.legalPerson a ");
 		sbf.append(" where 1=1 ");
 		
 		if(StringUtils.isNotBlank(m.getName()))
