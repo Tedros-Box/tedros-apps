@@ -3,6 +3,7 @@
  */
 package org.tedros.person.model;
 
+import javax.persistence.Cacheable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonClassDescription;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.philanthrope, schema = DomainSchema.schema)
 @DiscriminatorValue("PHLNTHRP")
 @JsonClassDescription("A Philanthrope")

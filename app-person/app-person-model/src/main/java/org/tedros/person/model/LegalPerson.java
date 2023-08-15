@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -28,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.legal_person, schema = DomainSchema.schema)
 @DiscriminatorValue("LGL_PRSN")
 @JsonClassDescription("A legal person")

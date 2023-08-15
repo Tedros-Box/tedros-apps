@@ -44,7 +44,7 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
-@TForm(header = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IPersonController.JNDI_NAME, model=Member.class)
 @TListViewPresenter(
 		page=@TPage(serviceName = IPersonController.JNDI_NAME,
@@ -64,7 +64,7 @@ import javafx.scene.layout.Priority;
 public class MemberMV extends NaturalPersonMV<Member> {
 
 	@TTabPane(tabs = { 
-		@TTab( text = TUsualKey.MAIN_DATA,fields={"lastName","sex", "type", "address"}),
+		@TTab( text = TUsualKey.MAIN_DATA, scroll=true, fields={"lastName","sex", "type", "address"}),
 		@TTab(text = TUsualKey.DESCRIPTION, fields={"description"}),
 		@TTab(text = TUsualKey.OBSERVATION, fields={"observation"}), 
 		@TTab(text = TUsualKey.EVENTS,fields={"events"})

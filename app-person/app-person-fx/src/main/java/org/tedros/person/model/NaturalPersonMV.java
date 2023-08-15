@@ -18,10 +18,8 @@ import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TRadio;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.control.TTrigger;
-import org.tedros.fx.annotation.layout.THBox;
-import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TFlowPane;
 import org.tedros.fx.annotation.layout.TPane;
-import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.query.TCondition;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.person.converter.CivilStatusConverter;
@@ -36,7 +34,6 @@ import org.tedros.server.query.TLogicOp;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
@@ -46,11 +43,8 @@ public class NaturalPersonMV<P extends NaturalPerson> extends PersonMV<P> {
 
 	@TLabel(text=TUsualKey.LAST_NAME)
 	@TTextField(maxLength=60)
-	@THBox(	pane=@TPane(children={"name", "lastName", "birthDate", "tedrosUser"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="name", priority=Priority.ALWAYS), 
-			@TPriority(field="lastName", priority=Priority.ALWAYS), 
-			@TPriority(field="birthDate", priority=Priority.SOMETIMES), 
-			@TPriority(field="tedrosUser", priority=Priority.SOMETIMES)}))
+	@TFlowPane(hgap=HGAP, vgap=VGAP,
+	pane=@TPane(children={"name", "lastName", "birthDate", "tedrosUser"}))
 	protected SimpleStringProperty lastName;
 	
 	@TLabel(text=TUsualKey.BIRTHDATE)
@@ -73,10 +67,8 @@ public class NaturalPersonMV<P extends NaturalPerson> extends PersonMV<P> {
 		radio = { @TRadio(text = TUsualKey.FEMININE, userData = TUsualKey.FEMININE ),
 				@TRadio(text = TUsualKey.MASCULINE, userData = TUsualKey.MASCULINE )
 		})
-	@THBox(	pane=@TPane(children={"sex", "gender", "civilStatus"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="sex", priority=Priority.ALWAYS), 
-			@TPriority(field="gender", priority=Priority.ALWAYS), 
-			@TPriority(field="civilStatus", priority=Priority.ALWAYS)}))
+	@TFlowPane(hgap=HGAP, vgap=VGAP,
+		pane=@TPane(children={"sex", "gender", "civilStatus"}))
 	protected SimpleObjectProperty<Sex> sex;
 	
 	@TLabel(text=TUsualKey.GENDER)

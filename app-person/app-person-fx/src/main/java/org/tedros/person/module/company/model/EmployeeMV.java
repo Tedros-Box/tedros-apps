@@ -17,10 +17,8 @@ import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.form.TForm;
-import org.tedros.fx.annotation.layout.THBox;
-import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TFlowPane;
 import org.tedros.fx.annotation.layout.TPane;
-import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
@@ -47,14 +45,13 @@ import org.tedros.server.query.TLogicOp;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
  *
  */
 
-@TForm(header = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IPersonController.JNDI_NAME, model=Employee.class)
 @TListViewPresenter(
 		page=@TPage(serviceName = IPersonController.JNDI_NAME,
@@ -74,7 +71,7 @@ import javafx.scene.layout.Priority;
 public class EmployeeMV extends NaturalPersonMV<Employee> {
 
 	@TTabPane(tabs = { 
-		@TTab(text = TUsualKey.MAIN_DATA, scroll=false, fields={"lastName","type", "sex", "address"}), 
+		@TTab(text = TUsualKey.MAIN_DATA, scroll=true, fields={"lastName","type", "sex", "address"}), 
 		@TTab(text = TUsualKey.DESCRIPTION,fields={"description"}),
 		@TTab(text = TUsualKey.OBSERVATION,fields={"observation"}), 
 		@TTab(text = TUsualKey.EVENTS,fields={"events"})
@@ -85,15 +82,8 @@ public class EmployeeMV extends NaturalPersonMV<Employee> {
 	@TComboBoxField(
 	process=@TProcess(service = IPersonTypeController.JNDI_NAME, 
 	modelView=StaffTypeMV.class, query=@TQuery(entity=StaffType.class)))
-	@THBox(	spacing=10, fillHeight=true,
-			pane=@TPane(children={"type", "status", "hiringDate", "resignationDate", "legalPerson", "costCenter"}), 
-	hgrow=@THGrow(priority={
-			@TPriority(field="costCenter", priority=Priority.ALWAYS), 
-			@TPriority(field="legalPerson", priority=Priority.ALWAYS),
-			@TPriority(field="type", priority=Priority.NEVER), 
-			@TPriority(field="status", priority=Priority.NEVER), 
-			@TPriority(field="hiringDate", priority=Priority.NEVER), 
-			@TPriority(field="resignationDate", priority=Priority.NEVER)}))
+	@TFlowPane(hgap=HGAP, vgap=VGAP,
+	pane=@TPane(children={"type", "status", "hiringDate", "resignationDate", "legalPerson", "costCenter"}))
 	private SimpleObjectProperty<StaffType> type;
 	
 	@TLabel(text=TUsualKey.STATUS)

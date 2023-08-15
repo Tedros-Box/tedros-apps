@@ -5,6 +5,7 @@ package org.tedros.person.model;
 
 import java.util.Date;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.natural_person, schema = DomainSchema.schema)
 @DiscriminatorValue("NTRL_PRSN")
 @JsonClassDescription("A natural person")

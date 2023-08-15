@@ -115,6 +115,16 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 	columnNames = { "person_id","doc_id"}))
 	private Set<Document> documents;
 	
+	@JsonPropertyDescription("Categories")
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name=DomainTables.personcateg_person, 
+	schema=DomainSchema.schema,
+	inverseJoinColumns=@JoinColumn(name="categ_id"), 
+	joinColumns=@JoinColumn(name="person_id"),
+	uniqueConstraints=@UniqueConstraint(name="PersonCategoriestUK", 
+	columnNames = { "person_id","categ_id"}))
+	private Set<PersonCategory> categories;
+	
 	public String getName() {
 		return name;
 	}
@@ -227,12 +237,30 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 		this.status = status;
 	}
 
+	/**
+	 * @return the categories
+	 */
+	public Set<PersonCategory> getCategories() {
+		return categories;
+	}
+
+	/**
+	 * @param categories the categories to set
+	 */
+	public void setCategories(Set<PersonCategory> categories) {
+		this.categories = categories;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((attributes == null) ? 0 : attributes.hashCode());
+		result = prime * result + ((categories == null) ? 0 : categories.hashCode());
 		result = prime * result + ((contacts == null) ? 0 : contacts.hashCode());
 		result = prime * result + ((dType == null) ? 0 : dType.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
@@ -246,13 +274,16 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Person))
+		if (getClass() != obj.getClass())
 			return false;
 		Person other = (Person) obj;
 		if (address == null) {
@@ -264,6 +295,11 @@ public class Person extends TReceptiveEntity implements ITDiscriminable{
 			if (other.attributes != null)
 				return false;
 		} else if (!attributes.equals(other.attributes))
+			return false;
+		if (categories == null) {
+			if (other.categories != null)
+				return false;
+		} else if (!categories.equals(other.categories))
 			return false;
 		if (contacts == null) {
 			if (other.contacts != null)
