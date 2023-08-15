@@ -12,12 +12,12 @@
   <description>The server application project configuration</description>
   
   <dependencies>
-	<dependency>
+	<!-- <dependency>
 	    <groupId>org.tedros</groupId>
 	    <artifactId>tedros-webapp</artifactId>
 	    <type>war</type>
 	    <version>8-5.2.1</version>
-	</dependency>
+	</dependency> -->
 	<dependency>
 	    <groupId>org.tedros</groupId>
 	    <artifactId>tedros-core-ejb-ear</artifactId>
@@ -345,11 +345,11 @@
 		      	<type>ear</type>
 		      </deployable> 
 		      
-		     <deployable>
+		    <!--  <deployable>
 		        <groupId>org.tedros</groupId>
 		        <artifactId>tedros-webapp</artifactId>
 		      	<type>war</type>
-		      </deployable> 
+		      </deployable>  -->
 		      
 		    </deployables>
 		    <packager>

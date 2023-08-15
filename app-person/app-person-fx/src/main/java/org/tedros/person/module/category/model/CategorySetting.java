@@ -13,13 +13,10 @@ import org.tedros.person.table.PersonTV;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.WeakChangeListener;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.WeakListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.WeakEventHandler;
-import javafx.scene.control.TableView;
 
 /**
  * @author Davis Gordon
@@ -40,16 +37,13 @@ public class CategorySetting extends TSetting {
 		repo.clear();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		repo = new TRepository();
 		CategoryMV mv = super.getModelView();
 		TAutoCompleteEntity ace = super.getControl("item");
 		TButton addBtn = super.getControl("addBtn");
-		TButton remBtn = super.getControl("remBtn");
-		remBtn.setDisable(true);
-		TableView<PersonTV> tbv = super.getControl("persons");
+		
 		ObservableList<PersonTV> lst = mv.getPersons();
 		SimpleObjectProperty<PersonTV> item = mv.getItem();
 		
@@ -67,23 +61,6 @@ public class CategorySetting extends TSetting {
 		};
 		repo.add("ev1", ev1);
 		addBtn.setOnAction(new WeakEventHandler<>(ev1));
-		
-		EventHandler<ActionEvent> ev2 = ev ->{
-			lst.removeAll(tbv.getSelectionModel().getSelectedItems());
-		};
-		repo.add("ev2", ev2);
-		remBtn.setOnAction(new WeakEventHandler<>(ev2));
-		
-		ListChangeListener<PersonTV> lchl = ch ->{
-			if(ch.next())
-				remBtn.setDisable(ch.getList().size()==0);
-		};
-		repo.add("lchl", lchl);
-		
-		tbv.getSelectionModel().getSelectedItems()
-		.addListener(new WeakListChangeListener<>(lchl));
-		
-		
 	}
 
 }

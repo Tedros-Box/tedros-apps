@@ -12,10 +12,8 @@ import org.tedros.fx.annotation.control.TProcess;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.form.TForm;
-import org.tedros.fx.annotation.layout.THBox;
-import org.tedros.fx.annotation.layout.THGrow;
+import org.tedros.fx.annotation.layout.TFlowPane;
 import org.tedros.fx.annotation.layout.TPane;
-import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
@@ -39,14 +37,13 @@ import org.tedros.server.query.TCompareOp;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.layout.Priority;
 
 /**
  * @author Davis Gordon
  *
  */
 
-@TForm(header = "", showBreadcrumBar=false, scroll=true)
+@TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IPersonController.JNDI_NAME, model=ClientCompany.class)
 @TListViewPresenter(
 		page=@TPage(serviceName = IPersonController.JNDI_NAME,
@@ -66,7 +63,7 @@ import javafx.scene.layout.Priority;
 public class ClientCompanyMV extends  LegalPersonMV<ClientCompany> {
 
 	@TTabPane(tabs = { 
-		@TTab(text = TUsualKey.MAIN_DATA, fields={"otherName","type", "address"}),
+		@TTab(text = TUsualKey.MAIN_DATA, scroll=true, fields={"otherName","type", "address"}),
 		@TTab(text = TUsualKey.DESCRIPTION, fields={"description"}),
 		@TTab(text = TUsualKey.OBSERVATION, fields={"observation"}), 
 		@TTab(text = TUsualKey.EVENTS, fields={"events"})
@@ -77,10 +74,8 @@ public class ClientCompanyMV extends  LegalPersonMV<ClientCompany> {
 	@TComboBoxField(
 	process=@TProcess(service = IPersonTypeController.JNDI_NAME, 
 	modelView=ClientCompanyTypeMV.class, query=@TQuery(entity=ClientCompanyType.class)))
-	@THBox(	spacing=10, fillHeight=true,
-			pane=@TPane(children={"type", "status"}), 
-	hgrow=@THGrow(priority={@TPriority(field="type", priority=Priority.NEVER), 
-			@TPriority(field="status", priority=Priority.NEVER)}))
+	@TFlowPane(hgap=HGAP, vgap=VGAP,
+			pane=@TPane(children={"type", "status"}))
 	private SimpleObjectProperty<ClientCompanyType> type;
 	
 	@TLabel(text=TUsualKey.STATUS)

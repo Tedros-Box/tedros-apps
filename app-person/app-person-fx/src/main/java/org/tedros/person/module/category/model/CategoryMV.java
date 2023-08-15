@@ -19,6 +19,7 @@ import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTableView.TTableViewSelectionModel;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.effect.TDropShadow;
 import org.tedros.fx.annotation.effect.TEffect;
 import org.tedros.fx.annotation.form.TForm;
@@ -43,7 +44,7 @@ import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.control.TInsets;
 import org.tedros.fx.annotation.scene.control.TLabeled;
 import org.tedros.fx.annotation.text.TText;
-import org.tedros.fx.builder.TEditModelRowFactoryCallBackBuilder;
+import org.tedros.fx.builder.TOpenModelRowFactoryCallBackBuilder;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.model.TEntityModelView;
@@ -53,6 +54,7 @@ import org.tedros.person.ejb.controller.IPersonCategoryController;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.Person;
 import org.tedros.person.model.PersonCategory;
+import org.tedros.person.module.category.trigger.SetCategoryTrigger;
 import org.tedros.person.table.PersonTV;
 import org.tedros.server.query.TCompareOp;
 
@@ -89,7 +91,7 @@ public class CategoryMV extends TEntityModelView<PersonCategory> {
 	@TTabPane(
 		tabs = { 
 			@TTab(text = TUsualKey.MAIN_DATA,fields = {"code", "description"}),
-			@TTab(text = TUsualKey.ADDITIONAL_DATA, fields = {"listHeader", "item", "persons", "remBtn"})})
+			@TTab(text = TUsualKey.ADDITIONAL_DATA, fields = {"listHeader", "item", "persons"})})
 	private SimpleLongProperty id;
 	
 	@TLabel(text=TUsualKey.CODE)
@@ -135,18 +137,15 @@ public class CategoryMV extends TEntityModelView<PersonCategory> {
 	@TTableView(editable=false,
 		selectionModel=@TTableViewSelectionModel(
 				selectionMode=SelectionMode.MULTIPLE, parse = true), 
-		rowFactory=TEditModelRowFactoryCallBackBuilder.class,
+		rowFactory=TOpenModelRowFactoryCallBackBuilder.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, maxHeight=350, parse = true),
 		columns = { 
 			@TTableColumn(cellValue="label", text = TUsualKey.NAME)
 	})
+	@TTrigger(type = SetCategoryTrigger.class)
 	@TGenericType(model=Person.class, modelView=PersonTV.class)
 	private ITObservableList<PersonTV> persons;
 
-	@TButtonField(labeled = 
-			@TLabeled(parse = true, text=TFxKey.BUTTON_REMOVE))
-	private SimpleStringProperty remBtn;
-	
 	
 	public CategoryMV(PersonCategory entity) {
 		super(entity);
@@ -222,20 +221,6 @@ public class CategoryMV extends TEntityModelView<PersonCategory> {
 	 */
 	public void setPersons(ITObservableList<PersonTV> person) {
 		this.persons = person;
-	}
-
-	/**
-	 * @return the remBtn
-	 */
-	public SimpleStringProperty getRemBtn() {
-		return remBtn;
-	}
-
-	/**
-	 * @param remBtn the remBtn to set
-	 */
-	public void setRemBtn(SimpleStringProperty remBtn) {
-		this.remBtn = remBtn;
 	}
 
 	public SimpleLongProperty getId() {

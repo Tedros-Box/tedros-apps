@@ -5,24 +5,26 @@ package org.tedros.person.model;
 
 import java.util.Set;
 
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
 import org.tedros.server.entity.TVersionEntity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Davis Gordon
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.person_category, schema = DomainSchema.schema)
 public class PersonCategory extends TVersionEntity {
 
@@ -37,13 +39,10 @@ public class PersonCategory extends TVersionEntity {
 	@Column(length=250)
 	private String description;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name=DomainTables.personcateg_person, 
-	schema=DomainSchema.schema,
-	joinColumns=@JoinColumn(name="categ_id"), 
-	inverseJoinColumns=@JoinColumn(name="person_id"),
-	uniqueConstraints=@UniqueConstraint(name="PersonCategoriestUK", 
-	columnNames = { "person_id","categ_id"}))
+	@JsonIgnore
+	@ManyToMany(mappedBy="categories", 
+	cascade= {CascadeType.MERGE, CascadeType.PERSIST},
+	fetch=FetchType.EAGER)
 	private Set<Person> persons;
 	
 	public String getName() {
@@ -77,6 +76,9 @@ public class PersonCategory extends TVersionEntity {
 		this.persons = persons;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -84,17 +86,19 @@ public class PersonCategory extends TVersionEntity {
 		result = prime * result + ((code == null) ? 0 : code.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((persons == null) ? 0 : persons.hashCode());
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof PersonCategory))
+		if (getClass() != obj.getClass())
 			return false;
 		PersonCategory other = (PersonCategory) obj;
 		if (code == null) {
@@ -111,11 +115,6 @@ public class PersonCategory extends TVersionEntity {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (persons == null) {
-			if (other.persons != null)
-				return false;
-		} else if (!persons.equals(other.persons))
 			return false;
 		return true;
 	}
