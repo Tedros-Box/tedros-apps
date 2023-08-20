@@ -44,7 +44,7 @@ import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.control.TInsets;
 import org.tedros.fx.annotation.scene.control.TLabeled;
 import org.tedros.fx.annotation.text.TText;
-import org.tedros.fx.builder.TOpenModelRowFactoryCallBackBuilder;
+import org.tedros.fx.builder.TRowFactoryWithOpenAction;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.model.TEntityModelView;
@@ -137,7 +137,7 @@ public class CategoryMV extends TEntityModelView<PersonCategory> {
 	@TTableView(editable=false,
 		selectionModel=@TTableViewSelectionModel(
 				selectionMode=SelectionMode.MULTIPLE, parse = true), 
-		rowFactory=TOpenModelRowFactoryCallBackBuilder.class,
+		rowFactory=TRowFactoryWithOpenAction.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, maxHeight=350, parse = true),
 		columns = { 
 			@TTableColumn(cellValue="label", text = TUsualKey.NAME)

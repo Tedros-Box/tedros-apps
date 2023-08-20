@@ -35,7 +35,7 @@ import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.layout.TRegion;
 import org.tedros.fx.builder.DateTimeFormatBuilder;
-import org.tedros.fx.builder.TReportRowFactoryCallBackBuilder;
+import org.tedros.fx.builder.TRowFactoryWithOpenAndRemoveAction;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TLayoutType;
 import org.tedros.fx.model.TModelView;
@@ -144,7 +144,7 @@ public class InventoryReportMV extends TModelView<InventoryReportModel>{
 	
 	@TTableView(
 			selectionModel=@TTableViewSelectionModel(selectionMode=SelectionMode.MULTIPLE,parse = true), 
-			rowFactory=TReportRowFactoryCallBackBuilder.class,
+			rowFactory=TRowFactoryWithOpenAndRemoveAction.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
 				@TTableColumn(cellValue="legalPerson", text = TUsualKey.LEGAL_PERSON, prefWidth=20, resizable=true), 
