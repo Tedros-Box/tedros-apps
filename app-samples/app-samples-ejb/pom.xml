@@ -95,6 +95,11 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.tedros</groupId>
+			<artifactId>tedros-util</artifactId>
+			<version>8-5.2.1</version>
+		</dependency>
 	</dependencies>
 
 	<!-- BUILD -->

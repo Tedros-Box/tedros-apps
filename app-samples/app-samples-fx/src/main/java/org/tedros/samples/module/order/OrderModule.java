@@ -12,6 +12,7 @@ import org.tedros.fx.presenter.view.group.TGroupView;
 import org.tedros.fx.presenter.view.group.TViewItem;
 import org.tedros.sample.domain.DomainApp;
 import org.tedros.samples.SmplsKey;
+import org.tedros.samples.module.order.model.OrderChartMV;
 import org.tedros.samples.module.order.model.OrderMV;
 import org.tedros.samples.module.order.model.OrderStatusMV;
 
@@ -32,7 +33,8 @@ public class OrderModule extends TModule {
 	public void tStart() {
 		super.tShowView(new TGroupView<TGroupPresenter>(this, SmplsKey.MODULE_ORDERS, 
 				new TViewItem(TDynaGroupView.class, OrderMV.class, SmplsKey.VIEW_ORDERS),
-				new TViewItem(TDynaGroupView.class, OrderStatusMV.class, SmplsKey.VIEW_ORDER_STATUS)
+				new TViewItem(TDynaGroupView.class, OrderStatusMV.class, SmplsKey.VIEW_ORDER_STATUS), 
+				new TViewItem(TDynaGroupView.class, OrderChartMV.class, SmplsKey.VIEW_ORDERS+" Chart")
 				));
 
 	}

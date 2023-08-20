@@ -36,7 +36,7 @@ import org.tedros.fx.annotation.query.TCondition;
 import org.tedros.fx.annotation.query.TOrder;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
-import org.tedros.fx.builder.TEditModelRowFactoryCallBackBuilder;
+import org.tedros.fx.builder.TRowFactoryWithOpenAndRemoveAction;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.control.tablecell.TShortDateCallback;
 import org.tedros.person.PersonKeys;
@@ -119,7 +119,7 @@ public class CompanyMV extends LegalPersonMV<LegalPerson> {
 	@TDatePickerField
 	protected SimpleObjectProperty<Date> endActivities;
 	
-	@TTableView(editable=true, rowFactory=TEditModelRowFactoryCallBackBuilder.class,
+	@TTableView(editable=true, rowFactory=TRowFactoryWithOpenAndRemoveAction.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
 			@TTableColumn(cellValue="toStringProperty", text = TUsualKey.NAME, prefWidth=20, resizable=true), 

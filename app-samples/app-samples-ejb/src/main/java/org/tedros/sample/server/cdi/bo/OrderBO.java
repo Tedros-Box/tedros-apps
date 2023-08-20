@@ -6,14 +6,21 @@ package org.tedros.sample.server.cdi.bo;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.tedros.person.model.CostCenter;
+import org.tedros.person.model.Employee;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.model.Person;
 import org.tedros.sample.entity.Order;
+import org.tedros.sample.entity.OrderStatus;
 import org.tedros.sample.entity.SaleEventConfig;
+import org.tedros.sample.server.cdi.eao.OrderEao;
 import org.tedros.sample.server.cdi.eao.SmplsEAO;
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
@@ -40,7 +47,7 @@ public class OrderBO extends TGenericBO<Order> {
 	 * The Order entity access object
 	 */
 	@Inject
-	private SmplsEAO<Order> eao;
+	private OrderEao eao;
 
 	/**
 	 * Entity access object to retrieve settings
@@ -59,6 +66,12 @@ public class OrderBO extends TGenericBO<Order> {
 		return eao;
 	}
 
+	public Map<Date, Long> count(Date begin, Date end,
+			LegalPerson legalPerson, CostCenter costCenter,
+			Person customer, Employee seller, OrderStatus status){
+		return eao.count(begin, end, legalPerson, costCenter, customer, seller, status);
+	}
+	
 	/**
 	 * The custom save operation to handle stock updating
 	 * @param token

@@ -28,7 +28,7 @@ import org.tedros.fx.annotation.process.TReportProcess;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.layout.TRegion;
-import org.tedros.fx.builder.TReportRowFactoryCallBackBuilder;
+import org.tedros.fx.builder.TRowFactoryWithOpenAndRemoveAction;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.model.TModelView;
 import org.tedros.fx.presenter.dynamic.TDynaPresenter;
@@ -111,7 +111,7 @@ public class ProductReportMV extends TModelView<ProductReportModel>{
 	@TTableView(
 			selectionModel=@TTableViewSelectionModel(
 					selectionMode=SelectionMode.MULTIPLE,parse = true), 
-			rowFactory=TReportRowFactoryCallBackBuilder.class,
+			rowFactory=TRowFactoryWithOpenAndRemoveAction.class,
 		control=@TControl(tooltip=TFxKey.TABLE_MENU_TOOLTIP, parse = true),
 		columns = { 
 				@TTableColumn(cellValue="code", text = TUsualKey.CODE, resizable=true), 
