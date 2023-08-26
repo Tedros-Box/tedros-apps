@@ -7,7 +7,7 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.chart.TAreaChart;
 import org.tedros.fx.annotation.chart.TAxis;
 import org.tedros.fx.annotation.chart.TBarChart;
-import org.tedros.fx.annotation.chart.TBubbleChart;
+import org.tedros.fx.annotation.chart.TCategoryAxis;
 import org.tedros.fx.annotation.chart.TLineChart;
 import org.tedros.fx.annotation.chart.TPieChart;
 import org.tedros.fx.annotation.chart.TStackedAreaChart;
@@ -43,12 +43,12 @@ public class ChartMV extends TModelView<ChartModel> {
 			xAxis = @TAxis(axisType = TAxisType.CATEGORY, label = TUsualKey.DATE), 
 			yAxis = @TAxis(axisType = TAxisType.NUMBER, label = "Total")))
 	@TGenericType(model=Order.class)
-	@TFlowPane(hgap=20, vgap=20,
+	/*@TFlowPane(hgap=20, vgap=20,
 	pane=@TPane(children={"items","items1", "items2", 
-			"items3", "items4", "items5"}))
+			"items3", "items4", "items5"}))*/
 	private ITObservableList<Order> items;
 	
-
+/*
 	@TBarChart(xyChart = @TXYChart(service=IOrderController.JNDI_NAME,
 			paramsBuilder=OrderParamBuilder.class,
 			xAxis = @TAxis(axisType = TAxisType.CATEGORY, label = TUsualKey.DATE), 
@@ -81,7 +81,7 @@ public class ChartMV extends TModelView<ChartModel> {
 			xAxis = @TAxis(axisType = TAxisType.CATEGORY, label = TUsualKey.DATE), 
 			yAxis = @TAxis(axisType = TAxisType.NUMBER, label = "Total")))
 	@TGenericType(model=Order.class)
-	private ITObservableList<Order> items5;
+	private ITObservableList<Order> items5;*/
 	
 	public ChartMV(ChartModel model) {
 		super(model);
