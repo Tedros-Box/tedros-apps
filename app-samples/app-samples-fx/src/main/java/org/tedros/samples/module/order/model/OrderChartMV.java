@@ -148,7 +148,7 @@ public class OrderChartMV extends TEntityModelView<Order> {
 	@TTrigger(type = ChartBuildTrigger.class, targetFieldName="chart")
 	private SimpleObjectProperty<Employee> seller;
 
-	@TDetailField(model = ChartModel.class, modelView = ChartMV.class, showButtons=false)
+	@TDetailField(model = ChartModel.class, modelView = ChartMV.class, showButtons=true)
 	private SimpleObjectProperty<ChartMV> chart;
 	
 	public OrderChartMV(Order entity) {
