@@ -27,7 +27,6 @@ import org.tedros.server.query.TCompareOp;
  * @author Davis Gordon
  *
  */
-
 @TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IPersonTypeController.JNDI_NAME, model=ClientCompanyType.class)
 @TListViewPresenter(
@@ -38,7 +37,7 @@ import org.tedros.server.query.TCompareOp;
 				),showSearch=true, showOrderBy=true),
 		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_CLIENT_COMPANY_TYPE,
 		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false)))
+	behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels = false, saveAllModels = false)))
 @TSecurity(id=DomainApp.CLIENT_COMPANY_TYPE_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_CUSTOMER, viewName = PersonKeys.VIEW_CLIENT_COMPANY_TYPE,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT,

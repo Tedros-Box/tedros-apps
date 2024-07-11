@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.person.function;
+package org.tedros.person.ai.function;
 
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;

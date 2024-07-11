@@ -6,7 +6,6 @@ package org.tedros.stock.module.inventory.model;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
-import org.tedros.fx.annotation.assistant.TAiAssistant;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
@@ -22,7 +21,6 @@ import org.tedros.stock.STCKKey;
 import org.tedros.stock.domain.DomainApp;
 import org.tedros.stock.ejb.controller.IEventTypeController;
 import org.tedros.stock.entity.OutType;
-import org.tedros.stock.module.inventory.assistant.OutTypeJson;
 
 /**
  * @author Davis Gordon
@@ -31,7 +29,6 @@ import org.tedros.stock.module.inventory.assistant.OutTypeJson;
 @TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IEventTypeController.JNDI_NAME, model=OutType.class)
 @TListViewPresenter(
-	aiAssistant=@TAiAssistant(jsonModel = OutTypeJson.class, modelViewClass = OutTypeMV.class, show=true),
 	page=@TPage(serviceName = IEventTypeController.JNDI_NAME,
 		query = @TQuery(entity=OutType.class, condition= {
 				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME)},

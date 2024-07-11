@@ -40,7 +40,8 @@ import javafx.scene.text.TextAlignment;
 		modelViewClass = StreetTypeMV.class),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=LocatKey.VIEW_STREET_TYPE),
-		behavior = @TBehavior(runNewActionAfterSave=true)))
+		behavior = @TBehavior(runNewActionAfterSave=true, 
+			saveAllModels = true, saveOnlyChangedModels = false)))
 @TSecurity(	id=DomainApp.STREET_TYPE_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
 moduleName = LocatKey.MODULE_PLACES, viewName = LocatKey.VIEW_STREET_TYPE,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})

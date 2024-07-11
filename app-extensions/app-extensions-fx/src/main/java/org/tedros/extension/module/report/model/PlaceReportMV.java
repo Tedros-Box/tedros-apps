@@ -116,7 +116,7 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 	@TCityComboBox(countryField="country", adminAreaField="adminArea")
 	private SimpleObjectProperty<City> city;
 	
-	@TLabel(text=TUsualKey.STREET_TYPE)
+	@TLabel(text=TUsualKey.TYPES_ROAD)
 	@TComboBoxField(
 		process=@TProcess(service = IExtensionDomainController.JNDI_NAME, 
 		modelView=StreetTypeMV.class, query=@TQuery(entity=StreetType.class)))
@@ -126,7 +126,7 @@ public class PlaceReportMV extends TModelView<PlaceReportModel>{
 			@TPriority(field="code", priority=Priority.SOMETIMES)}))
 	private SimpleObjectProperty<StreetType> streetType;
 	
-	@TLabel(text=TUsualKey.PUBLIC_PLACE)
+	@TLabel(text=TUsualKey.FACILITIES)
 	@TTextField(maxLength=120)
 	private SimpleStringProperty publicPlace;
 	
