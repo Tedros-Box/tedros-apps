@@ -37,8 +37,8 @@
 	</background>
 	<title>
 		<band height="106" splitType="Stretch">
-			<image onErrorType="Blank">
-				<reportElement x="263" y="0" width="292" height="106" uuid="837fc979-9b53-4aff-9b74-04568b4175a8"/>
+			<image scaleImage="Clip" isUsingCache="false" onErrorType="Blank" evaluationTime="Auto">
+				<reportElement isPrintRepeatedValues="false" x="263" y="0" width="292" height="106" uuid="837fc979-9b53-4aff-9b74-04568b4175a8"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
@@ -148,7 +148,7 @@
 					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{code}.isEmpty() ? $P{hName} : $P{hCode}+"/"+$P{hName} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{code}.isEmpty() ? $P{hName} : $P{hCode}+"/"+$P{hName}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="87" y="1" width="266" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="bb77b6a5-fe5a-4181-ad5c-f0c993400ba9"/>
