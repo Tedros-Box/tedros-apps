@@ -6,7 +6,7 @@ package org.tedros.stock.ejb.support;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.Remote;
+import jakarta.ejb.Remote;
 
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.LegalPerson;

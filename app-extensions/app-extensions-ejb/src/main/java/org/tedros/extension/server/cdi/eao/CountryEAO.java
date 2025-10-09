@@ -6,7 +6,7 @@ package org.tedros.extension.server.cdi.eao;
 import java.util.Collections;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.RequestScoped;
 
 import org.tedros.extension.model.Country;
 import org.tedros.server.cdi.eao.TGenericEAO;

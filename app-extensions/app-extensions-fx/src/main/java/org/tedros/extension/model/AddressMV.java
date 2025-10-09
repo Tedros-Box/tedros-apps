@@ -17,6 +17,7 @@ import org.tedros.extension.component.annotation.TCountryComboBox;
 import org.tedros.extension.domain.DomainApp;
 import org.tedros.extension.ejb.controller.IAddressController;
 import org.tedros.extension.ejb.controller.IExtensionDomainController;
+import org.tedros.extension.module.setting.MapSetting;
 import org.tedros.extension.start.TConstant;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
@@ -47,12 +48,12 @@ import javafx.scene.layout.Priority;
  *
  */
 @TEditModalPresenter
-@TSetting(TAddressSetting.class)
+@TSetting(MapSetting.class)
 @TEjbService(serviceName = IAddressController.JNDI_NAME, model=Address.class)
 @TSecurity(	id=DomainApp.ADDRESS_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
 moduleName = LocatKey.MODULE_PLACES, viewName = LocatKey.VIEW_ADDRESS,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
-public class AddressMV extends TEntityModelView<Address> {
+public class AddressMV extends TEntityModelView<Address> implements Coordinated {
 	
 	@TLabel(text=TUsualKey.COUNTRY)
 	@TCountryComboBox(required=true)
@@ -105,15 +106,15 @@ public class AddressMV extends TEntityModelView<Address> {
 	@TLabel(text="Latitude")
 	@TTextField(maxLength=15, 
 			control=@TControl(tooltip=LocatKey.TEXT_MAPVIEW_PRESS_ENTER, parse = true))
-	@THBox(	pane=@TPane(children={"latitude", "logintude"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"latitude", "longitude"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="latitude", priority=Priority.ALWAYS), 
-			@TPriority(field="logintude", priority=Priority.ALWAYS)}))
+			@TPriority(field="longitude", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty latitude;
 	
-	@TLabel(text="Logintude")
+	@TLabel(text="Longitude")
 	@TTextField(maxLength=15, 
 			control=@TControl(tooltip=LocatKey.TEXT_MAPVIEW_PRESS_ENTER, parse = true))
-	private SimpleStringProperty logintude;
+	private SimpleStringProperty longitude;
 	
 	@TWebView(prefHeight=300,
 			engine=@TWebEngine(load=TWebEngine.MODULE_FOLDER+"/"+TConstant.UUI+"/location.html"))
@@ -188,30 +189,27 @@ public class AddressMV extends TEntityModelView<Address> {
 		this.city = city;
 	}
 
+	@Override
 	public SimpleStringProperty getLatitude() {
 		return latitude;
 	}
-
 
 	public void setLatitude(SimpleStringProperty latitude) {
 		this.latitude = latitude;
 	}
 
-
-	public SimpleStringProperty getLogintude() {
-		return logintude;
+	@Override
+	public SimpleStringProperty getLongitude() {
+		return longitude;
 	}
 
-
-	public void setLogintude(SimpleStringProperty logintude) {
-		this.logintude = logintude;
+	public void setLongitude(SimpleStringProperty longitude) {
+		this.longitude = longitude;
 	}
-
 
 	public SimpleStringProperty getWebview() {
 		return webview;
 	}
-
 
 	public void setWebview(SimpleStringProperty webview) {
 		this.webview = webview;

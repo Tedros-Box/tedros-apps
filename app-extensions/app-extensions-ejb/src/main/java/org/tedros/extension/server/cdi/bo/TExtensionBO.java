@@ -3,8 +3,8 @@
  */
 package org.tedros.extension.server.cdi.bo;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
 
 import org.tedros.extension.server.cdi.eao.TExtensionEAO;
 import org.tedros.server.cdi.bo.TGenericBO;

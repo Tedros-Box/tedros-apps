@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.LegalPerson;

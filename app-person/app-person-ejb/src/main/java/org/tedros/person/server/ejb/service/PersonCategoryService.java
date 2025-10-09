@@ -3,11 +3,11 @@
  */
 package org.tedros.person.server.ejb.service;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.inject.Inject;
+import jakarta.ejb.Local;
+import jakarta.ejb.Stateless;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
+import jakarta.inject.Inject;
 
 import org.tedros.person.model.PersonCategory;
 import org.tedros.person.server.cdi.bo.PersonCategoryBO;

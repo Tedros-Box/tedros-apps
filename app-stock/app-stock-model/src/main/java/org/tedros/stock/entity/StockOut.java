@@ -3,9 +3,9 @@
  */
 package org.tedros.stock.entity;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import org.tedros.stock.domain.DomainSchema;
 import org.tedros.stock.domain.DomainTables;

@@ -3,7 +3,7 @@
  */
 package org.tedros.sample.ejb.controller;
 
-import javax.ejb.Remote;
+import jakarta.ejb.Remote;
 
 import org.tedros.sample.entity.Order;
 import org.tedros.server.controller.ITEjbChartController;

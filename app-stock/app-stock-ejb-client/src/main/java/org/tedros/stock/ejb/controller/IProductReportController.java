@@ -3,7 +3,7 @@
  */
 package org.tedros.stock.ejb.controller;
 
-import javax.ejb.Remote;
+import jakarta.ejb.Remote;
 
 import org.tedros.server.controller.ITEjbReportController;
 import org.tedros.stock.model.ProductReportModel;

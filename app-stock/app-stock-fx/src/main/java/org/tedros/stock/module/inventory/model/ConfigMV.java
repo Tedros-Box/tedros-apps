@@ -10,8 +10,8 @@ import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TDetailListField;
 import org.tedros.fx.annotation.control.TFieldBox;
-import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TGenericType;
+import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.form.TSetting;
@@ -77,10 +77,11 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 			operator=TCompareOp.LIKE)}))
 	@TTrigger(type = FilterCostCenterTrigger.class, 
 	targetFieldName="costCenter", runAfterFormBuild=true)
-	@THBox(	pane=@TPane(children={"legalPerson", "costCenter", "responsable"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="costCenter", priority=Priority.NEVER), 
-			@TPriority(field="legalPerson", priority=Priority.NEVER),
-			@TPriority(field="responsable", priority=Priority.NEVER)}))
+	@THBox(	pane=@TPane(children={"legalPerson", "costCenter", "responsable", "reg"+TPane.REGION}), spacing=10, fillHeight=true,
+	hgrow=@THGrow(priority={@TPriority(field="costCenter", priority=Priority.SOMETIMES), 
+			@TPriority(field="legalPerson", priority=Priority.SOMETIMES),
+			@TPriority(field="responsable", priority=Priority.ALWAYS),
+			@TPriority(field="reg"+TPane.REGION, priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<LegalPerson> legalPerson;
 	
 	@TLabel(text=TUsualKey.COST_CENTER)
@@ -89,7 +90,7 @@ public class ConfigMV extends TEntityModelView<StockConfig> {
 
 	@TLabel(text=TUsualKey.RESPONSABLE)
 	@TAutoCompleteEntity( 
-		showMaxItems=30, prefColumnCount=400,
+		showMaxItems=30, prefColumnCount=400, 
 		service = IEmployeeController.JNDI_NAME,
 		query = @TQuery(entity = Employee.class, 
 			condition = {

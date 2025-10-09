@@ -2,7 +2,7 @@ package org.tedros.extension.ejb.controller;
 
 import java.util.List;
 
-import javax.ejb.Remote;
+import jakarta.ejb.Remote;
 
 import org.tedros.extension.model.AdminArea;
 import org.tedros.extension.model.Country;

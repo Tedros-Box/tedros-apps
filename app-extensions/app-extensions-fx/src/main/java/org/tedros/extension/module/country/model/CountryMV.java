@@ -13,7 +13,10 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.extension.LocatKey;
 import org.tedros.extension.domain.DomainApp;
 import org.tedros.extension.ejb.controller.ICountryController;
+import org.tedros.extension.model.Coordinated;
 import org.tedros.extension.model.Country;
+import org.tedros.extension.module.setting.MapSetting;
+import org.tedros.extension.start.TConstant;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TLabel;
@@ -23,6 +26,7 @@ import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
@@ -37,6 +41,8 @@ import org.tedros.fx.annotation.query.TCondition;
 import org.tedros.fx.annotation.query.TOrder;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.scene.web.TWebEngine;
+import org.tedros.fx.annotation.scene.web.TWebView;
 import org.tedros.fx.domain.TEnvironment;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.server.model.ITFileBaseModel;
@@ -52,6 +58,8 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
+
+@TSetting(MapSetting.class)
 @TForm(header = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = ICountryController.JNDI_NAME, model=Country.class)
 @TListViewPresenter(
@@ -67,20 +75,22 @@ import javafx.scene.layout.Priority;
 @TSecurity(	id=DomainApp.COUNTRY_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
 moduleName = LocatKey.MODULE_COUNTRIES, viewName = LocatKey.VIEW_COUNTRY,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
-public class CountryMV extends TEntityModelView<Country> {
+public class CountryMV extends TEntityModelView<Country> implements Coordinated  {
 
 	@TTabPane(tabs = { 
 		@TTab(text = TUsualKey.MAIN, 
-				fields={"iso2Code", "capital", "populationName", "currencyCode","cctld"}), 
+				fields={"iso2Code", "capital", "populationName", "currencyCode", "webview"}), 
 		@TTab(text = TUsualKey.FLAG, fields={"flag"})})
 	private SimpleLongProperty code;
 	
 	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO2)")
 	@TTextField(maxLength=2, required = true, node=@TNode(requestFocus=true, parse = true))
-	@THBox(	pane=@TPane(children={"iso2Code", "iso3Code", "name"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"iso2Code", "iso3Code", "name", "latitude", "longitude" }), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="iso2Code", priority=Priority.NEVER), 
 			@TPriority(field="iso3Code", priority=Priority.NEVER), 
-			@TPriority(field="name", priority=Priority.ALWAYS)}))
+			@TPriority(field="name", priority=Priority.ALWAYS),
+			@TPriority(field="latitude", priority=Priority.ALWAYS), 
+			@TPriority(field="longitude", priority=Priority.ALWAYS)}))
 	private SimpleStringProperty iso2Code;
 	
 	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO3)")
@@ -90,6 +100,14 @@ public class CountryMV extends TEntityModelView<Country> {
 	@TLabel(text=TUsualKey.NAME)
 	@TTextField(maxLength=60, required = true)
 	private SimpleStringProperty name;
+	
+	@TLabel(text="Latitude")
+	@TTextField(maxLength=20)
+	private SimpleStringProperty latitude;
+			
+	@TLabel(text="Longitude")
+	@TTextField(maxLength=20)
+	private SimpleStringProperty longitude;
 			
 	@TLabel(text=TUsualKey.CAPITAL)
 	@TTextField(maxLength=120, required = true)
@@ -125,11 +143,12 @@ public class CountryMV extends TEntityModelView<Country> {
 			
 	@TLabel(text=TUsualKey.CURRENCY_CODE)
 	@TTextField(maxLength=3)
-	@THBox(	pane=@TPane(children={"currencyCode", "currencyName", "langCode", "langName"}), spacing=10, fillHeight=true,
+	@THBox(	pane=@TPane(children={"currencyCode", "currencyName", "langCode", "langName", "cctld"}), spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="currencyCode", priority=Priority.NEVER), 
 			@TPriority(field="currencyName", priority=Priority.ALWAYS), 
 			@TPriority(field="langCode", priority=Priority.NEVER), 
-			@TPriority(field="langName", priority=Priority.ALWAYS)}))
+			@TPriority(field="langName", priority=Priority.ALWAYS), 
+			@TPriority(field="cctld", priority=Priority.NEVER)}))
 	private SimpleStringProperty currencyCode;
 			
 	@TLabel(text=TUsualKey.CURRENCY_NAME)
@@ -146,24 +165,16 @@ public class CountryMV extends TEntityModelView<Country> {
 	
 	@TLabel(text=TUsualKey.CCTLD)
 	@TTextField(maxLength=2)
-	@THBox(	pane=@TPane(children={"cctld", "latitude", "longitude"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="latitude", priority=Priority.SOMETIMES), 
-			@TPriority(field="longitude", priority=Priority.SOMETIMES), 
-			@TPriority(field="cctld", priority=Priority.NEVER)}))
 	private SimpleStringProperty cctld;
-			
-	@TLabel(text="Latitude")
-	@TTextField(maxLength=20)
-	private SimpleStringProperty latitude;
-			
-	@TLabel(text="Longitude")
-	@TTextField(maxLength=20)
-	private SimpleStringProperty longitude;
 			
 	@TFieldBox(node=@TNode(id="img", parse = true))
 	@TSelectImageField(source=TEnvironment.LOCAL, target=TEnvironment.REMOTE, 
 	remoteOwner=DomainApp.MNEMONIC, maxFileSize=300000)
 	private SimpleObjectProperty<ITFileBaseModel> flag;
+	
+	@TWebView(prefHeight=200,
+			engine=@TWebEngine(load=TWebEngine.MODULE_FOLDER+"/"+TConstant.UUI+"/location.html"))
+	private SimpleStringProperty webview;
 	
 	public CountryMV(Country entity) {
 		super(entity);
@@ -319,6 +330,16 @@ public class CountryMV extends TEntityModelView<Country> {
 
 	public void setCode(SimpleLongProperty code) {
 		this.code = code;
+	}
+
+
+	public SimpleStringProperty getWebview() {
+		return webview;
+	}
+
+
+	public void setWebview(SimpleStringProperty webview) {
+		this.webview = webview;
 	}
 
 }

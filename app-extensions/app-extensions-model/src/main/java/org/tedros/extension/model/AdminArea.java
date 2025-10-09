@@ -3,9 +3,9 @@
  */
 package org.tedros.extension.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import org.tedros.extension.domain.DomainSchema;
 import org.tedros.extension.domain.DomainTables;
@@ -23,7 +23,7 @@ import org.tedros.server.entity.TVersionEntity;
 @Table(name = DomainTables.adminArea, schema = DomainSchema.schema)
 @TImportInfo(description = "#{city.import.rule.desc}", 
 fileType = { TFileType.CSV, TFileType.XLS })
-public class AdminArea extends TVersionEntity {
+public class AdminArea extends TVersionEntity implements GeoMap {
 
 	private static final long serialVersionUID = 1L;
 
@@ -112,6 +112,11 @@ public class AdminArea extends TVersionEntity {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public GeoLocation getGeoLocation() {
+		return GeoMap.process(this);
 	}
 	
 }

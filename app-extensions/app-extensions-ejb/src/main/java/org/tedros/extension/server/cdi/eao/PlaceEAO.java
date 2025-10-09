@@ -5,8 +5,8 @@ package org.tedros.extension.server.cdi.eao;
 
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
-import javax.persistence.Query;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.persistence.Query;
 
 import org.apache.commons.lang3.StringUtils;
 import org.tedros.extension.model.Place;

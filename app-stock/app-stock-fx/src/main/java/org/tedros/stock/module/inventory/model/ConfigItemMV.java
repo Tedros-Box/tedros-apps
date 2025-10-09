@@ -75,11 +75,12 @@ public class ConfigItemMV extends TEntityModelView<StockConfigItem> {
 		condition = {
 			@TCondition(field = "name", operator=TCompareOp.LIKE),
 			@TCondition(logicOp=TLogicOp.OR, field = "code", operator=TCompareOp.LIKE)}))
-	@THBox(	pane=@TPane(children={"product", "minimumAmount", "notify", "allowNegativeStock"}), 
+	@THBox(	pane=@TPane(children={"product", "minimumAmount", "notify", "allowNegativeStock", "reg"+TPane.REGION}), 
 	spacing=10, fillHeight=true,
 	hgrow=@THGrow(priority={@TPriority(field="product", priority=Priority.NEVER), 
-			@TPriority(field="notify", priority=Priority.ALWAYS), 
-			@TPriority(field="minimumAmount", priority=Priority.NEVER)}))
+			@TPriority(field="notify", priority=Priority.NEVER), 
+			@TPriority(field="minimumAmount", priority=Priority.NEVER), 
+			@TPriority(field="reg"+TPane.REGION, priority=Priority.ALWAYS)}))
 	private SimpleObjectProperty<Product> product;
 	
 	@TLabel(text=TUsualKey.MINIMUN_AMOUNT)

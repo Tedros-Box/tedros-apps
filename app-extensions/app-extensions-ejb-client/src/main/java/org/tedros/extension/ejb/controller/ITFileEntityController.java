@@ -1,6 +1,6 @@
 package org.tedros.extension.ejb.controller;
 
-import javax.ejb.Remote;
+import jakarta.ejb.Remote;
 
 import org.tedros.common.model.TFileEntity;
 import org.tedros.server.controller.ITSecureEjbController;

@@ -3,7 +3,7 @@
  */
 package org.tedros.stock.server.cdi.eao;
 
-import javax.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.RequestScoped;
 
 import org.tedros.server.cdi.eao.TGenericEAO;
 import org.tedros.stock.entity.StockEvent;

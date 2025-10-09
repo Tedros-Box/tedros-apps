@@ -18,11 +18,15 @@ import org.tedros.extension.LocatKey;
 import org.tedros.extension.domain.DomainApp;
 import org.tedros.extension.ejb.controller.ICityController;
 import org.tedros.extension.model.City;
+import org.tedros.extension.model.Coordinated;
+import org.tedros.extension.module.setting.MapSetting;
+import org.tedros.extension.start.TConstant;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TNumberSpinnerField;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
@@ -38,6 +42,8 @@ import org.tedros.fx.annotation.query.TOrder;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.reader.TReaderHtml;
 import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.scene.web.TWebEngine;
+import org.tedros.fx.annotation.scene.web.TWebView;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.server.query.TCompareOp;
 
@@ -49,6 +55,8 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
+
+@TSetting(MapSetting.class)
 @TForm(header = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = ICityController.JNDI_NAME, model=City.class)
 @TListViewPresenter(listViewMinWidth=350, listViewMaxWidth=350,
@@ -66,7 +74,7 @@ import javafx.scene.layout.Priority;
 @TSecurity(	id=DomainApp.CITY_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
 moduleName = LocatKey.MODULE_CITIES, viewName = LocatKey.VIEW_CITY,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
-public class CityMV extends TEntityModelView<City> {
+public class CityMV extends TEntityModelView<City> implements Coordinated {
 	
 	@TLabel(text=TUsualKey.COUNTRY_CODE+" (ISO2)")
 	@TTextField(maxLength=2, required = true, node=@TNode(requestFocus=true, parse = true))
@@ -106,7 +114,10 @@ public class CityMV extends TEntityModelView<City> {
 	@TLabel(text="Longitude")
 	@TTextField(maxLength=20)
 	private SimpleStringProperty longitude;
-			
+	
+	@TWebView(prefHeight=400,
+			engine=@TWebEngine(load=TWebEngine.MODULE_FOLDER+"/"+TConstant.UUI+"/location.html"))
+	private SimpleStringProperty webview;
 	
 	public CityMV(City e) {
 		super(e);
@@ -166,5 +177,11 @@ public class CityMV extends TEntityModelView<City> {
 
 	public void setAdminArea(SimpleStringProperty adminArea) {
 		this.adminArea = adminArea;
+	}
+	public SimpleStringProperty getWebview() {
+		return webview;
+	}
+	public void setWebview(SimpleStringProperty webview) {
+		this.webview = webview;
 	}
 }

@@ -5,8 +5,8 @@ package org.tedros.extension.server.cdi.bo;
 
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 import org.tedros.extension.model.AdminArea;
 import org.tedros.extension.model.City;
