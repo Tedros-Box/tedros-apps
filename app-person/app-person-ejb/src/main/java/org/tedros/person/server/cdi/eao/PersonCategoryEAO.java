@@ -3,7 +3,7 @@
  */
 package org.tedros.person.server.cdi.eao;
 
-import javax.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.RequestScoped;
 
 import org.tedros.person.model.PersonCategory;
 import org.tedros.server.cdi.eao.TGenericEAO;

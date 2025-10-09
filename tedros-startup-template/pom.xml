@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.tedros</groupId>
-    <artifactId>tedrosbox</artifactId>
-    <version>8-5.2.1</version>
-  </parent>
-  
-  <groupId>org.tedros.archetype</groupId>
-  <artifactId>tedros-startup-template</artifactId>
-  <version>8-2.2.1</version>
-  
-  <packaging>pom</packaging>
-  <name>The Tedros Box startup, database and application server projects</name>
-  
-  	<!-- DEVELOPERS -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.tedros</groupId>
+		<artifactId>tedrosbox</artifactId>
+		<version>17-0.0.1</version>
+	</parent>
+
+	<groupId>org.tedros.archetype</groupId>
+	<artifactId>tedros-startup-template</artifactId>
+	<version>17-1.0.0</version>
+
+	<packaging>pom</packaging>
+	<name>The Tedros Box startup, database and application server projects</name>
+
+	<!-- DEVELOPERS -->
 	<developers>
 		<developer>
 			<name>Davis Gordon Dun</name>
@@ -22,60 +24,63 @@
 			<organization>Tedros</organization>
 		</developer>
 	</developers>
-	
-  	<!-- PROPERTIES -->
+
+	<!-- PROPERTIES -->
 	<properties>
-		<app.samples>8-2.2.1</app.samples>
-		<app.stock>8-2.2.1</app.stock>
-		<app.ext>8-2.2.1</app.ext>
-		<app.person>8-2.2.1</app.person>
-		<app.services>8-2.2.1</app.services>
-		<tedros.box>8-5.2.1</tedros.box>
-		<tedros.fx>8-5.2.1</tedros.fx>
-		<app.settings>8-5.2.1</app.settings>
-		<tedros.jee>8-5.2.1</tedros.jee>
-		<java.home>C:\Program Files\Java\jdk1.8.0_102\bin</java.home>
+		<app.samples>17-1.0.0</app.samples>
+		<app.stock>17-1.0.0</app.stock>
+		<app.ext>17-1.0.0</app.ext>
+		<app.person>17-1.0.0</app.person>
+		<app.services>17-1.0.0</app.services>
+		<tedros.box>17-0.0.1</tedros.box>
+		<tedros.fx>17-0.0.1</tedros.fx>
+		<app.settings>17-0.0.1</app.settings>
+		<tedros.jee>17-0.0.1</tedros.jee>
 		
+
 		<junit.version>4.13</junit.version>
 		<tomee.ejb.url>http://127.0.0.1:8080/tomee/ejb</tomee.ejb.url>
-	
+		
+		<compiler.plugin>3.13.0</compiler.plugin>
+		<source.plugin>3.0.0</source.plugin>
+
 	</properties>
-  
-  	<!-- BUILD -->
-  	<build>
-    	<plugins>
-      		<plugin>
-        		<groupId>org.apache.maven.plugins</groupId>
-        		<artifactId>maven-compiler-plugin</artifactId>
-        		<version>3.3</version>
-        		<configuration>
-          			<source>${java.version}</source>
-          			<target>${java.version}</target>
-        		</configuration>
-      		</plugin>
-      		<plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-source-plugin</artifactId>
-		        <version>3.2.1</version>
-		        <executions>
-		          <execution>
-		            <id>attach-sources</id>
-		            <phase>verify</phase>
-		            <goals>
-		              <goal>jar-no-fork</goal>
-		            </goals>
-		          </execution>
-		        </executions>
-		      </plugin>
-      		<plugin>
-	          <groupId>org.apache.maven.plugins</groupId>
-	          <artifactId>maven-archetype-plugin</artifactId>
-	          <version>3.0.0</version>
-	        </plugin>  	
-  		</plugins>
- 	</build>
- 	
- 	<!-- REPOSITORIES -->
+
+	<!-- BUILD -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler.plugin}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${source.plugin}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-archetype-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- REPOSITORIES 
 	<repositories>
 		<repository>
 			<id>oss.sonatype.org</id>
@@ -85,20 +90,21 @@
 		<repository>
 			<id>apache.releases.https</id>
 			<name>Apache</name>
-			<url>https://repository.apache.org/service/local/staging/deploy/maven2</url>
+			<url>
+				https://repository.apache.org/service/local/staging/deploy/maven2</url>
 		</repository>
 		<repository>
 			<id>Tedros-Box</id>
 			<name>Tedros</name>
 			<url>https://maven.pkg.github.com/tedros-box/package</url>
 		</repository>
-  	</repositories>
- 
- 	<!-- MODULES -->
+	</repositories>
+-->
+	<!-- MODULES -->
 	<modules>
-	    <module>server-application</module>
-	    <module>startup-tedros-box</module>
-	    <module>startup-database</module>
-	    <module>server-chat</module>
+		<module>server-application</module>
+		<module>startup-tedros-box</module>
+		<module>startup-database</module>
+		<module>server-chat</module>
 	</modules>
 </project>

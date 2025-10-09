@@ -3,14 +3,14 @@
  */
 package org.tedros.extension.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 import org.tedros.common.model.TFileEntity;
 import org.tedros.extension.domain.DomainSchema;
@@ -30,7 +30,7 @@ import org.tedros.server.entity.TVersionEntity;
 uniqueConstraints= {@UniqueConstraint(name="countryCodeUnIdx", columnNames = { "iso2Code" })} )
 @TImportInfo(description = "#{country.import.rule.desc}", 
 fileType = { TFileType.CSV, TFileType.XLS })
-public class Country extends TVersionEntity {
+public class Country extends TVersionEntity  implements GeoMap {
 
 	private static final long serialVersionUID = 1L;
 
@@ -400,6 +400,11 @@ public class Country extends TVersionEntity {
 		} else if (!totalArea.equals(other.totalArea))
 			return false;
 		return true;
+	}
+
+	@Override
+	public GeoLocation getGeoLocation() {
+		return GeoMap.process(this);
 	}
 
 }

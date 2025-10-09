@@ -8,9 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import jakarta.ejb.EJB;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.tedros.person.model.CostCenter;

@@ -1,100 +1,142 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <!-- PARENT INFO -->
-  <parent>
-	<groupId>org.tedros.archetype</groupId>
-	 <artifactId>tedros-startup-template</artifactId>
-	 <version>8-2.2.1</version>
-  </parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- PARENT INFO -->
+	<parent>
+		<groupId>org.tedros.archetype</groupId>
+		<artifactId>tedros-startup-template</artifactId>
+		<version>17-1.0.0</version>
+	</parent>
+
+	<artifactId>startup-tedros-box</artifactId>
+
+	<name>Tedros Box startup project</name>
+	<description>The startup project to load, run and package the main class</description>
 	
-  <artifactId>startup-tedros-box</artifactId>
-  
-  <name>Tedros Box startup project</name>
-  <description>The startup project to load, run and package the main class</description>
-  
-  <dependencies>
-  
-  	<dependency>
-	  	<groupId>org.tedros</groupId>
-	  	<artifactId>tedros-box</artifactId>
-	  	<version>${tedros.box}</version>
-	  	<scope>compile</scope>
-	 </dependency>
-	 
-	 <dependency>
-  		<groupId>org.tedros</groupId>
-  		<artifactId>app-samples-fx</artifactId>
-  		<version>${app.samples}</version>
-  		<scope>compile</scope>
-  	</dependency>
-  	
-	 <dependency>
-  		<groupId>org.tedros</groupId>
-  		<artifactId>app-stock-fx</artifactId>
-  		<version>${app.stock}</version>
-  		<scope>compile</scope>
-  	</dependency>
-  	
-	 <dependency>
-  		<groupId>org.tedros</groupId>
-  		<artifactId>app-services-fx</artifactId>
-  		<version>${app.services}</version>
-  		<scope>compile</scope>
-  	</dependency>
-	 
-  	 <dependency>
-  		<groupId>org.tedros</groupId>
-  		<artifactId>app-person-fx</artifactId>
-  		<version>${app.person}</version>
-  		<scope>compile</scope>
-  	</dependency> 
-  	
-  </dependencies>
-  
-  <build>
- 	<plugins>
-	 	<plugin>
-		  <artifactId>maven-assembly-plugin</artifactId>
-		  <configuration>
-		  	<archive>
-		      <manifest>
-		        <mainClass>com.template.Main</mainClass>
-		      </manifest>
-		    </archive>
-		    <descriptorRefs>
-		      <descriptorRef>jar-with-dependencies</descriptorRef>
-		    </descriptorRefs>
-		  </configuration>
-		  <executions>
-		    <execution>
-		      <id>make-assembly</id> <!-- this is used for inheritance merges -->
-		      <phase>package</phase> <!-- bind to the packaging phase -->
-		      <goals>
-		        <goal>single</goal>
-		      </goals>
-		    </execution>
-		  </executions>
-		</plugin>
-		<plugin>
-       		<groupId>org.apache.maven.plugins</groupId>
-       		<artifactId>maven-compiler-plugin</artifactId>
-       		<version>3.3</version>
-       		<configuration>
-         			<source>${java.version}</source>
-         			<target>${java.version}</target>
-       		</configuration>
-     	</plugin>
-	  </plugins>
-	 	  
-    	<resources>
-        	<resource>
-            	<directory>src/main/resources</directory>
-        	</resource>
-    	</resources>
+	<properties>
+	  <maven.version>3.8.8</maven.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.tedros</groupId>
+			<artifactId>tedros-box</artifactId>
+			<version>${tedros.box}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!--<dependency>
+			<groupId>org.tedros</groupId>
+			<artifactId>app-samples-fx</artifactId>
+			<version>${app.samples}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.tedros</groupId>
+			<artifactId>app-stock-fx</artifactId>
+			<version>17-1.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.tedros</groupId>
+			<artifactId>app-services-fx</artifactId>
+			<version>${app.services}</version>
+			<scope>compile</scope>
+		</dependency>-->
+
+		<dependency>
+			<groupId>org.tedros</groupId>
+			<artifactId>app-person-fx</artifactId>
+			<version>${app.person}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>uk.riosdevida</groupId>
+			<artifactId>riosdevida-fx</artifactId>
+			<version>17-1.0.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.template.Main</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<!-- this is used for inheritance merges -->
+						<id>make-assembly</id>
+						<!-- bind to the packaging phase -->
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<!--<version>${compiler.plugin}</version>-->
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+			    <groupId>com.gluonhq</groupId>
+			    <artifactId>gluonfx-maven-plugin</artifactId>
+			    <version>1.0.24</version>
+			    <configuration>
+			        <mainClass>com.template.Main</mainClass>
+			        <graalvmHome>D:\java\graalvm-jdk-21.0.4+8.1</graalvmHome>
+			        <runtimeArgs>-Xms512m -Xmx2048m -Dprism.maxvram=2G --add-opens=javafx.graphics/javafx.scene.layout=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.css=ALL-UNNAMED --add-exports javafx.base/com.sun.javafx.collections=ALL-UNNAMED --add-exports javafx.base/com.sun.javafx.property=ALL-UNNAMED --add-exports javafx.web/com.sun.javafx.webkit=ALL-UNNAMED --add-exports javafx.web/com.sun.webkit=ALL-UNNAMED --add-modules=javafx.controls,javafx.fxml,javafx.web</runtimeArgs>
+			    	<verbose>true</verbose>
+			        <javaStaticSdkVersion>17.0.10</javaStaticSdkVersion>
+			        <javafxStaticSdkVersion>17.0.11</javafxStaticSdkVersion>
+			        <releaseConfiguration>
+			            <!-- all targets -->
+			            <packageType>exe</packageType>
+			            <description>Tedros System</description>
+			            <vendor>Tedros</vendor>
+			        </releaseConfiguration>
+			    </configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-maven-plugin</artifactId>
+			    <version>0.0.8</version>
+			    <configuration>
+			        <mainClass>com.template.Main</mainClass>
+			    </configuration>
+			</plugin>
+		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 	</build>
-  
-  <!-- REPOSITORIES -->
+
+	<!-- REPOSITORIES -->
 	<repositories>
 		<repository>
 			<id>oss.sonatype.org</id>
@@ -104,13 +146,14 @@
 		<repository>
 			<id>apache.releases.https</id>
 			<name>Apache</name>
-			<url>https://repository.apache.org/service/local/staging/deploy/maven2</url>
+			<url>
+				https://repository.apache.org/service/local/staging/deploy/maven2</url>
 		</repository>
 		<repository>
 			<id>Tedros-Box</id>
 			<name>Tedros</name>
 			<url>https://maven.pkg.github.com/tedros-box/package</url>
 		</repository>
-  	</repositories>
-  
+	</repositories>
+
 </project>

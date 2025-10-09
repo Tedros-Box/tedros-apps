@@ -22,8 +22,11 @@
 	const z3 = 14;
 	const z4 = 18;
     
-	function setCoord(lat, lng){
-		vZoom = z4;
+	function setCoord(locOf, lat, lng){
+		vZoom = z2;
+		if(locOf=='country') vZoom = z1;
+    	if(locOf=='city') vZoom = z3;
+    	if(locOf=='address') vZoom = z4;
 		goToLatLng([lat, lng]);
 	}
 	

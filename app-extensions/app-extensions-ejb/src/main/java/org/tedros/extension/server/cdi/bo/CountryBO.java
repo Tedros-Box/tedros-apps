@@ -3,8 +3,8 @@
  */
 package org.tedros.extension.server.cdi.bo;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 import org.tedros.extension.model.Country;
 import org.tedros.extension.server.cdi.eao.CountryEAO;

@@ -3,15 +3,15 @@
  */
 package org.tedros.extension.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.tedros.extension.domain.DomainSchema;
 import org.tedros.extension.domain.DomainTables;
 import org.tedros.server.entity.TVersionEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * @author Davis Gordon
@@ -19,7 +19,7 @@ import org.tedros.server.entity.TVersionEntity;
  */
 @Entity
 @Table(name = DomainTables.address, schema = DomainSchema.schema)
-public class Address extends TVersionEntity {
+public class Address extends TVersionEntity  implements GeoMap{
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,7 +55,7 @@ public class Address extends TVersionEntity {
 	private String latitude;
 
 	@Column(length=15)
-	private String logintude;
+	private String longitude;
 	
 
 	public Address() {
@@ -72,9 +72,9 @@ public class Address extends TVersionEntity {
 		this.city = address.city;
 		this.code = address.code;
 		this.latitude = address.latitude;
-		this.logintude = address.logintude;
+		this.longitude = address.longitude;
 	}
-
+	
 	public StreetType getStreetType() {
 		return streetType;
 	}
@@ -138,6 +138,22 @@ public class Address extends TVersionEntity {
 	public void setCode(String code) {
 		this.code = code;
 	}
+		
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+		
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
 
 	@Override
 	public String toString() {
@@ -146,23 +162,7 @@ public class Address extends TVersionEntity {
 				streetType, (publicPlace!=null?publicPlace:""), (complement!=null?complement:""), 
 				(neighborhood!=null?neighborhood:""), (country!=null?country:""), 
 				(adminArea!=null?adminArea:""), (city!=null?city:""), (code!=null?code:""));
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getLogintude() {
-		return logintude;
-	}
-
-	public void setLogintude(String logintude) {
-		this.logintude = logintude;
-	}
+	}	
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -177,7 +177,7 @@ public class Address extends TVersionEntity {
 		result = prime * result + ((complement == null) ? 0 : complement.hashCode());
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + ((latitude == null) ? 0 : latitude.hashCode());
-		result = prime * result + ((logintude == null) ? 0 : logintude.hashCode());
+		result = prime * result + ((longitude == null) ? 0 : longitude.hashCode());
 		result = prime * result + ((neighborhood == null) ? 0 : neighborhood.hashCode());
 		result = prime * result + ((publicPlace == null) ? 0 : publicPlace.hashCode());
 		result = prime * result + ((streetType == null) ? 0 : streetType.hashCode());
@@ -226,10 +226,10 @@ public class Address extends TVersionEntity {
 				return false;
 		} else if (!latitude.equals(other.latitude))
 			return false;
-		if (logintude == null) {
-			if (other.logintude != null)
+		if (longitude == null) {
+			if (other.longitude != null)
 				return false;
-		} else if (!logintude.equals(other.logintude))
+		} else if (!longitude.equals(other.longitude))
 			return false;
 		if (neighborhood == null) {
 			if (other.neighborhood != null)
@@ -248,7 +248,10 @@ public class Address extends TVersionEntity {
 			return false;
 		return true;
 	}
-	
-	
+
+	@Override
+	public GeoLocation getGeoLocation() {
+		return GeoMap.process(this);
+	}
 	
 }

@@ -60,12 +60,12 @@
 		
 		<properties>
 		
-		  <property name="javax.persistence.retrieveMode" value="BYPASS"/>
-	      <property name="javax.persistence.storeMode" value="BYPASS"/>
+		  <property name="jakarta.persistence.retrieveMode" value="BYPASS"/>
+	      <property name="jakarta.persistence.storeMode" value="BYPASS"/>
 	      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
 	      <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
 	      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
-	      <property name="eclipselink.logging.level" value="FINER"/>
+	      <property name="eclipselink.logging.level" value="OFF"/>
           <property name="eclipselink.logging.exceptions" value="true"/>
           <property name="eclipselink.logging.timestamp" value="false"/>
           <property name="eclipselink.logging.thread" value="false"/>
@@ -73,10 +73,10 @@
           <property name="eclipselink.logging.level.sql" value="OFF"/>
            <property name="eclipselink.logging.parameters" value="true"/>
           
-         <!--  <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-          <property name="javax.persistence.schema-generation.create-source" value="metadata"/> 
-          <property name="javax.persistence.schema-generation.drop-source" value="metadata"/> 
-          <property name="javax.persistence.sql-load-script-source" value="init.sql"/>  -->
+         <!--  <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+          <property name="jakarta.persistence.schema-generation.create-source" value="metadata"/> 
+          <property name="jakarta.persistence.schema-generation.drop-source" value="metadata"/> 
+          <property name="jakarta.persistence.sql-load-script-source" value="init.sql"/>  -->
 	    </properties>
 		
       </persistence-unit> 

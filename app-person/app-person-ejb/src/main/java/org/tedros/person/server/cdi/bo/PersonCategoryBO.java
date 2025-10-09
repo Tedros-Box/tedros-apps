@@ -3,8 +3,8 @@
  */
 package org.tedros.person.server.cdi.bo;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 import org.tedros.person.model.PersonCategory;
 import org.tedros.person.server.cdi.eao.PersonCategoryEAO;

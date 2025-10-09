@@ -3,7 +3,7 @@
  */
 package org.tedros.extension.ejb.controller;
 
-import javax.ejb.Remote;
+import jakarta.ejb.Remote;
 
 import org.tedros.extension.report.model.PlaceReportModel;
 import org.tedros.server.controller.ITEjbReportController;

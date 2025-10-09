@@ -39,6 +39,8 @@ import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.layout.TPriority;
+import org.tedros.fx.annotation.layout.TVBox;
+import org.tedros.fx.annotation.layout.TVGrow;
 import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
@@ -58,6 +60,7 @@ import org.tedros.server.query.TCompareOp;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Orientation;
 import javafx.scene.layout.Priority;
 
 /**
@@ -81,9 +84,18 @@ allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})
 public class PlaceMV extends TEntityModelView<Place> {
 
 	@TTabPane(tabs = { 
-		@TTab(text = TUsualKey.MAIN_DATA, fields = {"title", "description"}),
+		@TTab(text = TUsualKey.MAIN_DATA, fields = {"description", "address"}, 
+				orientation = Orientation.HORIZONTAL),
 		@TTab(text = TUsualKey.PICTURES, fields = {"pictures"})})
 	private SimpleLongProperty id;
+	
+	
+	@TLabel(text=TUsualKey.DESCRIPTION)
+	@TTextAreaField(maxLength=500, wrapText=true, prefRowCount=7)
+	@TVBox(	pane=@TPane(children={"title","description"}), spacing=10, fillWidth=true,
+	vgrow=@TVGrow(priority={@TPriority(field="title", priority=Priority.ALWAYS), 
+			@TPriority(field="description", priority=Priority.ALWAYS)}))
+	private SimpleStringProperty description;
 	
 	@TLabel(text=TUsualKey.TITLE)
 	@TTextField(maxLength=60, required = true, node=@TNode(requestFocus=true, parse = true))
@@ -98,17 +110,12 @@ public class PlaceMV extends TEntityModelView<Place> {
 		modelView=PlaceTypeMV.class, query=@TQuery(entity=PlaceType.class)))
 	private SimpleObjectProperty<PlaceType> type;
 	
-	@TLabel(text=TUsualKey.DESCRIPTION)
-	@TTextAreaField(maxLength=500, wrapText=true, prefRowCount=7)
-	@THBox(	pane=@TPane(children={"description","address", "contacts"}), spacing=10, fillHeight=true,
-	hgrow=@THGrow(priority={@TPriority(field="description", priority=Priority.ALWAYS), 
-			@TPriority(field="address", priority=Priority.NEVER), 
-			@TPriority(field="contacts", priority=Priority.NEVER)}))
-	private SimpleStringProperty description;
-	
 	@TLabel(text=TUsualKey.ADDRESS)
 	@TEditEntityModal(model = Address.class, modelView=AddressMV.class, required=true)
 	@TGenericType(model = Address.class, modelView=AddressMV.class)
+	@TVBox(	pane=@TPane(children={"address", "contacts"}), spacing=10, fillWidth=true,
+	vgrow=@TVGrow(priority={@TPriority(field="address", priority=Priority.ALWAYS), 
+			@TPriority(field="contacts", priority=Priority.SOMETIMES)}))
 	private SimpleObjectProperty<AddressMV> address;
 	
 	@TLabel(text=TUsualKey.CONTACTS)

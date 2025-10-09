@@ -14,10 +14,13 @@ import org.tedros.extension.LocatKey;
 import org.tedros.extension.domain.DomainApp;
 import org.tedros.extension.ejb.controller.IAdminAreaController;
 import org.tedros.extension.model.AdminArea;
+import org.tedros.extension.module.setting.MapSetting;
+import org.tedros.extension.start.TConstant;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTextField;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
@@ -32,6 +35,8 @@ import org.tedros.fx.annotation.query.TCondition;
 import org.tedros.fx.annotation.query.TOrder;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
+import org.tedros.fx.annotation.scene.web.TWebEngine;
+import org.tedros.fx.annotation.scene.web.TWebView;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.server.query.TCompareOp;
 
@@ -42,6 +47,8 @@ import javafx.scene.layout.Priority;
  * @author Davis Gordon
  *
  */
+
+@TSetting(MapSetting.class)
 @TForm(header = LocatKey.FORM_KEEP_UPDATE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IAdminAreaController.JNDI_NAME, model=AdminArea.class)
 @TListViewPresenter(listViewMinWidth=350, listViewMaxWidth=350,
@@ -74,6 +81,10 @@ public class AdminAreaMV extends TEntityModelView<AdminArea> {
 	@TLabel(text=TUsualKey.CAPITAL)
 	@TTextField(maxLength=120, required = false)
 	private SimpleStringProperty iso2Code;
+	
+	@TWebView(prefHeight=300,
+			engine=@TWebEngine(load=TWebEngine.MODULE_FOLDER+"/"+TConstant.UUI+"/location.html"))
+	private SimpleStringProperty webview;
 			
 	
 	public AdminAreaMV(AdminArea e) {
@@ -103,6 +114,14 @@ public class AdminAreaMV extends TEntityModelView<AdminArea> {
 
 	public void setIso2Code(SimpleStringProperty iso2Code) {
 		this.iso2Code = iso2Code;
+	}
+
+	public SimpleStringProperty getWebview() {
+		return webview;
+	}
+
+	public void setWebview(SimpleStringProperty webview) {
+		this.webview = webview;
 	}
 
 }
