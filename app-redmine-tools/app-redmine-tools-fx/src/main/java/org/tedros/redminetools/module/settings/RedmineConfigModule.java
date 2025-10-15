@@ -8,9 +8,9 @@ import org.tedros.core.annotation.TItem;
 import org.tedros.core.annotation.TView;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
-import org.tedros.domain.DomainApp;
-import org.tedros.entity.RedmineConfig;
 import org.tedros.redminetools.RDMN_Key;
+import org.tedros.redminetools.domain.DomainApp;
+import org.tedros.redminetools.entity.RedmineConfig;
 import org.tedros.redminetools.module.settings.model.RedmineConfigMV;
 
 /**

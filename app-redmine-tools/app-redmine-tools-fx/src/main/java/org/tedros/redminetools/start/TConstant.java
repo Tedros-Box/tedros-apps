@@ -1,6 +1,6 @@
 package org.tedros.redminetools.start;
 
-import org.tedros.domain.DomainApp;
+import org.tedros.redminetools.domain.DomainApp;
 
 public interface TConstant {
 

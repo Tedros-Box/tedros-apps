@@ -22,10 +22,10 @@ import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.redminetools.RDMN_Key;
+import org.tedros.redminetools.domain.DomainApp;
+import org.tedros.redminetools.ejb.controller.IRedmineConfigController;
+import org.tedros.redminetools.entity.RedmineConfig;
 import org.tedros.server.query.TCompareOp;
-import org.tedros.domain.DomainApp;
-import org.tedros.ejb.controller.IRedmineConfigController;
-import org.tedros.entity.RedmineConfig;
 
 import javafx.beans.property.SimpleStringProperty;
 
