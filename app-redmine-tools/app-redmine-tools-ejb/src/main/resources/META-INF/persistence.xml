@@ -79,7 +79,7 @@
 		<class>org.tedros.stock.entity.StockItem</class>
 		<class>org.tedros.stock.entity.EventType</class>
 		
-		<class>org.tedros.entity.RedmineConfig</class>
+		<class>org.tedros.redminetools.entity.RedmineConfig</class>
 		
 		<properties>
 		
