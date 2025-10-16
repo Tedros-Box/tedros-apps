@@ -2,7 +2,7 @@ package org.tedros.redminetools.model;
 
 import org.tedros.server.entity.TEntity;
 
-public class JournalDetail extends TEntity {
+public class TJournalDetail extends TEntity {
 
 	private static final long serialVersionUID = 1L;
 

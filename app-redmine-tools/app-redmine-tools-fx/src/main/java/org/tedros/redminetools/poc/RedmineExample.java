@@ -18,6 +18,8 @@ public class RedmineExample {
 
         try {
         	
+        	//mgr.getProjectManager().
+        	
         	mgr.getProjectManager().getProjects()
         	.stream().forEach(p->{
         		

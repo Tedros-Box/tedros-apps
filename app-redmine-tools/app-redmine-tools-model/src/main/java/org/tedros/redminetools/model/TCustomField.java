@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.tedros.server.entity.TEntity;
 
-public class CustomField extends TEntity {
+public class TCustomField extends TEntity {
 	
 	private static final long serialVersionUID = 1L;
 

@@ -3,11 +3,11 @@ package org.tedros.redminetools.model;
 import java.util.List;
 import org.tedros.server.entity.TEntity;
 
-public class Membership extends TEntity {
+public class TMembership extends TEntity {
 	
 	private static final long serialVersionUID = 1L;
 
-	private RedmineProject project;
+	private TProject project;
 	
 	private Integer userId;
 	
@@ -17,13 +17,13 @@ public class Membership extends TEntity {
 	
 	private String groupName;
 	
-	private List<Role> roles;
+	private List<TRemineRole> roles;
 
-	public RedmineProject getProject() {
+	public TProject getProject() {
 		return project;
 	}
 
-	public void setProject(RedmineProject project) {
+	public void setProject(TProject project) {
 		this.project = project;
 	}
 
@@ -59,11 +59,11 @@ public class Membership extends TEntity {
 		this.groupName = groupName;
 	}
 
-	public List<Role> getRoles() {
+	public List<TRemineRole> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(List<TRemineRole> roles) {
 		this.roles = roles;
 	}
 	

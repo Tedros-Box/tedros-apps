@@ -2,7 +2,7 @@ package org.tedros.redminetools.model;
 
 import org.tedros.server.entity.TEntity;
 
-public class IssueRelation extends TEntity {
+public class TIssueRelation extends TEntity {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -30,11 +30,11 @@ public class IssueRelation extends TEntity {
 		this.issueToId = issueToId;
 	}
 
-	public String getRelationType() {
+	public String getType() {
 		return relationType;
 	}
 
-	public void setRelationType(String relationType) {
+	public void setType(String relationType) {
 		this.relationType = relationType;
 	}
 

@@ -4,41 +4,41 @@ import java.util.Date;
 
 import org.tedros.server.entity.TEntity;
 
-public class Attachment extends TEntity {
+public class TAttachment extends TEntity {
 	
 	
 	private static final long serialVersionUID = -1747906306442723211L;
 	
-	private String filename;
+	private String fileName;
 	
-	private Long filesize;
+	private Long fileSize;
 	
 	private String contentType;
 	
-	private String contentUrl;
+	private String contentURL;
 	
 	private String description;
 	
 	private Date createdOn;
 	
-	private User author;
+	private TRedmineUser author;
 	
 	private String token;
 		
-	public String getFilename() {
-		return filename;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public void setFileName(String filename) {
+		this.fileName = filename;
 	}
 
-	public Long getFilesize() {
-		return filesize;
+	public Long getFileSize() {
+		return fileSize;
 	}
 
-	public void setFilesize(Long filesize) {
-		this.filesize = filesize;
+	public void setFileSize(Long filesize) {
+		this.fileSize = filesize;
 	}
 
 	public String getContentType() {
@@ -49,12 +49,12 @@ public class Attachment extends TEntity {
 		this.contentType = contentType;
 	}
 
-	public String getContentUrl() {
-		return contentUrl;
+	public String getContentURL() {
+		return contentURL;
 	}
 
-	public void setContentUrl(String contentUrl) {
-		this.contentUrl = contentUrl;
+	public void setContentURL(String contentUrl) {
+		this.contentURL = contentUrl;
 	}
 
 	public String getDescription() {
@@ -73,11 +73,11 @@ public class Attachment extends TEntity {
 		this.createdOn = createdOn;
 	}
 
-	public User getAuthor() {
+	public TRedmineUser getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(User author) {
+	public void setAuthor(TRedmineUser author) {
 		this.author = author;
 	}
 
@@ -91,6 +91,6 @@ public class Attachment extends TEntity {
 
 	@Override
 	public String toString() {
-		return filename;
+		return fileName;
 	}
 }

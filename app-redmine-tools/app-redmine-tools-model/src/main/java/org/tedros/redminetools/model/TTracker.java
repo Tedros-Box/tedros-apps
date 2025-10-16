@@ -2,7 +2,7 @@ package org.tedros.redminetools.model;
 
 import org.tedros.server.entity.TEntity;
 
-public class Tracker extends TEntity{
+public class TTracker extends TEntity{
 	
     private static final long serialVersionUID = 1L;
 	private String name;
