@@ -1,18 +1,20 @@
 package org.tedros.redminetools.model;
 
+import java.util.Date;
+
 import org.tedros.server.entity.TEntity;
 
-public class Changeset extends TEntity{
+public class TChangeset extends TEntity{
 	
 	private static final long serialVersionUID = 1L;
 
 	private String revision;
 	
-	private User user;
+	private TRedmineUser user;
 	
 	private String comments;
 	
-	private String committedOn;
+	private Date committedOn;
 
 	public String getRevision() {
 		return revision;
@@ -22,11 +24,11 @@ public class Changeset extends TEntity{
 		this.revision = revision;
 	}
 
-	public User getUser() {
+	public TRedmineUser getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(TRedmineUser user) {
 		this.user = user;
 	}
 
@@ -38,11 +40,11 @@ public class Changeset extends TEntity{
 		this.comments = comments;
 	}
 
-	public String getCommittedOn() {
+	public Date getCommittedOn() {
 		return committedOn;
 	}
 
-	public void setCommittedOn(String committedOn) {
+	public void setCommittedOn(Date committedOn) {
 		this.committedOn = committedOn;
 	}
 	

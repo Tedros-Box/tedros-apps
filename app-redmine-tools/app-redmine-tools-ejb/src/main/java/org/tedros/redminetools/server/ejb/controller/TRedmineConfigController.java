@@ -19,7 +19,7 @@ import org.tedros.server.service.ITEjbService;
 import org.tedros.redminetools.domain.DomainApp;
 import org.tedros.redminetools.ejb.controller.IRedmineConfigController;
 import org.tedros.redminetools.entity.RedmineConfig;
-import org.tedros.redminetools.server.ejb.service.RDMN_Service;
+import org.tedros.redminetools.server.ejb.service.RedmineService;
 
 /**
  * The controller bean
@@ -35,7 +35,7 @@ policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 public class TRedmineConfigController extends TSecureEjbController<RedmineConfig> implements IRedmineConfigController, ITSecurity  {
 
 	@EJB
-	private RDMN_Service<RedmineConfig> serv;
+	private RedmineService<RedmineConfig> serv;
 	
 	@EJB
 	private ITSecurityController securityController;

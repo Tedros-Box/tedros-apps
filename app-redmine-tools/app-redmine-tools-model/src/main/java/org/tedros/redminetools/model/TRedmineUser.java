@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.tedros.server.entity.TEntity;
 
-public class User extends TEntity {
+public class TRedmineUser extends TEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,9 +13,9 @@ public class User extends TEntity {
 	
 	private String password;
 	
-	private String firstname;
+	private String firstName;
 	
-	private String lastname;
+	private String lastName;
 	
 	private String mail;
 	
@@ -25,7 +25,7 @@ public class User extends TEntity {
 	
 	private Date lastLoginOn;
 	
-	private String authSourceId;
+	private Integer authSourceId;
 	
 	private Integer status;
 	
@@ -35,11 +35,11 @@ public class User extends TEntity {
 	
 	private Boolean generatePassword;
 	
-	private List<CustomField> customFields;
+	private List<TCustomField> customFields;
 	
-	private List<Membership> memberships;
+	private List<TMembership> memberships;
 	
-	private List<Group> groups;
+	private List<TGroup> groups;
 
 	public String getLogin() {
 		return login;
@@ -57,20 +57,20 @@ public class User extends TEntity {
 		this.password = password;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstname) {
+		this.firstName = firstname;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastname) {
+		this.lastName = lastname;
 	}
 
 	public String getMail() {
@@ -105,11 +105,11 @@ public class User extends TEntity {
 		this.lastLoginOn = lastLoginOn;
 	}
 
-	public String getAuthSourceId() {
+	public Integer getAuthSourceId() {
 		return authSourceId;
 	}
 
-	public void setAuthSourceId(String authSourceId) {
+	public void setAuthSourceId(Integer authSourceId) {
 		this.authSourceId = authSourceId;
 	}
 
@@ -145,27 +145,27 @@ public class User extends TEntity {
 		this.generatePassword = generatePassword;
 	}
 
-	public List<CustomField> getCustomFields() {
+	public List<TCustomField> getCustomFields() {
 		return customFields;
 	}
 
-	public void setCustomFields(List<CustomField> customFields) {
+	public void setCustomFields(List<TCustomField> customFields) {
 		this.customFields = customFields;
 	}
 
-	public List<Membership> getMemberships() {
+	public List<TMembership> getMemberships() {
 		return memberships;
 	}
 
-	public void setMemberships(List<Membership> memberships) {
+	public void setMemberships(List<TMembership> memberships) {
 		this.memberships = memberships;
 	}
 
-	public List<Group> getGroups() {
+	public List<TGroup> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(List<Group> groups) {
+	public void setGroups(List<TGroup> groups) {
 		this.groups = groups;
 	}
 	

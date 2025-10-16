@@ -6,7 +6,7 @@ package org.tedros.redminetools.server.cdi.bo;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
-import org.tedros.redminetools.server.cdi.eao.RDMN_EAO;
+import org.tedros.redminetools.server.cdi.eao.RedmineEAO;
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 import org.tedros.server.entity.ITEntity;
@@ -18,10 +18,10 @@ import org.tedros.server.entity.ITEntity;
  *
  */
 @Dependent
-public class RDMN_BO<E extends ITEntity> extends TGenericBO<E> {
+public class RedmineBO<E extends ITEntity> extends TGenericBO<E> {
 
 	@Inject
-	private RDMN_EAO<E> eao;
+	private RedmineEAO<E> eao;
 	
 	@Override
 	public ITGenericEAO<E> getEao() {

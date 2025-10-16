@@ -5,17 +5,17 @@ import java.util.List;
 
 import org.tedros.server.entity.TEntity;
 
-public class Journal extends TEntity {
+public class TJournal extends TEntity {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private String notes;
 	
-	private User user;
+	private TRedmineUser user;
 	
 	private Date createdOn;
 	
-	private List<JournalDetail> details;
+	private List<TJournalDetail> details;
 
 	public String getNotes() {
 		return notes;
@@ -25,11 +25,11 @@ public class Journal extends TEntity {
 		this.notes = notes;
 	}
 
-	public User getUser() {
+	public TRedmineUser getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(TRedmineUser user) {
 		this.user = user;
 	}
 
@@ -41,11 +41,11 @@ public class Journal extends TEntity {
 		this.createdOn = createdOn;
 	}
 
-	public List<JournalDetail> getDetails() {
+	public List<TJournalDetail> getDetails() {
 		return details;
 	}
 
-	public void setDetails(List<JournalDetail> details) {
+	public void setDetails(List<TJournalDetail> details) {
 		this.details = details;
 	}
 	

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.tedros.server.entity.TEntity;
 
-public class TimeEntry extends TEntity {
+public class TTimeEntry extends TEntity {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class TimeEntry extends TEntity {
 	
 	private Date updatedOn;
 	
-	private List<CustomField> customFields;
+	private List<TCustomField> customFields;
 
 	public Integer getIssueId() {
 		return issueId;
@@ -131,11 +131,11 @@ public class TimeEntry extends TEntity {
 		this.updatedOn = updatedOn;
 	}
 
-	public List<CustomField> getCustomFields() {
+	public List<TCustomField> getCustomFields() {
 		return customFields;
 	}
 
-	public void setCustomFields(List<CustomField> customFields) {
+	public void setCustomFields(List<TCustomField> customFields) {
 		this.customFields = customFields;
 	}
 	

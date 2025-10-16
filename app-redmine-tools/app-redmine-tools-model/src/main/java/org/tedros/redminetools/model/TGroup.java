@@ -2,7 +2,7 @@ package org.tedros.redminetools.model;
 
 import org.tedros.server.entity.TEntity;
 
-public class Watcher extends TEntity{
+public class TGroup extends TEntity {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -20,5 +20,5 @@ public class Watcher extends TEntity{
 	public String toString() {
 		return name;
 	}
-	
+
 }

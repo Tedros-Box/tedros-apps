@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.tedros.server.entity.TEntity;
 
-public class Version extends TEntity {
+public class TRedmineVersion extends TEntity {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -21,13 +21,13 @@ public class Version extends TEntity {
 	
 	private String sharing;
 	
-	private String dueDate;
+	private Date dueDate;
 	
 	private Date createdOn;
 	
 	private Date updatedOn;
 	
-	private List<CustomField> customFields;
+	private List<TCustomField> customFields;
 
 	public String getProjectId() {
 		return projectId;
@@ -77,11 +77,11 @@ public class Version extends TEntity {
 		this.sharing = sharing;
 	}
 
-	public String getDueDate() {
+	public Date getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(String dueDate) {
+	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -101,11 +101,11 @@ public class Version extends TEntity {
 		this.updatedOn = updatedOn;
 	}
 
-	public List<CustomField> getCustomFields() {
+	public List<TCustomField> getCustomFields() {
 		return customFields;
 	}
 
-	public void setCustomFields(List<CustomField> customFields) {
+	public void setCustomFields(List<TCustomField> customFields) {
 		this.customFields = customFields;
 	}
 	

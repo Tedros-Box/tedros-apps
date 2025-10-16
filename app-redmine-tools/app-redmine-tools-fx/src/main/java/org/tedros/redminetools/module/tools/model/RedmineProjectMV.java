@@ -15,14 +15,14 @@ import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.model.TModelView;
 import org.tedros.fx.presenter.model.behavior.TViewBehavior;
 import org.tedros.fx.presenter.model.decorator.TViewDecorator;
-import org.tedros.redminetools.model.RedmineProject;
+import org.tedros.redminetools.model.TProject;
 
 import javafx.beans.property.SimpleStringProperty;
 
-@TPresenter(model=RedmineProject.class,
+@TPresenter(model=TProject.class,
 decorator=@TDecorator(type=TViewDecorator.class, viewTitle="Projetos"),
 behavior=@TBehavior(type=TViewBehavior.class))
-public class RedmineProjectMV extends TModelView<RedmineProject> {
+public class RedmineProjectMV extends TModelView<TProject> {
 	
 	@TText(textStyle = TTextStyle.LARGE)
 	@TFieldBox(node=@TNode(parse = true, id=TFieldBox.TITLE))
@@ -46,7 +46,7 @@ public class RedmineProjectMV extends TModelView<RedmineProject> {
 	@TShowField
 	private SimpleStringProperty description;
 	
-	public RedmineProjectMV(RedmineProject model) {
+	public RedmineProjectMV(TProject model) {
 		super(model);
 		super.formatToString("%s", name);
 	}

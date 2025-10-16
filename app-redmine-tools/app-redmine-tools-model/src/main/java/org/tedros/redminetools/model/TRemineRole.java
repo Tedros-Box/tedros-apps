@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.tedros.server.entity.TEntity;
 
-public class Role extends TEntity {
+public class TRemineRole extends TEntity {
 	
 	private static final long serialVersionUID = 1L;
 
 	private String name;
 	
-	private String inherited;
+	private Boolean inherited;
 	
 	private List<String> permissions;
 
@@ -22,11 +22,11 @@ public class Role extends TEntity {
 		this.name = name;
 	}
 
-	public String getInherited() {
+	public Boolean getInherited() {
 		return inherited;
 	}
 
-	public void setInherited(String inherited) {
+	public void setInherited(Boolean inherited) {
 		this.inherited = inherited;
 	}
 

@@ -1,10 +1,11 @@
 package org.tedros.redminetools.model;
 
-import org.tedros.server.entity.TEntity;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
-public class RedmineIssue extends TEntity {
+import org.tedros.server.entity.TEntity;
+
+public class TIssue extends TEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,21 +29,21 @@ public class RedmineIssue extends TEntity {
     private String projectName;
     private Integer authorId;
     private String authorName;
-    private Tracker tracker;
+    private TTracker tracker;
     private String description;
     private Date closedOn;
     private Integer statusId;
     private String statusName;
-    private Version targetVersion;
-    private IssueCategory issueCategory;
+    private TRedmineVersion targetVersion;
+    private TIssueCategory issueCategory;
     private Boolean privateIssue;
-    private Set<CustomField> customFields;
-    private Set<Journal> journals;
-    private Set<IssueRelation> relations;
-    private Set<Attachment> attachments;
-    private Set<Changeset> changesets;
-    private Set<Watcher> watchers;
-    private Set<RedmineIssue> children;
+    private List<TCustomField> customFields;
+    private List<TJournal> journals;
+    private List<TIssueRelation> relations;
+    private List<TAttachment> attachments;
+    private List<TChangeset> changesets;
+    private List<TWatcher> watchers;
+    private List<TIssue> children;
    
 
     public Long getId() {
@@ -205,11 +206,11 @@ public class RedmineIssue extends TEntity {
 		this.authorName = authorName;
 	}
 
-	public Tracker getTracker() {
+	public TTracker getTracker() {
 		return tracker;
 	}
 
-	public void setTracker(Tracker tracker) {
+	public void setTracker(TTracker tracker) {
 		this.tracker = tracker;
 	}
 
@@ -245,19 +246,19 @@ public class RedmineIssue extends TEntity {
 		this.statusName = statusName;
 	}
 
-	public Version getTargetVersion() {
+	public TRedmineVersion getTargetVersion() {
 		return targetVersion;
 	}
 
-	public void setTargetVersion(Version targetVersion) {
+	public void setTargetVersion(TRedmineVersion targetVersion) {
 		this.targetVersion = targetVersion;
 	}
 
-	public IssueCategory getIssueCategory() {
+	public TIssueCategory getCategory() {
 		return issueCategory;
 	}
 
-	public void setIssueCategory(IssueCategory issueCategory) {
+	public void setCategory(TIssueCategory issueCategory) {
 		this.issueCategory = issueCategory;
 	}
 
@@ -269,59 +270,59 @@ public class RedmineIssue extends TEntity {
 		this.privateIssue = privateIssue;
 	}
 
-	public Set<CustomField> getCustomFields() {
+	public List<TCustomField> getCustomFields() {
 		return customFields;
 	}
 
-	public void setCustomFields(Set<CustomField> customFields) {
+	public void setCustomFields(List<TCustomField> customFields) {
 		this.customFields = customFields;
 	}
 
-	public Set<Journal> getJournals() {
+	public List<TJournal> getJournals() {
 		return journals;
 	}
 
-	public void setJournals(Set<Journal> journals) {
+	public void setJournals(List<TJournal> journals) {
 		this.journals = journals;
 	}
 
-	public Set<IssueRelation> getRelations() {
+	public List<TIssueRelation> getRelations() {
 		return relations;
 	}
 
-	public void setRelations(Set<IssueRelation> relations) {
+	public void setRelations(List<TIssueRelation> relations) {
 		this.relations = relations;
 	}
 
-	public Set<Attachment> getAttachments() {
+	public List<TAttachment> getAttachments() {
 		return attachments;
 	}
 
-	public void setAttachments(Set<Attachment> attachments) {
+	public void setAttachments(List<TAttachment> attachments) {
 		this.attachments = attachments;
 	}
 
-	public Set<Changeset> getChangesets() {
+	public List<TChangeset> getChangesets() {
 		return changesets;
 	}
 
-	public void setChangesets(Set<Changeset> changesets) {
+	public void setChangesets(List<TChangeset> changesets) {
 		this.changesets = changesets;
 	}
 
-	public Set<Watcher> getWatchers() {
+	public List<TWatcher> getWatchers() {
 		return watchers;
 	}
 
-	public void setWatchers(Set<Watcher> watchers) {
+	public void setWatchers(List<TWatcher> watchers) {
 		this.watchers = watchers;
 	}
 
-	public Set<RedmineIssue> getChildren() {
+	public List<TIssue> getChildren() {
 		return children;
 	}
 
-	public void setChildren(Set<RedmineIssue> children) {
+	public void setChildren(List<TIssue> children) {
 		this.children = children;
 	}
 
