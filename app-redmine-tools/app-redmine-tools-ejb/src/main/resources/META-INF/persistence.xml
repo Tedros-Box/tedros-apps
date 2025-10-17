@@ -32,6 +32,7 @@
 		<class>org.tedros.person.model.Person</class>
 		<class>org.tedros.person.model.NaturalPerson</class>
 		<class>org.tedros.person.model.LegalPerson</class>
+		<class>org.tedros.person.model.CostCenter</class>
 		<class>org.tedros.person.model.Employee</class>
 		<class>org.tedros.person.model.Customer</class>
 		<class>org.tedros.person.model.LegalType</class>
@@ -59,14 +60,6 @@
 		<class>org.tedros.person.model.VoluntaryType</class>
 		<class>org.tedros.person.model.NaturalType</class>
 		<class>org.tedros.person.model.NaturalStatus</class> 
-		
-		<class>org.tedros.services.model.PaymentPlan</class>
-		<class>org.tedros.services.model.Plan</class>
-		<class>org.tedros.services.model.Service</class>
-		<class>org.tedros.services.model.ServiceLocation</class>
-		<class>org.tedros.services.model.ServiceType</class>
-		<class>org.tedros.services.model.Contract</class>
-		<class>org.tedros.services.model.ContractualAgreement</class>
 		
 		<class>org.tedros.stock.entity.Product</class>
 		<class>org.tedros.stock.entity.EntryType</class>
