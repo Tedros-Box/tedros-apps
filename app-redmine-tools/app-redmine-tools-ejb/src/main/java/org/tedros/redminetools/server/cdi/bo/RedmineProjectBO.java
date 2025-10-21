@@ -6,7 +6,6 @@ package org.tedros.redminetools.server.cdi.bo;
 import java.util.List;
 
 import org.tedros.redminetools.model.TProject;
-import org.tedros.redminetools.server.gateway.RedmineApiGateway;
 import org.tedros.server.cdi.bo.ITGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 import org.tedros.server.entity.ITEntity;
@@ -24,13 +23,13 @@ import jakarta.enterprise.context.Dependent;
 @Dependent
 public class RedmineProjectBO implements ITGenericBO<TProject> {
 	
-	private RedmineApiGateway gateway;
+	//private RedmineApiGateway gateway;
     
 	@PostConstruct
    	void init() {
    		String redmineURI = "https://redmine.detran.go.gov.br/";
    	    String apiAccessKey = "559147fe2183d824e7784c2862e6e0b070cd6804";
-   		this.gateway = new RedmineApiGateway(redmineURI, apiAccessKey);
+   		//this.gateway = new RedmineApiGateway(redmineURI, apiAccessKey);
    	}
     
 	@Override
@@ -41,11 +40,11 @@ public class RedmineProjectBO implements ITGenericBO<TProject> {
 	@Override
 	public List<TProject> search(TSelect<TProject> sel, int firstResult, int maxResult) {
 		// TODO Auto-generated method stub
-		return this.gateway.listAllProjects();
+		return null;//this.gateway.listAllProjects();
 	}
 	@Override
 	public Long countSearch(TSelect<TProject> sel) {
-		return this.gateway.countAllProjects();
+		return null;//this.gateway.countAllProjects();
 	}
 	@Override
 	public ITGenericEAO<TProject> getEao() {
@@ -79,7 +78,7 @@ public class RedmineProjectBO implements ITGenericBO<TProject> {
 	}
 	@Override
 	public List<TProject> listAll(Class<? extends ITEntity> entidade) throws Exception {
-		return this.gateway.listAllProjects();
+		return null;//this.gateway.listAllProjects();
 	}
 	@Override
 	public List<TProject> pageAll(TProject entidade, int firstResult, int maxResult, boolean orderByAsc)
