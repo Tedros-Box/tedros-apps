@@ -10,6 +10,10 @@ public class FilterCondition {
     private FilterType type;
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    
+    public FilterCondition() {
+		
+	}
 
     public FilterCondition(FilterType type, String operator, String... values) {
         this.type = type;
@@ -19,6 +23,10 @@ public class FilterCondition {
 
     public static FilterCondition auto(FilterType detectedType, String operator, String... values) {
         return new FilterCondition(detectedType, operator, values);
+    }
+    
+    public static FilterCondition to(String operator, Boolean value) {
+        return new FilterCondition(FilterType.BOOLEAN, "=", value.toString());
     }
 
     public static FilterCondition equalsTo(String value) {
@@ -52,8 +60,30 @@ public class FilterCondition {
         return formatted;
     }
 
-    public String getOperator() { return operator; }
-    public String[] getValues() { return values; }
-    public FilterType getType() { return type; }
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	public String[] getValues() {
+		return values;
+	}
+
+	public void setValues(String[] values) {
+		this.values = values;
+	}
+
+	public FilterType getType() {
+		return type;
+	}
+
+	public void setType(FilterType type) {
+		this.type = type;
+	}
+
+    
 }
 
