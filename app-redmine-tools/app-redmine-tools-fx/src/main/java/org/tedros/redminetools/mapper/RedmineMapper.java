@@ -76,7 +76,7 @@ public class RedmineMapper {
 		issue.setAssigneeId(i.getAssigneeId());
 		issue.setAssigneeName(i.getAssigneeName());
 		issue.setNotes(i.getNotes());
-		issue.setPrivateNotes(i.isPrivateNotes());
+		//issue.setPrivateNotes(i.isPrivateNotes());
 		issue.setPriorityText(i.getPriorityText());
 		issue.setProjectId(i.getProjectId());
 		issue.setProjectName(i.getProjectName());
@@ -98,7 +98,7 @@ public class RedmineMapper {
 		issue.setWatchers(convertWatchersList(i.getWatchers()));
 		issue.setChildren(convertIssueList(i.getChildren()));
 		
-		return null;
+		return issue;
 	}
 	
 	public static List<TWatcher> convertWatchersList(Collection<Watcher> watchers) {

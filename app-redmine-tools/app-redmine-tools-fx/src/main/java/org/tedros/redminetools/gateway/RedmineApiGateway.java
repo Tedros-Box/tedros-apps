@@ -3,17 +3,22 @@ package org.tedros.redminetools.gateway;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.tedros.redminetools.mapper.RedmineMapper;
+import org.tedros.redminetools.model.TCustomField;
 import org.tedros.redminetools.model.TIssue;
+import org.tedros.redminetools.model.TMembership;
 import org.tedros.redminetools.model.TProject;
 
 import com.taskadapter.redmineapi.Include;
 import com.taskadapter.redmineapi.Params;
+import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.RedmineManager;
 import com.taskadapter.redmineapi.RedmineManagerFactory;
 import com.taskadapter.redmineapi.bean.CustomFieldDefinition;
 import com.taskadapter.redmineapi.bean.Issue;
+import com.taskadapter.redmineapi.bean.Membership;
 import com.taskadapter.redmineapi.bean.Project;
 import com.taskadapter.redmineapi.internal.ResultsWrapper;
 
@@ -49,7 +54,17 @@ public class RedmineApiGateway {
 	    }
 	}
 	
-	public ResultsWrapper<Issue> getIssuesByFilters(Map<String, FilterCondition> filters) {
+	public List<TMembership> getProjectMembers(String projectKey){		
+		List<Membership> members;
+		try {
+			members = manager.getProjectManager().getProjectMembers(projectKey);
+			return RedmineMapper.convertMembershipList(members);
+		} catch (RedmineException e) {
+			throw new RuntimeException("Erro ao carregar os membros do projeto: " + e.getMessage());
+		}
+	}
+	
+	public List<TIssue> getIssuesByFilters(Map<String, FilterCondition> filters) {
 	    try {
 	        Params params = new Params()
 	            .add("set_filter", "1")
@@ -76,7 +91,7 @@ public class RedmineApiGateway {
 	        }
 
 	        // colunas padrão (customizável)
-	        params.add("c[]", "project")
+	       /* params.add("c[]", "project")
 	              .add("c[]", "tracker")
 	              .add("c[]", "status")
 	              .add("c[]", "subject")
@@ -86,9 +101,13 @@ public class RedmineApiGateway {
 	              .add("c[]", "due_date")
 	              .add("c[]", "assigned_to")
 	              .add("c[]", "cf_30")
-	              .add("t[]", "spent_hours");
+	              .add("t[]", "spent_hours");*/
+	        
+	        ResultsWrapper<Issue> wrapper = manager.getIssueManager().getIssues(params); 
 
-	        return manager.getIssueManager().getIssues(params);
+	        return wrapper != null && wrapper.hasSomeResults()
+	            ? RedmineMapper.convertIssueList(wrapper.getResults())
+	            : List.of();
 
 	    } catch (Exception e) {
 	        throw new RuntimeException("Erro ao buscar issues: " + e.getMessage());
@@ -157,8 +176,6 @@ public class RedmineApiGateway {
 	
 	public Long countAllProjects(){
 		
-		//return 1L;
-		
 		try {
 			List<Project> projects = this.manager.getProjectManager().getProjects();
 			if(projects!=null) 
@@ -171,14 +188,6 @@ public class RedmineApiGateway {
 	}
 	
 	public List<TProject> listAllProjects(){
-		
-		/*TProject p = new TProject();
-		p.setId(1L);
-		p.setName("Project 1");
-		p.setIdentifier("project1");
-		List<TProject> projects = new ArrayList<>();
-		projects.add(p);
-		return projects;*/
 		
 		try {
 			List<Project> projects = this.manager.getProjectManager().getProjects();
@@ -203,7 +212,7 @@ public class RedmineApiGateway {
 
 	    // Agora, criar os filtros:
 	    Map<String, FilterCondition> filters = new HashMap<>();
-	    filters.put("status_id", FilterCondition.notEquals("2"));
+	    //filters.put("status_id", FilterCondition.equalsTo("2"));
 	    filters.put("assigned_to_id", FilterCondition.equalsTo("509"));
 	
 	    // Campo de texto personalizado
@@ -215,24 +224,29 @@ public class RedmineApiGateway {
 	        LocalDate.of(2025, 10, 31)
 	    ));*/
 
-	    ResultsWrapper<Issue> issues = gateway.getIssuesByFilters(filters);
-        
         //ResultsWrapper<Issue> issues = gateway.getIssues();
-        
-        List<Issue> projects = issues.getResults();
-        projects.stream().forEach(p->{
+        int x = 1;
+        List<TIssue> projects = gateway.getIssuesByFilters(filters);
+        for(TIssue p : projects){
         	
         	String pr = p.getProjectName();
         	String t = p.getTracker().getName();
         	String tit = p.getSubject();
         	String sit = p.getStatusName();
         	String att = p.getAssigneeName();
+        	//Date dtIni = p.getStartDate().
+        	
+        	Optional<TCustomField> opt = p.getCustomFields().stream().filter(c->c.getName().equals("HPA")).findFirst();
+        	
+        	String hpa = opt.isPresent() 
+        			? opt.get().getValue()
+        					: "";
     		
-        	String str = String.format("[Projeto]: %s, [Tipo]: %s, [Situação]: %s, [Titulo]: %s, [Atribuida para]: %s", pr, t, sit, tit, att);
-    		
+        	String str = String.format("%s) [Projeto]: %s, [Tipo]: %s, [Situação]: %s, [Titulo]: %s, [Atribuida para]: %s, [HPA] %s", x, pr, t, sit, tit, att, hpa);
     		System.out.println(str);
+    		x++;
     		
-    	});
+    	}
 	}
 
 	

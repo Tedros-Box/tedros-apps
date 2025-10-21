@@ -1,5 +1,14 @@
 package org.tedros.redminetools.gateway;
 
+import java.io.IOException;
+import java.lang.reflect.RecordComponent;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * Enum que representa todos os campos conhecidos que podem ser utilizados
  * como parâmetros de filtragem em consultas de issues do Redmine.
@@ -211,6 +220,7 @@ public enum RedmineFilterField {
 
     private final String fieldName;
     private final FilterType type;
+    private final static ObjectMapper mapper = new ObjectMapper();
 
     RedmineFilterField(String fieldName, FilterType type) {
         this.fieldName = fieldName;
@@ -244,7 +254,93 @@ public enum RedmineFilterField {
         }
         return null;
     }
- 
+    
+    /**
+     * Converte um mapa genérico de filtros (ex: vindo de JSON ou query params)
+     * em um mapa tipado com {@link RedmineFilterField} e {@link FilterCondition}.
+     *
+     * <p>Exemplo de entrada:</p>
+     * <pre>{@code
+     * {
+     *   "status_id": {"op": "!=", "value": "2"},
+     *   "assigned_to_id": {"op": "=", "value": "509"},
+     *   "cf_30": {"op": "=", "value": "Entregue"}
+     * }
+     * }</pre>
+     *
+     * @param rawFilters mapa genérico contendo filtros
+     * @return mapa convertido para tipos seguros
+     */
+    public static Map<String, FilterCondition> fromRawMap(Map<String, Object> rawFilters) {
+        Map<String, FilterCondition> result = new HashMap<>();
+        if (rawFilters == null || rawFilters.isEmpty())
+            return result;
+
+        for (Map.Entry<String, Object> entry : rawFilters.entrySet()) {
+            String fieldName = entry.getKey();
+            Object value = entry.getValue();
+
+            RedmineFilterField field = fromFieldName(fieldName);
+            FilterType type = (field != null) ? field.getType() :
+                    (isCustomField(fieldName) ? FilterType.TEXT : FilterType.TEXT);
+
+            if (value instanceof Map<?, ?> mapValue) {
+                Object opObj = mapValue.get("op");
+                String op = opObj != null ? opObj.toString() : "=";
+
+                Object val = mapValue.get("value");
+
+                FilterCondition condition = null;
+
+                if (val instanceof Boolean bVal) {
+                    condition = FilterCondition.to(op, bVal);
+                } else if (val instanceof String strVal) {
+                    condition = FilterCondition.auto(type, op, strVal);
+                } else if (val instanceof Number numVal) {
+                    condition = FilterCondition.auto(type, op, numVal.toString());
+                } else if (val instanceof Map<?, ?> dateRange
+                        && type == FilterType.DATE
+                        && dateRange.containsKey("from")
+                        && dateRange.containsKey("to")) {
+                    LocalDate from = LocalDate.parse(dateRange.get("from").toString());
+                    LocalDate to = LocalDate.parse(dateRange.get("to").toString());
+                    condition = FilterCondition.betweenDates(from, to);
+                }
+
+                if (condition != null) {
+                    result.put(fieldName, condition);
+                }
+
+            } else {
+                result.put(fieldName, FilterCondition.equalsTo(String.valueOf(value)));
+            }
+        }
+
+        return result;
+    }
+
+    public static Map<String, FilterCondition> fromJSON(String json) throws IOException {
+        // Converte o JSON para um Map<String, Object>
+        Map<String, Object> raw = mapper.readValue(json, new TypeReference<>() {});
+        
+        // Converte para Map tipado com FilterCondition
+        return RedmineFilterField.fromRawMap(raw);
+    } 
+    
+    public static Map<String, FilterCondition> fromRecord(Object record) {
+        Map<String, FilterCondition> map = new HashMap<>();
+        if (record == null) return map;
+
+        for (RecordComponent component : record.getClass().getRecordComponents()) {
+            try {
+                Object value = component.getAccessor().invoke(record);
+                if (value != null && value instanceof FilterCondition fc) {
+                    map.put(component.getName(), fc);
+                }
+            } catch (Exception ignored) {}
+        }
+        return map;
+    }
     
 }
 

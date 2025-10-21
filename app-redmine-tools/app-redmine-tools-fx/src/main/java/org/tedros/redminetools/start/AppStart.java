@@ -7,6 +7,7 @@ import org.tedros.core.annotation.TResourceBundle;
 import org.tedros.redminetools.RDMN_Key;
 import org.tedros.redminetools.module.settings.RedmineConfigModule;
 import org.tedros.redminetools.module.tools.RedmineToolsModule;
+import org.tedros.redminetools.resource.AppResource;
 
 /**
  * The app start class.
@@ -33,7 +34,7 @@ public class AppStart implements ITApplication {
 
 	@Override
 	public void start() {
-		// Run at startup
+		new AppResource().copyToFolder();
 	}
 
 	@Override
