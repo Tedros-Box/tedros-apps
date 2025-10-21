@@ -1,4 +1,4 @@
-package org.tedros.redminetools.server.gateway;
+package org.tedros.redminetools.gateway;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

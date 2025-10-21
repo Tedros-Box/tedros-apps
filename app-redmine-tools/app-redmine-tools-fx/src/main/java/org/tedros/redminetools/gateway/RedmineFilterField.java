@@ -1,4 +1,4 @@
-package org.tedros.redminetools.server.gateway;
+package org.tedros.redminetools.gateway;
 
 /**
  * Enum que representa todos os campos conhecidos que podem ser utilizados

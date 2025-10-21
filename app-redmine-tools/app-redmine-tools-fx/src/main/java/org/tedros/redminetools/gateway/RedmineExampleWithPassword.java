@@ -1,4 +1,4 @@
-package org.tedros.redminetools.server.gateway;
+package org.tedros.redminetools.gateway;
 
 import com.taskadapter.redmineapi.RedmineManager;
 import com.taskadapter.redmineapi.RedmineManagerFactory;
