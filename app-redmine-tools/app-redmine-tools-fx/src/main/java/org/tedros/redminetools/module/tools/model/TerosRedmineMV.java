@@ -16,14 +16,14 @@ import javafx.beans.property.SimpleStringProperty;
 
 @TPresenter(model=TerosRedmineModel.class,
 decorator=@TDecorator(type=TViewDecorator.class, viewTitle="Teros AI HTML Response", 
-	region = @TRegion(parse = true, maxWidth = 820, maxHeight=620)),
+	region = @TRegion(parse = true, maxWidth = 1080, maxHeight=620)),
 behavior=@TBehavior(type=TViewBehavior.class))
 public class TerosRedmineMV extends TModelView<TerosRedmineModel> {
 	
 	//private final static double HEIGHT = 500;
 	
 	@TWebView(engine = @TWebEngine(load = TWebEngine.MODULE_FOLDER+"/"+TConstant.UUI+"/teros_ia_response.html"),
-			maxWidth = 760, maxHeight=560)
+			maxWidth = 1040, maxHeight=560)
 	private SimpleStringProperty webContent;
 
 	public TerosRedmineMV(TerosRedmineModel model) {
