@@ -17,7 +17,15 @@ public class WebViewBridge {
 	}
 	
 	public void run(String content) {
-		getWebEngine().executeScript("appendAIResponse('"+content+"')");
+		getWebEngine().executeScript("appendAIResponse(" + toJSString(content) + ")");
+	}
+
+	private String toJSString(String content) {
+	    // Escapa o conteúdo para ser uma string JS válida
+	    return "\"" + content.replace("\\", "\\\\")
+	                          .replace("\"", "\\\"")
+	                          .replace("\n", "\\n")
+	                          .replace("\r", "") + "\"";
 	}
 	
 	private WebEngine getWebEngine() {
