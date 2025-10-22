@@ -28,7 +28,6 @@
         margin: 0 24px;
         padding: 18px 26px;
         max-width: 70%;
-        font-size: 16px;
         word-break: break-word;
         transition: box-shadow 0.2s, transform 0.2s;
         animation: fadeIn 0.5s;
@@ -37,6 +36,9 @@
       .chat-message.ai {
         border: 1.5px solid #80deea;
         box-shadow: 0 6px 24px rgba(128,222,234,0.08);
+      }
+      .chat-message, .chat-message * {
+        font-size: 9px !important;
       }
       h4 {
         color: #fff;
@@ -92,28 +94,7 @@
       mermaidDivs.forEach((el) => {
         mermaid.init(undefined, el);
       });
-    }
-
-    // Exemplo de uso:
-    /*appendAIResponse(`
-      <div class="mermaid">
-        graph TD
-          A[Início] --> B{Decisão}
-          B -->|Sim| C[Resultado 1]
-          B -->|Não| D[Resultado 2]
-      </div>
-    `);
-	*/
-	 // Exemplo de uso:
-    /*appendAIResponse(`
-      <div class="mermaid">
-        graph TD
-          A[Início] --> B{Decisão}
-          B -->|Sim| C[Resultado 1]
-          B -->|Não| D[Resultado 2]
-      </div>
-    `);*/
-	
+    }	
   </script>
 </body>
 </html>

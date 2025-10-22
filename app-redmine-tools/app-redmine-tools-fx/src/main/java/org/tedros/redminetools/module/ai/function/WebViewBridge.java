@@ -25,7 +25,7 @@ public class WebViewBridge {
 	    return "\"" + content.replace("\\", "\\\\")
 	                          .replace("\"", "\\\"")
 	                          .replace("\n", "\\n")
-	                          .replace("\r", "") + "\"";
+	                          .replace("\r", "\\r") + "\"";
 	}
 	
 	private WebEngine getWebEngine() {
