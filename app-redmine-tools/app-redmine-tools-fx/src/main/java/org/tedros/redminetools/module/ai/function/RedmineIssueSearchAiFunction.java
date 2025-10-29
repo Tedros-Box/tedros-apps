@@ -154,7 +154,7 @@ public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> 
 					LOGGER.info("Filtros recebidos: {}", mapper.writeValueAsString(v));
 					
 					Map<String, FilterCondition> filters;
-					filters = RedmineFilterField.fromRecord(v);
+					filters = RedmineFilterField.fromObject(v);
 					String redmineURI = "https://redmine.detran.go.gov.br/";
 			        String apiAccessKey = "559147fe2183d824e7784c2862e6e0b070cd6804";
 			        

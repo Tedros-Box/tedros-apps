@@ -5,7 +5,8 @@ package org.tedros.extension.ai.function;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.tedros.ai.function.TRequiredProperty;
+
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 /**
@@ -14,8 +15,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 public class ListItemParam {
 	
+	@TRequiredProperty
 	@JsonPropertyDescription("A list of items")
-	@JsonProperty(required = true)
 	private List<CodeNameDescParam> items;
 
 	public List<CodeNameDescParam> getItems() {
