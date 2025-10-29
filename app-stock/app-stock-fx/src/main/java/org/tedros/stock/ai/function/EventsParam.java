@@ -5,7 +5,8 @@ package org.tedros.stock.ai.function;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.tedros.ai.function.TRequiredProperty;
+
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 /**
@@ -13,10 +14,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
  */
 
 public class EventsParam {
-	
 
+	@TRequiredProperty
 	@JsonPropertyDescription("A list of types")
-	@JsonProperty(required = true)
 	private List<EventTypeParam> events;
 
 	public List<EventTypeParam> getEvents() {

@@ -3,10 +3,24 @@ package org.tedros.redminetools.gateway;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import org.tedros.ai.function.TRequiredProperty;
+
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
+@JsonClassDescription("Represents a filter condition for Redmine issue filtering.")
 public class FilterCondition {
 	
+	@TRequiredProperty
+	@JsonPropertyDescription("The operator used in the filter condition (e.g., '=', '!=', '><').")
     private String operator;
+	
+	@TRequiredProperty
+	@JsonPropertyDescription("The values associated with the filter condition.")
     private String[] values;
+	
+	@TRequiredProperty
+	@JsonPropertyDescription("The type of the filter condition (e.g., TEXT, NUMBER, DATE, BOOLEAN).")
     private FilterType type;
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");

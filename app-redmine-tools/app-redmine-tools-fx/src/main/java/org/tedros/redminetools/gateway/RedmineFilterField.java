@@ -1,7 +1,7 @@
 package org.tedros.redminetools.gateway;
 
 import java.io.IOException;
-import java.lang.reflect.RecordComponent;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -326,8 +326,26 @@ public enum RedmineFilterField {
         // Converte para Map tipado com FilterCondition
         return RedmineFilterField.fromRawMap(raw);
     } 
+     
+
+    public static Map<String, FilterCondition> fromObject(Object obj) {
+        Map<String, FilterCondition> map = new HashMap<>();
+        if (obj == null) return map;
+
+        Class<?> clazz = obj.getClass();
+        for (Field field : clazz.getDeclaredFields()) {
+            try {
+                field.setAccessible(true);
+                Object value = field.get(obj);
+                if (value != null && value instanceof FilterCondition fc) {
+                    map.put(field.getName(), fc);
+                }
+            } catch (Exception ignored) {}
+        }
+        return map;
+    }
     
-    public static Map<String, FilterCondition> fromRecord(Object record) {
+    /*public static Map<String, FilterCondition> fromRecord(Object record) {
         Map<String, FilterCondition> map = new HashMap<>();
         if (record == null) return map;
 
@@ -340,7 +358,7 @@ public enum RedmineFilterField {
             } catch (Exception ignored) {}
         }
         return map;
-    }
+    }*/
     
 }
 
