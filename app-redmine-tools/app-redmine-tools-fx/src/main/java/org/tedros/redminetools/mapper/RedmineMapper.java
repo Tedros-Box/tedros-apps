@@ -263,6 +263,19 @@ public class RedmineMapper {
 		
 		return detail;
 	}
+	
+	public static List<TRedmineUser> convertUserList(Collection<User> users) {
+		
+		if(users!=null && !users.isEmpty()) {						
+			Set<User> lst = Set.copyOf(users);
+			return lst.stream()
+					.filter(p->p!=null)
+					.map(t->convert(t))
+					.toList();
+		}
+		
+		return List.of();
+	}
 
 	@SuppressWarnings("deprecation")
 	public static TRedmineUser convert(User u) {
