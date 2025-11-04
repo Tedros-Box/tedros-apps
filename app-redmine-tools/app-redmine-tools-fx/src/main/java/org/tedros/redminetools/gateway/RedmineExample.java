@@ -9,7 +9,7 @@ import java.util.List;
 public class RedmineExample {
     public static void main(String[] args) {
         String redmineURI = "https://redmine.detran.go.gov.br/";
-        String apiAccessKey = "559147fe2183d824e7784c2862e6e0b070cd6804";
+        String apiAccessKey = "key";
         String projectKey = "43";
 
         // Enable REST API key access in your Redmine user profile.

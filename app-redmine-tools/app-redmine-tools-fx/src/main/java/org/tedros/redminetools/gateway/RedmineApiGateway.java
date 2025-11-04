@@ -10,6 +10,7 @@ import org.tedros.redminetools.model.TCustomField;
 import org.tedros.redminetools.model.TIssue;
 import org.tedros.redminetools.model.TMembership;
 import org.tedros.redminetools.model.TProject;
+import org.tedros.redminetools.model.TRedmineUser;
 
 import com.taskadapter.redmineapi.Include;
 import com.taskadapter.redmineapi.Params;
@@ -20,6 +21,7 @@ import com.taskadapter.redmineapi.bean.CustomFieldDefinition;
 import com.taskadapter.redmineapi.bean.Issue;
 import com.taskadapter.redmineapi.bean.Membership;
 import com.taskadapter.redmineapi.bean.Project;
+import com.taskadapter.redmineapi.bean.User;
 import com.taskadapter.redmineapi.internal.ResultsWrapper;
 
 public class RedmineApiGateway {
@@ -202,18 +204,32 @@ public class RedmineApiGateway {
 		}
 	}
 	
+	public List<TRedmineUser> findUser(String name){
+		
+		try {
+			ResultsWrapper<User> wrapper = this.manager.getUserManager().getUsers(Map.of("name", name));
+			
+			if(wrapper!=null) 
+				return RedmineMapper.convertUserList(wrapper.getResults());
+			
+			return List.of();
+			
+		}catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
 	public static void main(String[] args) {
 		String redmineURI = "https://redmine.detran.go.gov.br/";
-        String apiAccessKey = "559147fe2183d824e7784c2862e6e0b070cd6804";
+        String apiAccessKey = "key";
         
         RedmineApiGateway gateway = new RedmineApiGateway(redmineURI, apiAccessKey);
         
+        System.out.println(gateway.findUser("Davis"));
+        
         //gateway.loadCustomFieldMetadata();
 
-	    // Agora, criar os filtros:
-	    Map<String, FilterCondition> filters = new HashMap<>();
-	    //filters.put("status_id", FilterCondition.equalsTo("2"));
-	    filters.put("assigned_to_id", FilterCondition.equalsTo("509"));
+	    
 	
 	    // Campo de texto personalizado
 	    //filters.put("cf_41", FilterCondition.equalsTo("HPA"));
@@ -225,7 +241,17 @@ public class RedmineApiGateway {
 	    ));*/
 
         //ResultsWrapper<Issue> issues = gateway.getIssues();
-        int x = 1;
+        //testFilterIssues(gateway);
+	}
+
+	private static void testFilterIssues(RedmineApiGateway gateway) {
+		
+		// Agora, criar os filtros:
+	    Map<String, FilterCondition> filters = new HashMap<>();
+	    //filters.put("status_id", FilterCondition.equalsTo("2"));
+	    filters.put("assigned_to_id", FilterCondition.equalsTo("509"));
+	    
+		int x = 1;
         List<TIssue> projects = gateway.getIssuesByFilters(filters);
         for(TIssue p : projects){
         	
