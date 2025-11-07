@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosContext;
-import org.tedros.core.service.remote.ServiceLocator;
+import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.person.ejb.controller.IPersonController;
 import org.tedros.person.model.ClientCompany;
 import org.tedros.person.model.Customer;
@@ -114,7 +114,7 @@ public class SearchPersonFunction extends TFunction<Search> {
 						}
 					}
 					
-					ServiceLocator loc = ServiceLocator.getInstance();
+					TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
 					try {
 						IPersonController serv = loc.lookup(IPersonController.JNDI_NAME);
 						TResult<List<Person>> res = serv.search(TedrosContext.getLoggedUser().getAccessToken(), sel);

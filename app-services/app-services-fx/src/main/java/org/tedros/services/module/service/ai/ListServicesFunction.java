@@ -9,7 +9,7 @@ import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Empty;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosContext;
-import org.tedros.core.service.remote.ServiceLocator;
+import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.server.result.TResult;
 import org.tedros.services.ejb.controller.IServiceController;
 import org.tedros.services.model.Service;
@@ -23,7 +23,7 @@ public class ListServicesFunction extends TFunction<Empty> {
 	public ListServicesFunction() {
 		super("list_services", "List all provision services", Empty.class, 
 		v->{
-			ServiceLocator loc = ServiceLocator.getInstance();
+			TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
 			try {
 				IServiceController serv = loc.lookup(IServiceController.JNDI_NAME);
 				TResult<List<Service>> res = serv.listAll(TedrosContext.getLoggedUser().getAccessToken(), Service.class);

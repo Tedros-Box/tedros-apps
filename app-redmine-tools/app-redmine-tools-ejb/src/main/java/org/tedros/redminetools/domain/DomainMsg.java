@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.redminetools.server.domain;
+package org.tedros.redminetools.domain;
 
 /**
  * @author Davis Dun

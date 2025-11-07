@@ -10,7 +10,7 @@ import javax.naming.NamingException;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosContext;
-import org.tedros.core.service.remote.ServiceLocator;
+import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.person.ejb.controller.IPersonStatusController;
 import org.tedros.person.model.ClientCompanyStatus;
 import org.tedros.person.model.CustomerStatus;
@@ -71,7 +71,7 @@ public class ListPersonStatusFunction extends TFunction<ClassificationParam> {
 						break;
 					}
 					
-					ServiceLocator loc = ServiceLocator.getInstance();
+					TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
 					try {
 						IPersonStatusController serv = loc.lookup(IPersonStatusController.JNDI_NAME);
 						TResult<List<PersonStatus>> res = serv.search(TedrosContext.getLoggedUser().getAccessToken(), sel);

@@ -11,7 +11,7 @@ import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Empty;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosContext;
-import org.tedros.core.service.remote.ServiceLocator;
+import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.person.ejb.controller.IPersonCategoryController;
 import org.tedros.person.model.PersonCategory;
 import org.tedros.server.result.TResult;
@@ -27,7 +27,7 @@ public class ListPersonCategoryFunction extends TFunction<Empty> {
 		super("list_categories_person", "List all categories that can be assigned to a person", Empty.class, 
 				v->{
 					
-					ServiceLocator loc = ServiceLocator.getInstance();
+					TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
 					try {
 						IPersonCategoryController serv = loc.lookup(IPersonCategoryController.JNDI_NAME);
 						TResult<List<PersonCategory>> res = serv.listAll(TedrosContext.getLoggedUser().getAccessToken(), PersonCategory.class);

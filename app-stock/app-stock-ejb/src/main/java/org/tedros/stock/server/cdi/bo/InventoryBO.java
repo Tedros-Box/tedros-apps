@@ -6,10 +6,6 @@ package org.tedros.stock.server.cdi.bo;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
 
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.LegalPerson;
@@ -20,6 +16,9 @@ import org.tedros.stock.entity.StockConfig;
 import org.tedros.stock.entity.StockItem;
 import org.tedros.stock.model.Inventory;
 import org.tedros.stock.server.cdi.eao.InventoryEAO;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 /**
  * The CDI business object 

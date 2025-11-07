@@ -6,6 +6,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
+import org.tedros.core.controller.TPropertieController;
+import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.redminetools.gateway.FilterCondition;
 import org.tedros.redminetools.gateway.RedmineApiGateway;
 import org.tedros.redminetools.gateway.RedmineFilterField;
@@ -15,7 +17,7 @@ import org.tedros.util.TLoggerUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> {
+public class RedmineIssueSearchAiFunction extends RedmineAiFunctionBase<RedmineIssueFilter> {
 	
 	private static final Logger LOGGER = TLoggerUtil.getLogger(RedmineIssueSearchAiFunction.class);
 	
@@ -155,10 +157,8 @@ public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> 
 					
 					Map<String, FilterCondition> filters;
 					filters = RedmineFilterField.fromObject(v);
-					String redmineURI = "https://redmine.detran.go.gov.br/";
-			        String apiAccessKey = "559147fe2183d824e7784c2862e6e0b070cd6804";
-			        
-			        RedmineApiGateway gateway = new RedmineApiGateway(redmineURI, apiAccessKey);
+					
+			        RedmineApiGateway gateway = new RedmineApiGateway(REDMINE_URL, REDMINE_KEY);
 			        
 			        List<TIssue> issues = gateway.getIssuesByFilters(filters);
 					
@@ -171,6 +171,9 @@ public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> 
 				}
 				  
 			});
+		
+		
+		
 	}
 
 }

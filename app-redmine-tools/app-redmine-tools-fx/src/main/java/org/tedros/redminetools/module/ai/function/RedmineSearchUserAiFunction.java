@@ -16,12 +16,12 @@ import org.tedros.util.TLoggerUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class RedmineSearchUserAiFunction extends TFunction<RedmineIssueFilter> {
+public class RedmineSearchUserAiFunction /* extends TFunction<RedmineIssueFilter> */ {
 	
 	private static final Logger LOGGER = TLoggerUtil.getLogger(RedmineIssueSearchAiFunction.class);
 
 	public RedmineSearchUserAiFunction() {
-		super("filter_redmine_user", "", RedmineIssueFilter.class, 
+	/*	super("filter_redmine_user", "", RedmineIssueFilter.class, 
 				v -> {
 					try {
 						
@@ -46,7 +46,7 @@ public class RedmineSearchUserAiFunction extends TFunction<RedmineIssueFilter> {
 						return new Response("An error occurred: "+e.getMessage());
 					}
 					  
-				});
+				});*/
 	}
 
 }

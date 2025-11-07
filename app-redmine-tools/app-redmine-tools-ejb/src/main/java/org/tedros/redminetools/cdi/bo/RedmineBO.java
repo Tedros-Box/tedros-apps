@@ -1,12 +1,12 @@
 /**
  * 
  */
-package org.tedros.redminetools.server.cdi.bo;
+package org.tedros.redminetools.cdi.bo;
 
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
-import org.tedros.redminetools.server.cdi.eao.RedmineEAO;
+import org.tedros.redminetools.cdi.eao.RedmineEAO;
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 import org.tedros.server.entity.ITEntity;

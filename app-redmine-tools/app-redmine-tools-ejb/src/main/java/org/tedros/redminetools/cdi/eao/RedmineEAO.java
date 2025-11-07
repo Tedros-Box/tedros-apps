@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.redminetools.server.cdi.eao;
+package org.tedros.redminetools.cdi.eao;
 
 import jakarta.enterprise.context.Dependent;
 
