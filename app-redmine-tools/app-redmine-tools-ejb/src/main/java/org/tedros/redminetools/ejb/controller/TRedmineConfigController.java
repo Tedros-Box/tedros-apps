@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.redminetools.server.ejb.controller;
+package org.tedros.redminetools.ejb.controller;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
@@ -18,8 +18,8 @@ import org.tedros.server.security.TSecurityInterceptor;
 import org.tedros.server.service.ITEjbService;
 import org.tedros.redminetools.domain.DomainApp;
 import org.tedros.redminetools.ejb.controller.IRedmineConfigController;
+import org.tedros.redminetools.ejb.service.RedmineService;
 import org.tedros.redminetools.entity.RedmineConfig;
-import org.tedros.redminetools.server.ejb.service.RedmineService;
 
 /**
  * The controller bean

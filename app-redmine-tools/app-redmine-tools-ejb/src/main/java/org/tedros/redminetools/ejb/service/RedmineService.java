@@ -4,17 +4,18 @@
  * TODOS OS DIREITOS RESERVADOS
  * 14/01/2014
  */
-package org.tedros.redminetools.server.ejb.service;
-
-import org.tedros.redminetools.model.TProject;
-import org.tedros.redminetools.server.cdi.bo.RedmineProjectBO;
-import org.tedros.server.ejb.service.TEjbService;
+package org.tedros.redminetools.ejb.service;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
 import jakarta.inject.Inject;
+
+import org.tedros.redminetools.cdi.bo.RedmineBO;
+import org.tedros.server.cdi.bo.ITGenericBO;
+import org.tedros.server.ejb.service.TEjbService;
+import org.tedros.server.entity.ITEntity;
 
 /**
  * The transact service bean 
@@ -23,15 +24,15 @@ import jakarta.inject.Inject;
  *
  */
 @LocalBean
-@Stateless(name="RedmineProjectService")
+@Stateless(name="RedmineService")
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class RedmineProjectService extends TEjbService<TProject>  {
+public class RedmineService<E extends ITEntity> extends TEjbService<E>  {
 	
 	@Inject
-	private RedmineProjectBO bo;
+	private RedmineBO<E> bo;
 	
 	@Override
-	public RedmineProjectBO getBussinesObject() {
+	public ITGenericBO<E> getBussinesObject() {
 		return bo;
 	}
 	

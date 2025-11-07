@@ -1,9 +1,10 @@
-package org.tedros.redminetools.server.ejb.service;
+package org.tedros.redminetools.ejb.startup;
 
 import org.tedros.core.setting.model.TPropertie;
 import org.tedros.core.support.TPropertieSupport;
 import org.tedros.redminetools.domain.RedminePropertie;
 import org.tedros.server.service.TServiceLocator;
+import org.tedros.server.util.TLoggerUtil;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -24,36 +25,26 @@ public class RedmineStartService {
     @PostConstruct
     public void init() {
         // Dispara assíncrono e SAI IMEDIATAMENTE (EAR continua inicializando)
-        executor.submit(()->executarInicializacaoAsync());
+        executor.submit(this::run);
     }
     
-    private void executarInicializacaoAsync() {
+    private void run() {
         try {
-            System.out.println("=== Iniciando carga de propriedades Redmine ASSÍNCRONA ===");
-            
             TServiceLocator serv = TServiceLocator.getInstance();
             try {
                 TPropertieSupport support = serv.lookupWithRetry(TPropertieSupport.JNDI_NAME);
-                
-                int contador = 0;
                 for (RedminePropertie p : RedminePropertie.values()) {
                     TPropertie e = new TPropertie();
                     e.setName(p.name());
                     e.setKey(p.getValue());
                     e.setDescription(p.getDescription());
-                    
-                    if (support.create(e)) {
-                        contador++;
-                    }
+                    support.create(e);
                 }
-                System.out.println("=== " + contador + "/" + RedminePropertie.values().length + " propriedades Redmine criadas com sucesso! ===");
-                
             } finally {
                 serv.close();
             }
         } catch (Exception e) {
-            System.err.println("ERRO na inicialização Redmine: " + e.getMessage());
-            e.printStackTrace();
+            TLoggerUtil.create(getClass()).error("ERROR at Redmine tools service", e);
         }
     }
 }

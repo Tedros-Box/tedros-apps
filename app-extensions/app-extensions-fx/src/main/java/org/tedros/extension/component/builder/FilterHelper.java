@@ -13,7 +13,7 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.StringUtils;
 import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
-import org.tedros.core.service.remote.ServiceLocator;
+import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.extension.ejb.controller.IAdminAreaController;
 import org.tedros.extension.ejb.controller.ICityController;
 import org.tedros.extension.model.AdminArea;
@@ -37,7 +37,7 @@ class FilterHelper {
 		Platform.runLater(()->{
 			ICityController serv;
 			try { 
-				serv = ServiceLocator.getInstance().lookup(ICityController.JNDI_NAME);
+				serv = TEjbServiceLocator.getInstance().lookup(ICityController.JNDI_NAME);
 				TResult<List<City>> r = serv.filter(TedrosContext.getLoggedUser().getAccessToken(), country, adminArea);
 				if(r.getState().equals(TState.SUCCESS)) {
 					addFirstItem(ann,items);
@@ -47,7 +47,7 @@ class FilterHelper {
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}finally {
-				ServiceLocator.getInstance().close();
+				TEjbServiceLocator.getInstance().close();
 			}
 		});
 	}
@@ -56,7 +56,7 @@ class FilterHelper {
 		Platform.runLater(()->{
 			IAdminAreaController serv;
 			try { 
-				serv = ServiceLocator.getInstance().lookup(IAdminAreaController.JNDI_NAME);
+				serv = TEjbServiceLocator.getInstance().lookup(IAdminAreaController.JNDI_NAME);
 				TResult<List<AdminArea>> r = serv.filter(TedrosContext.getLoggedUser().getAccessToken(), country);
 				if(r.getState().equals(TState.SUCCESS)) {
 					addFirstItem(ann,items);
@@ -66,7 +66,7 @@ class FilterHelper {
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}finally {
-				ServiceLocator.getInstance().close();
+				TEjbServiceLocator.getInstance().close();
 			}
 		});
 	}
