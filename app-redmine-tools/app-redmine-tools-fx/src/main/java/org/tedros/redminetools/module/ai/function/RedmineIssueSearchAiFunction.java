@@ -6,8 +6,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
-import org.tedros.core.controller.TPropertieController;
-import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.redminetools.gateway.FilterCondition;
 import org.tedros.redminetools.gateway.RedmineApiGateway;
 import org.tedros.redminetools.gateway.RedmineFilterField;
@@ -17,8 +15,8 @@ import org.tedros.util.TLoggerUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class RedmineIssueSearchAiFunction extends RedmineAiFunctionBase<RedmineIssueFilter> {
-	
+public class RedmineIssueSearchAiFunction /* extends TFunction<RedmineIssueFilter> */ {
+	/*
 	private static final Logger LOGGER = TLoggerUtil.getLogger(RedmineIssueSearchAiFunction.class);
 	
 	private static final String PROMPT = """
@@ -158,7 +156,8 @@ public class RedmineIssueSearchAiFunction extends RedmineAiFunctionBase<RedmineI
 					Map<String, FilterCondition> filters;
 					filters = RedmineFilterField.fromObject(v);
 					
-			        RedmineApiGateway gateway = new RedmineApiGateway(REDMINE_URL, REDMINE_KEY);
+					RedmineApiPropertyUtil propertyUtil = RedmineApiPropertyUtil.getInstance();
+			        RedmineApiGateway gateway = new RedmineApiGateway(propertyUtil.getRedmineUrl(), propertyUtil.getRedmineKey());
 			        
 			        List<TIssue> issues = gateway.getIssuesByFilters(filters);
 					
@@ -175,5 +174,5 @@ public class RedmineIssueSearchAiFunction extends RedmineAiFunctionBase<RedmineI
 		
 		
 	}
-
+*/
 }

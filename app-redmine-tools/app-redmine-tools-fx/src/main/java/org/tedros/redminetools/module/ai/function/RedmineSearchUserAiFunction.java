@@ -1,27 +1,23 @@
 package org.tedros.redminetools.module.ai.function;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
-import org.tedros.redminetools.gateway.FilterCondition;
 import org.tedros.redminetools.gateway.RedmineApiGateway;
-import org.tedros.redminetools.gateway.RedmineFilterField;
-import org.tedros.redminetools.gateway.RedmineIssueFilter;
-import org.tedros.redminetools.model.TIssue;
+import org.tedros.redminetools.gateway.RedmineUserFilter;
+import org.tedros.redminetools.model.TRedmineUser;
 import org.tedros.util.TLoggerUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class RedmineSearchUserAiFunction /* extends TFunction<RedmineIssueFilter> */ {
+public class RedmineSearchUserAiFunction extends TFunction<RedmineUserFilter> {
 	
-	private static final Logger LOGGER = TLoggerUtil.getLogger(RedmineIssueSearchAiFunction.class);
+	private static final Logger LOGGER = TLoggerUtil.getLogger(RedmineSearchUserAiFunction.class);
 
 	public RedmineSearchUserAiFunction() {
-	/*	super("filter_redmine_user", "", RedmineIssueFilter.class, 
+		super("filter_redmine_user_by_name", "Filter redmine users by user name", RedmineUserFilter.class, 
 				v -> {
 					try {
 						
@@ -29,24 +25,20 @@ public class RedmineSearchUserAiFunction /* extends TFunction<RedmineIssueFilter
 						
 						LOGGER.info("Filtros recebidos: {}", mapper.writeValueAsString(v));
 						
-						Map<String, FilterCondition> filters;
-						filters = RedmineFilterField.fromObject(v);
-						String redmineURI = "https://redmine.detran.go.gov.br/";
-				        String apiAccessKey = "559147fe2183d824e7784c2862e6e0b070cd6804";
+						RedmineApiPropertyUtil propertyUtil = RedmineApiPropertyUtil.getInstance();
+				        RedmineApiGateway gateway = new RedmineApiGateway(propertyUtil.getRedmineUrl(), propertyUtil.getRedmineKey());
 				        
-				        RedmineApiGateway gateway = new RedmineApiGateway(redmineURI, apiAccessKey);
-				        
-				        List<TIssue> issues = gateway.getIssuesByFilters(filters);
+				        List<TRedmineUser> users = gateway.findUser(v.getUserName());
 						
-				        LOGGER.info("Resultado da pesquisa: {}", mapper.writeValueAsString(issues));
+				        LOGGER.info("Resultado da pesquisa: {}", mapper.writeValueAsString(users));
 				        
-						return new Response("Result list", issues);
+						return new Response("Result list", users);
 						
 					} catch (Exception e) {
 						return new Response("An error occurred: "+e.getMessage());
 					}
 					  
-				});*/
+				});
 	}
 
 }
