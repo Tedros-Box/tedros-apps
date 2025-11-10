@@ -220,12 +220,12 @@ public class RedmineApiGateway {
 	}
 	
 	public static void main(String[] args) {
-		String redmineURI = "https://redmine.detran.go.gov.br/";
+		String redmineURI = "http://localhost:8080/";
         String apiAccessKey = "key";
         
         RedmineApiGateway gateway = new RedmineApiGateway(redmineURI, apiAccessKey);
         
-        System.out.println(gateway.findUser("Davis"));
+        System.out.println(gateway.findUser("davis"));
         
         //gateway.loadCustomFieldMetadata();
 
