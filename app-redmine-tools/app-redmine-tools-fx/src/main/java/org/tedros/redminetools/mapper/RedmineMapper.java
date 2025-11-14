@@ -2,15 +2,20 @@ package org.tedros.redminetools.mapper;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+import org.tedros.core.context.TedrosContext;
 import org.tedros.redminetools.model.TAttachment;
 import org.tedros.redminetools.model.TChangeset;
 import org.tedros.redminetools.model.TCustomField;
 import org.tedros.redminetools.model.TGroup;
 import org.tedros.redminetools.model.TIssue;
 import org.tedros.redminetools.model.TIssueCategory;
+import org.tedros.redminetools.model.TIssueEvidenceInfo;
 import org.tedros.redminetools.model.TIssueRelation;
 import org.tedros.redminetools.model.TJournal;
 import org.tedros.redminetools.model.TJournalDetail;
@@ -21,6 +26,7 @@ import org.tedros.redminetools.model.TRedmineVersion;
 import org.tedros.redminetools.model.TRemineRole;
 import org.tedros.redminetools.model.TTracker;
 import org.tedros.redminetools.model.TWatcher;
+import org.tedros.util.TDateUtil;
 
 import com.taskadapter.redmineapi.bean.Attachment;
 import com.taskadapter.redmineapi.bean.Changeset;
@@ -41,6 +47,8 @@ import com.taskadapter.redmineapi.bean.Watcher;
 
 public class RedmineMapper {
 	
+	private static final TDateUtil util = TDateUtil.create(TedrosContext.getLocale());
+	
 	private RedmineMapper() {
 		
 	}
@@ -56,6 +64,92 @@ public class RedmineMapper {
 		}
 		
 		return List.of();
+	}
+	
+	private static String convertDateToString(Date date) {
+		if(date==null)
+			return null;
+		
+		return util.format(date);
+	}
+	
+	
+	public static TIssueEvidenceInfo convertForEvidenceInfo(Issue i) {
+		
+		TIssueEvidenceInfo issue = new TIssueEvidenceInfo();
+		
+		issue.setId(Long.valueOf(i.getId()));
+		issue.setSubject(i.getSubject());
+		issue.setStartDate(convertDateToString(i.getStartDate()));
+		issue.setDueDate(convertDateToString(i.getDueDate()));
+		issue.setCreatedOn(convertDateToString(i.getCreatedOn()));
+		issue.setUpdatedOn(convertDateToString(i.getUpdatedOn()));
+		issue.setDoneRatio(i.getDoneRatio());
+		issue.setClosedOn(convertDateToString(i.getClosedOn()));
+		issue.setEstimatedHours(i.getEstimatedHours());
+		issue.setSpentHours(i.getSpentHours());
+		issue.setAssigneeId(i.getAssigneeId());
+		issue.setAssigneeName(i.getAssigneeName());
+		issue.setPriorityText(i.getPriorityText());
+		issue.setProjectName(i.getProjectName());
+		issue.setAuthorId(i.getAuthorId());
+		issue.setAuthorName(i.getAuthorName());
+		issue.setDescription(i.getDescription());
+		issue.setStatusName(i.getStatusName());
+		
+		if(i.getCustomFields()!=null) {
+			
+			Optional<String> opt = i.getCustomFields().stream()
+			.filter(cf->cf.getId().equals(79))
+			.map(cf->cf.getValue())
+			.findFirst();
+			
+			if(opt.isPresent()) {
+				String deliverable = opt.get();
+				issue.setDeliverable(deliverable);
+			}
+			
+			opt = i.getCustomFields().stream()
+					.filter(cf->cf.getId().equals(75))
+					.map(cf->cf.getValue())
+					.findFirst();
+			
+			if(opt.isPresent()) {
+				String hpa = opt.get();
+				issue.setHpa(hpa);
+			}
+			
+			opt = i.getCustomFields().stream()
+					.filter(cf->cf.getId().equals(60))
+					.map(cf->cf.getValue())
+					.findFirst();
+			
+			if(opt.isPresent()) {
+				String serviceType = opt.get();
+				issue.setServiceType(serviceType);
+			}
+			
+			opt = i.getCustomFields().stream()
+					.filter(cf->cf.getId().equals(59))
+					.map(cf->cf.getValue())
+					.findFirst();
+			
+			if(opt.isPresent()) {
+				String requiredProfile = opt.get();
+				issue.setRequiredProfile(requiredProfile);
+			}
+		}
+		
+		if(i.getJournals()!=null) {
+			 List<String> notes = i.getJournals().stream()
+					 .filter(j->StringUtils.isNotBlank(j.getNotes()))
+					 .map(j->j.getNotes())
+					 .toList();
+			 
+			 issue.setNotes(notes);
+		}
+		
+		return issue;
 	}
 	
 	@SuppressWarnings("deprecation")

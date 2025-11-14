@@ -1,22 +1,33 @@
 package org.tedros.redminetools.gateway;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.Base64;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.tedros.common.model.TFileContentInfo;
 import org.tedros.redminetools.mapper.RedmineMapper;
 import org.tedros.redminetools.model.TCustomField;
 import org.tedros.redminetools.model.TIssue;
+import org.tedros.redminetools.model.TIssueEvidenceInfo;
 import org.tedros.redminetools.model.TMembership;
 import org.tedros.redminetools.model.TProject;
 import org.tedros.redminetools.model.TRedmineUser;
+import org.tedros.util.TedrosFolder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taskadapter.redmineapi.Include;
 import com.taskadapter.redmineapi.Params;
 import com.taskadapter.redmineapi.RedmineException;
 import com.taskadapter.redmineapi.RedmineManager;
 import com.taskadapter.redmineapi.RedmineManagerFactory;
+import com.taskadapter.redmineapi.bean.Attachment;
 import com.taskadapter.redmineapi.bean.CustomFieldDefinition;
 import com.taskadapter.redmineapi.bean.Issue;
 import com.taskadapter.redmineapi.bean.Membership;
@@ -93,7 +104,7 @@ public class RedmineApiGateway {
 	        }
 
 	        // colunas padrão (customizável)
-	       /* params.add("c[]", "project")
+	       /*params.add("c[]", "project")
 	              .add("c[]", "tracker")
 	              .add("c[]", "status")
 	              .add("c[]", "subject")
@@ -103,7 +114,15 @@ public class RedmineApiGateway {
 	              .add("c[]", "due_date")
 	              .add("c[]", "assigned_to")
 	              .add("c[]", "cf_30")
-	              .add("t[]", "spent_hours");*/
+	              .add("t[]", "spent_hours")
+	              .add("c[]", "notes")
+	              .add("c[]", "cf_41")
+	              .add("c[]", "cf_59")
+	              .add("c[]", "cf_60")
+	              .add("c[]", "cf_75")
+	              .add("c[]", "cf_79")
+	              .add("c[]", "issue_id")	       
+	              .add("c[]", "attachments");*/
 	        
 	        ResultsWrapper<Issue> wrapper = manager.getIssueManager().getIssues(params); 
 
@@ -128,6 +147,22 @@ public class RedmineApiGateway {
 			
 		}catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	public IssueRelevantInfo getIssueRelevantInfo(Integer issueId){
+		
+		try {
+			Issue issue = this.manager.getIssueManager().getIssueById(issueId, Include.values());
+			
+			TIssueEvidenceInfo info = RedmineMapper.convertForEvidenceInfo(issue);
+			
+			List<TFileContentInfo> attachments = getAttachmentsInfo(issue.getAttachments());
+			
+			return new IssueRelevantInfo(info, attachments);
+			
+		}catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -219,13 +254,61 @@ public class RedmineApiGateway {
 		}
 	}
 	
+	
+	public List<String> getAttachments(Collection<Attachment> attachments) {
+		return attachments.stream()
+				.map(this::getAttachment)
+				.toList();
+	}
+	
+	public String getAttachment(Attachment attachment) {
+		
+		String dir = TedrosFolder.EXPORT_FOLDER.getFullPath();
+		String path = dir+attachment.getFileName();
+		File f = new File(path);
+		try(OutputStream out = new FileOutputStream(f)) {
+			this.manager.getAttachmentManager().downloadAttachmentContent(attachment, out);
+			return path;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public List<TFileContentInfo> getAttachmentsInfo(Collection<Attachment> attachments) {
+		return attachments.stream()
+				.map(this::getAttachmentInfo)
+				.toList();
+	}
+	
+	public TFileContentInfo getAttachmentInfo(Attachment attachment) {
+		String fileName = attachment.getFileName();
+		String contentType = attachment.getContentType();
+		try {
+			byte[] bytes = this.manager.getAttachmentManager().downloadAttachmentContent(attachment);
+			return new TFileContentInfo(fileName, contentType, Base64.getEncoder().encodeToString(bytes));
+		} catch (RedmineException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public static void main(String[] args) {
-		String redmineURI = "http://localhost:8080/";
-        String apiAccessKey = "key";
+		//String redmineURI = "http://localhost:8080/";
+		String redmineURI = "https://redmine.detran.go.gov.br/";
+        String apiAccessKey = "559147fe2183d824e7784c2862e6e0b070cd6804";
         
         RedmineApiGateway gateway = new RedmineApiGateway(redmineURI, apiAccessKey);
         
-        System.out.println(gateway.findUser("davis"));
+        IssueRelevantInfo issue = gateway.getIssueRelevantInfo(214212);
+        
+        
+        try {
+        	 System.out.println(new ObjectMapper().writeValueAsString(issue));
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        //System.out.println(gateway.findUser("davis"));
         
         //gateway.loadCustomFieldMetadata();
 
@@ -241,7 +324,7 @@ public class RedmineApiGateway {
 	    ));*/
 
         //ResultsWrapper<Issue> issues = gateway.getIssues();
-        //testFilterIssues(gateway);
+       // testFilterIssues(gateway);
 	}
 
 	private static void testFilterIssues(RedmineApiGateway gateway) {
