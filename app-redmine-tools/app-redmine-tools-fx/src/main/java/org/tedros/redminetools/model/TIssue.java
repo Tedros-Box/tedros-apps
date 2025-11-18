@@ -3,54 +3,123 @@ package org.tedros.redminetools.model;
 import java.util.Date;
 import java.util.List;
 
-import org.tedros.server.entity.TEntity;
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class TIssue extends TEntity {
+@JsonClassDescription("Complete Redmine issue (ticket) with core fields, relations, history and custom fields")
+public class TIssue {
 
-    private static final long serialVersionUID = 1L;
+    @JsonPropertyDescription("Unique issue ID in Redmine")
+    private Integer id;
 
-    private Long id;
+    @JsonPropertyDescription("Issue title/subject")
     private String subject;
+
+    @JsonPropertyDescription("Planned start date")
     private Date startDate;
+
+    @JsonPropertyDescription("Due date / deadline")
     private Date dueDate;
+
+    @JsonPropertyDescription("Issue creation timestamp")
     private Date createdOn;
+
+    @JsonPropertyDescription("Last update timestamp")
     private Date updatedOn;
+
+    @JsonPropertyDescription("Completion percentage (0-100)")
     private Integer doneRatio;
+
+    @JsonPropertyDescription("Parent issue ID (for sub-tasks)")
     private Integer parentId;
+
+    @JsonPropertyDescription("Priority ID (references issue_priority)")
     private Integer priorityId;
+
+    @JsonPropertyDescription("Estimated effort in hours")
     private Float estimatedHours;
+
+    @JsonPropertyDescription("Total time spent in hours")
     private Float spentHours;
+
+    @JsonPropertyDescription("Assigned user ID")
     private Integer assigneeId;
+
+    @JsonPropertyDescription("Assigned user full name")
     private String assigneeName;
+
+    @JsonPropertyDescription("Latest comment/notes added")
     private String notes;
+
+    @JsonPropertyDescription("True if latest notes are private")
     private Boolean privateNotes;
+
+    @JsonPropertyDescription("Priority name (e.g. High, Urgent)")
     private String priorityText;
+
+    @JsonPropertyDescription("Project ID this issue belongs to")
     private Integer projectId;
+
+    @JsonPropertyDescription("Project name")
     private String projectName;
+
+    @JsonPropertyDescription("Author/creator user ID")
     private Integer authorId;
+
+    @JsonPropertyDescription("Author full name")
     private String authorName;
+
+    @JsonPropertyDescription("Issue tracker/type (Bug, Feature, etc.)")
     private TTracker tracker;
+
+    @JsonPropertyDescription("Full issue description (supports Markdown)")
     private String description;
+
+    @JsonPropertyDescription("Date when issue was closed")
     private Date closedOn;
+
+    @JsonPropertyDescription("Current status ID")
     private Integer statusId;
+
+    @JsonPropertyDescription("Current status name (Open, Closed, etc.)")
     private String statusName;
+
+    @JsonPropertyDescription("Target/fix version for this issue")
     private TRedmineVersion targetVersion;
+
+    @JsonPropertyDescription("Issue category within project")
     private TIssueCategory issueCategory;
+
+    @JsonPropertyDescription("True if issue is private (visible only to certain roles)")
     private Boolean privateIssue;
+
+    @JsonPropertyDescription("List of custom field values")
     private List<TCustomField> customFields;
+
+    @JsonPropertyDescription("History of comments and field changes")
     private List<TJournal> journals;
+
+    @JsonPropertyDescription("Relations to other issues (blocks, precedes, etc.)")
     private List<TIssueRelation> relations;
+
+    @JsonPropertyDescription("File attachments linked to issue")
     private List<TAttachment> attachments;
+
+    @JsonPropertyDescription("Linked repository changesets/commits")
     private List<TChangeset> changesets;
+
+    @JsonPropertyDescription("Users watching this issue")
     private List<TWatcher> watchers;
+
+    @JsonPropertyDescription("Child/sub-task issues")
     private List<TIssue> children;
    
 
-    public Long getId() {
+    public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

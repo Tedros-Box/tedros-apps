@@ -1,17 +1,21 @@
 package org.tedros.redminetools.model;
 
-import org.tedros.server.entity.TEntity;
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class TJournalDetail extends TEntity {
+@JsonClassDescription("Single field change recorded in a Redmine issue journal/history")
+public class TJournalDetail {
 
-	private static final long serialVersionUID = 1L;
+    @JsonPropertyDescription("New value after the change (as string)")
+    private String newValue;
 
-	private String newValue;
-	
+    @JsonPropertyDescription("Field name (e.g. status, priority, custom field name)")
     private String name;
-    
+
+    @JsonPropertyDescription("Property type: 'attr' (standard field), 'cf_<id>' (custom field), 'attachment', 'relation'")
     private String property;
-    
+
+    @JsonPropertyDescription("Previous value before the change (as string)")
     private String oldValue;
 
 	public String getNewValue() {

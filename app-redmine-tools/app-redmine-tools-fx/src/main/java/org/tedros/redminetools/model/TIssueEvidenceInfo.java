@@ -4,78 +4,80 @@ import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import java.util.List;
 
-@JsonClassDescription("Informações detalhadas de uma issue (tarefa) do Redmine, incluindo metadados, " +
-                     "responsáveis, prazos, horas trabalhadas e campos personalizados do projeto.")
+@JsonClassDescription("Redmine issue summary for evidence/reporting")
 public class TIssueEvidenceInfo {
 
-    @JsonPropertyDescription("Identificador único da issue no Redmine")
+    @JsonPropertyDescription("Issue ID")
     private Long id;
 
-    @JsonPropertyDescription("Título ou assunto principal da tarefa")
+    @JsonPropertyDescription("Title")
     private String subject;
 
-    @JsonPropertyDescription("Data de início planejada da issue")
+    @JsonPropertyDescription("Start date (ISO)")
     private String startDate;
 
-    @JsonPropertyDescription("Data de vencimento ou prazo final da issue")
+    @JsonPropertyDescription("Due date (ISO)")
     private String dueDate;
 
-    @JsonPropertyDescription("Data e hora de criação da issue")
+    @JsonPropertyDescription("Creation date (ISO)")
     private String createdOn;
 
-    @JsonPropertyDescription("Data e hora da última atualização da issue")
+    @JsonPropertyDescription("Last update (ISO)")
     private String updatedOn;
 
-    @JsonPropertyDescription("Percentual de conclusão da issue (0 a 100)")
+    @JsonPropertyDescription("Done ratio % (0-100)")
     private Integer doneRatio;
 
-    @JsonPropertyDescription("Data de fechamento da issue (nulo se ainda aberta)")
+    @JsonPropertyDescription("Closed date (ISO or null)")
     private String closedOn;
 
-    @JsonPropertyDescription("Total de horas estimadas para conclusão da tarefa")
+    @JsonPropertyDescription("Estimated hours")
     private Float estimatedHours;
 
-    @JsonPropertyDescription("Total de horas já registradas/gastas na tarefa")
+    @JsonPropertyDescription("Spent hours")
     private Float spentHours;
 
-    @JsonPropertyDescription("ID do usuário atribuído como responsável pela issue")
+    @JsonPropertyDescription("Assignee user ID")
     private Integer assigneeId;
 
-    @JsonPropertyDescription("Nome completo do responsável pela issue")
+    @JsonPropertyDescription("Assignee full name")
     private String assigneeName;
 
-    @JsonPropertyDescription("Texto da prioridade (ex: 'Alta', 'Urgente', 'Baixa')")
+    @JsonPropertyDescription("Priority name")
     private String priorityText;
 
-    @JsonPropertyDescription("Nome do projeto ao qual a issue pertence")
+    @JsonPropertyDescription("Project name")
     private String projectName;
 
-    @JsonPropertyDescription("ID do usuário que criou a issue")
+    @JsonPropertyDescription("Author user ID")
     private Integer authorId;
 
-    @JsonPropertyDescription("Nome completo do autor/criador da issue")
+    @JsonPropertyDescription("Author full name")
     private String authorName;
 
-    @JsonPropertyDescription("Descrição detalhada da issue")
+    @JsonPropertyDescription("Full description")
     private String description;
 
-    @JsonPropertyDescription("Nome do status atual da issue (ex: 'Nova', 'Em Andamento', 'Fechada')")
+    @JsonPropertyDescription("Current status name")
     private String statusName;
 
-    @JsonPropertyDescription("Entregável esperado ao final da issue (ex: relatório, funcionalidade)")
+    @JsonPropertyDescription("Expected deliverable")
     private String deliverable;
 
-    @JsonPropertyDescription("Campo personalizado: HPA - 'Horas Por Atividade'")
+    @JsonPropertyDescription("CF: HPA - Hours per Activity")
     private String hpa;
 
-    @JsonPropertyDescription("Perfil profissional requerido para executar a tarefa (ex: 'Desenvolvedor Fullstack')")
+    @JsonPropertyDescription("CF: Required professional profile")
     private String requiredProfile;
 
-    @JsonPropertyDescription("Tipo de serviço associado à issue com a quantidade de horas esperada para execução (ex: 'Definição de Arquitetura da Solução (Baixa: 22H) Por Projeto/Módulo de Solução de TI')")
+    @JsonPropertyDescription("CF: Service type with expected hours")
     private String serviceType;
 
-    @JsonPropertyDescription("Lista de notas e comentários registrados na issue (em ordem cronológica)")
+    @JsonPropertyDescription("Chronological notes/comments list")
     private List<String> notes;
+
+    @JsonPropertyDescription("File attachments")
+    private List<TAttachment> attachments;
 
     // === GETTERS E SETTERS ===
 
@@ -262,4 +264,12 @@ public class TIssueEvidenceInfo {
     public void setNotes(List<String> notes) {
         this.notes = notes;
     }
+
+	public List<TAttachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<TAttachment> attachments) {
+		this.attachments = attachments;
+	}
 }

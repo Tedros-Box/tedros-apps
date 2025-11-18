@@ -3,37 +3,53 @@ package org.tedros.redminetools.model;
 import java.util.Date;
 import java.util.List;
 
-import org.tedros.server.entity.TEntity;
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class TTimeEntry extends TEntity {
-	
-	private static final long serialVersionUID = 1L;
+@JsonClassDescription("Redmine time entry - logged hours on an issue or project")
+public class TTimeEntry {
 
-	private Integer issueId;
-	
-	private Integer projectId;
-	
-	private String projectName;
-	
-	private String userName;
-	
-	private String userId;
-	
-	private String activityName;
-	
-	private String activityId;
-	
-	private String hours;
-	
-	private String comment;
-	
-	private Date spentOn;
-	
-	private Date createdOn;
-	
-	private Date updatedOn;
-	
-	private List<TCustomField> customFields;
+    @JsonPropertyDescription("Unique time entry ID")
+    private Integer id;
+
+    @JsonPropertyDescription("Issue ID this time was spent on (null if project-only)")
+    private Integer issueId;
+
+    @JsonPropertyDescription("Project ID this time belongs to")
+    private Integer projectId;
+
+    @JsonPropertyDescription("Project name")
+    private String projectName;
+
+    @JsonPropertyDescription("Full name of user who logged the time")
+    private String userName;
+
+    @JsonPropertyDescription("User ID who logged the time")
+    private String userId;
+
+    @JsonPropertyDescription("Time entry activity name (Design, Development, etc.)")
+    private String activityName;
+
+    @JsonPropertyDescription("Activity enumeration ID")
+    private String activityId;
+
+    @JsonPropertyDescription("Hours spent (e.g. '2.5', '1.75')")
+    private String hours;
+
+    @JsonPropertyDescription("Comment/description of the work done")
+    private String comment;
+
+    @JsonPropertyDescription("Date when the time was spent")
+    private Date spentOn;
+
+    @JsonPropertyDescription("Creation timestamp")
+    private Date createdOn;
+
+    @JsonPropertyDescription("Last update timestamp")
+    private Date updatedOn;
+
+    @JsonPropertyDescription("Custom field values for this time entry")
+    private List<TCustomField> customFields;
 
 	public Integer getIssueId() {
 		return issueId;
@@ -142,6 +158,14 @@ public class TTimeEntry extends TEntity {
 	@Override
 	public String toString() {
 		return activityName;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }
