@@ -3,43 +3,62 @@ package org.tedros.redminetools.model;
 import java.util.Date;
 import java.util.List;
 
-import org.tedros.server.entity.TEntity;
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class TRedmineUser extends TEntity {
+@JsonClassDescription("Complete Redmine user account with memberships, groups and settings")
+public class TRedmineUser {
 
-	private static final long serialVersionUID = 1L;
+    @JsonPropertyDescription("Unique user ID in Redmine")
+    private Integer id;
 
-	private String login;
-	
-	private String password;
-	
-	private String firstName;
-	
-	private String lastName;
-	
-	private String mail;
-	
-	private String apiKey;
-	
-	private Date createdOn;
-	
-	private Date lastLoginOn;
-	
-	private Integer authSourceId;
-	
-	private Integer status;
-	
-	private String mailNotification;
-	
-	private Boolean mustChangePassword;
-	
-	private Boolean generatePassword;
-	
-	private List<TCustomField> customFields;
-	
-	private List<TMembership> memberships;
-	
-	private List<TGroup> groups;
+    @JsonPropertyDescription("Login username")
+    private String login;
+
+    @JsonPropertyDescription("Password (usually null or hashed - not sent in API)")
+    private String password;
+
+    @JsonPropertyDescription("First name")
+    private String firstName;
+
+    @JsonPropertyDescription("Last name")
+    private String lastName;
+
+    @JsonPropertyDescription("Email address")
+    private String mail;
+
+    @JsonPropertyDescription("User's personal API access key")
+    private String apiKey;
+
+    @JsonPropertyDescription("Account creation timestamp")
+    private Date createdOn;
+
+    @JsonPropertyDescription("Last successful login timestamp")
+    private Date lastLoginOn;
+
+    @JsonPropertyDescription("Authentication source ID (null = internal, >0 = LDAP/etc.)")
+    private Integer authSourceId;
+
+    @JsonPropertyDescription("Account status: 1=active, 2=registered, 3=locked")
+    private Integer status;
+
+    @JsonPropertyDescription("Mail notification setting: 'all','selected','only_my_events', etc.")
+    private String mailNotification;
+
+    @JsonPropertyDescription("True if user must change password on next login")
+    private Boolean mustChangePassword;
+
+    @JsonPropertyDescription("True if password should be auto-generated")
+    private Boolean generatePassword;
+
+    @JsonPropertyDescription("Custom field values for this user")
+    private List<TCustomField> customFields;
+
+    @JsonPropertyDescription("Project memberships with roles")
+    private List<TMembership> memberships;
+
+    @JsonPropertyDescription("Groups the user belongs to")
+    private List<TGroup> groups;
 
 	public String getLogin() {
 		return login;
@@ -172,6 +191,14 @@ public class TRedmineUser extends TEntity {
 	@Override
 	public String toString() {
 		return login;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 }

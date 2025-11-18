@@ -3,7 +3,6 @@ package org.tedros.redminetools.gateway;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +11,7 @@ import java.util.Optional;
 
 import org.tedros.common.model.TFileContentInfo;
 import org.tedros.redminetools.mapper.RedmineMapper;
+import org.tedros.redminetools.model.TAttachment;
 import org.tedros.redminetools.model.TCustomField;
 import org.tedros.redminetools.model.TIssue;
 import org.tedros.redminetools.model.TIssueEvidenceInfo;
@@ -150,16 +150,11 @@ public class RedmineApiGateway {
 		}
 	}
 	
-	public IssueRelevantInfo getIssueRelevantInfo(Integer issueId){
+	public TIssueEvidenceInfo getTIssueEvidenceInfo(Integer issueId){
 		
 		try {
 			Issue issue = this.manager.getIssueManager().getIssueById(issueId, Include.values());
-			
-			TIssueEvidenceInfo info = RedmineMapper.convertForEvidenceInfo(issue);
-			
-			List<TFileContentInfo> attachments = getAttachmentsInfo(issue.getAttachments());
-			
-			return new IssueRelevantInfo(info, attachments);
+			return RedmineMapper.convertForEvidenceInfo(issue);
 			
 		}catch (Exception e) {
 			throw new RuntimeException(e);
@@ -274,10 +269,21 @@ public class RedmineApiGateway {
 		}
 	}
 	
-	public List<TFileContentInfo> getAttachmentsInfo(Collection<Attachment> attachments) {
+	public List<TFileContentInfo> dowloadAttachments(Collection<Attachment> attachments) {
 		return attachments.stream()
 				.map(this::getAttachmentInfo)
 				.toList();
+	}
+	
+	public List<TFileContentInfo> dowloadTAttachments(Collection<TAttachment> attachments) {
+		return attachments.stream()
+				.map(this::getAttachmentInfo)
+				.toList();
+	}
+	
+	public TFileContentInfo getAttachmentInfo(TAttachment attachment) {
+		Attachment att = RedmineMapper.convert(attachment);
+		return getAttachmentInfo(att);
 	}
 	
 	public TFileContentInfo getAttachmentInfo(Attachment attachment) {
@@ -285,7 +291,7 @@ public class RedmineApiGateway {
 		String contentType = attachment.getContentType();
 		try {
 			byte[] bytes = this.manager.getAttachmentManager().downloadAttachmentContent(attachment);
-			return new TFileContentInfo(fileName, contentType, Base64.getEncoder().encodeToString(bytes));
+			return new TFileContentInfo(fileName, contentType, bytes);
 		} catch (RedmineException e) {
 			throw new RuntimeException(e);
 		}
@@ -294,11 +300,11 @@ public class RedmineApiGateway {
 	public static void main(String[] args) {
 		//String redmineURI = "http://localhost:8080/";
 		String redmineURI = "https://redmine.detran.go.gov.br/";
-        String apiAccessKey = "key";
+        String apiAccessKey = "559147fe2183d824e7784c2862e6e0b070cd6804";
         
         RedmineApiGateway gateway = new RedmineApiGateway(redmineURI, apiAccessKey);
         
-        IssueRelevantInfo issue = gateway.getIssueRelevantInfo(214212);
+        TIssueEvidenceInfo issue = gateway.getTIssueEvidenceInfo(214212);
         
         
         try {
@@ -307,6 +313,15 @@ public class RedmineApiGateway {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
+        System.out.println("***********************");
+        
+        TAttachment att = new TAttachment();
+        //att.setId(issue.getAttachments().get(0).getId());
+        att.setContentURL(issue.getAttachments().get(0).getContentURL());
+        //att.setId(issue.getAttachments().get(0).getId());
+        
+        System.out.println(gateway.dowloadTAttachments(List.of(att)));
         
         //System.out.println(gateway.findUser("davis"));
         

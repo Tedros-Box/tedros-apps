@@ -3,31 +3,44 @@ package org.tedros.redminetools.model;
 import java.util.Date;
 import java.util.List;
 
-import org.tedros.server.entity.TEntity;
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class TRedmineVersion extends TEntity {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private String projectId;
-	
-	private String projectName;
+@JsonClassDescription("Redmine project version / target version (milestone or release)")
+public class TRedmineVersion {
 
-	private String name;
-	
-	private String description;
-	
-	private String status;
-	
-	private String sharing;
-	
-	private Date dueDate;
-	
-	private Date createdOn;
-	
-	private Date updatedOn;
-	
-	private List<TCustomField> customFields;
+    @JsonPropertyDescription("Unique version ID")
+    private Integer id;
+
+    @JsonPropertyDescription("Project ID this version belongs to")
+    private String projectId;
+
+    @JsonPropertyDescription("Project name")
+    private String projectName;
+
+    @JsonPropertyDescription("Version name (e.g. '2.5.0', 'Sprint 23')")
+    private String name;
+
+    @JsonPropertyDescription("Version description")
+    private String description;
+
+    @JsonPropertyDescription("Status: open, locked, closed")
+    private String status;
+
+    @JsonPropertyDescription("Sharing: none, descendants, hierarchy, tree, system")
+    private String sharing;
+
+    @JsonPropertyDescription("Target completion date")
+    private Date dueDate;
+
+    @JsonPropertyDescription("Creation timestamp")
+    private Date createdOn;
+
+    @JsonPropertyDescription("Last update timestamp")
+    private Date updatedOn;
+
+    @JsonPropertyDescription("Custom field values for this version")
+    private List<TCustomField> customFields;
 
 	public String getProjectId() {
 		return projectId;
@@ -113,6 +126,14 @@ public class TRedmineVersion extends TEntity {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 }

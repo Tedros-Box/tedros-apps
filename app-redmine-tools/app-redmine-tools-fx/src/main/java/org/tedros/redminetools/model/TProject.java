@@ -3,33 +3,47 @@ package org.tedros.redminetools.model;
 import java.util.Date;
 import java.util.List;
 
-import org.tedros.server.entity.TEntity;
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class TProject extends TEntity {
-	
-	private static final long serialVersionUID = -1747906306442723211L;
-	
-	private String homepage;
-	
-	private String identifier;
-	
-	private String name;
-	
-	private String description;
-	
-	private Date createdOn;
-	
-	private Date updatedOn;
-	
-	private Boolean publicProject;
-	
-	private Boolean inheritMembers;
-	
-	private Integer parentId;
-	
-	private List<TCustomField> customFields;
-	
-	private List<TTracker> trackers;	
+@JsonClassDescription("Redmine project with settings, hierarchy and enabled trackers")
+public class TProject {
+
+    @JsonPropertyDescription("Unique project ID")
+    private Integer id;
+
+    @JsonPropertyDescription("Project homepage URL (optional)")
+    private String homepage;
+
+    @JsonPropertyDescription("Short unique identifier (used in URLs)")
+    private String identifier;
+
+    @JsonPropertyDescription("Full project name/title")
+    private String name;
+
+    @JsonPropertyDescription("Project description (supports Markdown)")
+    private String description;
+
+    @JsonPropertyDescription("Project creation timestamp")
+    private Date createdOn;
+
+    @JsonPropertyDescription("Last update timestamp")
+    private Date updatedOn;
+
+    @JsonPropertyDescription("True if project is public (visible to non-members)")
+    private Boolean publicProject;
+
+    @JsonPropertyDescription("True if subprojects inherit members from parent")
+    private Boolean inheritMembers;
+
+    @JsonPropertyDescription("Parent project ID (for subprojects)")
+    private Integer parentId;
+
+    @JsonPropertyDescription("Custom field values defined for this project")
+    private List<TCustomField> customFields;
+
+    @JsonPropertyDescription("Trackers enabled in this project (Bug, Feature, etc.)")
+    private List<TTracker> trackers;
 		
 	public String getHomepage() {
 		return homepage;
@@ -122,5 +136,13 @@ public class TProject extends TEntity {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }
