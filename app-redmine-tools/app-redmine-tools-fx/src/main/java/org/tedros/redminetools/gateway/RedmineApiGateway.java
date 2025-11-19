@@ -300,7 +300,7 @@ public class RedmineApiGateway {
 	public static void main(String[] args) {
 		//String redmineURI = "http://localhost:8080/";
 		String redmineURI = "https://redmine.detran.go.gov.br/";
-        String apiAccessKey = "559147fe2183d824e7784c2862e6e0b070cd6804";
+        String apiAccessKey = "key";
         
         RedmineApiGateway gateway = new RedmineApiGateway(redmineURI, apiAccessKey);
         
