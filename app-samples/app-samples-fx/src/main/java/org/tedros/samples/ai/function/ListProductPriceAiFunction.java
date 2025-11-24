@@ -12,7 +12,7 @@ import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Empty;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosContext;
-import org.tedros.core.service.remote.ServiceLocator;
+import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.sample.ejb.controller.IProductPriceController;
 import org.tedros.sample.entity.ProductPrice;
 import org.tedros.server.result.TResult;
@@ -30,7 +30,7 @@ public class ListProductPriceAiFunction extends TFunction<Empty> {
 	public ListProductPriceAiFunction() {
 		super("list_products_price", "Lists all products price", Empty.class, 
 			v->{
-				ServiceLocator loc = ServiceLocator.getInstance();
+				TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
 				try {
 					IProductPriceController serv = loc.lookup(IProductPriceController.JNDI_NAME);
 					TResult<List<ProductPrice>> res = serv

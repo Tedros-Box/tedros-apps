@@ -12,7 +12,7 @@ import org.tedros.core.context.TedrosContext;
 import org.tedros.core.context.TedrosModuleLoader;
 import org.tedros.core.message.TMessage;
 import org.tedros.core.message.TMessageType;
-import org.tedros.core.service.remote.ServiceLocator;
+import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.fx.builder.TBaseEventHandlerBuilder;
 import org.tedros.fx.presenter.dynamic.TDynaPresenter;
 import org.tedros.fx.presenter.entity.behavior.TMasterCrudViewBehavior;
@@ -66,7 +66,7 @@ public class CreateSaleEvent extends TBaseEventHandlerBuilder<ActionEvent> {
 	}
 
 	private void saveAndLoadInModule(TMasterCrudViewBehavior<OrderMV, Order> b, Order order) {
-		ServiceLocator loc = ServiceLocator.getInstance();
+		TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
 		try {
 			IOrderController serv = loc.lookup(IOrderController.JNDI_NAME);
 			TResult<Order> res = serv.save(TedrosContext.getLoggedUser().getAccessToken(), order);

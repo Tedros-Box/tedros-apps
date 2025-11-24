@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosContext;
-import org.tedros.core.service.remote.ServiceLocator;
+import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.server.query.TCompareOp;
 import org.tedros.server.query.TSelect;
 import org.tedros.server.result.TResult;
@@ -60,7 +60,7 @@ public class FindProductFunction extends TFunction<ProductParam> {
 					}else if(v.getEndDate()!=null)
 						sel.addOrCondition("insertDate", TCompareOp.LESS_EQ_THAN, v.getEndDate());
 					
-					ServiceLocator loc = ServiceLocator.getInstance();
+					TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
 					try {
 						IProductController serv = loc.lookup(IProductController.JNDI_NAME);
 						TResult<List<Product>> res = serv.search(TedrosContext.getLoggedUser().getAccessToken(), sel);

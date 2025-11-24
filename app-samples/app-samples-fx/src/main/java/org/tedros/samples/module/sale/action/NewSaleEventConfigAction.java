@@ -8,7 +8,7 @@ import java.util.List;
 import javax.naming.NamingException;
 
 import org.tedros.core.context.TedrosContext;
-import org.tedros.core.service.remote.ServiceLocator;
+import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.fx.control.action.TPresenterAction;
 import org.tedros.fx.presenter.behavior.TActionType;
 import org.tedros.fx.presenter.dynamic.TDynaPresenter;
@@ -37,7 +37,7 @@ public class NewSaleEventConfigAction extends TPresenterAction {
 	@Override
 	public boolean runBefore() {
 		
-		ServiceLocator loc = ServiceLocator.getInstance();
+		TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
 		try {
 			ISaleEventConfigController serv = loc.lookup(ISaleEventConfigController.JNDI_NAME);
 			TResult<List<SaleEventConfig>> res = 
