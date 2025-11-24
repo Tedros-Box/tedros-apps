@@ -189,7 +189,7 @@ public class RedmineMapper {
 		issue.setAssigneeId(i.getAssigneeId());
 		issue.setAssigneeName(i.getAssigneeName());
 		issue.setNotes(i.getNotes());
-		issue.setPrivateNotes(i.isPrivateNotes());
+		try { issue.setPrivateNotes(i.isPrivateNotes()); } catch(Exception e) {}
 		issue.setPriorityText(i.getPriorityText());
 		issue.setProjectId(i.getProjectId());
 		issue.setProjectName(i.getProjectName());
@@ -202,7 +202,7 @@ public class RedmineMapper {
 		issue.setStatusName(i.getStatusName());
 		issue.setTargetVersion(convert(i.getTargetVersion()));
 		issue.setCategory(convert(i.getCategory()));
-		issue.setPrivateIssue(i.isPrivateIssue());
+		try { issue.setPrivateIssue(i.isPrivateIssue()); } catch(Exception e) {}
 		issue.setCustomFields(convertCustomFieldList(i.getCustomFields()));
 		issue.setJournals(convertJournalList(i.getJournals()));
 		issue.setRelations(convertIssueRelationList(i.getRelations()));

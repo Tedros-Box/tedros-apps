@@ -6,8 +6,6 @@ import org.tedros.core.annotation.TModule;
 import org.tedros.core.annotation.TResourceBundle;
 import org.tedros.redminetools.RDMN_Key;
 import org.tedros.redminetools.module.settings.RedmineConfigModule;
-import org.tedros.redminetools.module.tools.RedmineToolsModule;
-import org.tedros.redminetools.resource.AppResource;
 
 /**
  * The app start class.
@@ -19,11 +17,7 @@ import org.tedros.redminetools.resource.AppResource;
 		@TModule(type=RedmineConfigModule.class, 
 			name=RDMN_Key.MODULE_MY_APP, 
 			menu=RDMN_Key.MENU_MY_APP, 
-			description=RDMN_Key.MODULE_DESC_MY_APP),
-		@TModule(type=RedmineToolsModule.class, 
-			name="Tools", 
-			menu="Tools", 
-			description="Ferramentas de suporte ao redmine")
+			description=RDMN_Key.MODULE_DESC_MY_APP)
 	}, packageName = "org.tedros.redminetools", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"RDMN_"})
@@ -34,7 +28,7 @@ public class AppStart implements ITApplication {
 
 	@Override
 	public void start() {
-		new AppResource().copyToFolder();
+		// Executed on app start
 	}
 
 	@Override
