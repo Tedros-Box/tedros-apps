@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.extension.ai.function;
+package org.tedros.extension.ai.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 

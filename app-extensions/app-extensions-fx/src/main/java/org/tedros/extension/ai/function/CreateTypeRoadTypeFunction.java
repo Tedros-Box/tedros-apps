@@ -6,6 +6,8 @@ import java.util.List;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosAppManager;
+import org.tedros.extension.ai.model.CodeNameDescParam;
+import org.tedros.extension.ai.model.ListItemParam;
 import org.tedros.extension.model.StreetType;
 import org.tedros.extension.model.StreetTypeMV;
 import org.tedros.extension.module.place.PlaceModule;
