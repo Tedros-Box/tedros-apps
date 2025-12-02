@@ -10,7 +10,9 @@ package org.tedros.redminetools.domain;
 public enum RedminePropertie {
 	
 	REDMINE_KEY ("redmine.api.key", "The redmine api key with administrator permission"),
-	REDMINE_URL ("redmine.url","The redmine url path");
+	REDMINE_URL ("redmine.url","The redmine url path"),
+	GITLAB_KEY ("gitlab.api.key", "The Gitlab api key"),
+	GITLAB_URL ("gitlab.url", "The Gitlab url path");
 	
 	private String value;
 	private String description;

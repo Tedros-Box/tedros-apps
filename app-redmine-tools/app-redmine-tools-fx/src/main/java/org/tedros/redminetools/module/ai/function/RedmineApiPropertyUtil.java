@@ -52,7 +52,7 @@ public class RedmineApiPropertyUtil {
 
 	private RedmineApiPropertyUtil(String redmineKey, String redmineUrl) {
 		this.redmineKey = redmineKey;
-		this.redmineUrl = redmineUrl;	
+		this.redmineUrl = redmineUrl;
 	}
 	
 	public String getRedmineKey() {

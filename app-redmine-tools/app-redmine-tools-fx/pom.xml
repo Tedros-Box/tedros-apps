@@ -45,12 +45,39 @@
 		    <version>3.1.3</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>org.gitlab4j</groupId>
+		    <artifactId>gitlab4j-models</artifactId>
+		    <version>6.2.0</version>
+		</dependency>
+		<dependency>
+	        <groupId>io.github.openfeign</groupId>
+	        <artifactId>feign-gson</artifactId>
+	        <version>13.6</version>
+	    </dependency>
+		<dependency>
+		    <groupId>io.github.openfeign</groupId>
+		    <artifactId>feign-core</artifactId>
+		    <version>13.6</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.github.openfeign</groupId>
+		    <artifactId>feign-okhttp</artifactId>
+		    <version>13.6</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.squareup.okhttp3</groupId>
+		    <artifactId>okhttp</artifactId>
+		    <version>4.12.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<!-- PROPERTIES -->
 	<properties>
 		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jersey-client-verion>4.0.0</jersey-client-verion>
 	</properties>
 
 	<!-- BUILD -->
