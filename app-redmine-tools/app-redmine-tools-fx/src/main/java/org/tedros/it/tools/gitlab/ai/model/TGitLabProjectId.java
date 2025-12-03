@@ -1,4 +1,6 @@
-package org.tedros.it.tools.gitlab.model;
+package org.tedros.it.tools.gitlab.ai.model;
+
+import org.tedros.ai.function.TRequiredProperty;
 
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
@@ -12,10 +14,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonClassDescription("The model to search git project by name")
-public class TSearchGitProject {
+@JsonClassDescription("The model to get gitlab project by id")
+public class TGitLabProjectId {
 	
-	@JsonPropertyDescription("The git project name to be searched")
-	private String name;
-
+	@TRequiredProperty
+	@JsonPropertyDescription("The gitlab project id")
+	private Long projectId;
 }
