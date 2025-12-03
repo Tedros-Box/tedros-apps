@@ -2,12 +2,13 @@ package org.tedros.it.tools.gitlab.gateway;
 
 import java.util.List;
 
-import org.tedros.it.tools.gitlab.model.GitLabMergeRequest;
-import org.tedros.it.tools.gitlab.model.GitLabProject;
+import org.tedros.it.tools.gitlab.api.model.GitLabMergeRequest;
+import org.tedros.it.tools.gitlab.api.model.GitLabProject;
 
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
+import feign.Response;
 
 @Headers("Accept: application/json")
 public interface GitLabClient {
@@ -26,9 +27,15 @@ public interface GitLabClient {
 
     // MRs abertos
     @RequestLine("GET /api/v4/projects/{projectId}/merge_requests?state=opened")
-    List<GitLabMergeRequest> getOpenMergeRequests(@Param("projectId") Long projectId);
+    List<GitLabMergeRequest> getOpenedMergeRequests(@Param("projectId") Long projectId);
 
     // MRs mesclados (últimos 50)
     @RequestLine("GET /api/v4/projects/{projectId}/merge_requests?state=merged&per_page=50")
     List<GitLabMergeRequest> getMergedMergeRequests(@Param("projectId") Long projectId);
+    
+    @RequestLine("GET /api/v4/projects/{projectId}/merge_requests/{iid}")
+    GitLabMergeRequest getMergeRequest(@Param("projectId") Long projectId, @Param("iid") Long iid);
+    
+    @RequestLine("GET /api/v4/projects/{projectId}/merge_requests/{iid}/raw_diffs")
+    Response getMergeRequestRawDiffs(@Param("projectId") Long projectId, @Param("iid") Long iid);
 }

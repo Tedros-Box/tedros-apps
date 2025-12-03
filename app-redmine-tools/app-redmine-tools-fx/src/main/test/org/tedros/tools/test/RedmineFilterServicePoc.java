@@ -4,7 +4,7 @@ import org.tedros.it.tools.redmine.gateway.RedmineFilterService;
 
 import com.taskadapter.redmineapi.Params;
 
-public class RedmineFilterServiceTest {
+public class RedmineFilterServicePoc {
    
     // 🔹 Exemplo de uso isolado
     public static void main(String[] args) throws Exception {

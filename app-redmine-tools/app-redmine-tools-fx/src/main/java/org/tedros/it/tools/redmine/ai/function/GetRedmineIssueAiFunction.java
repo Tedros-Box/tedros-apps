@@ -45,7 +45,7 @@ public class GetRedmineIssueAiFunction extends TFunction<RedmineIssueIdToFind> {
                 int attachCount = issue.getAttachments() != null ? issue.getAttachments().size() : 0;
                 LOGGER.info("Issue #{} retrieved. {} attachment(s) found.", v.getIssueId(), attachCount);
 
-                return new ToolCallResult(FUNCTION_NAME, issue);
+                return new ToolCallResult(FUNCTION_NAME, issue, true);
 
             } catch (Exception e) {
                 LOGGER.error("Failed to fetch issue #{}: {}", v.getIssueId(), e.getMessage(), e);

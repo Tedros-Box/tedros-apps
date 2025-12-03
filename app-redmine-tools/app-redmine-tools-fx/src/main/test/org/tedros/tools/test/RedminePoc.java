@@ -6,7 +6,7 @@ import org.tedros.it.tools.redmine.ai.model.FilterCondition;
 import org.tedros.it.tools.redmine.ai.model.RedmineFilterField;
 
 // ... other imports
-public class RedmineMainExample {
+public class RedminePoc {
     public static void main(String[] args) {
     	Map<String, Object> raw = Map.of(
     		    "status_id", Map.of("op", "!=", "value", "2"),
