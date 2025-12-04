@@ -7,12 +7,12 @@ import org.tedros.it.tools.gitlab.gateway.GitLabGateway;
 import org.tedros.util.TLoggerUtil;
 
 
-public class SearchGitLabOpenedMergeRequestFunction extends TFunction<TGitLabProjectId> {
+public class SearchGitLabRepositoryCommitsFunction extends TFunction<TGitLabProjectId> {
 	
-	private static final Logger LOGGER = TLoggerUtil.getLogger(SearchGitLabOpenedMergeRequestFunction.class);
+	private static final Logger LOGGER = TLoggerUtil.getLogger(SearchGitLabRepositoryCommitsFunction.class);
 	
-	private static final String NAME = "list_opened_merge_request"; 
-	private static final String DESCRIPTION = "Get opened merge requests for this project";
+	private static final String NAME = "list_gitlab_repository_commits"; 
+	private static final String DESCRIPTION = "Get a list of repository commits in a project";
 	private static GitLabGateway gateway;
 	
 	static {
@@ -20,11 +20,11 @@ public class SearchGitLabOpenedMergeRequestFunction extends TFunction<TGitLabPro
 		gateway = GitLabGateway.getInstance(instance.getGitlabUrl(), instance.getGitlabKey());
 	}
 	
-	public SearchGitLabOpenedMergeRequestFunction() {
-		super(NAME, DESCRIPTION, TGitLabProjectId.class, v->{
+	public SearchGitLabRepositoryCommitsFunction() {		
+		super(NAME, DESCRIPTION, TGitLabProjectId.class, v->{			
 			try {
-				LOGGER.info("Searching GitLab merge request for project id: {}", v.getProjectId());
-		        return gateway.getOpenedMergeRequests(v.getProjectId());
+				LOGGER.info("Searches for repository commits for projectId {}", v.getProjectId());
+		        return gateway.getRepositoryCommits(v.getProjectId());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 				return "Function error: " + e.getMessage();

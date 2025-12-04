@@ -12,7 +12,7 @@ public class SearchGitLabProjectFunction extends TFunction<TGitLabProjectName> {
 	private static final Logger LOGGER = TLoggerUtil.getLogger(SearchGitLabProjectFunction.class);
 	
 	private static final String NAME = "get_gitlab_projects_by_name"; 
-	private static final String DESCRIPTION = "Searches for a gitlab projects by name";
+	private static final String DESCRIPTION = "Search for projects by name";
 	private static GitLabGateway gateway;
 	
 	static {
@@ -23,7 +23,7 @@ public class SearchGitLabProjectFunction extends TFunction<TGitLabProjectName> {
 	public SearchGitLabProjectFunction() {		
 		super(NAME, DESCRIPTION, TGitLabProjectName.class, v->{			
 			try {
-				LOGGER.info("Searching GitLab projects by name: " + v.getName());
+				LOGGER.info("Searching GitLab projects by name: {}",  v.getName());
 		        return gateway.searchProjectsByName(v.getName());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);

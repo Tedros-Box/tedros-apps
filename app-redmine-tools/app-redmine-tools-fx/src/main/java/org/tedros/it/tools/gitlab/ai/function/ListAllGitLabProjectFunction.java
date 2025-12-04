@@ -11,7 +11,7 @@ public class ListAllGitLabProjectFunction extends TFunction<Empty>{
 	private static final Logger LOGGER = TLoggerUtil.getLogger(ListAllGitLabProjectFunction.class);
 	
 	private static final String NAME = "list_gitlab_projects"; 
-	private static final String DESCRIPTION = "List all gitlab projects";
+	private static final String DESCRIPTION = "Get a list of all projects";
 	private static GitLabGateway gateway;
 	
 	static {

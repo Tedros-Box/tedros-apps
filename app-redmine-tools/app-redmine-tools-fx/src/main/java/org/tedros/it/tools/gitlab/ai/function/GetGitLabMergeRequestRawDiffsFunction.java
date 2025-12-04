@@ -7,12 +7,12 @@ import org.tedros.it.tools.gitlab.gateway.GitLabGateway;
 import org.tedros.util.TLoggerUtil;
 
 
-public class SearchGitLabMergeRequestRawDiffsFunction extends TFunction<TGitLabMergeRequest> {
+public class GetGitLabMergeRequestRawDiffsFunction extends TFunction<TGitLabMergeRequest> {
 	
-	private static final Logger LOGGER = TLoggerUtil.getLogger(SearchGitLabMergeRequestRawDiffsFunction.class);
+	private static final Logger LOGGER = TLoggerUtil.getLogger(GetGitLabMergeRequestRawDiffsFunction.class);
 	
 	private static final String NAME = "get_merge_request_raw_diffs"; 
-	private static final String DESCRIPTION = "Get a gitlab merge request raw diffs";
+	private static final String DESCRIPTION = "Show raw diffs of the files changed in a merge request";
 	private static GitLabGateway gateway;
 	
 	static {
@@ -20,7 +20,7 @@ public class SearchGitLabMergeRequestRawDiffsFunction extends TFunction<TGitLabM
 		gateway = GitLabGateway.getInstance(instance.getGitlabUrl(), instance.getGitlabKey());
 	}
 	
-	public SearchGitLabMergeRequestRawDiffsFunction() {
+	public GetGitLabMergeRequestRawDiffsFunction() {
 		super(NAME, DESCRIPTION, TGitLabMergeRequest.class, v->{
 			try {
 				LOGGER.info("Searching GitLab merge request raws diffs for project id: {} and merge request iid: {}", 
