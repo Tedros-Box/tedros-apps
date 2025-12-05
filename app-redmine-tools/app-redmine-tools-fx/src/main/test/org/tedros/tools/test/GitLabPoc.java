@@ -3,6 +3,7 @@ package org.tedros.tools.test;
 import org.tedros.it.tools.gitlab.ai.function.SearchGitLabProjectFunction;
 import org.tedros.it.tools.gitlab.ai.model.TGitLabProjectName;
 import org.tedros.it.tools.gitlab.gateway.GitLabClient;
+import org.tedros.it.tools.gitlab.gateway.GitLabGateway;
 
 import feign.Feign;
 import feign.RequestInterceptor;
@@ -11,12 +12,46 @@ import feign.okhttp.OkHttpClient;
 
 public class GitLabPoc {
 	
-	private static final String TOKEN = "";
+	private static final String TOKEN = System.getenv("GITLAB_TOKEN");
 	private static final String GITLAB_URL = "https://gitlab.detran.go.gov.br/";
+	
+	private static final GitLabGateway gateway;
+	
+	static {
+		gateway = GitLabGateway.getInstance(GITLAB_URL, TOKEN); 
+	}
 
 	public static void main(String[] args) {
-		searchProjectFunctionPoc();
-		searchProjectByNamePoc();
+		//searchProjectFunctionPoc();
+		//searchProjectByNamePoc();
+		//getBranches();
+		//getSingleBranches();
+		//getCommits();
+		//getSingleCommit();
+		getCommitDiff();
+	}
+	
+	private static void getCommitDiff() {
+		gateway.getRepositoryCommitDiff(273L, "8eca03ff0cedb99b1828306a3861ed447913e7cb").stream()
+		.forEach(System.out::println);
+	}
+	
+	private static void getSingleCommit() {
+		System.out.println(gateway.getSingleRepositoryCommit(273L, "8eca03ff0cedb99b1828306a3861ed447913e7cb"));
+	}
+	
+	private static void getCommits() {
+		gateway.getRepositoryCommits(273L).stream()
+		.forEach(System.out::println);
+	}
+	
+	private static void getSingleBranches() {
+		System.out.println(gateway.getSingleRepositoryBranches(273L, "develop"));
+	}
+	
+	private static void getBranches() {
+		gateway.getRepositoryBranches(273L).stream()
+		.forEach(System.out::println);
 	}
 
 	private static void searchProjectFunctionPoc() {
