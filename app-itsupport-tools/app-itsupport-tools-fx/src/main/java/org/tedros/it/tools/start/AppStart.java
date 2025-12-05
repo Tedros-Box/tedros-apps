@@ -12,12 +12,12 @@ import org.tedros.it.tools.redmine.module.settings.RedmineConfigModule;
  * 
  * @author Davis Dun
  * */
-@TApplication(name=ItToolsKey.APP_MY_APP, 
+@TApplication(name=ItToolsKey.APP_ITSUPPORT, 
 	module = {	
 		@TModule(type=RedmineConfigModule.class, 
-			name=ItToolsKey.MODULE_MY_APP, 
-			menu=ItToolsKey.MENU_MY_APP, 
-			description=ItToolsKey.MODULE_DESC_MY_APP)
+			name=ItToolsKey.MODULE_ITSUPPORT_EVIDENCE, 
+			menu=ItToolsKey.MENU_ITSUPPORT, 
+			description=ItToolsKey.MODULE_ITSUPPORT_EVIDENCE_DESC)
 	}, packageName = "org.tedros.it.tools", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"ittools"})

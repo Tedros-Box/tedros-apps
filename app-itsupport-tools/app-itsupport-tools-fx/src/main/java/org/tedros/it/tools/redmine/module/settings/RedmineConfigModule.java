@@ -18,11 +18,12 @@ import org.tedros.it.tools.redmine.module.settings.model.RedmineConfigMV;
  *
  */
 @TView(items = { 
-	@TItem(title = ItToolsKey.MY_APP_MY_VIEW, 
+	@TItem(title = ItToolsKey.VIEW_ITSUPPORT_CAPTURE_EVIDENCE, 
+			description = ItToolsKey.VIEW_ITSUPPORT_CAPTURE_EVIDENCE_DESC, 
 			modelView=RedmineConfigMV.class, model=RedmineConfig.class)})
-@TSecurity(id=DomainApp.REDMINE_CONFIG_MODULE_ID, 
-appName = ItToolsKey.APP_MY_APP, 
-moduleName = ItToolsKey.MODULE_MY_APP, 
+@TSecurity(id=DomainApp.EVIDENCE_MANAGER_MODULE_ID, 
+appName = ItToolsKey.APP_ITSUPPORT, 
+moduleName = ItToolsKey.MODULE_ITSUPPORT_EVIDENCE, 
 allowedAccesses=TAuthorizationType.MODULE_ACCESS)
 public class RedmineConfigModule extends TModule {
 

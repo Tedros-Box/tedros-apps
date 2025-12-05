@@ -41,11 +41,11 @@ import javafx.beans.property.SimpleStringProperty;
 				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME)},
 			orderBy= {@TOrder(label = TUsualKey.NAME, field = "name")}
 		),showSearch=true, showOrderBy=true),
-	presenter=@TPresenter(decorator = @TDecorator(viewTitle=ItToolsKey.MY_APP_MY_VIEW,
+	presenter=@TPresenter(decorator = @TDecorator(viewTitle=ItToolsKey.VIEW_ITSUPPORT_CAPTURE_EVIDENCE,
 		buildModesRadioButton=false),
 		behavior=@TBehavior(runNewActionAfterSave=false)))
-@TSecurity(id=DomainApp.REDMINE_CONFIG_FORM_ID, appName = ItToolsKey.APP_MY_APP,
-	moduleName = ItToolsKey.MODULE_MY_APP, viewName = ItToolsKey.MY_APP_MY_VIEW,
+@TSecurity(id=DomainApp.EVIDENCE_MANAGER_FORM_ID, appName = ItToolsKey.APP_ITSUPPORT,
+	moduleName = ItToolsKey.MODULE_ITSUPPORT_EVIDENCE, viewName = ItToolsKey.VIEW_ITSUPPORT_CAPTURE_EVIDENCE,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class RedmineConfigMV extends TEntityModelView<RedmineConfig> {

@@ -15,9 +15,10 @@ package org.tedros.it.tools;
  */
 public interface ItToolsKey {
 
-	static final String APP_MY_APP = "#{app.rdmn}";
-	static final String MENU_MY_APP = "#{menu.rdmn}";
-	static final String MODULE_DESC_MY_APP = "#{module.desc.rdmn}";
-	static final String MODULE_MY_APP = "#{module.rdmn}";
-	static final String MY_APP_MY_VIEW = "#{rdmn.my.view}";
+	static final String APP_ITSUPPORT = "#{app.itsupport}";
+	static final String MENU_ITSUPPORT = "#{menu.itsupport}";
+	static final String MODULE_ITSUPPORT_EVIDENCE = "#{module.itsupport.evidence}";
+	static final String MODULE_ITSUPPORT_EVIDENCE_DESC = "#{module.itsupport.evidence.desc}";
+	static final String VIEW_ITSUPPORT_CAPTURE_EVIDENCE = "#{view.itsupport.capture.evidence}";
+	static final String VIEW_ITSUPPORT_CAPTURE_EVIDENCE_DESC = "#{view.itsupport.capture.evidence.desc}";
 }
