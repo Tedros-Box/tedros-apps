@@ -15,8 +15,12 @@ public class ListAllGitLabProjectFunction extends TFunction<Empty>{
 	private static GitLabGateway gateway;
 	
 	static {
-		GitLabApiPropertyUtil instance = GitLabApiPropertyUtil.getInstance();
-		gateway = GitLabGateway.getInstance(instance.getGitlabUrl(), instance.getGitlabKey());
+		try {
+			GitLabApiPropertyUtil instance = GitLabApiPropertyUtil.getInstance();
+			gateway = GitLabGateway.getInstance(instance.getGitlabUrl(), instance.getGitlabKey());
+		}catch (Exception e) {
+			LOGGER.error("Error initializing GitLab gateway: {}", e.getMessage(), e);
+		}
 	}
 	
 	public ListAllGitLabProjectFunction() {		

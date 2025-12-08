@@ -12,7 +12,7 @@ import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
 import jakarta.inject.Inject;
 
-import org.tedros.it.tools.cdi.bo.RedmineBO;
+import org.tedros.it.tools.cdi.bo.ItSupportToolsBO;
 import org.tedros.server.cdi.bo.ITGenericBO;
 import org.tedros.server.ejb.service.TEjbService;
 import org.tedros.server.entity.ITEntity;
@@ -24,12 +24,12 @@ import org.tedros.server.entity.ITEntity;
  *
  */
 @LocalBean
-@Stateless(name="RedmineService")
+@Stateless(name="ItSupportToolsService")
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class RedmineService<E extends ITEntity> extends TEjbService<E>  {
+public class ItSupportToolsService<E extends ITEntity> extends TEjbService<E>  {
 	
 	@Inject
-	private RedmineBO<E> bo;
+	private ItSupportToolsBO<E> bo;
 	
 	@Override
 	public ITGenericBO<E> getBussinesObject() {

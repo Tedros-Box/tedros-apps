@@ -17,7 +17,7 @@ public interface DomainApp {
 	static final String EVIDENCE_MANAGER = "EVIDENCE_MANAGER";
 	static final String SEP = SEPARATOR;
 	
-	static final String MNEMONIC = "RDMN_";
+	static final String MNEMONIC = "ISPT";
 
 	static final String EVIDENCE_MANAGER_MODULE_ID = MNEMONIC + SEP + EVIDENCE_MANAGER + SEP + MODULE;
 	static final String EVIDENCE_MANAGER_FORM_ID = MNEMONIC + SEP + EVIDENCE_MANAGER + SEP + FORM;

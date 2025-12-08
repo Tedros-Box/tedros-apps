@@ -17,7 +17,7 @@ public class EvidenceScheduler {
 
     private ScheduledExecutorService scheduler;
     // Define the interval in seconds between checks
-    private int checkIntervalSeconds = 5;
+    private int checkIntervalSeconds = 3;
 
     private String outputDir = System.getProperty("user.home") + File.separator + "TedrosEvidence";
 
@@ -96,6 +96,23 @@ public class EvidenceScheduler {
 
                         File capturedFile = ScreenCaptureUtil.captureActiveMonitor(outputDir, fileName, windowBounds);
 
+                       // Save Metadata (Sidecar file)
+                        try {
+                        	java.util.Properties props = new java.util.Properties();
+                        	props.setProperty("windowTitle", windowTitle);
+                        	props.setProperty("timestamp", timestamp);
+                        	
+                        	String metaFileName = fileName.replace(".png", ".properties");
+                        	// Ensure we save in the same directory as the image
+                        	File metaFile = new File(capturedFile.getParentFile(), metaFileName);
+                        	
+                        	try(java.io.FileOutputStream fos = new java.io.FileOutputStream(metaFile)){
+                        		props.store(fos, "Evidence Metadata");
+                        	}
+                        } catch(Exception ex) {
+                        	System.err.println("Error saving metadata: " + ex.getMessage());
+                        }
+
                         notifyListeners(windowTitle, capturedFile);
 
                         System.out.println("-> EVIDENCE CAPTURED (Target Monitor) for: " + windowTitle + " (File: "
@@ -112,7 +129,7 @@ public class EvidenceScheduler {
             } catch (Exception e) {
                 System.err.println("Generic ERROR during monitoring: " + e.getMessage());
             }
-        }, 0, checkIntervalSeconds, TimeUnit.SECONDS);
+        }, 0, checkIntervalSeconds, TimeUnit.MINUTES);
     }
 
     private void notifyListeners(String windowTitle, File capturedFile) {
@@ -139,6 +156,13 @@ public class EvidenceScheduler {
             System.out.println("Monitoring stopped.");
         }
     }
+    
+    public void destroy() {
+		stopMonitoring();
+		listeners.clear();
+		targetApplications.clear();
+		scheduler = null;
+	}
 
     public int getCheckIntervalSeconds() {
         return checkIntervalSeconds;
@@ -158,5 +182,6 @@ public class EvidenceScheduler {
 
     public boolean isRunning() {
         return running;
+        
     }
 }

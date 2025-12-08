@@ -4,8 +4,8 @@
 package org.tedros.it.tools.ejb.controller;
 
 import org.tedros.it.tools.domain.DomainApp;
-import org.tedros.it.tools.ejb.service.RedmineService;
-import org.tedros.it.tools.entity.RedmineConfig;
+import org.tedros.it.tools.ejb.service.ItSupportToolsService;
+import org.tedros.it.tools.entity.JobEvidence;
 import org.tedros.server.ejb.controller.ITSecurityController;
 import org.tedros.server.ejb.controller.TSecureEjbController;
 import org.tedros.server.security.ITSecurity;
@@ -27,20 +27,20 @@ import jakarta.ejb.TransactionAttributeType;
  *
  */
 @TSecurityInterceptor
-@Stateless(name="IRedmineConfigController")
+@Stateless(name="IJobEvidenceController")
 @TBeanSecurity({@TBeanPolicie(id = DomainApp.EVIDENCE_MANAGER_FORM_ID, 
 policie = { TAccessPolicie.APP_ACCESS, TAccessPolicie.VIEW_ACCESS })})
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-public class TRedmineConfigController extends TSecureEjbController<RedmineConfig> implements IRedmineConfigController, ITSecurity  {
+public class JobEvidenceController extends TSecureEjbController<JobEvidence> implements IJobEvidenceController, ITSecurity  {
 
 	@EJB
-	private RedmineService<RedmineConfig> serv;
+	private ItSupportToolsService<JobEvidence> serv;
 	
 	@EJB
 	private ITSecurityController securityController;
 	
 	@Override
-	public ITEjbService<RedmineConfig> getService() {
+	public ITEjbService<JobEvidence> getService() {
 		return serv;
 	}
 	

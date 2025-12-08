@@ -17,6 +17,6 @@ import org.tedros.server.entity.ITEntity;
  *
  */
 @Dependent
-public class RedmineEAO<E extends ITEntity> extends TGenericEAO<E> {
+public class ItSupportToolsEAO<E extends ITEntity> extends TGenericEAO<E> {
 
 }

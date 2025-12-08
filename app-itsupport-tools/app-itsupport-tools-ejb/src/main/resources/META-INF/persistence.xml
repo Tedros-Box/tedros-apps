@@ -72,14 +72,16 @@
 		<class>org.tedros.stock.entity.StockItem</class>
 		<class>org.tedros.stock.entity.EventType</class>
 		
-		<class>org.tedros.it.tools.entity.RedmineConfig</class>
+		<class>org.tedros.it.tools.entity.JobEvidence</class>
+		<class>org.tedros.it.tools.entity.JobEvidenceItem</class>
 		
 		<properties>
 		
 		  <property name="jakarta.persistence.retrieveMode" value="BYPASS"/>
 	      <property name="jakarta.persistence.storeMode" value="BYPASS"/>
 	      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
-	      <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+	      <!-- drop-and-create-tables || create-or-extend-tables -->
+	      <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/> 
 	      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
 	      <property name="eclipselink.logging.level" value="OFF"/>
           <property name="eclipselink.logging.exceptions" value="true"/>

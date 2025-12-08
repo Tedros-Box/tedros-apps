@@ -1,15 +1,19 @@
 package org.tedros.it.tools.evidence;
 
 import java.awt.AWTException;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+
 import javax.imageio.ImageIO;
-import java.awt.GraphicsEnvironment;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsConfiguration;
+
+import org.tedros.util.TDateUtil;
 
 public class ScreenCaptureUtil {
 
@@ -49,9 +53,9 @@ public class ScreenCaptureUtil {
 
         // Captura o retângulo completo do monitor (Bounds)
         BufferedImage image = robot.createScreenCapture(monitorBounds);
-
+        String workingDayFolder = TDateUtil.format(new Date(), "yyyy-MM-dd");
         // 4. Salva a imagem
-        File outputFile = new File(outputDir, fileName);
+        File outputFile = new File(outputDir+File.separator+workingDayFolder, fileName);
         if (!outputFile.getParentFile().exists()) {
             outputFile.getParentFile().mkdirs();
         }
