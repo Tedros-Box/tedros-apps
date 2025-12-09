@@ -17,7 +17,7 @@ public class EvidenceScheduler {
 
     private ScheduledExecutorService scheduler;
     // Define the interval in seconds between checks
-    private int checkIntervalSeconds = 3;
+    private int checkIntervalSeconds = 15;
 
     private String outputDir = System.getProperty("user.home") + File.separator + "TedrosEvidence";
 
@@ -34,10 +34,17 @@ public class EvidenceScheduler {
         // Default values
         targetApplications.add("IntelliJ IDEA");
         targetApplications.add("Microsoft Teams");
-        targetApplications.add("SAP GUI");
         targetApplications.add("Eclipse");
+        targetApplications.add("Explorer");
+        targetApplications.add("localhost");
         targetApplications.add("Redmine");
         targetApplications.add("Excel");
+        targetApplications.add("World");
+        targetApplications.add("Adobe");
+        targetApplications.add("postman");
+        targetApplications.add("notepad");
+        targetApplications.add("sna");
+        
     }
 
     public void addListener(EvidenceCaptureListener listener) {
@@ -73,64 +80,67 @@ public class EvidenceScheduler {
 
         System.out.println("Monitoring started. Check interval: " + checkIntervalSeconds + " seconds.");
 
-        scheduler.scheduleAtFixedRate(() -> {
-            try {
-                if (!running)
-                    return;
-
-                // 1. CHECK THE ACTIVE WINDOW TITLE
-                String windowTitle = WindowMonitor.getForegroundWindowTitle();
-
-                // 2. CHECK IF THE ACTIVE WINDOW IS A TARGET APPLICATION
-                boolean isTargetApp = targetApplications.stream()
-                        .anyMatch(app -> windowTitle.toLowerCase().contains(app.toLowerCase()));
-
-                if (isTargetApp) {
-                    // 3. CAPTURE THE SCREEN FOR EVIDENCE
-                    java.awt.Rectangle windowBounds = WindowMonitor.getForegroundWindowBounds();
-
-                    if (windowBounds != null) {
-                        // 3. CAPTURE APENAS O MONITOR ATIVO
-                        String timestamp = String.valueOf(System.currentTimeMillis());
-                        String fileName = "evidence_" + timestamp + ".png";
-
-                        File capturedFile = ScreenCaptureUtil.captureActiveMonitor(outputDir, fileName, windowBounds);
-
-                       // Save Metadata (Sidecar file)
-                        try {
-                        	java.util.Properties props = new java.util.Properties();
-                        	props.setProperty("windowTitle", windowTitle);
-                        	props.setProperty("timestamp", timestamp);
-                        	
-                        	String metaFileName = fileName.replace(".png", ".properties");
-                        	// Ensure we save in the same directory as the image
-                        	File metaFile = new File(capturedFile.getParentFile(), metaFileName);
-                        	
-                        	try(java.io.FileOutputStream fos = new java.io.FileOutputStream(metaFile)){
-                        		props.store(fos, "Evidence Metadata");
-                        	}
-                        } catch(Exception ex) {
-                        	System.err.println("Error saving metadata: " + ex.getMessage());
-                        }
-
-                        notifyListeners(windowTitle, capturedFile);
-
-                        System.out.println("-> EVIDENCE CAPTURED (Target Monitor) for: " + windowTitle + " (File: "
-                                + fileName + ")");
-                    } else {
-                        System.err.println("Could not get window bounds for " + windowTitle + ". Skipping capture.");
-                    }
-                }
-
-            } catch (AWTException e) {
-                System.err.println("ERROR during screen capture (AWT): " + e.getMessage());
-            } catch (IOException e) {
-                System.err.println("ERROR writing file: " + e.getMessage());
-            } catch (Exception e) {
-                System.err.println("Generic ERROR during monitoring: " + e.getMessage());
-            }
-        }, 0, checkIntervalSeconds, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(this::captureEvidence, 0, checkIntervalSeconds, TimeUnit.SECONDS);
+        
     }
+
+	private void captureEvidence() {
+		try {
+		    if (!running)
+		        return;
+
+		    // 1. CHECK THE ACTIVE WINDOW TITLE
+		    String windowTitle = WindowMonitor.getForegroundWindowTitle();
+
+		    // 2. CHECK IF THE ACTIVE WINDOW IS A TARGET APPLICATION
+		    boolean isTargetApp = targetApplications.stream()
+		            .anyMatch(app -> windowTitle.toLowerCase().contains(app.toLowerCase()));
+
+		    if (isTargetApp) {
+		        // 3. CAPTURE THE SCREEN FOR EVIDENCE
+		        java.awt.Rectangle windowBounds = WindowMonitor.getForegroundWindowBounds();
+
+		        if (windowBounds != null) {
+		            // 3. CAPTURE APENAS O MONITOR ATIVO
+		            String timestamp = String.valueOf(System.currentTimeMillis());
+		            String fileName = "evidence_" + timestamp + ".png";
+
+		            File capturedFile = ScreenCaptureUtil.captureActiveMonitor(outputDir, fileName, windowBounds);
+
+		           // Save Metadata (Sidecar file)
+		            try {
+		            	java.util.Properties props = new java.util.Properties();
+		            	props.setProperty("windowTitle", windowTitle);
+		            	props.setProperty("timestamp", timestamp);
+		            	
+		            	String metaFileName = fileName.replace(".png", ".properties");
+		            	// Ensure we save in the same directory as the image
+		            	File metaFile = new File(capturedFile.getParentFile(), metaFileName);
+		            	
+		            	try(java.io.FileOutputStream fos = new java.io.FileOutputStream(metaFile)){
+		            		props.store(fos, "Evidence Metadata");
+		            	}
+		            } catch(Exception ex) {
+		            	System.err.println("Error saving metadata: " + ex.getMessage());
+		            }
+
+		            notifyListeners(windowTitle, capturedFile);
+
+		            System.out.println("-> EVIDENCE CAPTURED (Target Monitor) for: " + windowTitle + " (File: "
+		                    + fileName + ")");
+		        } else {
+		            System.err.println("Could not get window bounds for " + windowTitle + ". Skipping capture.");
+		        }
+		    }
+
+		} catch (AWTException e) {
+		    System.err.println("ERROR during screen capture (AWT): " + e.getMessage());
+		} catch (IOException e) {
+		    System.err.println("ERROR writing file: " + e.getMessage());
+		} catch (Exception e) {
+		    System.err.println("Generic ERROR during monitoring: " + e.getMessage());
+		}
+	}
 
     private void notifyListeners(String windowTitle, File capturedFile) {
         for (EvidenceCaptureListener l : listeners) {
