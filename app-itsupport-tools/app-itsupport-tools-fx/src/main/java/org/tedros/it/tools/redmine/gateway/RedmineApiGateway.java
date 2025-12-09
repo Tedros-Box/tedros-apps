@@ -7,14 +7,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.tedros.common.model.TFileContentInfo;
 import org.tedros.it.tools.redmine.ai.model.CustomFieldMetadata;
 import org.tedros.it.tools.redmine.ai.model.FilterCondition;
 import org.tedros.it.tools.redmine.ai.model.FilterType;
 import org.tedros.it.tools.redmine.api.model.TAttachment;
-import org.tedros.it.tools.redmine.api.model.TCustomField;
 import org.tedros.it.tools.redmine.api.model.TIssue;
 import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
 import org.tedros.it.tools.redmine.api.model.TMembership;
@@ -23,8 +21,6 @@ import org.tedros.it.tools.redmine.api.model.TRedmineUser;
 import org.tedros.it.tools.redmine.mapper.RedmineMapper;
 import org.tedros.util.TedrosFolder;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taskadapter.redmineapi.Include;
 import com.taskadapter.redmineapi.Params;
 import com.taskadapter.redmineapi.RedmineException;
@@ -40,10 +36,12 @@ import com.taskadapter.redmineapi.internal.ResultsWrapper;
 
 public class RedmineApiGateway {
 	
+	private String uri;
 	private RedmineManager manager;
 	private Map<String, CustomFieldMetadata> customFieldCache = new HashMap<>();
 
 	public RedmineApiGateway(String uri, String apiAccessKey) {
+		this.uri = uri;
 		this.manager = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
 	}
 	
@@ -68,6 +66,22 @@ public class RedmineApiGateway {
 	    } catch (Exception e) {
 	        throw new RuntimeException("Erro ao carregar metadados de campos personalizados: " + e.getMessage());
 	    }
+	}
+	
+	public void addIssueJournal(Integer userId, Integer issueId) {
+		
+		try {
+			User user = manager.getUserManager().getUserById(userId);
+			String userApiKey = user.getApiKey();
+			Issue issue = manager.getIssueManager().getIssueById(issueId, Include.journals);
+			//Journal journal = JournalFactory.create(null, "Automated journal entry", user, new Date());
+			issue.setNotes("Test");
+			
+			RedmineManagerFactory.createWithApiKey(uri, userApiKey).getIssueManager().update(issue);
+			
+		} catch (RedmineException e) {			
+			throw new RuntimeException("Erro ao atualuzar issue: " + e.getMessage());
+		}
 	}
 	
 	public List<TMembership> getProjectMembers(String projectKey){		
@@ -299,83 +313,5 @@ public class RedmineApiGateway {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public static void main(String[] args) {
-		//String redmineURI = "http://localhost:8080/";
-		String redmineURI = "https://redmine.detran.go.gov.br/";
-        String apiAccessKey = "key";
-        
-        RedmineApiGateway gateway = new RedmineApiGateway(redmineURI, apiAccessKey);
-        
-        TIssueEvidenceInfo issue = gateway.getTIssueEvidenceInfo(214212);
-        
-        
-        try {
-        	 System.out.println(new ObjectMapper().writeValueAsString(issue));
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        System.out.println("***********************");
-        
-        TAttachment att = new TAttachment();
-        //att.setId(issue.getAttachments().get(0).getId());
-        att.setContentURL(issue.getAttachments().get(0).getContentURL());
-        //att.setId(issue.getAttachments().get(0).getId());
-        
-        System.out.println(gateway.dowloadTAttachments(List.of(att)));
-        
-        //System.out.println(gateway.findUser("davis"));
-        
-        //gateway.loadCustomFieldMetadata();
-
-	    
-	
-	    // Campo de texto personalizado
-	    //filters.put("cf_41", FilterCondition.equalsTo("HPA"));
-	
-	    // Campo de data personalizado (auto detectado via cache)
-	    /*filters.put("cf_30", FilterCondition.betweenDates(
-	        LocalDate.of(2025, 10, 1),
-	        LocalDate.of(2025, 10, 31)
-	    ));*/
-
-        //ResultsWrapper<Issue> issues = gateway.getIssues();
-       // testFilterIssues(gateway);
-	}
-
-	private static void testFilterIssues(RedmineApiGateway gateway) {
-		
-		// Agora, criar os filtros:
-	    Map<String, FilterCondition> filters = new HashMap<>();
-	    //filters.put("status_id", FilterCondition.equalsTo("2"));
-	    filters.put("assigned_to_id", FilterCondition.equalsTo("509"));
-	    
-		int x = 1;
-        List<TIssue> projects = gateway.getIssuesByFilters(filters);
-        for(TIssue p : projects){
-        	
-        	String pr = p.getProjectName();
-        	String t = p.getTracker().getName();
-        	String tit = p.getSubject();
-        	String sit = p.getStatusName();
-        	String att = p.getAssigneeName();
-        	//Date dtIni = p.getStartDate().
-        	
-        	Optional<TCustomField> opt = p.getCustomFields().stream().filter(c->c.getName().equals("HPA")).findFirst();
-        	
-        	String hpa = opt.isPresent() 
-        			? opt.get().getValue()
-        					: "";
-    		
-        	String str = String.format("%s) [Projeto]: %s, [Tipo]: %s, [Situação]: %s, [Titulo]: %s, [Atribuida para]: %s, [HPA] %s", x, pr, t, sit, tit, att, hpa);
-    		System.out.println(str);
-    		x++;
-    		
-    	}
-	}
-
-	
 
 }

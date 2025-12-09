@@ -13,7 +13,9 @@ import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.form.TForm;
+import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.TFlowPane;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.TPane;
@@ -34,6 +36,8 @@ import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.ejb.controller.IJobEvidenceController;
 import org.tedros.it.tools.entity.JobEvidence;
 import org.tedros.it.tools.entity.JobEvidenceItem;
+import org.tedros.it.tools.evidence.setting.JobEvidenceSettings;
+import org.tedros.it.tools.evidence.trigger.SearchForIssueTrigger;
 import org.tedros.person.ejb.controller.IEmployeeController;
 import org.tedros.person.model.Employee;
 import org.tedros.server.query.TCompareOp;
@@ -43,6 +47,7 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+@TSetting(JobEvidenceSettings.class)
 @TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IJobEvidenceController.JNDI_NAME, model=JobEvidence.class)
 @TListViewPresenter(
@@ -65,24 +70,26 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
 	static final double VGAP = 12;
 	
 	@TTabPane(tabs = { 
-			@TTab(text = TUsualKey.MAIN_DATA, scroll=true, fields={"name"}), 
+			@TTab(text = TUsualKey.MAIN_DATA, scroll=true, fields={"issueNumber"}), 
 			@TTab(text = TUsualKey.DESCRIPTION,fields={"description"})
 		})
 		private SimpleLongProperty id;
 
-	@TLabel(text = TUsualKey.NAME)
-	@TTextField(maxLength=120, required = true)	
+	
+	@TLabel(text = "Issue Number")
+	@TTextField(maxLength=50, required = true)
 	@TFlowPane(hgap=HGAP, vgap=VGAP,
-	pane=@TPane(children={"name", "tool", "issueNumber", "employee", "executionDate", "issueTitle"}))	
+	pane=@TPane(children={"issueNumber", "name", "tool", "employee", "executionDate", "issueTitle"}))	
+	@TTrigger(type = SearchForIssueTrigger.class, targetFieldName = "issueTitle", associatedFieldBox = "issueLink")
+    private SimpleStringProperty issueNumber;
+	
+	@TLabel(text = TUsualKey.NAME)
+	@TTextField(maxLength=120, required = true)		
     private SimpleStringProperty name;
 	
 	@TLabel(text = "Ferramenta")
 	@TTextField(maxLength=50)	
     private SimpleStringProperty tool;
-
-	@TLabel(text = "Issue Number")
-	@TTextField(maxLength=50, required = true)
-    private SimpleStringProperty issueNumber;
 
 	@THBox(pane=@TPane(children={"issueTitle", "issueLink"}))
 	@TLabel(text = TUsualKey.TITLE)

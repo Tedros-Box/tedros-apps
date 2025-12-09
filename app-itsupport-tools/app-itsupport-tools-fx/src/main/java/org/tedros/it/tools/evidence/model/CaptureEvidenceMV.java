@@ -13,6 +13,7 @@ import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.model.TModelView;
 import org.tedros.fx.presenter.model.behavior.TViewBehavior;
 import org.tedros.fx.presenter.model.decorator.TViewDecorator;
+import org.tedros.it.tools.evidence.setting.CaptureEvidenceSettings;
 
 import javafx.beans.property.SimpleStringProperty;
 

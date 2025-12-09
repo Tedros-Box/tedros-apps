@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.controller.TPropertieController;
 import org.tedros.core.service.remote.TEjbServiceLocator;
-import org.tedros.it.tools.domain.RedminePropertie;
+import org.tedros.it.tools.domain.ItSupportPropertie;
 import org.tedros.server.result.TResult;
 import org.tedros.server.result.TResult.TState;
 
@@ -22,8 +22,8 @@ public class RedmineApiPropertyUtil {
 		TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
 		try {
 			TPropertieController serv = loc.lookup(TPropertieController.JNDI_NAME);
-			TResult<String> keyResult = serv.getValue(TedrosContext.getLoggedUser().getAccessToken(), RedminePropertie.REDMINE_KEY.getValue());
-			TResult<String> urlResult = serv.getValue(TedrosContext.getLoggedUser().getAccessToken(), RedminePropertie.REDMINE_URL.getValue());
+			TResult<String> keyResult = serv.getValue(TedrosContext.getLoggedUser().getAccessToken(), ItSupportPropertie.REDMINE_KEY.getValue());
+			TResult<String> urlResult = serv.getValue(TedrosContext.getLoggedUser().getAccessToken(), ItSupportPropertie.REDMINE_URL.getValue());
 			
 			if(keyResult.getState().equals(TState.SUCCESS) && urlResult.getState().equals(TState.SUCCESS)) {
 				redmineKey = keyResult.getValue();

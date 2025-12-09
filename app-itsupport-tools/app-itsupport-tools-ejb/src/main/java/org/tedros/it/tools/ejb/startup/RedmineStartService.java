@@ -2,7 +2,7 @@ package org.tedros.it.tools.ejb.startup;
 
 import org.tedros.core.setting.model.TPropertie;
 import org.tedros.core.support.TPropertieSupport;
-import org.tedros.it.tools.domain.RedminePropertie;
+import org.tedros.it.tools.domain.ItSupportPropertie;
 import org.tedros.server.service.TServiceLocator;
 import org.tedros.server.util.TLoggerUtil;
 
@@ -33,7 +33,7 @@ public class RedmineStartService {
             TServiceLocator serv = TServiceLocator.getInstance();
             try {
                 TPropertieSupport support = serv.lookupWithRetry(TPropertieSupport.JNDI_NAME);
-                for (RedminePropertie p : RedminePropertie.values()) {
+                for (ItSupportPropertie p : ItSupportPropertie.values()) {
                     TPropertie e = new TPropertie();
                     e.setName(p.name());
                     e.setKey(p.getValue());

@@ -1,8 +1,9 @@
-package org.tedros.it.tools.evidence.model;
+package org.tedros.it.tools.evidence.setting;
 
 import org.tedros.api.descriptor.ITComponentDescriptor;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.fx.form.TSetting;
+import org.tedros.it.tools.evidence.model.EvidenceMonitorView;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.WeakChangeListener;

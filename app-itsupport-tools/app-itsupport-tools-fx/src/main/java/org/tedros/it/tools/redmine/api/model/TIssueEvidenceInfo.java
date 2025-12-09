@@ -2,8 +2,12 @@ package org.tedros.it.tools.redmine.api.model;
 
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
+import lombok.ToString;
+
 import java.util.List;
 
+@ToString
 @JsonClassDescription("Redmine issue summary for evidence/reporting")
 public class TIssueEvidenceInfo {
 
