@@ -10,13 +10,17 @@ import java.util.Properties;
 
 import org.tedros.common.model.TByteEntity;
 import org.tedros.common.model.TFileEntity;
+import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
+import org.tedros.fx.TFxKey;
+import org.tedros.fx.TUsualKey;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.collections.TFXCollections;
 import org.tedros.fx.control.TButton;
 import org.tedros.fx.control.TDatePickerField;
 import org.tedros.fx.control.TLabel;
 import org.tedros.fx.control.TMaskField;
+import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.entity.JobEvidenceItem;
 import org.tedros.it.tools.evidence.EvidenceScheduler;
 import org.tedros.util.TDateUtil;
@@ -38,12 +42,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class EvidenceSelectorView extends BorderPane {
+public class EvidenceSelectorView extends StackPane {
 
     // Wrapper for search results (transient)
     private static class SelectableEvidence {
@@ -59,7 +63,7 @@ public class EvidenceSelectorView extends BorderPane {
             this.timestamp = timestamp;
         }
     }
-
+    
     private TDatePickerField datePicker;
     private TextField tfAppName;
     private TMaskField tfStartTime; // Format HH:mm
@@ -95,6 +99,9 @@ public class EvidenceSelectorView extends BorderPane {
     }
 
     private void initUI() {
+    	
+    	VBox root = new VBox(10);
+    	
         this.setPadding(new Insets(10));
 
         // --- TOP ZONE: Filters ---
@@ -106,29 +113,30 @@ public class EvidenceSelectorView extends BorderPane {
         datePicker.setLocale(TedrosContext.getLocale());
         
         tfAppName = new TextField();
-        tfAppName.setPromptText("App Name...");
+        tfAppName.setPromptText(TLanguage.getInstance().getString(ItToolsKey.TARGET_APPLICATIONS));
 
         tfStartTime = new TMaskField("99:99", "08:00");
         tfStartTime.setPrefWidth(60);
         tfEndTime = new TMaskField("99:99", "18:00");
         tfEndTime.setPrefWidth(60);
 
-        TButton btnSearch = new TButton("Search");
+        TButton btnSearch = new TButton(TLanguage.getInstance().getString(TFxKey.BUTTON_SEARCH));
         btnSearch.setOnAction(e -> doSearch());
 
         filters.getChildren().addAll(
-                new Label("Date:"), datePicker,
+                new Label(TLanguage.getInstance().getString(TUsualKey.DATE)+":"), datePicker,
                 new Label("App:"), tfAppName,
                 new Label("Time:"), tfStartTime, new Label("-"), tfEndTime,
                 btnSearch);
 
         topContainer.getChildren().addAll(filters, new Separator());
-        this.setTop(topContainer);
+        root.getChildren().add(topContainer);
 
         // --- CENTER ZONE: Split Pane (Search Result | Selected Items) ---
         SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.HORIZONTAL);
         splitPane.setStyle("-fx-background-color: transparent;");
+        
         // 1. Search Results List (TOP HALF)
         evidenceList = FXCollections.observableArrayList();
         listViewSearch = new ListView<>(evidenceList);
@@ -140,7 +148,7 @@ public class EvidenceSelectorView extends BorderPane {
         searchHeader.setPadding(new Insets(5));
         searchHeader.setStyle("-fx-background-color: transparent; -fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
         
-        TButton btnAdd = new TButton("Add Selected"); // Down arrow
+        TButton btnAdd = new TButton(TLanguage.getInstance().getString(TFxKey.BUTTON_ADD)); // Down arrow
         btnAdd.setOnAction(e -> addSelectedItems());
 
         HBox spacer = new HBox();
@@ -163,7 +171,10 @@ public class EvidenceSelectorView extends BorderPane {
         splitPane.getItems().addAll(searchBox, selectedBox);
         splitPane.setDividerPositions(0.5);
 
-        this.setCenter(splitPane);
+        VBox.setVgrow(splitPane, Priority.ALWAYS);
+        root.getChildren().add(splitPane);
+        
+        super.getChildren().add(root);
 
         // Initial search
         doSearch();
@@ -208,7 +219,7 @@ public class EvidenceSelectorView extends BorderPane {
         private final ImageView imageView = new ImageView();
         private final Label lblInfo = new Label();
         
-        private final TButton btnOpen = new TButton("Open");
+        private final TButton btnOpen = new TButton(TLanguage.getInstance().getString(TFxKey.BUTTON_OPEN));
         private final HBox root = new HBox(10, chkSelect, imageView, new VBox(5, lblInfo, btnOpen));
 
         {
@@ -258,7 +269,7 @@ public class EvidenceSelectorView extends BorderPane {
         private final ImageView imageView = new ImageView();
         private final Label lblInfo = new Label();
         private final TextArea txtDesc = new TextArea();
-        private final TButton btnRemove = new TButton("Remove");
+        private final TButton btnRemove = new TButton(TLanguage.getInstance().getString(TFxKey.BUTTON_REMOVE));
         private final HBox root = new HBox(10, new VBox(5, imageView, btnRemove), new VBox(5, lblInfo, txtDesc));
 
         {
@@ -336,15 +347,17 @@ public class EvidenceSelectorView extends BorderPane {
 
             Arrays.sort(imageFiles, (f1, f2) -> Long.compare(f2.lastModified(), f1.lastModified()));
 
+            String unknownApp = TLanguage.getInstance().getString(ItToolsKey.UNKNOWN_APP);
+            
             for (File img : imageFiles) {
-                String appName = "Unknown";
+                String appName = unknownApp;
                 long ts = img.lastModified();
                 File meta = new File(img.getParentFile(), img.getName().replace(".png", ".properties"));
                 if (meta.exists()) {
                     try (FileInputStream fis = new FileInputStream(meta)) {
                         Properties props = new Properties();
                         props.load(fis);
-                        appName = props.getProperty("windowTitle", "Unknown");
+                        appName = props.getProperty("windowTitle", unknownApp);
                         String tsStr = props.getProperty("timestamp");
                         if (tsStr != null)
                             ts = Long.parseLong(tsStr);
@@ -373,5 +386,6 @@ public class EvidenceSelectorView extends BorderPane {
         } catch (Exception e) {
             return start ? Long.MIN_VALUE : Long.MAX_VALUE;
         }
-    }
+    }    
+    
 }

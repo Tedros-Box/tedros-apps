@@ -9,6 +9,7 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.evidence.module.JobEvidenceModule;
+import org.tedros.it.tools.resource.AppResource;
 
 /**
  * The app start class.
@@ -31,7 +32,7 @@ public class AppStart implements ITApplication {
 
 	@Override
 	public void start() {
-		// Executed on app start
+		AppResource.createResource();
 	}
 
 	@Override

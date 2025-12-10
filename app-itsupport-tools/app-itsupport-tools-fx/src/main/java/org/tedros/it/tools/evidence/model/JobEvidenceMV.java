@@ -8,6 +8,7 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TFieldBox;
+import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.THTMLEditor;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTab;
@@ -126,7 +127,8 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
     @TText(textStyle = TTextStyle.LARGE, text="Somente os items selecionados serão usados como evidencia.")
     @TFieldBox(node=@TNode(parse = true, id=TFieldBox.TITLE))
 	private SimpleStringProperty itemsHeader;
-        
+    
+    @TGenericType(model = JobEvidenceItem.class)
     private ITObservableList<JobEvidenceItem> items;
 
     public JobEvidenceMV(JobEvidence entity) {
