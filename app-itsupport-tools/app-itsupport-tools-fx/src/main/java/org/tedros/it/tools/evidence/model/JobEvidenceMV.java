@@ -7,6 +7,7 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TDatePickerField;
+import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.THTMLEditor;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TTab;
@@ -19,6 +20,7 @@ import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.TFlowPane;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.TPane;
+import org.tedros.fx.annotation.layout.TVBox;
 import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
@@ -28,8 +30,11 @@ import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.query.TCondition;
 import org.tedros.fx.annotation.query.TOrder;
 import org.tedros.fx.annotation.query.TQuery;
+import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
+import org.tedros.fx.annotation.text.TText;
 import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.DomainApp;
@@ -71,7 +76,8 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
 	
 	@TTabPane(tabs = { 
 			@TTab(text = TUsualKey.MAIN_DATA, scroll=true, fields={"issueNumber"}), 
-			@TTab(text = TUsualKey.DESCRIPTION,fields={"description"})
+			@TTab(text = TUsualKey.DESCRIPTION,fields={"description"}),
+			@TTab(text = "Evidencias",fields={"itemsHeader"})
 		})
 		private SimpleLongProperty id;
 
@@ -116,6 +122,11 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
     @THTMLEditor(control=@TControl( maxHeight=450, parse = true))
     private SimpleStringProperty description;
 
+    @TVBox(pane=@TPane(children={"itemsHeader"}))
+    @TText(textStyle = TTextStyle.LARGE, text="Somente os items selecionados serão usados como evidencia.")
+    @TFieldBox(node=@TNode(parse = true, id=TFieldBox.TITLE))
+	private SimpleStringProperty itemsHeader;
+        
     private ITObservableList<JobEvidenceItem> items;
 
     public JobEvidenceMV(JobEvidence entity) {
@@ -201,6 +212,14 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
 
 	public void setItems(ITObservableList<JobEvidenceItem> items) {
 		this.items = items;
+	}
+
+	public SimpleStringProperty getItemsHeader() {
+		return itemsHeader;
+	}
+
+	public void setItemsHeader(SimpleStringProperty itemsHeader) {
+		this.itemsHeader = itemsHeader;
 	}
 
 }

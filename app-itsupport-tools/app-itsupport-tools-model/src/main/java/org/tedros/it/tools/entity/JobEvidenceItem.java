@@ -18,10 +18,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
 /**
  * 
@@ -31,16 +29,14 @@ import jakarta.persistence.UniqueConstraint;
 public class JobEvidenceItem extends TEntity {
 
 	private static final long serialVersionUID = 7607736437723984845L;
-	
+
 	@Column
 	private String description;
-	
+
 	@JsonIgnore
-	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable(name=DomainTables.JOB_EVIDENCE_ITEM_FILE, schema=DomainSchema.schema, 
-	uniqueConstraints=@UniqueConstraint(columnNames = { "job_id", "file_id" }),
-	joinColumns=@JoinColumn(name="job_id"), inverseJoinColumns=@JoinColumn(name="file_id"))
-	private List<TFileEntity> files;
+	@jakarta.persistence.ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "file_id")
+	private TFileEntity file;
 
 	public String getDescription() {
 		return description;
@@ -50,19 +46,19 @@ public class JobEvidenceItem extends TEntity {
 		this.description = description;
 	}
 
-	public List<TFileEntity> getFiles() {
-		return files;
+	public TFileEntity getFile() {
+		return file;
 	}
 
-	public void setFiles(List<TFileEntity> files) {
-		this.files = files;
+	public void setFile(TFileEntity file) {
+		this.file = file;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(description, files);
+		result = prime * result + Objects.hash(description, file);
 		return result;
 	}
 
@@ -78,7 +74,7 @@ public class JobEvidenceItem extends TEntity {
 			return false;
 		}
 		JobEvidenceItem other = (JobEvidenceItem) obj;
-		return Objects.equals(description, other.description) && Objects.equals(files, other.files);
+		return Objects.equals(description, other.description) && Objects.equals(file, other.file);
 	}
 
 }
