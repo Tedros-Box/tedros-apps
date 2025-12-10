@@ -1,30 +1,34 @@
 package org.tedros.it.tools.evidence.model;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Properties;
 
+import org.tedros.common.model.TByteEntity;
+import org.tedros.common.model.TFileEntity;
+import org.tedros.core.context.TedrosContext;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.collections.TFXCollections;
 import org.tedros.fx.control.TButton;
+import org.tedros.fx.control.TDatePickerField;
+import org.tedros.fx.control.TLabel;
+import org.tedros.fx.control.TMaskField;
 import org.tedros.it.tools.entity.JobEvidenceItem;
 import org.tedros.it.tools.evidence.EvidenceScheduler;
 import org.tedros.util.TDateUtil;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -48,7 +52,6 @@ public class EvidenceSelectorView extends BorderPane {
         long timestamp;
 
         BooleanProperty selected = new SimpleBooleanProperty(false);
-        StringProperty description = new SimpleStringProperty("");
 
         public SelectableEvidence(File file, String appName, long timestamp) {
             this.file = file;
@@ -57,10 +60,10 @@ public class EvidenceSelectorView extends BorderPane {
         }
     }
 
-    private DatePicker datePicker;
+    private TDatePickerField datePicker;
     private TextField tfAppName;
-    private TextField tfStartTime; // Format HH:mm
-    private TextField tfEndTime; // Format HH:mm
+    private TMaskField tfStartTime; // Format HH:mm
+    private TMaskField tfEndTime; // Format HH:mm
 
     // Search Results
     private ObservableList<SelectableEvidence> evidenceList;
@@ -99,13 +102,15 @@ public class EvidenceSelectorView extends BorderPane {
         HBox filters = new HBox(10);
         filters.setAlignment(Pos.CENTER_LEFT);
 
-        datePicker = new DatePicker(java.time.LocalDate.now());
+        datePicker = new TDatePickerField(new Date());
+        datePicker.setLocale(TedrosContext.getLocale());
+        
         tfAppName = new TextField();
         tfAppName.setPromptText("App Name...");
 
-        tfStartTime = new TextField("08:00");
+        tfStartTime = new TMaskField("99:99", "08:00");
         tfStartTime.setPrefWidth(60);
-        tfEndTime = new TextField("18:00");
+        tfEndTime = new TMaskField("99:99", "18:00");
         tfEndTime.setPrefWidth(60);
 
         TButton btnSearch = new TButton("Search");
@@ -122,8 +127,8 @@ public class EvidenceSelectorView extends BorderPane {
 
         // --- CENTER ZONE: Split Pane (Search Result | Selected Items) ---
         SplitPane splitPane = new SplitPane();
-        splitPane.setOrientation(javafx.geometry.Orientation.VERTICAL);
-
+        splitPane.setOrientation(Orientation.HORIZONTAL);
+        splitPane.setStyle("-fx-background-color: transparent;");
         // 1. Search Results List (TOP HALF)
         evidenceList = FXCollections.observableArrayList();
         listViewSearch = new ListView<>(evidenceList);
@@ -132,14 +137,16 @@ public class EvidenceSelectorView extends BorderPane {
         VBox searchBox = new VBox(5);
         HBox searchHeader = new HBox(10);
         searchHeader.setAlignment(Pos.CENTER_LEFT);
-
-        TButton btnAdd = new TButton("Add Selected \u2193"); // Down arrow
+        searchHeader.setPadding(new Insets(5));
+        searchHeader.setStyle("-fx-background-color: transparent; -fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
+        
+        TButton btnAdd = new TButton("Add Selected"); // Down arrow
         btnAdd.setOnAction(e -> addSelectedItems());
 
         HBox spacer = new HBox();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        searchHeader.getChildren().addAll(new Label("1. Search Results"), spacer, btnAdd);
+        searchHeader.getChildren().addAll(new TLabel("1. Search Results"), spacer, btnAdd);
 
         searchBox.getChildren().addAll(searchHeader, listViewSearch);
         VBox.setVgrow(listViewSearch, Priority.ALWAYS);
@@ -147,9 +154,11 @@ public class EvidenceSelectorView extends BorderPane {
         // 2. Selected Items List (BOTTOM HALF)
         listViewSelected = new ListView<>(selectedItems);
         listViewSelected.setCellFactory(param -> new SelectedItemCell());
-
-        VBox selectedBox = new VBox(5, new Label("2. Selected Evidence (Final List)"), listViewSelected);
+        TLabel lblSelected = new TLabel("2. Selected Evidence (Final List)");
+        VBox selectedBox = new VBox(5, lblSelected, listViewSelected);
+        selectedBox.setStyle("-fx-background-color: transparent; -fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
         VBox.setVgrow(listViewSelected, Priority.ALWAYS);
+        VBox.setMargin(lblSelected, new Insets(11,5,5,5));
 
         splitPane.getItems().addAll(searchBox, selectedBox);
         splitPane.setDividerPositions(0.5);
@@ -165,22 +174,31 @@ public class EvidenceSelectorView extends BorderPane {
             if (item.selected.get()) {
                 // Logic: Add to selectedItems list
                 JobEvidenceItem newItem = new JobEvidenceItem();
-                newItem.setDescription(item.description.get());
-
-                // TODO: Here we should map the file properly.
-                // Since we don't have transient fields in JobEvidenceItem for File object,
-                // we assume usage of files list or just description for now.
-                // Or maybe the user will implement file upload later.
-                newItem.setFiles(new ArrayList<>());
-
-                selectedItems.add(newItem);
+                newItem.setFilePath(item.file.getAbsolutePath());
+                newItem.setName(item.appName);
+                newItem.setEvidenceDate(new Date(item.timestamp));
+                
+                try(InputStream fis = new FileInputStream(item.file)) {
+					byte[] fileBytes = fis.readAllBytes();
+					TByteEntity byteEntity = new TByteEntity();
+					byteEntity.setBytes(fileBytes);
+					
+					TFileEntity fileEntity = new TFileEntity();
+					fileEntity.setFileName(item.file.getName());
+					fileEntity.setByteEntity(byteEntity);					
+					newItem.setFile(fileEntity);
+					selectedItems.add(newItem);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}                
 
                 // UX: Uncheck item or show it as added?
                 // Unchecking is clearer that it was processed.
-                item.selected.set(false);
+                item.selected.setValue(false);
             }
         }
     }
+    
 
     // --- INNER CLASSES: CELLS ---
 
@@ -189,9 +207,9 @@ public class EvidenceSelectorView extends BorderPane {
         private final CheckBox chkSelect = new CheckBox();
         private final ImageView imageView = new ImageView();
         private final Label lblInfo = new Label();
-        private final TextArea txtDesc = new TextArea();
+        
         private final TButton btnOpen = new TButton("Open");
-        private final HBox root = new HBox(10, chkSelect, imageView, new VBox(5, lblInfo, txtDesc), btnOpen);
+        private final HBox root = new HBox(10, chkSelect, imageView, new VBox(5, lblInfo, btnOpen));
 
         {
             root.setAlignment(Pos.CENTER_LEFT);
@@ -199,22 +217,13 @@ public class EvidenceSelectorView extends BorderPane {
             imageView.setPreserveRatio(true);
             imageView.setFitHeight(60);
             imageView.setFitWidth(100);
-
-            txtDesc.setPromptText("Description...");
-            txtDesc.setPrefHeight(50);
-            txtDesc.setPrefWidth(200);
-            txtDesc.setWrapText(true);
-
+            
             chkSelect.selectedProperty().addListener((obs, old, val) -> {
                 SelectableEvidence item = getItem();
                 if (item != null)
                     item.selected.set(val);
             });
-            txtDesc.textProperty().addListener((obs, old, val) -> {
-                SelectableEvidence item = getItem();
-                if (item != null)
-                    item.description.set(val);
-            });
+            
             btnOpen.setOnAction(e -> {
                 SelectableEvidence item = getItem();
                 if (item != null)
@@ -229,24 +238,34 @@ public class EvidenceSelectorView extends BorderPane {
                 setGraphic(null);
             } else {
                 chkSelect.setSelected(item.selected.get());
-                txtDesc.setText(item.description.get());
                 lblInfo.setText(TDateUtil.format(new Date(item.timestamp), "HH:mm") + " - " + item.appName);
-
                 setThumbnail(imageView, item.file);
-
                 setGraphic(root);
+            }
+        }
+        
+        private void setThumbnail(ImageView iv, File f) {
+            try {
+                iv.setImage(new Image(new FileInputStream(f), 0, 100, true, true));
+            } catch (Exception e) {
+                iv.setImage(null);
             }
         }
     }
 
     // Cell for Selected Items
     private class SelectedItemCell extends ListCell<JobEvidenceItem> {
+        private final ImageView imageView = new ImageView();
+        private final Label lblInfo = new Label();
         private final TextArea txtDesc = new TextArea();
         private final TButton btnRemove = new TButton("Remove");
-        private final VBox root = new VBox(5, new Label("Evidence Item"), txtDesc, btnRemove);
+        private final HBox root = new HBox(10, new VBox(5, imageView, btnRemove), new VBox(5, lblInfo, txtDesc));
 
         {
             root.setPadding(new Insets(5));
+            imageView.setPreserveRatio(true);
+            imageView.setFitHeight(60);
+            imageView.setFitWidth(100);
             txtDesc.setPromptText("Edit Description...");
             txtDesc.setPrefHeight(50);
             txtDesc.setWrapText(true);
@@ -270,10 +289,18 @@ public class EvidenceSelectorView extends BorderPane {
             if (empty || item == null) {
                 setGraphic(null);
             } else {
-                // Note: We don't have easy access to the image/app name here unless
-                // JobEvidenceItem stored it. Displaying description is primary.
+            	setThumbnail(imageView, item.getFile());
+            	lblInfo.setText(TDateUtil.format(item.getEvidenceDate(), "HH:mm") + " - " + item.getName());
                 txtDesc.setText(item.getDescription());
                 setGraphic(root);
+            }
+        }
+        
+        private void setThumbnail(ImageView iv, TFileEntity fileEntity) {
+            try {
+                iv.setImage(new Image(new ByteArrayInputStream(fileEntity.getByteEntity().getBytes()), 0, 100, true, true));
+            } catch (Exception e) {
+                iv.setImage(null);
             }
         }
     }
@@ -286,22 +313,14 @@ public class EvidenceSelectorView extends BorderPane {
         }
     }
 
-    private void setThumbnail(ImageView iv, File f) {
-        try {
-            iv.setImage(new Image(new FileInputStream(f), 0, 100, true, true));
-        } catch (Exception e) {
-            iv.setImage(null);
-        }
-    }
-
     private void doSearch() {
         evidenceList.clear();
         try {
-            java.time.LocalDate ld = datePicker.getValue();
-            if (ld == null)
+            Date date = datePicker.getValue();
+            if (date == null)
                 return;
 
-            String dateStr = ld.toString();
+            String dateStr = TDateUtil.format(date, "yyyy-MM-dd");
             File dayDir = new File(scheduler.getOutputDir(), dateStr);
 
             if (!dayDir.exists() || !dayDir.isDirectory())
