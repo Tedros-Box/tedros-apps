@@ -126,7 +126,7 @@ public class EvidenceSelectorView extends StackPane {
         filters.getChildren().addAll(
                 new Label(TLanguage.getInstance().getString(TUsualKey.DATE)+":"), datePicker,
                 new Label("App:"), tfAppName,
-                new Label("Time:"), tfStartTime, new Label("-"), tfEndTime,
+                new Label(TLanguage.getInstance().getString(ItToolsKey.TIME)+":"), tfStartTime, new Label("-"), tfEndTime,
                 btnSearch);
 
         topContainer.getChildren().addAll(filters, new Separator());
@@ -154,7 +154,7 @@ public class EvidenceSelectorView extends StackPane {
         HBox spacer = new HBox();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        searchHeader.getChildren().addAll(new TLabel("1. Search Results"), spacer, btnAdd);
+        searchHeader.getChildren().addAll(new TLabel(TLanguage.getInstance().getString(ItToolsKey.SEARCH_RESULTS)), spacer, btnAdd);
 
         searchBox.getChildren().addAll(searchHeader, listViewSearch);
         VBox.setVgrow(listViewSearch, Priority.ALWAYS);
@@ -162,7 +162,7 @@ public class EvidenceSelectorView extends StackPane {
         // 2. Selected Items List (BOTTOM HALF)
         listViewSelected = new ListView<>(selectedItems);
         listViewSelected.setCellFactory(param -> new SelectedItemCell());
-        TLabel lblSelected = new TLabel("2. Selected Evidence (Final List)");
+        TLabel lblSelected = new TLabel(TLanguage.getInstance().getString(ItToolsKey.SELECTED_EVIDENCES));
         VBox selectedBox = new VBox(5, lblSelected, listViewSelected);
         selectedBox.setStyle("-fx-background-color: transparent; -fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
         VBox.setVgrow(listViewSelected, Priority.ALWAYS);
@@ -277,7 +277,7 @@ public class EvidenceSelectorView extends StackPane {
             imageView.setPreserveRatio(true);
             imageView.setFitHeight(60);
             imageView.setFitWidth(100);
-            txtDesc.setPromptText("Edit Description...");
+            txtDesc.setPromptText(TLanguage.getInstance().getString(ItToolsKey.PROMPT_EDIT_DESCRIPTION));
             txtDesc.setPrefHeight(50);
             txtDesc.setWrapText(true);
 

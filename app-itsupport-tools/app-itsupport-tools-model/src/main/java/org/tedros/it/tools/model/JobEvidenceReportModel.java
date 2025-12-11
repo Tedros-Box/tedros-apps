@@ -1,5 +1,8 @@
 package org.tedros.it.tools.model;
 
+import java.util.Date;
+
+import org.tedros.person.model.Employee;
 import org.tedros.server.model.TReportModel;
 
 public class JobEvidenceReportModel extends TReportModel<JobEvidenceReportItemModel> {
@@ -9,9 +12,8 @@ public class JobEvidenceReportModel extends TReportModel<JobEvidenceReportItemMo
 	private String name;
 	private String issueNumber;
 	private String issueTitle;
-	private String employee;
-	private String executionDateBegin;
-	private String executionDateEnd;
+	private Employee employee;
+	private Date executionDate;
 	
 	public String getIssueNumber() {
 		return issueNumber;
@@ -25,24 +27,18 @@ public class JobEvidenceReportModel extends TReportModel<JobEvidenceReportItemMo
 	public void setIssueTitle(String issueTitle) {
 		this.issueTitle = issueTitle;
 	}
-	public String getEmployee() {
+	public Employee getEmployee() {
 		return employee;
 	}
-	public void setEmployee(String employee) {
+	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-	public String getExecutionDateBegin() {
-		return executionDateBegin;
+	public Date getExecutionDate() {
+		return executionDate;
 	}
-	public void setExecutionDateBegin(String executionDateBegin) {
-		this.executionDateBegin = executionDateBegin;
-	}
-	public String getExecutionDateEnd() {
-		return executionDateEnd;
-	}
-	public void setExecutionDateEnd(String executionDateEnd) {
-		this.executionDateEnd = executionDateEnd;
-	}
+	public void setExecutionDate(Date executionDate) {
+		this.executionDate = executionDate;
+	}	
 	public String getName() {
 		return name;
 	}

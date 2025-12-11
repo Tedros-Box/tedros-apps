@@ -21,7 +21,9 @@ import org.tedros.it.tools.resource.AppResource;
 		@TModule(type=JobEvidenceModule.class, 
 			name=ItToolsKey.MODULE_ITSUPPORT_EVIDENCE, 
 			menu=ItToolsKey.MENU_ITSUPPORT, 
-			description=ItToolsKey.MODULE_ITSUPPORT_EVIDENCE_DESC)
+			description=ItToolsKey.MODULE_ITSUPPORT_EVIDENCE_DESC,
+			icon=TConstant.ICONS_FOLDER+"job_evidence.png", 
+			menuIcon=TConstant.ICONS_FOLDER+"job_evidence_menu.png")
 	}, packageName = "org.tedros.it.tools", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"ittools"})

@@ -60,41 +60,40 @@ import javafx.beans.property.SimpleStringProperty;
 		page=@TPage(serviceName = IJobEvidenceController.JNDI_NAME,
 		query = @TQuery(entity=JobEvidence.class, condition= {
 				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME),
-				@TCondition(field = "issueNumber", operator=TCompareOp.EQUAL, label="Issue Number")},
-			orderBy= {@TOrder(label = "Issue Number", field = "issueNumber")}
+				@TCondition(field = "issueNumber", operator=TCompareOp.EQUAL, label=ItToolsKey.ISSUE_NUMBER)
+				},
+			orderBy= {@TOrder(label = ItToolsKey.ISSUE_NUMBER, field = "issueNumber"),
+					@TOrder(label = TUsualKey.NAME, field = "name")}
 				),showSearch=true, showOrderBy=true),
 		presenter=@TPresenter(
-			decorator = @TDecorator(viewTitle=ItToolsKey.VIEW_ITSUPPORT_CAPTURE_EVIDENCE, buildModesRadioButton=false),
+			decorator = @TDecorator(viewTitle=ItToolsKey.VIEW_JOB_EVIDENCE, buildModesRadioButton=false),
 			behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
+
 @TSecurity(id=DomainApp.EVIDENCE_MANAGER_FORM_ID, appName = ItToolsKey.APP_ITSUPPORT,
-	moduleName = ItToolsKey.MODULE_ITSUPPORT_EVIDENCE, viewName = ItToolsKey.VIEW_ITSUPPORT_CAPTURE_EVIDENCE,
+	moduleName = ItToolsKey.MODULE_ITSUPPORT_EVIDENCE, viewName = ItToolsKey.VIEW_JOB_EVIDENCE,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
 	
-	static final double HGAP = 20;
-	static final double VGAP = 12;
-	
 	@TTabPane(tabs = { 
-			@TTab(text = TUsualKey.MAIN_DATA, scroll=true, fields={"issueNumber"}), 
-			@TTab(text = TUsualKey.DESCRIPTION,fields={"description"}),
-			@TTab(text = "Evidencias",fields={"itemsHeader"})
-		})
-		private SimpleLongProperty id;
+		@TTab(text = TUsualKey.MAIN_DATA, 	fields={"issueNumber"}), 
+		@TTab(text = TUsualKey.DESCRIPTION,	fields={"description"}),
+		@TTab(text = ItToolsKey.EVIDENCES, 	fields={"itemsHeader"})})
+	private SimpleLongProperty id;
 
 	
-	@TLabel(text = "Issue Number")
+	@TLabel(text = ItToolsKey.ISSUE_NUMBER)
 	@TTextField(maxLength=50, required = true)
-	@TFlowPane(hgap=HGAP, vgap=VGAP,
-	pane=@TPane(children={"issueNumber", "name", "tool", "employee", "executionDate", "issueTitle"}))	
+	@TFlowPane(hgap=20, vgap=12,
+		pane=@TPane(children={"issueNumber", "name", "tool", "employee", "executionDate", "issueTitle"}))	
 	@TTrigger(type = SearchForIssueTrigger.class, targetFieldName = "issueTitle", associatedFieldBox = "issueLink")
     private SimpleStringProperty issueNumber;
 	
 	@TLabel(text = TUsualKey.NAME)
-	@TTextField(maxLength=120, required = true)		
+	@TTextField(maxLength=120, required = true)
     private SimpleStringProperty name;
 	
-	@TLabel(text = "Ferramenta")
+	@TLabel(text = ItToolsKey.TOOL)
 	@TTextField(maxLength=50)	
     private SimpleStringProperty tool;
 
@@ -103,7 +102,7 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
 	@TTextAreaField(maxLength=500, wrapText=true)
     private SimpleStringProperty issueTitle;
 
-	@TLabel(text = "Link para a Issue")
+	@TLabel(text = ItToolsKey.ISSUE_LINK)
 	@TTextAreaField(maxLength=2083, wrapText=true)
     private SimpleStringProperty issueLink;
 
@@ -116,7 +115,7 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
 					@TCondition(logicOp=TLogicOp.OR, field = "lastName", operator=TCompareOp.LIKE)}))
     private SimpleObjectProperty<Employee> employee;
 
-	@TLabel(text="Data da Execução")
+	@TLabel(text=ItToolsKey.EXECUTION_DATE)
 	@TDatePickerField()
     private SimpleObjectProperty<Date> executionDate;
     
@@ -124,7 +123,7 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
     private SimpleStringProperty description;
 
     @TVBox(pane=@TPane(children={"itemsHeader"}))
-    @TText(textStyle = TTextStyle.LARGE, text="Somente os items selecionados serão usados como evidencia.")
+    @TText(textStyle = TTextStyle.LARGE, text=ItToolsKey.TEXT_SELECT_EVIDENCES)
     @TFieldBox(node=@TNode(parse = true, id=TFieldBox.TITLE))
 	private SimpleStringProperty itemsHeader;
     
@@ -136,10 +135,12 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
         super.formatToString("%s - %s", issueNumber, name);
     }
 
+	@Override
 	public SimpleLongProperty getId() {
 		return id;
 	}
-
+	
+	@Override
 	public void setId(SimpleLongProperty id) {
 		this.id = id;
 	}

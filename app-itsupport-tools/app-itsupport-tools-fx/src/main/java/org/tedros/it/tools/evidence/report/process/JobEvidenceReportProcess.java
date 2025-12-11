@@ -11,7 +11,7 @@ import org.tedros.fx.TUsualKey;
 import org.tedros.fx.exception.TProcessException;
 import org.tedros.fx.process.TReportProcess;
 import org.tedros.it.tools.ItToolsKey;
-import org.tedros.it.tools.ejb.controller.IJobEvidenceController;
+import org.tedros.it.tools.ejb.controller.IJobEvidenceReportController;
 import org.tedros.it.tools.model.JobEvidenceReportModel;
 import org.tedros.it.tools.resource.AppResource;
 import org.tedros.server.result.TResult;
@@ -21,9 +21,9 @@ import net.sf.jasperreports.engine.JRException;
 public class JobEvidenceReportProcess extends TReportProcess<JobEvidenceReportModel> {
 
 	public JobEvidenceReportProcess() throws TProcessException {
-		super(IJobEvidenceController.JNDI_NAME, 
+		super(IJobEvidenceReportController.JNDI_NAME, 
 				TLanguage.getInstance()
-				.getString("Relatorio de evidencias"));
+				.getString(ItToolsKey.TITLE_JOB_EVIDENCE_REPORT));
 	}
 	
 	/* (non-Javadoc)
@@ -54,18 +54,19 @@ public class JobEvidenceReportProcess extends TReportProcess<JobEvidenceReportMo
 
 	protected HashMap<String, Object> getReportParameters() {
 		TLanguage l = TLanguage.getInstance();
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("hCode", l.getString(TUsualKey.CODE));
-		params.put("hProduct", l.getString(TUsualKey.NAME));
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("hIssueLink", l.getString(ItToolsKey.ISSUE_LINK));
+		params.put("hExecutionDate", l.getString(ItToolsKey.EXECUTION_DATE));
 		params.put("hName", l.getString(TUsualKey.NAME));
-		params.put("hTrademark", l.getString(TUsualKey.TRADEMARK));
-		params.put("hUnitMeasure", l.getString(TUsualKey.UNIT_MEASURE));
-		params.put("hMeasure",  l.getString(TUsualKey.MEASURE));
-		params.put("hSize",  l.getString(TUsualKey.SIZE));
-		params.put("hWeight",  l.getString(TUsualKey.WEIGHT));
+		params.put("hIssueTitle", l.getString(TUsualKey.TITLE));
+		params.put("hEmployee", l.getString(TUsualKey.EMPLOYEE));
+		params.put("hTool",  l.getString(ItToolsKey.TOOL_SHORT));
+		params.put("hIssueNumber",  l.getString(ItToolsKey.ISSUE_NUMBER));
 		params.put("hDesc",  l.getString(TUsualKey.DESCRIPTION));
+		
+		params.put("hWeight",  l.getString(TUsualKey.WEIGHT));
 		params.put("hImages",  l.getString(TUsualKey.IMAGE));
-		params.put("report_title", l.getString("Relatorio de evidencias"));
+		params.put("report_title", l.getString(ItToolsKey.TITLE_JOB_EVIDENCE_REPORT));
 		params.put("SUBREPORT_DIR", AppResource.APP_MODULE_PATH);
 		return params;
 	}
