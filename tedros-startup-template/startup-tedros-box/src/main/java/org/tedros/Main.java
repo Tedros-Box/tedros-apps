@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.template;
+package org.tedros;
 
 import org.tedros.TedrosBox;
 

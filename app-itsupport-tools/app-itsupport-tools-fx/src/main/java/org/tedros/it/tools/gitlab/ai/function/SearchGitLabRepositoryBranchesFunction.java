@@ -3,7 +3,6 @@ package org.tedros.it.tools.gitlab.ai.function;
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.it.tools.gitlab.ai.model.TGitLabProjectId;
-import org.tedros.it.tools.gitlab.gateway.GitLabGateway;
 import org.tedros.util.TLoggerUtil;
 
 
@@ -13,22 +12,12 @@ public class SearchGitLabRepositoryBranchesFunction extends TFunction<TGitLabPro
 	
 	private static final String NAME = "list_gitlab_repository_branches"; 
 	private static final String DESCRIPTION = "List gitlab repository branches by project id";
-	private static GitLabGateway gateway;
-	
-	static {
-		try {
-			GitLabApiPropertyUtil instance = GitLabApiPropertyUtil.getInstance();
-			gateway = GitLabGateway.getInstance(instance.getGitlabUrl(), instance.getGitlabKey());
-		}catch (Exception e) {
-			LOGGER.error("Error initializing GitLab gateway: {}", e.getMessage(), e);
-		}
-	}
-	
+		
 	public SearchGitLabRepositoryBranchesFunction() {		
 		super(NAME, DESCRIPTION, TGitLabProjectId.class, v->{			
 			try {
 				LOGGER.info("Searches for repository branches for projectId {}" + v.getProjectId());
-		        return gateway.getRepositoryBranches(v.getProjectId());
+		        return GitLabGatewayUtil.gateway().getRepositoryBranches(v.getProjectId());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 				return "Function error: " + e.getMessage();

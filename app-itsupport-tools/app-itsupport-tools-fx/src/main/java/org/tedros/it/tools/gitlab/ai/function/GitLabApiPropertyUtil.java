@@ -13,10 +13,21 @@ public class GitLabApiPropertyUtil {
 	private String gitlabKey; 
 	private String gitlabUrl;
 	
-	
 	private static GitLabApiPropertyUtil instance;
 	
-	static {
+	private GitLabApiPropertyUtil(String redmineKey, String redmineUrl) {
+		this.gitlabKey = redmineKey;
+		this.gitlabUrl = redmineUrl;	
+	}
+	
+	public static GitLabApiPropertyUtil getInstance() {
+		if(instance==null)
+			create();
+		
+		return instance;
+	}
+	
+	private static void create() {
 		String key;
 		String url;
 		
@@ -45,15 +56,6 @@ public class GitLabApiPropertyUtil {
 		}finally {
 			loc.close();
 		}
-	}
-	
-	public static GitLabApiPropertyUtil getInstance() {
-		return instance;
-	}
-
-	private GitLabApiPropertyUtil(String redmineKey, String redmineUrl) {
-		this.gitlabKey = redmineKey;
-		this.gitlabUrl = redmineUrl;	
 	}
 
 	public String getGitlabKey() {

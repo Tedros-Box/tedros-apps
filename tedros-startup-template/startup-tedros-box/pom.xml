@@ -28,7 +28,7 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!--<dependency>
+		<dependency>
 			<groupId>org.tedros</groupId>
 			<artifactId>app-samples-fx</artifactId>
 			<version>${app.samples}</version>
@@ -47,7 +47,7 @@
 			<artifactId>app-services-fx</artifactId>
 			<version>${app.services}</version>
 			<scope>compile</scope>
-		</dependency>-->
+		</dependency>
 
 		<dependency>
 			<groupId>org.tedros</groupId>
@@ -57,9 +57,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>uk.riosdevida</groupId>
-			<artifactId>riosdevida-fx</artifactId>
-			<version>17-1.0.1</version>
+			<groupId>org.tedros</groupId>
+			<artifactId>app-itsupport-tools-fx</artifactId>
+			<version>1.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 
