@@ -1,5 +1,7 @@
 package org.tedros.it.tools.evidence.report.process;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +17,7 @@ import org.tedros.it.tools.ejb.controller.IJobEvidenceReportController;
 import org.tedros.it.tools.model.JobEvidenceReportModel;
 import org.tedros.it.tools.resource.AppResource;
 import org.tedros.server.result.TResult;
+import org.tedros.util.TedrosFolder;
 
 import net.sf.jasperreports.engine.JRException;
 
@@ -53,6 +56,11 @@ public class JobEvidenceReportProcess extends TReportProcess<JobEvidenceReportMo
 	}
 
 	protected HashMap<String, Object> getReportParameters() {
+		
+		try {
+			setLogoInputStream(new FileInputStream(new File("C:\\Users\\davis.dun\\.tedros\\MODULE\\TCORE_19780222\\globalweb3.png")));
+		
+		
 		TLanguage l = TLanguage.getInstance();
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("hIssueLink", l.getString(ItToolsKey.ISSUE_LINK));
@@ -68,7 +76,11 @@ public class JobEvidenceReportProcess extends TReportProcess<JobEvidenceReportMo
 		params.put("hImages",  l.getString(TUsualKey.IMAGE));
 		params.put("report_title", l.getString(ItToolsKey.TITLE_JOB_EVIDENCE_REPORT));
 		params.put("SUBREPORT_DIR", AppResource.APP_MODULE_PATH);
+		params.put("logo", getLogoInputStream());
 		return params;
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	protected InputStream getJasperInputStream() {
