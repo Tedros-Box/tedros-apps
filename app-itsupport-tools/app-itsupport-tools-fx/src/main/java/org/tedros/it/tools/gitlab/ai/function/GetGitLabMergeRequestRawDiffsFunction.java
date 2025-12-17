@@ -18,7 +18,7 @@ public class GetGitLabMergeRequestRawDiffsFunction extends TFunction<TGitLabMerg
 			try {
 				LOGGER.info("Searching GitLab merge request raws diffs for project id: {} and merge request iid: {}", 
 						v.getProjectId(), v.getMergeRequestIid());
-		        return GitLabGatewayUtil.gateway().getMergeRequestRawDiffs(v.getProjectId(), v.getMergeRequestIid());
+		        return GitLabGatewayFactory.getGateway().getMergeRequestRawDiffs(v.getProjectId(), v.getMergeRequestIid());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 				return "Function error: " + e.getMessage();

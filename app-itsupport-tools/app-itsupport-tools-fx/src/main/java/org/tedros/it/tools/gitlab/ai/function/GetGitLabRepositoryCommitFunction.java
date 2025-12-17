@@ -17,7 +17,7 @@ public class GetGitLabRepositoryCommitFunction extends TFunction<TGitLabCommit> 
 			try {
 				LOGGER.info("Finding for a repository commit for projectId {} and Commit sha {}", 
 						v.getProjectId(), v.getCommitSha());
-		        return GitLabGatewayUtil.gateway().getSingleRepositoryCommit(v.getProjectId(), v.getCommitSha());
+		        return GitLabGatewayFactory.getGateway().getSingleRepositoryCommit(v.getProjectId(), v.getCommitSha());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 				return "Function error: " + e.getMessage();

@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.tedros.it.tools.gitlab.gateway.GitLabGateway;
 import org.tedros.util.TLoggerUtil;
 
-public final class GitLabGatewayUtil {
+public final class GitLabGatewayFactory {
 	
-	private static final Logger LOGGER = TLoggerUtil.getLogger(GitLabGatewayUtil.class); 
+	private static final Logger LOGGER = TLoggerUtil.getLogger(GitLabGatewayFactory.class); 
 	
 	private static GitLabGateway gateway;
 	
-	private GitLabGatewayUtil() {
+	private GitLabGatewayFactory() {
 		
 	}
 	
@@ -25,7 +25,7 @@ public final class GitLabGatewayUtil {
 		}
 	}
 	
-	public static GitLabGateway gateway() {
+	public static GitLabGateway getGateway() {
 		if(gateway==null)
 			createGateway();
 		return gateway;

@@ -17,7 +17,7 @@ public class GetGitLabRepositoryCommitDiffFunction extends TFunction<TGitLabComm
 			try {
 				LOGGER.info("Finding for a repository commit diff for projectId {} and Commit sha {}", 
 						v.getProjectId(), v.getCommitSha());
-		        return GitLabGatewayUtil.gateway().getRepositoryCommitDiff(v.getProjectId(), v.getCommitSha());
+		        return GitLabGatewayFactory.getGateway().getRepositoryCommitDiff(v.getProjectId(), v.getCommitSha());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 				return "Function error: " + e.getMessage();

@@ -16,7 +16,7 @@ public class ListAllGitLabProjectFunction extends TFunction<Empty>{
 		super(NAME, DESCRIPTION, Empty.class, v->{			
 			try {
 				LOGGER.info("Listing all GitLab projects");
-		        return GitLabGatewayUtil.gateway().getAllProjects();
+		        return GitLabGatewayFactory.getGateway().getAllProjects();
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 				return "Function error: " + e.getMessage();

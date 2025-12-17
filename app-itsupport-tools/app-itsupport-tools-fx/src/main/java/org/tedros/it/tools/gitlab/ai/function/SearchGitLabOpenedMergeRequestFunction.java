@@ -17,7 +17,7 @@ public class SearchGitLabOpenedMergeRequestFunction extends TFunction<TGitLabPro
 		super(NAME, DESCRIPTION, TGitLabProjectId.class, v->{
 			try {
 				LOGGER.info("Searching GitLab merge request for project id: {}", v.getProjectId());
-		        return GitLabGatewayUtil.gateway().getOpenedMergeRequests(v.getProjectId());
+		        return GitLabGatewayFactory.getGateway().getOpenedMergeRequests(v.getProjectId());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 				return "Function error: " + e.getMessage();

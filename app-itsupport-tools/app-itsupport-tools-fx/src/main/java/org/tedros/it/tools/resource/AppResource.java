@@ -32,12 +32,6 @@ public class AppResource {
 			SUB_REPO1_JASPER + JASPER_EXT, SUB_REPO1_JASPER + JRXML_EXT,
 			SUB_REPO2_JASPER + JASPER_EXT, SUB_REPO2_JASPER + JRXML_EXT
 			};
-	/**
-	 * 
-	 */
-	public AppResource() {
-	}
-
 	
 	public static InputStream getJobEvidenceJasperInputStream() throws FileNotFoundException {
 		File f = new File(APP_MODULE_PATH+JOB_EVIDENCE_JASPER+JASPER_EXT);
@@ -47,7 +41,6 @@ public class AppResource {
 		
 		return null;
 	}
-	
 	
 	public static void createResource() {
 		for(String ref : FILES) {
@@ -61,6 +54,4 @@ public class AppResource {
 			}
 		}
 	}
-	
-
 }

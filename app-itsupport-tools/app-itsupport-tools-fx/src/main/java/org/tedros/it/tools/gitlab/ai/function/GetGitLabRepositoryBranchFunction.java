@@ -18,7 +18,7 @@ public class GetGitLabRepositoryBranchFunction extends TFunction<TGitLabBranch> 
 			try {
 				LOGGER.info("Finding for a repository branch for projectId {} and branch name {}", 
 						v.getProjectId(), v.getBranchName());
-		        return GitLabGatewayUtil.gateway().getSingleRepositoryBranches(v.getProjectId(), v.getBranchName());
+		        return GitLabGatewayFactory.getGateway().getSingleRepositoryBranches(v.getProjectId(), v.getBranchName());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 				return "Function error: " + e.getMessage();

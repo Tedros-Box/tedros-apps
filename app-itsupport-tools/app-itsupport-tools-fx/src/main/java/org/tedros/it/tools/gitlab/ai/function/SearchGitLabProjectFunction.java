@@ -17,7 +17,7 @@ public class SearchGitLabProjectFunction extends TFunction<TGitLabProjectName> {
 		super(NAME, DESCRIPTION, TGitLabProjectName.class, v->{			
 			try {
 				LOGGER.info("Searching GitLab projects by name: {}",  v.getName());
-		        return GitLabGatewayUtil.gateway().searchProjectsByName(v.getName());
+		        return GitLabGatewayFactory.getGateway().searchProjectsByName(v.getName());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 				return "Function error: " + e.getMessage();

@@ -17,7 +17,7 @@ public class SearchGitLabRepositoryCommitsFunction extends TFunction<TGitLabProj
 		super(NAME, DESCRIPTION, TGitLabProjectId.class, v->{			
 			try {
 				LOGGER.info("Searches for repository commits for projectId {}", v.getProjectId());
-		        return GitLabGatewayUtil.gateway().getRepositoryCommits(v.getProjectId());
+		        return GitLabGatewayFactory.getGateway().getRepositoryCommits(v.getProjectId());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 				return "Function error: " + e.getMessage();
