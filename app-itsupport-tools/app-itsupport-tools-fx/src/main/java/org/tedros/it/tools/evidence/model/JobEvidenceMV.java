@@ -55,16 +55,17 @@ import javafx.beans.property.SimpleStringProperty;
 
 @TSetting(JobEvidenceSettings.class)
 @TForm(header = "", showBreadcrumBar=false, scroll=false)
-@TEjbService(serviceName = IJobEvidenceController.JNDI_NAME, model=JobEvidence.class)
+@TEjbService(serviceName = IJobEvidenceController.JNDI_NAME, model=JobEvidence.class, filterByLoggedUser=true)
 @TListViewPresenter(
 		page=@TPage(serviceName = IJobEvidenceController.JNDI_NAME,
-		query = @TQuery(entity=JobEvidence.class, condition= {
+			filterByLoggedUser=true,
+			query = @TQuery(entity=JobEvidence.class, condition= {
 				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME),
 				@TCondition(field = "issueNumber", operator=TCompareOp.EQUAL, label=ItToolsKey.ISSUE_NUMBER)
 				},
-			orderBy= {@TOrder(label = ItToolsKey.ISSUE_NUMBER, field = "issueNumber"),
-					@TOrder(label = TUsualKey.NAME, field = "name")}
-				),showSearch=true, showOrderBy=true),
+				orderBy= {@TOrder(label = ItToolsKey.ISSUE_NUMBER, field = "issueNumber"),
+						@TOrder(label = TUsualKey.NAME, field = "name")}
+					),showSearch=true, showOrderBy=true),
 		presenter=@TPresenter(
 			decorator = @TDecorator(viewTitle=ItToolsKey.VIEW_JOB_EVIDENCE, buildModesRadioButton=false),
 			behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
