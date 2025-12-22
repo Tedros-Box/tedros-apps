@@ -1,0 +1,71 @@
+You are an expert software architect specializing in Java web applications, particularly those built with Maven WAR packaging. Your task is to refactor the existing project "tedros-io", which is the institutional website for Tedros (a desktop client-server system built on Java 17, JavaFX for frontend, and OpenEJB with Apache TomEE Plume for backend). The website is currently under construction (as per the domain tedros.io) and serves as a promotional tool to showcase the Tedros Box system, its framework, architecture, components, and value proposition to attract potential clients—such as software factories, enterprises needing back-office solutions (e.g., CRM, ERP), government institutions, or NGOs—and encourage them to sign contracts for custom development or partnerships. All content on the website must be in Portuguese to target the primary audience.
+
+Use the following detailed overview of the Tedros project as the core content and inspiration for the refactored website. Structure the site to highlight this information in an engaging, professional manner, emphasizing benefits like cost reduction, rapid development, and especially the native AI integration, including the powerful chatbot for intelligent operations and data analysis. Ensure the refactored site is modern, responsive, SEO-optimized, and includes clear calls-to-action (CTAs) for contacting the team, requesting demos, or exploring partnerships.
+
+### Key Content from Tedros Overview (Incorporate and Organize This into Website Sections, All in Portuguese):
+
+#### Introdução
+- Tedros Box é uma solução desktop cliente-servidor em Java 17, com frontend em JavaFX e backend em OpenEJB/Apache TomEE.
+- Framework Tedros reduz custos de desenvolvimento e melhora a experiência do usuário ao abstrair processos complexos (ex.: design de layout, permissões, integrações, mapeamento de entidades com ORM).
+- Ideal para soluções personalizadas em setores privados ou governamentais, similar a TOTVS ou SAP, com integração nativa a modelos de IA, permitindo que assistentes de IA acessem dados e funções via chatbot para operações mais inteligentes e eficientes.
+- Permite foco no core business; UI customizável, gerenciamento de usuários e permissões autônomo.
+- Desenvolvido por Davis Gordon Dun (arquiteto de software Java com mais de 12 anos de experiência).
+
+#### Arquitetura do Sistema
+- Sistema desktop cliente-servidor que detecta automaticamente apps instalados e gerencia permissões de usuário (apps, módulos, telas, ações).
+- Contextos isolados de apps para tolerância a falhas.
+- Camadas backend: Persistência (CRUD, paginação, consultas dinâmicas), Negócios (processos centrais), Serviços (transacionais, chamadas inter-apps), Controle (chamadas frontend com validação de permissões).
+- Comunicação seamless entre apps no frontend e backend.
+
+#### Componentes do Framework
+- Importação de dados via Excel/CSV com guias para usuários.
+- Filtros, relatórios (com logotipos da empresa).
+- Agendamento/envio de e-mails.
+- Tarefas CRON.
+- Gerenciamento centralizado de arquivos/imagens.
+- Construção dinâmica de formulários/telas/tabelas/filtros com interceptação em runtime (pré/pós-construção em níveis de app/módulo/tela/campo).
+- Internacionalização (inglês/português nativos; fácil adicionar mais).
+- Customização visual (cores, opacidade, fundos, temas).
+- Criação de gráficos.
+- Desenvolvimento de módulos.
+- Gerenciamento de processos em background.
+- Integração entre apps (ex.: rastrear origem de registros, exibir tela de origem).
+- Modais e mensagens para usuários.
+- Validação de permissões.
+- Integração com chatbot de IA para acessar recursos do sistema (ênfase: o chatbot usa IA para tarefas operacionais, ajuda no sistema, análises de dados como e-mails de marketing baseados em cruzamento de clientes/estoque, verificações de consistência em demandas, revisões de código, e mais; destaque a integração nativa com modelos de IA para eficiência inteligente).
+- Exibição/manipulação de mapas geográficos.
+- Navegação entre apps/módulos/telas.
+- E mais para flexibilidade.
+
+#### Aplicativos Base
+1. Ferramentas de Temas: Escolha de temas, alteração de cores em painéis/textos/botões/formulários, definição de imagem de fundo.
+2. Preferências: Propriedades do sistema, tipos MIME para arquivos.
+3. Usuários: Políticas de autorização, perfis, gerenciamento de usuários.
+4. Notificações: Gerenciamento de e-mails (agendados/enviados/fila).
+5. Chatbot Tedros (Assistente com IA): Ênfase em uso de IA para tarefas operacionais, ajuda no sistema, execução de operações, análises de dados (ex.: criação/envio de e-mails de marketing via cruzamento de clientes/estoque; análise de consistência em demandas no Redmine/Jira; revisões de código em pull requests).
+6. Produtos e Inventário: Catálogo, relatórios, configuração de estoque, entradas/saídas, tipos.
+7. Suporte: Documentos/tipos/estados, locais (países/cidades/áreas), pessoas físicas/jurídicas/tipos/situações, clientes/categorias/situações.
+
+#### Situação Atual da Empresa
+- Pertence à Dux XCode Engenharia, mantida pelo cofundador Davis Gordon Dun desde 2013.
+- Semifinalista regional no "Desafio Brasil" em 2013.
+- Domínio: tedros.io (site em construção).
+- GitHub: https://github.com/Tedros-Box/tedros-apps/
+- LinkedIn Empresa: https://www.linkedin.com/company/tedros
+- LinkedIn Cofundador: https://www.linkedin.com/in/davis-gordon-dun/
+- MVP buscando parceiros; casos de uso comprovados.
+
+#### Casos de Uso
+1. **Somos Social Movement** (http://www.somossocial.org.br/): ONG para populações vulneráveis de rua.
+   - Problemas: Ausência de sistema para ações/voluntários/patrocinadores; falta de site para divulgação/doações.
+   - Solução Tedros: Back-office para conteúdo de site, ações, voluntários, estoque, e-mail marketing, relatórios; formulários de contato/doações.
+
+### Refactoring Guidelines:
+- **Project Structure**: Maintain Maven WAR packaging. Refactor for clean, modular code. Use existing technologies only: Frontend with React (v18.2.0), Vite, framer-motion, lucide-react; Backend with Jakarta EE API 9.1.0, Java 17. Ensure dependencies are up-to-date within these constraints (no new frameworks or major changes).
+- **Frontend**: Use the existing responsive setup with React/Vite. Make it visually appealing with Tedros-themed colors/images (e.g., customizable themes from the overview). Include sections: Home (hero com introdução e CTA), Sobre (arquitetura/componentes), Recursos (apps base, com ênfase no chatbot e integração IA), Casos de Uso, Contato/Formulário de Parceria. All text in Portuguese.
+- **Backend**: Add simple API endpoints if needed for dynamic content (e.g., contact form submission using Jakarta EE). Integrate with GitHub/LinkedIn links.
+- **SEO and Marketing Focus**: Optimize for search terms in Portuguese like "ERP desktop Java", "software back-office integrado com IA", "desenvolvimento CRM personalizado". Add CTAs everywhere (e.g., "Solicite uma Demo", "Seja Parceiro", "Entre em Contato com Davis Gordon Dun"). Emphasize AI chatbot as a key differentiator for intelligent, efficient operations.
+- **Enhancements**: Add animations (using framer-motion), testimonials from use cases, demo screenshots/videos of Tedros Box (highlighting AI features), blog section for updates. Ensure accessibility (WCAG compliant). Make it multilingual if possible, but prioritize Portuguese.
+- **Security/Performance**: Refactor for secure practices (e.g., input validation). Optimize load times; use CDNs for assets if supported in current setup.
+- **Testing**: Add unit/integration tests. Ensure cross-browser compatibility.
+- **Output**: Generate refactored code files, updated pom.xml and package.json if minor changes needed, and a brief changelog explaining changes. Focus on making the site persuasive to close contracts by showcasing ROI (e.g., reduced dev costs, faster time-to-market, AI-driven efficiency via native integration and chatbot).

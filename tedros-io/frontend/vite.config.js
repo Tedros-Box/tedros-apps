@@ -5,10 +5,10 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/tedros-io/',
+  base: './',
   build: {
     outDir: '../src/main/webapp',
-    emptyOutDir: true,
+    emptyOutDir: false,
   },
   resolve: {
     alias: {
