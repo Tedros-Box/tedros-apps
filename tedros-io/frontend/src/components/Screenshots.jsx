@@ -3,11 +3,17 @@ import Carousel from './ui/Carousel';
 
 const screenshots = [
     './images/Screenshots/153532.png',
+    './images/Screenshots/160547.png',     
+    './images/Screenshots/161004.png',
+    './images/Screenshots/153856.png',
     './images/Screenshots/153641.png',
-    './images/Screenshots/154929.png',
-    './images/Screenshots/155550.png',
-    './images/Screenshots/160659.png',
-    './images/Screenshots/161004.png'
+    './images/Screenshots/160036.png',
+    './images/Screenshots/160503.png',   
+    './images/Screenshots/160913.png',    
+    './images/Screenshots/160623.png',
+    './images/Screenshots/160634.png',
+    './images/Screenshots/160645.png',
+    './images/Screenshots/160710.png'
 ];
 
 const Screenshots = () => {

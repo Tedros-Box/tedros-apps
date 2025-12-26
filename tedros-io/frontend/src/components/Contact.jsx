@@ -8,10 +8,22 @@ const Contact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus('sending');
-        // Simulation calling the future Backend API
+        // Chamada correta ao endpoint backend (ContactResource) enviando JSON via POST
         try {
-            // In a real scenario: await fetch('/api/contact', { ... })
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            const res = await fetch('api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Opcional: ler a resposta JSON do backend
+            // const data = await res.json();
             setStatus('success');
             setFormData({ name: '', email: '', message: '' });
         } catch (error) {

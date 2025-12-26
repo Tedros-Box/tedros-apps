@@ -8,6 +8,12 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.logging.Logger;
 
+import javax.naming.NamingException;
+
+import org.tedros.core.controller.TNotifyController;
+import org.tedros.core.support.TNotifySupport;
+import org.tedros.server.service.TServiceLocator;
+
 @Path("/contact")
 public class ContactResource {
 
@@ -20,19 +26,18 @@ public class ContactResource {
         // In a real application, you would send an email or save to DB here.
         // For now, we log it.
         LOGGER.info("New contact message received: " + message);
+        
+        try(TServiceLocator locator = TServiceLocator.getInstance()){
+        	
+        	TNotifySupport notify = locator.lookup(TNotifySupport.JNDI_NAME);
+        	notify.send("davis.dun@gmail.com", "Tedros.io Contact Message", message.toString());
+        	
+        } catch (Exception e) {
+			LOGGER.severe("Failed to send notification: " + e.getMessage());
+			return Response.ok("{\"status\":\"error\", \"message\":\"Houve um erro inesperado, tente novamente mais tarde!\"}").build();
+		}
+    
 
-        return Response.ok("{\"status\":\"success\", \"message\":\"Message received\"}").build();
-    }
-
-    // Inner class for DTO
-    public static class ContactMessage {
-        public String name;
-        public String email;
-        public String message;
-
-        @Override
-        public String toString() {
-            return "Name: " + name + ", Email: " + email + ", Message: " + message;
-        }
+        return Response.ok("{\"status\":\"success\", \"message\":\"Mensagem enviada\"}").build();
     }
 }
