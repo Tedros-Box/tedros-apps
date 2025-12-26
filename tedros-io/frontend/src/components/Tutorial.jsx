@@ -124,40 +124,46 @@ const Tutorial = () => {
 };
 
 const CodeBlock = ({ code }) => {
-    // Simple syntax highlighting regexes
     const highlight = (code) => {
         if (!code) return null;
 
-        let html = code
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+        // Escape function
+        const escape = (str) => str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-        // Helper to replace but keep content using a placeholder attribute to avoid recursion
-        const wrap = (pattern, className) => {
-            // We use '___CLS___' as a temporary placeholder for 'class' attribute
-            html = html.replace(pattern, (match) => `<span ___CLS___="${className}">${match}</span>`);
-        }
+        // Tokenize by splitting: Strings OR Comments
+        // Capturing groups in split will include the separator in the result array
+        const parts = code.split(/(".*?"|\/\/.*$)/gm);
 
-        // Comments (Gray) - First to avoid matching keywords inside comments
-        wrap(/(\/\/.*$)/gm, 'text-slate-500');
+        // Placeholder for class attribute to prevent collision with 'class' keyword during regex replacement
+        const placeholder = '___CLS___';
 
-        // Strings (Green)
-        wrap(/("[^"]*")/g, 'text-emerald-400');
+        const processed = parts.map((part) => {
+            // If it's a string, color it green
+            if (part.startsWith('"')) {
+                return `<span class="text-emerald-400">${escape(part)}</span>`;
+            }
+            // If it's a comment, color it gray
+            if (part.startsWith('//')) {
+                return `<span class="text-slate-500">${escape(part)}</span>`;
+            }
 
-        // Annotations (Yellow) - Handle strict word boundary or whitespace for safety
-        wrap(/(@\w+)/g, 'text-yellow-400');
+            // Otherwise, it's code. Apply keywords/types highlighting.
+            let chunk = escape(part);
 
-        // Types (Cyan)
-        wrap(/\b([A-Z]\w+)\b/g, 'text-cyan-400');
+            // Annotations (Yellow)
+            chunk = chunk.replace(/(@\w+)/g, `<span ${placeholder}="text-yellow-400">$1</span>`);
 
-        // Keywords (Purple/Blue)
-        wrap(/\b(public|class|private|protected|void|return|new|extends|implements|interface|static|final|package|import)\b/g, 'text-violet-400 font-semibold');
+            // Keywords (Violet)
+            chunk = chunk.replace(/\b(public|class|private|protected|void|return|new|extends|implements|interface|static|final|package|import)\b/g, `<span ${placeholder}="text-violet-400 font-semibold">$1</span>`);
 
-        // Finally replace placeholder with actual class attribute
-        html = html.replace(/___CLS___/g, 'class');
+            // Types (Cyan)
+            chunk = chunk.replace(/\b([A-Z]\w+)\b/g, `<span ${placeholder}="text-cyan-400">$1</span>`);
 
-        return html;
+            return chunk;
+        }).join('');
+
+        // Final swap of placeholder to actual class attribute
+        return processed.replace(/___CLS___/g, 'class');
     };
 
     return (
