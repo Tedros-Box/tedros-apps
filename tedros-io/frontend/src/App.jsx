@@ -4,6 +4,7 @@ import About from './components/About';
 import Features from './components/Features';
 import Screenshots from './components/Screenshots';
 import UseCases from './components/UseCases';
+import Tutorial from './components/Tutorial';
 import Contact from './components/Contact';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
             <Features />
             <Screenshots />
             <UseCases />
+            <Tutorial />
             <Contact />
         </Layout>
     );
