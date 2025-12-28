@@ -1,27 +1,30 @@
 import { motion } from 'framer-motion';
+import { useTranslation, Trans } from 'react-i18next';
 import { TrendingUp, Brain, ShieldCheck, Zap } from 'lucide-react';
 
 const StrategicAdvantages = () => {
+    const { t } = useTranslation();
+
     const advantages = [
         {
             icon: <TrendingUp className="w-8 h-8 text-blue-500" />,
-            title: "Lucratividade Maximizada",
-            description: "Nosso framework abstrai camadas complexas (Segurança, UI, BD), permitindo que devs Júnior/Pleno entreguem resultados de Sênior. Reduza sua folha de pagamento, aumente a margem dos contratos."
+            title: t('advantages.list.profit.title'),
+            description: t('advantages.list.profit.desc')
         },
         {
             icon: <Brain className="w-8 h-8 text-violet-500" />,
-            title: "A Vantagem da IA",
-            description: "Entregue sistemas que nascem inteligentes. Integração nativa com IA para auditoria automatizada, revisão de código e automação de processos de negócios."
+            title: t('advantages.list.ai.title'),
+            description: t('advantages.list.ai.desc')
         },
         {
             icon: <ShieldCheck className="w-8 h-8 text-emerald-500" />,
-            title: "Estabilidade Corporativa",
-            description: "Vá além das limitações do navegador. Ofereça multi-janelas real, performance nativa de hardware e segurança máxima para dados sensíveis (Gov/LGPD)."
+            title: t('advantages.list.stability.title'),
+            description: t('advantages.list.stability.desc')
         },
         {
             icon: <Zap className="w-8 h-8 text-amber-500" />,
-            title: "Time-to-Market Acelerado",
-            description: "Vá do zero ao MVP funcional de ERP/CRM em semanas usando nossa biblioteca de componentes pré-construída e testada em batalha."
+            title: t('advantages.list.time.title'),
+            description: t('advantages.list.time.desc')
         }
     ];
 
@@ -29,9 +32,13 @@ const StrategicAdvantages = () => {
         <section id="advantages" className="section-padding bg-[#0f172a]">
             <div className="container">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4">Vantagens Estratégicas para <span className="text-gradient">Parceiros de TI</span></h2>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                        <Trans i18nKey="advantages.title">
+                            Vantagens Estratégicas para <span className="text-gradient">Parceiros de TI</span>
+                        </Trans>
+                    </h2>
                     <p className="text-slate-400 max-w-2xl mx-auto">
-                        Posicione sua empresa como líder na transformação digital com uma plataforma construída para lucro e performance.
+                        {t('advantages.subtitle')}
                     </p>
                 </div>
 

@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Menu, X } from 'lucide-react';
 import Button from './ui/Button';
 
+import LanguageSwitcher from './LanguageSwitcher';
+
 const Navbar = () => {
+    const { t } = useTranslation();
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -16,10 +20,10 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: 'Sobre', href: '#sobre' },
-        { name: 'Recursos', href: '#recursos' },
-        { name: 'Casos de Uso', href: '#casos-de-uso' },
-        { name: 'Contato', href: '#contato' },
+        { name: t('navbar.links.about'), href: '#sobre' },
+        { name: t('navbar.links.features'), href: '#recursos' },
+        { name: t('navbar.links.usecases'), href: '#casos-de-uso' },
+        { name: t('navbar.links.contact'), href: '#contato' },
     ];
 
     return (
@@ -44,8 +48,9 @@ const Navbar = () => {
                             {link.name}
                         </a>
                     ))}
+                    <LanguageSwitcher />
                     <Button variant="primary" onClick={() => document.getElementById('contato').scrollIntoView({ behavior: 'smooth' })}>
-                        Solicite uma Demo
+                        {t('navbar.cta')}
                     </Button>
                 </div>
 
@@ -79,8 +84,11 @@ const Navbar = () => {
                                 setMobileMenuOpen(false);
                                 document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
                             }}>
-                                Solicite uma Demo
+                                {t('navbar.cta')}
                             </Button>
+                            <div className="flex justify-center py-2">
+                                <LanguageSwitcher />
+                            </div>
                         </div>
                     </motion.div>
                 )}

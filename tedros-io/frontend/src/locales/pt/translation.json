@@ -1,0 +1,190 @@
+{
+    "features": {
+        "title": "Ecossistema",
+        "titleHighlight": "Integrado",
+        "description": "O Tedros Box não é apenas um sistema, é um framework completo de aplicativos interconectados. O destaque é nossa <strong>Integração Nativa com IA</strong>, permitindo que assistentes analisem dados cruzados (como estoque e clientes) para gerar insights valiosos.",
+        "list": {
+            "marketing": "Geração e envio de e-mails de marketing automatizados.",
+            "consistency": "Análise de consistência em demandas (Jira/Redmine).",
+            "review": "Revisão de código e operações assistidas."
+        },
+        "apps": {
+            "chatbot": {
+                "name": "Chatbot IA",
+                "desc": "Assistente inteligente para operações, análise de dados e automação de marketing."
+            },
+            "notifications": {
+                "name": "Notificações",
+                "desc": "Gerenciamento completo de emails, filas de envio e agendamentos."
+            },
+            "users": {
+                "name": "Usuários",
+                "desc": "Controle total de perfis, hierarquias e políticas de acesso."
+            },
+            "reports": {
+                "name": "Relatórios",
+                "desc": "Geração dinâmica de relatórios e gráficos com a identidade da empresa."
+            },
+            "inventory": {
+                "name": "Inventário",
+                "desc": "Gestão de produtos, estoque e movimentações em tempo real."
+            },
+            "settings": {
+                "name": "Configurações",
+                "desc": "Ferramentas de temas, internacionalização e preferências do sistema."
+            }
+        }
+    },
+    "common": {
+        "language": "Idioma"
+    },
+    "navbar": {
+        "links": {
+            "about": "Sobre",
+            "features": "Recursos",
+            "usecases": "Casos de Uso",
+            "contact": "Contato"
+        },
+        "cta": "Solicite uma Demo"
+    },
+    "hero": {
+        "title": "Escale seu Outsourcing de TI com <1>Sistemas Robustos</1> e <3>IA Nativa</3>",
+        "subtitle": "Reduza custos de desenvolvimento em até 60% e entregue aplicações Desktop de nível corporativo—nível SAP/TOTVS—com equipes enxutas e time-to-market acelerado.",
+        "cta": {
+            "primary": "Agende uma Demo para Parceiros",
+            "secondary": "Conheça o Ecossistema"
+        },
+        "stats": {
+            "experience": "Anos de Experiência",
+            "tech": "Java & Open Source"
+        },
+        "cards": {
+            "ai": {
+                "title": "IA Integrada",
+                "desc": "Chatbot para operações e análise de dados."
+            },
+            "lowcode": {
+                "title": "Low Code",
+                "desc": "Geração dinâmica de telas e formulários."
+            },
+            "architecture": {
+                "title": "Cliente-Servidor Robusto",
+                "desc": "Arquitetura JavaEE com OpenEJB e tolerância a falhas."
+            }
+        }
+    },
+    "advantages": {
+        "title": "Vantagens Estratégicas para <1>Parceiros de TI</1>",
+        "subtitle": "Posicione sua empresa como líder na transformação digital com uma plataforma construída para lucro e performance.",
+        "list": {
+            "profit": {
+                "title": "Lucratividade Maximizada",
+                "desc": "Nosso framework abstrai camadas complexas (Segurança, UI, BD), permitindo que devs Júnior/Pleno entreguem resultados de Sênior. Reduza sua folha de pagamento, aumente a margem dos contratos."
+            },
+            "ai": {
+                "title": "A Vantagem da IA",
+                "desc": "Entregue sistemas que nascem inteligentes. Integração nativa com IA para auditoria automatizada, revisão de código e automação de processos de negócios."
+            },
+            "stability": {
+                "title": "Estabilidade Corporativa",
+                "desc": "Vá além das limitações do navegador. Ofereça multi-janelas real, performance nativa de hardware e segurança máxima para dados sensíveis (Gov/LGPD)."
+            },
+            "time": {
+                "title": "Time-to-Market Acelerado",
+                "desc": "Vá do zero ao MVP funcional de ERP/CRM em semanas usando nossa biblioteca de componentes pré-construída e testada em batalha."
+            }
+        }
+    },
+    "desktopVsWeb": {
+        "title": "Por que Líderes Globais <1/> <3>Escolhem Desktop</3>",
+        "desc": "Grandes players como SAP e TOTVS confiam em arquiteturas Rich Client para operações críticas. Enquanto apps web são ótimos para uso leve, cenários B2B complexos exigem o poder bruto e a estabilidade que apenas um ambiente Desktop nativo pode prover.",
+        "businessCase": {
+            "title": "O Caso de Negócio",
+            "text": "Pare de lutar contra limitações do browser. Dê aos seus clientes uma ferramenta de trabalho robusta que respeita sua produtividade e segurança de dados."
+        },
+        "reasons": {
+            "multitask": {
+                "title": "Multi-Tarefa Real",
+                "desc": "Janelas destacáveis e suporte multi-monitor permitem que operadores gerenciem fluxos de trabalho complexos sem fadiga de abas."
+            },
+            "performance": {
+                "title": "Performance Nativa",
+                "desc": "Evite o DOM do navegador. Obtenha acesso direto ao hardware para cálculos pesados e resposta de UI instantânea."
+            },
+            "security": {
+                "title": "Superfície de Ataque Reduzida",
+                "desc": "Ambiente de execução isolado. Imune a ataques comuns basedos em navegador como XSS e roubo de dados por extensões."
+            },
+            "peripherals": {
+                "title": "Integração de Periféricos",
+                "desc": "Comunicação transparente com impressoras, balanças e drivers biométricos sem pontes complexas de navegador."
+            }
+        }
+    },
+    "useCases": {
+        "title": "Real <1>Impact</1>",
+        "somos": {
+            "title": "Transformação Digital no Terceiro Setor",
+            "desc": "Uma implementação completa de back-office para gerenciar voluntários, doações e logística. Integrando o site público com operações internas para uma gestão transparente.",
+            "quote": "\"Tedros Box allowed us to focus on the business logic while the framework handled complexity and performance.\"",
+            "success": "Success Story"
+        }
+    },
+    "screenshots": {
+        "title": "Interface <1>Intuitiva</1>",
+        "subtitle": "Conheça o visual moderno e funcional do ecossistema Tedros Box."
+    },
+    "tutorial": {
+        "title": "Como Criar uma Tela CRUD Simples no <1>Tedros Box</1>",
+        "subtitle": "Veja como é simples adicionar uma nova tela CRUD para a entidade 'Product' no sistema Tedros Box. A seguir, os passos em ordem de precedência, com trechos de código das classes envolvidas.",
+        "structure": "Estrutura do Projeto",
+        "result": {
+            "label": "Resultado Final",
+            "title": "Tela de Produtos Gerada Automaticamente",
+            "hint": "Toque na imagem para ampliar"
+        },
+        "steps": {
+            "entity": {
+                "title": "Entidade (Entity)",
+                "desc": "Defina a entidade JPA que representa o objeto de negócio."
+            },
+            "mv": {
+                "title": "Model View (MV)",
+                "desc": "Crie a classe ModelView que define como a entidade será apresentada."
+            },
+            "module": {
+                "title": "Módulo (Module)",
+                "desc": "Registre a ModelView e configure as permissões no módulo."
+            },
+            "startup": {
+                "title": "Inicialização (AppStart)",
+                "desc": "Integre o módulo na inicialização da aplicação."
+            }
+        }
+    },
+    "contact": {
+        "title": "Vamos <1>Conversar?</1>",
+        "subtitle": "Pronto para transformar a gestão da sua empresa? Entre em contato com Davis Gordon Dun e descubra como o Tedros Box pode ajudar.",
+        "form": {
+            "name": "Nome",
+            "namePlaceholder": "Seu nome",
+            "email": "E-mail",
+            "emailPlaceholder": "seu@email.com",
+            "message": "Mensagem",
+            "messagePlaceholder": "Como podemos ajudar?",
+            "submit": "Enviar Mensagem",
+            "sending": "Enviando...",
+            "success": "Mensagem enviada com sucesso!",
+            "error": "Erro ao enviar. Tente novamente."
+        }
+    },
+    "footer": {
+        "desc": "Solução completa para gestão corporativa com inteligência artificial nativa. Reduza custos e escale seu negócio com eficiência.",
+        "products": "Produto",
+        "company": "Empresa",
+        "partner": "Seja Parceiro",
+        "architecture": "Arquitetura",
+        "rights": "Todos os direitos reservados.",
+        "engineering": "Dux XCode Engenharia"
+    }
+}

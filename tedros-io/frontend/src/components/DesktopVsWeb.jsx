@@ -1,27 +1,30 @@
 import { motion } from 'framer-motion';
+import { useTranslation, Trans } from 'react-i18next';
 import { Monitor, Shield, Layers, Cpu } from 'lucide-react';
 
 const DesktopVsWeb = () => {
+    const { t } = useTranslation();
+
     const reasons = [
         {
             icon: <Layers className="w-6 h-6 text-blue-400" />,
-            title: "Multi-Tarefa Real",
-            desc: "Janelas destacáveis e suporte multi-monitor permitem que operadores gerenciem fluxos de trabalho complexos sem fadiga de abas."
+            title: t('desktopVsWeb.reasons.multitask.title'),
+            desc: t('desktopVsWeb.reasons.multitask.desc')
         },
         {
             icon: <Cpu className="w-6 h-6 text-violet-400" />,
-            title: "Performance Nativa",
-            desc: "Evite o DOM do navegador. Obtenha acesso direto ao hardware para cálculos pesados e resposta de UI instantânea."
+            title: t('desktopVsWeb.reasons.performance.title'),
+            desc: t('desktopVsWeb.reasons.performance.desc')
         },
         {
             icon: <Shield className="w-6 h-6 text-emerald-400" />,
-            title: "Superfície de Ataque Reduzida",
-            desc: "Ambiente de execução isolado. Imune a ataques comuns basedos em navegador como XSS e roubo de dados por extensões."
+            title: t('desktopVsWeb.reasons.security.title'),
+            desc: t('desktopVsWeb.reasons.security.desc')
         },
         {
             icon: <Monitor className="w-6 h-6 text-amber-400" />,
-            title: "Integração de Periféricos",
-            desc: "Comunicação transparente com impressoras, balanças e drivers biométricos sem pontes complexas de navegador."
+            title: t('desktopVsWeb.reasons.peripherals.title'),
+            desc: t('desktopVsWeb.reasons.peripherals.desc')
         }
     ];
 
@@ -40,18 +43,19 @@ const DesktopVsWeb = () => {
                         className="flex-1"
                     >
                         <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                            Por que Líderes Globais <br />
-                            <span className="text-gradient">Escolhem Desktop</span>
+                            <Trans i18nKey="desktopVsWeb.title">
+                                Por que Líderes Globais <br />
+                                <span className="text-gradient">Escolhem Desktop</span>
+                            </Trans>
                         </h2>
                         <p className="text-slate-300 text-lg mb-8 leading-relaxed">
-                            Grandes players como SAP e TOTVS confiam em arquiteturas Rich Client para operações críticas.
-                            Enquanto apps web são ótimos para uso leve, cenários B2B complexos exigem o poder bruto e a estabilidade que apenas um ambiente Desktop nativo pode prover.
+                            {t('desktopVsWeb.desc')}
                         </p>
 
                         <div className="p-6 bg-blue-900/10 border border-blue-500/20 rounded-xl">
-                            <h4 className="font-bold text-blue-400 mb-2">O Caso de Negócio</h4>
+                            <h4 className="font-bold text-blue-400 mb-2">{t('desktopVsWeb.businessCase.title')}</h4>
                             <p className="text-sm text-slate-400">
-                                Pare de lutar contra limitações do browser. Dê aos seus clientes uma ferramenta de trabalho robusta que respeita sua produtividade e segurança de dados.
+                                {t('desktopVsWeb.businessCase.text')}
                             </p>
                         </div>
                     </motion.div>

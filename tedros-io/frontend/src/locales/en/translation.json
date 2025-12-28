@@ -1,0 +1,190 @@
+{
+    "features": {
+        "title": "Integrated",
+        "titleHighlight": "Ecosystem",
+        "description": "Tedros Box is not just a system, it is a complete framework of interconnected applications. The highlight is our <strong>Native AI Integration</strong>, allowing assistants to analyze cross-data (such as inventory and customers) to generate valuable insights.",
+        "list": {
+            "marketing": "Automated generation and sending of marketing emails.",
+            "consistency": "Consistency analysis in demands (Jira/Redmine).",
+            "review": "Code review and assisted operations."
+        },
+        "apps": {
+            "chatbot": {
+                "name": "AI Chatbot",
+                "desc": "Intelligent assistant for operations, data analysis, and marketing automation."
+            },
+            "notifications": {
+                "name": "Notifications",
+                "desc": "Complete management of emails, sending queues, and scheduling."
+            },
+            "users": {
+                "name": "Users",
+                "desc": "Total control of profiles, hierarchies, and access policies."
+            },
+            "reports": {
+                "name": "Reports",
+                "desc": "Dynamic generation of reports and charts with company identity."
+            },
+            "inventory": {
+                "name": "Inventory",
+                "desc": "Management of products, stock, and movements in real-time."
+            },
+            "settings": {
+                "name": "Settings",
+                "desc": "Tools for themes, internationalization, and system preferences."
+            }
+        }
+    },
+    "common": {
+        "language": "Language"
+    },
+    "navbar": {
+        "links": {
+            "about": "About",
+            "features": "Features",
+            "usecases": "Use Cases",
+            "contact": "Contact"
+        },
+        "cta": "Request a Demo"
+    },
+    "hero": {
+        "title": "Scale your IT Outsourcing with <1>Robust Systems</1> and <3>Native AI</3>",
+        "subtitle": "Reduce development costs by up to 60% and deliver enterprise-grade Desktop applications—SAP/TOTVS level—with lean teams and accelerated time-to-market.",
+        "cta": {
+            "primary": "Schedule a Demo for Partners",
+            "secondary": "Explore the Ecosystem"
+        },
+        "stats": {
+            "experience": "Years of Experience",
+            "tech": "Java & Open Source"
+        },
+        "cards": {
+            "ai": {
+                "title": "Integrated AI",
+                "desc": "Chatbot for operations and data analysis."
+            },
+            "lowcode": {
+                "title": "Low Code",
+                "desc": "Dynamic generation of screens and forms."
+            },
+            "architecture": {
+                "title": "Robust Client-Server",
+                "desc": "JavaEE architecture with OpenEJB and fault tolerance."
+            }
+        }
+    },
+    "advantages": {
+        "title": "Strategic Advantages for <1>IT Partners</1>",
+        "subtitle": "Position your company as a leader in digital transformation with a platform built for profit and performance.",
+        "list": {
+            "profit": {
+                "title": "Maximized Profitability",
+                "desc": "Our framework abstracts complex layers (Security, UI, DB), allowing Junior/Mid-level devs to deliver Senior-level results. Reduce payroll, increase contract margins."
+            },
+            "ai": {
+                "title": "The AI Advantage",
+                "desc": "Deliver systems born intelligent. Native AI integration for automated auditing, code review, and business process automation."
+            },
+            "stability": {
+                "title": "Corporate Stability",
+                "desc": "Go beyond browser limitations. Offer real multi-windowing, native hardware performance, and maximum security for sensitive data (Gov/GDPR)."
+            },
+            "time": {
+                "title": "Accelerated Time-to-Market",
+                "desc": "Go from zero to functional ERP/CRM MVP in weeks using our battle-tested, pre-built component library."
+            }
+        }
+    },
+    "desktopVsWeb": {
+        "title": "Why Global Leaders <1/> <3>Choose Desktop</3>",
+        "desc": "Major players like SAP and TOTVS rely on Rich Client architectures for critical operations. While web apps are great for light use, complex B2B scenarios demand the raw power and stability only a native Desktop environment can provide.",
+        "businessCase": {
+            "title": "The Business Case",
+            "text": "Stop fighting browser limitations. Give your clients a robust work tool that respects their productivity and data security."
+        },
+        "reasons": {
+            "multitask": {
+                "title": "Real Multi-Tasking",
+                "desc": "Detachable windows and multi-monitor support allow operators to manage complex workflows without tab fatigue."
+            },
+            "performance": {
+                "title": "Native Performance",
+                "desc": "Avoid the browser DOM. Get direct hardware access for heavy calculations and instant UI response."
+            },
+            "security": {
+                "title": "Reduced Attack Surface",
+                "desc": "Isolated execution environment. Immune to common browser-based attacks like XSS and data theft by extensions."
+            },
+            "peripherals": {
+                "title": "Peripheral Integration",
+                "desc": "Transparent communication with printers, scales, and biometric drivers without complex browser bridges."
+            }
+        }
+    },
+    "useCases": {
+        "title": "Real <1>Impact</1>",
+        "somos": {
+            "title": "Digital Transformation in the Third Sector",
+            "desc": "A complete back-office implementation to manage volunteers, donations, and logistics. Integrating the public site with internal operations for transparent management.",
+            "quote": "\"Tedros Box allowed us to focus on the business logic while the framework handled complexity and performance.\"",
+            "success": "Success Story"
+        }
+    },
+    "screenshots": {
+        "title": "Intuitive <1>Interface</1>",
+        "subtitle": "Discover the modern and functional look of the Tedros Box ecosystem."
+    },
+    "tutorial": {
+        "title": "How to Create a Simple CRUD Screen in <1>Tedros Box</1>",
+        "subtitle": "See how simple it is to add a new CRUD screen for the 'Product' entity in the Tedros Box system. Below are the steps in order of precedence, with code snippets of the involved classes.",
+        "structure": "Project Structure",
+        "result": {
+            "label": "Final Result",
+            "title": "Automatically Generated Product Screen",
+            "hint": "Tap image to zoom"
+        },
+        "steps": {
+            "entity": {
+                "title": "Entity",
+                "desc": "Define the JPA entity representing the business object."
+            },
+            "mv": {
+                "title": "Model View (MV)",
+                "desc": "Create the ModelView class defining how the entity will be presented."
+            },
+            "module": {
+                "title": "Module",
+                "desc": "Register the ModelView and configure module permissions."
+            },
+            "startup": {
+                "title": "Initialization (AppStart)",
+                "desc": "Integrate the module at application startup."
+            }
+        }
+    },
+    "contact": {
+        "title": "Let's <1>Talk?</1>",
+        "subtitle": "Ready to transform your company management? Contact Davis Gordon Dun and discover how Tedros Box can help.",
+        "form": {
+            "name": "Name",
+            "namePlaceholder": "Your name",
+            "email": "E-mail",
+            "emailPlaceholder": "your@email.com",
+            "message": "Message",
+            "messagePlaceholder": "How can we help?",
+            "submit": "Send Message",
+            "sending": "Sending...",
+            "success": "Message sent successfully!",
+            "error": "Error sending. Please try again."
+        }
+    },
+    "footer": {
+        "desc": "Complete solution for corporate management with native artificial intelligence. Reduce costs and scale your business efficiently.",
+        "products": "Product",
+        "company": "Company",
+        "partner": "Become a Partner",
+        "architecture": "Architecture",
+        "rights": "All rights reserved.",
+        "engineering": "Dux XCode Engineering"
+    }
+}

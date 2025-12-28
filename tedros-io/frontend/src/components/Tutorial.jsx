@@ -1,10 +1,12 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation, Trans } from 'react-i18next';
 import { Code, FileCode, Layers, Play, X, ZoomIn } from 'lucide-react';
 import { PRODUCT_CODE, PRODUCT_MV_CODE, PRODUCT_MODULE_CODE, APP_START_CODE } from './code-examples/tutorial-code';
 
 const Tutorial = () => {
+    const { t } = useTranslation();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
@@ -24,11 +26,12 @@ const Tutorial = () => {
                     className="text-center mb-16"
                 >
                     <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                        Como Criar uma Tela CRUD Simples no <span className="text-gradient">Tedros Box</span>
+                        <Trans i18nKey="tutorial.title">
+                            Como Criar uma Tela CRUD Simples no <span className="text-gradient">Tedros Box</span>
+                        </Trans>
                     </h2>
                     <p className="text-lg text-slate-300 max-w-3xl mx-auto">
-                        Veja como é simples adicionar uma nova tela CRUD para a entidade 'Product' no sistema Tedros Box.
-                        A seguir, os passos em ordem de precedência, com trechos de código das classes envolvidas.
+                        {t('tutorial.subtitle')}
                     </p>
                 </motion.div>
 
@@ -41,7 +44,7 @@ const Tutorial = () => {
                     className="glass-card p-6 mb-16 w-full max-w-3xl"
                 >
                     <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                        <span className="text-blue-400">#</span> Estrutura do Projeto
+                        <span className="text-blue-400">#</span> {t('tutorial.structure')}
                     </h3>
                     <div className="bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-300 overflow-x-auto border border-slate-700">
                         <pre>{`/app-stock
@@ -57,8 +60,8 @@ const Tutorial = () => {
                 <div className="w-full max-w-4xl space-y-8 mb-16">
                     <StepItem
                         number="1"
-                        title="Entidade (Entity)"
-                        description="Defina a entidade JPA que representa o objeto de negócio."
+                        title={t('tutorial.steps.entity.title')}
+                        description={t('tutorial.steps.entity.desc')}
                         file="org.tedros.stock.entity.Product"
                         project="app-stock-model"
                         icon={<Code size={20} />}
@@ -67,8 +70,8 @@ const Tutorial = () => {
 
                     <StepItem
                         number="2"
-                        title="Model View (MV)"
-                        description="Crie a classe ModelView que define como a entidade será apresentada."
+                        title={t('tutorial.steps.mv.title')}
+                        description={t('tutorial.steps.mv.desc')}
                         file="org.tedros.stock.module.products.model.ProductMV"
                         project="app-stock-fx"
                         icon={<Layers size={20} />}
@@ -77,8 +80,8 @@ const Tutorial = () => {
 
                     <StepItem
                         number="3"
-                        title="Módulo (Module)"
-                        description="Registre a ModelView e configure as permissões no módulo."
+                        title={t('tutorial.steps.module.title')}
+                        description={t('tutorial.steps.module.desc')}
                         file="org.tedros.stock.module.products.ProductModule"
                         project="app-stock-fx"
                         icon={<FileCode size={20} />}
@@ -87,8 +90,8 @@ const Tutorial = () => {
 
                     <StepItem
                         number="4"
-                        title="Inicialização (AppStart)"
-                        description="Integre o módulo na inicialização da aplicação."
+                        title={t('tutorial.steps.startup.title')}
+                        description={t('tutorial.steps.startup.desc')}
                         file="org.tedros.stock.start.AppStart"
                         project="app-stock-fx"
                         icon={<Play size={20} />}
@@ -129,10 +132,10 @@ const Tutorial = () => {
                         {/* Content Box - Relative on Mobile, Absolute Overlay on Desktop */}
                         <div className="relative md:absolute bottom-0 left-0 w-full bg-slate-900 md:bg-gradient-to-t md:from-slate-900 md:via-slate-900/90 md:to-transparent p-6 md:p-8 md:pt-24 text-center border-t border-slate-800 md:border-t-0">
                             <span className="inline-block px-4 py-1.5 bg-blue-500 text-white text-sm font-bold rounded-full mb-3 shadow-lg shadow-blue-500/20">
-                                Resultado Final
+                                {t('tutorial.result.label')}
                             </span>
-                            <p className="text-white text-xl font-bold">Tela de Produtos Gerada Automaticamente</p>
-                            <p className="text-slate-400 text-sm mt-2 md:hidden">Toque na imagem para ampliar</p>
+                            <p className="text-white text-xl font-bold">{t('tutorial.result.title')}</p>
+                            <p className="text-slate-400 text-sm mt-2 md:hidden">{t('tutorial.result.hint')}</p>
                         </div>
                     </div>
                 </motion.div>

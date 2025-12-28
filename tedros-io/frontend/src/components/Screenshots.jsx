@@ -1,15 +1,16 @@
 import { motion } from 'framer-motion';
 import Carousel from './ui/Carousel';
+import { useTranslation, Trans } from 'react-i18next';
 
 const screenshots = [
     './images/Screenshots/153532.png',
-    './images/Screenshots/160547.png',     
+    './images/Screenshots/160547.png',
     './images/Screenshots/161004.png',
     './images/Screenshots/153856.png',
     './images/Screenshots/153641.png',
     './images/Screenshots/160036.png',
-    './images/Screenshots/160503.png',   
-    './images/Screenshots/160913.png',    
+    './images/Screenshots/160503.png',
+    './images/Screenshots/160913.png',
     './images/Screenshots/160623.png',
     './images/Screenshots/160634.png',
     './images/Screenshots/160645.png',
@@ -17,6 +18,8 @@ const screenshots = [
 ];
 
 const Screenshots = () => {
+    const { t } = useTranslation();
+
     return (
         <section id="screenshots" className="section-padding relative overflow-hidden">
             {/* Background Gradient */}
@@ -31,7 +34,9 @@ const Screenshots = () => {
                         transition={{ duration: 0.5 }}
                         className="text-4xl md:text-5xl font-bold mb-6"
                     >
-                        Interface <span className="text-gradient">Intuitiva</span>
+                        <Trans i18nKey="screenshots.title">
+                            Interface <span className="text-gradient">Intuitiva</span>
+                        </Trans>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -39,7 +44,7 @@ const Screenshots = () => {
                         transition={{ duration: 0.5, delay: 0.1 }}
                         className="text-xl text-slate-400 max-w-2xl mx-auto"
                     >
-                        Conheça o visual moderno e funcional do ecossistema Tedros Box.
+                        {t('screenshots.subtitle')}
                     </motion.p>
                 </div>
 

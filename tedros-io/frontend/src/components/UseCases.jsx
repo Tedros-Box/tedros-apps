@@ -1,11 +1,14 @@
 import Button from './ui/Button';
+import { useTranslation, Trans } from 'react-i18next';
 
 const UseCases = () => {
+    const { t } = useTranslation();
+
     const cases = [
         {
             company: "ONG Somos Social Movement",
-            title: "Transformação Digital no Terceiro Setor",
-            desc: "Uma implementação completa de back-office para gerenciar voluntários, doações e logística. Integrando o site público com operações internas para uma gestão transparente.",
+            title: t('useCases.somos.title'),
+            desc: t('useCases.somos.desc'),
             stats: [
                 { value: "100%", label: "Centralizado" },
                 { value: "Web+Desk", label: "Integração" }
@@ -18,7 +21,11 @@ const UseCases = () => {
     return (
         <section id="casos-de-uso" className="section-padding bg-[#0f172a]">
             <div className="container">
-                <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Real <span className="text-gradient">Impact</span></h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+                    <Trans i18nKey="useCases.title">
+                        Real <span className="text-gradient">Impact</span>
+                    </Trans>
+                </h2>
 
                 <div className="flex flex-col gap-12">
                     {cases.map((useCase, index) => (
@@ -52,9 +59,9 @@ const UseCases = () => {
                                 <div className={`relative min-h-[300px] flex items-center justify-center p-8 ${index % 2 === 0 ? 'bg-gradient-to-br from-blue-900/50 to-slate-900' : 'bg-gradient-to-br from-violet-900/50 to-slate-900'}`}>
                                     <div className="text-center">
                                         <blockquote className="italic text-slate-300 mb-4 max-w-sm mx-auto">
-                                            "Tedros Box allowed us to focus on the business logic while the framework handled complexity and performance."
+                                            {t('useCases.somos.quote')}
                                         </blockquote>
-                                        <div className="text-sm font-bold text-blue-400">Success Story</div>
+                                        <div className="text-sm font-bold text-blue-400">{t('useCases.somos.success')}</div>
                                     </div>
                                 </div>
                             </div>
