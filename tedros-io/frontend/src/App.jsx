@@ -1,6 +1,7 @@
 import Layout from './components/Layout';
 import Hero from './components/Hero';
-import About from './components/About';
+import StrategicAdvantages from './components/StrategicAdvantages';
+import DesktopVsWeb from './components/DesktopVsWeb';
 import Features from './components/Features';
 import Screenshots from './components/Screenshots';
 import UseCases from './components/UseCases';
@@ -11,10 +12,11 @@ function App() {
     return (
         <Layout>
             <Hero />
-            <About />
+            <StrategicAdvantages />
+            <DesktopVsWeb />
+            <UseCases />
             <Features />
             <Screenshots />
-            <UseCases />
             <Tutorial />
             <Contact />
         </Layout>

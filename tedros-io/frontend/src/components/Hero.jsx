@@ -15,28 +15,20 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                        </span>
-                        Tedros Box Framework v1.0
-                    </div>
-
-                    <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-                        Gestão Inteligente com <span className="text-gradient">IA Nativa</span>
+                    <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
+                        Escale seu Outsourcing de TI com <span className="text-gradient">Sistemas Robustos</span> e <span className="text-gradient">IA Nativa</span>
                     </h1>
 
                     <p className="text-lg text-slate-300 mb-8 max-w-xl">
-                        Reduza custos e acelere o desenvolvimento com o Tedros Box. Uma solução completa Java 17 + Chatbot IA para operações autônomas e eficientes.
+                        Reduza custos de desenvolvimento em até 60% e entregue aplicações Desktop de nível corporativo—nível SAP/TOTVS—com equipes enxutas e time-to-market acelerado.
                     </p>
 
                     <div className="flex flex-wrap gap-4">
                         <Button variant="primary" onClick={() => document.getElementById('contato').scrollIntoView({ behavior: 'smooth' })}>
-                            Solicite uma Demo <ArrowRight className="ml-2 w-4 h-4" />
+                            Agende uma Demo para Parceiros <ArrowRight className="ml-2 w-4 h-4" />
                         </Button>
                         <Button variant="outline" onClick={() => document.getElementById('recursos').scrollIntoView({ behavior: 'smooth' })}>
-                            Conheça os Apps
+                            Conheça o Ecossistema
                         </Button>
                     </div>
 
