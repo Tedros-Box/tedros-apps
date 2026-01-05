@@ -16,21 +16,15 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class IFoodAuthRequest {
 
-    @SerializedName("grant_type")
     private String grantType;
-
-    @SerializedName("client_id")
+    
     private String clientId;
-
-    @SerializedName("client_secret")
+    
     private String clientSecret;
 
-    @SerializedName("authorizationCode")
     private String authorizationCode;
 
-    @SerializedName("authorizationCodeVerifier")
     private String authorizationCodeVerifier;
 
-    @SerializedName("refreshToken")
     private String refreshToken;
 }
