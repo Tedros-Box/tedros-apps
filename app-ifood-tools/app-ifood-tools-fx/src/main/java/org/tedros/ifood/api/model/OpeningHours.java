@@ -1,6 +1,5 @@
 package org.tedros.ifood.api.model;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,16 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OpeningHours {
-
-    @SerializedName("dayOfWeek")
+	
+	private String id;
+    
     private String dayOfWeek;
+    
+    private String start;
 
-    @SerializedName("salesChannel")
-    private String salesChannel;
+    private Integer duration;
 
-    @SerializedName("openingTime")
-    private String openingTime;
-
-    @SerializedName("closingTime")
-    private String closingTime;
 }

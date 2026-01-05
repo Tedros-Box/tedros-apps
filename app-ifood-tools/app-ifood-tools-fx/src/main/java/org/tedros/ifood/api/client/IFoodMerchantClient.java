@@ -1,15 +1,17 @@
 package org.tedros.ifood.api.client;
 
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
+import java.util.List;
+
 import org.tedros.ifood.api.model.CheckIn;
 import org.tedros.ifood.api.model.Merchant;
 import org.tedros.ifood.api.model.MerchantInterruption;
 import org.tedros.ifood.api.model.MerchantStatus;
-import org.tedros.ifood.api.model.OpeningHours;
+import org.tedros.ifood.api.model.SaveShiftsOpeningHours;
+import org.tedros.ifood.api.model.ShiftsOpeningHours;
 
-import java.util.List;
+import feign.Headers;
+import feign.Param;
+import feign.RequestLine;
 
 @Headers({ "Content-Type: application/json", "Accept: application/json" })
 public interface IFoodMerchantClient {
@@ -24,7 +26,7 @@ public interface IFoodMerchantClient {
     List<MerchantStatus> getAllStatusDetails(@Param("id") String id);
 
     @RequestLine("GET /merchants/{id}/status/{operation}")
-    MerchantStatus getStatusDetails(@Param("id") String id, @Param("operation") String operation);
+    List<MerchantStatus> getStatusDetails(@Param("id") String id, @Param("operation") String operation);
 
     @RequestLine("GET /merchants/{id}/interruptions")
     List<MerchantInterruption> getInterruption(@Param("id") String id);
@@ -36,10 +38,10 @@ public interface IFoodMerchantClient {
     void deleteInterruption(@Param("id") String id, @Param("interruptionId") String interruptionId);
 
     @RequestLine("GET /merchants/{id}/opening-hours")
-    List<OpeningHours> getOpeningHours(@Param("id") String id);
+    ShiftsOpeningHours getOpeningHours(@Param("id") String id);
 
     @RequestLine("PUT /merchants/{id}/opening-hours")
-    void updateOpeningHours(@Param("id") String id, List<OpeningHours> openingHours);
+    void updateOpeningHours(@Param("id") String id, SaveShiftsOpeningHours openingHours);
 
     @RequestLine("POST /merchants/checkin-qrcode")
     @Headers("Accept: application/pdf")

@@ -8,34 +8,34 @@ import org.tedros.ifood.api.model.IFoodAuthResponse;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class IFoodAuthClientTest {
+class IFoodAuthClientTest {
 
         @Test
-        public void testAuth() {
-                IFoodAuthClient client = IFoodClientBuilder.createClient(
-                                IFoodAuthClient.class,
-                                "https://merchant-api.ifood.com.br",
-                                () -> null // No token needed for auth
-                );
+        void testAuth() {
+            IFoodAuthClient client = IFoodClientBuilder.createClient(
+                            IFoodAuthClient.class,
+                            "https://merchant-api.ifood.com.br",
+                            () -> null // No token needed for auth
+            );
 
-                IFoodAuthRequest request = IFoodAuthRequest.builder()
-                                .grantType(System.getenv().get("grantType"))
-                                .clientId(System.getenv().get("clientId"))
-                                .clientSecret(System.getenv().get("clientSecret"))
-                                .authorizationCode(System.getenv().get("authorizationCode"))
-                                .authorizationCodeVerifier(System.getenv().get("authorizationCodeVerifier"))
-                                .refreshToken("")
-                                .build();
+            IFoodAuthRequest request = IFoodAuthRequest.builder()
+                            .grantType(System.getenv().get("grantType"))
+                            .clientId(System.getenv().get("clientId"))
+                            .clientSecret(System.getenv().get("clientSecret"))
+                            .authorizationCode(System.getenv().get("authorizationCode"))
+                            .authorizationCodeVerifier(System.getenv().get("authorizationCodeVerifier"))
+                            .refreshToken("")
+                            .build();
 
-                IFoodAuthResponse response = client.auth(
-                                request.getGrantType(),
-                                request.getClientId(),
-                                request.getClientSecret(),
-                                request.getAuthorizationCode(),
-                                request.getAuthorizationCodeVerifier(),
-                                request.getRefreshToken());
-                System.out.println(response);
-                assertNotNull(response);
-                assertNotNull(response.getAccessToken());
+            IFoodAuthResponse response = client.auth(
+                            request.getGrantType(),
+                            request.getClientId(),
+                            request.getClientSecret(),
+                            request.getAuthorizationCode(),
+                            request.getAuthorizationCodeVerifier(),
+                            request.getRefreshToken());
+            System.out.println(response);
+            assertNotNull(response);
+            assertNotNull(response.getAccessToken());
         }
 }

@@ -1,7 +1,5 @@
 package org.tedros.ifood.api.model;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,11 +13,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class MerchantInterruption extends IFoodBaseEntity {
+public class SaveShiftsOpeningHours extends ShiftsOpeningHours{
+	
+	private String storeId;
 
-    private String description;
-
-    private Date start;
-
-    private Date end;
 }

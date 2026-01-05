@@ -23,9 +23,9 @@ public class MerchantStatus {
 
     private String state;
 
-    private List<Reason> reasons;
-
     private Reopenable reopenable;
+
+    private List<Reason> reasons;
 
     private List<Validation> validations;
 
@@ -45,7 +45,7 @@ public class MerchantStatus {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Reopenable {
-        private Boolean isReopenable;
+        private Boolean reopenable;
         private String identifier;
         private String type;
     }
@@ -58,7 +58,7 @@ public class MerchantStatus {
         private String id;
         private String code;
         private String state;
-        private String message;
+        private ValidationMessage message;
     }
 
     @Data
@@ -66,6 +66,17 @@ public class MerchantStatus {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class StatusMessage {
+        private String title;
+        private String subtitle;
+        private String description;
+        private Integer priority;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ValidationMessage {
         private String title;
         private String subtitle;
         private String description;

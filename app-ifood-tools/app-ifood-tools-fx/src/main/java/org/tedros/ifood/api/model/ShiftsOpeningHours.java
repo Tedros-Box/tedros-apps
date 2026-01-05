@@ -3,15 +3,16 @@ package org.tedros.ifood.api.model;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckIn {
-    
-    private List<String> merchantIds;
+public class ShiftsOpeningHours {
+	
+	private List<OpeningHours> shifts;
+
 }

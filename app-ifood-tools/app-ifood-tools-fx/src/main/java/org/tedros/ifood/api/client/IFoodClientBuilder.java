@@ -14,17 +14,20 @@ import java.util.function.Supplier;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class IFoodClientBuilder {
 
-    private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-
     public static <T> T createClient(Class<T> clientClass, String url, Supplier<String> tokenSupplier) {
         Gson gson = new GsonBuilder()
-                .setDateFormat(DEFAULT_DATE_FORMAT)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
                 .create();
 
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new GsonEncoder(gson))
-                .decoder(new GsonDecoder(gson))
+                .decoder((response, type) -> {
+                    if (type == byte[].class) {
+                        return feign.Util.toByteArray(response.body().asInputStream());
+                    }
+                    return new GsonDecoder(gson).decode(response, type);
+                })
                 .requestInterceptor(new IFoodTokenInterceptor(tokenSupplier))
                 .target(clientClass, url);
     }
