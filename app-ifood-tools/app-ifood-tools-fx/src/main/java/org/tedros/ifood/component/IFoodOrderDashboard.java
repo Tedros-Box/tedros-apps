@@ -82,7 +82,7 @@ public class IFoodOrderDashboard extends BorderPane {
 
         webView.setContextMenuEnabled(false);
         VBox.setVgrow(webView, Priority.ALWAYS);
-        webEngine.loadContent(OrderViewerTemplate.getHtml());
+        webEngine.load(getClass().getResource("OrderViewer.html").toExternalForm());
 
         detailSidebar.getChildren().add(webView);
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.ifood.module.ifoodcfg.model;
+package org.tedros.ifood.module.order.model;
 
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;

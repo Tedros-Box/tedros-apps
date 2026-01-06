@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --ifood-red: #EA1D2C;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --grey-light: #f8f8f8;
+            --grey-medium: #eeeeee;
+            --border-color: #dddddd;
+            --success-color: #388E3C;
+            --warning-color: #FBC02D;
+            --info-color: #1976D2;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0; padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--ifood-red);
+            background-color: var(--grey-light);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .tab.active {
+            background-color: var(--ifood-red);
+            color: white;
+        }
+        .tab:hover:not(.active) {
+            background-color: var(--grey-medium);
+        }
+        .content {
+            padding: 15px;
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }
+        h2, h3 { margin: 0 0 10px 0; color: var(--ifood-red); font-size: 1.1em; border-bottom: 1px solid var(--grey-medium); padding-bottom: 5px;}
+        .section {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: white;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .field { margin-bottom: 5px; }
+        .label { font-weight: bold; color: #666; font-size: 0.85em; display: block; }
+        .value { font-size: 0.95em; }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .badge-info { background: #e3f2fd; color: #1976d2; }
+        .badge-success { background: #e8f5e9; color: #388e3c; }
+        .badge-warning { background: #fffde7; color: #fbc02d; }
+        
+        /* Items Area */
+        .item-row {
+            border-bottom: 1px solid var(--grey-medium);
+            padding: 10px 0;
+        }
+        .item-row:last-child { border-bottom: none; }
+        .item-main {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+        .item-identity {
+            display: flex;
+            align-items: center;
+        }
+        .item-img {
+            width: 50px; height: 50px; border-radius: 6px;
+            margin-right: 12px; object-fit: cover;
+            background-color: var(--grey-light); border: 1px solid #eee;
+        }
+        .item-name { font-weight: bold; font-size: 1em; }
+        .item-price { font-weight: bold; color: var(--ifood-red); }
+        
+        .nested-box { margin-left: 15px; padding-left: 10px; border-left: 2px solid var(--grey-light); margin-top: 5px; }
+        .option-item { font-size: 0.85em; color: #555; margin-bottom: 3px; }
+        .custom-item { font-size: 0.8em; color: #777; font-style: italic; }
+        
+        /* Financials */
+        .totals-container {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid var(--grey-medium);
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        .summary-row.benefit { color: var(--success-color); font-weight: 500; }
+        .summary-row.total {
+            margin-top: 10px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--ifood-red);
+            border-top: 1px solid var(--grey-medium);
+            padding-top: 10px;
+        }
+        
+        .payment-method {
+            padding: 8px;
+            background: var(--grey-light);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+        
+        pre { 
+            background: #282c34; 
+            color: #abb2bf; 
+            padding: 15px; 
+            border-radius: 8px; 
+            overflow: auto; 
+            font-size: 0.85em;
+            margin: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('summary')">Order Summary</div>
+        <div class="tab" onclick="switchTab('raw')">Raw Data</div>
+    </div>
+    
+    <div id="summary" class="content active">
+        <div id="summary-container">Select an order load details...</div>
+    </div>
+    
+    <div id="raw" class="content">
+        <pre id="json-view"></pre>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function formatCurrency(v) {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v || 0);
+        }
+
+        function formatDate(d) {
+            if (!d) return 'N/A';
+            return new Date(d).toLocaleString('pt-BR');
+        }
+
+        function renderOptions(options) {
+            if (!options || options.length === 0) return '';
+            return `<div class="nested-box">` + 
+                options.map(o => `
+                    <div class="option-item">
+                        <b>${o.quantity}x ${o.name}</b> (${formatCurrency(o.price)})
+                        ${o.customization ? renderCustomizations(o.customization) : ''}
+                    </div>
+                `).join('') + 
+                `</div>`;
+        }
+        
+        function renderCustomizations(custs) {
+            if (!custs || custs.length === 0) return '';
+            return `<div class="nested-box">` + 
+                custs.map(c => `<div class="custom-item">- ${c.quantity}x ${c.name}</div>`).join('') + 
+                `</div>`;
+        }
+
+        function updateDetailView(data) {
+            const container = document.getElementById('summary-container');
+            if (!data) {
+                container.innerHTML = 'No data available.';
+                return;
+            }
+
+            // Update Raw
+            const jsonView = document.getElementById('json-view');
+            jsonView.textContent = JSON.stringify(data, null, 2);
+            hljs.highlightElement(jsonView);
+
+            // Build Visual Summary
+            let html = '';
+
+            // 1. Header & Status
+            html += `
+                <div class="section">
+                    <h3>General Info</h3>
+                    <div class="grid">
+                        <div class="field"><span class="label">Display ID</span><span class="value"><b>${data.displayId}</b></span></div>
+                        <div class="field"><span class="label">Order Type</span><span class="badge badge-info">${data.orderType}</span></div>
+                        <div class="field"><span class="label">Created At</span><span class="value">${formatDate(data.createdAt)}</span></div>
+                        <div class="field"><span class="label">Sales Channel</span><span class="value">${data.salesChannel || 'N/A'}</span></div>
+                        <div class="field"><span class="label">Order Timing</span><span class="value">${data.orderTiming}</span></div>
+                        <div class="field"><span class="label">Category</span><span class="value">${data.category || 'N/A'}</span></div>
+                    </div>
+                    ${data.extraInfo ? `<div class="field" style="margin-top:10px;"><span class="label">Extra Info</span><span class="value">${data.extraInfo}</span></div>` : ''}
+                </div>`;
+
+            // 2. Merchant
+            if (data.merchant) {
+                html += `
+                    <div class="section">
+                        <h3>Merchant</h3>
+                        <div class="field"><span class="label">Name</span><span class="value">${data.merchant.name}</span></div>
+                        <div class="field"><span class="label">ID</span><span class="value" style="font-size:0.8em; color:#888;">${data.merchant.id}</span></div>
+                    </div>`;
+            }
+
+            // 3. Customer
+            if (data.customer) {
+                html += `
+                    <div class="section">
+                        <h3>Customer</h3>
+                        <div class="grid">
+                            <div class="field"><span class="label">Name</span><span class="value">${data.customer.name}</span></div>
+                            <div class="field"><span class="label">Segmentation</span><span class="badge badge-warning">${data.customer.segmentation || 'Standard'}</span></div>
+                            <div class="field"><span class="label">Document</span><span class="value">${data.customer.documentNumber || 'N/A'}</span></div>
+                            <div class="field"><span class="label">Orders count</span><span class="value">${data.customer.ordersCountOnMerchant || 0}</span></div>
+                        </div>
+                        ${data.customer.phone ? `
+                            <div class="field" style="margin-top:8px;">
+                                <span class="label">Phone</span>
+                                <span class="value">${data.customer.phone.number}</span>
+                                ${data.customer.phone.localizer ? `<br><small color="#888">Localizer: ${data.customer.phone.localizer} (Exp: ${formatDate(data.customer.phone.localizerExpiration)})</small>` : ''}
+                            </div>
+                        ` : ''}
+                    </div>`;
+            }
+
+            // 4. Delivery / Logistics
+            if (data.delivery) {
+                const addr = data.delivery.deliveryAddress;
+                html += `
+                    <div class="section">
+                        <h3>Logistics & Delivery</h3>
+                        <div class="grid">
+                            <div class="field"><span class="label">Mode</span><span class="badge badge-info">${data.delivery.mode}</span></div>
+                            <div class="field"><span class="label">Partner</span><span class="value">${data.delivery.deliveredBy}</span></div>
+                            <div class="field"><span class="label">Pickup Code</span><span class="value" style="font-weight:bold; color:var(--ifood-red);">${data.delivery.pickupCode || 'N/A'}</span></div>
+                            <div class="field"><span class="label">Delivery Time</span><span class="value">${formatDate(data.delivery.deliveryDateTime)}</span></div>
+                        </div>
+                        <div class="field" style="margin-top:10px;">
+                            <span class="label">Address</span>
+                            <span class="value">${addr?.formattedAddress || 'N/A'}</span>
+                            ${addr?.complement ? `<br><small><b>Complement:</b> ${addr.complement}</small>` : ''}
+                            ${addr?.reference ? `<br><small><b>Reference:</b> ${addr.reference}</small>` : ''}
+                        </div>
+                    </div>`;
+            }
+
+            // 5. Items
+            if (data.items && data.items.length > 0) {
+                html += `
+                    <div class="section">
+                        <h3>Order Items</h3>
+                        ${data.items.map(item => `
+                            <div class="item-row">
+                                <div class="item-main">
+                                    <div class="item-identity">
+                                        <img class="item-img" src="${item.imageUrl || ''}" onerror="this.src='https://placehold.co/50x50?text=Food'">
+                                        <div>
+                                            <div class="item-name">${item.quantity}x ${item.name}</div>
+                                            <div style="font-size:0.8em; color:#888;">Unit: ${formatCurrency(item.unitPrice)} | ${item.type}</div>
+                                        </div>
+                                    </div>
+                                    <div class="item-price">${formatCurrency(item.totalPrice)}</div>
+                                </div>
+                                ${item.observations ? `<div class="nested-box" style="font-style:italic; font-size:0.85em;">Obs: ${item.observations}</div>` : ''}
+                                ${renderOptions(item.options)}
+                            </div>
+                        `).join('')}
+                    </div>`;
+            }
+
+            // 6. Benefits / Discounts
+            if (data.benefits && data.benefits.length > 0) {
+                html += `
+                    <div class="section">
+                        <h3>Benefits & Campaigns</h3>
+                        ${data.benefits.map(b => `
+                            <div class="payment-method" style="border-left: 4px solid var(--success-color);">
+                                <div style="display:flex; justify-content:space-between;">
+                                    <b>${b.campaign?.name || 'Campaign'}</b>
+                                    <span style="color:var(--success-color); font-weight:bold;">-${formatCurrency(b.value)}</span>
+                                </div>
+                                <small>${b.target}</small>
+                            </div>
+                        `).join('')}
+                    </div>`;
+            }
+
+            // 7. Payments
+            if (data.payments) {
+                html += `
+                    <div class="section">
+                        <h3>Payment Details</h3>
+                        ${data.payments.methods.map(m => `
+                            <div class="payment-method">
+                                <div style="display:flex; justify-content:space-between; font-weight:bold;">
+                                    <span>${m.method} (${m.type})</span>
+                                    <span>${formatCurrency(m.value)}</span>
+                                </div>
+                                <div style="font-size:0.85em; color:#666; margin-top:3px;">
+                                    ${m.card ? `Card: ${m.card.brand}` : ''}
+                                    ${m.wallet ? `Wallet: ${m.wallet.name}` : ''}
+                                    ${m.cash ? `Cash (Change for: ${formatCurrency(m.cash.changeFor)})` : ''}
+                                    ${m.prepaid ? ' | <span class="badge badge-success">Prepaid</span>' : ''}
+                                </div>
+                                ${m.transaction ? `<div style="font-size:0.75em; color:#999;">Auth: ${m.transaction.authorizationCode}</div>` : ''}
+                            </div>
+                        `).join('')}
+                        <div class="grid" style="margin-top:10px;">
+                            <div class="field"><span class="label">Prepaid Total</span><span class="value">${formatCurrency(data.payments.prepaid)}</span></div>
+                            <div class="field"><span class="label">Pending Total</span><span class="value" style="color:var(--ifood-red); font-weight:bold;">${formatCurrency(data.payments.pending)}</span></div>
+                        </div>
+                    </div>`;
+            }
+
+            // 8. Financial Summary
+            html += `
+                <div class="totals-container">
+                    <div class="summary-row"><span>Subtotal</span><span>${formatCurrency(data.total.subTotal)}</span></div>
+                    <div class="summary-row"><span>Delivery Fee</span><span>${formatCurrency(data.total.deliveryFee)}</span></div>
+                    ${data.total.additionalFees > 0 ? `<div class="summary-row"><span>Additional Fees</span><span>${formatCurrency(data.total.additionalFees)}</span></div>` : ''}
+                    ${data.total.benefits > 0 ? `<div class="summary-row benefit"><span>Discounts</span><span>-${formatCurrency(data.total.benefits)}</span></div>` : ''}
+                    <div class="summary-row total">
+                        <span>GRAND TOTAL</span>
+                        <span>${formatCurrency(data.total.orderAmount)}</span>
+                    </div>
+                </div>`;
+
+            // 9. Additional Meta (Schedule, Indoor, etc)
+            if (data.schedule || data.indoor || data.takeout) {
+                html += `<div class="section" style="background:#fffde7; border-color:#ffe57f;">
+                    <h3>Service Logistics</h3>`;
+                if (data.schedule) {
+                    html += `<div><b>Scheduled:</b> ${formatDate(data.schedule.deliveryDateTimeStart)} - ${formatDate(data.schedule.deliveryDateTimeEnd)}</div>`;
+                }
+                if (data.indoor) {
+                    html += `<div><b>Indoor:</b> Table ${data.indoor.table} | Mode: ${data.indoor.mode}</div>`;
+                }
+                if (data.takeout) {
+                    html += `<div><b>Takeout:</b> Mode: ${data.takeout.mode} | Time: ${formatDate(data.takeout.takeoutDateTime)}</div>`;
+                }
+                html += `</div>`;
+            }
+
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

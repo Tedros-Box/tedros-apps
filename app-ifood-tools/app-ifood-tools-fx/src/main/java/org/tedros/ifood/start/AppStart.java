@@ -8,7 +8,7 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.ifood.IFOODKey;
 import org.tedros.ifood.domain.DomainApp;
-import org.tedros.ifood.module.ifoodcfg.IFoodConfigModule;
+import org.tedros.ifood.module.order.IFoodConfigModule;
 
 /**
  * The app start class.
@@ -21,12 +21,12 @@ import org.tedros.ifood.module.ifoodcfg.IFoodConfigModule;
 			name=IFOODKey.MODULE_MY_APP, 
 			menu=IFOODKey.MENU_MY_APP, 
 			description=IFOODKey.MODULE_DESC_MY_APP)
-	}, packageName = "org.tedros", 
+	}, packageName = "org.tedros.ifood", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"IFOOD"})
-@TSecurity(id=DomainApp.MNEMONIC, 
+/*@TSecurity(id=DomainApp.MNEMONIC, 
 	appName = IFOODKey.APP_MY_APP, 
-	allowedAccesses=TAuthorizationType.APP_ACCESS)
+	allowedAccesses=TAuthorizationType.APP_ACCESS)*/
 public class AppStart implements ITApplication {
 
 	@Override
