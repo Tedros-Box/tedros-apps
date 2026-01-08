@@ -1,23 +1,27 @@
-package org.tedros.it.tools.evidence.model;
+package org.tedros.it.tools.evidence.component;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
+import org.tedros.core.control.PopOver;
 import org.tedros.fx.TFxKey;
 import org.tedros.fx.control.TButton;
 import org.tedros.fx.control.TLabel;
 import org.tedros.it.tools.ItToolsKey;
-import org.tedros.it.tools.evidence.EvidenceCaptureListener;
-import org.tedros.it.tools.evidence.EvidenceScheduler;
 import org.tedros.util.TDateUtil;
+import org.tedros.util.TFileUtil;
+import org.tedros.util.TLoggerUtil;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -31,12 +35,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
 
 public class EvidenceMonitorView extends StackPane implements EvidenceCaptureListener {
 	
+	private static final String FX_FONT_WEIGHT_BOLD = "-fx-font-weight: bold;";
 	private static final String ADD_NEW_APP_TITLE = TLanguage.getInstance().getString(ItToolsKey.ADD_NEW_APP_TITLE);	
-	private static final String OUTPUT_FOLDER = TLanguage.getInstance().getString(ItToolsKey.OUTPUT_FOLDER);
 	private static final String START_MONITORING = TLanguage.getInstance().getString(ItToolsKey.START_MONITORING);
 	private static final String STATUS_RUNNING = TLanguage.getInstance().getString(ItToolsKey.STATUS_RUNNING);
 	private static final String STATUS_STOPPED = TLanguage.getInstance().getString(ItToolsKey.STATUS_STOPPED);
@@ -56,7 +59,7 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 	
 	private TLabel lblStatus;
 	private Button btnStartStop;
-	private TextField tfOutputDir;
+	private TLabel lblOutputDir;
 	
 	public EvidenceMonitorView() {
 		this.scheduler = new EvidenceScheduler();
@@ -82,15 +85,38 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 		
 		lblStatus = new TLabel(STATUS_STOPPED);
 		
-		TButton btnChooseDir = new TButton(OUTPUT_FOLDER);
-		btnChooseDir.getStyleClass().add("button-secondary");
-		tfOutputDir = new TextField(scheduler.getOutputDir());
-		tfOutputDir.setEditable(false);
-		tfOutputDir.setPrefWidth(300);
+		lblOutputDir = new TLabel(scheduler.getOutputDir());
+		lblOutputDir.setStyle(FX_FONT_WEIGHT_BOLD);
+		lblOutputDir.setOnMouseEntered(e-> lblOutputDir.setCursor(Cursor.HAND));
 		
-		btnChooseDir.setOnAction(e -> chooseDirectory());
+		lblOutputDir.setOnMouseExited(e-> lblOutputDir.setCursor(Cursor.DEFAULT));
 		
-		controlsBox.getChildren().addAll(btnStartStop, new Separator(), new TLabel(SAVE_TO), tfOutputDir, btnChooseDir);
+		lblOutputDir.setOnMouseClicked(e->{
+			Thread thread = new Thread(() ->
+			Platform.runLater(() ->{
+                try {
+					if(!TFileUtil.open(new File(scheduler.getOutputDir()))) {
+						Label label = new Label(TLanguage.getInstance(null).getString("#{tedros.fxapi.message.os.not.support.operation}"));
+						label.setId("t-label");
+						label.setStyle(	"-fx-font: Arial; "+
+										"-fx-font-size: 1.0em; "+
+										"-fx-font-weight: bold; "+
+										"-fx-font-smoothing-type:lcd; "+
+										"-fx-text-fill: #000000; "+
+										"-fx-padding: 2 5 5 2; ");
+						
+						PopOver p = new PopOver(label);
+						p.show(lblOutputDir);
+					}
+				} catch (IOException ex) {
+					TLoggerUtil.error(EvidenceMonitorView.class, ex.getMessage(), ex);
+				}
+	          }));
+		thread.setDaemon(true);
+		thread.start();
+		});
+		
+		controlsBox.getChildren().addAll(btnStartStop, new Separator(), new TLabel(SAVE_TO), lblOutputDir);
 		mainLayout.setTop(controlsBox);
 		
 		// --- LEFT: Target Apps & Settings ---
@@ -99,7 +125,7 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 		leftSidebar.setPadding(new Insets(0, 10, 0, 0));
 		
 		TLabel lblApps = new TLabel(TARGET_APPLICATIONS);
-		lblApps.setStyle("-fx-font-weight: bold;");
+		lblApps.setStyle(FX_FONT_WEIGHT_BOLD);
 		
 		targetAppsList = FXCollections.observableArrayList(scheduler.getTargetApps());
 		lvTargetApps = new ListView<>(targetAppsList);
@@ -152,7 +178,7 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 			private final HBox root = new HBox(10, imageView, infoBox); 
 			private final HBox container = new HBox(root, new HBox() {{ HBox.setHgrow(this, Priority.ALWAYS); }}, btnOpen);
 
-			{
+			{	
 				root.setAlignment(Pos.CENTER_LEFT);
 				container.setAlignment(Pos.CENTER_LEFT);
 				container.setPadding(new Insets(5));
@@ -161,7 +187,7 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 				imageView.setFitHeight(80);
 				imageView.setFitWidth(120);
 				
-				lblTitle.setStyle("-fx-font-weight: bold;");
+				lblTitle.setStyle(FX_FONT_WEIGHT_BOLD);
 				
 				btnOpen.setOnAction(e -> {
 					EvidenceItem item = getItem();
@@ -223,19 +249,6 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 		}
 	}
 	
-	private void chooseDirectory() {
-		DirectoryChooser dc = new DirectoryChooser();
-		dc.setTitle("Select Evidence Output Directory");
-		if(new File(scheduler.getOutputDir()).exists()) {
-			dc.setInitialDirectory(new File(scheduler.getOutputDir()));
-		}
-		
-		File selected = dc.showDialog(this.getScene().getWindow());
-		if(selected != null) {
-			scheduler.setOutputDir(selected.getAbsolutePath());
-			tfOutputDir.setText(selected.getAbsolutePath());
-		}
-	}
 
 	@Override
 	public void onCapture(String windowTitle, File evidenceFile) {
@@ -246,7 +259,7 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 		// Update status label with flash
 		String originalText = lblStatus.getText();
 		lblStatus.setText(TLanguage.getInstance().getFormatedString(ItToolsKey.ATTRIBUTES_CAPTURED, windowTitle));
-		lblStatus.setStyle("-fx-font-weight: bold;");
+		lblStatus.setStyle(FX_FONT_WEIGHT_BOLD);
 		
 		// Simple timer to revert status color (UI animation could be better but keeping it simple)
 		new java.util.Timer().schedule(new java.util.TimerTask() {
@@ -280,20 +293,7 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 					java.util.Arrays.sort(files, (f1, f2) -> Long.compare(f2.lastModified(), f1.lastModified()));
 					
 					for (File f : files) {
-						String title = UNKNOWN_APP;
-						try {
-							File metaFile = new File(f.getParentFile(), f.getName().replace(".png", ".properties"));
-							if(metaFile.exists()) {
-								java.util.Properties props = new java.util.Properties();
-								try(FileInputStream fis = new FileInputStream(metaFile)){
-									props.load(fis);
-									title = props.getProperty("windowTitle", UNKNOWN_APP);
-								}
-							}
-						} catch(Exception ex) {
-							// Ignore metadata read errors
-						}
-						
+						String title = getWindowTitle(f);
 						evidenceList.add(new EvidenceItem(title, f));
 					}
 				}
@@ -301,5 +301,22 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private String getWindowTitle(File f) {
+		String title = UNKNOWN_APP;
+		try {
+			File metaFile = new File(f.getParentFile(), f.getName().replace(".png", ".properties"));
+			if(metaFile.exists()) {
+				java.util.Properties props = new java.util.Properties();
+				try(FileInputStream fis = new FileInputStream(metaFile)){
+					props.load(fis);
+					title = props.getProperty("windowTitle", UNKNOWN_APP);
+				}
+			}
+		} catch(Exception ex) {
+			// Ignore metadata read errors
+		}
+		return title;
 	}
 }

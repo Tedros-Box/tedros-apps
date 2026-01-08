@@ -1,4 +1,4 @@
-package org.tedros.it.tools.evidence;
+package org.tedros.it.tools.evidence.component;
 
 import java.awt.AWTException;
 import java.awt.GraphicsConfiguration;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.ifood.server.domain;
+package org.tedros.ifood.domain;
 
 /**
  * @author Davis Dun

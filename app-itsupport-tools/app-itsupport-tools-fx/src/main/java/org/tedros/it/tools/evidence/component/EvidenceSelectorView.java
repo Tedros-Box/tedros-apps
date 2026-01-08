@@ -1,4 +1,4 @@
-package org.tedros.it.tools.evidence.model;
+package org.tedros.it.tools.evidence.component;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -22,7 +22,6 @@ import org.tedros.fx.control.TLabel;
 import org.tedros.fx.control.TMaskField;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.entity.JobEvidenceItem;
-import org.tedros.it.tools.evidence.EvidenceScheduler;
 import org.tedros.util.TDateUtil;
 
 import javafx.beans.property.BooleanProperty;

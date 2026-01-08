@@ -1,4 +1,4 @@
-package org.tedros.it.tools.evidence.model;
+package org.tedros.it.tools.evidence.component;
 
 import java.io.File;
 import java.util.Date;

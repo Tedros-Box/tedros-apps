@@ -1,12 +1,12 @@
 /**
  * 
  */
-package org.tedros.ifood.server.cdi.bo;
+package org.tedros.ifood.cdi.bo;
 
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
-import org.tedros.ifood.server.cdi.eao.IFOODEAO;
+import org.tedros.ifood.cdi.eao.IFOODEAO;
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 import org.tedros.server.entity.ITEntity;

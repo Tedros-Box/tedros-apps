@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.ifood.server.ejb.controller;
+package org.tedros.ifood.ejb.controller;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
@@ -18,8 +18,8 @@ import org.tedros.server.security.TSecurityInterceptor;
 import org.tedros.server.service.ITEjbService;
 import org.tedros.ifood.domain.DomainApp;
 import org.tedros.ifood.ejb.controller.IIFoodConfigController;
+import org.tedros.ifood.ejb.service.IFOODService;
 import org.tedros.ifood.entity.IFoodConfig;
-import org.tedros.ifood.server.ejb.service.IFOODService;
 
 /**
  * The controller bean

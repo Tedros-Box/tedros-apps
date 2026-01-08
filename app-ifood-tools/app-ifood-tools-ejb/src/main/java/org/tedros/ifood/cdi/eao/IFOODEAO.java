@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.tedros.ifood.server.cdi.eao;
+package org.tedros.ifood.cdi.eao;
 
 import jakarta.enterprise.context.Dependent;
 

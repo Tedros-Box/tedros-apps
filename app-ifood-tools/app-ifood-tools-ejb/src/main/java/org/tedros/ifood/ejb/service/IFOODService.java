@@ -4,7 +4,7 @@
  * TODOS OS DIREITOS RESERVADOS
  * 14/01/2014
  */
-package org.tedros.ifood.server.ejb.service;
+package org.tedros.ifood.ejb.service;
 
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -12,7 +12,7 @@ import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
 import jakarta.inject.Inject;
 
-import org.tedros.ifood.server.cdi.bo.IFOODBO;
+import org.tedros.ifood.cdi.bo.IFOODBO;
 import org.tedros.server.cdi.bo.ITGenericBO;
 import org.tedros.server.ejb.service.TEjbService;
 import org.tedros.server.entity.ITEntity;

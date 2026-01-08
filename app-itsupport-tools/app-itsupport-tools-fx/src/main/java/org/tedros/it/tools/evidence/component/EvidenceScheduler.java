@@ -1,4 +1,4 @@
-package org.tedros.it.tools.evidence;
+package org.tedros.it.tools.evidence.component;
 
 import java.awt.AWTException;
 import java.io.File;
@@ -11,13 +11,16 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.tedros.util.TLoggerUtil;
+
 import javafx.application.Platform;
 
 public class EvidenceScheduler {
 
     private ScheduledExecutorService scheduler;
     // Define the interval in seconds between checks
-    private int checkIntervalSeconds = 15;
+    private int checkIntervalSeconds = 3;
+    private TimeUnit timeUnit = TimeUnit.MINUTES;
 
     private String outputDir = System.getProperty("user.home") + File.separator + "TedrosEvidence";
 
@@ -39,7 +42,7 @@ public class EvidenceScheduler {
         targetApplications.add("localhost");
         targetApplications.add("Redmine");
         targetApplications.add("Excel");
-        targetApplications.add("World");
+        targetApplications.add("Word");
         targetApplications.add("Adobe");
         targetApplications.add("postman");
         targetApplications.add("notepad");
@@ -78,9 +81,9 @@ public class EvidenceScheduler {
         scheduler = Executors.newSingleThreadScheduledExecutor();
         running = true;
 
-        System.out.println("Monitoring started. Check interval: " + checkIntervalSeconds + " seconds.");
-
-        scheduler.scheduleAtFixedRate(this::captureEvidence, 0, checkIntervalSeconds, TimeUnit.SECONDS);
+        TLoggerUtil.info(EvidenceScheduler.class, "Monitoring started. Check interval: " + checkIntervalSeconds + " " + timeUnit.name().toLowerCase());
+        
+        scheduler.scheduleAtFixedRate(this::captureEvidence, 0, checkIntervalSeconds, timeUnit);
         
     }
 
@@ -108,37 +111,41 @@ public class EvidenceScheduler {
 		            File capturedFile = ScreenCaptureUtil.captureActiveMonitor(outputDir, fileName, windowBounds);
 
 		           // Save Metadata (Sidecar file)
-		            try {
-		            	java.util.Properties props = new java.util.Properties();
-		            	props.setProperty("windowTitle", windowTitle);
-		            	props.setProperty("timestamp", timestamp);
-		            	
-		            	String metaFileName = fileName.replace(".png", ".properties");
-		            	// Ensure we save in the same directory as the image
-		            	File metaFile = new File(capturedFile.getParentFile(), metaFileName);
-		            	
-		            	try(java.io.FileOutputStream fos = new java.io.FileOutputStream(metaFile)){
-		            		props.store(fos, "Evidence Metadata");
-		            	}
-		            } catch(Exception ex) {
-		            	System.err.println("Error saving metadata: " + ex.getMessage());
-		            }
+		            saveMetadata(windowTitle, timestamp, fileName, capturedFile);
 
 		            notifyListeners(windowTitle, capturedFile);
 
-		            System.out.println("-> EVIDENCE CAPTURED (Target Monitor) for: " + windowTitle + " (File: "
+		            TLoggerUtil.info(EvidenceScheduler.class, "-> EVIDENCE CAPTURED (Target Monitor) for: " + windowTitle + " (File: "
 		                    + fileName + ")");
 		        } else {
-		            System.err.println("Could not get window bounds for " + windowTitle + ". Skipping capture.");
+		        	TLoggerUtil.info(EvidenceScheduler.class, "Could not get window bounds for " + windowTitle + ". Skipping capture.");
 		        }
 		    }
 
 		} catch (AWTException e) {
-		    System.err.println("ERROR during screen capture (AWT): " + e.getMessage());
+			TLoggerUtil.error(EvidenceScheduler.class, "Error during screen capture (AWT)", e);		    
 		} catch (IOException e) {
-		    System.err.println("ERROR writing file: " + e.getMessage());
+		    TLoggerUtil.error(EvidenceScheduler.class, "ERROR writing file", e);
 		} catch (Exception e) {
-		    System.err.println("Generic ERROR during monitoring: " + e.getMessage());
+			TLoggerUtil.error(EvidenceScheduler.class, "Generic ERROR during monitoring", e);
+		}
+	}
+
+	private void saveMetadata(String windowTitle, String timestamp, String fileName, File capturedFile) {
+		try {
+			java.util.Properties props = new java.util.Properties();
+			props.setProperty("windowTitle", windowTitle);
+			props.setProperty("timestamp", timestamp);
+			
+			String metaFileName = fileName.replace(".png", ".properties");
+			// Ensure we save in the same directory as the image
+			File metaFile = new File(capturedFile.getParentFile(), metaFileName);
+			
+			try(java.io.FileOutputStream fos = new java.io.FileOutputStream(metaFile)){
+				props.store(fos, "Evidence Metadata");
+			}
+		} catch(Exception ex) {
+			TLoggerUtil.error(EvidenceScheduler.class, "Error saving metadata", ex);
 		}
 	}
 
@@ -163,7 +170,7 @@ public class EvidenceScheduler {
         running = false;
         if (scheduler != null && !scheduler.isShutdown()) {
             scheduler.shutdownNow();
-            System.out.println("Monitoring stopped.");
+            TLoggerUtil.info(EvidenceScheduler.class, "Monitoring stopped.");
         }
     }
     

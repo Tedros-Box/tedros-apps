@@ -12,6 +12,7 @@ import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.model.TModelView;
 import org.tedros.fx.presenter.model.behavior.TViewBehavior;
 import org.tedros.fx.presenter.model.decorator.TViewDecorator;
+import org.tedros.ifood.module.order.setting.OrderDashboardSettings;
 
 import javafx.beans.property.SimpleStringProperty;
 
