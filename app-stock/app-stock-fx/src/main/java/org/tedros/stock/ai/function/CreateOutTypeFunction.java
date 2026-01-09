@@ -34,7 +34,7 @@ public class CreateOutTypeFunction extends TFunction<EventsParam> {
 				.loadInModule(InventoryModule.class, FXCollections.observableArrayList(l));
 			});
 			
-			return new Response("Successful");
+			return new Response("Out types created successfully, please inform the user and stop polling.");
 			
 		});
 		
