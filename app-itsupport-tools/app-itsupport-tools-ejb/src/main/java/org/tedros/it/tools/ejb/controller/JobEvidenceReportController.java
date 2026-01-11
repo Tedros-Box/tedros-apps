@@ -1,5 +1,6 @@
 package org.tedros.it.tools.ejb.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -78,7 +79,7 @@ implements IJobEvidenceReportController, ITSecurity {
 							})
 							.toList();
 					
-					model.setResult(items);
+					model.setResult(new ArrayList<>(items));
 				}
 				
 			}
