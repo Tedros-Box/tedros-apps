@@ -3,6 +3,7 @@ package org.tedros.it.tools.redmine.gateway;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +16,11 @@ import org.tedros.it.tools.redmine.ai.model.FilterType;
 import org.tedros.it.tools.redmine.api.model.TAttachment;
 import org.tedros.it.tools.redmine.api.model.TIssue;
 import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
+import org.tedros.it.tools.redmine.api.model.TIssueStatus;
 import org.tedros.it.tools.redmine.api.model.TMembership;
 import org.tedros.it.tools.redmine.api.model.TProject;
 import org.tedros.it.tools.redmine.api.model.TRedmineUser;
+import org.tedros.it.tools.redmine.api.model.TTimeEntry;
 import org.tedros.it.tools.redmine.mapper.RedmineMapper;
 import org.tedros.util.TedrosFolder;
 
@@ -29,8 +32,10 @@ import com.taskadapter.redmineapi.RedmineManagerFactory;
 import com.taskadapter.redmineapi.bean.Attachment;
 import com.taskadapter.redmineapi.bean.CustomFieldDefinition;
 import com.taskadapter.redmineapi.bean.Issue;
+import com.taskadapter.redmineapi.bean.IssueStatus;
 import com.taskadapter.redmineapi.bean.Membership;
 import com.taskadapter.redmineapi.bean.Project;
+import com.taskadapter.redmineapi.bean.TimeEntry;
 import com.taskadapter.redmineapi.bean.User;
 import com.taskadapter.redmineapi.internal.ResultsWrapper;
 
@@ -43,6 +48,7 @@ public class RedmineApiGateway {
 	public RedmineApiGateway(String uri, String apiAccessKey) {
 		this.uri = uri;
 		this.manager = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+		this.manager.setObjectsPerPage(100);
 	}
 	
 	public void loadCustomFieldMetadata() {
@@ -66,6 +72,32 @@ public class RedmineApiGateway {
 	    } catch (Exception e) {
 	        throw new RuntimeException("Erro ao carregar metadados de campos personalizados: " + e.getMessage());
 	    }
+	}
+	
+	public List<TTimeEntry> getTimeEntriesForIssue(Integer issueId){
+		try {
+			List<TimeEntry> entries = this.manager.getTimeEntryManager().getTimeEntriesForIssue(issueId);
+			if(entries!=null) 
+				return RedmineMapper.convertTimeEntryList(entries);
+			return List.of();
+		}catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	public List<TIssueStatus> listIssueStatuses(){
+		
+		try {
+			List<IssueStatus> statuses = this.manager.getIssueManager().getStatuses();
+			
+			if(statuses!=null) 
+				return RedmineMapper.convertIssueStatusList(statuses);
+			
+			return List.of();
+			
+		}catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
 	}
 	
 	public void addIssueJournal(Integer userId, Integer issueId) {
@@ -94,17 +126,24 @@ public class RedmineApiGateway {
 		}
 	}
 	
-	public List<TIssue> getIssuesByFilters(Map<String, FilterCondition> filters) {
+	public List<TIssueEvidenceInfo> getIssuesByFilters(Map<String, FilterCondition> filters) {
+	    List<TIssueEvidenceInfo> todasIssues = new ArrayList<>();
+	    int limit = 100; // Máximo permitido pelo Redmine geralmente é 100
+	    int offset = 0;
+	    int totalEncontrado = 0;
+	    
 	    try {
+	        // 1. Configuração inicial dos Parâmetros (Filtros fixos e dinâmicos)
 	        Params params = new Params()
 	            .add("set_filter", "1")
-	            .add("sort", "id:desc");
+	            .add("sort", "id:desc")
+	            .add("limit", String.valueOf(limit)); // Define o tamanho da página
 
+	        // Aplica os filtros do mapa
 	        for (Map.Entry<String, FilterCondition> entry : filters.entrySet()) {
 	            String field = entry.getKey();
 	            FilterCondition condition = entry.getValue();
 
-	            // Detecta tipo automaticamente se for custom field
 	            if (field.startsWith("cf_") && customFieldCache.containsKey(field)) {
 	                FilterType detectedType = customFieldCache.get(field).getType();
 	                condition = FilterCondition.auto(detectedType, condition.getOperator(), condition.getValues());
@@ -120,35 +159,39 @@ public class RedmineApiGateway {
 	            }
 	        }
 
-	        // colunas padrão (customizável)
-	       /*params.add("c[]", "project")
-	              .add("c[]", "tracker")
-	              .add("c[]", "status")
-	              .add("c[]", "subject")
-	              .add("c[]", "done_ratio")
-	              .add("c[]", "cf_41")
-	              .add("c[]", "start_date")
-	              .add("c[]", "due_date")
-	              .add("c[]", "assigned_to")
-	              .add("c[]", "cf_30")
-	              .add("t[]", "spent_hours")
-	              .add("c[]", "notes")
-	              .add("c[]", "cf_41")
-	              .add("c[]", "cf_59")
-	              .add("c[]", "cf_60")
-	              .add("c[]", "cf_75")
-	              .add("c[]", "cf_79")
-	              .add("c[]", "issue_id")	       
-	              .add("c[]", "attachments");*/
-	        
-	        ResultsWrapper<Issue> wrapper = manager.getIssueManager().getIssues(params); 
+	        // 2. Loop de Paginação
+	        do {
+	            // Atualiza o offset para a próxima página
+	            // Nota: Certifique-se que sua classe Params atualiza o valor se a chave já existir, 
+	            // ou use um método .replace() se disponível.
+	            params.add("offset", String.valueOf(offset));
 
-	        return wrapper != null && wrapper.hasSomeResults()
-	            ? RedmineMapper.convertIssueList(wrapper.getResults())
-	            : List.of();
+	            // Chamada à API
+	            ResultsWrapper<Issue> wrapper = manager.getIssueManager().getIssues(params);
+
+	            // Se não houver resultados ou wrapper for nulo, encerra
+	            if (wrapper == null || !wrapper.hasSomeResults()) {
+	                break;
+	            }
+
+	            // Pega o total disponível no servidor (metadado da resposta)
+	            totalEncontrado = wrapper.getTotalFoundOnServer();
+
+	            // Converte e adiciona à lista acumulada
+	            List<Issue> paginaAtual = wrapper.getResults();
+	            if(!paginaAtual.isEmpty()) {
+	                paginaAtual.forEach(issue -> todasIssues.add(RedmineMapper.convertForEvidenceInfo(issue)));
+	            }
+
+	            // Incrementa o offset com a quantidade real retornada nesta página
+	            offset += paginaAtual.size();
+
+	        } while (offset < totalEncontrado);
+
+	        return todasIssues;
 
 	    } catch (Exception e) {
-	        throw new RuntimeException("Erro ao buscar issues: " + e.getMessage());
+	        throw new RuntimeException("Erro ao buscar issues paginadas: " + e.getMessage(), e);
 	    }
 	}
 	

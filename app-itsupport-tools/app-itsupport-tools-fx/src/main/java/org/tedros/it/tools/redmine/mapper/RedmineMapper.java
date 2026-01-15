@@ -17,6 +17,7 @@ import org.tedros.it.tools.redmine.api.model.TIssue;
 import org.tedros.it.tools.redmine.api.model.TIssueCategory;
 import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
 import org.tedros.it.tools.redmine.api.model.TIssueRelation;
+import org.tedros.it.tools.redmine.api.model.TIssueStatus;
 import org.tedros.it.tools.redmine.api.model.TJournal;
 import org.tedros.it.tools.redmine.api.model.TJournalDetail;
 import org.tedros.it.tools.redmine.api.model.TMembership;
@@ -24,6 +25,7 @@ import org.tedros.it.tools.redmine.api.model.TProject;
 import org.tedros.it.tools.redmine.api.model.TRedmineRole;
 import org.tedros.it.tools.redmine.api.model.TRedmineUser;
 import org.tedros.it.tools.redmine.api.model.TRedmineVersion;
+import org.tedros.it.tools.redmine.api.model.TTimeEntry;
 import org.tedros.it.tools.redmine.api.model.TTracker;
 import org.tedros.it.tools.redmine.api.model.TWatcher;
 import org.tedros.util.TDateUtil;
@@ -41,6 +43,7 @@ import com.taskadapter.redmineapi.bean.IssueCategoryFactory;
 import com.taskadapter.redmineapi.bean.IssueFactory;
 import com.taskadapter.redmineapi.bean.IssueRelation;
 import com.taskadapter.redmineapi.bean.IssueRelationFactory;
+import com.taskadapter.redmineapi.bean.IssueStatus;
 import com.taskadapter.redmineapi.bean.Journal;
 import com.taskadapter.redmineapi.bean.JournalDetail;
 import com.taskadapter.redmineapi.bean.JournalFactory;
@@ -50,6 +53,7 @@ import com.taskadapter.redmineapi.bean.Project;
 import com.taskadapter.redmineapi.bean.ProjectFactory;
 import com.taskadapter.redmineapi.bean.Role;
 import com.taskadapter.redmineapi.bean.RoleFactory;
+import com.taskadapter.redmineapi.bean.TimeEntry;
 import com.taskadapter.redmineapi.bean.Tracker;
 import com.taskadapter.redmineapi.bean.TrackerFactory;
 import com.taskadapter.redmineapi.bean.User;
@@ -74,6 +78,42 @@ public class RedmineMapper {
 		return util.format(date);
 	}
 	
+	public static List<TTimeEntry> convertTimeEntryList(Collection<TimeEntry> entries) {
+		
+		if(entries!=null && !entries.isEmpty()) {						
+			Set<TimeEntry> lst = Set.copyOf(entries);
+			return lst.stream()
+					.filter(p->p!=null)
+					.map(t->convert(t))
+					.toList();
+		}
+		
+		return List.of();
+	}
+	
+	public static TTimeEntry convert(TimeEntry entry) {
+		if(entry==null)
+			return null;
+		
+		TTimeEntry te = new TTimeEntry();
+		te.setId(entry.getId());
+		te.setIssueId(entry.getIssueId());
+		te.setProjectId(entry.getProjectId());
+		te.setProjectName(entry.getProjectName());
+		te.setUserName(entry.getUserName());
+		te.setUserId(entry.getUserId());
+		te.setActivityName(entry.getActivityName());
+		te.setActivityId(entry.getActivityId());
+		te.setHours(entry.getHours());
+		te.setComment(entry.getComment());
+		te.setSpentOn(entry.getSpentOn());
+		te.setCreatedOn(entry.getCreatedOn());
+		te.setUpdatedOn(entry.getUpdatedOn());
+		te.setCustomFields(convertCustomFieldList(entry.getCustomFields()));
+		
+		return te;
+		
+	}
 	
 	public static TIssueEvidenceInfo convertForEvidenceInfo(Issue i) {
 		
@@ -156,6 +196,29 @@ public class RedmineMapper {
 		}
 		
 		return issue;
+	}
+	
+	public static List<TIssueStatus> convertIssueStatusList(Collection<IssueStatus> statuses) {
+		if(statuses!=null && !statuses.isEmpty()) {						
+			Set<IssueStatus> lst = Set.copyOf(statuses);
+			return lst.stream()
+					.filter(p->p!=null)
+					.map(t->convert(t))
+					.toList();
+		}
+		
+		return List.of();
+	}
+	
+	public static TIssueStatus convert(IssueStatus status) {
+		if(status==null)
+			return null;		
+		TIssueStatus s = new TIssueStatus();
+		s.setId(status.getId());
+		s.setName(status.getName());
+		s.setClosed(status.isClosed());
+		s.setDefaultStatus(status.isDefaultStatus());		
+		return s;
 	}
 	
 	public static List<TIssue> convertIssueList(Collection<Issue> issues) {

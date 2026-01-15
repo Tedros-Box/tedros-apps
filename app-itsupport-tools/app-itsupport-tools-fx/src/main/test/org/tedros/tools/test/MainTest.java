@@ -2,7 +2,7 @@ package org.tedros.tools.test;
 
 import java.util.concurrent.TimeUnit;
 
-import org.tedros.it.tools.evidence.EvidenceScheduler;
+import org.tedros.it.tools.evidence.component.EvidenceScheduler;
 
 public class MainTest {
 

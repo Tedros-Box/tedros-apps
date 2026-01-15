@@ -9,14 +9,14 @@ import org.tedros.ai.function.model.Response;
 import org.tedros.it.tools.redmine.ai.model.FilterCondition;
 import org.tedros.it.tools.redmine.ai.model.RedmineFilterField;
 import org.tedros.it.tools.redmine.ai.model.RedmineIssueFilter;
-import org.tedros.it.tools.redmine.api.model.TIssue;
+import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class RedmineIssueSearchAiFunction /* extends TFunction<RedmineIssueFilter> */ {
-	/*
+public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter>  {
+	
 	private static final Logger LOGGER = TLoggerUtil.getLogger(RedmineIssueSearchAiFunction.class);
 	
 	private static final String PROMPT = """
@@ -159,11 +159,11 @@ public class RedmineIssueSearchAiFunction /* extends TFunction<RedmineIssueFilte
 					RedmineApiPropertyUtil propertyUtil = RedmineApiPropertyUtil.getInstance();
 			        RedmineApiGateway gateway = new RedmineApiGateway(propertyUtil.getRedmineUrl(), propertyUtil.getRedmineKey());
 			        
-			        List<TIssue> issues = gateway.getIssuesByFilters(filters);
+			        List<TIssueEvidenceInfo> issues = gateway.getIssuesByFilters(filters);
 					
 			        LOGGER.info("Resultado da pesquisa: {}", mapper.writeValueAsString(issues));
 			        
-					return new Response("Result list", issues);
+					return new Response(SUSCESS_MESSAGE + DO_NOT_CALL_AGAIN  + PROCEED_WITH_HTML_RESPONSE, issues);
 					
 				} catch (Exception e) {
 					return new Response("An error occurred: "+e.getMessage());
@@ -174,5 +174,5 @@ public class RedmineIssueSearchAiFunction /* extends TFunction<RedmineIssueFilte
 		
 		
 	}
-*/
+
 }

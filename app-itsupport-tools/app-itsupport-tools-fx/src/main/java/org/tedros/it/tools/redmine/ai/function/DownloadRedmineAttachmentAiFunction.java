@@ -53,7 +53,7 @@ public class DownloadRedmineAttachmentAiFunction extends TFunction<TAttachment> 
                 TFileContentInfo file = downloaded.get(0);
                 LOGGER.info("Attachment downloaded: {} ({} bytes)", file.fileName(), file.bytes().length);
 
-                return new ToolCallResult(FUNCTION_NAME, List.of(file), true);
+                return new ToolCallResult(SUSCESS_MESSAGE, List.of(file), true);
 
             } catch (Exception e) {
                 LOGGER.error("Download failed for attachment #{} ({}): {}", 

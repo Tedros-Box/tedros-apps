@@ -25,16 +25,16 @@ public class TTimeEntry {
     private String userName;
 
     @JsonPropertyDescription("User ID who logged the time")
-    private String userId;
+    private Integer userId;
 
     @JsonPropertyDescription("Time entry activity name (Design, Development, etc.)")
     private String activityName;
 
     @JsonPropertyDescription("Activity enumeration ID")
-    private String activityId;
+    private Integer activityId;
 
     @JsonPropertyDescription("Hours spent (e.g. '2.5', '1.75')")
-    private String hours;
+    private Float hours;
 
     @JsonPropertyDescription("Comment/description of the work done")
     private String comment;
@@ -83,11 +83,11 @@ public class TTimeEntry {
 		this.userName = userName;
 	}
 
-	public String getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -99,19 +99,19 @@ public class TTimeEntry {
 		this.activityName = activityName;
 	}
 
-	public String getActivityId() {
+	public Integer getActivityId() {
 		return activityId;
 	}
 
-	public void setActivityId(String activityId) {
+	public void setActivityId(Integer activityId) {
 		this.activityId = activityId;
 	}
 
-	public String getHours() {
+	public Float getHours() {
 		return hours;
 	}
 
-	public void setHours(String hours) {
+	public void setHours(Float hours) {
 		this.hours = hours;
 	}
 

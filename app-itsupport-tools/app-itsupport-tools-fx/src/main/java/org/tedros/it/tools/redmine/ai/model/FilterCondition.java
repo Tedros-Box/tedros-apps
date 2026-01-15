@@ -8,6 +8,13 @@ import org.tedros.ai.function.TRequiredProperty;
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonClassDescription("Represents a filter condition for Redmine issue filtering.")
 public class FilterCondition {
 	
@@ -25,10 +32,6 @@ public class FilterCondition {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
-    public FilterCondition() {
-		
-	}
-
     public FilterCondition(FilterType type, String operator, String... values) {
         this.type = type;
         this.operator = operator;
