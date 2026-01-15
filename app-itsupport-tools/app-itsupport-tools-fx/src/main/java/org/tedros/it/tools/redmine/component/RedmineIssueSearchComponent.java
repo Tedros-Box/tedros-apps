@@ -1,5 +1,6 @@
 package org.tedros.it.tools.redmine.component;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -8,6 +9,7 @@ import org.tedros.fx.control.TButton;
 import org.tedros.fx.control.TDatePickerField;
 import org.tedros.fx.control.TLabel;
 import org.tedros.it.tools.redmine.ai.model.FilterCondition;
+import org.tedros.it.tools.redmine.ai.model.FilterType;
 import org.tedros.it.tools.redmine.ai.model.RedmineFilterField;
 import org.tedros.it.tools.redmine.ai.model.RedmineIssueFilter;
 import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
@@ -25,6 +27,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
@@ -133,13 +136,20 @@ public class RedmineIssueSearchComponent extends VBox {
         // --- COLUNAS ---
 
         // 1. Select (Tamanho fixo pequeno)
-        TableColumn<IssueViewModel, Boolean> selectCol = new TableColumn<>("Select");
+        TableColumn<IssueViewModel, Boolean> selectCol = new TableColumn<>();
+        CheckBox selectAllCb = new CheckBox();
+        selectAllCb.setOnAction(e -> {
+            boolean isSelected = selectAllCb.isSelected();
+            issueData.forEach(item -> item.setSelected(isSelected));
+        });
+        selectCol.setGraphic(selectAllCb);
+        selectCol.setText("Select");
         selectCol.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
         selectCol.setCellFactory(CheckBoxTableCell.forTableColumn(selectCol));
         selectCol.setEditable(true);
-        selectCol.setMinWidth(40);
-        selectCol.setMaxWidth(40);
-        selectCol.setPrefWidth(40);
+        selectCol.setMinWidth(60);
+        selectCol.setMaxWidth(60);
+        selectCol.setPrefWidth(60);
         selectCol.setResizable(false); // Impede o usuário de redimensionar esta coluna
 
         // 2. ID (Tamanho fixo numérico)
@@ -299,7 +309,13 @@ public class RedmineIssueSearchComponent extends VBox {
 
         // Issue Id
         if (issueIdField.getText() != null && !issueIdField.getText().trim().isEmpty()) {
-            filter.setIssue_id(FilterCondition.equalsTo(issueIdField.getText().trim()));
+            String[] ids = Arrays.stream(issueIdField.getText().trim().split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toArray(String[]::new);
+            if (ids.length > 0) {
+                filter.setIssue_id(new FilterCondition(FilterType.TEXT, "=", ids));
+            }
         }
 
         return filter;
