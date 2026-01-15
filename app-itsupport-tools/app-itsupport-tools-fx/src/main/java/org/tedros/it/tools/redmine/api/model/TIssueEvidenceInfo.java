@@ -59,6 +59,9 @@ public class TIssueEvidenceInfo {
     @JsonPropertyDescription("Author full name")
     private String authorName;
 
+    @JsonPropertyDescription("Tracker/Type name")
+    private String trackerName;
+
     @JsonPropertyDescription("Full description")
     private String description;
 
@@ -213,6 +216,14 @@ public class TIssueEvidenceInfo {
         this.authorName = authorName;
     }
 
+    public String getTrackerName() {
+        return trackerName;
+    }
+
+    public void setTrackerName(String trackerName) {
+        this.trackerName = trackerName;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -269,11 +280,11 @@ public class TIssueEvidenceInfo {
         this.notes = notes;
     }
 
-	public List<TAttachment> getAttachments() {
-		return attachments;
-	}
+    public List<TAttachment> getAttachments() {
+        return attachments;
+    }
 
-	public void setAttachments(List<TAttachment> attachments) {
-		this.attachments = attachments;
-	}
+    public void setAttachments(List<TAttachment> attachments) {
+        this.attachments = attachments;
+    }
 }

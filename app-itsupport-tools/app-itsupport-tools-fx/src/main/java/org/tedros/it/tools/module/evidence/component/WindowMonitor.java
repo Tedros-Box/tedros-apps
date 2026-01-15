@@ -1,4 +1,4 @@
-package org.tedros.it.tools.evidence.component;
+package org.tedros.it.tools.module.evidence.component;
 
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;

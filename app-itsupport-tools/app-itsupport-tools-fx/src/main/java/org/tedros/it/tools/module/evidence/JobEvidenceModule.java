@@ -1,4 +1,4 @@
-package org.tedros.it.tools.evidence.module;
+package org.tedros.it.tools.module.evidence;
 
 import org.tedros.core.TModule;
 import org.tedros.core.annotation.TItem;
@@ -8,11 +8,11 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.entity.JobEvidence;
-import org.tedros.it.tools.evidence.model.CaptureEvidenceMV;
-import org.tedros.it.tools.evidence.model.CaptureEvidenceModel;
-import org.tedros.it.tools.evidence.model.JobEvidenceMV;
-import org.tedros.it.tools.evidence.report.JobEvidenceReportMV;
 import org.tedros.it.tools.model.JobEvidenceReportModel;
+import org.tedros.it.tools.module.evidence.model.CaptureEvidenceMV;
+import org.tedros.it.tools.module.evidence.model.CaptureEvidenceModel;
+import org.tedros.it.tools.module.evidence.model.JobEvidenceMV;
+import org.tedros.it.tools.module.evidence.report.JobEvidenceReportMV;
 
 @TView(items = {
 		@TItem(title =  ItToolsKey.VIEW_CAPTURE_EVIDENCE, description = ItToolsKey.VIEW_CAPTURE_EVIDENCE_DESC, 

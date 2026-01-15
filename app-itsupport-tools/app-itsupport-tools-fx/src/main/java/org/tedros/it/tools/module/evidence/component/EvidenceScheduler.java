@@ -1,4 +1,4 @@
-package org.tedros.it.tools.evidence.component;
+package org.tedros.it.tools.module.evidence.component;
 
 import java.awt.AWTException;
 import java.io.File;

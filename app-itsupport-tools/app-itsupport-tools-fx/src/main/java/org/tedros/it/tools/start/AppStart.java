@@ -8,7 +8,8 @@ import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.DomainApp;
-import org.tedros.it.tools.evidence.module.JobEvidenceModule;
+import org.tedros.it.tools.module.evidence.JobEvidenceModule;
+import org.tedros.it.tools.module.redmine.RedmineModule;
 import org.tedros.it.tools.resource.AppResource;
 
 /**
@@ -23,7 +24,13 @@ import org.tedros.it.tools.resource.AppResource;
 			menu=ItToolsKey.MENU_ITSUPPORT, 
 			description=ItToolsKey.MODULE_ITSUPPORT_EVIDENCE_DESC,
 			icon=TConstant.ICONS_FOLDER+"job_evidence.png", 
-			menuIcon=TConstant.ICONS_FOLDER+"job_evidence_menu.png")
+			menuIcon=TConstant.ICONS_FOLDER+"job_evidence_menu.png"),		
+		@TModule(type=RedmineModule.class, 
+			name="Remine Tools", 
+			menu=ItToolsKey.MENU_ITSUPPORT, 
+			description="Redmine Tools Module" /*,
+			icon=TConstant.ICONS_FOLDER+"job_evidence.png", 
+			menuIcon=TConstant.ICONS_FOLDER+"job_evidence_menu.png"*/)
 	}, packageName = "org.tedros.it.tools", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"ittools"})

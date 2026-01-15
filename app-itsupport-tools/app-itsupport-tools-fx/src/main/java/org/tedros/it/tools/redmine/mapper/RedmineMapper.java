@@ -64,37 +64,37 @@ import com.taskadapter.redmineapi.bean.Watcher;
 import com.taskadapter.redmineapi.bean.WatcherFactory;
 
 public class RedmineMapper {
-	
+
 	private static final TDateUtil util = TDateUtil.create(TedrosContext.getLocale());
-	
+
 	private RedmineMapper() {
-		
+
 	}
-	
+
 	private static String convertDateToString(Date date) {
-		if(date==null)
+		if (date == null)
 			return null;
-		
+
 		return util.format(date);
 	}
-	
+
 	public static List<TTimeEntry> convertTimeEntryList(Collection<TimeEntry> entries) {
-		
-		if(entries!=null && !entries.isEmpty()) {						
+
+		if (entries != null && !entries.isEmpty()) {
 			Set<TimeEntry> lst = Set.copyOf(entries);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static TTimeEntry convert(TimeEntry entry) {
-		if(entry==null)
+		if (entry == null)
 			return null;
-		
+
 		TTimeEntry te = new TTimeEntry();
 		te.setId(entry.getId());
 		te.setIssueId(entry.getIssueId());
@@ -110,15 +110,15 @@ public class RedmineMapper {
 		te.setCreatedOn(entry.getCreatedOn());
 		te.setUpdatedOn(entry.getUpdatedOn());
 		te.setCustomFields(convertCustomFieldList(entry.getCustomFields()));
-		
+
 		return te;
-		
+
 	}
-	
+
 	public static TIssueEvidenceInfo convertForEvidenceInfo(Issue i) {
-		
+
 		TIssueEvidenceInfo issue = new TIssueEvidenceInfo();
-		
+
 		issue.setId(Long.valueOf(i.getId()));
 		issue.setSubject(i.getSubject());
 		issue.setStartDate(convertDateToString(i.getStartDate()));
@@ -135,108 +135,111 @@ public class RedmineMapper {
 		issue.setProjectName(i.getProjectName());
 		issue.setAuthorId(i.getAuthorId());
 		issue.setAuthorName(i.getAuthorName());
+		if (i.getTracker() != null) {
+			issue.setTrackerName(i.getTracker().getName());
+		}
 		issue.setDescription(i.getDescription());
 		issue.setStatusName(i.getStatusName());
-		
-		if(i.getCustomFields()!=null) {
-			
+
+		if (i.getCustomFields() != null) {
+
 			Optional<String> opt = i.getCustomFields().stream()
-			.filter(cf->cf.getId().equals(79))
-			.map(cf->cf.getValue())
-			.findFirst();
-			
-			if(opt.isPresent()) {
+					.filter(cf -> cf.getId().equals(79))
+					.map(cf -> cf.getValue())
+					.findFirst();
+
+			if (opt.isPresent()) {
 				String deliverable = opt.get();
 				issue.setDeliverable(deliverable);
 			}
-			
+
 			opt = i.getCustomFields().stream()
-					.filter(cf->cf.getId().equals(75))
-					.map(cf->cf.getValue())
+					.filter(cf -> cf.getId().equals(75))
+					.map(cf -> cf.getValue())
 					.findFirst();
-			
-			if(opt.isPresent()) {
+
+			if (opt.isPresent()) {
 				String hpa = opt.get();
 				issue.setHpa(hpa);
 			}
-			
+
 			opt = i.getCustomFields().stream()
-					.filter(cf->cf.getId().equals(60))
-					.map(cf->cf.getValue())
+					.filter(cf -> cf.getId().equals(60))
+					.map(cf -> cf.getValue())
 					.findFirst();
-			
-			if(opt.isPresent()) {
+
+			if (opt.isPresent()) {
 				String serviceType = opt.get();
 				issue.setServiceType(serviceType);
 			}
-			
+
 			opt = i.getCustomFields().stream()
-					.filter(cf->cf.getId().equals(59))
-					.map(cf->cf.getValue())
+					.filter(cf -> cf.getId().equals(59))
+					.map(cf -> cf.getValue())
 					.findFirst();
-			
-			if(opt.isPresent()) {
+
+			if (opt.isPresent()) {
 				String requiredProfile = opt.get();
 				issue.setRequiredProfile(requiredProfile);
 			}
 		}
-		
-		if(i.getJournals()!=null) {
-			 List<String> notes = i.getJournals().stream()
-					 .filter(j->StringUtils.isNotBlank(j.getNotes()))
-					 .map(j->j.getNotes())
-					 .toList();
-			 
-			 issue.setNotes(notes);
+
+		if (i.getJournals() != null) {
+			List<String> notes = i.getJournals().stream()
+					.filter(j -> StringUtils.isNotBlank(j.getNotes()))
+					.map(j -> j.getNotes())
+					.toList();
+
+			issue.setNotes(notes);
 		}
-		
-		if(i.getAttachments()!=null) {
-			 List<TAttachment> atts = convertAttachmentList(i.getAttachments());
-			 issue.setAttachments(atts);
+
+		if (i.getAttachments() != null) {
+			List<TAttachment> atts = convertAttachmentList(i.getAttachments());
+			issue.setAttachments(atts);
 		}
-		
+
 		return issue;
 	}
-	
+
 	public static List<TIssueStatus> convertIssueStatusList(Collection<IssueStatus> statuses) {
-		if(statuses!=null && !statuses.isEmpty()) {						
+		if (statuses != null && !statuses.isEmpty()) {
 			Set<IssueStatus> lst = Set.copyOf(statuses);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static TIssueStatus convert(IssueStatus status) {
-		if(status==null)
-			return null;		
+		if (status == null)
+			return null;
 		TIssueStatus s = new TIssueStatus();
 		s.setId(status.getId());
 		s.setName(status.getName());
 		s.setClosed(status.isClosed());
-		s.setDefaultStatus(status.isDefaultStatus());		
+		s.setDefaultStatus(status.isDefaultStatus());
 		return s;
 	}
-	
+
 	public static List<TIssue> convertIssueList(Collection<Issue> issues) {
-		
-		if(issues!=null && !issues.isEmpty()) {						
+
+		if (issues != null && !issues.isEmpty()) {
 			Set<Issue> lst = Set.copyOf(issues);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public static TIssue convert(Issue i) {
-		
+
 		TIssue issue = new TIssue();
 		issue.setId(i.getId());
 		issue.setSubject(i.getSubject());
@@ -252,7 +255,10 @@ public class RedmineMapper {
 		issue.setAssigneeId(i.getAssigneeId());
 		issue.setAssigneeName(i.getAssigneeName());
 		issue.setNotes(i.getNotes());
-		try { issue.setPrivateNotes(i.isPrivateNotes()); } catch(Exception e) {}
+		try {
+			issue.setPrivateNotes(i.isPrivateNotes());
+		} catch (Exception e) {
+		}
 		issue.setPriorityText(i.getPriorityText());
 		issue.setProjectId(i.getProjectId());
 		issue.setProjectName(i.getProjectName());
@@ -265,7 +271,10 @@ public class RedmineMapper {
 		issue.setStatusName(i.getStatusName());
 		issue.setTargetVersion(convert(i.getTargetVersion()));
 		issue.setCategory(convert(i.getCategory()));
-		try { issue.setPrivateIssue(i.isPrivateIssue()); } catch(Exception e) {}
+		try {
+			issue.setPrivateIssue(i.isPrivateIssue());
+		} catch (Exception e) {
+		}
 		issue.setCustomFields(convertCustomFieldList(i.getCustomFields()));
 		issue.setJournals(convertJournalList(i.getJournals()));
 		issue.setRelations(convertIssueRelationList(i.getRelations()));
@@ -273,26 +282,26 @@ public class RedmineMapper {
 		issue.setChangesets(convertChangesetList(i.getChangesets()));
 		issue.setWatchers(convertWatchersList(i.getWatchers()));
 		issue.setChildren(convertIssueList(i.getChildren()));
-		
+
 		return issue;
 	}
-	
+
 	public static List<Issue> convertTIssueList(Collection<TIssue> issues) {
-		
-		if(issues!=null && !issues.isEmpty()) {						
+
+		if (issues != null && !issues.isEmpty()) {
 			Set<TIssue> lst = Set.copyOf(issues);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public static Issue convert(TIssue i) {
-		
+
 		Issue issue = IssueFactory.create(i.getId());
 		issue.setSubject(i.getSubject());
 		issue.setStartDate(i.getStartDate());
@@ -328,130 +337,130 @@ public class RedmineMapper {
 		issue.addChangesets(convertTChangesetList(i.getChangesets()));
 		issue.addWatchers(convertTWatchersList(i.getWatchers()));
 		issue.addChildren(convertTIssueList(i.getChildren()));
-		
+
 		return issue;
 	}
-	
+
 	public static List<TWatcher> convertWatchersList(Collection<Watcher> watchers) {
-				
-		if(watchers!=null && !watchers.isEmpty()) {						
+
+		if (watchers != null && !watchers.isEmpty()) {
 			Set<Watcher> lst = Set.copyOf(watchers);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static TWatcher convert(Watcher w) {
-		
-		if(w==null)
+
+		if (w == null)
 			return null;
-		
+
 		TWatcher watcher = new TWatcher();
 		watcher.setId(w.getId());
 		watcher.setName(w.getName());
-		
+
 		return watcher;
 	}
-	
+
 	public static List<Watcher> convertTWatchersList(Collection<TWatcher> watchers) {
-		
-		if(watchers!=null && !watchers.isEmpty()) {						
+
+		if (watchers != null && !watchers.isEmpty()) {
 			Set<TWatcher> lst = Set.copyOf(watchers);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static Watcher convert(TWatcher w) {
-		
-		if(w==null)
+
+		if (w == null)
 			return null;
-		
+
 		Watcher watcher = WatcherFactory.create(w.getId());
 		watcher.setName(w.getName());
-		
+
 		return watcher;
 	}
 
 	public static List<TChangeset> convertChangesetList(Collection<Changeset> changesets) {
-				
-		if(changesets!=null && !changesets.isEmpty()) {						
+
+		if (changesets != null && !changesets.isEmpty()) {
 			Set<Changeset> lst = Set.copyOf(changesets);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static TChangeset convert(Changeset c) {
-		
-		if(c==null)
+
+		if (c == null)
 			return null;
-		
+
 		TChangeset changeset = new TChangeset();
 		changeset.setRevision(c.getRevision());
 		changeset.setUser(convert(c.getUser()));
 		changeset.setComments(c.getComments());
 		changeset.setCommittedOn(c.getCommittedOn());
-		
+
 		return changeset;
 	}
-	
+
 	public static List<Changeset> convertTChangesetList(Collection<TChangeset> changesets) {
-		
-		if(changesets!=null && !changesets.isEmpty()) {						
+
+		if (changesets != null && !changesets.isEmpty()) {
 			Set<TChangeset> lst = Set.copyOf(changesets);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static Changeset convert(TChangeset c) {
-		
-		if(c==null)
+
+		if (c == null)
 			return null;
-		
+
 		Changeset changeset = new Changeset();
 		changeset.setRevision(c.getRevision());
 		changeset.setUser(convert(c.getUser()));
 		changeset.setComments(c.getComments());
 		changeset.setCommittedOn(c.getCommittedOn());
-		
+
 		return changeset;
 	}
 
 	public static List<TAttachment> convertAttachmentList(Collection<Attachment> attachments) {
-		
-		if(attachments!=null && !attachments.isEmpty()) {						
+
+		if (attachments != null && !attachments.isEmpty()) {
 			Set<Attachment> lst = Set.copyOf(attachments);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
 		return List.of();
 	}
-	
+
 	public static TAttachment convert(Attachment a) {
-		
-		if(a==null)
+
+		if (a == null)
 			return null;
-		
+
 		TAttachment att = new TAttachment();
 		att.setId(a.getId());
 		att.setFileName(a.getFileName());
@@ -462,27 +471,27 @@ public class RedmineMapper {
 		att.setCreatedOn(a.getCreatedOn());
 		att.setAuthor(convert(a.getAuthor()));
 		att.setToken(a.getToken());
-		
+
 		return att;
 	}
-	
+
 	public static List<Attachment> convertTAttachmentList(Collection<TAttachment> attachments) {
-		
-		if(attachments!=null && !attachments.isEmpty()) {						
+
+		if (attachments != null && !attachments.isEmpty()) {
 			Set<TAttachment> lst = Set.copyOf(attachments);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
 		return List.of();
 	}
-	
-	public static Attachment convert(TAttachment a) {	
-		
-		if(a==null)
+
+	public static Attachment convert(TAttachment a) {
+
+		if (a == null)
 			return null;
-		
+
 		Attachment att = AttachmentFactory.create(a.getId());
 		att.setFileName(a.getFileName());
 		att.setFileSize(a.getFileSize());
@@ -492,187 +501,187 @@ public class RedmineMapper {
 		att.setCreatedOn(a.getCreatedOn());
 		att.setAuthor(convert(a.getAuthor()));
 		att.setToken(a.getToken());
-		
+
 		return att;
 	}
 
 	public static List<TIssueRelation> convertIssueRelationList(Collection<IssueRelation> relations) {
-		
-		if(relations!=null && !relations.isEmpty()) {						
+
+		if (relations != null && !relations.isEmpty()) {
 			Set<IssueRelation> lst = Set.copyOf(relations);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static TIssueRelation convert(IssueRelation r) {
-		
-		if(r==null)
+
+		if (r == null)
 			return null;
-		
+
 		TIssueRelation rel = new TIssueRelation();
 		rel.setId(r.getId());
 		rel.setIssueId(r.getIssueId());
 		rel.setIssueToId(r.getIssueToId());
 		rel.setType(r.getType());
 		rel.setDelay(r.getDelay());
-		
+
 		return rel;
 	}
-	
+
 	public static List<IssueRelation> convertTIssueRelationList(Collection<TIssueRelation> relations) {
-		
-		if(relations!=null && !relations.isEmpty()) {						
+
+		if (relations != null && !relations.isEmpty()) {
 			Set<TIssueRelation> lst = Set.copyOf(relations);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static IssueRelation convert(TIssueRelation r) {
-		
-		if(r==null)
+
+		if (r == null)
 			return null;
-		
+
 		IssueRelation rel = IssueRelationFactory.create(r.getId());
 		rel.setIssueId(r.getIssueId());
 		rel.setIssueToId(r.getIssueToId());
 		rel.setType(r.getType());
 		rel.setDelay(r.getDelay());
-		
+
 		return rel;
 	}
 
 	public static List<TJournal> convertJournalList(Collection<Journal> journals) {
-		
-		if(journals!=null && !journals.isEmpty()) {						
+
+		if (journals != null && !journals.isEmpty()) {
 			Set<Journal> lst = Set.copyOf(journals);
 			return lst.stream()
-					.map(t->convert(t))
+					.map(t -> convert(t))
 					.toList();
 		}
 		return List.of();
 	}
 
 	private static TJournal convert(Journal j) {
-		
-		if(j==null)
+
+		if (j == null)
 			return null;
-		
+
 		TJournal journal = new TJournal();
 		journal.setId(j.getId());
 		journal.setNotes(j.getNotes());
 		journal.setUser(convert(j.getUser()));
 		journal.setCreatedOn(j.getCreatedOn());
 		journal.setDetails(convertJournalDetailList(j.getDetails()));
-		
+
 		return journal;
 	}
-	
+
 	public static List<Journal> convertTJournalList(Collection<TJournal> journals) {
-		
-		if(journals!=null && !journals.isEmpty()) {						
+
+		if (journals != null && !journals.isEmpty()) {
 			Set<TJournal> lst = Set.copyOf(journals);
 			return lst.stream()
-					.map(t->convert(t))
+					.map(t -> convert(t))
 					.toList();
 		}
 		return List.of();
 	}
-	
+
 	private static Journal convert(TJournal j) {
-		
-		if(j==null)
+
+		if (j == null)
 			return null;
-		
+
 		Journal journal = JournalFactory.create(j.getId());
 		journal.setNotes(j.getNotes());
 		journal.setUser(convert(j.getUser()));
 		journal.setCreatedOn(j.getCreatedOn());
 		journal.addDetails(convertTJournalDetailList(j.getDetails()));
-		
+
 		return journal;
 	}
 
 	public static List<TJournalDetail> convertJournalDetailList(List<JournalDetail> details) {
-				
-		if(details!=null && !details.isEmpty()) {						
+
+		if (details != null && !details.isEmpty()) {
 			Set<JournalDetail> lst = Set.copyOf(details);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
 		return List.of();
 	}
-	
+
 	public static TJournalDetail convert(JournalDetail d) {
-		
-		if(d==null)
+
+		if (d == null)
 			return null;
-		
+
 		TJournalDetail detail = new TJournalDetail();
 		detail.setNewValue(d.getNewValue());
 		detail.setName(d.getName());
 		detail.setProperty(d.getProperty());
 		detail.setOldValue(d.getOldValue());
-		
+
 		return detail;
 	}
-	
+
 	public static List<JournalDetail> convertTJournalDetailList(List<TJournalDetail> details) {
-		
-		if(details!=null && !details.isEmpty()) {						
+
+		if (details != null && !details.isEmpty()) {
 			Set<TJournalDetail> lst = Set.copyOf(details);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
 		return List.of();
 	}
-	
+
 	public static JournalDetail convert(TJournalDetail d) {
-		
-		if(d==null)
+
+		if (d == null)
 			return null;
-		
+
 		JournalDetail detail = new JournalDetail();
 		detail.setNewValue(d.getNewValue());
 		detail.setName(d.getName());
 		detail.setProperty(d.getProperty());
 		detail.setOldValue(d.getOldValue());
-		
+
 		return detail;
 	}
-	
+
 	public static List<TRedmineUser> convertUserList(Collection<User> users) {
-		
-		if(users!=null && !users.isEmpty()) {						
+
+		if (users != null && !users.isEmpty()) {
 			Set<User> lst = Set.copyOf(users);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
 
 	@SuppressWarnings("deprecation")
 	public static TRedmineUser convert(User u) {
-		
-		if(u==null)
+
+		if (u == null)
 			return null;
-		
+
 		TRedmineUser user = new TRedmineUser();
 		user.setId(u.getId());
 		user.setLogin(u.getLogin());
@@ -680,7 +689,7 @@ public class RedmineMapper {
 		user.setFirstName(u.getFirstName());
 		user.setLastName(u.getLastName());
 		user.setMail(u.getMail());
-		user.setApiKey(u.getApiKey());		
+		user.setApiKey(u.getApiKey());
 		user.setCreatedOn(u.getCreatedOn());
 		user.setLastLoginOn(u.getLastLoginOn());
 		user.setAuthSourceId(u.getAuthSourceId());
@@ -688,22 +697,22 @@ public class RedmineMapper {
 		user.setCustomFields(convertCustomFieldList(u.getCustomFields()));
 		user.setMemberships(convertMembershipList(u.getMemberships()));
 		user.setGroups(convertGroupList(u.getGroups()));
-		
+
 		return user;
 	}
-	
+
 	public static User convert(TRedmineUser u) {
-		
-		if(u==null)
+
+		if (u == null)
 			return null;
-		
+
 		User user = UserFactory.create(u.getId());
 		user.setLogin(u.getLogin());
 		user.setPassword(u.getPassword());
 		user.setFirstName(u.getFirstName());
 		user.setLastName(u.getLastName());
 		user.setMail(u.getMail());
-				
+
 		user.setCreatedOn(u.getCreatedOn());
 		user.setLastLoginOn(u.getLastLoginOn());
 		user.setAuthSourceId(u.getAuthSourceId());
@@ -711,77 +720,77 @@ public class RedmineMapper {
 		user.addCustomFields(convertTCustomFieldList(u.getCustomFields()));
 		user.addMemberships(convertTMembershipList(u.getMemberships()));
 		user.addGroups(convertTGroupList(u.getGroups()));
-		
+
 		return user;
 	}
 
 	public static List<TGroup> convertGroupList(Collection<Group> groups) {
-				
-		if(groups!=null && !groups.isEmpty()) {						
+
+		if (groups != null && !groups.isEmpty()) {
 			Set<Group> lst = Set.copyOf(groups);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static TGroup convert(Group g) {
-		
-		if(g==null) 
+
+		if (g == null)
 			return null;
-		
+
 		TGroup group = new TGroup();
 		group.setId(g.getId());
 		group.setName(g.getName());
-		
+
 		return group;
 	}
-	
+
 	public static List<Group> convertTGroupList(Collection<TGroup> groups) {
-		
-		if(groups!=null && !groups.isEmpty()) {						
+
+		if (groups != null && !groups.isEmpty()) {
 			Set<TGroup> lst = Set.copyOf(groups);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static Group convert(TGroup g) {
-		
-		if(g==null) 
+
+		if (g == null)
 			return null;
-		
+
 		Group group = GroupFactory.create(g.getId());
 		group.setName(g.getName());
-		
+
 		return group;
 	}
 
 	public static List<TMembership> convertMembershipList(Collection<Membership> memberships) {
-		
-		if(memberships!=null && !memberships.isEmpty()) {						
+
+		if (memberships != null && !memberships.isEmpty()) {
 			Set<Membership> lst = Set.copyOf(memberships);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
 
 	public static TMembership convert(Membership m) {
-		
-		if(m==null) 
-			return null;		
-		
+
+		if (m == null)
+			return null;
+
 		TMembership mem = new TMembership();
 		mem.setId(m.getId());
 		mem.setProject(convert(m.getProject()));
@@ -792,25 +801,25 @@ public class RedmineMapper {
 		mem.setRoles(convertRoleList(m.getRoles()));
 		return mem;
 	}
-	
+
 	public static List<Membership> convertTMembershipList(Collection<TMembership> memberships) {
-		
-		if(memberships!=null && !memberships.isEmpty()) {						
+
+		if (memberships != null && !memberships.isEmpty()) {
 			Set<TMembership> lst = Set.copyOf(memberships);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static Membership convert(TMembership m) {
-		
-		if(m==null) 
-			return null;		
-		
+
+		if (m == null)
+			return null;
+
 		Membership mem = MembershipFactory.create(m.getId());
 		mem.setProject(convert(m.getProject()));
 		mem.setUserId(m.getUserId());
@@ -822,23 +831,23 @@ public class RedmineMapper {
 	}
 
 	public static List<TRedmineRole> convertRoleList(Collection<Role> roles) {
-		
-		if(roles!=null && !roles.isEmpty()) {						
+
+		if (roles != null && !roles.isEmpty()) {
 			Set<Role> lst = Set.copyOf(roles);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
 
 	public static TRedmineRole convert(Role r) {
-		
-		if(r==null)
+
+		if (r == null)
 			return null;
-		
+
 		TRedmineRole role = new TRedmineRole();
 		role.setId(r.getId());
 		role.setName(r.getName());
@@ -846,25 +855,25 @@ public class RedmineMapper {
 		role.setPermissions(convertPermissionList(r.getPermissions()));
 		return role;
 	}
-	
+
 	public static List<Role> convertTRedmineRoleList(Collection<TRedmineRole> roles) {
-		
-		if(roles!=null && !roles.isEmpty()) {						
+
+		if (roles != null && !roles.isEmpty()) {
 			Set<TRedmineRole> lst = Set.copyOf(roles);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static Role convert(TRedmineRole r) {
-		
-		if(r==null)
+
+		if (r == null)
 			return null;
-		
+
 		Role role = RoleFactory.create(r.getId());
 		role.setName(r.getName());
 		role.setInherited(r.getInherited());
@@ -873,8 +882,8 @@ public class RedmineMapper {
 	}
 
 	public static List<String> convertPermissionList(Collection<String> permissions) {
-		
-		if(permissions!=null && !permissions.isEmpty()) {						
+
+		if (permissions != null && !permissions.isEmpty()) {
 			Set<String> lst = Set.copyOf(permissions);
 			return new ArrayList<>(lst);
 		}
@@ -882,42 +891,42 @@ public class RedmineMapper {
 	}
 
 	public static TIssueCategory convert(IssueCategory category) {
-				
-		if(category==null) 
+
+		if (category == null)
 			return null;
-		
+
 		TIssueCategory cat = new TIssueCategory();
 		cat.setId(category.getId());
 		cat.setName(category.getName());
 		cat.setProjectId(category.getProjectId());
 		cat.setAssigneeId(category.getAssigneeId());
 		cat.setAssigneeName(category.getAssigneeName());
-		
+
 		return cat;
 	}
-	
+
 	public static IssueCategory convert(TIssueCategory category) {
-		
-		if(category==null) 
+
+		if (category == null)
 			return null;
-		
+
 		IssueCategory cat = IssueCategoryFactory.create(category.getId());
 		cat.setName(category.getName());
 		cat.setProjectId(category.getProjectId());
 		cat.setAssigneeId(category.getAssigneeId());
 		cat.setAssigneeName(category.getAssigneeName());
-		
+
 		return cat;
 	}
 
 	public static TRedmineVersion convert(Version v) {
-		
-		if(v==null)
-			return null;		
-		
+
+		if (v == null)
+			return null;
+
 		TRedmineVersion version = new TRedmineVersion();
 		version.setId(v.getId());
-		version.setProjectName(v.getProjectName());		
+		version.setProjectName(v.getProjectName());
 		version.setName(v.getName());
 		version.setDescription(v.getDescription());
 		version.setStatus(v.getStatus());
@@ -925,17 +934,17 @@ public class RedmineMapper {
 		version.setDueDate(v.getDueDate());
 		version.setCreatedOn(v.getCreatedOn());
 		version.setUpdatedOn(v.getUpdatedOn());
-		
+
 		return version;
 	}
-	
+
 	public static Version convert(TRedmineVersion v) {
-		
-		if(v==null)
-			return null;		
-		
+
+		if (v == null)
+			return null;
+
 		Version version = VersionFactory.create(v.getId());
-		version.setProjectName(v.getProjectName());		
+		version.setProjectName(v.getProjectName());
 		version.setName(v.getName());
 		version.setDescription(v.getDescription());
 		version.setStatus(v.getStatus());
@@ -943,29 +952,29 @@ public class RedmineMapper {
 		version.setDueDate(v.getDueDate());
 		version.setCreatedOn(v.getCreatedOn());
 		version.setUpdatedOn(v.getUpdatedOn());
-		
+
 		return version;
 	}
-	
+
 	public static List<TProject> convertProjectList(Collection<Project> projects) {
-		
-		if(projects!=null && !projects.isEmpty()) {						
+
+		if (projects != null && !projects.isEmpty()) {
 			Set<Project> lst = Set.copyOf(projects);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
 
 	@SuppressWarnings("deprecation")
 	public static TProject convert(Project p) {
-		
-		if(p==null)
+
+		if (p == null)
 			return null;
-		
+
 		TProject proj = new TProject();
 		proj.setId(p.getId());
 		proj.setDescription(p.getDescription());
@@ -979,17 +988,17 @@ public class RedmineMapper {
 		proj.setParentId(p.getParentId());
 		proj.setTrackers(convertTrackerList(p.getTrackers()));
 		proj.setCustomFields(convertCustomFieldList(p.getCustomFields()));
-		
+
 		return proj;
 	}
-	
+
 	public static Project convert(TProject p) {
-		
-		if(p==null)
+
+		if (p == null)
 			return null;
-		
+
 		Project proj = ProjectFactory.create(p.getId());
-		
+
 		proj.setDescription(p.getDescription());
 		proj.setHomepage(p.getHomepage());
 		proj.setIdentifier(p.getIdentifier());
@@ -1001,112 +1010,112 @@ public class RedmineMapper {
 		proj.setParentId(p.getParentId());
 		proj.addTrackers(convertTTrackerList(p.getTrackers()));
 		proj.addCustomFields(convertTCustomFieldList(p.getCustomFields()));
-		
+
 		return proj;
 	}
-	
+
 	public static List<TCustomField> convertCustomFieldList(Collection<CustomField> customFields) {
-		if(customFields!=null && !customFields.isEmpty()) {						
+		if (customFields != null && !customFields.isEmpty()) {
 			Set<CustomField> lst = Set.copyOf(customFields);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
 
 	public static TCustomField convert(CustomField c) {
-				
-		if(c==null)
+
+		if (c == null)
 			return null;
-		
+
 		TCustomField field = new TCustomField();
 		field.setId(c.getId());
 		field.setName(c.getName());
 		field.setValue(c.getValue());
 		field.setMultiple(c.isMultiple());
-		
-		if(c.getValues()!=null)
+
+		if (c.getValues() != null)
 			field.setValues(new ArrayList<>(c.getValues()));
-		
+
 		return field;
 	}
-	
+
 	public static List<CustomField> convertTCustomFieldList(Collection<TCustomField> customFields) {
-		if(customFields!=null && !customFields.isEmpty()) {						
+		if (customFields != null && !customFields.isEmpty()) {
 			Set<TCustomField> lst = Set.copyOf(customFields);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static CustomField convert(TCustomField c) {
-		
-		if(c==null)
+
+		if (c == null)
 			return null;
-		
+
 		CustomField field = CustomFieldFactory.create(c.getId());
 		field.setName(c.getName());
 		field.setValue(c.getValue());
-		
-		if(c.getValues()!=null)
+
+		if (c.getValues() != null)
 			field.setValues(new ArrayList<>(c.getValues()));
-		
+
 		return field;
 	}
-	
+
 	public static List<TTracker> convertTrackerList(Collection<Tracker> trackers) {
-		
-		if(trackers!=null && !trackers.isEmpty()) {						
+
+		if (trackers != null && !trackers.isEmpty()) {
 			Set<Tracker> lst = Set.copyOf(trackers);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
 
 	public static TTracker convert(Tracker t) {
-		
-		if(t==null)
+
+		if (t == null)
 			return null;
-		
+
 		TTracker tk = new TTracker();
 		tk.setId(t.getId());
 		tk.setName(t.getName());
-		
+
 		return tk;
 	}
-	
+
 	public static List<Tracker> convertTTrackerList(Collection<TTracker> trackers) {
-		
-		if(trackers!=null && !trackers.isEmpty()) {						
+
+		if (trackers != null && !trackers.isEmpty()) {
 			Set<TTracker> lst = Set.copyOf(trackers);
 			return lst.stream()
-					.filter(p->p!=null)
-					.map(t->convert(t))
+					.filter(p -> p != null)
+					.map(t -> convert(t))
 					.toList();
 		}
-		
+
 		return List.of();
 	}
-	
+
 	public static Tracker convert(TTracker t) {
-		
-		if(t==null)
+
+		if (t == null)
 			return null;
-		
+
 		Tracker tk = TrackerFactory.create(t.getId());
 		tk.setName(t.getName());
-		
+
 		return tk;
 	}
 

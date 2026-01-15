@@ -1,4 +1,4 @@
-package org.tedros.it.tools.evidence.model;
+package org.tedros.it.tools.module.evidence.model;
 
 import org.tedros.server.model.ITModel;
 

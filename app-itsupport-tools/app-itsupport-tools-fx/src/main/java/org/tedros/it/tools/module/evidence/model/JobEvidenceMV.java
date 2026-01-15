@@ -1,4 +1,4 @@
-package org.tedros.it.tools.evidence.model;
+package org.tedros.it.tools.module.evidence.model;
 
 import java.util.Date;
 
@@ -42,8 +42,8 @@ import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.ejb.controller.IJobEvidenceController;
 import org.tedros.it.tools.entity.JobEvidence;
 import org.tedros.it.tools.entity.JobEvidenceItem;
-import org.tedros.it.tools.evidence.setting.JobEvidenceSettings;
-import org.tedros.it.tools.evidence.trigger.SearchForIssueTrigger;
+import org.tedros.it.tools.module.evidence.setting.JobEvidenceSettings;
+import org.tedros.it.tools.module.evidence.trigger.SearchForIssueTrigger;
 import org.tedros.person.ejb.controller.IEmployeeController;
 import org.tedros.person.model.Employee;
 import org.tedros.server.query.TCompareOp;

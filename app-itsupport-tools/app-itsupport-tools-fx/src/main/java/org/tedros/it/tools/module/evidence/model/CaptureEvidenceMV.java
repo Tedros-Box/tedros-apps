@@ -1,4 +1,4 @@
-package org.tedros.it.tools.evidence.model;
+package org.tedros.it.tools.module.evidence.model;
 
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.form.TSetting;
@@ -13,7 +13,7 @@ import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.model.TModelView;
 import org.tedros.fx.presenter.model.behavior.TViewBehavior;
 import org.tedros.fx.presenter.model.decorator.TViewDecorator;
-import org.tedros.it.tools.evidence.setting.CaptureEvidenceSettings;
+import org.tedros.it.tools.module.evidence.setting.CaptureEvidenceSettings;
 
 import javafx.beans.property.SimpleStringProperty;
 
