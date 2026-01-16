@@ -1,10 +1,17 @@
 package org.tedros.it.tools.redmine.component;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
+import org.tedros.ai.service.AiServiceProvider;
+import org.tedros.ai.service.AiTerosServiceFactory;
+import org.tedros.ai.service.IAiTerosService;
+import org.tedros.ai.web.TerosWebViewBridge;
+import org.tedros.core.context.TedrosContext;
 import org.tedros.fx.control.TButton;
 import org.tedros.fx.control.TDatePickerField;
 import org.tedros.fx.control.TLabel;
@@ -17,6 +24,11 @@ import org.tedros.it.tools.redmine.api.model.TIssueStatus;
 import org.tedros.it.tools.redmine.api.model.TRedmineUser;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TDateUtil;
+import org.tedros.util.TLoggerUtil;
+import org.tedros.util.TedrosFolder;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -24,7 +36,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
@@ -32,15 +44,48 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 
 public class RedmineIssueSearchComponent extends VBox {
+
+    private static final String SYSTEM_PROMPT = """
+            Your are a Redmine AI Assistant integrated into the Teros system.
+               Reply using HTML format only.
+
+               STRICT PROTOCOLS:
+            1. Tone: Professional and direct. NO EMOTICONS or EMOJIS allowed.
+            2. Data: Use only provided/system data. Do NOT invent data.
+            3. Missing Info: If data is missing, explicitly ask for specific fields and provide a placeholder example.
+            4. No Images: Do NOT generate <img> tags or reference external images.
+            5. Responses language. Always respond in the user's language. The primary languages are Portuguese and English. Detect the language of the user's input and match it.
+
+               CRITICAL OUTPUT RULES (Follow Strictly):
+               1. **RAW HTML ONLY**: You must return a raw HTML string.
+               2. **NO ESCAPING**: Do NOT escape HTML tags. For example, return "<div>" (CORRECT), never "&lt;div&gt;" (WRONG).
+               3. **NO MARKDOWN**: Do NOT wrap the output in Markdown code blocks (e.g., ```html ... ```). Do NOT use backticks.
+               4. **NO DOCUMENT TAGS**: Do NOT include <html>, <head>, <body>, or <script>.
+               5. **MERMAID DIAGRAMS**: To insert diagrams, use exactly: <div class="mermaid">...syntax...</div>.
+
+               Content Guidelines:
+               - Use standard HTML5 tags (div, h3, p, ul, table, strong, span).
+               - Use inline CSS for styling to ensure it looks good on a dark background.
+               - Ensure the content is safe for insertion via 'innerHTML'.
+
+               Example of CORRECT response:
+               <div style='padding:10px;'><h3>Title</h3><p>Content here.</p></div>
+
+               Example of WRONG response (Do NOT do this):
+               ```html\n&lt;div&gt;...&lt;/div&gt;\n```
+               """;
 
     private RedmineApiGateway gateway;
 
@@ -57,8 +102,22 @@ public class RedmineIssueSearchComponent extends VBox {
     private ProgressIndicator progressIndicator;
 
     // Results
+    private Accordion accordion;
+    private TitledPane aiPane;
+    private TitledPane resultsPane;
     private TableView<IssueViewModel> resultsTable;
     private ObservableList<IssueViewModel> issueData = FXCollections.observableArrayList();
+    private TButton addToAnalysisButton;
+
+    // AI Analysis
+    private ObservableList<IssueViewModel> selectedIssueData = FXCollections.observableArrayList();;
+    private TableView<IssueViewModel> selectedTable;
+    private TButton removeSelectedButton;
+    private TButton clearAllButton;
+    private TextArea aiPromptField;
+    private WebView aiResponseWebView;
+    private IAiTerosService iaServ;
+    private TerosWebViewBridge webViewBridge;
 
     public RedmineIssueSearchComponent(RedmineApiGateway gateway) {
         this.gateway = gateway;
@@ -67,7 +126,15 @@ public class RedmineIssueSearchComponent extends VBox {
         this.setFillWidth(true);
 
         initializeUI();
-        loadInitialData();
+        // loadInitialData();        
+
+        webViewBridge = new TerosWebViewBridge(aiResponseWebView);
+        String apiKey = TedrosContext.getAiApiKey();
+        String aiModel = TedrosContext.getAiModel();
+        AiServiceProvider aiProvider = TedrosContext.getAiServiceProvider();
+        // String aiSystemPrompt = TedrosContext.getAiSystemPrompt();
+        iaServ = AiTerosServiceFactory.newInstance(apiKey, aiModel, SYSTEM_PROMPT, aiProvider);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -122,8 +189,76 @@ public class RedmineIssueSearchComponent extends VBox {
         progressIndicator.setMaxSize(20, 20);
         filtersGrid.add(progressIndicator, 4, 2);
 
-        this.getChildren().add(filtersGrid);
+        TitledPane filterPane = new TitledPane("Filtros de pesquisa", filtersGrid);
 
+        buildResultTableView();
+        buildSelectedTableView();
+
+        // 3. Layout Restructuring with Accordion
+        accordion = new Accordion();
+        VBox.setVgrow(accordion, Priority.ALWAYS);
+
+        // Pane 1: Search Results
+        addToAnalysisButton = new TButton("Add to Analysis");
+        addToAnalysisButton.setOnAction(e -> addToAnalysis());
+
+        VBox resultsBox = new VBox(10, resultsTable, addToAnalysisButton);
+        resultsBox.setPadding(new Insets(10));
+        resultsBox.setFillWidth(true);
+        VBox.setVgrow(resultsTable, Priority.ALWAYS);
+        resultsPane = new TitledPane("Resultado da pesquisa", resultsBox);
+
+        // Pane 2: AI Analysis
+        aiPromptField = new TextArea();
+        aiPromptField.setPromptText("Descreva instruções adicionais para a análise da IA...");
+        aiPromptField.setPrefRowCount(4);
+
+        removeSelectedButton = new TButton("Remove Selected");
+        removeSelectedButton.setOnAction(e -> removeFromAnalysis());
+
+        clearAllButton = new TButton("Clear All");
+        clearAllButton.setOnAction(e -> selectedIssueData.clear());
+
+        HBox selectionButtons = new HBox(10, removeSelectedButton, clearAllButton);
+
+        sendForAnalysisButton = new TButton("Send for Analysis");
+        sendForAnalysisButton.setStyle("-fx-font-weight: bold;");
+        sendForAnalysisButton.setOnAction(e -> performAiAnalysis());
+
+        aiResponseWebView = new WebView();
+        aiResponseWebView.setPrefHeight(500);
+        VBox aiBox = new VBox(10,
+                new TLabel("Itens selecionados para análise:"),
+                selectedTable,
+                selectionButtons,
+                new TLabel("Instruções para IA:"),
+                aiPromptField,
+                sendForAnalysisButton,
+                aiResponseWebView);
+        aiBox.setPadding(new Insets(10));
+
+        aiPane = new TitledPane("Analisar demandas com Teros", aiBox);
+
+        this.aiResponseWebView.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                try {
+                    aiResponseWebView.getEngine()
+                            .load("file:" + TedrosFolder.MODULE_FOLDER.getFullPath() + "TCORE_19780222" + File.separator
+                                    + "teros_ia_response.html");
+                    aiResponseWebView.setZoom(0.8);
+                } catch (Exception e) {
+                    TLoggerUtil.error(RedmineIssueSearchComponent.class, "Failed to load AI response HTML template.",
+                            e);
+                }
+            }
+        });
+
+        accordion.getPanes().addAll(filterPane, resultsPane, aiPane);
+        this.getChildren().add(accordion);
+        accordion.setExpandedPane(filterPane);
+    }
+
+    private void buildResultTableView() {
         // 2. Center Section - Results Table
         resultsTable = new TableView<>();
         resultsTable.setEditable(true);
@@ -208,18 +343,145 @@ public class RedmineIssueSearchComponent extends VBox {
                 assignedCol);
 
         this.getChildren().add(resultsTable);
+    }
 
-        // 3. Bottom Section - Actions
-        HBox actionsBox = new HBox(10);
-        actionsBox.setAlignment(Pos.CENTER_RIGHT);
-        actionsBox.setPadding(new Insets(10, 0, 0, 0));
+    private void buildSelectedTableView() {
+        selectedTable = new TableView<>();
+        selectedTable.setItems(selectedIssueData);
+        selectedTable.setPrefHeight(200);
+        selectedTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        sendForAnalysisButton = new TButton("Send for Analysis");
-        sendForAnalysisButton.setStyle("-fx-font-weight: bold;");
-        // Logic for this button is not required yet according to task
+        // 2. ID (Tamanho fixo numérico)
+        TableColumn<IssueViewModel, Long> idCol = new TableColumn<>("Issue ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idCol.setMinWidth(60);
+        idCol.setMaxWidth(70);
+        idCol.setPrefWidth(60);
+        idCol.setResizable(false);
 
-        actionsBox.getChildren().add(sendForAnalysisButton);
-        this.getChildren().add(actionsBox);
+        // 3. Type (Tamanho controlado)
+        TableColumn<IssueViewModel, String> typeCol = new TableColumn<>("Type");
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("trackerName"));
+        typeCol.setMinWidth(100);
+        typeCol.setMaxWidth(120); // Pode crescer um pouco, mas não muito
+
+        // 4. Status (Tamanho controlado)
+        TableColumn<IssueViewModel, String> statusCol = new TableColumn<>("Status");
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("statusName"));
+        statusCol.setMinWidth(100);
+        statusCol.setMaxWidth(120);
+
+        // 5. Title (PRINCIPAL: Ocupa todo o espaço restante)
+        TableColumn<IssueViewModel, String> titleCol = new TableColumn<>("Title");
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        titleCol.setMinWidth(200); // Garante que o texto não suma
+        titleCol.setMaxWidth(Double.MAX_VALUE); // Permite crescer infinitamente
+
+        selectedTable.getColumns().addAll(idCol, typeCol, statusCol, titleCol);
+    }
+
+    private void addToAnalysis() {
+        List<IssueViewModel> selectedInResults = issueData.stream()
+                .filter(IssueViewModel::isSelected)
+                .collect(Collectors.toList());
+
+        if (selectedInResults.isEmpty()) {
+            showAlert("No Selection", "Please select items in the results table first.");
+            return;
+        }
+
+        int addedCount = 0;
+        for (IssueViewModel item : selectedInResults) {
+            // Prevent duplicates based on ID
+            boolean exists = selectedIssueData.stream().anyMatch(existing -> existing.getId().equals(item.getId()));
+            if (!exists) {
+                // We add the same ViewModel instance.
+                // If we wanted independent selection state in the second table,
+                // we might clone it, but here it's fine.
+                selectedIssueData.add(item);
+                addedCount++;
+            }
+        }
+
+        if (addedCount > 0) {
+            accordion.setExpandedPane(aiPane);
+        } else {
+            showAlert("Info", "Selected items are already in the analysis list.");
+        }
+    }
+
+    private void removeFromAnalysis() {
+        IssueViewModel selected = selectedTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            selectedIssueData.remove(selected);
+        }
+    }
+
+    private void performAiAnalysis() {
+        if (selectedIssueData.isEmpty()) {
+            showAlert("No Selection", "Please add issues to the analysis list.");
+            accordion.setExpandedPane(resultsPane);
+            return;
+        }
+
+        List<TIssueEvidenceInfo> selectedIssues = selectedIssueData.stream()
+                .map(IssueViewModel::getOriginal)
+                .collect(Collectors.toList());
+
+        progressIndicator.setVisible(true);
+        sendForAnalysisButton.setDisable(true);
+
+        String userPrompt = aiPromptField.getText();
+
+        CompletableFuture.runAsync(() -> {
+            if (selectedIssues.size() > 3) {
+                int count = 1;
+                for (TIssueEvidenceInfo issue : selectedIssues) {
+                    callTerosService(List.of(issue), userPrompt,
+                            "the user selected " + selectedIssues.size()
+                                    + " issues and to prevent overload we are sending one by one. this one is the number "
+                                    + count + " of " + selectedIssues.size() + ". Reply using HTML format only.");
+                    count++;
+                }
+            } else {
+                callTerosService(selectedIssues, userPrompt, null);
+            }
+        });
+
+    }
+
+    private void callTerosService(List<TIssueEvidenceInfo> selectedIssues, String userPrompt, String systemPrompt) {
+
+        String contextData = toJson(selectedIssues);
+        String fullPromptWithIssues = (userPrompt != null ? userPrompt : "") + "\n\nData:\n" + contextData;
+
+        try {
+
+            iaServ.cleanMessageHistory();
+            String htmlMessage = iaServ.call(fullPromptWithIssues, systemPrompt);
+            TLoggerUtil.info(RedmineIssueSearchComponent.class, "Resposta Teros:");
+            TLoggerUtil.info(RedmineIssueSearchComponent.class, htmlMessage);
+            Platform.runLater(() -> {
+                webViewBridge.run(htmlMessage);
+                accordion.setExpandedPane(aiPane);
+            });
+        } catch (Exception e) {
+            Platform.runLater(() -> showAlert("AI Error", "Failed to analyze: " + e.getMessage()));
+        } finally {
+            Platform.runLater(() -> {
+                progressIndicator.setVisible(false);
+                sendForAnalysisButton.setDisable(false);
+            });
+        }
+    }
+
+    private String toJson(List<TIssueEvidenceInfo> issues) {
+        try {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            return gson.toJson(issues);
+        } catch (Exception e) {
+            return issues.toString();
+        }
     }
 
     private void loadInitialData() {
@@ -259,6 +521,7 @@ public class RedmineIssueSearchComponent extends VBox {
 
                 Platform.runLater(() -> {
                     if (results != null) {
+                        accordion.setExpandedPane(resultsPane);
                         for (TIssueEvidenceInfo info : results) {
                             issueData.add(new IssueViewModel(info));
                         }
@@ -322,11 +585,13 @@ public class RedmineIssueSearchComponent extends VBox {
     }
 
     private void showAlert(String title, String content) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(title);
-        alert.setContentText(content);
-        alert.showAndWait();
+        /*
+         * Alert alert = new Alert(AlertType.ERROR);
+         * alert.setTitle("Error");
+         * alert.setHeaderText(title);
+         * alert.setContentText(content);
+         * alert.showAndWait();
+         */
     }
 
     // ViewModel for TableView
