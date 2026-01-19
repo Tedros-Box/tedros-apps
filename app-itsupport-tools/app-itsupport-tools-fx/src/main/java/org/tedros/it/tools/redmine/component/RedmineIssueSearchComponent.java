@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import org.tedros.ai.TFunctionHelper;
+import org.tedros.ai.function.TFunction;
 import org.tedros.ai.service.AiServiceProvider;
 import org.tedros.ai.service.AiTerosServiceFactory;
 import org.tedros.ai.service.IAiTerosService;
@@ -26,7 +27,23 @@ import org.tedros.fx.modal.TMessageBox;
 import org.tedros.fx.process.TProcess;
 import org.tedros.fx.process.TTaskImpl;
 import org.tedros.it.tools.ItToolsKey;
+import org.tedros.it.tools.gitlab.ai.function.GetGitLabMergeRequestRawDiffsFunction;
+import org.tedros.it.tools.gitlab.ai.function.GetGitLabRepositoryBranchFunction;
+import org.tedros.it.tools.gitlab.ai.function.GetGitLabRepositoryCommitDiffFunction;
+import org.tedros.it.tools.gitlab.ai.function.GetGitLabRepositoryCommitFunction;
+import org.tedros.it.tools.gitlab.ai.function.ListAllGitLabProjectFunction;
+import org.tedros.it.tools.gitlab.ai.function.SearchGitLabOpenedMergeRequestFunction;
+import org.tedros.it.tools.gitlab.ai.function.SearchGitLabProjectFunction;
+import org.tedros.it.tools.gitlab.ai.function.SearchGitLabRepositoryBranchesFunction;
+import org.tedros.it.tools.gitlab.ai.function.SearchGitLabRepositoryCommitsFunction;
+import org.tedros.it.tools.redmine.ai.function.DownloadRedmineAttachmentAiFunction;
+import org.tedros.it.tools.redmine.ai.function.GetRedmineIssueAiFunction;
 import org.tedros.it.tools.redmine.ai.function.RedmineApiPropertyUtil;
+import org.tedros.it.tools.redmine.ai.function.RedmineFilterIssueByUserAiFunction;
+import org.tedros.it.tools.redmine.ai.function.RedmineIssueSearchAiFunction;
+import org.tedros.it.tools.redmine.ai.function.RedmineListIssueStatusAiFunction;
+import org.tedros.it.tools.redmine.ai.function.RedmineListIssueTimeEntryAiFunction;
+import org.tedros.it.tools.redmine.ai.function.RedmineSearchUserAiFunction;
 import org.tedros.it.tools.redmine.ai.model.FilterCondition;
 import org.tedros.it.tools.redmine.ai.model.FilterType;
 import org.tedros.it.tools.redmine.ai.model.RedmineFilterField;
@@ -35,6 +52,7 @@ import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
 import org.tedros.it.tools.redmine.api.model.TIssueStatus;
 import org.tedros.it.tools.redmine.api.model.TRedmineUser;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
+import org.tedros.tools.module.notify.function.CreateNotificationListFunction;
 import org.tedros.util.TDateUtil;
 import org.tedros.util.TLoggerUtil;
 import org.tedros.util.TedrosFolder;
@@ -53,6 +71,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -60,6 +79,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -69,33 +90,34 @@ import javafx.scene.web.WebView;
 public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 
     private static final String SYSTEM_PROMPT = """
-            	Your are a Redmine AI Assistant integrated into the Teros system.
-            	Reply using HTML format only.
-
-               STRICT PROTOCOLS:
-	           1. Tone: Professional and direct. NO EMOTICONS or EMOJIS allowed.
-	           2. Data: Use only provided/system data. Do NOT invent data.
-	           3. Missing Info: If data is missing, explicitly ask for specific fields and provide a placeholder example.
-	           4. No Images: Do NOT generate <img> tags or reference external images.
-	           5. Responses language. Always respond in the user's language. The primary languages are Portuguese and English. Detect the language of the user's input and match it.
-
-               CRITICAL OUTPUT RULES (Follow Strictly):
-               1. **RAW HTML ONLY**: You must return a raw HTML string.
-               2. **NO ESCAPING**: Do NOT escape HTML tags. For example, return "<div>" (CORRECT), never "&lt;div&gt;" (WRONG).
-               3. **NO MARKDOWN**: Do NOT wrap the output in Markdown code blocks (e.g., ```html ... ```). Do NOT use backticks.
-               4. **NO DOCUMENT TAGS**: Do NOT include <html>, <head>, <body>, or <script>.
-               5. **MERMAID DIAGRAMS**: To insert diagrams, use exactly: <div class="mermaid">...syntax...</div>.
-
-               Content Guidelines:
-               - Use standard HTML5 tags (div, h3, p, ul, table, strong, span).
-               - Use inline CSS for styling to ensure it looks good on a dark background.
-               - Ensure the content is safe for insertion via 'innerHTML'.
-
-               Example of CORRECT response:
-               <div style='padding:10px;'><h3>Title</h3><p>Content here.</p></div>
-
-               Example of WRONG response (Do NOT do this):
-               ```html\n&lt;div&gt;...&lt;/div&gt;\n```
+            	You are a Redmine AI Assistant integrated into the Teros system.
+				Reply using HTML format only.
+				
+				STRICT PROTOCOLS:
+				1. Tone: Professional and direct. NO EMOTICONS or EMOJIS allowed.
+				2. Data: Use only provided/system data. Do NOT invent data.
+				3. Missing Info: If data is missing, explicitly ask for specific fields and provide a placeholder example.
+				4. No Images: Do NOT generate <img> tags or reference external images.
+				5. Responses language: Always respond in the user's language. The primary languages are Portuguese and English. Detect the language of the user's input and match it.
+				
+				CRITICAL OUTPUT RULES (Follow Strictly):
+				1. **RAW HTML ONLY**: You must return a raw HTML string.
+				2. **NO ESCAPING**: Do NOT escape HTML tags. For example, return "<div>" (CORRECT), never "&lt;div&gt;" (WRONG).
+				3. **NO MARKDOWN**: Do NOT wrap the output in Markdown code blocks (e.g., ```html ... ```). Do NOT use backticks.
+				4. **NO DOCUMENT TAGS**: Do NOT include <html>, <head>, <body>, or <script>.
+				5. **NO COLORS / THEME NEUTRAL**: Do NOT use 'background-color' or 'color' in inline styles. The output must be transparent and inherit colors from the parent application.
+				6. **MERMAID DIAGRAMS**: To insert diagrams, use exactly: <div class="mermaid">...syntax...</div>.
+				
+				Content Guidelines:
+				- Use standard HTML5 tags (div, h3, p, ul, table, strong, span).
+				- Use inline CSS ONLY for layout (padding, margin, borders), NOT for colors.
+				- Ensure the content is safe for insertion via 'innerHTML'.
+				
+				Example of CORRECT response:
+				<div style='padding:10px; border:1px solid #ccc;'><h3>Title</h3><p>Content here.</p></div>
+				
+				Example of WRONG response (Do NOT do this):
+				```html\n&lt;div style="background-color:black"&gt;...&lt;/div&gt;\n```
                """;
 
     // Filters
@@ -105,9 +127,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
     private ComboBox<TRedmineUser> assignedToComboBox;
     private ComboBox<TRedmineUser> authorComboBox;
     private TextField issueIdField;
-
-    private TButton searchButton;
-    private TButton sendForAnalysisButton;
+    
     private SimpleBooleanProperty progressIndicatorVisible = new SimpleBooleanProperty(false);
 
     // Results
@@ -116,13 +136,10 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
     private TitledPane aiPane;
     private TableView<IssueViewModel> resultsTable;
     private ObservableList<IssueViewModel> issueData = FXCollections.observableArrayList();
-    private TButton addToAnalysisButton;
-
+    
     // AI Analysis
     private ObservableList<IssueViewModel> selectedIssueData = FXCollections.observableArrayList();
     private TableView<IssueViewModel> selectedTable;
-    private TButton removeSelectedButton;
-    private TButton clearAllButton;
     private TextArea aiPromptField;
     private WebView aiResponseWebView;
     private RedmineApiGateway gateway;
@@ -228,7 +245,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         issueIdField.setPromptText(lang.getString(ItToolsKey.ISSUE_ID));
         filtersGrid.add(issueIdField, 3, 2);
 
-        searchButton = new TButton(lang.getString(ItToolsKey.SEACH_FOR_ISSUE));
+        TButton searchButton = new TButton(lang.getString(ItToolsKey.SEACH_FOR_ISSUE));
         searchButton.setOnAction(e -> searchIssues());
         filtersGrid.add(searchButton, 4, 1);
 
@@ -240,7 +257,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         VBox.setVgrow(accordion, Priority.ALWAYS);
 
         // Pane 1: Search Results
-        addToAnalysisButton = new TButton(lang.getString(ItToolsKey.ADD_TO_ANALYSIS));
+        TButton addToAnalysisButton = new TButton(lang.getString(ItToolsKey.ADD_TO_ANALYSIS));
         addToAnalysisButton.setOnAction(e -> addToAnalysis());
 
         VBox resultsBox = new VBox(10, filtersGrid, resultsTable, addToAnalysisButton);
@@ -253,23 +270,31 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 
         // Pane 2: AI Analysis
         aiPromptField = new TextArea();
-        aiPromptField.setPromptText(lang.getString(ItToolsKey.DESCRIBE_IA_INSTRUCTIONS));
+        aiPromptField.setPromptText(lang.getString(ItToolsKey.DESCRIBE_IA_INSTRUCTIONS)+" [Enter] + [Shift] = "+lang.getString(TUsualKey.SEND));
         aiPromptField.setPrefRowCount(4);
+        
+        aiPromptField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER && event.isShiftDown()) {
+            	performAiAnalysis();
+                event.consume();
+            }
+        });
 
-        removeSelectedButton = new TButton(lang.getString(ItToolsKey.REMOVE_SELECTED));
+        TButton removeSelectedButton = new TButton(lang.getString(ItToolsKey.REMOVE_SELECTED));
         removeSelectedButton.setOnAction(e -> removeFromAnalysis());
 
-        clearAllButton = new TButton(lang.getString(ItToolsKey.CLEAR_ALL));
+        TButton clearAllButton = new TButton(lang.getString(ItToolsKey.CLEAR_ALL));
         clearAllButton.setOnAction(e -> selectedIssueData.clear());
 
         TToolBar selectionButtons = new TToolBar(removeSelectedButton, clearAllButton);
 
-        sendForAnalysisButton = new TButton(lang.getString(ItToolsKey.SEND_TO_TEROS));
+        TButton sendForAnalysisButton = new TButton(lang.getString(ItToolsKey.SEND_TO_TEROS));
         sendForAnalysisButton.setStyle("-fx-font-weight: bold;");
         sendForAnalysisButton.setOnAction(e -> performAiAnalysis());
 
         aiResponseWebView = new WebView();
-        aiResponseWebView.setMaxHeight(350);
+        aiResponseWebView.getEngine().setJavaScriptEnabled(true);        
+        
         VBox selectedItensBox = new VBox(10,
                 new TLabel(lang.getString(ItToolsKey.SELECTED_ITEMS_TO_ANALYSE)),
                 selectedTable,
@@ -285,7 +310,8 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         aiBox.setPadding(new Insets(10));
 
         aiPane = new TitledPane(lang.getString(ItToolsKey.ISSUE_ANALYSIS_WITH_TEROS), new HBox(10, selectedItensBox, aiBox));
-        
+        HBox.setHgrow(selectedItensBox, Priority.ALWAYS);
+        HBox.setHgrow(aiBox, Priority.ALWAYS);
 
         accordion.getPanes().addAll(filterPane, aiPane);
         this.getChildren().add(accordion);
@@ -388,6 +414,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
     	TLanguage lang = TLanguage.getInstance();
     	
         selectedTable = new TableView<>();
+        selectedTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         selectedTable.setItems(selectedIssueData);
         selectedTable.setPrefHeight(200);
         selectedTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -446,9 +473,9 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
     }
 
     private void removeFromAnalysis() {
-        IssueViewModel selected = selectedTable.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            selectedIssueData.remove(selected);
+        List<IssueViewModel> selected = selectedTable.getSelectionModel().getSelectedItems();
+        if (selected != null && !selected.isEmpty()) {
+            selectedIssueData.removeAll(selected);
         }
     }
 
@@ -470,8 +497,8 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 			return;
 		}
 
-        CompletableFuture.runAsync(() -> {
-            if (selectedIssues.size() > 3) {
+        Platform.runLater(() -> {
+        	if (selectedIssues.size() > 3) {
                 int count = 1;
                 for (TIssueEvidenceInfo issue : selectedIssues) {
                     callTerosService(List.of(issue), userPrompt,
@@ -484,7 +511,6 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
                 callTerosService(selectedIssues, userPrompt, null);
             }
         });
-
     }
 
     private void callTerosService(List<TIssueEvidenceInfo> selectedIssues, String userPrompt, String systemPrompt) {
@@ -667,11 +693,37 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 		private String systemPrompt;
 		private IAiTerosService iaServ;
 		
+		@SuppressWarnings("rawtypes")
 		public TerosService() {
 			String apiKey = TedrosContext.getAiApiKey();
             String aiModel = TedrosContext.getAiModel();
             AiServiceProvider aiProvider = TedrosContext.getAiServiceProvider();
             iaServ = AiTerosServiceFactory.newInstance(apiKey, aiModel, SYSTEM_PROMPT, aiProvider);
+            TFunction[] arr = new TFunction[] {
+					TFunctionHelper.listAllViewPathFunction(),
+					TFunctionHelper.getViewInfoFunction(),
+					TFunctionHelper.callUpViewFunction(),
+					TFunctionHelper.getCreateFileFunction(),
+					new DownloadRedmineAttachmentAiFunction(),
+					new GetRedmineIssueAiFunction(),
+					new RedmineFilterIssueByUserAiFunction(),
+					new RedmineIssueSearchAiFunction(),
+					new RedmineListIssueStatusAiFunction(),
+					new RedmineListIssueTimeEntryAiFunction(),
+					new RedmineSearchUserAiFunction(),
+					new CreateNotificationListFunction(),
+					new GetGitLabMergeRequestRawDiffsFunction(),
+					new GetGitLabRepositoryBranchFunction(),
+					new GetGitLabRepositoryCommitDiffFunction(),
+					new GetGitLabRepositoryCommitFunction(),
+					new ListAllGitLabProjectFunction(),
+					new SearchGitLabOpenedMergeRequestFunction(),
+					new SearchGitLabProjectFunction(),
+					new SearchGitLabRepositoryBranchesFunction(),
+					new SearchGitLabRepositoryCommitsFunction()
+            };
+						
+			iaServ.createFunctionExecutor(arr);
 		}
 
 		@Override
