@@ -14,19 +14,13 @@
 	<description>JavaFx App - Front end</description>
 
 	<dependencies>
-
+		
 		<dependency>
 			<groupId>org.tedros</groupId>
-			<artifactId>app-services-fx</artifactId>
-			<version>${app.services}</version>
+			<artifactId>app-person-fx</artifactId>
+			<version>${app.person}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.tedros</groupId>
-			<artifactId>app-stock-fx</artifactId>
-			<version>${app.stock}</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>org.tedros</groupId>
 			<artifactId>tedros-fx-api</artifactId>

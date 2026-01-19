@@ -8,9 +8,9 @@ import javafx.stage.Stage;
 
 public class RedmineViewTestArgs extends Application {
 	
-	private static String token = System.getenv("REDMINE_TOKEN"); 
-	private static String url = "https://redmine.detran.go.gov.br/";
-	private static RedmineApiGateway gateway = new RedmineApiGateway(url, token);
+	//private static String token = System.getenv("REDMINE_TOKEN"); 
+	//private static String url = "https://redmine.detran.go.gov.br/";
+	//private static RedmineApiGateway gateway = new RedmineApiGateway(url, token);
 
     public static void main(String[] args) {
         launch(args);
@@ -20,7 +20,7 @@ public class RedmineViewTestArgs extends Application {
     public void start(Stage primaryStage) {
         try {
             
-            RedmineIssueSearchComponent component = new RedmineIssueSearchComponent(gateway);
+            RedmineIssueSearchComponent component = new RedmineIssueSearchComponent();
 
             Scene scene = new Scene(component, 1000, 600);
             primaryStage.setScene(scene);

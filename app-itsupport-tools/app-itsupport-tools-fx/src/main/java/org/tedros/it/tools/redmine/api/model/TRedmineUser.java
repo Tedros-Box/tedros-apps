@@ -190,7 +190,10 @@ public class TRedmineUser {
 	
 	@Override
 	public String toString() {
-		return login;
+		if(firstName == null && lastName == null)
+			return login;
+		
+		return "[%s] %s %s".formatted(login, firstName, lastName);
 	}
 
 	public Integer getId() {

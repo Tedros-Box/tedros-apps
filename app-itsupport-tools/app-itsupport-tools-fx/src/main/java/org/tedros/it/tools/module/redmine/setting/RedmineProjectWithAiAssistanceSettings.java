@@ -29,10 +29,7 @@ public class RedmineProjectWithAiAssistanceSettings extends TSetting {
     public void run() {
     	VBox node = super.getLayout("header");
     	
-    	RedmineApiPropertyUtil propertyUtil = RedmineApiPropertyUtil.getInstance();
-        RedmineApiGateway gateway = new RedmineApiGateway(propertyUtil.getRedmineUrl(), propertyUtil.getRedmineKey());
-    	
-    	RedmineIssueSearchComponent component = new RedmineIssueSearchComponent(gateway); 
+    	RedmineIssueSearchComponent component = new RedmineIssueSearchComponent(); 
     	node.getChildren().add(component);
 		
 		/*

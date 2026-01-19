@@ -17,6 +17,7 @@ public interface DomainApp {
 	static final String EVIDENCE_MANAGER = "EVIDENCE_MANAGER";
 	static final String EVIDENCE_CAPTURE = "EVIDENCE_CAPTURE";
 	static final String EVIDENCE_REPORT = "EVIDENCE_REPORT";
+	static final String REDMINE_TOOLS = "REDMINE_TOOLS";
 	static final String SEP = SEPARATOR;
 	
 	static final String MNEMONIC = "ISPT";
@@ -30,5 +31,8 @@ public interface DomainApp {
 	
 	static final String EVIDENCE_CAPTURE_FORM_ID = MNEMONIC + SEP + EVIDENCE_CAPTURE + SEP + FORM;
 	static final String EVIDENCE_CAPTURE_VIEW_ID = MNEMONIC + SEP + EVIDENCE_CAPTURE + SEP + VIEW;
+	
+	static final String REDMINE_TOOLS_MODULE_ID = MNEMONIC + SEP + REDMINE_TOOLS + SEP + MODULE;
+	static final String REDMINE_TOOLS_FORM_ID = MNEMONIC + SEP + REDMINE_TOOLS + SEP + FORM;
 
 }

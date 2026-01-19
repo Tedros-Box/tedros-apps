@@ -26,11 +26,11 @@ import org.tedros.it.tools.resource.AppResource;
 			icon=TConstant.ICONS_FOLDER+"job_evidence.png", 
 			menuIcon=TConstant.ICONS_FOLDER+"job_evidence_menu.png"),		
 		@TModule(type=RedmineModule.class, 
-			name="Remine Tools", 
+			name=ItToolsKey.MODULE_ITSUPPORT_REDMINE, 
 			menu=ItToolsKey.MENU_ITSUPPORT, 
-			description="Redmine Tools Module" /*,
-			icon=TConstant.ICONS_FOLDER+"job_evidence.png", 
-			menuIcon=TConstant.ICONS_FOLDER+"job_evidence_menu.png"*/)
+			description=ItToolsKey.MODULE_ITSUPPORT_REDMINE_DESC,
+			icon=TConstant.ICONS_FOLDER+"redmine_tools.png", 
+			menuIcon=TConstant.ICONS_FOLDER+"redmine_tools_menu.png")
 	}, packageName = "org.tedros.it.tools", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"ittools"})

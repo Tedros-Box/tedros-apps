@@ -1,6 +1,7 @@
 package org.tedros.it.tools.redmine.component;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +12,21 @@ import org.tedros.ai.service.AiServiceProvider;
 import org.tedros.ai.service.AiTerosServiceFactory;
 import org.tedros.ai.service.IAiTerosService;
 import org.tedros.ai.web.TerosWebViewBridge;
+import org.tedros.api.descriptor.ITComponentDescriptor;
+import org.tedros.api.presenter.view.ITView;
+import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
+import org.tedros.fx.TUsualKey;
+import org.tedros.fx.component.ITComponent;
 import org.tedros.fx.control.TButton;
 import org.tedros.fx.control.TDatePickerField;
 import org.tedros.fx.control.TLabel;
+import org.tedros.fx.layout.TToolBar;
+import org.tedros.fx.modal.TMessageBox;
+import org.tedros.fx.process.TProcess;
+import org.tedros.fx.process.TTaskImpl;
+import org.tedros.it.tools.ItToolsKey;
+import org.tedros.it.tools.redmine.ai.function.RedmineApiPropertyUtil;
 import org.tedros.it.tools.redmine.ai.model.FilterCondition;
 import org.tedros.it.tools.redmine.ai.model.FilterType;
 import org.tedros.it.tools.redmine.ai.model.RedmineFilterField;
@@ -35,13 +47,12 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -55,18 +66,18 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
-public class RedmineIssueSearchComponent extends VBox {
+public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 
     private static final String SYSTEM_PROMPT = """
-            Your are a Redmine AI Assistant integrated into the Teros system.
-               Reply using HTML format only.
+            	Your are a Redmine AI Assistant integrated into the Teros system.
+            	Reply using HTML format only.
 
                STRICT PROTOCOLS:
-            1. Tone: Professional and direct. NO EMOTICONS or EMOJIS allowed.
-            2. Data: Use only provided/system data. Do NOT invent data.
-            3. Missing Info: If data is missing, explicitly ask for specific fields and provide a placeholder example.
-            4. No Images: Do NOT generate <img> tags or reference external images.
-            5. Responses language. Always respond in the user's language. The primary languages are Portuguese and English. Detect the language of the user's input and match it.
+	           1. Tone: Professional and direct. NO EMOTICONS or EMOJIS allowed.
+	           2. Data: Use only provided/system data. Do NOT invent data.
+	           3. Missing Info: If data is missing, explicitly ask for specific fields and provide a placeholder example.
+	           4. No Images: Do NOT generate <img> tags or reference external images.
+	           5. Responses language. Always respond in the user's language. The primary languages are Portuguese and English. Detect the language of the user's input and match it.
 
                CRITICAL OUTPUT RULES (Follow Strictly):
                1. **RAW HTML ONLY**: You must return a raw HTML string.
@@ -87,8 +98,6 @@ public class RedmineIssueSearchComponent extends VBox {
                ```html\n&lt;div&gt;...&lt;/div&gt;\n```
                """;
 
-    private RedmineApiGateway gateway;
-
     // Filters
     private TDatePickerField startDatePicker;
     private TDatePickerField endDatePicker;
@@ -99,46 +108,85 @@ public class RedmineIssueSearchComponent extends VBox {
 
     private TButton searchButton;
     private TButton sendForAnalysisButton;
-    private ProgressIndicator progressIndicator;
+    private SimpleBooleanProperty progressIndicatorVisible = new SimpleBooleanProperty(false);
 
     // Results
     private Accordion accordion;
+    private TitledPane filterPane;
     private TitledPane aiPane;
-    private TitledPane resultsPane;
     private TableView<IssueViewModel> resultsTable;
     private ObservableList<IssueViewModel> issueData = FXCollections.observableArrayList();
     private TButton addToAnalysisButton;
 
     // AI Analysis
-    private ObservableList<IssueViewModel> selectedIssueData = FXCollections.observableArrayList();;
+    private ObservableList<IssueViewModel> selectedIssueData = FXCollections.observableArrayList();
     private TableView<IssueViewModel> selectedTable;
     private TButton removeSelectedButton;
     private TButton clearAllButton;
     private TextArea aiPromptField;
     private WebView aiResponseWebView;
-    private IAiTerosService iaServ;
+    private RedmineApiGateway gateway;
     private TerosWebViewBridge webViewBridge;
-
-    public RedmineIssueSearchComponent(RedmineApiGateway gateway) {
-        this.gateway = gateway;
+    private TerosService terosServ;
+    private RedmineService redmineServ;
+    
+    @SuppressWarnings("rawtypes")
+	private ITView view;
+    
+    @Override
+	public void tInitializeComponent(ITComponentDescriptor descriptor) {
+    	view = descriptor.getForm().gettPresenter().getView();
+    	view.gettProgressIndicator().bind(progressIndicatorVisible);
+    	
         this.setSpacing(10);
         this.setPadding(new Insets(10));
         this.setFillWidth(true);
-
         initializeUI();
-        // loadInitialData();        
+        Platform.runLater(() -> {
+            try {
+            	RedmineApiPropertyUtil propertyUtil = RedmineApiPropertyUtil.getInstance();
+            	gateway = new RedmineApiGateway(propertyUtil.getRedmineUrl(), propertyUtil.getRedmineKey());
 
-        webViewBridge = new TerosWebViewBridge(aiResponseWebView);
-        String apiKey = TedrosContext.getAiApiKey();
-        String aiModel = TedrosContext.getAiModel();
-        AiServiceProvider aiProvider = TedrosContext.getAiServiceProvider();
-        // String aiSystemPrompt = TedrosContext.getAiSystemPrompt();
-        iaServ = AiTerosServiceFactory.newInstance(apiKey, aiModel, SYSTEM_PROMPT, aiProvider);
-
+                loadInitialData();
+            	
+            	terosServ = new TerosService();
+            	terosServ.onFailedProperty().addListener((obs, oldVal, newVal) -> Platform
+                		.runLater(() -> Platform.runLater(() -> showAlert(terosServ.getException().getMessage())))); 
+            	terosServ.setOnSucceeded(e -> {
+            		String htmlMessage = terosServ.getValue();
+					webViewBridge.run(htmlMessage);
+					accordion.setExpandedPane(aiPane);
+            	});
+            	
+                redmineServ = new RedmineService(gateway);
+                redmineServ.onFailedProperty().addListener((obs, oldVal, newVal) -> Platform
+                		.runLater(() -> showAlert(redmineServ.getException().getMessage())));               
+                redmineServ.setOnSucceeded(e -> {
+	       			List<TIssueEvidenceInfo> results = redmineServ.getValue();
+	       			if (results != null) {
+	       				accordion.setExpandedPane(filterPane);
+	       				results.stream().map(IssueViewModel::new).forEach(issueData::add);
+	       			}
+	       		});
+               
+                progressIndicatorVisible.bind(terosServ.runningProperty().or(redmineServ.runningProperty()));
+                
+            	webViewBridge = new TerosWebViewBridge(aiResponseWebView);
+            	aiResponseWebView.getEngine()
+                        .load("file:" + TedrosFolder.MODULE_FOLDER.getFullPath() + "TCORE_19780222" + File.separator
+                                + "teros_ia_response.html");
+                aiResponseWebView.setZoom(0.78);
+            } catch (Exception e) {
+                TLoggerUtil.error(RedmineIssueSearchComponent.class, "Failed to load AI response HTML template.", e);
+            }
+		});
+                
     }
-
-    @SuppressWarnings("unchecked")
+    
     private void initializeUI() {
+    	
+    	TLanguage lang = TLanguage.getInstance();
+    	
         // 1. Top Section - Filters
         GridPane filtersGrid = new GridPane();
         filtersGrid.setHgap(10);
@@ -147,49 +195,42 @@ public class RedmineIssueSearchComponent extends VBox {
         filtersGrid.setStyle("-fx-border-color: lightgray; -fx-border-radius: 5; -fx-padding: 10;");
 
         // Date Range
-        filtersGrid.add(new TLabel("Start Date:"), 0, 0);
+        filtersGrid.add(new TLabel(lang.getString(TUsualKey.BEGIN_DATE)), 0, 0);
         startDatePicker = new TDatePickerField();
         filtersGrid.add(startDatePicker, 1, 0);
 
-        filtersGrid.add(new TLabel("End Date:"), 2, 0);
+        filtersGrid.add(new TLabel(lang.getString(TUsualKey.END_DATE)), 2, 0);
         endDatePicker = new TDatePickerField();
         filtersGrid.add(endDatePicker, 3, 0);
 
         // Status
-        filtersGrid.add(new TLabel("Status:"), 0, 1);
+        filtersGrid.add(new TLabel(lang.getString(TUsualKey.STATUS)), 0, 1);
         statusComboBox = new ComboBox<>();
         statusComboBox.setMaxWidth(Double.MAX_VALUE);
         filtersGrid.add(statusComboBox, 1, 1);
 
         // Assigned To
-        filtersGrid.add(new TLabel("Assigned To:"), 2, 1);
+        filtersGrid.add(new TLabel(lang.getString(ItToolsKey.ASSIGNED_TO)), 2, 1);
         assignedToComboBox = new ComboBox<>();
         assignedToComboBox.setMaxWidth(Double.MAX_VALUE);
         filtersGrid.add(assignedToComboBox, 3, 1);
 
         // Author
-        filtersGrid.add(new TLabel("Author:"), 0, 2);
+        filtersGrid.add(new TLabel(lang.getString(TUsualKey.AUTOR)), 0, 2);
         authorComboBox = new ComboBox<>();
         authorComboBox.setMaxWidth(Double.MAX_VALUE);
         filtersGrid.add(authorComboBox, 1, 2);
 
         // Spent Time
         // Issue Id
-        filtersGrid.add(new TLabel("Issue Id:"), 2, 2);
+        filtersGrid.add(new TLabel(lang.getString(ItToolsKey.ISSUE_ID)), 2, 2);
         issueIdField = new TextField();
-        issueIdField.setPromptText("Issue ID");
+        issueIdField.setPromptText(lang.getString(ItToolsKey.ISSUE_ID));
         filtersGrid.add(issueIdField, 3, 2);
 
-        searchButton = new TButton("Search Issues");
+        searchButton = new TButton(lang.getString(ItToolsKey.SEACH_FOR_ISSUE));
         searchButton.setOnAction(e -> searchIssues());
         filtersGrid.add(searchButton, 4, 1);
-
-        progressIndicator = new ProgressIndicator();
-        progressIndicator.setVisible(false);
-        progressIndicator.setMaxSize(20, 20);
-        filtersGrid.add(progressIndicator, 4, 2);
-
-        TitledPane filterPane = new TitledPane("Filtros de pesquisa", filtersGrid);
 
         buildResultTableView();
         buildSelectedTableView();
@@ -199,66 +240,62 @@ public class RedmineIssueSearchComponent extends VBox {
         VBox.setVgrow(accordion, Priority.ALWAYS);
 
         // Pane 1: Search Results
-        addToAnalysisButton = new TButton("Add to Analysis");
+        addToAnalysisButton = new TButton(lang.getString(ItToolsKey.ADD_TO_ANALYSIS));
         addToAnalysisButton.setOnAction(e -> addToAnalysis());
 
-        VBox resultsBox = new VBox(10, resultsTable, addToAnalysisButton);
+        VBox resultsBox = new VBox(10, filtersGrid, resultsTable, addToAnalysisButton);
         resultsBox.setPadding(new Insets(10));
         resultsBox.setFillWidth(true);
         VBox.setVgrow(resultsTable, Priority.ALWAYS);
-        resultsPane = new TitledPane("Resultado da pesquisa", resultsBox);
+        
+        filterPane = new TitledPane(lang.getString(TUsualKey.FILTERS), resultsBox);
+        
 
         // Pane 2: AI Analysis
         aiPromptField = new TextArea();
-        aiPromptField.setPromptText("Descreva instruções adicionais para a análise da IA...");
+        aiPromptField.setPromptText(lang.getString(ItToolsKey.DESCRIBE_IA_INSTRUCTIONS));
         aiPromptField.setPrefRowCount(4);
 
-        removeSelectedButton = new TButton("Remove Selected");
+        removeSelectedButton = new TButton(lang.getString(ItToolsKey.REMOVE_SELECTED));
         removeSelectedButton.setOnAction(e -> removeFromAnalysis());
 
-        clearAllButton = new TButton("Clear All");
+        clearAllButton = new TButton(lang.getString(ItToolsKey.CLEAR_ALL));
         clearAllButton.setOnAction(e -> selectedIssueData.clear());
 
-        HBox selectionButtons = new HBox(10, removeSelectedButton, clearAllButton);
+        TToolBar selectionButtons = new TToolBar(removeSelectedButton, clearAllButton);
 
-        sendForAnalysisButton = new TButton("Send for Analysis");
+        sendForAnalysisButton = new TButton(lang.getString(ItToolsKey.SEND_TO_TEROS));
         sendForAnalysisButton.setStyle("-fx-font-weight: bold;");
         sendForAnalysisButton.setOnAction(e -> performAiAnalysis());
 
         aiResponseWebView = new WebView();
-        aiResponseWebView.setPrefHeight(500);
-        VBox aiBox = new VBox(10,
-                new TLabel("Itens selecionados para análise:"),
+        aiResponseWebView.setMaxHeight(350);
+        VBox selectedItensBox = new VBox(10,
+                new TLabel(lang.getString(ItToolsKey.SELECTED_ITEMS_TO_ANALYSE)),
                 selectedTable,
-                selectionButtons,
-                new TLabel("Instruções para IA:"),
+                selectionButtons);
+        selectedItensBox.setPadding(new Insets(10));
+        VBox.setVgrow(selectedTable, Priority.ALWAYS);
+        
+        VBox aiBox = new VBox(10,
+                new TLabel(lang.getString(ItToolsKey.TEROS_INSTRUCTIONS)),
                 aiPromptField,
                 sendForAnalysisButton,
                 aiResponseWebView);
         aiBox.setPadding(new Insets(10));
 
-        aiPane = new TitledPane("Analisar demandas com Teros", aiBox);
+        aiPane = new TitledPane(lang.getString(ItToolsKey.ISSUE_ANALYSIS_WITH_TEROS), new HBox(10, selectedItensBox, aiBox));
+        
 
-        this.aiResponseWebView.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene != null) {
-                try {
-                    aiResponseWebView.getEngine()
-                            .load("file:" + TedrosFolder.MODULE_FOLDER.getFullPath() + "TCORE_19780222" + File.separator
-                                    + "teros_ia_response.html");
-                    aiResponseWebView.setZoom(0.8);
-                } catch (Exception e) {
-                    TLoggerUtil.error(RedmineIssueSearchComponent.class, "Failed to load AI response HTML template.",
-                            e);
-                }
-            }
-        });
-
-        accordion.getPanes().addAll(filterPane, resultsPane, aiPane);
+        accordion.getPanes().addAll(filterPane, aiPane);
         this.getChildren().add(accordion);
         accordion.setExpandedPane(filterPane);
     }
 
-    private void buildResultTableView() {
+    @SuppressWarnings("unchecked")
+	private void buildResultTableView() {
+    	TLanguage lang = TLanguage.getInstance();
+    	
         // 2. Center Section - Results Table
         resultsTable = new TableView<>();
         resultsTable.setEditable(true);
@@ -278,64 +315,64 @@ public class RedmineIssueSearchComponent extends VBox {
             issueData.forEach(item -> item.setSelected(isSelected));
         });
         selectCol.setGraphic(selectAllCb);
-        selectCol.setText("Select");
+        selectCol.setText(lang.getString(TUsualKey.SELECT));
         selectCol.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
         selectCol.setCellFactory(CheckBoxTableCell.forTableColumn(selectCol));
         selectCol.setEditable(true);
-        selectCol.setMinWidth(60);
-        selectCol.setMaxWidth(60);
-        selectCol.setPrefWidth(60);
-        selectCol.setResizable(false); // Impede o usuário de redimensionar esta coluna
+        selectCol.setMinWidth(90);
+        selectCol.setMaxWidth(90);
+        selectCol.setPrefWidth(90);
+        selectCol.setResizable(true); // Impede o usuário de redimensionar esta coluna
 
         // 2. ID (Tamanho fixo numérico)
-        TableColumn<IssueViewModel, Long> idCol = new TableColumn<>("Issue ID");
+        TableColumn<IssueViewModel, Long> idCol = new TableColumn<>(lang.getString(ItToolsKey.ISSUE_ID));
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        idCol.setMinWidth(60);
-        idCol.setMaxWidth(70);
-        idCol.setPrefWidth(60);
-        idCol.setResizable(false);
+        idCol.setMinWidth(80);
+        idCol.setMaxWidth(90);
+        idCol.setPrefWidth(70);
+        idCol.setResizable(true);
 
         // 3. Type (Tamanho controlado)
-        TableColumn<IssueViewModel, String> typeCol = new TableColumn<>("Type");
+        TableColumn<IssueViewModel, String> typeCol = new TableColumn<>(lang.getString(TUsualKey.TYPE));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("trackerName"));
         typeCol.setMinWidth(100);
         typeCol.setMaxWidth(120); // Pode crescer um pouco, mas não muito
 
         // 4. Status (Tamanho controlado)
-        TableColumn<IssueViewModel, String> statusCol = new TableColumn<>("Status");
+        TableColumn<IssueViewModel, String> statusCol = new TableColumn<>(lang.getString(TUsualKey.STATUS));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("statusName"));
         statusCol.setMinWidth(100);
         statusCol.setMaxWidth(120);
 
         // 5. Title (PRINCIPAL: Ocupa todo o espaço restante)
-        TableColumn<IssueViewModel, String> titleCol = new TableColumn<>("Title");
+        TableColumn<IssueViewModel, String> titleCol = new TableColumn<>(lang.getString(TUsualKey.TITLE));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("subject"));
         titleCol.setMinWidth(200); // Garante que o texto não suma
         titleCol.setMaxWidth(Double.MAX_VALUE); // Permite crescer infinitamente
 
         // 6. % Done (Fixo pequeno)
-        TableColumn<IssueViewModel, Integer> doneCol = new TableColumn<>("% Done");
+        TableColumn<IssueViewModel, Integer> doneCol = new TableColumn<>(lang.getString(ItToolsKey.PERCENTAGE_DONE));
         doneCol.setCellValueFactory(new PropertyValueFactory<>("doneRatio"));
-        doneCol.setMinWidth(60);
-        doneCol.setMaxWidth(60);
-        doneCol.setResizable(false);
+        doneCol.setMinWidth(90);
+        doneCol.setMaxWidth(90);
+        doneCol.setResizable(true);
 
         // 7. Start Date (Fixo para caber a data)
-        TableColumn<IssueViewModel, String> startCol = new TableColumn<>("Start Date");
+        TableColumn<IssueViewModel, String> startCol = new TableColumn<>(lang.getString(TUsualKey.BEGIN_DATE));
         startCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         startCol.setMinWidth(100);
         startCol.setMaxWidth(200);
 
         // 8. Due Date (Fixo para caber a data)
-        TableColumn<IssueViewModel, String> dueCol = new TableColumn<>("Due Date");
+        TableColumn<IssueViewModel, String> dueCol = new TableColumn<>(lang.getString(ItToolsKey.DUE_DATE));
         dueCol.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
         dueCol.setMinWidth(100);
         dueCol.setMaxWidth(200);
 
         // 9. Assigned To (Fixo ou ligeiramente flexível)
-        TableColumn<IssueViewModel, String> assignedCol = new TableColumn<>("Assigned To");
+        TableColumn<IssueViewModel, String> assignedCol = new TableColumn<>(lang.getString(ItToolsKey.ASSIGNED_TO));
         assignedCol.setCellValueFactory(new PropertyValueFactory<>("assigneeName"));
-        assignedCol.setMinWidth(100);
+        assignedCol.setMinWidth(200);
         assignedCol.setMaxWidth(250);
 
         // Adiciona todas as colunas
@@ -345,34 +382,38 @@ public class RedmineIssueSearchComponent extends VBox {
         this.getChildren().add(resultsTable);
     }
 
-    private void buildSelectedTableView() {
+    @SuppressWarnings("unchecked")
+	private void buildSelectedTableView() {
+    	
+    	TLanguage lang = TLanguage.getInstance();
+    	
         selectedTable = new TableView<>();
         selectedTable.setItems(selectedIssueData);
         selectedTable.setPrefHeight(200);
         selectedTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // 2. ID (Tamanho fixo numérico)
-        TableColumn<IssueViewModel, Long> idCol = new TableColumn<>("Issue ID");
+        TableColumn<IssueViewModel, Long> idCol = new TableColumn<>(lang.getString(ItToolsKey.ISSUE_ID));
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        idCol.setMinWidth(60);
-        idCol.setMaxWidth(70);
-        idCol.setPrefWidth(60);
-        idCol.setResizable(false);
+        idCol.setMinWidth(90);
+        idCol.setMaxWidth(90);
+        idCol.setPrefWidth(90);
+        idCol.setResizable(true);
 
         // 3. Type (Tamanho controlado)
-        TableColumn<IssueViewModel, String> typeCol = new TableColumn<>("Type");
+        TableColumn<IssueViewModel, String> typeCol = new TableColumn<>(lang.getString(TUsualKey.TYPE));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("trackerName"));
         typeCol.setMinWidth(100);
         typeCol.setMaxWidth(120); // Pode crescer um pouco, mas não muito
 
         // 4. Status (Tamanho controlado)
-        TableColumn<IssueViewModel, String> statusCol = new TableColumn<>("Status");
+        TableColumn<IssueViewModel, String> statusCol = new TableColumn<>(lang.getString(TUsualKey.STATUS));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("statusName"));
         statusCol.setMinWidth(100);
         statusCol.setMaxWidth(120);
 
         // 5. Title (PRINCIPAL: Ocupa todo o espaço restante)
-        TableColumn<IssueViewModel, String> titleCol = new TableColumn<>("Title");
+        TableColumn<IssueViewModel, String> titleCol = new TableColumn<>(lang.getString(TUsualKey.TITLE));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("subject"));
         titleCol.setMinWidth(200); // Garante que o texto não suma
         titleCol.setMaxWidth(Double.MAX_VALUE); // Permite crescer infinitamente
@@ -386,11 +427,12 @@ public class RedmineIssueSearchComponent extends VBox {
                 .collect(Collectors.toList());
 
         if (selectedInResults.isEmpty()) {
-            showAlert("No Selection", "Please select items in the results table first.");
+            showAlert(TLanguage.getInstance().getString(ItToolsKey.TEXT_SELECT_ITEMS_FIRST));
             return;
         }
 
-        int addedCount = 0;
+        accordion.setExpandedPane(aiPane);
+        
         for (IssueViewModel item : selectedInResults) {
             // Prevent duplicates based on ID
             boolean exists = selectedIssueData.stream().anyMatch(existing -> existing.getId().equals(item.getId()));
@@ -399,14 +441,7 @@ public class RedmineIssueSearchComponent extends VBox {
                 // If we wanted independent selection state in the second table,
                 // we might clone it, but here it's fine.
                 selectedIssueData.add(item);
-                addedCount++;
             }
-        }
-
-        if (addedCount > 0) {
-            accordion.setExpandedPane(aiPane);
-        } else {
-            showAlert("Info", "Selected items are already in the analysis list.");
         }
     }
 
@@ -419,8 +454,8 @@ public class RedmineIssueSearchComponent extends VBox {
 
     private void performAiAnalysis() {
         if (selectedIssueData.isEmpty()) {
-            showAlert("No Selection", "Please add issues to the analysis list.");
-            accordion.setExpandedPane(resultsPane);
+        	accordion.setExpandedPane(filterPane);
+        	showAlert(TLanguage.getInstance().getString(ItToolsKey.TEXT_ADD_ISSUES_TO_ANALYSIS));
             return;
         }
 
@@ -428,10 +463,12 @@ public class RedmineIssueSearchComponent extends VBox {
                 .map(IssueViewModel::getOriginal)
                 .collect(Collectors.toList());
 
-        progressIndicator.setVisible(true);
-        sendForAnalysisButton.setDisable(true);
-
         String userPrompt = aiPromptField.getText();
+        
+        if(userPrompt == null || userPrompt.trim().isEmpty()) {
+        	showAlert(TLanguage.getInstance().getString(ItToolsKey.TEXT_PROVIDE_INSTRUCTIONS));
+			return;
+		}
 
         CompletableFuture.runAsync(() -> {
             if (selectedIssues.size() > 3) {
@@ -451,28 +488,11 @@ public class RedmineIssueSearchComponent extends VBox {
     }
 
     private void callTerosService(List<TIssueEvidenceInfo> selectedIssues, String userPrompt, String systemPrompt) {
-
         String contextData = toJson(selectedIssues);
-        String fullPromptWithIssues = (userPrompt != null ? userPrompt : "") + "\n\nData:\n" + contextData;
-
-        try {
-
-            iaServ.cleanMessageHistory();
-            String htmlMessage = iaServ.call(fullPromptWithIssues, systemPrompt);
-            TLoggerUtil.info(RedmineIssueSearchComponent.class, "Resposta Teros:");
-            TLoggerUtil.info(RedmineIssueSearchComponent.class, htmlMessage);
-            Platform.runLater(() -> {
-                webViewBridge.run(htmlMessage);
-                accordion.setExpandedPane(aiPane);
-            });
-        } catch (Exception e) {
-            Platform.runLater(() -> showAlert("AI Error", "Failed to analyze: " + e.getMessage()));
-        } finally {
-            Platform.runLater(() -> {
-                progressIndicator.setVisible(false);
-                sendForAnalysisButton.setDisable(false);
-            });
-        }
+        String fullPromptWithIssues = (userPrompt != null ? userPrompt : "") + "\n\nData:\n" + contextData;        
+        terosServ.prompt = fullPromptWithIssues;
+        terosServ.systemPrompt = systemPrompt != null ? systemPrompt : SYSTEM_PROMPT;
+        terosServ.startProcess();
     }
 
     private String toJson(List<TIssueEvidenceInfo> issues) {
@@ -485,57 +505,52 @@ public class RedmineIssueSearchComponent extends VBox {
     }
 
     private void loadInitialData() {
-        progressIndicator.setVisible(true);
-        CompletableFuture.runAsync(() -> {
-            try {
-                // Initialize gateway cache if needed (gateway logic)
-                gateway.loadCustomFieldMetadata();
+        
+    	Service<Void> loadService = new Service<Void>() {
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+						// Initialize gateway cache if needed (gateway logic)
+		                gateway.loadCustomFieldMetadata();
+		                
+		                String all = "-";
+		                
+		                TIssueStatus allStatus = new TIssueStatus();
+		                allStatus.setName(all);
+		                
+		                TRedmineUser allUsers = new TRedmineUser();
+		                allUsers.setLogin(all);
 
-                List<TIssueStatus> statuses = gateway.listIssueStatuses();
-                List<TRedmineUser> users = gateway.listUsers();
-
-                Platform.runLater(() -> {
-                    statusComboBox.getItems().setAll(statuses);
-                    assignedToComboBox.getItems().setAll(users);
-                    authorComboBox.getItems().setAll(users);
-                });
-            } catch (Exception e) {
-                Platform.runLater(() -> showAlert("Error loading initial data", e.getMessage()));
-            } finally {
-                Platform.runLater(() -> progressIndicator.setVisible(false));
-            }
-        });
+		                List<TIssueStatus> statuses = new ArrayList<>(gateway.listIssueStatuses());
+		                List<TRedmineUser> users = new ArrayList<>(gateway.listUsers());
+		                
+		                statuses.add(0, allStatus);
+		                users.add(0, allUsers);
+		                
+	                    statusComboBox.getItems().setAll(statuses);
+	                    assignedToComboBox.getItems().setAll(users);
+	                    authorComboBox.getItems().setAll(users);
+		                
+						return null;
+					}
+				};
+			}
+    		
+    	};
+    	
+    	progressIndicatorVisible.bind(loadService.runningProperty());
+    	
+    	loadService.setOnFailed(e -> showAlert("Error loading initial data"+": "+loadService.getException().getMessage()));
+    	loadService.start();
     }
 
     private void searchIssues() {
-        progressIndicator.setVisible(true);
-        searchButton.setDisable(true);
         issueData.clear();
-
         RedmineIssueFilter filter = buildFilter();
-
-        CompletableFuture.runAsync(() -> {
-            try {
-                Map<String, FilterCondition> filtersMap = RedmineFilterField.fromObject(filter);
-                List<TIssueEvidenceInfo> results = gateway.getIssuesByFilters(filtersMap);
-
-                Platform.runLater(() -> {
-                    if (results != null) {
-                        accordion.setExpandedPane(resultsPane);
-                        for (TIssueEvidenceInfo info : results) {
-                            issueData.add(new IssueViewModel(info));
-                        }
-                    }
-                });
-            } catch (Exception e) {
-                Platform.runLater(() -> showAlert("Error searching issues", e.getMessage()));
-            } finally {
-                Platform.runLater(() -> {
-                    progressIndicator.setVisible(false);
-                    searchButton.setDisable(false);
-                });
-            }
-        });
+        redmineServ.filter = filter;
+        redmineServ.startProcess();
     }
 
     private RedmineIssueFilter buildFilter() {
@@ -556,17 +571,17 @@ public class RedmineIssueSearchComponent extends VBox {
         }
 
         // Status
-        if (statusComboBox.getValue() != null) {
+        if (statusComboBox.getValue() != null && statusComboBox.getValue().getId() != null) {
             filter.setStatus_id(FilterCondition.equalsTo(String.valueOf(statusComboBox.getValue().getId())));
         }
 
         // Assigned To
-        if (assignedToComboBox.getValue() != null) {
+        if (assignedToComboBox.getValue() != null && assignedToComboBox.getValue().getId() != null) {
             filter.setAssigned_to_id(FilterCondition.equalsTo(String.valueOf(assignedToComboBox.getValue().getId())));
         }
 
         // Author
-        if (authorComboBox.getValue() != null) {
+        if (authorComboBox.getValue() != null && authorComboBox.getValue().getId() != null) {
             filter.setAuthor_id(FilterCondition.equalsTo(String.valueOf(authorComboBox.getValue().getId())));
         }
 
@@ -584,14 +599,8 @@ public class RedmineIssueSearchComponent extends VBox {
         return filter;
     }
 
-    private void showAlert(String title, String content) {
-        /*
-         * Alert alert = new Alert(AlertType.ERROR);
-         * alert.setTitle("Error");
-         * alert.setHeaderText(title);
-         * alert.setContentText(content);
-         * alert.showAndWait();
-         */
+    private void showAlert(String content) {
+    	view.tShowModal(new TMessageBox(content), true); 
     }
 
     // ViewModel for TableView
@@ -651,4 +660,60 @@ public class RedmineIssueSearchComponent extends VBox {
             return original;
         }
     }
+    
+    private static class TerosService extends TProcess<String> {
+    	
+		private String prompt;
+		private String systemPrompt;
+		private IAiTerosService iaServ;
+		
+		public TerosService() {
+			String apiKey = TedrosContext.getAiApiKey();
+            String aiModel = TedrosContext.getAiModel();
+            AiServiceProvider aiProvider = TedrosContext.getAiServiceProvider();
+            iaServ = AiTerosServiceFactory.newInstance(apiKey, aiModel, SYSTEM_PROMPT, aiProvider);
+		}
+
+		@Override
+		protected TTaskImpl<String> createTask() {
+			return new TTaskImpl<String>() {
+				@Override
+				protected String call() throws Exception {
+					iaServ.cleanMessageHistory();
+					return iaServ.call(prompt, systemPrompt);
+				}
+
+				@Override
+				public String getServiceNameInfo() {
+					return null;
+				}
+			};
+		}
+    }
+    
+    private static class RedmineService extends TProcess<List<TIssueEvidenceInfo>> {
+    	
+    	RedmineIssueFilter filter;
+    	private RedmineApiGateway gateway;
+    	
+    	public RedmineService(RedmineApiGateway gateway) {
+    		this.gateway = gateway;	
+    	}
+
+    	@Override
+		protected TTaskImpl<List<TIssueEvidenceInfo>> createTask() {
+			return new TTaskImpl<List<TIssueEvidenceInfo>>() {
+				@Override
+				protected List<TIssueEvidenceInfo> call() throws Exception {
+					Map<String, FilterCondition> filtersMap = RedmineFilterField.fromObject(filter);
+	                return gateway.getIssuesByFilters(filtersMap);
+				}
+
+				@Override
+				public String getServiceNameInfo() {
+					return null;
+				}
+			};
+		}
+    }	
 }

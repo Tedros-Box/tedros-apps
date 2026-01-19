@@ -186,7 +186,13 @@ public class RedmineApiGateway {
 				// Converte e adiciona à lista acumulada
 				List<Issue> paginaAtual = wrapper.getResults();
 				if (!paginaAtual.isEmpty()) {
-					paginaAtual.forEach(issue -> todasIssues.add(RedmineMapper.convertForEvidenceInfo(issue)));
+					for (Issue issueResumida : paginaAtual) {
+		                // Faz uma nova chamada para cada issue para pegar TUDO (Journals, etc)
+		                // CUIDADO: Isso fará 100 chamadas HTTP por página. Pode demorar muito.
+		                Issue issueCompleta = manager.getIssueManager()
+		                    .getIssueById(issueResumida.getId(), Include.values());
+		                todasIssues.add(RedmineMapper.convertForEvidenceInfo(issueCompleta));
+		            }
 				}
 
 				// Incrementa o offset com a quantidade real retornada nesta página
