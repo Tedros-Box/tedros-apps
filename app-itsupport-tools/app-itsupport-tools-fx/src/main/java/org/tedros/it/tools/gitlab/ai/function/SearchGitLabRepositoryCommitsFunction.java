@@ -2,6 +2,7 @@ package org.tedros.it.tools.gitlab.ai.function;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
+import org.tedros.ai.function.model.Response;
 import org.tedros.it.tools.gitlab.ai.model.TGitLabProjectId;
 import org.tedros.util.TLoggerUtil;
 
@@ -20,7 +21,7 @@ public class SearchGitLabRepositoryCommitsFunction extends TFunction<TGitLabProj
 		        return GitLabGatewayFactory.getGateway().getRepositoryCommits(v.getProjectId());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
-				return "Function error: " + e.getMessage();
+				return new Response(EXCEPTION_MESSAGE + e.getMessage());
 			}
 		});
 	}

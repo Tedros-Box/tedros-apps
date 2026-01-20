@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosContext;
@@ -24,71 +25,77 @@ import org.tedros.person.model.VoluntaryType;
 import org.tedros.server.query.TSelect;
 import org.tedros.server.result.TResult;
 import org.tedros.server.result.TResult.TState;
+import org.tedros.util.TLoggerUtil;
 
 /**
  * @author Davis Gordon
  *
  */
 public class ListPersonTypeFunction extends TFunction<ClassificationParam> {
+	
+	private static final Logger LOGGER = TLoggerUtil.getLogger(ListPersonTypeFunction.class);
+	
+	public static final String NAME = "list_person_types";
+	public static final String DESCRIPTION = "List all types that can be given to a person";
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ListPersonTypeFunction() {
-		super("list_types_person", "List all types that can be given to a person", ClassificationParam.class, 
+		super(NAME, DESCRIPTION, ClassificationParam.class, 
 				v->{
-					TSelect sel = null;;
+					LOGGER.info("Listing all person types with classification: {}", v.getClassification());
+					
+					TSelect sel = null;
 					if(v.getClassification()==null)
 						sel = new TSelect(PersonType.class);
-					else
-					switch(v.getClassification()) {
-					case ALL:
-						sel = new TSelect(PersonType.class);
-						break;
-					case CLIENT_COMPANY:
-						sel = new TSelect(ClientCompanyType.class);
-						break;
-					case CUSTOMER:
-						sel = new TSelect(CustomerType.class);
-						break;
-					case EMPLOYEE:
-						sel = new TSelect(StaffType.class);
-						break;
-					case LEGAL_PERSON:
-						sel = new TSelect(LegalType.class);
-						break;
-					case MEMBER:
-						sel = new TSelect(MemberType.class);
-						break;
-					case NATURAL_PERSON:
-						sel = new TSelect(NaturalType.class);
-						break;
-					case PHILANTHROPE:
-						sel = new TSelect(PhilanthropeType.class);
-						break;
-					case VOLUNTARY:
-						sel = new TSelect(VoluntaryType.class);
-						break;
-					default:
-						break;
+					else {
+						switch(v.getClassification()) {
+						case ALL:
+							sel = new TSelect(PersonType.class);
+							break;
+						case CLIENT_COMPANY:
+							sel = new TSelect(ClientCompanyType.class);
+							break;
+						case CUSTOMER:
+							sel = new TSelect(CustomerType.class);
+							break;
+						case EMPLOYEE:
+							sel = new TSelect(StaffType.class);
+							break;
+						case LEGAL_PERSON:
+							sel = new TSelect(LegalType.class);
+							break;
+						case MEMBER:
+							sel = new TSelect(MemberType.class);
+							break;
+						case NATURAL_PERSON:
+							sel = new TSelect(NaturalType.class);
+							break;
+						case PHILANTHROPE:
+							sel = new TSelect(PhilanthropeType.class);
+							break;
+						case VOLUNTARY:
+							sel = new TSelect(VoluntaryType.class);
+							break;
+						default:
+							break;
+						}
 					}
-					
-					TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
-					try {
+										
+					try(TEjbServiceLocator loc = TEjbServiceLocator.getInstance()) {
 						IPersonTypeController serv = loc.lookup(IPersonTypeController.JNDI_NAME);
 						TResult<List<PersonType>> res = serv.search(TedrosContext.getLoggedUser().getAccessToken(), sel);
 						if(res.getState().equals(TState.SUCCESS)) {
 							if(res.getValue().isEmpty())
-								return new Response("No data found!");
-							return new Response("Result list", res.getValue()); 
+								return new Response(NO_DATA_FOUND_MESSAGE);
+							return new Response(SUSCESS_MESSAGE, res.getValue()); 
 						}
 						
 					} catch (NamingException e) {
-						e.printStackTrace();
-						return new Response("An error occurred!");
-					}finally {
-						loc.close();
+						LOGGER.error(e.getMessage(), e);
+						return new Response(EXCEPTION_MESSAGE + e.getMessage());
 					}
 					
-					return new Response("The operation fail!");
+					return new Response(FAILURE_MESSAGE);
 				});
 			
 	}

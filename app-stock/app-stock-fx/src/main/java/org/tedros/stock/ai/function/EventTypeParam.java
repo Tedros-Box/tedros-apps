@@ -6,9 +6,18 @@ package org.tedros.stock.ai.function;
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonClassDescription("The Inventory event fields")
 public class EventTypeParam {
 	
@@ -20,29 +29,4 @@ public class EventTypeParam {
 	
 	@JsonPropertyDescription("the description")
 	private String description;
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 }

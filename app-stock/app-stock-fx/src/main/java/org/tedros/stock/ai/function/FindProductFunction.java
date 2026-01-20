@@ -9,6 +9,7 @@ import java.util.List;
 import javax.naming.NamingException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosContext;
@@ -19,18 +20,27 @@ import org.tedros.server.result.TResult;
 import org.tedros.server.result.TResult.TState;
 import org.tedros.stock.ejb.controller.IProductController;
 import org.tedros.stock.entity.Product;
+import org.tedros.util.TLoggerUtil;
 
 /**
  * 
  */
 public class FindProductFunction extends TFunction<ProductParam> {
+	
+	private static final Logger LOGGER = TLoggerUtil.getLogger(FindProductFunction.class);
+	
+	public static final String NAME = "search_products";
+	public static final String DESCRIPTION = "Searches the product catalog/inventory using partial matches. ";
+	
+	private static final String INSERT_DATE = "insertDate";
 
 	public FindProductFunction() {
-		super("search_products", "Search for products based on the fields provided, lists all if no field is filled in", ProductParam.class, 
+		super(NAME, DESCRIPTION, ProductParam.class, 
 				v->{
 					
-					TSelect<Product> sel = new TSelect<>(Product.class);
+					LOGGER.info("Searching Products with parameters: {}", v);
 					
+					TSelect<Product> sel = new TSelect<>(Product.class);
 
 					if(StringUtils.isNotBlank(v.getCode())) 
 						sel.addOrCondition("code", TCompareOp.LIKE, v.getCode().trim().toLowerCase());
@@ -52,35 +62,34 @@ public class FindProductFunction extends TFunction<ProductParam> {
 					
 					if(v.getBeginDate()!=null) {
 						if(v.getBeginDate()!=null && v.getEndDate()==null)
-							sel.addOrCondition("insertDate", TCompareOp.EQUAL, v.getBeginDate());
+							sel.addOrCondition(INSERT_DATE, TCompareOp.EQUAL, v.getBeginDate());
 						else {
-							sel.addOrCondition("insertDate", TCompareOp.GREATER_EQ_THAN, v.getBeginDate());
-							sel.addAndCondition("insertDate", TCompareOp.LESS_THAN, v.getEndDate());
+							sel.addOrCondition(INSERT_DATE, TCompareOp.GREATER_EQ_THAN, v.getBeginDate());
+							sel.addAndCondition(INSERT_DATE, TCompareOp.LESS_THAN, v.getEndDate());
 						}
 					}else if(v.getEndDate()!=null)
-						sel.addOrCondition("insertDate", TCompareOp.LESS_EQ_THAN, v.getEndDate());
+						sel.addOrCondition(INSERT_DATE, TCompareOp.LESS_EQ_THAN, v.getEndDate());
 					
-					TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
-					try {
+					
+					try(TEjbServiceLocator loc = TEjbServiceLocator.getInstance()) {
 						IProductController serv = loc.lookup(IProductController.JNDI_NAME);
 						TResult<List<Product>> res = serv.search(TedrosContext.getLoggedUser().getAccessToken(), sel);
 						if(res.getState().equals(TState.SUCCESS)) {
 							if(res.getValue().isEmpty())
-								return new Response("No data found!");
+								return new Response(NO_DATA_FOUND_MESSAGE);
 							
 							List<ProductParam> lst = new ArrayList<>();
 							res.getValue().forEach(p->lst.add(new ProductParam(p)));
 							
-							return new Response("Result list", lst); 
+							return new Response(SUSCESS_MESSAGE, lst); 
 						}
 						
 					} catch (NamingException e) {
-						e.printStackTrace();
-						return new Response("An error occurred!");
-					}finally {
-						loc.close();
+						LOGGER.error(e.getMessage(), e);
+						return new Response(EXCEPTION_MESSAGE + e.getMessage());
 					}
-					return new Response("The operation fail!");
+					
+					return new Response(FAILURE_MESSAGE);
 				});
 
 	}

@@ -3,6 +3,7 @@ package org.tedros.extension.ai.function;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosContext;
@@ -20,17 +21,22 @@ import org.tedros.server.query.TLogicOp;
 import org.tedros.server.query.TSelect;
 import org.tedros.server.result.TResult;
 import org.tedros.server.result.TResult.TState;
+import org.tedros.util.TLoggerUtil;
 
 public class SearchForDocumentsFunction extends TFunction<DocumentSearchParam> {
+	
+	private static final Logger LOGGER = TLoggerUtil.getLogger(SearchForDocumentsFunction.class);
 
-	private static final String NAME = "search_for_documents";
-	private static final String DESCRIPTION = "Search for documents based on given parameters";
+	public static final String NAME = "search_for_documents";
+	public static final String DESCRIPTION = "Search for documents based on given parameters";
 	
 	public SearchForDocumentsFunction() {
 		super(NAME, DESCRIPTION, DocumentSearchParam.class, v-> {
-			TEjbServiceLocator locator = TEjbServiceLocator.getInstance();
 			
-			try {
+			LOGGER.info("Searching for documents with parameters: {}", v);
+			
+			try(TEjbServiceLocator locator = TEjbServiceLocator.getInstance()) {
+				
 				TSelect<Document> select = new TSelect<>(Document.class, "doc");
 				select.addJoin(TJoinType.INNER, "doc", "type", "tp");
 				select.addJoin(TJoinType.INNER, "doc", "status", "st");
@@ -54,59 +60,57 @@ public class SearchForDocumentsFunction extends TFunction<DocumentSearchParam> {
 				if(result.getState().equals(TState.SUCCESS)) {
 					List<Document> lst = result.getValue();
 					if(lst!=null && !lst.isEmpty()) {
-						
-						return lst.stream().map(doc->{
-							
-							DocumentTypeInfo typeInfo = null;
-							if(doc.getType()!=null) {
-								typeInfo = DocumentTypeInfo.builder()
-										.documentType(doc.getType().getDocType())
-										.build();
-								typeInfo.setName(doc.getType().getName());
-								typeInfo.setCode(doc.getType().getCode());
-								typeInfo.setDescription(doc.getType().getDescription());
-							}
-							
-							DomainInfo statusInfo = doc.getStatus()!=null ? 
-									new DomainInfo(doc.getStatus().getCode(), 
-											doc.getStatus().getName(), 
-											doc.getStatus().getDescription())
-									: null;
-							
-							FileInfo fileInfo = null;
-							if(doc.getFile()!=null) {
-								fileInfo = FileInfo.builder()
-										.id(doc.getFile().getId())
-										.fileName(doc.getFile().getFileName())
-										.fileSize(doc.getFile().getFileSize())
-										.fileExtension(doc.getFile().getFileExtension())
-										.owner(doc.getFile().getOwner())
-										.build();
-							}
-							
-							return DocumentInfo.builder().id(doc.getId())
-									.code(doc.getCode())
-									.name(doc.getName())
-									.type(typeInfo)
-									.status(statusInfo)
-									.observation(doc.getObservation())
-									.file(fileInfo)
-									.build();
-						}).toList();
-						
+						List<DocumentInfo> docs = lst.stream().map(SearchForDocumentsFunction::convert).toList();
+						return new Response(SUSCESS_MESSAGE, docs);
 					}
-					
 				}
 				
 			} catch (Exception e) {
-				return new Response("Error searching for documents: " + e.getMessage());
-			}finally {
-				locator.close();
+				LOGGER.error(e.getMessage(), e);
+				return new Response(EXCEPTION_MESSAGE + e.getMessage());
 			}
 			
-			return new Response("No documents found");
+			return new Response(NO_DATA_FOUND_MESSAGE);
 		});
 		
+	}
+
+	private static DocumentInfo convert(Document doc) {
+		DocumentTypeInfo typeInfo = null;
+		if(doc.getType()!=null) {
+			typeInfo = DocumentTypeInfo.builder()
+					.documentType(doc.getType().getDocType())
+					.build();
+			typeInfo.setName(doc.getType().getName());
+			typeInfo.setCode(doc.getType().getCode());
+			typeInfo.setDescription(doc.getType().getDescription());
+		}
+		
+		DomainInfo statusInfo = doc.getStatus()!=null ? 
+				new DomainInfo(doc.getStatus().getCode(), 
+						doc.getStatus().getName(), 
+						doc.getStatus().getDescription())
+				: null;
+		
+		FileInfo fileInfo = null;
+		if(doc.getFile()!=null) {
+			fileInfo = FileInfo.builder()
+					.id(doc.getFile().getId())
+					.fileName(doc.getFile().getFileName())
+					.fileSize(doc.getFile().getFileSize())
+					.fileExtension(doc.getFile().getFileExtension())
+					.owner(doc.getFile().getOwner())
+					.build();
+		}
+		
+		return DocumentInfo.builder().id(doc.getId())
+				.code(doc.getCode())
+				.name(doc.getName())
+				.type(typeInfo)
+				.status(statusInfo)
+				.observation(doc.getObservation())
+				.file(fileInfo)
+				.build();
 	}
 
 }

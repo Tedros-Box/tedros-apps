@@ -13,23 +13,22 @@ public class GetRedmineIssueAiFunction extends TFunction<RedmineIssueIdToFind> {
     
     private static final Logger LOGGER = TLoggerUtil.getLogger(GetRedmineIssueAiFunction.class);
 
-    private static final String FUNCTION_NAME = "get_redmine_issue";
-
-    private static final String PROMPT = """
-    Call this function when user wants to analyze, review, audit, or understand a Redmine issue.
-    Always use this FIRST when a specific issue ID is mentioned.
-    Returns full issue data including:
-    • Title, description, status, priority, assignee
-    • Custom fields (deliverable, HPA, required profile, service type)
-    • All notes/comments in chronological order
-    • List of attachments with file names, sizes, and metadata
-    Never analyze content or attachments without calling this first.
-    Input: issueId (integer, required)
-    Output: Complete issue object with attachments list
-    """;
+    public static final String NAME = "get_redmine_issue";
+    public static final String DESCRIPTION = """
+	    Call this function when user wants to analyze, review, audit, or understand a Redmine issue.
+	    Always use this FIRST when a specific issue ID is mentioned.
+	    Returns full issue data including:
+	    • Title, description, status, priority, assignee
+	    • Custom fields (deliverable, HPA, required profile, service type)
+	    • All notes/comments in chronological order
+	    • List of attachments with file names, sizes, and metadata
+	    Never analyze content or attachments without calling this first.
+	    Input: issueId (integer, required)
+	    Output: Complete issue object with attachments list
+	    """;
 
     public GetRedmineIssueAiFunction() {
-        super(FUNCTION_NAME, PROMPT, RedmineIssueIdToFind.class, v -> {
+        super(NAME, DESCRIPTION, RedmineIssueIdToFind.class, v -> {
             try {
                 LOGGER.info("Fetching Redmine issue #{}", v.getIssueId());
                 var gateway = new RedmineApiGateway(
@@ -39,7 +38,7 @@ public class GetRedmineIssueAiFunction extends TFunction<RedmineIssueIdToFind> {
 
                 TIssueEvidenceInfo issue = gateway.getTIssueEvidenceInfo(v.getIssueId());
                 if (issue == null) {
-                    return new Response("Error: Issue #" + v.getIssueId() + " not found or inaccessible.");
+                    return new Response(NO_DATA_FOUND_MESSAGE);
                 }
 
                 int attachCount = issue.getAttachments() != null ? issue.getAttachments().size() : 0;
@@ -49,7 +48,7 @@ public class GetRedmineIssueAiFunction extends TFunction<RedmineIssueIdToFind> {
 
             } catch (Exception e) {
                 LOGGER.error("Failed to fetch issue #{}: {}", v.getIssueId(), e.getMessage(), e);
-                return new Response("Failed to retrieve issue: " + e.getMessage());
+                return new Response(EXCEPTION_MESSAGE + e.getMessage());
             }
         });
     }

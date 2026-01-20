@@ -13,22 +13,18 @@ import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class RedmineFilterIssueByUserAiFunction extends TFunction<RedmineAssignedToFilter> {
 	
 	private static final Logger LOGGER = TLoggerUtil.getLogger(RedmineFilterIssueByUserAiFunction.class);
-	
-	private static final String PROMPT = "Filter Redmine issues by assigned to ID."; 
-			
+
+	public static final String NAME = "filter_redmine_issues_by_assigned_to_id";
+	public static final String DESCRIPTION = "Filter Redmine issues by assigned to ID.";
+	 			
 	public RedmineFilterIssueByUserAiFunction() {
-		super("filter_redmine_issues_by_assigned_to_id", PROMPT, RedmineAssignedToFilter.class, 
+		super(NAME, DESCRIPTION, RedmineAssignedToFilter.class, 
 			v -> {
 				try {
-					
-					ObjectMapper mapper = new ObjectMapper();
-					
-					LOGGER.info("Filtros recebidos: {}", mapper.writeValueAsString(v));
+					LOGGER.info("Received request to filter Redmine issues by assigned to ID: {}", v.getAssigned_to_id());
 					
 					Map<String, FilterCondition> filters = new HashMap<>();
 				    filters.put("assigned_to_id", FilterCondition.equalsTo(v.getAssigned_to_id()));
@@ -38,18 +34,16 @@ public class RedmineFilterIssueByUserAiFunction extends TFunction<RedmineAssigne
 			        
 			        List<TIssueEvidenceInfo> issues = gateway.getIssuesByFilters(filters);
 					
-			        LOGGER.info("Resultado da pesquisa: {}", mapper.writeValueAsString(issues));
+			        LOGGER.info("Result found: {} issues assigned to ID: {}", issues.size(), v.getAssigned_to_id());
 			        
 					return new Response(SUSCESS_MESSAGE + DO_NOT_CALL_AGAIN  + PROCEED_WITH_HTML_RESPONSE, issues);
 					
 				} catch (Exception e) {
-					return new Response("An error occurred: "+e.getMessage());
+					LOGGER.error("Error filtering issues by assigned to ID: {}", e.getMessage(), e);
+					return new Response(EXCEPTION_MESSAGE + e.getMessage());
 				}
 				  
 			});
-		
-		
-		
 	}
 
 }

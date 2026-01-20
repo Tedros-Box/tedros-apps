@@ -15,9 +15,8 @@ public class DownloadRedmineAttachmentAiFunction extends TFunction<TAttachment> 
     
     private static final Logger LOGGER = TLoggerUtil.getLogger(DownloadRedmineAttachmentAiFunction.class);
 
-    private static final String FUNCTION_NAME = "download_redmine_attachment";
-
-    private static final String PROMPT = """
+    public static final String NAME = "download_redmine_attachment";
+    public static final String DESCRIPTION = """
     Call this function when the user wants to read, analyze, or view the content of a specific attached file.
     Only use AFTER get_redmine_issue has returned the attachment list.
     Required fields in input:
@@ -29,7 +28,8 @@ public class DownloadRedmineAttachmentAiFunction extends TFunction<TAttachment> 
     """;
 
     public DownloadRedmineAttachmentAiFunction() {
-        super(FUNCTION_NAME, PROMPT, TAttachment.class, attachment -> {
+        super(NAME, DESCRIPTION, TAttachment.class, attachment -> {
+        	
             try {
                 if (attachment.getId() == null || attachment.getContentURL() == null || attachment.getContentURL().isBlank()) {
                     return new Response("Error: Attachment missing required fields (id or contentURL). Cannot download.");
@@ -47,7 +47,7 @@ public class DownloadRedmineAttachmentAiFunction extends TFunction<TAttachment> 
                 List<TFileContentInfo> downloaded = gateway.dowloadTAttachments(List.of(attachment));
 
                 if (downloaded == null || downloaded.isEmpty()) {
-                    return new Response("Failed to download file: " + attachment.getFileName());
+                    return new Response(NO_DATA_FOUND_MESSAGE);
                 }
 
                 TFileContentInfo file = downloaded.get(0);
@@ -58,7 +58,7 @@ public class DownloadRedmineAttachmentAiFunction extends TFunction<TAttachment> 
             } catch (Exception e) {
                 LOGGER.error("Download failed for attachment #{} ({}): {}", 
                             attachment.getId(), attachment.getFileName(), e.getMessage(), e);
-                return new Response("Download error: " + e.getMessage());
+                return new Response(EXCEPTION_MESSAGE + e.getMessage());
             }
         });
     }

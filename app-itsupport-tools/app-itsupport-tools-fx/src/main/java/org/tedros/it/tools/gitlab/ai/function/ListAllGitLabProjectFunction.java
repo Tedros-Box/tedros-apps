@@ -3,6 +3,7 @@ package org.tedros.it.tools.gitlab.ai.function;
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Empty;
+import org.tedros.ai.function.model.Response;
 import org.tedros.util.TLoggerUtil;
 
 public class ListAllGitLabProjectFunction extends TFunction<Empty>{
@@ -10,7 +11,7 @@ public class ListAllGitLabProjectFunction extends TFunction<Empty>{
 	private static final Logger LOGGER = TLoggerUtil.getLogger(ListAllGitLabProjectFunction.class);
 	
 	private static final String NAME = "list_gitlab_projects"; 
-	private static final String DESCRIPTION = "Get a list of all projects";
+	private static final String DESCRIPTION = "Get a list of all gitlab projects";
 	
 	public ListAllGitLabProjectFunction() {		
 		super(NAME, DESCRIPTION, Empty.class, v->{			
@@ -19,7 +20,7 @@ public class ListAllGitLabProjectFunction extends TFunction<Empty>{
 		        return GitLabGatewayFactory.getGateway().getAllProjects();
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
-				return "Function error: " + e.getMessage();
+				return new Response(EXCEPTION_MESSAGE + e.getMessage());
 			}
 		});
 	}

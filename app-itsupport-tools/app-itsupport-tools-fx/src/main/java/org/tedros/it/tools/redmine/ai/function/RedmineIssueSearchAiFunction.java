@@ -13,13 +13,12 @@ import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter>  {
 	
 	private static final Logger LOGGER = TLoggerUtil.getLogger(RedmineIssueSearchAiFunction.class);
 	
-	private static final String PROMPT = """
+	public static final String NAME = "filter_redmine_issues";
+	public static final String DESCRIPTION = """
 			You are an assistant that builds Redmine issue filters in JSON format.
 
 			Your task is to return only a valid JSON object describing how to filter Redmine issues, based on user criteria.
@@ -145,13 +144,11 @@ public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> 
 
 
 	public RedmineIssueSearchAiFunction() {
-		super("filter_redmine_issues", PROMPT, RedmineIssueFilter.class, 
+		super(NAME, DESCRIPTION, RedmineIssueFilter.class, 
 			v -> {
 				try {
 					
-					ObjectMapper mapper = new ObjectMapper();
-					
-					LOGGER.info("Filtros recebidos: {}", mapper.writeValueAsString(v));
+					LOGGER.info("Received filter request: {}", v);
 					
 					Map<String, FilterCondition> filters;
 					filters = RedmineFilterField.fromObject(v);
@@ -161,18 +158,15 @@ public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> 
 			        
 			        List<TIssueEvidenceInfo> issues = gateway.getIssuesByFilters(filters);
 					
-			        LOGGER.info("Resultado da pesquisa: {}", mapper.writeValueAsString(issues));
+			        LOGGER.info("Result found {} issues", issues!=null?issues.size():0);
 			        
 					return new Response(SUSCESS_MESSAGE + DO_NOT_CALL_AGAIN  + PROCEED_WITH_HTML_RESPONSE, issues);
 					
 				} catch (Exception e) {
-					return new Response("An error occurred: "+e.getMessage());
-				}
-				  
+					LOGGER.error("Error filtering Redmine issues: {}", e.getMessage(), e);
+					return new Response(EXCEPTION_MESSAGE + e.getMessage());
+				}				  
 			});
-		
-		
-		
 	}
 
 }

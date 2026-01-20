@@ -10,32 +10,32 @@ import org.tedros.it.tools.redmine.api.model.TRedmineUser;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class RedmineSearchUserAiFunction extends TFunction<RedmineUserFilter> {
 	
 	private static final Logger LOGGER = TLoggerUtil.getLogger(RedmineSearchUserAiFunction.class);
+	
+	public static final String NAME = "filter_redmine_user_by_name";
+	public static final String DESCRIPTION = "Filter redmine users by user name";
 
 	public RedmineSearchUserAiFunction() {
-		super("filter_redmine_user_by_name", "Filter redmine users by user name", RedmineUserFilter.class, 
+		super(NAME, DESCRIPTION, RedmineUserFilter.class, 
 				v -> {
 					try {
 						
-						ObjectMapper mapper = new ObjectMapper();
-						
-						LOGGER.info("Filtros recebidos: {}", mapper.writeValueAsString(v));
+						LOGGER.info("Redmine searching user by name: {}", v.getUserName());
 						
 						RedmineApiPropertyUtil propertyUtil = RedmineApiPropertyUtil.getInstance();
 				        RedmineApiGateway gateway = new RedmineApiGateway(propertyUtil.getRedmineUrl(), propertyUtil.getRedmineKey());
 				        
 				        List<TRedmineUser> users = gateway.findUser(v.getUserName());
 						
-				        LOGGER.info("Resultado da pesquisa: {}", mapper.writeValueAsString(users));
+				        LOGGER.info("Result users found: {}", users.size());
 				        
-						return new Response("Result list", users);
+						return new Response(SUSCESS_MESSAGE, users);
 						
 					} catch (Exception e) {
-						return new Response("An error occurred: "+e.getMessage());
+						LOGGER.error(e.getMessage(), e);
+						return new Response(EXCEPTION_MESSAGE + e.getMessage());
 					}
 					  
 				});

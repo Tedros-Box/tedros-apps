@@ -8,6 +8,7 @@ import java.util.List;
 import javax.naming.NamingException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
 import org.tedros.core.context.TedrosContext;
@@ -27,6 +28,7 @@ import org.tedros.server.query.TJoinType;
 import org.tedros.server.query.TSelect;
 import org.tedros.server.result.TResult;
 import org.tedros.server.result.TResult.TState;
+import org.tedros.util.TLoggerUtil;
 
 /**
  * @author Davis Gordon
@@ -34,8 +36,10 @@ import org.tedros.server.result.TResult.TState;
  */
 public class SearchPersonFunction extends TFunction<Search> {
 	
-	private static final String NAME = "search_person";
-	private static final String PROMPT = """
+	private static final Logger LOGGER = TLoggerUtil.getLogger(SearchPersonFunction.class);
+	
+	public static final String NAME = "search_person";
+	public static final String DESCRIPTION = """
 			Search for people, companies, employees, or members in the database. 
             Use this tool when the user asks to find, look up, or retrieve information about a specific entity
             based on attributes like name, document, contact, or location.
@@ -43,9 +47,12 @@ public class SearchPersonFunction extends TFunction<Search> {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public SearchPersonFunction() {
-		super(NAME, PROMPT, Search.class, 
+		super(NAME, DESCRIPTION, Search.class, 
 				v->{
-					TSelect sel = null;;
+										
+					LOGGER.info("Searching Persons with parameters: {}", v);
+					
+					TSelect sel = null;
 					if(v.getClassification()==null)
 						sel = new TSelect(Person.class);
 					else {
@@ -122,8 +129,8 @@ public class SearchPersonFunction extends TFunction<Search> {
 						}
 					}
 					
-					TEjbServiceLocator loc = TEjbServiceLocator.getInstance();
-					try {
+					
+					try(TEjbServiceLocator loc = TEjbServiceLocator.getInstance()) {
 						IPersonController serv = loc.lookup(IPersonController.JNDI_NAME);
 						TResult<List<Person>> res = serv.search(TedrosContext.getLoggedUser().getAccessToken(), sel);
 						if(res.getState().equals(TState.SUCCESS)) {
@@ -133,10 +140,8 @@ public class SearchPersonFunction extends TFunction<Search> {
 						}
 						
 					} catch (NamingException e) {
-						e.printStackTrace();
-						return new Response(FAILURE_MESSAGE + e.getMessage());
-					}finally {
-						loc.close();
+						LOGGER.error(e.getMessage(), e);
+						return new Response(EXCEPTION_MESSAGE + e.getMessage());
 					}
 					
 					return new Response(FAILURE_MESSAGE);

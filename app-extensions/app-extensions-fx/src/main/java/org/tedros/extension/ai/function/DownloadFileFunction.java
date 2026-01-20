@@ -1,5 +1,6 @@
 package org.tedros.extension.ai.function;
 
+import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
 import org.tedros.common.domain.MimeType;
@@ -11,17 +12,23 @@ import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.extension.ai.model.FileParam;
 import org.tedros.server.result.TResult;
 import org.tedros.server.result.TResult.TState;
+import org.tedros.util.TLoggerUtil;
 
 public class DownloadFileFunction extends TFunction<FileParam> {
+	
+	private static final Logger LOGGER = TLoggerUtil.getLogger(DownloadFileFunction.class);
 
 	public static final String NAME = "download_tedros_file";
-	private static final String DESCRIPTION = "Download a file saved on Tedros system by file id";
+	public static final String DESCRIPTION = "Retrieves and reads the content of a specific file from the Tedros system database. " +
+            "Use this tool when the user asks to read, analyze, or download a document. " +
+            "CRITICAL: Requires a known numeric 'id' (from a previous search result). Do NOT guess or fabricate the ID.";
 	
 	public DownloadFileFunction() {
 		super(NAME, DESCRIPTION, FileParam.class, v-> {
-			TEjbServiceLocator locator = TEjbServiceLocator.getInstance();
 			
-			try {
+			LOGGER.info("Downloading file with id: {}", v.id());
+			
+			try(TEjbServiceLocator locator = TEjbServiceLocator.getInstance()) {
 				
 				TFileEntity entity = new TFileEntity();
 				entity.setId(v.id());
@@ -36,12 +43,12 @@ public class DownloadFileFunction extends TFunction<FileParam> {
 				}
 				
 			} catch (Exception e) {
-				return new Response("Error: " + e.getMessage());
-			}finally {
-				locator.close();
+				LOGGER.error(e.getMessage(), e);
+				return new Response(EXCEPTION_MESSAGE + e.getMessage());
 			}
 			
-			return new Response("File not found");
+			return new Response(NO_DATA_FOUND_MESSAGE);
+			
 		});
 	}
 }

@@ -7,6 +7,16 @@ import org.tedros.ai.function.TRequiredProperty;
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonClassDescription("File attachment linked to a Redmine issue, wiki page or other entity")
 public class TAttachment {
 	
@@ -38,81 +48,10 @@ public class TAttachment {
 
     @JsonPropertyDescription("Download token for non-logged-in access")
     private String token;
-		
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String filename) {
-		this.fileName = filename;
-	}
-
-	public Long getFileSize() {
-		return fileSize;
-	}
-
-	public void setFileSize(Long filesize) {
-		this.fileSize = filesize;
-	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
-
-	public String getContentURL() {
-		return contentURL;
-	}
-
-	public void setContentURL(String contentUrl) {
-		this.contentURL = contentUrl;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public TRedmineUser getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(TRedmineUser author) {
-		this.author = author;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
+	
 	@Override
 	public String toString() {
 		return fileName;
 	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	
 }

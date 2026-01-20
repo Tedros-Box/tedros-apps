@@ -2,6 +2,7 @@ package org.tedros.it.tools.gitlab.ai.function;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
+import org.tedros.ai.function.model.Response;
 import org.tedros.it.tools.gitlab.ai.model.TGitLabProjectId;
 import org.tedros.util.TLoggerUtil;
 
@@ -10,8 +11,8 @@ public class SearchGitLabRepositoryBranchesFunction extends TFunction<TGitLabPro
 	
 	private static final Logger LOGGER = TLoggerUtil.getLogger(SearchGitLabRepositoryBranchesFunction.class);
 	
-	private static final String NAME = "list_gitlab_repository_branches"; 
-	private static final String DESCRIPTION = "List gitlab repository branches by project id";
+	public static final String NAME = "list_gitlab_repository_branches"; 
+	public static final String DESCRIPTION = "List gitlab repository branches by project id";
 		
 	public SearchGitLabRepositoryBranchesFunction() {		
 		super(NAME, DESCRIPTION, TGitLabProjectId.class, v->{			
@@ -20,7 +21,7 @@ public class SearchGitLabRepositoryBranchesFunction extends TFunction<TGitLabPro
 		        return GitLabGatewayFactory.getGateway().getRepositoryBranches(v.getProjectId());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
-				return "Function error: " + e.getMessage();
+				return new Response(EXCEPTION_MESSAGE + e.getMessage());
 			}
 		});
 	}
