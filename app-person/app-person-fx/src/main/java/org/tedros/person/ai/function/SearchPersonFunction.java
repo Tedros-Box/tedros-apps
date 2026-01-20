@@ -33,45 +33,53 @@ import org.tedros.server.result.TResult.TState;
  *
  */
 public class SearchPersonFunction extends TFunction<Search> {
+	
+	private static final String NAME = "search_person";
+	private static final String PROMPT = """
+			Search for people, companies, employees, or members in the database. 
+            Use this tool when the user asks to find, look up, or retrieve information about a specific entity
+            based on attributes like name, document, contact, or location.
+			""";
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public SearchPersonFunction() {
-		super("search_person", "Searches for persons", Search.class, 
+		super(NAME, PROMPT, Search.class, 
 				v->{
 					TSelect sel = null;;
 					if(v.getClassification()==null)
 						sel = new TSelect(Person.class);
-					else
-					switch(v.getClassification()) {
-					case ALL:
-						sel = new TSelect(Person.class);
-						break;
-					case CLIENT_COMPANY:
-						sel = new TSelect(ClientCompany.class);
-						break;
-					case CUSTOMER:
-						sel = new TSelect(Customer.class);
-						break;
-					case EMPLOYEE:
-						sel = new TSelect(Employee.class);
-						break;
-					case LEGAL_PERSON:
-						sel = new TSelect(LegalPerson.class);
-						break;
-					case MEMBER:
-						sel = new TSelect(Member.class);
-						break;
-					case NATURAL_PERSON:
-						sel = new TSelect(NaturalPerson.class);
-						break;
-					case PHILANTHROPE:
-						sel = new TSelect(Philanthrope.class);
-						break;
-					case VOLUNTARY:
-						sel = new TSelect(Voluntary.class);
-						break;
-					default:
-						break;
+					else {
+						switch(v.getClassification()) {
+						case ALL:
+							sel = new TSelect(Person.class);
+							break;
+						case CLIENT_COMPANY:
+							sel = new TSelect(ClientCompany.class);
+							break;
+						case CUSTOMER:
+							sel = new TSelect(Customer.class);
+							break;
+						case EMPLOYEE:
+							sel = new TSelect(Employee.class);
+							break;
+						case LEGAL_PERSON:
+							sel = new TSelect(LegalPerson.class);
+							break;
+						case MEMBER:
+							sel = new TSelect(Member.class);
+							break;
+						case NATURAL_PERSON:
+							sel = new TSelect(NaturalPerson.class);
+							break;
+						case PHILANTHROPE:
+							sel = new TSelect(Philanthrope.class);
+							break;
+						case VOLUNTARY:
+							sel = new TSelect(Voluntary.class);
+							break;
+						default:
+							break;
+						}
 					}
 					
 					if(StringUtils.isNotBlank(v.getName())) {
@@ -120,18 +128,18 @@ public class SearchPersonFunction extends TFunction<Search> {
 						TResult<List<Person>> res = serv.search(TedrosContext.getLoggedUser().getAccessToken(), sel);
 						if(res.getState().equals(TState.SUCCESS)) {
 							if(res.getValue().isEmpty())
-								return new Response("No data found!");
-							return new Response("Result list", res.getValue()); 
+								return new Response(NO_DATA_FOUND_MESSAGE);
+							return new Response(SUSCESS_MESSAGE, res.getValue()); 
 						}
 						
 					} catch (NamingException e) {
 						e.printStackTrace();
-						return new Response("An error occurred!");
+						return new Response(FAILURE_MESSAGE + e.getMessage());
 					}finally {
 						loc.close();
 					}
 					
-					return new Response("The operation fail!");
+					return new Response(FAILURE_MESSAGE);
 				});
 			
 	}

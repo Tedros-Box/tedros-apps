@@ -10,18 +10,19 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
  * @author Davis Gordon
  *
  */
-@JsonClassDescription("The location address")
+@JsonClassDescription("Geographic filters for the search.")
 public class Location {
 
+    @JsonPropertyDescription("The neighborhood, district, or borough name.")
 	private String neighborhood;
 	
-	@JsonPropertyDescription("the country iso2code")
+	@JsonPropertyDescription("The 2-letter Country ISO Code (e.g., 'US', 'BR', 'DE'). Do not use full country names.")
 	private String countryIso2Code;
 	
-	@JsonPropertyDescription("the administrative area (federal state)")
+	@JsonPropertyDescription("The administrative area, state, province, or region.")
 	private String adminArea;
 	
-	@JsonPropertyDescription("the city name")
+	@JsonPropertyDescription("The city or municipality name.")
 	private String city;
 	
 	/**

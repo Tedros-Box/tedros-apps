@@ -52,6 +52,7 @@ import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
 import org.tedros.it.tools.redmine.api.model.TIssueStatus;
 import org.tedros.it.tools.redmine.api.model.TRedmineUser;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
+import org.tedros.person.ai.function.SearchPersonFunction;
 import org.tedros.tools.module.notify.function.CreateNotificationListFunction;
 import org.tedros.util.TDateUtil;
 import org.tedros.util.TLoggerUtil;
@@ -173,6 +174,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
             		String htmlMessage = terosServ.getValue();
 					webViewBridge.run(htmlMessage);
 					accordion.setExpandedPane(aiPane);
+					aiPromptField.clear();
             	});
             	
                 redmineServ = new RedmineService(gateway);
@@ -704,6 +706,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 					TFunctionHelper.getViewInfoFunction(),
 					TFunctionHelper.callUpViewFunction(),
 					TFunctionHelper.getCreateFileFunction(),
+					new SearchPersonFunction(),
 					new DownloadRedmineAttachmentAiFunction(),
 					new GetRedmineIssueAiFunction(),
 					new RedmineFilterIssueByUserAiFunction(),

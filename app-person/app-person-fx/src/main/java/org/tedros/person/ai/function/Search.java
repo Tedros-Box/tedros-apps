@@ -10,31 +10,31 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
  * @author Davis Gordon
  *
  */
-@JsonClassDescription("The person attributes to search")
+@JsonClassDescription("Criteria for searching a person or organization. Fill at least one field to perform a search.")
 public class Search {
 	
-	@JsonPropertyDescription("the person name")
+	@JsonPropertyDescription("The full or partial name of the person or company.")
 	private String name;
 	
-	@JsonPropertyDescription("the person contact (email address, phone number and others)")
+	@JsonPropertyDescription("Contact information, such as email address, phone number, or social media handle.")
 	private String contact;
 	
-	@JsonPropertyDescription("the person document (ID nukber, Fiscal number and others")
+	@JsonPropertyDescription("Official identification document (e.g., Tax ID, SSN, Passport number, Driver's License).")
 	private String document;
 	
-	@JsonPropertyDescription("the person address location")
+	@JsonPropertyDescription("Filter by geographic location address.")
 	private Location location;
 	
-	@JsonPropertyDescription("the person classification. Acceptable values: "
-			+ "LEGAL_PERSON, NATURAL_PERSON, EMPLOYEE, " + 
-			"CUSTOMER, CLIENT_COMPANY, MEMBER, PHILANTHROPE, VOLUNTARY, ALL")
+	// Aprimorei a descrição para ajudar a IA a escolher o tipo certo baseada na intenção do usuário
+	@JsonPropertyDescription("The entity type. Use 'NATURAL_PERSON' for humans, 'LEGAL_PERSON' or 'CLIENT_COMPANY' for organizations. "
+			+ "Other values: EMPLOYEE, CUSTOMER, MEMBER, PHILANTHROPE, VOLUNTARY. Default is 'ALL'.")
 	private Classification classification;
 
 	/**
 	 * 
 	 */
 	public Search() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**
