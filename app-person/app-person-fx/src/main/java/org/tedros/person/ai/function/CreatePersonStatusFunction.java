@@ -1,8 +1,11 @@
 package org.tedros.person.ai.function;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.core.context.TedrosAppManager;
 import org.tedros.person.model.ClientCompanyStatus;
 import org.tedros.person.model.CustomerStatus;
@@ -46,7 +49,13 @@ public class CreatePersonStatusFunction extends TFunction<PersonAttributeParam>{
 					TedrosAppManager mng = TedrosAppManager.getInstance();
 					
 					if(v.getClassification()==null)
-						return new Response("The field 'classification' must be filled with an acceptable value!");
+						return ToolCallResult.builder()
+								.message("The field 'classification' must be filled with an acceptable value!")
+								.result(Map.of(
+					                    STATUS, ERROR,
+					                    ACTION, "missing_classification",
+					                    INFO_MESSAGE, "The field 'classification' is required to proceed."
+					                )).build();
 					
 					switch(v.getClassification()) {
 					case CLIENT_COMPANY:
@@ -148,7 +157,15 @@ public class CreatePersonStatusFunction extends TFunction<PersonAttributeParam>{
 					default:
 						break;
 					}		
-					return new Response(SUSCESS_MESSAGE);
+					
+					return ToolCallResult.builder()
+							.message("Person Status creation screen opened.")
+							.result(Map.of(
+				                    "status", "success",
+				                    "action", "person_status_screen_opened",
+				                    "info_message", "Content loaded in view for user review. Do not retry."
+				                ))
+							.build();
 				});
 	}
 

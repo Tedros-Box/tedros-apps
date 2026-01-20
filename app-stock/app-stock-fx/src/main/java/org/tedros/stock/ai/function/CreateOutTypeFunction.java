@@ -2,10 +2,11 @@ package org.tedros.stock.ai.function;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.core.context.TedrosAppManager;
 import org.tedros.stock.entity.OutType;
 import org.tedros.stock.module.inventory.InventoryModule;
@@ -50,7 +51,15 @@ public class CreateOutTypeFunction extends TFunction<EventsParam> {
 				}
 			});
 			
-			return new Response(SUSCESS_MESSAGE + DO_NOT_CALL_AGAIN);
+			return ToolCallResult.builder()
+					.message("Out Types created successfully.")
+					.result(Map.of(
+		                    STATUS, SUCCESS,
+		                    "out_type_created_count", v.getEvents().size(),
+		                    ACTION, "out_type_screen_opened",
+		                    INFO_MESSAGE, CONTENT_LOADED_IN_VIEW_FOR_USER_REVIEW_DO_NOT_RETRY
+		                ))
+					.build();
 			
 		});
 		

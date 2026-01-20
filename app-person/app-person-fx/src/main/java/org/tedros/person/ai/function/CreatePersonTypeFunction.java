@@ -1,8 +1,10 @@
 package org.tedros.person.ai.function;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.core.context.TedrosAppManager;
 import org.tedros.person.model.ClientCompanyType;
 import org.tedros.person.model.CustomerType;
@@ -49,7 +51,14 @@ public class CreatePersonTypeFunction extends TFunction<PersonAttributeParam>{
 					TedrosAppManager mng = TedrosAppManager.getInstance();
 					
 					if(v.getClassification()==null)
-						return new Response("The field 'classification' must be filled with an acceptable value!");
+						return ToolCallResult.builder()
+								.message("The field 'classification' must be filled with an acceptable value!")
+								.result(Map.of(
+					                    STATUS, ERROR,
+					                    ACTION, "missing_classification",
+					                    INFO_MESSAGE, "The field 'classification' is required to proceed."
+					                ))
+								.build();
 					
 					switch(v.getClassification()) {
 					case CLIENT_COMPANY:
@@ -149,9 +158,23 @@ public class CreatePersonTypeFunction extends TFunction<PersonAttributeParam>{
 						});
 						break;
 					default:
-						return new Response("The field 'classification' must be filled with an acceptable value!");						
+						return ToolCallResult.builder()
+								.message("The field 'classification' must be filled with an acceptable value!")
+								.result(Map.of(
+					                    STATUS, ERROR,
+					                    ACTION, "invalid_classification",
+					                    INFO_MESSAGE, "The provided classification is not recognized."
+					                ))
+								.build();		
 					}		
-					return new Response(SUSCESS_MESSAGE);
+					return ToolCallResult.builder()
+							.message("Person Type creation screen opened.")
+							.result(Map.of(
+				                    STATUS, SUCCESS,
+				                    ACTION, "person_type_screen_opened",
+				                    INFO_MESSAGE, CONTENT_LOADED_IN_VIEW_FOR_USER_REVIEW_DO_NOT_RETRY
+				                ))
+							.build();
 				});
 	}
 

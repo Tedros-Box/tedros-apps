@@ -50,14 +50,15 @@ public class CreateEntryTypeFunction extends TFunction<EventsParam> {
 				}
 			});
 			
-			Map<String, Object> resultData = Map.of(
-                    "status", "success",
-                    "entry_type_created_count", v.getEvents().size(),
-                    "action", "entry_type_screen_opened",
-                    "message", "Content loaded in view for user review. Do not retry."
-                );
-			
-			return new ToolCallResult(SUSCESS_MESSAGE, resultData, true);
+			return ToolCallResult.builder()
+					.message("Entry Types created successfully.")
+					.result(Map.of(
+		                    STATUS, SUCCESS,
+		                    "entry_type_created_count", v.getEvents().size(),
+		                    ACTION, "entry_type_screen_opened",
+		                    INFO_MESSAGE, CONTENT_LOADED_IN_VIEW_FOR_USER_REVIEW_DO_NOT_RETRY
+		                ))
+					.build();
 			
 		});
 		

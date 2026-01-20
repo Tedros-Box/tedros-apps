@@ -2,10 +2,11 @@ package org.tedros.extension.ai.function;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.core.context.TedrosAppManager;
 import org.tedros.extension.ai.model.CodeNameDescParam;
 import org.tedros.extension.ai.model.ListItemParam;
@@ -53,7 +54,15 @@ public class CreateTypeRoadTypeFunction extends TFunction<ListItemParam> {
 					}
 				});
 				
-				return new Response(SUSCESS_MESSAGE);
+				return ToolCallResult.builder()
+						.message("Road Types created successfully.")
+						.result(Map.of(
+			                    STATUS, SUCCESS,
+			                    "road_type_created_count", v.getItems().size(),
+			                    ACTION, "road_type_screen_opened",
+			                    INFO_MESSAGE, CONTENT_LOADED_IN_VIEW_FOR_USER_REVIEW_DO_NOT_RETRY
+			                ))
+						.build();
 			});
 	}
 

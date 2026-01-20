@@ -1,8 +1,10 @@
 package org.tedros.person.ai.function;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.core.context.TedrosAppManager;
 import org.tedros.person.model.PersonCategory;
 import org.tedros.person.module.category.CategoryModule;
@@ -38,7 +40,14 @@ public class CreatePersonCategoryFunction extends TFunction<PersonAttributeParam
 						}
 					});
 							
-					return new Response(SUSCESS_MESSAGE);
+					return ToolCallResult.builder()
+							.message("Person Category creation screen opened.")
+							.result(Map.of(
+				                    STATUS, SUCCESS,
+				                    ACTION, "person_category_screen_opened",
+				                    INFO_MESSAGE, CONTENT_LOADED_IN_VIEW_FOR_USER_REVIEW_DO_NOT_RETRY
+				                ))
+							.build();
 				});
 	}
 
