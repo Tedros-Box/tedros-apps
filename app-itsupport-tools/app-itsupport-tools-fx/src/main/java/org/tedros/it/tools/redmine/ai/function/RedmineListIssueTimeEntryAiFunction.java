@@ -1,10 +1,11 @@
 package org.tedros.it.tools.redmine.ai.function;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.it.tools.redmine.ai.model.RedmineIssueIdToFind;
 import org.tedros.it.tools.redmine.api.model.TTimeEntry;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
@@ -28,11 +29,27 @@ public class RedmineListIssueTimeEntryAiFunction extends TFunction<RedmineIssueI
 				
 				LOGGER.info("Entries found for issue {}: {}", v.getIssueId(), entries.size());
 				
-				return new Response(SUSCESS_MESSAGE + DO_NOT_CALL_AGAIN  + PROCEED_WITH_HTML_RESPONSE, entries);
+				return ToolCallResult.builder()
+						.message("Redmine issue time entries retrieved successfully.")
+						.result(Map.of(
+		                    STATUS, SUCCESS,
+		                    ACTION, "redmine_issue_time_entries_retrieved",
+		                    SYSTEM_INSTRUCTION, "Time entries retrieved successfully. "
+		                    		+ "Do not retry again. Proceed with the user's request.",
+		                    "time_entries", entries
+		                ))
+						.build();
 				
 			} catch (Exception e) {
 				LOGGER.error("Error fetching time entries", e);
-				return new Response(EXCEPTION_MESSAGE + e.getMessage());
+				return ToolCallResult.builder()
+						.message("Error retrieving Redmine issue time entries: " + e.getMessage())
+						.result(Map.of(
+		                    STATUS, ERROR,
+		                    ACTION, "redmine_issue_time_entries_error",
+		                    ERROR_MESSAGE, e.getMessage()
+		                ))
+						.build();
 			}
 		});
 	}

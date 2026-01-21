@@ -56,7 +56,8 @@ public class CreateEntryTypeFunction extends TFunction<EventsParam> {
 		                    STATUS, SUCCESS,
 		                    "entry_type_created_count", v.getEvents().size(),
 		                    ACTION, "entry_type_screen_opened",
-		                    INFO_MESSAGE, CONTENT_LOADED_IN_VIEW_FOR_USER_REVIEW_DO_NOT_RETRY
+		                    SYSTEM_INSTRUCTION, "The system has opened the Entry Type creation screen. "
+		                    	+ "Do not retry again. Inform the user to check the opened screen."
 		                ))
 					.build();
 			

@@ -1,8 +1,10 @@
 package org.tedros.extension.ai.function;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.common.domain.MimeType;
 import org.tedros.common.model.TFileContentInfo;
 import org.tedros.common.model.TFileEntity;
@@ -37,17 +39,42 @@ public class DownloadFileFunction extends TFunction<FileParam> {
 				TResult<TFileEntity> fileResult = fileService.findByIdWithBytesLoaded(TedrosContext.getLoggedUser().getAccessToken(), entity);
 				if(fileResult.getState().equals(TState.SUCCESS)) {
 					entity = fileResult.getValue();
-					return new TFileContentInfo(entity.getFileName(), 
-							MimeType.fromExtension(entity.getFileExtension()).getMimeType(), 
-							entity.getByteEntity().getBytes());
+					
+					return ToolCallResult.builder()
+							.message("File downloaded successfully.")
+							.result(Map.of(
+				                    STATUS, SUCCESS,
+				                    ACTION, "file_downloaded",
+				                    SYSTEM_INSTRUCTION, "The system has downloaded the file successfully. "
+					                    	+ "Do not retry again. Inform the user to check the downloaded file."
+				                ))
+							.filesContentInfo(new TFileContentInfo(
+											entity.getFileName(), 
+											MimeType.fromExtension(entity.getFileExtension()).getMimeType(), 
+											entity.getByteEntity().getBytes()))
+							.build();
 				}
 				
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
-				return new Response(EXCEPTION_MESSAGE + e.getMessage());
+				return ToolCallResult.builder()
+						.message("Error downloading file: " + e.getMessage())
+						.result(Map.of(
+			                    STATUS, ERROR,
+			                    ACTION, "file_download_failed",
+			                    ERROR_MESSAGE, "Error downloading file: " + e.getMessage()
+			                ))
+						.build();
 			}
 			
-			return new Response(NO_DATA_FOUND_MESSAGE);
+			return ToolCallResult.builder()
+					.message("File not found.")
+					.result(Map.of(
+		                    STATUS, ERROR,
+		                    ACTION, "file_not_found",
+		                    ERROR_MESSAGE, "File not found with the provided ID."
+		                ))
+					.build();
 			
 		});
 	}

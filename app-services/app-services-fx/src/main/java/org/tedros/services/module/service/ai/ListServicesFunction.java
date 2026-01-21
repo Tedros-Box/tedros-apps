@@ -4,11 +4,12 @@
 package org.tedros.services.module.service.ai;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Empty;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.server.result.TResult;
@@ -35,15 +36,39 @@ public class ListServicesFunction extends TFunction<Empty> {
 			try(TEjbServiceLocator loc = TEjbServiceLocator.getInstance()) {
 				IServiceController serv = loc.lookup(IServiceController.JNDI_NAME);
 				TResult<List<Service>> res = serv.listAll(TedrosContext.getLoggedUser().getAccessToken(), Service.class);
-				if(res.getValue()!=null)
-					return new Response(SUSCESS_MESSAGE, res.getValue());
+				if(res.getValue()!=null) {
+					return ToolCallResult.builder()
+							.message("Services retrieved successfully.")
+							.result(Map.of(
+				                    STATUS, SUCCESS,
+				                    ACTION, "services_listed",
+				                    SYSTEM_INSTRUCTION, "Services listed successfully. "
+				                    		+ "Do not retry again. Proceed with the user's request.",
+				                    "services", res.getValue()
+				                ))
+							.build();
+				}
 			}catch(Exception e) {
 				LOGGER.error(e.getMessage(), e);
-				return new Response(EXCEPTION_MESSAGE + e.getMessage());
+				return ToolCallResult.builder()
+						.message("Error listing services: " + e.getMessage())
+						.result(Map.of(
+		                    STATUS, ERROR,
+		                    ACTION, "services_list_error",
+		                    ERROR_MESSAGE, e.getMessage()
+		                ))
+						.build();
 			}
 			
 			
-			return new Response(NO_DATA_FOUND_MESSAGE);
+			return ToolCallResult.builder()
+					.message("No services found.")
+					.result(Map.of(
+		                    STATUS, ERROR,
+		                    ACTION, "no_services_found",
+		                    ERROR_MESSAGE, "No services available in the system."
+		                ))
+					.build();
 		});
 	}
 

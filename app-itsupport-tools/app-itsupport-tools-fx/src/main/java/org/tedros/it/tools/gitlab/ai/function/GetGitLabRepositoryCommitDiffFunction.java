@@ -1,9 +1,13 @@
 package org.tedros.it.tools.gitlab.ai.function;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.it.tools.gitlab.ai.model.TGitLabCommit;
+import org.tedros.it.tools.gitlab.api.model.CommitDiffModel;
 import org.tedros.util.TLoggerUtil;
 
 public class GetGitLabRepositoryCommitDiffFunction extends TFunction<TGitLabCommit> {
@@ -18,10 +22,27 @@ public class GetGitLabRepositoryCommitDiffFunction extends TFunction<TGitLabComm
 			try {
 				LOGGER.info("Finding for a repository commit diff for projectId {} and Commit sha {}", 
 						v.getProjectId(), v.getCommitSha());
-		        return GitLabGatewayFactory.getGateway().getRepositoryCommitDiff(v.getProjectId(), v.getCommitSha());
+				List<CommitDiffModel> lst = GitLabGatewayFactory.getGateway().getRepositoryCommitDiff(v.getProjectId(), v.getCommitSha());
+				return ToolCallResult.builder()
+						.message("GitLab repository commit diff retrieved successfully.")
+						.result(Map.of(
+		                    STATUS, SUCCESS,
+		                    ACTION, "gitlab_repository_commit_diff_retrieved",
+		                    SYSTEM_INSTRUCTION, "Commit diff retrieved successfully. "
+		                    		+ "Do not retry again. Proceed with the user's request.",
+		                    "commit_diff", lst
+		                ))
+						.build();
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
-				return new Response(EXCEPTION_MESSAGE + e.getMessage());
+				return ToolCallResult.builder()
+						.message("Error retrieving GitLab repository commit diff: " + e.getMessage())
+						.result(Map.of(
+		                    STATUS, ERROR,
+		                    ACTION, "gitlab_repository_commit_diff_error",
+		                    ERROR_MESSAGE, e.getMessage()
+		                ))
+						.build();
 			}
 		});
 	}

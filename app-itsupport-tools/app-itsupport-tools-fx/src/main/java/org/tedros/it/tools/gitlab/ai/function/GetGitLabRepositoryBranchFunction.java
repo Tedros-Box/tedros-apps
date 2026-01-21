@@ -1,9 +1,12 @@
 package org.tedros.it.tools.gitlab.ai.function;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.it.tools.gitlab.ai.model.TGitLabBranch;
+import org.tedros.it.tools.gitlab.api.model.BranchModel;
 import org.tedros.util.TLoggerUtil;
 
 
@@ -19,10 +22,29 @@ public class GetGitLabRepositoryBranchFunction extends TFunction<TGitLabBranch> 
 			try {
 				LOGGER.info("Finding for a repository branch for projectId {} and branch name {}", 
 						v.getProjectId(), v.getBranchName());
-		        return GitLabGatewayFactory.getGateway().getSingleRepositoryBranches(v.getProjectId(), v.getBranchName());
+		        BranchModel result = GitLabGatewayFactory.getGateway().getSingleRepositoryBranches(v.getProjectId(), v.getBranchName());
+		        return ToolCallResult.builder()
+						.message("GitLab repository branch retrieved successfully.")
+						.result(Map.of(
+		                    STATUS, SUCCESS,
+		                    ACTION, "gitlab_repository_branch_retrieved",
+		                    SYSTEM_INSTRUCTION, "Branch retrieved successfully. "
+		                    		+ "Do not retry again. Proceed with the user's request.",
+		                    "branch", result
+		                ))
+						.build();
+		        		
+		        		
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
-				return new Response(EXCEPTION_MESSAGE + e.getMessage());
+				return ToolCallResult.builder()
+						.message("Error retrieving GitLab repository branch: " + e.getMessage())
+						.result(Map.of(
+		                    STATUS, ERROR,
+		                    ACTION, "gitlab_repository_branch_error",
+		                    ERROR_MESSAGE, e.getMessage()
+		                ))
+						.build();
 			}
 		});
 	}

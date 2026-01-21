@@ -45,7 +45,8 @@ public class CreatePersonCategoryFunction extends TFunction<PersonAttributeParam
 							.result(Map.of(
 				                    STATUS, SUCCESS,
 				                    ACTION, "person_category_screen_opened",
-				                    INFO_MESSAGE, CONTENT_LOADED_IN_VIEW_FOR_USER_REVIEW_DO_NOT_RETRY
+				                    SYSTEM_INSTRUCTION, "The system has opened the Category creation screen. "
+					                    	+ "Do not retry again. Inform the user to check the opened screen."
 				                ))
 							.build();
 				});

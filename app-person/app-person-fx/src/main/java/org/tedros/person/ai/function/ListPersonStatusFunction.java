@@ -4,12 +4,13 @@
 package org.tedros.person.ai.function;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.person.ejb.controller.IPersonStatusController;
@@ -86,17 +87,49 @@ public class ListPersonStatusFunction extends TFunction<ClassificationParam> {
 						IPersonStatusController serv = loc.lookup(IPersonStatusController.JNDI_NAME);
 						TResult<List<PersonStatus>> res = serv.search(TedrosContext.getLoggedUser().getAccessToken(), sel);
 						if(res.getState().equals(TState.SUCCESS)) {
-							if(res.getValue().isEmpty())
-								return new Response(NO_DATA_FOUND_MESSAGE);
-							return new Response(SUSCESS_MESSAGE, res.getValue()); 
+							if(res.getValue().isEmpty()) {
+								return ToolCallResult.builder()
+										.message("No person statuses found.")
+										.result(Map.of(
+							                    STATUS, ERROR,
+							                    ACTION, "no_person_statuses_found",
+							                    ERROR_MESSAGE, "No person statuses available in the system."
+							                ))
+										.build();
+							}
+							
+							return ToolCallResult.builder()
+									.message("Person statuses retrieved successfully.")
+									.result(Map.of(
+						                    STATUS, SUCCESS,
+						                    ACTION, "person_statuses_listed",
+						                    SYSTEM_INSTRUCTION, "Person statuses listed successfully. "
+						                    		+ "Do not retry again. Proceed with the user's request.",
+						                    "person_statuses", res.getValue()
+						                ))
+									.build(); 
 						}
 						
 					} catch (NamingException e) {
 						LOGGER.error(e.getMessage(), e);
-						return new Response(EXCEPTION_MESSAGE + e.getMessage());
+						return ToolCallResult.builder()
+								.message("Error listing person statuses: " + e.getMessage())
+								.result(Map.of(
+					                    STATUS, ERROR,
+					                    ACTION, "person_statuses_list_error",
+					                    ERROR_MESSAGE, e.getMessage()
+					                ))
+								.build();
 					}
 					
-					return new Response(FAILURE_MESSAGE);
+					return ToolCallResult.builder()
+							.message("No person statuses found.")
+							.result(Map.of(
+				                    STATUS, ERROR,
+				                    ACTION, "no_person_statuses_found",
+				                    ERROR_MESSAGE, "No person statuses available in the system."
+				                ))
+							.build();
 				});
 			
 	}

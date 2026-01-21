@@ -56,7 +56,7 @@ public class CreatePersonTypeFunction extends TFunction<PersonAttributeParam>{
 								.result(Map.of(
 					                    STATUS, ERROR,
 					                    ACTION, "missing_classification",
-					                    INFO_MESSAGE, "The field 'classification' is required to proceed."
+					                    ERROR_MESSAGE, "The field 'classification' is required to proceed."
 					                ))
 								.build();
 					
@@ -159,20 +159,20 @@ public class CreatePersonTypeFunction extends TFunction<PersonAttributeParam>{
 						break;
 					default:
 						return ToolCallResult.builder()
-								.message("The field 'classification' must be filled with an acceptable value!")
+								.message("The classification '"+v.getClassification()+"' is not recognized or supported!")
 								.result(Map.of(
 					                    STATUS, ERROR,
 					                    ACTION, "invalid_classification",
-					                    INFO_MESSAGE, "The provided classification is not recognized."
-					                ))
-								.build();		
+					                    ERROR_MESSAGE, "The provided 'classification' is invalid."
+					                )).build();
 					}		
 					return ToolCallResult.builder()
 							.message("Person Type creation screen opened.")
 							.result(Map.of(
 				                    STATUS, SUCCESS,
 				                    ACTION, "person_type_screen_opened",
-				                    INFO_MESSAGE, CONTENT_LOADED_IN_VIEW_FOR_USER_REVIEW_DO_NOT_RETRY
+				                    SYSTEM_INSTRUCTION, "The system has opened the Person Type creation screen. "
+					                    	+ "Do not retry again. Inform the user to check the opened screen."
 				                ))
 							.build();
 				});

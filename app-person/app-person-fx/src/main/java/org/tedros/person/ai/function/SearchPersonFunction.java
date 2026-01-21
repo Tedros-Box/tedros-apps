@@ -4,13 +4,14 @@
 package org.tedros.person.ai.function;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.person.ejb.controller.IPersonController;
@@ -36,6 +37,8 @@ import org.tedros.util.TLoggerUtil;
  */
 public class SearchPersonFunction extends TFunction<Search> {
 	
+	private static final String NO_PERSONS_FOUND_MATCHING_THE_CRITERIA = "No persons found matching the criteria.";
+
 	private static final Logger LOGGER = TLoggerUtil.getLogger(SearchPersonFunction.class);
 	
 	public static final String NAME = "search_person";
@@ -134,17 +137,47 @@ public class SearchPersonFunction extends TFunction<Search> {
 						IPersonController serv = loc.lookup(IPersonController.JNDI_NAME);
 						TResult<List<Person>> res = serv.search(TedrosContext.getLoggedUser().getAccessToken(), sel);
 						if(res.getState().equals(TState.SUCCESS)) {
-							if(res.getValue().isEmpty())
-								return new Response(NO_DATA_FOUND_MESSAGE);
-							return new Response(SUSCESS_MESSAGE, res.getValue()); 
+							if(res.getValue().isEmpty()) {
+								return ToolCallResult.builder()
+										.message(NO_PERSONS_FOUND_MATCHING_THE_CRITERIA)
+										.result(Map.of(
+							                    STATUS, ERROR,
+							                    ACTION, "no_persons_found",
+							                    ERROR_MESSAGE, NO_PERSONS_FOUND_MATCHING_THE_CRITERIA
+							                ))
+										.build();
+							}
+							return ToolCallResult.builder()
+									.message("Persons found successfully.")
+									.result(Map.of(
+						                    STATUS, SUCCESS,
+						                    ACTION, "persons_found",
+						                    SYSTEM_INSTRUCTION, "Persons found successfully. "
+						                    		+ "Do not retry again. Proceed with the user's request.",
+						                    "persons",  res.getValue()))
+									
+									.build(); 
 						}
 						
 					} catch (NamingException e) {
 						LOGGER.error(e.getMessage(), e);
-						return new Response(EXCEPTION_MESSAGE + e.getMessage());
+						return ToolCallResult.builder()
+								.message("Error searching persons: " + e.getMessage())
+								.result(Map.of(
+					                    STATUS, ERROR,
+					                    ACTION, "person_search_failed",
+					                    ERROR_MESSAGE, "Error searching persons: " + e.getMessage()))
+								.build();
 					}
 					
-					return new Response(FAILURE_MESSAGE);
+					return ToolCallResult.builder()
+							.message(NO_PERSONS_FOUND_MATCHING_THE_CRITERIA)
+							.result(Map.of(
+				                    STATUS, ERROR,
+				                    ACTION, "no_persons_found",
+				                    ERROR_MESSAGE, NO_PERSONS_FOUND_MATCHING_THE_CRITERIA
+				                ))
+							.build();
 				});
 			
 	}

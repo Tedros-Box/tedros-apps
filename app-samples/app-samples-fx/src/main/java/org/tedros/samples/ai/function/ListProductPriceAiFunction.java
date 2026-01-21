@@ -5,13 +5,14 @@ package org.tedros.samples.ai.function;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Empty;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.sample.ejb.controller.IProductPriceController;
@@ -48,14 +49,37 @@ public class ListProductPriceAiFunction extends TFunction<Empty> {
 					if(res.getState().equals(TState.SUCCESS) && !res.getValue().isEmpty()) {
 						List<Price> lst = new ArrayList<>();
 						res.getValue().forEach(p-> lst.add(new Price(p)));
-						return new Response(SUSCESS_MESSAGE, lst);
+						return ToolCallResult.builder()
+								.message("Product prices retrieved successfully.")
+								.result(Map.of(
+					                    STATUS, SUCCESS,
+					                    ACTION, "product_prices_listed",
+					                    SYSTEM_INSTRUCTION, "Product prices listed successfully. "
+					                    		+ "Do not retry again. Proceed with the user's request.",
+					                    "product_prices", lst
+					                ))
+								.build();
 					}
 				} catch (NamingException e) {
 					LOGGER.error(e.getMessage(), e);
-					return new Response(EXCEPTION_MESSAGE + e.getMessage());
+					return ToolCallResult.builder()
+							.message("Error listing product prices: " + e.getMessage())
+							.result(Map.of(
+				                    STATUS, ERROR,
+				                    ACTION, "product_price_list_error",
+				                    ERROR_MESSAGE, e.getMessage()
+				                ))
+							.build();
 				}
 				
-				return new Response(NO_DATA_FOUND_MESSAGE);
+				return ToolCallResult.builder()
+						.message("No product prices found.")
+						.result(Map.of(
+			                    STATUS, ERROR,
+			                    ACTION, "no_product_prices_found",
+			                    ERROR_MESSAGE, "No product prices available in the system."
+			                ))
+						.build();
 		});
 	}
-}
+}  

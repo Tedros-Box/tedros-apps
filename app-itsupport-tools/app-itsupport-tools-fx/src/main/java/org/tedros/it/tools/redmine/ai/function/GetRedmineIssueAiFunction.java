@@ -1,5 +1,7 @@
 package org.tedros.it.tools.redmine.ai.function;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.model.Response;
@@ -44,11 +46,27 @@ public class GetRedmineIssueAiFunction extends TFunction<RedmineIssueIdToFind> {
                 int attachCount = issue.getAttachments() != null ? issue.getAttachments().size() : 0;
                 LOGGER.info("Issue #{} retrieved. {} attachment(s) found.", v.getIssueId(), attachCount);
 
-                return new ToolCallResult(SUSCESS_MESSAGE + DO_NOT_CALL_AGAIN  + PROCEED_WITH_HTML_RESPONSE, issue, true);
+                return ToolCallResult.builder()
+						.message("Redmine issue retrieved successfully.")
+						.result(Map.of(
+		                    STATUS, SUCCESS,
+		                    ACTION, "redmine_issue_retrieved",
+		                    SYSTEM_INSTRUCTION, "Issue retrieved successfully. "
+		                    		+ "Do not retry again. Proceed with the user's request.",
+		                    "issue", issue
+		                ))
+						.build();
 
             } catch (Exception e) {
                 LOGGER.error("Failed to fetch issue #{}: {}", v.getIssueId(), e.getMessage(), e);
-                return new Response(EXCEPTION_MESSAGE + e.getMessage());
+                return ToolCallResult.builder()
+						.message("Error retrieving Redmine issue: " + e.getMessage())
+						.result(Map.of(
+	                        STATUS, ERROR,
+	                        ACTION, "gitlab_repository_commit_error",
+	                        ERROR_MESSAGE, e.getMessage()
+	                    ))
+						.build();
             }
         });
     }

@@ -57,7 +57,8 @@ public class CreateOutTypeFunction extends TFunction<EventsParam> {
 		                    STATUS, SUCCESS,
 		                    "out_type_created_count", v.getEvents().size(),
 		                    ACTION, "out_type_screen_opened",
-		                    INFO_MESSAGE, CONTENT_LOADED_IN_VIEW_FOR_USER_REVIEW_DO_NOT_RETRY
+		                    SYSTEM_INSTRUCTION, "The system has opened the Out Type creation screen. "
+			                    	+ "Do not retry again. Inform the user to check the opened screen."
 		                ))
 					.build();
 			

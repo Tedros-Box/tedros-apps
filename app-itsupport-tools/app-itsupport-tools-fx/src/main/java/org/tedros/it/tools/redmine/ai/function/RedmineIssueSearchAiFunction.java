@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.it.tools.redmine.ai.model.FilterCondition;
 import org.tedros.it.tools.redmine.ai.model.RedmineFilterField;
 import org.tedros.it.tools.redmine.ai.model.RedmineIssueFilter;
@@ -160,11 +160,27 @@ public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> 
 					
 			        LOGGER.info("Result found {} issues", issues!=null?issues.size():0);
 			        
-					return new Response(SUSCESS_MESSAGE + DO_NOT_CALL_AGAIN  + PROCEED_WITH_HTML_RESPONSE, issues);
+					return ToolCallResult.builder()
+							.message("Redmine issues filtered successfully.")
+							.result(Map.of(
+				                    STATUS, SUCCESS,
+				                    ACTION, "redmine_issues_filtered",
+				                    SYSTEM_INSTRUCTION, "Issues filtered successfully. "
+				                    		+ "Do not retry again. Proceed with the user's request.",
+				                    "issues", issues
+				                ))
+							.build();
 					
 				} catch (Exception e) {
 					LOGGER.error("Error filtering Redmine issues: {}", e.getMessage(), e);
-					return new Response(EXCEPTION_MESSAGE + e.getMessage());
+					return ToolCallResult.builder()
+							.message("Error filtering Redmine issues: " + e.getMessage())
+							.result(Map.of(
+				                    STATUS, ERROR,
+				                    ACTION, "redmine_issues_filter_error",
+				                    ERROR_MESSAGE, e.getMessage()
+				                ))
+							.build();
 				}				  
 			});
 	}

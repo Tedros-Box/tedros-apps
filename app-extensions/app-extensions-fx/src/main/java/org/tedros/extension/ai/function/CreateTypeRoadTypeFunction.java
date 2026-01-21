@@ -60,7 +60,8 @@ public class CreateTypeRoadTypeFunction extends TFunction<ListItemParam> {
 			                    STATUS, SUCCESS,
 			                    "road_type_created_count", v.getItems().size(),
 			                    ACTION, "road_type_screen_opened",
-			                    INFO_MESSAGE, CONTENT_LOADED_IN_VIEW_FOR_USER_REVIEW_DO_NOT_RETRY
+			                    SYSTEM_INSTRUCTION, "The system has opened the Place/Location screen. "
+				                    	+ "Do not retry again. Inform the user to check the opened screen."
 			                ))
 						.build();
 			});

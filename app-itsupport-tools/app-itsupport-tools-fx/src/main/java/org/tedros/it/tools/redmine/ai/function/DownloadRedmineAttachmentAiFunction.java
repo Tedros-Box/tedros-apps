@@ -1,10 +1,10 @@
 package org.tedros.it.tools.redmine.ai.function;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
 import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.common.model.TFileContentInfo;
 import org.tedros.it.tools.redmine.api.model.TAttachment;
@@ -32,7 +32,15 @@ public class DownloadRedmineAttachmentAiFunction extends TFunction<TAttachment> 
         	
             try {
                 if (attachment.getId() == null || attachment.getContentURL() == null || attachment.getContentURL().isBlank()) {
-                    return new Response("Error: Attachment missing required fields (id or contentURL). Cannot download.");
+                    return ToolCallResult.builder()
+							.message("Error: Attachment missing required fields (id or contentURL). Cannot download.")
+							.result(Map.of(
+			                    STATUS, ERROR,
+			                    ACTION, "missing_fields",
+			                    ERROR_MESSAGE, "Attachment missing required fields (id or contentURL). Cannot download."
+			                ))
+							.build();
+                    
                 }
 
                 LOGGER.info("Downloading attachment #{} – {} ({})", 
@@ -47,18 +55,41 @@ public class DownloadRedmineAttachmentAiFunction extends TFunction<TAttachment> 
                 List<TFileContentInfo> downloaded = gateway.dowloadTAttachments(List.of(attachment));
 
                 if (downloaded == null || downloaded.isEmpty()) {
-                    return new Response(NO_DATA_FOUND_MESSAGE);
+                	return ToolCallResult.builder()
+							.message("Error: No data found for the requested attachment.")
+							.result(Map.of(
+			                    STATUS, ERROR,
+			                    ACTION, "no_data_found",
+			                    ERROR_MESSAGE, "No data found for the requested attachment."
+			                ))
+							.build();
                 }
 
                 TFileContentInfo file = downloaded.get(0);
                 LOGGER.info("Attachment downloaded: {} ({} bytes)", file.fileName(), file.bytes().length);
 
-                return new ToolCallResult(SUSCESS_MESSAGE, List.of(file), true);
+                return ToolCallResult.builder()
+                		.message("Attachment downloaded successfully.")
+                		.result(Map.of(
+		                    STATUS, SUCCESS,
+		                    ACTION, "attachment_downloaded",
+		                    SYSTEM_INSTRUCTION, "Attachment downloaded successfully. "
+		                    		+ "Do not retry again. Inform the user to check the downloaded file."
+		                ))
+                		.filesContentInfo(file)
+                		.build();                
 
             } catch (Exception e) {
                 LOGGER.error("Download failed for attachment #{} ({}): {}", 
                             attachment.getId(), attachment.getFileName(), e.getMessage(), e);
-                return new Response(EXCEPTION_MESSAGE + e.getMessage());
+                return ToolCallResult.builder()
+                		.message("Error downloading attachment: " + e.getMessage())
+                		.result(Map.of(
+		                    STATUS, ERROR,
+		                    ACTION, "attachment_download_failed",
+		                    ERROR_MESSAGE, "Error downloading attachment: " + e.getMessage()
+		                ))
+                		.build();
             }
         });
     }

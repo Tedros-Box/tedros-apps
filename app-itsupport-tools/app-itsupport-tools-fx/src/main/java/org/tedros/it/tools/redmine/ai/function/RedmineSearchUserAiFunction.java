@@ -1,10 +1,11 @@
 package org.tedros.it.tools.redmine.ai.function;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.it.tools.redmine.ai.model.RedmineUserFilter;
 import org.tedros.it.tools.redmine.api.model.TRedmineUser;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
@@ -31,11 +32,27 @@ public class RedmineSearchUserAiFunction extends TFunction<RedmineUserFilter> {
 						
 				        LOGGER.info("Result users found: {}", users.size());
 				        
-						return new Response(SUSCESS_MESSAGE, users);
+						return ToolCallResult.builder()
+								.message("Redmine users retrieved successfully.")
+								.result(Map.of(
+				                    STATUS, SUCCESS,
+				                    ACTION, "redmine_users_retrieved",
+				                    SYSTEM_INSTRUCTION, "Users retrieved successfully. "
+				                    		+ "Do not retry again. Proceed with the user's request.",
+				                    "users", users
+				                ))
+								.build();
 						
 					} catch (Exception e) {
 						LOGGER.error(e.getMessage(), e);
-						return new Response(EXCEPTION_MESSAGE + e.getMessage());
+						return ToolCallResult.builder()
+								.message("Error retrieving Redmine users: " + e.getMessage())
+								.result(Map.of(
+				                    STATUS, ERROR,
+				                    ACTION, "redmine_users_error",
+				                    ERROR_MESSAGE, e.getMessage()
+				                ))
+								.build();
 					}
 					  
 				});
