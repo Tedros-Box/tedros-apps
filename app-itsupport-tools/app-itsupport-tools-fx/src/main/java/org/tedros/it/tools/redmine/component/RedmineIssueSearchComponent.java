@@ -765,7 +765,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 			return new TTaskImpl<String>() {
 				@Override
 				protected String call() throws Exception {
-					iaServ.cleanMessageHistory();
+					//iaServ.cleanMessageHistory();
 					return iaServ.call(prompt, systemPrompt);
 				}
 
