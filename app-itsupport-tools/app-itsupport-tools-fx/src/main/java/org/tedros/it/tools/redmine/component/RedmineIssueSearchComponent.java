@@ -3,8 +3,10 @@ package org.tedros.it.tools.redmine.component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 import org.tedros.ai.TFunctionHelper;
@@ -143,10 +145,13 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
     private TableView<IssueViewModel> selectedTable;
     private TextArea aiPromptField;
     private WebView aiResponseWebView;
+    
     private RedmineApiGateway gateway;
     private TerosWebViewBridge webViewBridge;
     private TerosService terosServ;
     private RedmineService redmineServ;
+ 
+    private Queue<Runnable> pendingTasks = new LinkedList<>();
     
     @SuppressWarnings("rawtypes")
 	private ITView view;
@@ -168,13 +173,20 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
                 loadInitialData();
             	
             	terosServ = new TerosService();
-            	terosServ.onFailedProperty().addListener((obs, oldVal, newVal) -> Platform
-                		.runLater(() -> Platform.runLater(() -> showAlert(terosServ.getException().getMessage())))); 
+            	
+            	terosServ.onFailedProperty().addListener((obs, oldVal, newVal) -> Platform.runLater(() -> {
+            	    Platform.runLater(() -> showAlert("Erro na análise: " + terosServ.getException().getMessage()));
+            	    // IMPORTANTE: Se falhar, tenta processar o próximo da fila mesmo assim
+            	    processNextTask(); 
+            	}));
+            	
             	terosServ.setOnSucceeded(e -> {
             		String htmlMessage = terosServ.getValue();
 					webViewBridge.run(htmlMessage);
 					accordion.setExpandedPane(aiPane);
 					aiPromptField.clear();
+					// GATILHO: Chama o próximo item da fila, se houver
+				    processNextTask();
             	});
             	
                 redmineServ = new RedmineService(gateway);
@@ -498,21 +510,40 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         	showAlert(TLanguage.getInstance().getString(ItToolsKey.TEXT_PROVIDE_INSTRUCTIONS));
 			return;
 		}
+        
+        // Limpa fila anterior se houver
+        pendingTasks.clear();
 
         Platform.runLater(() -> {
         	if (selectedIssues.size() > 3) {
+        		int total = selectedIssues.size();
                 int count = 1;
                 for (TIssueEvidenceInfo issue : selectedIssues) {
-                    callTerosService(List.of(issue), userPrompt,
-                            "the user selected " + selectedIssues.size()
-                                    + " issues and to prevent overload we are sending one by one. this one is the number "
-                                    + count + " of " + selectedIssues.size() + ". Reply using HTML format only.");
+                	final int currentNum = count;
+                    // Cria uma tarefa para este item e adiciona na fila
+                    pendingTasks.add(() -> {
+                        callTerosService(List.of(issue), userPrompt,
+                                "the user selected " + total
+                                        + " issues and to prevent overload we are sending one by one. this one is the number "
+                                        + currentNum + " of " + total + ". Reply using HTML format only.");
+                    });
                     count++;
                 }
+                
+                // Inicia o primeiro item da fila
+                processNextTask();
+                
             } else {
                 callTerosService(selectedIssues, userPrompt, null);
             }
         });
+    }    
+
+    private void processNextTask() {
+        if (!pendingTasks.isEmpty()) {
+            Runnable task = pendingTasks.poll();
+            task.run();
+        }
     }
 
     private void callTerosService(List<TIssueEvidenceInfo> selectedIssues, String userPrompt, String systemPrompt) {
