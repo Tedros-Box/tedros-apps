@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.openai.model.ToolCallResult;
+import org.tedros.ai.function.ToolCallResult;
 import org.tedros.common.model.TFileContentInfo;
 import org.tedros.it.tools.redmine.api.model.TAttachment;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;

@@ -21,7 +21,6 @@ import org.tedros.fx.annotation.form.TSetting;
 import org.tedros.fx.annotation.layout.TFlowPane;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.TPane;
-import org.tedros.fx.annotation.layout.TVBox;
 import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
@@ -35,6 +34,7 @@ import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.text.TText;
 import org.tedros.fx.collections.ITObservableList;
+import org.tedros.fx.component.TComponent;
 import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.it.tools.ItToolsKey;
@@ -42,6 +42,7 @@ import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.ejb.controller.IJobEvidenceController;
 import org.tedros.it.tools.entity.JobEvidence;
 import org.tedros.it.tools.entity.JobEvidenceItem;
+import org.tedros.it.tools.module.evidence.component.EvidenceSelectorComponent;
 import org.tedros.it.tools.module.evidence.setting.JobEvidenceSettings;
 import org.tedros.it.tools.module.evidence.trigger.SearchForIssueTrigger;
 import org.tedros.person.ejb.controller.IEmployeeController;
@@ -74,12 +75,12 @@ import javafx.beans.property.SimpleStringProperty;
 	moduleName = ItToolsKey.MODULE_ITSUPPORT_EVIDENCE, viewName = ItToolsKey.VIEW_JOB_EVIDENCE,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
 					TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
-public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
+public class CreateJobEvidenceMV extends TEntityModelView<JobEvidence> {
 	
 	@TTabPane(tabs = { 
 		@TTab(text = TUsualKey.MAIN_DATA, 	fields={"issueNumber"}), 
 		@TTab(text = TUsualKey.DESCRIPTION,	fields={"description"}),
-		@TTab(text = ItToolsKey.EVIDENCES, 	fields={"itemsHeader"})})
+		@TTab(text = ItToolsKey.EVIDENCES, 	fields={"itemsHeader", "component"})})
 	private SimpleLongProperty id;
 
 	
@@ -122,16 +123,18 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
     
     @THTMLEditor(control=@TControl( maxHeight=450, parse = true))
     private SimpleStringProperty description;
-
-    @TVBox(pane=@TPane(children={"itemsHeader"}))
+    
     @TText(textStyle = TTextStyle.LARGE, text=ItToolsKey.TEXT_SELECT_EVIDENCES)
     @TFieldBox(node=@TNode(parse = true, id=TFieldBox.TITLE))
 	private SimpleStringProperty itemsHeader;
     
+    @TComponent(type=EvidenceSelectorComponent.class)
+    private SimpleStringProperty component;
+    
     @TGenericType(model = JobEvidenceItem.class)
     private ITObservableList<JobEvidenceItem> items;
 
-    public JobEvidenceMV(JobEvidence entity) {
+    public CreateJobEvidenceMV(JobEvidence entity) {
         super(entity);
         super.formatToString("%s - %s", issueNumber, name);
     }
@@ -224,6 +227,14 @@ public class JobEvidenceMV extends TEntityModelView<JobEvidence> {
 
 	public void setItemsHeader(SimpleStringProperty itemsHeader) {
 		this.itemsHeader = itemsHeader;
+	}
+
+	public SimpleStringProperty getComponent() {
+		return component;
+	}
+
+	public void setComponent(SimpleStringProperty component) {
+		this.component = component;
 	}
 
 }

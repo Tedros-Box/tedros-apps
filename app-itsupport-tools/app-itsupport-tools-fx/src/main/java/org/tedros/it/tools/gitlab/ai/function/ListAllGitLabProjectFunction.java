@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
+import org.tedros.ai.function.ToolCallResult;
 import org.tedros.ai.function.model.Empty;
-import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.it.tools.gitlab.api.model.GitLabProject;
 import org.tedros.util.TLoggerUtil;
 

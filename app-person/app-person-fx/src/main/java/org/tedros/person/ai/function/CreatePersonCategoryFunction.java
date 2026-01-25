@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.openai.model.ToolCallResult;
+import org.tedros.ai.function.ToolCallResult;
 import org.tedros.core.context.TedrosAppManager;
 import org.tedros.person.model.PersonCategory;
 import org.tedros.person.module.category.CategoryModule;

@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
-import org.tedros.ai.TFunctionHelper;
 import org.tedros.ai.function.TFunction;
+import org.tedros.ai.function.TFunctionHelper;
 import org.tedros.ai.service.AiServiceProvider;
 import org.tedros.ai.service.AiTerosServiceFactory;
 import org.tedros.ai.service.IAiTerosService;
@@ -19,6 +19,8 @@ import org.tedros.api.descriptor.ITComponentDescriptor;
 import org.tedros.api.presenter.view.ITView;
 import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
+import org.tedros.core.control.ITProgressIndicator;
+import org.tedros.core.control.TProgressIndicator;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.component.ITComponent;
 import org.tedros.fx.control.TButton;
@@ -68,8 +70,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
+import javafx.concurrent.Worker.State;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.CheckBox;
@@ -87,12 +88,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
 public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 
-    private static final String SYSTEM_PROMPT = """
+    private static final int MAX_ISSUES = 1;
+
+	private static final String SYSTEM_PROMPT = """
             	You are a Redmine AI Assistant integrated into the Teros system.
 				Reply using HTML format only.
 				
@@ -142,8 +146,9 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
     
     // AI Analysis
     private ObservableList<IssueViewModel> selectedIssueData = FXCollections.observableArrayList();
-    private TableView<IssueViewModel> selectedTable;
+    private TableView<IssueViewModel> selectedTable;    
     private TextArea aiPromptField;
+    private ITProgressIndicator aiPromptProgressIndicator;
     private WebView aiResponseWebView;
     
     private RedmineApiGateway gateway;
@@ -165,54 +170,102 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         this.setPadding(new Insets(10));
         this.setFillWidth(true);
         initializeUI();
-        Platform.runLater(() -> {
-            try {
-            	RedmineApiPropertyUtil propertyUtil = RedmineApiPropertyUtil.getInstance();
-            	gateway = new RedmineApiGateway(propertyUtil.getRedmineUrl(), propertyUtil.getRedmineKey());
+       
+        try {
+        	RedmineApiPropertyUtil propertyUtil = RedmineApiPropertyUtil.getInstance();
+        	gateway = new RedmineApiGateway(propertyUtil.getRedmineUrl(), propertyUtil.getRedmineKey());
+            
+            LoadCustomFieldMetadataDataService loadService = new LoadCustomFieldMetadataDataService(gateway);
+            LoadIssueStatusesService statusService = new LoadIssueStatusesService(gateway);
+            LoadRedmineUsersService userService = new LoadRedmineUsersService(gateway);
 
-                loadInitialData();
-            	
-            	terosServ = new TerosService();
-            	
-            	terosServ.onFailedProperty().addListener((obs, oldVal, newVal) -> Platform.runLater(() -> {
-            	    Platform.runLater(() -> showAlert("Erro na análise: " + terosServ.getException().getMessage()));
-            	    // IMPORTANTE: Se falhar, tenta processar o próximo da fila mesmo assim
-            	    processNextTask(); 
-            	}));
-            	
-            	terosServ.setOnSucceeded(e -> {
-            		String htmlMessage = terosServ.getValue();
-					webViewBridge.run(htmlMessage);
-					accordion.setExpandedPane(aiPane);
-					aiPromptField.clear();
-					// GATILHO: Chama o próximo item da fila, se houver
-				    processNextTask();
-            	});
-            	
-                redmineServ = new RedmineService(gateway);
-                redmineServ.onFailedProperty().addListener((obs, oldVal, newVal) -> Platform
-                		.runLater(() -> showAlert(redmineServ.getException().getMessage())));               
-                redmineServ.setOnSucceeded(e -> {
-	       			List<TIssueEvidenceInfo> results = redmineServ.getValue();
-	       			if (results != null) {
-	       				accordion.setExpandedPane(filterPane);
-	       				results.stream().map(IssueViewModel::new).forEach(issueData::add);
-	       			}
-	       		});
-               
-                progressIndicatorVisible.bind(terosServ.runningProperty().or(redmineServ.runningProperty()));
-                
-            	webViewBridge = new TerosWebViewBridge(aiResponseWebView);
-            	aiResponseWebView.getEngine()
-                        .load("file:" + TedrosFolder.MODULE_FOLDER.getFullPath() + "TCORE_19780222" + File.separator
-                                + "teros_ia_response.html");
-                aiResponseWebView.setZoom(0.78);
-            } catch (Exception e) {
-                TLoggerUtil.error(RedmineIssueSearchComponent.class, "Failed to load AI response HTML template.", e);
-            }
-		});
+            loadService.stateProperty().addListener((obs, oldState, newState) -> {
+				if(newState.equals(State.SUCCEEDED)) {
+					statusService.startProcess();
+				}
+				if(newState.equals(State.FAILED)) {
+					statusService.startProcess();
+					showAlert("Error loading initial data"+": "+loadService.getException().getMessage());
+				}
+			});
+            
+            statusService.stateProperty().addListener((obs, oldState, newState) -> {
+				if(newState.equals(State.SUCCEEDED)) {
+					String all = "-";
+                	TIssueStatus allStatus = new TIssueStatus();
+	                allStatus.setName(all);
+	                List<TIssueStatus> statuses = statusService.getValue();
+	                statuses.add(0, allStatus);
+                    statusComboBox.getItems().setAll(statuses);
+                    userService.startProcess();
+				}
+				
+				if(newState.equals(State.FAILED)) {
+					userService.startProcess();
+					showAlert("Error loading status"+": "+statusService.getException().getMessage());
+				}
+			});
+            
+            userService.setOnFailed(e -> showAlert("Error loading users"+": "+userService.getException().getMessage()));
+            userService.setOnSucceeded(e -> {
+            	String all = "-";	                
+                TRedmineUser allUsers = new TRedmineUser();
+                allUsers.setLogin(all);
+                List<TRedmineUser> users = userService.getValue();
+                users.add(0, allUsers);
+
+                assignedToComboBox.getItems().setAll(users);
+                authorComboBox.getItems().setAll(users);
+			});
+            
+            // Teros AI Service setup
+        	terosServ = new TerosService();
+        	terosServ.onFailedProperty().addListener((obs, oldVal, newVal) -> Platform.runLater(() -> {
+        	    Platform.runLater(() -> showAlert("Erro na análise: " + terosServ.getException().getMessage()));
+        	    // IMPORTANTE: Se falhar, tenta processar o próximo da fila mesmo assim
+        	    processNextTask(); 
+        	}));
+        	
+        	terosServ.setOnSucceeded(e -> {
+        		String htmlMessage = terosServ.getValue();
+				webViewBridge.run(htmlMessage);
+				accordion.setExpandedPane(aiPane);
+				aiPromptField.clear();
+				// GATILHO: Chama o próximo item da fila, se houver
+			    processNextTask();
+        	});
+        	aiPromptProgressIndicator.bind(terosServ.runningProperty());
+        	
+        	// Redmine Service setup
+            redmineServ = new RedmineService(gateway);
+            redmineServ.onFailedProperty().addListener((obs, oldVal, newVal) -> Platform
+            		.runLater(() -> showAlert(redmineServ.getException().getMessage())));               
+            redmineServ.setOnSucceeded(e -> {
+       			List<TIssueEvidenceInfo> results = redmineServ.getValue();
+       			if (results != null) {
+       				accordion.setExpandedPane(filterPane);
+       				results.stream().map(IssueViewModel::new).forEach(issueData::add);
+       			}
+       		});
+            
+            progressIndicatorVisible.bind(loadService.runningProperty()
+            		.or(statusService.runningProperty())
+            		.or(userService.runningProperty())
+            		.or(redmineServ.runningProperty()));          	
+            
+            loadService.startProcess();
+            
+        } catch (Exception e) {
+            TLoggerUtil.error(RedmineIssueSearchComponent.class, "Failed to load AI response HTML template.", e);
+        }
                 
     }
+    
+    @Override
+	public void tStopComponent() {
+		terosServ.cancel();
+		redmineServ.cancel();
+	}	
     
     private void initializeUI() {
     	
@@ -281,7 +334,6 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         
         filterPane = new TitledPane(lang.getString(TUsualKey.FILTERS), resultsBox);
         
-
         // Pane 2: AI Analysis
         aiPromptField = new TextArea();
         aiPromptField.setPromptText(lang.getString(ItToolsKey.DESCRIBE_IA_INSTRUCTIONS)+" [Enter] + [Shift] = "+lang.getString(TUsualKey.SEND));
@@ -307,7 +359,15 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         sendForAnalysisButton.setOnAction(e -> performAiAnalysis());
 
         aiResponseWebView = new WebView();
-        aiResponseWebView.getEngine().setJavaScriptEnabled(true);        
+        aiResponseWebView.setZoom(0.78);
+        aiResponseWebView.getEngine().documentProperty().addListener((a,o,n)->{
+    		if(n!=null) {
+    			webViewBridge = new TerosWebViewBridge(aiResponseWebView);
+			}
+    	});
+        
+        aiResponseWebView.getEngine()
+        .load("file:" + TedrosFolder.MODULE_FOLDER.getFullPath() + "TCORE_19780222" + File.separator + "teros_ia_response.html");
         
         VBox selectedItensBox = new VBox(10,
                 new TLabel(lang.getString(ItToolsKey.SELECTED_ITEMS_TO_ANALYSE)),
@@ -316,10 +376,18 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         selectedItensBox.setPadding(new Insets(10));
         VBox.setVgrow(selectedTable, Priority.ALWAYS);
         
-        VBox aiBox = new VBox(10,
-                new TLabel(lang.getString(ItToolsKey.TEROS_INSTRUCTIONS)),
-                aiPromptField,
-                sendForAnalysisButton,
+        VBox promptBox = new VBox(10, new TLabel(lang.getString(ItToolsKey.DESCRIBE_IA_INSTRUCTIONS)), 
+        		aiPromptField, sendForAnalysisButton);
+        
+        StackPane aiPromptStack = new StackPane();
+        StackPane.setMargin(promptBox, new Insets(5));        
+        aiPromptStack.getChildren().add(promptBox);
+        
+        aiPromptProgressIndicator = new TProgressIndicator(aiPromptStack);
+        aiPromptProgressIndicator.setSmallLogo();
+        
+        VBox aiBox = new VBox(5,
+                aiPromptStack,
                 aiResponseWebView);
         aiBox.setPadding(new Insets(10));
 
@@ -515,18 +583,17 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         pendingTasks.clear();
 
         Platform.runLater(() -> {
-        	if (selectedIssues.size() > 3) {
+        	if (selectedIssues.size() > MAX_ISSUES) {
         		int total = selectedIssues.size();
                 int count = 1;
                 for (TIssueEvidenceInfo issue : selectedIssues) {
                 	final int currentNum = count;
                     // Cria uma tarefa para este item e adiciona na fila
-                    pendingTasks.add(() -> {
+                    pendingTasks.add(() -> 
                         callTerosService(List.of(issue), userPrompt,
                                 "the user selected " + total
                                         + " issues and to prevent overload we are sending one by one. this one is the number "
-                                        + currentNum + " of " + total + ". Reply using HTML format only.");
-                    });
+                                        + currentNum + " of " + total + ". Reply using HTML format only."));
                     count++;
                 }
                 
@@ -561,48 +628,6 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         } catch (Exception e) {
             return issues.toString();
         }
-    }
-
-    private void loadInitialData() {
-        
-    	Service<Void> loadService = new Service<Void>() {
-			@Override
-			protected Task<Void> createTask() {
-				return new Task<Void>() {
-					@Override
-					protected Void call() throws Exception {
-						// Initialize gateway cache if needed (gateway logic)
-		                gateway.loadCustomFieldMetadata();
-		                
-		                String all = "-";
-		                
-		                TIssueStatus allStatus = new TIssueStatus();
-		                allStatus.setName(all);
-		                
-		                TRedmineUser allUsers = new TRedmineUser();
-		                allUsers.setLogin(all);
-
-		                List<TIssueStatus> statuses = new ArrayList<>(gateway.listIssueStatuses());
-		                List<TRedmineUser> users = new ArrayList<>(gateway.listUsers());
-		                
-		                statuses.add(0, allStatus);
-		                users.add(0, allUsers);
-		                
-	                    statusComboBox.getItems().setAll(statuses);
-	                    assignedToComboBox.getItems().setAll(users);
-	                    authorComboBox.getItems().setAll(users);
-		                
-						return null;
-					}
-				};
-			}
-    		
-    	};
-    	
-    	progressIndicatorVisible.bind(loadService.runningProperty());
-    	
-    	loadService.setOnFailed(e -> showAlert("Error loading initial data"+": "+loadService.getException().getMessage()));
-    	loadService.start();
     }
 
     private void searchIssues() {
@@ -720,7 +745,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         }
     }
     
-    private static class TerosService extends TProcess<String> {
+    private class TerosService extends TProcess<String> {
     	
 		private String prompt;
 		private String systemPrompt;
@@ -731,7 +756,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 			String apiKey = TedrosContext.getAiApiKey();
             String aiModel = TedrosContext.getAiModel();
             AiServiceProvider aiProvider = TedrosContext.getAiServiceProvider();
-            iaServ = AiTerosServiceFactory.newInstance(apiKey, aiModel, SYSTEM_PROMPT, aiProvider);
+            iaServ = AiTerosServiceFactory.newInstanceWithLangChain4jAdapters(apiKey, aiModel, SYSTEM_PROMPT, aiProvider);
             TFunction[] arr = new TFunction[] {
 					TFunctionHelper.listAllViewPathFunction(),
 					TFunctionHelper.getViewInfoFunction(),
@@ -765,7 +790,6 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 			return new TTaskImpl<String>() {
 				@Override
 				protected String call() throws Exception {
-					//iaServ.cleanMessageHistory();
 					return iaServ.call(prompt, systemPrompt);
 				}
 
@@ -777,7 +801,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 		}
     }
     
-    private static class RedmineService extends TProcess<List<TIssueEvidenceInfo>> {
+    private class RedmineService extends TProcess<List<TIssueEvidenceInfo>> {
     	
     	RedmineIssueFilter filter;
     	private RedmineApiGateway gateway;
@@ -802,4 +826,77 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 			};
 		}
     }	
+    
+    private class LoadCustomFieldMetadataDataService extends TProcess<Void> {
+
+    	private RedmineApiGateway gateway;
+    	
+    	public LoadCustomFieldMetadataDataService(RedmineApiGateway gateway) {
+    		this.gateway = gateway;	
+    	}
+
+    	@Override
+		protected TTaskImpl<Void> createTask() {
+			return new TTaskImpl<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					gateway.loadCustomFieldMetadata();
+					return null;
+				}
+
+				@Override
+				public String getServiceNameInfo() {
+					return null;
+				}
+			};
+		}
+    }
+    
+    private class LoadIssueStatusesService extends TProcess<List<TIssueStatus>> {
+
+    	private RedmineApiGateway gateway;
+    	
+    	public LoadIssueStatusesService(RedmineApiGateway gateway) {
+    		this.gateway = gateway;	
+    	}
+
+    	@Override
+		protected TTaskImpl<List<TIssueStatus>> createTask() {
+			return new TTaskImpl<List<TIssueStatus>>() {
+				@Override
+				protected List<TIssueStatus> call() throws Exception {
+					return new ArrayList<>(gateway.listIssueStatuses());
+				}
+
+				@Override
+				public String getServiceNameInfo() {
+					return null;
+				}
+			};
+		}
+    }
+    
+    private class LoadRedmineUsersService extends TProcess<List<TRedmineUser>> {
+
+    	private RedmineApiGateway gateway;
+    	
+    	public LoadRedmineUsersService(RedmineApiGateway gateway) {
+    		this.gateway = gateway;	
+    	}
+
+    	@Override
+		protected TTaskImpl<List<TRedmineUser>> createTask() {
+			return new TTaskImpl<List<TRedmineUser>>() {
+				@Override
+				protected List<TRedmineUser> call() throws Exception {
+	                return new ArrayList<>(gateway.listUsers());
+				}
+
+				@Override
+				public String getServiceNameInfo() {
+					return null;
+				}
+			};
+		}
+    }
 }

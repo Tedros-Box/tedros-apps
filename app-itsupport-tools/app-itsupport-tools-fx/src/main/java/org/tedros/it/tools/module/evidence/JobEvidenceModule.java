@@ -11,14 +11,14 @@ import org.tedros.it.tools.entity.JobEvidence;
 import org.tedros.it.tools.model.JobEvidenceReportModel;
 import org.tedros.it.tools.module.evidence.model.CaptureEvidenceMV;
 import org.tedros.it.tools.module.evidence.model.CaptureEvidenceModel;
-import org.tedros.it.tools.module.evidence.model.JobEvidenceMV;
+import org.tedros.it.tools.module.evidence.model.CreateJobEvidenceMV;
 import org.tedros.it.tools.module.evidence.report.JobEvidenceReportMV;
 
 @TView(items = {
 		@TItem(title =  ItToolsKey.VIEW_CAPTURE_EVIDENCE, description = ItToolsKey.VIEW_CAPTURE_EVIDENCE_DESC, 
 			modelView = CaptureEvidenceMV.class, model = CaptureEvidenceModel.class),
 		@TItem(title = ItToolsKey.VIEW_JOB_EVIDENCE, description = ItToolsKey.VIEW_JOB_EVIDENCE_DESC, 
-			modelView = JobEvidenceMV.class, model = JobEvidence.class),
+			modelView = CreateJobEvidenceMV.class, model = JobEvidence.class),
 		@TItem(title = ItToolsKey.VIEW_JOB_EVIDENCE_REPORT, description = ItToolsKey.VIEW_JOB_EVIDENCE_REPORT_DESC,
 			modelView = JobEvidenceReportMV.class, model = JobEvidenceReportModel.class)})
 @TSecurity(id = DomainApp.EVIDENCE_MANAGER_MODULE_ID, appName = ItToolsKey.APP_ITSUPPORT, 

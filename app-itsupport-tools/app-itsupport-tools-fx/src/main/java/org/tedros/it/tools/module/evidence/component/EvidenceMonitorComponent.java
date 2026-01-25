@@ -5,10 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.tedros.api.descriptor.ITComponentDescriptor;
 import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.control.PopOver;
 import org.tedros.fx.TFxKey;
+import org.tedros.fx.component.ITComponent;
 import org.tedros.fx.control.TButton;
 import org.tedros.fx.control.TLabel;
 import org.tedros.it.tools.ItToolsKey;
@@ -36,7 +38,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class EvidenceMonitorView extends StackPane implements EvidenceCaptureListener {
+public class EvidenceMonitorComponent extends StackPane implements ITComponent, EvidenceCaptureListener {
 	
 	private static final String FX_FONT_WEIGHT_BOLD = "-fx-font-weight: bold;";
 	private static final String ADD_NEW_APP_TITLE = TLanguage.getInstance().getString(ItToolsKey.ADD_NEW_APP_TITLE);	
@@ -61,7 +63,8 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 	private Button btnStartStop;
 	private TLabel lblOutputDir;
 	
-	public EvidenceMonitorView() {
+	@Override
+	public void tInitializeComponent(ITComponentDescriptor descriptor) {
 		this.scheduler = new EvidenceScheduler();
 		// Register ourselves as a listener
 		this.scheduler.addListener(this);
@@ -69,6 +72,11 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 		initUI();
 		this.loadTodayEvidence();
 	}
+	
+	@Override
+	public void tStopComponent() {
+		shutdown();
+	}	
 
 	private void initUI() {
 		BorderPane mainLayout = new BorderPane();
@@ -85,7 +93,7 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 		
 		lblStatus = new TLabel(STATUS_STOPPED);
 		
-		lblOutputDir = new TLabel(scheduler.getOutputDir());
+		lblOutputDir = new TLabel(EvidenceScheduler.OUTPUT_DIR);
 		lblOutputDir.setStyle(FX_FONT_WEIGHT_BOLD);
 		lblOutputDir.setOnMouseEntered(e-> lblOutputDir.setCursor(Cursor.HAND));
 		
@@ -95,7 +103,7 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 			Thread thread = new Thread(() ->
 			Platform.runLater(() ->{
                 try {
-					if(!TFileUtil.open(new File(scheduler.getOutputDir()))) {
+					if(!TFileUtil.open(new File(EvidenceScheduler.OUTPUT_DIR))) {
 						Label label = new Label(TLanguage.getInstance(null).getString("#{tedros.fxapi.message.os.not.support.operation}"));
 						label.setId("t-label");
 						label.setStyle(	"-fx-font: Arial; "+
@@ -109,7 +117,7 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 						p.show(lblOutputDir);
 					}
 				} catch (IOException ex) {
-					TLoggerUtil.error(EvidenceMonitorView.class, ex.getMessage(), ex);
+					TLoggerUtil.error(EvidenceMonitorComponent.class, ex.getMessage(), ex);
 				}
 	          }));
 		thread.setDaemon(true);
@@ -268,7 +276,6 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 				javafx.application.Platform.runLater(() -> {
 					lblStatus.setText(originalText);
 					lblStatus.setStyle("-fx-font-weight: normal;");
-					//lblStatus.setStyle("-fx-text-fill: black;");
 				});
 			}
 		}, 2000);
@@ -284,7 +291,7 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 	private void loadTodayEvidence() {
 		try {
 			String workingDayFolder = org.tedros.util.TDateUtil.format(new java.util.Date(), "yyyy-MM-dd");
-			File dayDir = new File(scheduler.getOutputDir(), workingDayFolder);
+			File dayDir = new File(EvidenceScheduler.OUTPUT_DIR, workingDayFolder);
 			
 			if (dayDir.exists() && dayDir.isDirectory()) {
 				File[] files = dayDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".png"));
@@ -318,5 +325,5 @@ public class EvidenceMonitorView extends StackPane implements EvidenceCaptureLis
 			// Ignore metadata read errors
 		}
 		return title;
-	}
+	}	
 }

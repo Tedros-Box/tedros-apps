@@ -55,6 +55,7 @@ public interface ItToolsKey {
 	static final String MODULE_ITSUPPORT_REDMINE_DESC = "#{module.itsupport.redmine.desc}";
 	static final String PROMPT_EDIT_DESCRIPTION = "#{prompt.edit.description}";
 	static final String TEXT_ADD_ISSUES_TO_ANALYSIS = "#{text.add.issues.to.analysis}";
+	static final String TEXT_NO_SCREENS_CAPTURED = "#{text.no.screens.captured}";
 	static final String TEXT_PROVIDE_INSTRUCTIONS = "#{text.provide.instructions}";
 	static final String TEXT_SELECT_EVIDENCES = "#{text.select.evidences}";
 	static final String TEXT_SELECT_ITEMS_FIRST = "#{text.select.items.first}";

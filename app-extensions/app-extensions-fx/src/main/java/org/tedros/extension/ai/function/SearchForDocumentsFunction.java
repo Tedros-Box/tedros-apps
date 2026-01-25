@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.openai.model.ToolCallResult;
+import org.tedros.ai.function.ToolCallResult;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.extension.ai.model.DocumentInfo;

@@ -4,7 +4,6 @@ import java.awt.AWTException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -13,16 +12,21 @@ import java.util.concurrent.TimeUnit;
 
 import org.tedros.util.TLoggerUtil;
 
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.NativeHookException;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
+
 import javafx.application.Platform;
 
-public class EvidenceScheduler {
+public class EvidenceScheduler implements NativeKeyListener {
 
+	public static final String OUTPUT_DIR = System.getProperty("user.home") + File.separator + "TedrosEvidence";
+	
     private ScheduledExecutorService scheduler;
     // Define the interval in seconds between checks
     private int checkIntervalSeconds = 3;
     private TimeUnit timeUnit = TimeUnit.MINUTES;
-
-    private String outputDir = System.getProperty("user.home") + File.separator + "TedrosEvidence";
 
     // Define the set of applications to monitor (e.g., for evidence)
     private final Set<String> targetApplications = ConcurrentHashMap.newKeySet();
@@ -48,6 +52,15 @@ public class EvidenceScheduler {
         targetApplications.add("notepad");
         targetApplications.add("sna");
         
+        try {
+        	if(!GlobalScreen.isNativeHookRegistered()) {
+        		// Inicializar o gancho (Hook) nativo
+                GlobalScreen.registerNativeHook();
+        	}
+        } catch (NativeHookException ex) {
+            TLoggerUtil.error(EvidenceScheduler.class, "Error registering native hook", ex);
+        }
+                
     }
 
     public void addListener(EvidenceCaptureListener listener) {
@@ -85,6 +98,8 @@ public class EvidenceScheduler {
         
         scheduler.scheduleAtFixedRate(this::captureEvidence, 0, checkIntervalSeconds, timeUnit);
         
+        // Adicionar este listener para ouvir as teclas
+        GlobalScreen.addNativeKeyListener(this);
     }
 
 	private void captureEvidence() {
@@ -108,7 +123,7 @@ public class EvidenceScheduler {
 		            String timestamp = String.valueOf(System.currentTimeMillis());
 		            String fileName = "evidence_" + timestamp + ".png";
 
-		            File capturedFile = ScreenCaptureUtil.captureActiveMonitor(outputDir, fileName, windowBounds);
+		            File capturedFile = ScreenCaptureUtil.captureActiveMonitor(OUTPUT_DIR, fileName, windowBounds);
 
 		           // Save Metadata (Sidecar file)
 		            saveMetadata(windowTitle, timestamp, fileName, capturedFile);
@@ -172,6 +187,9 @@ public class EvidenceScheduler {
             scheduler.shutdownNow();
             TLoggerUtil.info(EvidenceScheduler.class, "Monitoring stopped.");
         }
+        
+        // Remove este listener para ouvir as teclas
+        GlobalScreen.removeNativeKeyListener(this);
     }
     
     public void destroy() {
@@ -179,6 +197,11 @@ public class EvidenceScheduler {
 		listeners.clear();
 		targetApplications.clear();
 		scheduler = null;
+		try {
+			GlobalScreen.unregisterNativeHook();
+		} catch (NativeHookException e) {
+			TLoggerUtil.error(EvidenceScheduler.class, "Error unregistering native hook", e);
+		}
 	}
 
     public int getCheckIntervalSeconds() {
@@ -189,16 +212,33 @@ public class EvidenceScheduler {
         this.checkIntervalSeconds = checkIntervalSeconds;
     }
 
-    public String getOutputDir() {
-        return outputDir;
-    }
-
-    public void setOutputDir(String outputDir) {
-        this.outputDir = outputDir;
-    }
-
     public boolean isRunning() {
         return running;
         
     }
+    
+    @Override
+    public void nativeKeyPressed(NativeKeyEvent e) {
+        int modifiers = e.getModifiers();
+        
+        // Verifica se AMBAS as teclas (Ctrl E Alt) estão pressionadas
+        boolean isCtrlPressed = (modifiers & NativeKeyEvent.CTRL_MASK) != 0;
+        boolean isAltPressed = (modifiers & NativeKeyEvent.ALT_MASK) != 0;
+
+        // VC_PRINTSCREEN é a constante para a tecla Print Screen
+        if (e.getKeyCode() == NativeKeyEvent.VC_PRINTSCREEN && isCtrlPressed && isAltPressed) {
+            
+            Platform.runLater(() -> {
+                TLoggerUtil.info(EvidenceScheduler.class, "Print Screen Captured via Global Hook (Ctrl + Alt + PrtSc).");
+                captureEvidence();
+            });
+        }
+    }
+    
+    // Métodos obrigatórios da interface que não precisamos usar agora
+    @Override
+    public void nativeKeyReleased(NativeKeyEvent e) { }
+
+    @Override
+    public void nativeKeyTyped(NativeKeyEvent e) { }
 }

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 
+import org.tedros.api.descriptor.ITComponentDescriptor;
 import org.tedros.common.model.TByteEntity;
 import org.tedros.common.model.TFileEntity;
 import org.tedros.core.TLanguage;
@@ -16,12 +17,14 @@ import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.collections.TFXCollections;
+import org.tedros.fx.component.ITComponent;
 import org.tedros.fx.control.TButton;
 import org.tedros.fx.control.TDatePickerField;
 import org.tedros.fx.control.TLabel;
 import org.tedros.fx.control.TMaskField;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.entity.JobEvidenceItem;
+import org.tedros.it.tools.module.evidence.model.CreateJobEvidenceMV;
 import org.tedros.util.TDateUtil;
 
 import javafx.beans.property.BooleanProperty;
@@ -46,22 +49,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class EvidenceSelectorView extends StackPane {
-
-    // Wrapper for search results (transient)
-    private static class SelectableEvidence {
-        File file;
-        String appName;
-        long timestamp;
-
-        BooleanProperty selected = new SimpleBooleanProperty(false);
-
-        public SelectableEvidence(File file, String appName, long timestamp) {
-            this.file = file;
-            this.appName = appName;
-            this.timestamp = timestamp;
-        }
-    }
+public class EvidenceSelectorComponent extends StackPane implements ITComponent {
     
     private TDatePickerField datePicker;
     private TextField tfAppName;
@@ -74,24 +62,22 @@ public class EvidenceSelectorView extends StackPane {
 
     // Selected Items (Final List)
     private ITObservableList<JobEvidenceItem> selectedItems;
-    private ListView<JobEvidenceItem> listViewSelected;
+    private ListView<JobEvidenceItem> listViewSelected;    
+    
+    @Override
+	public void tInitializeComponent(ITComponentDescriptor descriptor) {
+    	
+    	this.selectedItems = TFXCollections.iTObservableList();
+        
+        CreateJobEvidenceMV mv = (CreateJobEvidenceMV) descriptor.getModelView();    	
+    	ITObservableList<JobEvidenceItem> items = mv.getItems(); 
 
-    private EvidenceScheduler scheduler;
-
-    public EvidenceSelectorView() {
-        this(null);
-    }
-
-    public EvidenceSelectorView(ITObservableList<JobEvidenceItem> initialItems) {
-        this.scheduler = new EvidenceScheduler();
-        this.selectedItems = TFXCollections.iTObservableList();
-
-        if (initialItems != null) {
-            this.selectedItems = initialItems;
+        if (items != null) {
+            this.selectedItems = items;
         }
 
         initUI();
-    }
+	}
 
     public ITObservableList<JobEvidenceItem> tEvidenceItemProperty() {
         return selectedItems;
@@ -123,9 +109,9 @@ public class EvidenceSelectorView extends StackPane {
         btnSearch.setOnAction(e -> doSearch());
 
         filters.getChildren().addAll(
-                new Label(TLanguage.getInstance().getString(TUsualKey.DATE)+":"), datePicker,
-                new Label("App:"), tfAppName,
-                new Label(TLanguage.getInstance().getString(ItToolsKey.TIME)+":"), tfStartTime, new Label("-"), tfEndTime,
+                new TLabel(TLanguage.getInstance().getString(TUsualKey.DATE)+":"), datePicker,
+                new TLabel("App:"), tfAppName,
+                new TLabel(TLanguage.getInstance().getString(ItToolsKey.TIME)+":"), tfStartTime, new TLabel("-"), tfEndTime,
                 btnSearch);
 
         topContainer.getChildren().addAll(filters, new Separator());
@@ -254,6 +240,14 @@ public class EvidenceSelectorView extends StackPane {
             }
         }
         
+        private void openFile(File f) {
+            try {
+                java.awt.Desktop.getDesktop().open(f);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        
         private void setThumbnail(ImageView iv, File f) {
             try {
                 iv.setImage(new Image(new FileInputStream(f), 0, 100, true, true));
@@ -315,13 +309,7 @@ public class EvidenceSelectorView extends StackPane {
         }
     }
 
-    private void openFile(File f) {
-        try {
-            java.awt.Desktop.getDesktop().open(f);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    
 
     private void doSearch() {
         evidenceList.clear();
@@ -331,7 +319,7 @@ public class EvidenceSelectorView extends StackPane {
                 return;
 
             String dateStr = TDateUtil.format(date, "yyyy-MM-dd");
-            File dayDir = new File(scheduler.getOutputDir(), dateStr);
+            File dayDir = new File(EvidenceScheduler.OUTPUT_DIR, dateStr);
 
             if (!dayDir.exists() || !dayDir.isDirectory())
                 return;
@@ -385,6 +373,24 @@ public class EvidenceSelectorView extends StackPane {
         } catch (Exception e) {
             return start ? Long.MIN_VALUE : Long.MAX_VALUE;
         }
-    }    
-    
+    }
+
+	@Override
+	public void tStopComponent() {
+	}    
+	
+	// Wrapper for search results (transient)
+    private static class SelectableEvidence {
+        File file;
+        String appName;
+        long timestamp;
+
+        BooleanProperty selected = new SimpleBooleanProperty(false);
+
+        public SelectableEvidence(File file, String appName, long timestamp) {
+            this.file = file;
+            this.appName = appName;
+            this.timestamp = timestamp;
+        }
+    }
 }

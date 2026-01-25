@@ -4,8 +4,8 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
+import org.tedros.ai.function.ToolCallResult;
 import org.tedros.ai.function.model.Response;
-import org.tedros.ai.openai.model.ToolCallResult;
 import org.tedros.it.tools.redmine.ai.model.RedmineIssueIdToFind;
 import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
 import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
