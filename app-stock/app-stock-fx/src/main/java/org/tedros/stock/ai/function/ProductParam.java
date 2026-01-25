@@ -10,10 +10,15 @@ import org.tedros.stock.entity.Product;
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * 
  */
-@JsonClassDescription("The product attributes")
+@Getter @Setter @ToString
+@JsonClassDescription("Search criteria for products. Fill fields to narrow down the results.")
 public class ProductParam {
 	
 	private String code;
@@ -32,16 +37,17 @@ public class ProductParam {
 	
 	private Double weight;
 	
-	@JsonPropertyDescription("the creation date, never fill in this field; instead, use beginDate and/or endDate")
+	@JsonPropertyDescription("Internal creation timestamp. Do NOT fill this field directly; use 'beginDate' and 'endDate' for range filtering.")
 	private Date insertDate;
 	
-	@JsonPropertyDescription("Used to find products created on "
-			+ "or after this date with the endDate field. "
-			+ "[Acceptable timestamp: ISO 8601 Date string, ex: yyyy-MM-dd'T'00:00:00]")
+	@JsonPropertyDescription("Start date for the creation range filter (Inclusive). "
+			+ "Format: ISO 8601 (yyyy-MM-dd'T'HH:mm:ss). "
+			+ "(e.g., '2026-01-02'T'00:00:00')")
 	private Date beginDate;
 	
-	@JsonPropertyDescription("use to find products created up to this date. "
-			+ "[Acceptable timestamp: ISO 8601 Date string, ex: yyyy-MM-dd'T'23:59:59]")
+	@JsonPropertyDescription("End date for the creation range filter (Exclusive/Inclusive based on logic). "
+			+ "Format: ISO 8601 (yyyy-MM-dd'T'HH:mm:ss). "
+			+ "(e.g., '2026-01-03'T'23:59:59'")
 	private Date endDate;
 	
 	public ProductParam() {
@@ -59,97 +65,5 @@ public class ProductParam {
 		this.weight = p.getWeight();
 		this.insertDate = p.getInsertDate();
 	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getTrademark() {
-		return trademark;
-	}
-
-	public void setTrademark(String trademark) {
-		this.trademark = trademark;
-	}
-
-	public String getUnitMeasure() {
-		return unitMeasure;
-	}
-
-	public void setUnitMeasure(String unitMeasure) {
-		this.unitMeasure = unitMeasure;
-	}
-
-	public Double getMeasure() {
-		return measure;
-	}
-
-	public void setMeasure(Double measure) {
-		this.measure = measure;
-	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}
-
-	public Double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(Double weight) {
-		this.weight = weight;
-	}
-
-	public Date getInsertDate() {
-		return insertDate;
-	}
-
-	public void setInsertDate(Date insertDate) {
-		this.insertDate = insertDate;
-	}
-
-	public Date getBeginDate() {
-		return beginDate;
-	}
-
-	public void setBeginDate(Date beginDate) {
-		this.beginDate = beginDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-	
-	
-	
-	
 
 }

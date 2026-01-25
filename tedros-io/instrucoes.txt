@@ -1,0 +1,197 @@
+A seguir está um **prompt completo, estruturado e pronto para uso no Antigravity**, elaborado para gerar um website profissional no domínio **tedros.io**, com foco explícito em **alavancar vendas**, **apresentar valor ao decisor corporativo** e **demonstrar viabilidade técnica** dentro do contexto do Detran / GlobalWeb.
+O texto já incorpora **requisitos técnicos**, **mensagem de negócio**, **arquitetura**, **stack** e **diretrizes de UX**.
+
+---
+
+## Prompt para o Antigravity
+
+**Contexto e Objetivo**
+
+Crie um website institucional e comercial para o projeto **Tedros**, hospedado no domínio **tedros.io**, com foco em **vendas B2B**, **apresentação executiva** e **demonstração técnica**.
+O objetivo principal do site é convencer gestores de TI, gerentes de projeto e decisores técnicos (ex.: GlobalWeb, Detran e empresas similares) de que o **Tedros é uma solução estratégica baseada em IA para gestão de demandas, code review e automação inteligente de processos de desenvolvimento de software**.
+
+O site deve comunicar claramente:
+
+* Problemas reais do cenário atual
+* A proposta de valor do Tedros
+* Casos de uso práticos
+* Diferenciais técnicos
+* Arquitetura da solução
+* Chamada clara para contato e demonstração
+
+---
+
+## Público-alvo
+
+* Diretores e gerentes de TI
+* Gerentes de projeto
+* Arquitetos de software
+* Líderes técnicos
+* Empresas que utilizam Redmine, GitLab, JBoss, WSO2 e ecossistemas Java corporativos
+
+---
+
+## Contexto do Problema (a ser traduzido em narrativa de negócio)
+
+O cliente (Detran) possui:
+
+* Cerca de **200 sistemas Java** em produção
+* Servidores de aplicação **JBoss EAP**
+* Integração via **WSO2**
+* Versionamento no **GitLab**
+* Gestão de demandas no **Redmine**
+
+Principais dores:
+
+* Grande volume de demandas abertas no Redmine
+* Processo rigoroso e demorado de aprovação de demandas
+* Necessidade constante de **code review** nos merge requests
+* Times distribuídos com múltiplos gerentes, desenvolvedores e analistas
+* Dificuldade em **gerar e organizar evidências de trabalho**, exigidas para aprovação das demandas
+
+---
+
+## Proposta de Valor do Tedros
+
+O **Tedros** é uma plataforma que:
+
+* Utiliza **IA conversacional (Chatbot corporativo)** integrada aos sistemas do cliente
+* Executa **tools/functions diretamente nos sistemas** (Redmine, GitLab, etc.)
+* Permite:
+
+  * Buscar, analisar e resumir issues do Redmine
+  * Realizar **code review automatizado** em merge requests
+  * Gerar análises sob demanda para gestores
+  * Apoiar a tomada de decisão com base em dados reais
+* Inclui um módulo para **gestão de evidências de trabalho**, permitindo:
+
+  * Captura automática de screenshots durante o expediente
+  * Seleção manual das evidências pelo colaborador
+  * Associação das evidências às demandas do Redmine
+  * Organização e rastreabilidade para auditoria e aprovação
+
+---
+
+## Estrutura do Website (obrigatória)
+
+1. **Home**
+
+   * Headline forte orientada a resultado
+   * Subtítulo explicando o valor do Tedros
+   * CTA claro: “Solicitar Demonstração” / “Fale Conosco”
+
+2. **Problema**
+
+   * Explicação visual e textual das dores atuais
+   * Linguagem corporativa e objetiva
+
+3. **Solução Tedros**
+
+   * Visão geral da plataforma
+   * Chatbot com IA + tools executáveis
+   * Integração com Redmine e GitLab
+
+4. **Casos de Uso**
+
+   * Análise de demandas no Redmine
+   * Code review automatizado
+   * Gestão de evidências de trabalho
+   * Apoio ao gestor e ao desenvolvedor
+
+5. **Arquitetura**
+
+   * Backend REST
+   * Integrações
+   * Segurança
+   * Escalabilidade
+   * Execução on-premise
+
+6. **Tecnologia**
+
+   * Java 17
+   * Maven (WAR)
+   * Apache TomEE com OpenEJB
+   * Backend RESTful
+   * Frontend moderno (React ou HTML + jQuery)
+   * Integração com IA
+
+7. **Benefícios**
+
+   * Redução de tempo de aprovação
+   * Melhoria na qualidade do código
+   * Aumento da produtividade
+   * Rastreabilidade e compliance
+   * Decisões orientadas por dados
+
+8. **Contato / Demonstração**
+
+   * Formulário simples
+   * Chamada para apresentação executiva
+
+---
+
+## Requisitos Técnicos Obrigatórios
+
+### Backend
+
+* Java 17
+* Projeto Maven do tipo **WAR**
+* Arquitetura REST
+* Deploy em **Apache TomEE com OpenEJB**
+* Código organizado e extensível
+* Pronto para integração com serviços de IA
+
+### Frontend
+
+* Pode ser:
+
+  * React (preferencialmente com Vite ou CRA)
+  * OU HTML + jQuery
+* Framework que permita **desenvolvimento rápido**
+* Layout moderno, corporativo e limpo
+* Foco em conversão (vendas)
+
+---
+
+## Diretrizes de UX/UI
+
+* Design profissional e corporativo
+* Linguagem clara, objetiva e orientada a valor
+* Evitar jargões desnecessários, mas manter credibilidade técnica
+* Layout responsivo
+* Destaque para CTAs
+
+---
+
+## Tom da Comunicação
+
+* Consultivo
+* Estratégico
+* Orientado a resultados
+* Confiança técnica
+* Sem linguagem informal
+
+---
+
+## Resultado Esperado
+
+Gerar:
+
+* Estrutura completa do website
+* Conteúdo textual persuasivo
+* Sugestão de layout
+* Organização de páginas
+* Indicação de stack frontend adequada
+* Preparação para rápida implementação
+
+---
+
+Se desejar, no próximo passo posso:
+
+* Refinar esse prompt para **foco 100% comercial**
+* Criar **copywriting executivo** para cada seção
+* Desenhar a **arquitetura técnica detalhada**
+* Propor **stack frontend específica** (ex.: React + MUI, HTMX, etc.)
+* Criar um **pitch de apresentação para a GlobalWeb**
+
+Basta indicar como deseja evoluir.

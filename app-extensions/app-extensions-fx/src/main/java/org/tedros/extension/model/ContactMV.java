@@ -4,8 +4,6 @@
 package org.tedros.extension.model;
 
 import org.tedros.extension.ejb.controller.IContactController;
-import org.tedros.extension.model.Contact;
-import org.tedros.extension.model.ContactType;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TLabel;

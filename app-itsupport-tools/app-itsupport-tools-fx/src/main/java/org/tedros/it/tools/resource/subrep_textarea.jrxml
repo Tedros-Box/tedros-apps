@@ -1,0 +1,25 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="subrep_textarea" language="java" pageWidth="595" pageHeight="802" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="191ec7ab-7ce8-4bd4-b3c5-cb79712e2f2b" ignorePagination="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="vText" class="java.lang.String"/>
+	<parameter name="hText" class="java.lang.String"/>
+	<background splitType="Stretch"/>
+	<title splitType="Stretch"/>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader splitType="Stretch"/>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<element kind="textField" uuid="5949f2d8-e154-45f5-9466-621b3768a911" stretchType="ContainerHeight" x="0" y="20" width="555" height="20" markup="html" fontSize="8.0" textAdjust="StretchHeight" linkType="None" linkTarget="Self" blankWhenNull="true" removeLineWhenBlank="true" printWhenDetailOverflows="true">
+				<expression><![CDATA[$P{vText}]]></expression>
+			</element>
+			<element kind="textField" uuid="7d0d8afe-6c59-4762-950e-fa807f6e0134" x="0" y="0" width="555" height="20" forecolor="#000000" fontSize="8.0" bold="true" vTextAlign="Middle">
+				<expression><![CDATA[$P{hText}+":"]]></expression>
+			</element>
+		</band>
+	</detail>
+	<columnFooter splitType="Stretch"/>
+	<pageFooter splitType="Stretch"/>
+	<summary splitType="Stretch"/>
+</jasperReport>

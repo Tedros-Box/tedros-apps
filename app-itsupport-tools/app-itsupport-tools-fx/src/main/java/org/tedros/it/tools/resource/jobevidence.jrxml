@@ -1,0 +1,143 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="employee" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="7f6bed53-7bd9-4c1c-b64f-090a19710b76">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26.0" bold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18.0"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12.0" bold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12.0"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="SUBREPORT_DIR" forPrompting="false" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Desenv\\Projetos\\CovidSemFome\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREP_IS" class="java.io.InputStream"/>
+	<parameter name="report_title" class="java.lang.String"/>
+	<parameter name="report_org" class="java.lang.String"/>
+	<parameter name="hName" class="java.lang.String"/>
+	<parameter name="hDesc" class="java.lang.String"/>
+	<parameter name="hIssueLink" class="java.lang.String"/>
+	<parameter name="hExecutionDate" class="java.lang.String"/>
+	<parameter name="hIssueTitle" class="java.lang.String"/>
+	<parameter name="hEmployee" class="java.lang.String"/>
+	<parameter name="hTool" class="java.lang.String"/>
+	<parameter name="hIssueNumber" class="java.lang.String"/>
+	<field name="issueTitle" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="issueLink" class="java.lang.String"/>
+	<field name="executionDate" class="java.lang.String"/>
+	<field name="employee" class="java.lang.String"/>
+	<field name="issueNumber" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="tool" class="java.lang.String"/>
+	<field name="items" class="java.util.List"/>
+	<background splitType="Stretch"/>
+	<title height="92" splitType="Stretch">
+		<element kind="image" uuid="837fc979-9b53-4aff-9b74-04568b4175a8" x="492" y="3" width="63" height="63" scaleImage="RealSize" onErrorType="Blank">
+			<expression><![CDATA[$P{logo}]]></expression>
+		</element>
+		<element kind="textField" uuid="c0102050-aea3-40e4-9934-a1a7a8f82e34" x="0" y="66" width="555" height="23" fontName="Arial" fontSize="14.0" bold="false" vTextAlign="Bottom">
+			<expression><![CDATA[$P{report_org}]]></expression>
+		</element>
+		<element kind="textField" uuid="967c426c-42ba-4acc-95b0-c15d487a838e" x="0" y="3" width="492" height="63" forecolor="#666666" fontName="SansSerif" fontSize="18.0" bold="true" vTextAlign="Middle">
+			<expression><![CDATA[$P{report_title}]]></expression>
+		</element>
+	</title>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader splitType="Stretch"/>
+	<detail>
+		<band height="100" splitType="Stretch">
+			<element kind="textField" uuid="fb96f04d-fc53-40a1-80ff-384a53ea14a4" x="0" y="20" width="86" height="20" fontSize="8.0" bold="true" vTextAlign="Middle">
+				<expression><![CDATA[$P{hName}]]></expression>
+			</element>
+			<element kind="textField" uuid="cde555ee-0df7-4bae-8324-2e52d2c0ad17" x="86" y="20" width="469" height="20" fontSize="8.0" blankWhenNull="true" vTextAlign="Middle">
+				<expression><![CDATA[$F{name}]]></expression>
+			</element>
+			<element kind="textField" uuid="c37455d2-979a-427e-a05b-ffe099c8dc77" mode="Transparent" x="0" y="80" width="86" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="false" italic="false" bold="true" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$P{hIssueLink}]]></expression>
+			</element>
+			<element kind="textField" uuid="94ab45c9-4a44-4216-bb04-255aafedd0fb" x="86" y="80" width="469" height="20" fontSize="8.0" blankWhenNull="true" removeLineWhenBlank="true" printWhenDetailOverflows="true" vTextAlign="Middle">
+				<expression><![CDATA[$F{issueLink}]]></expression>
+			</element>
+			<element kind="line" uuid="836251c5-5810-419b-a998-da7a4f078c90" x="0" y="-1" width="555" height="1" forecolor="#CCCCCC"/>
+			<element kind="textField" uuid="351edfdb-2f8d-486a-9005-6245bb4e422c" mode="Transparent" x="0" y="0" width="86" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="false" italic="false" bold="true" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$P{hIssueNumber}]]></expression>
+			</element>
+			<element kind="textField" uuid="bbc813f7-e3b8-41a3-9bef-0c2f5b9955e1" mode="Transparent" x="86" y="0" width="202" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="true" italic="false" bold="false" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$F{issueNumber}]]></expression>
+			</element>
+			<element kind="textField" uuid="10c3cf5b-af9c-4e97-b5a1-25670551cae1" mode="Transparent" x="0" y="40" width="86" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="false" italic="false" bold="true" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$P{hIssueTitle}]]></expression>
+			</element>
+			<element kind="textField" uuid="661415cd-2b2a-4a7b-a61b-0368363092e1" mode="Transparent" x="86" y="40" width="469" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="true" italic="false" bold="false" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$F{issueTitle}]]></expression>
+			</element>
+			<element kind="textField" uuid="ab122131-8f3a-4cd1-8491-ce8f8dbef3f8" mode="Transparent" x="0" y="60" width="86" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="false" italic="false" bold="true" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$P{hExecutionDate}]]></expression>
+			</element>
+			<element kind="textField" uuid="b52abdeb-6dff-4f3e-bcec-05f54060ebcf" mode="Transparent" x="86" y="60" width="69" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="true" italic="false" bold="false" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$F{executionDate}]]></expression>
+			</element>
+			<element kind="textField" uuid="f85d2aab-06d0-455b-ae1b-605a227f1630" mode="Transparent" x="155" y="60" width="63" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="false" italic="false" bold="true" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Right" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$P{hEmployee}]]></expression>
+				<box rightPadding="10"/>
+			</element>
+			<element kind="textField" uuid="e3e2620d-a604-4d9d-8a8d-4e0f93f3cae9" mode="Transparent" x="218" y="60" width="337" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="true" italic="false" bold="false" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$F{employee}]]></expression>
+			</element>
+			<element kind="textField" uuid="9f47673e-ab47-4064-854a-5c55c3988101" mode="Transparent" x="288" y="0" width="75" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="false" italic="false" bold="true" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Right" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$P{hTool}]]></expression>
+				<box rightPadding="10"/>
+			</element>
+			<element kind="textField" uuid="31d091de-a31f-43de-abb6-48de56362936" mode="Transparent" x="363" y="0" width="192" height="20" forecolor="#000000" backcolor="#FFFFFF" rotation="None" markup="none" fontName="SansSerif" fontSize="8.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="true" italic="false" bold="false" strikeThrough="false" underline="false" pdfEmbedded="false" hTextAlign="Left" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$F{tool}]]></expression>
+			</element>
+		</band>
+		<band height="19">
+			<printWhenExpression><![CDATA[$F{description}!=null && !$F{description}.isEmpty()]]></printWhenExpression>
+			<element kind="subreport" uuid="1c5689c2-c146-4a52-a393-5e75584c666b" stretchType="ContainerHeight" x="0" y="0" width="555" height="19" backcolor="#CCCCCC" runToBottom="false" usingCache="false" removeLineWhenBlank="true" printWhenDetailOverflows="true">
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource()]]></dataSourceExpression>
+				<expression><![CDATA[$P{SUBREPORT_DIR}+"subrep_textarea.jasper"]]></expression>
+				<parameter name="vText">
+					<expression><![CDATA[$F{description}]]></expression>
+				</parameter>
+				<parameter name="hText">
+					<expression><![CDATA[$P{hDesc}]]></expression>
+				</parameter>
+			</element>
+		</band>
+		<band height="20">
+			<element kind="subreport" uuid="49a9b020-7690-4fd2-9e44-e4873d176689" x="0" y="-1" width="555" height="21">
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{items})]]></dataSourceExpression>
+				<expression><![CDATA[$P{SUBREPORT_DIR}+"subrep_images.jasper"]]></expression>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="20" splitType="Stretch">
+		<element kind="textField" uuid="4f9d39f2-c0d9-41d5-ae1d-e3044f747978" x="435" y="0" width="80" height="20" fontSize="10.0" bold="false" hTextAlign="Right" vTextAlign="Bottom" style="Column header">
+			<expression><![CDATA[$V{PAGE_NUMBER}+" of"]]></expression>
+		</element>
+		<element kind="textField" uuid="60ac72be-128c-4fb1-8614-a989e36af8d6" x="515" y="0" width="40" height="20" fontSize="10.0" evaluationTime="Report" bold="false" vTextAlign="Bottom" style="Column header">
+			<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+		</element>
+		<element kind="textField" uuid="60f40776-070d-4bac-aefd-c768e5677544" x="190" y="0" width="197" height="20" fontSize="10.0" pattern="EEEEE dd MMMMM yyyy" bold="false" vTextAlign="Bottom" style="Column header">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="staticText" uuid="8a9f790d-e3f7-460c-987c-421f206e4cfd" x="0" y="0" width="190" height="20" forecolor="#999999" fontName="Arial" fontSize="8.0" bold="true" vTextAlign="Bottom">
+			<text><![CDATA[Powered by Tedros Box]]></text>
+		</element>
+	</pageFooter>
+	<summary splitType="Stretch"/>
+</jasperReport>

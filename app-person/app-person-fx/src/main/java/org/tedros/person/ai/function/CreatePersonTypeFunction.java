@@ -1,7 +1,10 @@
 package org.tedros.person.ai.function;
 
+import java.util.Map;
+
+import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
-import org.tedros.ai.function.model.Response;
+import org.tedros.ai.function.ToolCallResult;
 import org.tedros.core.context.TedrosAppManager;
 import org.tedros.person.model.ClientCompanyType;
 import org.tedros.person.model.CustomerType;
@@ -23,89 +26,155 @@ import org.tedros.person.module.individual.model.IndividualTypeMV;
 import org.tedros.person.module.individual.model.MemberTypeMV;
 import org.tedros.person.module.individual.model.PhilanthropeTypeMV;
 import org.tedros.person.module.individual.model.VoluntaryTypeMV;
+import org.tedros.util.TLoggerUtil;
 
 import javafx.application.Platform;
 
 public class CreatePersonTypeFunction extends TFunction<PersonAttributeParam>{
+	
+	private static final Logger LOGGER = TLoggerUtil.getLogger(CreatePersonTypeFunction.class);
 
+	public static final String NAME = "create_person_type";
+	public static final String DESCRIPTION = "Opens the administration view to create a new 'Person Type'. " +
+            "Use this to define structural distinctions or sub-classes of entities. " +
+            "Examples: For Employees use 'Full-time', 'Contractor', 'Intern'; " +
+            "For Customers use 'Reseller', 'B2B', 'Government'. " +
+            "Do NOT use this for lifecycle states (use 'Status') or marketing segments (use 'Category'). " +
+            "Requires the 'classification' field.";
+	
 	public CreatePersonTypeFunction() {
-		super("create_person_type", "create a person type register", PersonAttributeParam.class, 
+		super(NAME, DESCRIPTION, PersonAttributeParam.class, 
 				v ->{
+					
+					LOGGER.info("Creating Person Type: {}", v);
 					
 					TedrosAppManager mng = TedrosAppManager.getInstance();
 					
 					if(v.getClassification()==null)
-						return new Response("The field 'classification' must be filled with an acceptable value!");
+						return ToolCallResult.builder()
+								.message("The field 'classification' must be filled with an acceptable value!")
+								.result(Map.of(
+					                    STATUS, ERROR,
+					                    ACTION, "missing_classification",
+					                    ERROR_MESSAGE, "The field 'classification' is required to proceed."
+					                ))
+								.build();
 					
 					switch(v.getClassification()) {
 					case CLIENT_COMPANY:
 						Platform.runLater(()->{
-							ClientCompanyType e = new ClientCompanyType();
-							setProperties(v, e);
-							ClientCompanyTypeMV mv = new ClientCompanyTypeMV((ClientCompanyType) e);
-							mng.loadInModule(CustomerModule.class, mv);
+							try {
+								ClientCompanyType e = new ClientCompanyType();
+								setProperties(v, e);
+								ClientCompanyTypeMV mv = new ClientCompanyTypeMV(e);
+								mng.loadInModule(CustomerModule.class, mv);
+							} catch (Exception e) {
+								LOGGER.error(e.getMessage(), e);
+							}
 						});
 						break;
 					case CUSTOMER:
 						Platform.runLater(()->{
-							CustomerType e = new CustomerType();
-							setProperties(v, e);
-							CustomerTypeMV mv = new CustomerTypeMV((CustomerType) e);
-							mng.loadInModule(CustomerModule.class, mv);
+							try {
+								CustomerType e = new CustomerType();
+								setProperties(v, e);
+								CustomerTypeMV mv = new CustomerTypeMV(e);
+								mng.loadInModule(CustomerModule.class, mv);
+							} catch (Exception e) {
+								LOGGER.error(e.getMessage(), e);
+							}
 						});					
 						break;
 					case EMPLOYEE:
 						Platform.runLater(()->{
-							StaffType e = new StaffType();
-							setProperties(v, e);
-							StaffTypeMV mv = new StaffTypeMV((StaffType) e);
-							mng.loadInModule(LegalPersonModule.class, mv);
+							try {
+								StaffType e = new StaffType();
+								setProperties(v, e);
+								StaffTypeMV mv = new StaffTypeMV(e);
+								mng.loadInModule(LegalPersonModule.class, mv);
+							} catch (Exception e) {
+								LOGGER.error(e.getMessage(), e);
+							}
 						});
 						break;
 					case LEGAL_PERSON:
 						Platform.runLater(()->{
-							LegalType e = new LegalType();
-							setProperties(v, e);
-							CompanyTypeMV mv = new CompanyTypeMV((LegalType) e);
-							mng.loadInModule(LegalPersonModule.class, mv);
+							try {
+								LegalType e = new LegalType();
+								setProperties(v, e);
+								CompanyTypeMV mv = new CompanyTypeMV(e);
+								mng.loadInModule(LegalPersonModule.class, mv);
+							} catch (Exception e) {
+								LOGGER.error(e.getMessage(), e);
+							}
 						});
 					break;
 					case MEMBER:
 						Platform.runLater(()->{
-							MemberType e = new MemberType();
-							setProperties(v, e);
-							MemberTypeMV mv = new MemberTypeMV((MemberType) e);
-							mng.loadInModule(IndividualModule.class, mv);
+							try {
+								MemberType e = new MemberType();
+								setProperties(v, e);
+								MemberTypeMV mv = new MemberTypeMV(e);
+								mng.loadInModule(IndividualModule.class, mv);
+							} catch (Exception e) {
+								LOGGER.error(e.getMessage(), e);
+							}
 						});
 						break;
 					case NATURAL_PERSON:
 						Platform.runLater(()->{
-							NaturalType e = new NaturalType();
-							setProperties(v, e);
-							IndividualTypeMV mv = new IndividualTypeMV((NaturalType) e);
-							mng.loadInModule(IndividualModule.class, mv);
+							try {
+								NaturalType e = new NaturalType();
+								setProperties(v, e);
+								IndividualTypeMV mv = new IndividualTypeMV(e);
+								mng.loadInModule(IndividualModule.class, mv);
+							} catch (Exception e) {
+								LOGGER.error(e.getMessage(), e);
+							}
 						});
 						break;
 					case PHILANTHROPE:
 						Platform.runLater(()->{
-							PhilanthropeType e = new PhilanthropeType();
-							setProperties(v, e);
-							PhilanthropeTypeMV mv = new PhilanthropeTypeMV((PhilanthropeType) e);
-							mng.loadInModule(IndividualModule.class, mv);
+							try {
+								PhilanthropeType e = new PhilanthropeType();
+								setProperties(v, e);
+								PhilanthropeTypeMV mv = new PhilanthropeTypeMV(e);
+								mng.loadInModule(IndividualModule.class, mv);
+							} catch (Exception e) {
+								LOGGER.error(e.getMessage(), e);
+							}
 						});
 						break;
 					case VOLUNTARY:
 						Platform.runLater(()->{
-							VoluntaryType e = new VoluntaryType();
-							setProperties(v, e);
-							VoluntaryTypeMV mv = new VoluntaryTypeMV((VoluntaryType) e);
-							mng.loadInModule(IndividualModule.class, mv);
+							try {
+								VoluntaryType e = new VoluntaryType();
+								setProperties(v, e);
+								VoluntaryTypeMV mv = new VoluntaryTypeMV(e);
+								mng.loadInModule(IndividualModule.class, mv);
+							} catch (Exception e) {
+								LOGGER.error(e.getMessage(), e);
+							}
 						});
 						break;
 					default:
-						return new Response("The field 'classification' must be filled with an acceptable value!");						
+						return ToolCallResult.builder()
+								.message("The classification '"+v.getClassification()+"' is not recognized or supported!")
+								.result(Map.of(
+					                    STATUS, ERROR,
+					                    ACTION, "invalid_classification",
+					                    ERROR_MESSAGE, "The provided 'classification' is invalid."
+					                )).build();
 					}		
-					return new Response("Success");
+					return ToolCallResult.builder()
+							.message("Person Type creation screen opened.")
+							.result(Map.of(
+				                    STATUS, SUCCESS,
+				                    ACTION, "person_type_screen_opened",
+				                    SYSTEM_INSTRUCTION, "The system has opened the Person Type creation screen. "
+					                    	+ "Do not retry again. Inform the user to check the opened screen."
+				                ))
+							.build();
 				});
 	}
 
