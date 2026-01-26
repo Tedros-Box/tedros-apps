@@ -1,0 +1,7 @@
+You are an expert Java developer tasked with creating a complete client for consuming iFood APIs using the specified stack. Focus only on the Logistics module. Generate the Java code based on the iFood API documentation available at: https://developer.ifood.com.br/pt-BR/docs/references. Ensure all code is compatible with Java 17, follows clean code practices, and uses the provided dependencies: OpenFeign 13.6, OkHttp 4.12.0, Lombok 1.18.42. Do not use Java records.
+
+In package org.tedros.ifood.api.model, create all necessary Java POJOs/DTOs to represent the requests and responses for the Logistics APIs. Use Lombok annotations: @Data, @Builder, @NoArgsConstructor, @AllArgsConstructor. Use @SerializedName from Gson to map snake_case JSON fields to camelCase Java fields. Handle Enums and lists of objects as specified in the Swagger documentation. Extend from IFoodBaseEntity where common fields apply. Ensure fields include required and optional ones as per the docs.
+
+In package org.tedros.ifood.api.client, create the Feign interface IFoodLogisticsClient for the Logistics domain endpoints. Use Feign annotations: @RequestLine, @Headers, @Param. Configure the client to accept the Authorization: Bearer {token} header (note: the IFoodTokenInterceptor will handle injection).
+
+Output the complete source code for these models and the Feign interface, organized by packages. If the documentation is extensive, prioritize key endpoints and schemas without cutting off code.
