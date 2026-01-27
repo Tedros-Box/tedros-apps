@@ -6,16 +6,12 @@ import java.util.Objects;
 
 import org.tedros.it.tools.domain.DomainSchema;
 import org.tedros.it.tools.domain.DomainTables;
-import org.tedros.it.tools.domain.GmudStatus;
-import org.tedros.it.tools.domain.GmudType;
 import org.tedros.person.model.Employee;
 import org.tedros.server.entity.TEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -35,14 +31,12 @@ public class Gmud extends TEntity {
 
     @Column(length = 1000)
     private String description;
-
-    @Enumerated(EnumType.STRING)
+    
     @Column(length = 20, nullable = false)
-    private GmudType type; // NORMAL, STANDARD, EMERGENCY
-
-    @Enumerated(EnumType.STRING)
+    private String type; // NORMAL, STANDARD, EMERGENCY
+    
     @Column(length = 20, nullable = false)
-    private GmudStatus status; // DRAFT, ANALYSIS, APPROVED, EXECUTING, FINISHED, REJECTED
+    private String status; // DRAFT, ANALYSIS, APPROVED, EXECUTING, FINISHED, REJECTED
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "requester_id", nullable = false)
@@ -79,19 +73,19 @@ public class Gmud extends TEntity {
 		this.description = description;
 	}
 
-	public GmudType getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(GmudType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public GmudStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(GmudStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
