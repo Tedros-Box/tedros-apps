@@ -1,0 +1,164 @@
+package org.tedros.it.tools.entity;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
+import org.tedros.it.tools.domain.DomainSchema;
+import org.tedros.it.tools.domain.DomainTables;
+import org.tedros.it.tools.domain.GmudStatus;
+import org.tedros.it.tools.domain.GmudType;
+import org.tedros.person.model.Employee;
+import org.tedros.server.entity.TEntity;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
+@Entity
+@Table(name = DomainTables.GMUD, schema = DomainSchema.schema)
+public class Gmud extends TEntity {
+
+    private static final long serialVersionUID = 1L;
+
+    @Column(length = 150, nullable = false)
+    private String title;
+
+    @Column(length = 1000)
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private GmudType type; // NORMAL, STANDARD, EMERGENCY
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private GmudStatus status; // DRAFT, ANALYSIS, APPROVED, EXECUTING, FINISHED, REJECTED
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "requester_id", nullable = false)
+    private Employee requester;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date scheduledDate;
+
+    @Column(length = 1000)
+    private String rollbackPlan;
+
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_gmud", nullable = false, updatable = false)
+    private List<GmudItem> executionPlan;
+
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_gmud", nullable = false, updatable = false)
+    private List<GmudReview> reviews;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public GmudType getType() {
+		return type;
+	}
+
+	public void setType(GmudType type) {
+		this.type = type;
+	}
+
+	public GmudStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(GmudStatus status) {
+		this.status = status;
+	}
+
+	public Employee getRequester() {
+		return requester;
+	}
+
+	public void setRequester(Employee requester) {
+		this.requester = requester;
+	}
+
+	public Date getScheduledDate() {
+		return scheduledDate;
+	}
+
+	public void setScheduledDate(Date scheduledDate) {
+		this.scheduledDate = scheduledDate;
+	}
+
+	public String getRollbackPlan() {
+		return rollbackPlan;
+	}
+
+	public void setRollbackPlan(String rollbackPlan) {
+		this.rollbackPlan = rollbackPlan;
+	}
+
+	public List<GmudItem> getExecutionPlan() {
+		return executionPlan;
+	}
+
+	public void setExecutionPlan(List<GmudItem> executionPlan) {
+		this.executionPlan = executionPlan;
+	}
+
+	public List<GmudReview> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<GmudReview> reviews) {
+		this.reviews = reviews;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(description, executionPlan, requester, reviews, rollbackPlan,
+				scheduledDate, status, title, type);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Gmud))
+			return false;
+		Gmud other = (Gmud) obj;
+		return Objects.equals(description, other.description) && Objects.equals(executionPlan, other.executionPlan)
+				&& Objects.equals(requester, other.requester) && Objects.equals(reviews, other.reviews)
+				&& Objects.equals(rollbackPlan, other.rollbackPlan)
+				&& Objects.equals(scheduledDate, other.scheduledDate) && status == other.status
+				&& Objects.equals(title, other.title) && type == other.type;
+	}
+
+    
+}
