@@ -4,10 +4,14 @@ import java.util.Objects;
 
 import org.tedros.it.tools.domain.DomainSchema;
 import org.tedros.it.tools.domain.DomainTables;
+import org.tedros.person.model.Employee;
 import org.tedros.server.entity.TEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,14 +26,15 @@ public class GmudItem extends TEntity {
 	@Column(nullable = false)
     private Integer stepOrder;
 
-    @Column(length = 500, nullable = false)
+    @Column(length = 1000, nullable = false)
     private String action;
 
-    @Column(length = 120)
-    private String responsible;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "responsible_id", nullable = false)
+    private Employee responsible;
 
-    @Column
-    private Boolean completed = false;
+    @Column(length = 20, nullable = false)
+    private String status;
 
 	public Integer getStepOrder() {
 		return stepOrder;
@@ -47,27 +52,27 @@ public class GmudItem extends TEntity {
 		this.action = action;
 	}
 
-	public String getResponsible() {
+	public Employee getResponsible() {
 		return responsible;
 	}
 
-	public void setResponsible(String responsible) {
+	public void setResponsible(Employee responsible) {
 		this.responsible = responsible;
 	}
 
-	public Boolean getCompleted() {
-		return completed;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setCompleted(Boolean completed) {
-		this.completed = completed;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(action, completed, responsible, stepOrder);
+		result = prime * result + Objects.hash(action, status, responsible, stepOrder);
 		return result;
 	}
 
@@ -80,7 +85,7 @@ public class GmudItem extends TEntity {
 		if (!(obj instanceof GmudItem))
 			return false;
 		GmudItem other = (GmudItem) obj;
-		return Objects.equals(action, other.action) && Objects.equals(completed, other.completed)
+		return Objects.equals(action, other.action) && Objects.equals(status, other.status)
 				&& Objects.equals(responsible, other.responsible) && Objects.equals(stepOrder, other.stepOrder);
 	}
     

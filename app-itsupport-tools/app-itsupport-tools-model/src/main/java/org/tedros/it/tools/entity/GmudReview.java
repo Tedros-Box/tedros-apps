@@ -33,8 +33,8 @@ public class GmudReview extends TEntity {
     @Column(length = 1000, nullable = false)
     private String comments;
 
-    @Column(nullable = false)
-    private Boolean approved;
+    @Column(length = 20, nullable = false)
+    private String status;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date reviewDate;
@@ -55,12 +55,12 @@ public class GmudReview extends TEntity {
 		this.comments = comments;
 	}
 
-	public Boolean getApproved() {
-		return approved;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setApproved(Boolean approved) {
-		this.approved = approved;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Date getReviewDate() {
@@ -75,7 +75,7 @@ public class GmudReview extends TEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(approved, comments, reviewDate, reviewer);
+		result = prime * result + Objects.hash(status, comments, reviewDate, reviewer);
 		return result;
 	}
 
@@ -88,7 +88,7 @@ public class GmudReview extends TEntity {
 		if (!(obj instanceof GmudReview))
 			return false;
 		GmudReview other = (GmudReview) obj;
-		return Objects.equals(approved, other.approved) && Objects.equals(comments, other.comments)
+		return Objects.equals(status, other.status) && Objects.equals(comments, other.comments)
 				&& Objects.equals(reviewDate, other.reviewDate) && Objects.equals(reviewer, other.reviewer);
 	}
     

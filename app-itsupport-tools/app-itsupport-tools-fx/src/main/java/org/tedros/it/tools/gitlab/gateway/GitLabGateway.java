@@ -8,6 +8,7 @@ import org.tedros.it.tools.gitlab.api.model.CommitDiffModel;
 import org.tedros.it.tools.gitlab.api.model.CommitModel;
 import org.tedros.it.tools.gitlab.api.model.GitLabMergeRequest;
 import org.tedros.it.tools.gitlab.api.model.GitLabProject;
+import org.tedros.it.tools.gitlab.api.model.GitLabProjectDetail;
 
 import feign.Feign;
 import feign.Param;
@@ -49,6 +50,10 @@ public class GitLabGateway {
     // Get all projects
     public List<GitLabProject> getAllProjects(){
     	return client.getAllProjects();
+    }
+    
+    public GitLabProjectDetail getProject(Long projectId){
+    	return client.getProject(projectId);
     }
     
     public List<GitLabMergeRequest> getMergeRequests(Long projectId){

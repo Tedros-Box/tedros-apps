@@ -1,6 +1,7 @@
 package org.tedros.it.tools.module.gmud.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
@@ -35,6 +36,7 @@ import org.tedros.fx.model.TEntityModelView;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.ejb.controller.IGmudController;
 import org.tedros.it.tools.entity.Gmud;
+import org.tedros.it.tools.entity.GmudIssueReference;
 import org.tedros.it.tools.entity.GmudItem;
 import org.tedros.it.tools.entity.GmudReview;
 import org.tedros.it.tools.module.gmud.builder.GmudStatusBuilder;
@@ -44,11 +46,15 @@ import org.tedros.person.model.Employee;
 import org.tedros.server.query.TCompareOp;
 import org.tedros.server.query.TLogicOp;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-//@TSetting(JobEvidenceSettings.class)
 @TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IGmudController.JNDI_NAME, model=Gmud.class)
 @TListViewPresenter(
@@ -65,9 +71,9 @@ import javafx.beans.property.SimpleStringProperty;
 			showSearch=true, showOrderBy=true),
 		
 		presenter=@TPresenter(
-			decorator = @TDecorator(viewTitle="Gmud Dashboard", buildModesRadioButton=false),
+			decorator = @TDecorator(viewTitle="Editar GMUD", buildModesRadioButton=false),
 			behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
-public class GmudDashboardMV extends TEntityModelView<Gmud> {
+public class EditGmudMV extends TEntityModelView<Gmud> {
 	
 	@TTabPane(tabs = { 
 			@TTab(text = TUsualKey.MAIN_DATA, 	fields={"title"}), 
@@ -83,18 +89,18 @@ public class GmudDashboardMV extends TEntityModelView<Gmud> {
 	private SimpleStringProperty title;
 	
 	@TLabel(text="Type")
-	@TComboBoxField(items=GmudTypesBuilder.class)
+	@TComboBoxField(items=GmudTypesBuilder.class, required=true)
 	@TFlowPane(hgap=20, vgap=12,
 		pane=@TPane(children={"type", "status", "requester", "scheduledDate"}))	
     private SimpleObjectProperty<String> type;
 
 	@TLabel(text="Status")
-	@TComboBoxField(items=GmudStatusBuilder.class)
+	@TComboBoxField(items=GmudStatusBuilder.class, required=true)
     private SimpleObjectProperty<String> status;
 
 	@TLabel(text="Requisitante")
 	@TAutoCompleteEntity(required = true,
-			control = @TControl(minWidth = 200, parse = true),
+			control = @TControl(minWidth = 400, parse = true),
 			service = IEmployeeController.JNDI_NAME,
 			query = @TQuery(entity = Employee.class, 
 			condition = {
@@ -105,27 +111,32 @@ public class GmudDashboardMV extends TEntityModelView<Gmud> {
 	@TLabel(text=ItToolsKey.EXECUTION_DATE)
 	@TDatePickerField()
     private SimpleObjectProperty<Date> scheduledDate;
+	
+    private SimpleLongProperty projectId;
+    private SimpleStringProperty projectName;
 
 	@TLabel(text="Description")
-	@THTMLEditor(control=@TControl( maxHeight=450, parse = true))
+	@THTMLEditor(control=@TControl( maxHeight=450, parse = true), required = true)
     private SimpleStringProperty description;
 
-	@THTMLEditor(control=@TControl( maxHeight=450, parse = true))
+	@THTMLEditor(control=@TControl( maxHeight=450, parse = true), required = true)
     private SimpleStringProperty rollbackPlan;
 	
+	private ITObservableList<GmudIssueReference> issueReferences;
+	
 	@TFieldBox(node=@TNode(id="list", parse = true))
-	@TDetailListField(region=@TRegion(maxHeight=400, parse = true),
+	@TDetailListField(region=@TRegion(maxHeight=400, parse = true), required = true,
 		modelView = GmudItemMV.class, entity = GmudItem.class)
 	@TGenericType(model=GmudItem.class, modelView=GmudItemMV.class)
     private ITObservableList<GmudItemMV> executionPlan;
 
 	@TFieldBox(node=@TNode(id="list", parse = true))
-	@TDetailListField(region=@TRegion(maxHeight=400, parse = true),
+	@TDetailListField(region=@TRegion(maxHeight=400, parse = true), required = true,
 		modelView = GmudReviewMV.class, entity = GmudReview.class)
 	@TGenericType(model=GmudReview.class, modelView=GmudReviewMV.class)
     private ITObservableList<GmudReviewMV> reviews;
 
-	public GmudDashboardMV(Gmud entity) {
+	public EditGmudMV(Gmud entity) {
 		super(entity);	
 		super.formatToString("[%s][%s][%s] %s", id, type, status, title);
 	}

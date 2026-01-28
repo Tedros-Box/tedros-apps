@@ -2,12 +2,12 @@ package org.tedros.it.tools.module.gmud.model;
 
 import java.util.Date;
 
+import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TCallbackFactory;
 import org.tedros.fx.annotation.control.TCellFactory;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TShowField;
-import org.tedros.fx.annotation.control.TShowField.TField;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
 import org.tedros.fx.annotation.control.TTextAreaField;
@@ -21,15 +21,14 @@ import org.tedros.fx.annotation.query.TCondition;
 import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.control.tablecell.TMediumDateTimeCallback;
-import org.tedros.fx.converter.TBooleanToYesNoConverter;
 import org.tedros.fx.model.TEntityModelView;
+import org.tedros.it.tools.domain.GmudReviewStatus;
 import org.tedros.it.tools.entity.GmudReview;
 import org.tedros.person.ejb.controller.IEmployeeController;
 import org.tedros.person.model.Employee;
 import org.tedros.server.query.TCompareOp;
 import org.tedros.server.query.TLogicOp;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Priority;
@@ -42,7 +41,7 @@ import javafx.scene.layout.Priority;
 			{
 				@TTableColumn(text = "Revisor", cellValue="reviewer"),  
 				@TTableColumn(text = "Comentario", cellValue="comments"), 
-				@TTableColumn(text = "Aprovado", cellValue="approved"), 
+				@TTableColumn(text = TUsualKey.STATUS, cellValue="status"), 
 				@TTableColumn(text = "Data revisão", cellValue="reviewDate", 
 						cellFactory=@TCellFactory(parse = true, 
 						callBack=@TCallbackFactory(parse=true, value=TMediumDateTimeCallback.class)))
@@ -58,29 +57,29 @@ public class GmudReviewMV extends TEntityModelView<GmudReview>{
 					@TCondition(field = "name", operator=TCompareOp.LIKE), 
 					@TCondition(logicOp=TLogicOp.OR, field = "lastName", operator=TCompareOp.LIKE)}))
 
-	@THBox(pane=@TPane(children={"reviewer","reviewDate", "approved"}),
+	@THBox(pane=@TPane(children={"reviewer","reviewDate", "status"}),
 		hgrow = @THGrow(priority = {@TPriority(field = "reviewer", priority = Priority.NEVER),
 				@TPriority(field = "reviewDate", priority = Priority.NEVER),
-				@TPriority(field = "approved", priority = Priority.NEVER)}))
+				@TPriority(field = "status", priority = Priority.NEVER)}))
     private SimpleObjectProperty<Employee> reviewer;
 	
 	@TLabel(text="Data revisão")
 	@TShowField
     private SimpleObjectProperty<Date> reviewDate;
 	
-	@TLabel(text="Aprovado")
-	@TShowField(fields = {@TField(name = "approved", converter = TBooleanToYesNoConverter.class)})
-    private SimpleBooleanProperty approved;
+	@TLabel(text=TUsualKey.STATUS)
+	@TShowField
+    private SimpleStringProperty status;
 
 	@TLabel(text="Comentario")
-	@TTextAreaField(prefRowCount = 4, wrapText = true)
+	@TTextAreaField(prefRowCount = 6, maxLength = 1000, wrapText = true)
     private SimpleStringProperty comments;
 
 	public GmudReviewMV(GmudReview entity) {
 		super(entity);
 		if(entity.isNew()) {
 			reviewDate.set(new Date());
-			approved.set(false);
+			status.set(GmudReviewStatus.PENDING.getDescription());
 		}
 	}
 
@@ -100,12 +99,12 @@ public class GmudReviewMV extends TEntityModelView<GmudReview>{
 		this.comments = comments;
 	}
 
-	public SimpleBooleanProperty getApproved() {
-		return approved;
+	public SimpleStringProperty getStatus() {
+		return status;
 	}
 
-	public void setApproved(SimpleBooleanProperty approved) {
-		this.approved = approved;
+	public void setStatus(SimpleStringProperty status) {
+		this.status = status;
 	}
 
 	public SimpleObjectProperty<Date> getReviewDate() {

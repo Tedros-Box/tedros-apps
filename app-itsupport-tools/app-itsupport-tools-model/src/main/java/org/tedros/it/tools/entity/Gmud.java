@@ -48,7 +48,17 @@ public class Gmud extends TEntity {
 
     @Column(length = 1000)
     private String rollbackPlan;
-
+    
+    @Column
+    private Long projectId;
+    
+    @Column(length = 120)
+    private String projectName;
+    
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_gmud", nullable = false, updatable = false)
+    private List<GmudIssueReference> issueReferences;
+    
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_gmud", nullable = false, updatable = false)
     private List<GmudItem> executionPlan;
@@ -113,6 +123,30 @@ public class Gmud extends TEntity {
 		this.rollbackPlan = rollbackPlan;
 	}
 
+	public Long getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public List<GmudIssueReference> getIssueReferences() {
+		return issueReferences;
+	}
+
+	public void setIssueReferences(List<GmudIssueReference> issueReferences) {
+		this.issueReferences = issueReferences;
+	}
+
 	public List<GmudItem> getExecutionPlan() {
 		return executionPlan;
 	}
@@ -133,8 +167,8 @@ public class Gmud extends TEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(description, executionPlan, requester, reviews, rollbackPlan,
-				scheduledDate, status, title, type);
+		result = prime * result + Objects.hash(description, executionPlan, issueReferences, projectId, projectName,
+				requester, reviews, rollbackPlan, scheduledDate, status, title, type);
 		return result;
 	}
 
@@ -148,11 +182,16 @@ public class Gmud extends TEntity {
 			return false;
 		Gmud other = (Gmud) obj;
 		return Objects.equals(description, other.description) && Objects.equals(executionPlan, other.executionPlan)
-				&& Objects.equals(requester, other.requester) && Objects.equals(reviews, other.reviews)
-				&& Objects.equals(rollbackPlan, other.rollbackPlan)
-				&& Objects.equals(scheduledDate, other.scheduledDate) && status == other.status
-				&& Objects.equals(title, other.title) && type == other.type;
+				&& Objects.equals(issueReferences, other.issueReferences) && Objects.equals(projectId, other.projectId)
+				&& Objects.equals(projectName, other.projectName) && Objects.equals(requester, other.requester)
+				&& Objects.equals(reviews, other.reviews) && Objects.equals(rollbackPlan, other.rollbackPlan)
+				&& Objects.equals(scheduledDate, other.scheduledDate) && Objects.equals(status, other.status)
+				&& Objects.equals(title, other.title) && Objects.equals(type, other.type);
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Gmud [getId()=%s, title=%s]", getId(), title);
+	}
     
 }
