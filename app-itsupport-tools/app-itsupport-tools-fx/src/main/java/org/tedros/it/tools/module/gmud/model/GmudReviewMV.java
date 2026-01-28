@@ -22,6 +22,7 @@ import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.control.tablecell.TMediumDateTimeCallback;
 import org.tedros.fx.model.TEntityModelView;
+import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.GmudReviewStatus;
 import org.tedros.it.tools.entity.GmudReview;
 import org.tedros.person.ejb.controller.IEmployeeController;
@@ -39,16 +40,16 @@ import javafx.scene.layout.Priority;
 			control=@TControl(minHeight=400, parse = true),
 			columns = 
 			{
-				@TTableColumn(text = "Revisor", cellValue="reviewer"),  
-				@TTableColumn(text = "Comentario", cellValue="comments"), 
+				@TTableColumn(text = ItToolsKey.REVIEWER, cellValue="reviewer"),  
+				@TTableColumn(text = TUsualKey.COMMENT, cellValue="comments"), 
 				@TTableColumn(text = TUsualKey.STATUS, cellValue="status"), 
-				@TTableColumn(text = "Data revisão", cellValue="reviewDate", 
+				@TTableColumn(text = ItToolsKey.REVIEW_DATE, cellValue="reviewDate", 
 						cellFactory=@TCellFactory(parse = true, 
 						callBack=@TCallbackFactory(parse=true, value=TMediumDateTimeCallback.class)))
 			}))
 public class GmudReviewMV extends TEntityModelView<GmudReview>{
 	
-	@TLabel(text="Revisor")
+	@TLabel(text=ItToolsKey.REVIEWER)
 	@TAutoCompleteEntity(required = true,
 			control = @TControl(minWidth = 400, parse = true),
 			service = IEmployeeController.JNDI_NAME,
@@ -63,7 +64,7 @@ public class GmudReviewMV extends TEntityModelView<GmudReview>{
 				@TPriority(field = "status", priority = Priority.NEVER)}))
     private SimpleObjectProperty<Employee> reviewer;
 	
-	@TLabel(text="Data revisão")
+	@TLabel(text=ItToolsKey.REVIEW_DATE)
 	@TShowField
     private SimpleObjectProperty<Date> reviewDate;
 	
@@ -71,7 +72,7 @@ public class GmudReviewMV extends TEntityModelView<GmudReview>{
 	@TShowField
     private SimpleStringProperty status;
 
-	@TLabel(text="Comentario")
+	@TLabel(text=TUsualKey.COMMENT)
 	@TTextAreaField(prefRowCount = 6, maxLength = 1000, wrapText = true)
     private SimpleStringProperty comments;
 

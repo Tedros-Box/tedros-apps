@@ -1,10 +1,11 @@
 package org.tedros.it.tools.module.gmud.model;
 
 import java.util.Date;
-import java.util.List;
 
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
+import org.tedros.fx.annotation.control.TAutoCompleteTextField;
+import org.tedros.fx.annotation.control.TAutoCompleteTextField.TEntry;
 import org.tedros.fx.annotation.control.TComboBoxField;
 import org.tedros.fx.annotation.control.TDatePickerField;
 import org.tedros.fx.annotation.control.TDetailListField;
@@ -12,13 +13,17 @@ import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.control.THTMLEditor;
 import org.tedros.fx.annotation.control.TLabel;
+import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
 import org.tedros.fx.annotation.control.TTextField;
+import org.tedros.fx.annotation.control.TTrigger;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TFlowPane;
+import org.tedros.fx.annotation.layout.THBox;
+import org.tedros.fx.annotation.layout.THGrow;
 import org.tedros.fx.annotation.layout.TPane;
-import org.tedros.fx.annotation.layout.TVBox;
+import org.tedros.fx.annotation.layout.TPriority;
 import org.tedros.fx.annotation.page.TPage;
 import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
@@ -39,66 +44,72 @@ import org.tedros.it.tools.entity.Gmud;
 import org.tedros.it.tools.entity.GmudIssueReference;
 import org.tedros.it.tools.entity.GmudItem;
 import org.tedros.it.tools.entity.GmudReview;
+import org.tedros.it.tools.module.gmud.builder.GitlabProjectListBuilder;
 import org.tedros.it.tools.module.gmud.builder.GmudStatusBuilder;
 import org.tedros.it.tools.module.gmud.builder.GmudTypesBuilder;
+import org.tedros.it.tools.module.gmud.builder.SelectGitlabProjectTrigger;
 import org.tedros.person.ejb.controller.IEmployeeController;
 import org.tedros.person.model.Employee;
 import org.tedros.server.query.TCompareOp;
 import org.tedros.server.query.TLogicOp;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.layout.Priority;
 
 @TForm(header = "", showBreadcrumBar=false, scroll=false)
 @TEjbService(serviceName = IGmudController.JNDI_NAME, model=Gmud.class)
 @TListViewPresenter(
 		page=@TPage(serviceName = IGmudController.JNDI_NAME, 
 			query = @TQuery(entity=Gmud.class, 
-					condition = {	@TCondition(field = "id", operator=TCompareOp.EQUAL, label="Numero"),
+					condition = {	@TCondition(field = "id", operator=TCompareOp.EQUAL, label=TUsualKey.NUMBER),
 									@TCondition(field = "title", operator=TCompareOp.LIKE, label=TUsualKey.TITLE),
 									@TCondition(field = "type", operator=TCompareOp.LIKE, label=TUsualKey.TYPE),
 									@TCondition(field = "status", operator=TCompareOp.LIKE, label=TUsualKey.STATUS)},
-					orderBy = {	@TOrder(label ="Numero", field = "id"),
+					orderBy = {	@TOrder(label = TUsualKey.NUMBER, field = "id"),
 								@TOrder(label = TUsualKey.TITLE, field = "title"),
 								@TOrder(label = TUsualKey.TYPE, field = "type"),
 								@TOrder(label = TUsualKey.STATUS, field = "status")}),
 			showSearch=true, showOrderBy=true),
 		
 		presenter=@TPresenter(
-			decorator = @TDecorator(viewTitle="Editar GMUD", buildModesRadioButton=false),
+			decorator = @TDecorator(viewTitle=ItToolsKey.VIEW_GMUD_EDIT, buildModesRadioButton=false),
 			behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
 public class EditGmudMV extends TEntityModelView<Gmud> {
 	
 	@TTabPane(tabs = { 
-			@TTab(text = TUsualKey.MAIN_DATA, 	fields={"title"}), 
-			@TTab(text = "Rollback plan",	fields={"rollbackPlan"}),
-			@TTab(text = "Plano de execução", 	fields={"executionPlan"}),
-			@TTab(text = "Revisores", 	fields={"reviews"})
-			})
-		private SimpleLongProperty id;
+			@TTab(text = TUsualKey.MAIN_DATA, fields={"id", "type", "description"}), 
+			@TTab(text = ItToolsKey.GMUD_REDMINE_REFERENCE, fields={"issueReferences"}),
+			@TTab(text = ItToolsKey.GMUD_ROLLBACK_PLAN, fields={"rollbackPlan"}),
+			@TTab(text = ItToolsKey.GMUD_EXECUTION_PLAN, fields={"executionPlan"}),
+			@TTab(text = ItToolsKey.GMUD_ADD_REVIEWER, fields={"reviews"})
+			})			
+	private SimpleStringProperty tab;
 	
-	@TLabel(text="Title")
+	@TLabel(text=TUsualKey.NUMBER)
+	@TShowField
+	@THBox(pane=@TPane(children={"id", "title"}), spacing = 10,
+		hgrow = @THGrow(priority = {
+				@TPriority(field = "id", priority = Priority.NEVER),
+				@TPriority(field = "title", priority = Priority.ALWAYS)}))
+	private SimpleLongProperty id;
+	
+	@TLabel(text=TUsualKey.TITLE)
 	@TTextField(maxLength=150, required=true)
-	@TVBox(pane=@TPane(children={"title", "type", "description"}))
 	private SimpleStringProperty title;
 	
-	@TLabel(text="Type")
+	@TLabel(text=TUsualKey.TYPE)
 	@TComboBoxField(items=GmudTypesBuilder.class, required=true)
 	@TFlowPane(hgap=20, vgap=12,
-		pane=@TPane(children={"type", "status", "requester", "scheduledDate"}))	
+		pane=@TPane(children={"type", "status", "requester", "projectName", "scheduledDate"}))	
     private SimpleObjectProperty<String> type;
 
-	@TLabel(text="Status")
+	@TLabel(text=TUsualKey.STATUS)
 	@TComboBoxField(items=GmudStatusBuilder.class, required=true)
     private SimpleObjectProperty<String> status;
 
-	@TLabel(text="Requisitante")
+	@TLabel(text=TUsualKey.REQUESTER)
 	@TAutoCompleteEntity(required = true,
 			control = @TControl(minWidth = 400, parse = true),
 			service = IEmployeeController.JNDI_NAME,
@@ -110,19 +121,28 @@ public class EditGmudMV extends TEntityModelView<Gmud> {
 
 	@TLabel(text=ItToolsKey.EXECUTION_DATE)
 	@TDatePickerField()
-    private SimpleObjectProperty<Date> scheduledDate;
-	
-    private SimpleLongProperty projectId;
+    private SimpleObjectProperty<Date> scheduledDate;    
+    
+	@TLabel(text=ItToolsKey.GITLAB_PROJECT)
+    @TAutoCompleteTextField(
+    		control = @TControl(minWidth = 150, parse = true),
+    		entries = @TEntry(factory = GitlabProjectListBuilder.class))
+    @TTrigger(type = SelectGitlabProjectTrigger.class)
     private SimpleStringProperty projectName;
+    private SimpleLongProperty projectId;
 
-	@TLabel(text="Description")
+	@TLabel(text=TUsualKey.DESCRIPTION)
 	@THTMLEditor(control=@TControl( maxHeight=450, parse = true), required = true)
     private SimpleStringProperty description;
 
 	@THTMLEditor(control=@TControl( maxHeight=450, parse = true), required = true)
     private SimpleStringProperty rollbackPlan;
 	
-	private ITObservableList<GmudIssueReference> issueReferences;
+	@TFieldBox(node=@TNode(id="list", parse = true))
+	@TDetailListField(region=@TRegion(maxHeight=400, parse = true), 
+		modelView = GmudIssueReferenceMV.class, entity = GmudIssueReference.class)
+	@TGenericType(model=GmudIssueReference.class, modelView=GmudIssueReferenceMV.class)
+	private ITObservableList<GmudIssueReferenceMV> issueReferences;
 	
 	@TFieldBox(node=@TNode(id="list", parse = true))
 	@TDetailListField(region=@TRegion(maxHeight=400, parse = true), required = true,
@@ -211,6 +231,30 @@ public class EditGmudMV extends TEntityModelView<Gmud> {
 
 	public void setReviews(ITObservableList<GmudReviewMV> reviews) {
 		this.reviews = reviews;
+	}
+
+	public SimpleLongProperty getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(SimpleLongProperty projectId) {
+		this.projectId = projectId;
+	}
+
+	public SimpleStringProperty getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(SimpleStringProperty projectName) {
+		this.projectName = projectName;
+	}
+
+	public ITObservableList<GmudIssueReferenceMV> getIssueReferences() {
+		return issueReferences;
+	}
+
+	public void setIssueReferences(ITObservableList<GmudIssueReferenceMV> issueReferences) {
+		this.issueReferences = issueReferences;
 	}
 
 }

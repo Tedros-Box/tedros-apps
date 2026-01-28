@@ -19,6 +19,7 @@ import org.tedros.fx.annotation.query.TQuery;
 import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.domain.TValidateNumber;
 import org.tedros.fx.model.TEntityModelView;
+import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.GmudItemStatus;
 import org.tedros.it.tools.entity.GmudItem;
 import org.tedros.person.ejb.controller.IEmployeeController;
@@ -37,22 +38,23 @@ import javafx.scene.layout.Priority;
 		control=@TControl(minHeight=400, parse = true),
 		columns = 
 		{
-			@TTableColumn(text = "Ordem", cellValue="stepOrder"),  
+			@TTableColumn(text = ItToolsKey.EXECUTION_ORDER, cellValue="stepOrder"),  
 			@TTableColumn(text = TUsualKey.ACTION, cellValue="action"), 
-			@TTableColumn(text = "Responsavel", cellValue="responsible"), 
+			@TTableColumn(text = TUsualKey.RESPONSABLE, cellValue="responsible"), 
 			@TTableColumn(text = TUsualKey.STATUS, cellValue="status")
 		}))
 public class GmudItemMV extends TEntityModelView<GmudItem> {
 	
-	@TLabel(text="Ordem de Execução")
+	@TLabel(text=ItToolsKey.EXECUTION_ORDER)
 	@TIntegerField(validate=TValidateNumber.GREATHER_THAN_ZERO)
 	@THBox(pane=@TPane(children={"stepOrder", "responsible","status"}),
-		hgrow = @THGrow(priority = {@TPriority(field = "stepOrder",priority = Priority.NEVER),
-				@TPriority(field = "status", priority = Priority.ALWAYS),
-				@TPriority(field = "responsible",priority = Priority.SOMETIMES)}))
+		hgrow = @THGrow(priority = {
+					@TPriority(field = "stepOrder",priority = Priority.NEVER),
+					@TPriority(field = "status", priority = Priority.ALWAYS),
+					@TPriority(field = "responsible",priority = Priority.SOMETIMES)}))
 	private SimpleIntegerProperty stepOrder;
 	
-	@TLabel(text="Responsável")
+	@TLabel(text=TUsualKey.RESPONSABLE)
 	@TAutoCompleteEntity(required = true,
 	control = @TControl(minWidth = 400, parse = true),
 	service = IEmployeeController.JNDI_NAME,

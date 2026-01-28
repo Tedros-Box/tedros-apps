@@ -17,19 +17,16 @@ public class GmudIssueReference extends TEntity {
     private static final long serialVersionUID = 4246280208687191618L;
 
 	@Column(nullable = false)
-    private Long issueId;
+    private Integer issueId;
 
 	@Column(length = 200, nullable = false)
     private String issueTitle;
 	
-	@Column(length = 500)
-    private String issueUrl;
-
-	public Long getIssueId() {
+	public Integer getIssueId() {
 		return issueId;
 	}
 
-	public void setIssueId(Long issueId) {
+	public void setIssueId(Integer issueId) {
 		this.issueId = issueId;
 	}
 
@@ -41,19 +38,11 @@ public class GmudIssueReference extends TEntity {
 		this.issueTitle = issueTitle;
 	}
 
-	public String getIssueUrl() {
-		return issueUrl;
-	}
-
-	public void setIssueUrl(String issueUrl) {
-		this.issueUrl = issueUrl;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(issueId, issueTitle, issueUrl);
+		result = prime * result + Objects.hash(issueId, issueTitle);
 		return result;
 	}
 
@@ -66,8 +55,7 @@ public class GmudIssueReference extends TEntity {
 		if (!(obj instanceof GmudIssueReference))
 			return false;
 		GmudIssueReference other = (GmudIssueReference) obj;
-		return Objects.equals(issueId, other.issueId) && Objects.equals(issueTitle, other.issueTitle)
-				&& Objects.equals(issueUrl, other.issueUrl);
+		return Objects.equals(issueId, other.issueId) && Objects.equals(issueTitle, other.issueTitle);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package org.tedros.it.tools.gitlab.gateway;
 
+import java.net.URI;
 import java.util.List;
 
 import org.tedros.it.tools.gitlab.api.model.BranchModel;
@@ -50,8 +51,19 @@ public interface GitLabClient {
      *      "https://docs.gitlab.com/ee/api/projects.html#list-all-projects">List
      *      all projects</a>
      */
-    @RequestLine("GET /api/v4/projects")
-    List<GitLabProject> getAllProjects();
+    @RequestLine("GET /api/v4/projects?pagination=keyset&per_page=100&order_by=id&sort=asc")
+    Response getAllProjects();
+
+    /**
+     * Método genérico para buscar a próxima página usando a URL completa
+     * extraída do header "Link".
+     * O parâmetro URI sobrescreve a URL base do Feign.
+     */
+    @RequestLine("GET")
+    Response getNextPage(URI uri);
+    
+    @RequestLine("GET /api/v4/projects?simple=true&pagination=keyset&per_page=100&order_by=id&sort=asc")
+    Response getAllProjectsInSimpleMode();
 
     @RequestLine("GET /api/v4/projects/{projectId}")
     GitLabProjectDetail getProject(@Param("projectId") Long projectId);

@@ -74,7 +74,7 @@ public class RedmineApiGateway {
 						new CustomFieldMetadata(field.getId(), field.getName(), type));
 			}
 		} catch (Exception e) {
-			throw new RuntimeException("Erro ao carregar metadados de campos personalizados: " + e.getMessage());
+			throw new RuntimeException("Erro ao carregar metadados de campos personalizados: " + e.getMessage(), e);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class RedmineApiGateway {
 				return RedmineMapper.convertTimeEntryList(entries);
 			return List.of();
 		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class RedmineApiGateway {
 			return List.of();
 
 		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -117,7 +117,7 @@ public class RedmineApiGateway {
 			RedmineManagerFactory.createWithApiKey(uri, userApiKey).getIssueManager().update(issue);
 
 		} catch (RedmineException e) {
-			throw new RuntimeException("Erro ao atualuzar issue: " + e.getMessage());
+			throw new RuntimeException("Erro ao atualuzar issue: " + e.getMessage(), e);
 		}
 	}
 
@@ -127,7 +127,7 @@ public class RedmineApiGateway {
 			members = manager.getProjectManager().getProjectMembers(projectKey);
 			return RedmineMapper.convertMembershipList(members);
 		} catch (RedmineException e) {
-			throw new RuntimeException("Erro ao carregar os membros do projeto: " + e.getMessage());
+			throw new RuntimeException("Erro ao carregar os membros do projeto: " + e.getMessage(), e);
 		}
 	}
 
@@ -218,7 +218,7 @@ public class RedmineApiGateway {
 			return null;
 
 		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -229,7 +229,7 @@ public class RedmineApiGateway {
 			return RedmineMapper.convertForEvidenceInfo(issue);
 
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -244,7 +244,7 @@ public class RedmineApiGateway {
 			return null;
 
 		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -259,7 +259,7 @@ public class RedmineApiGateway {
 			return null;
 
 		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -274,7 +274,7 @@ public class RedmineApiGateway {
 			return null;
 
 		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -286,7 +286,7 @@ public class RedmineApiGateway {
 				return Long.valueOf(projects.size());
 			return 0L;
 		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage(), e);
 		}
 
 	}
@@ -302,7 +302,7 @@ public class RedmineApiGateway {
 			return List.of();
 
 		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -317,7 +317,7 @@ public class RedmineApiGateway {
 			return List.of();
 
 		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -331,7 +331,7 @@ public class RedmineApiGateway {
 				return RedmineMapper.convertUserList(users);
 			return List.of();
 		} catch (Exception e) {
-			throw new RuntimeException("Error fetching users: " + e.getMessage());
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -350,7 +350,7 @@ public class RedmineApiGateway {
 			this.manager.getAttachmentManager().downloadAttachmentContent(attachment, out);
 			return path;
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -378,7 +378,7 @@ public class RedmineApiGateway {
 			byte[] bytes = this.manager.getAttachmentManager().downloadAttachmentContent(attachment);
 			return new TFileContentInfo(fileName, contentType, bytes);
 		} catch (RedmineException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
