@@ -21,16 +21,17 @@ import jakarta.persistence.TemporalType;
 @Table(name = DomainTables.GMUD_REVIEW, schema = DomainSchema.schema)
 public class GmudReview extends TEntity {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -6940391737963052709L;
-
+    private static final long serialVersionUID = -6940391737963052709L;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_gmud", nullable = false)
+    private Gmud gmud;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "reviewer_id", nullable = false)
     private Employee reviewer;
 
-    @Column(length = 1000, nullable = false)
+    @Column(length = 1000)
     private String comments;
 
     @Column(length = 20, nullable = false)
@@ -38,6 +39,14 @@ public class GmudReview extends TEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date reviewDate;
+
+	public Gmud getGmud() {
+		return gmud;
+	}
+
+	public void setGmud(Gmud gmud) {
+		this.gmud = gmud;
+	}
 
 	public Employee getReviewer() {
 		return reviewer;
@@ -70,26 +79,25 @@ public class GmudReview extends TEntity {
 	public void setReviewDate(Date reviewDate) {
 		this.reviewDate = reviewDate;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(status, comments, reviewDate, reviewer);
-		return result;
-	}
+	
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (!(obj instanceof GmudReview))
+		}
+		if (!(obj instanceof GmudReview)) {
 			return false;
+		}
 		GmudReview other = (GmudReview) obj;
-		return Objects.equals(status, other.status) && Objects.equals(comments, other.comments)
-				&& Objects.equals(reviewDate, other.reviewDate) && Objects.equals(reviewer, other.reviewer);
+		return Objects.equals(comments, other.comments) && Objects.equals(gmud, other.gmud)
+				&& Objects.equals(reviewDate, other.reviewDate) && Objects.equals(reviewer, other.reviewer)
+				&& Objects.equals(status, other.status);
 	}
+
+	
     
 }

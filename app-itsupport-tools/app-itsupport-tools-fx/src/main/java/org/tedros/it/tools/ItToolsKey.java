@@ -59,6 +59,8 @@ public interface ItToolsKey {
 	static final String MENU_ITSUPPORT = "#{menu.itsupport}";
 	static final String MODULE_ITSUPPORT_EVIDENCE = "#{module.itsupport.evidence}";
 	static final String MODULE_ITSUPPORT_EVIDENCE_DESC = "#{module.itsupport.evidence.desc}";
+	static final String MODULE_ITSUPPORT_GMUD = "#{module.itsupport.gmud}";
+	static final String MODULE_ITSUPPORT_GMUD_DESC = "#{module.itsupport.gmud.desc}";
 	static final String MODULE_ITSUPPORT_REDMINE = "#{module.itsupport.redmine}";
 	static final String MODULE_ITSUPPORT_REDMINE_DESC = "#{module.itsupport.redmine.desc}";
 	static final String PROMPT_EDIT_DESCRIPTION = "#{prompt.edit.description}";
@@ -74,11 +76,13 @@ public interface ItToolsKey {
 	static final String VIEW_CAPTURE_EVIDENCE = "#{view.capture.evidence}";
 	static final String VIEW_CAPTURE_EVIDENCE_DESC = "#{view.capture.evidence.desc}";
 	static final String VIEW_GMUD_EDIT = "#{view.gmud.edit}";
+	static final String VIEW_GMUD_EDIT_DESC = "#{view.gmud.edit.desc}";
 	static final String VIEW_JOB_EVIDENCE = "#{view.job.evidence}";
 	static final String VIEW_JOB_EVIDENCE_DESC = "#{view.job.evidence.desc}";
 	static final String VIEW_JOB_EVIDENCE_REPORT = "#{view.job.evidence.report}";
 	static final String VIEW_JOB_EVIDENCE_REPORT_DESC = "#{view.job.evidence.report.desc}";
 	static final String VIEW_REDMINE_SEARCH_ISSUES_TO_TEROS = "#{view.redmine.search.issues.to.teros}";
 	static final String VIEW_REDMINE_SEARCH_ISSUES_TO_TEROS_DESC = "#{view.redmine.search.issues.to.teros.desc}";
+
 
 }

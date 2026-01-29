@@ -2,6 +2,8 @@ package org.tedros.it.tools.module.gmud.model;
 
 import java.util.Date;
 
+import org.tedros.core.annotation.security.TAuthorizationType;
+import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TAutoCompleteTextField;
@@ -39,6 +41,7 @@ import org.tedros.fx.annotation.scene.layout.TRegion;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.it.tools.ItToolsKey;
+import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.ejb.controller.IGmudController;
 import org.tedros.it.tools.entity.Gmud;
 import org.tedros.it.tools.entity.GmudIssueReference;
@@ -76,6 +79,10 @@ import javafx.scene.layout.Priority;
 		presenter=@TPresenter(
 			decorator = @TDecorator(viewTitle=ItToolsKey.VIEW_GMUD_EDIT, buildModesRadioButton=false),
 			behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
+@TSecurity(id=DomainApp.CHANGE_MANAGER_GMUD_EDIT_FORM_ID, appName = ItToolsKey.APP_ITSUPPORT,
+	moduleName = ItToolsKey.MODULE_ITSUPPORT_GMUD, viewName = ItToolsKey.VIEW_GMUD_EDIT,
+	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
+		TAuthorizationType.SAVE, TAuthorizationType.DELETE, TAuthorizationType.NEW})
 public class EditGmudMV extends TEntityModelView<Gmud> {
 	
 	@TTabPane(tabs = { 

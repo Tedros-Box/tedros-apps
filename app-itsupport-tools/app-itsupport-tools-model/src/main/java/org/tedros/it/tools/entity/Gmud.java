@@ -63,8 +63,8 @@ public class Gmud extends TEntity {
     @JoinColumn(name = "id_gmud", nullable = false, updatable = false)
     private List<GmudItem> executionPlan;
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_gmud", nullable = false, updatable = false)
+    @OneToMany(mappedBy = "gmud", orphanRemoval = true, 
+    		cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<GmudReview> reviews;
 
 	public String getTitle() {
@@ -159,17 +159,13 @@ public class Gmud extends TEntity {
 		return reviews;
 	}
 
-	public void setReviews(List<GmudReview> reviews) {
+	public void setReviews(List<GmudReview> reviews) {		
 		this.reviews = reviews;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(description, executionPlan, issueReferences, projectId, projectName,
-				requester, reviews, rollbackPlan, scheduledDate, status, title, type);
-		return result;
+		if(this.reviews!=null) {
+			for (GmudReview r : this.reviews) {
+				r.setGmud(this);
+			}
+		}
 	}
 
 	@Override

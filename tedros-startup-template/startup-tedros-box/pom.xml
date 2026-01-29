@@ -28,7 +28,7 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>org.tedros</groupId>
 			<artifactId>app-samples-fx</artifactId>
 			<version>${app.samples}</version>
@@ -47,7 +47,7 @@
 			<artifactId>app-services-fx</artifactId>
 			<version>${app.services}</version>
 			<scope>compile</scope>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>org.tedros</groupId>

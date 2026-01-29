@@ -4,6 +4,9 @@ package org.tedros.it.tools.domain;
  * Representa os estados possíveis de uma GMUD no sistema Tedros.
  */
 public enum GmudStatus {
+	
+	/** Aberta pelo solicitante. */
+    OPENED("Aberta"),
     
     /** Em fase de rascunho/elaboração pelo solicitante. */
     DRAFT("Rascunho"),
