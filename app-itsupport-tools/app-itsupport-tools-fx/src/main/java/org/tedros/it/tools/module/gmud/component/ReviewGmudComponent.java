@@ -11,14 +11,20 @@ import org.tedros.api.presenter.view.ITView;
 import org.tedros.api.presenter.view.TDetachViewType;
 import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
+import org.tedros.core.message.TMessage;
+import org.tedros.core.message.TMessageType;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.component.ITComponent;
 import org.tedros.fx.control.TButton;
 import org.tedros.fx.control.TDatePickerField;
 import org.tedros.fx.control.TLabel;
 import org.tedros.fx.control.TLongField;
+import org.tedros.fx.control.TText;
+import org.tedros.fx.control.TText.TTextStyle;
+import org.tedros.fx.modal.TMessageBox;
 import org.tedros.fx.presenter.dynamic.view.TDynaView;
 import org.tedros.fx.process.TEntityProcess;
+import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.GmudStatus;
 import org.tedros.it.tools.ejb.controller.IGmudReviewController;
 import org.tedros.it.tools.entity.Gmud;
@@ -28,7 +34,7 @@ import org.tedros.server.query.TCompareOp;
 import org.tedros.server.query.TJoinType;
 import org.tedros.server.query.TSelect;
 import org.tedros.server.result.TResult;
-import org.tedros.tools.logged.user.TUserSettingModelView;
+import org.tedros.util.TLoggerUtil;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -37,8 +43,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SelectionMode;
@@ -89,7 +93,7 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		buildUI();
 		
 		gmudReviewProcess = new GmudReviewProcess();
-		gmudReviewProcess.setOnFailed(e -> showAlert("Error", "Error message", gmudReviewProcess.getException().getMessage()));
+		gmudReviewProcess.setOnFailed(e -> showAlert(TMessageType.ERROR, gmudReviewProcess.getException().getMessage()));
 		gmudReviewProcess.setOnSucceeded(e -> {
 			List<TResult> lst = (List<TResult>) gmudReviewProcess.getValue();
 			TResult result =  lst.get(0);
@@ -118,18 +122,19 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 	}
 
 	private HBox createFilters() {
+		TLanguage lang = TLanguage.getInstance();
 		HBox hbox = new HBox(10);
 		hbox.setPadding(new Insets(0, 0, 10, 0));
 		hbox.setAlignment(Pos.CENTER_LEFT);
 		
 		gmudNumber = new TLongField();
-		VBox vGmudNumber = new VBox(2, new TLabel("Number"), gmudNumber);
+		VBox vGmudNumber = new VBox(2, new TLabel(lang.getString(TUsualKey.NUMBER)), gmudNumber);
 
 		promptTitle = new TextField();
 		cmbStatus = new ComboBox<>();
 		
-		VBox vTitle = new VBox(2, new TLabel("Title"), promptTitle);
-		VBox vStatus = new VBox(2, new TLabel("Status"), cmbStatus);
+		VBox vTitle = new VBox(2, new TLabel(lang.getString(TUsualKey.TITLE)), promptTitle);
+		VBox vStatus = new VBox(2, new TLabel(lang.getString(TUsualKey.STATUS)), cmbStatus);
 		cmbStatus.getItems().add(null);		
 		cmbStatus.getItems().addAll(GmudStatus.values());
 		cmbStatus.setConverter(new StringConverter<GmudStatus>() {
@@ -147,10 +152,10 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		datePicker = new TDatePickerField();
 		txtProject = new TextField();
 				
-		VBox vDate = new VBox(2, new TLabel("Scheduled Date"), datePicker);
-		VBox vProject = new VBox(2, new TLabel("Project"), txtProject);
+		VBox vDate = new VBox(2, new TLabel(lang.getString(ItToolsKey.EXECUTION_DATE)), datePicker);
+		VBox vProject = new VBox(2, new TLabel(lang.getString(ItToolsKey.GITLAB_PROJECT)), txtProject);
 
-		btnSearch = new TButton("Search");
+		btnSearch = new TButton(lang.getString(TUsualKey.SEARCH));
 		btnSearch.setOnAction(e -> search());
 
 		VBox vBtn = new VBox(2, new TLabel(""), btnSearch);
@@ -242,37 +247,37 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		colId.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getGmud().getId()));
 
 		// Title
-		TableColumn<GmudReview, String> colTitle = new TableColumn<>("Title");
+		TableColumn<GmudReview, String> colTitle = new TableColumn<>(lang.getString(TUsualKey.TITLE));
 		colTitle.setMinWidth(200); 
         colTitle.setMaxWidth(Double.MAX_VALUE); 
 		colTitle.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getGmud().getTitle()));
 
 		// Reviewer Name
-		TableColumn<GmudReview, String> colReviewer = new TableColumn<>("Reviewer");
+		TableColumn<GmudReview, String> colReviewer = new TableColumn<>(lang.getString(ItToolsKey.REVIEWER));
 		colReviewer.setMinWidth(200);
         colReviewer.setMaxWidth(250);
 		colReviewer.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getReviewer().getName()));
 
 		// GMUD Status
-		TableColumn<GmudReview, String> colGStatus = new TableColumn<>("GMUD Status");
+		TableColumn<GmudReview, String> colGStatus = new TableColumn<>(lang.getString(ItToolsKey.GMUD_STATUS));
 		colGStatus.setMinWidth(100);
         colGStatus.setMaxWidth(120);
 		colGStatus.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getGmud().getStatus()));
 
 		// Review Status
-		TableColumn<GmudReview, String> colRStatus = new TableColumn<>("Review Status");
+		TableColumn<GmudReview, String> colRStatus = new TableColumn<>(lang.getString(ItToolsKey.REVIEW_STATUS));
 		colRStatus.setMinWidth(100);
 		colRStatus.setMaxWidth(120);
 		colRStatus.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
 
 		// Type
-		TableColumn<GmudReview, String> colType = new TableColumn<>("Type");
+		TableColumn<GmudReview, String> colType = new TableColumn<>(lang.getString(TUsualKey.TYPE));
 		colType.setMinWidth(100);
         colType.setMaxWidth(120);
 		colType.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getGmud().getType()));
 
 		// Review Date
-		TableColumn<GmudReview, String> colDate = new TableColumn<>("Review Date");
+		TableColumn<GmudReview, String> colDate = new TableColumn<>(lang.getString(ItToolsKey.REVIEW_DATE));
 		colDate.setMinWidth(180);
         colDate.setMaxWidth(220);
         colDate.setCellValueFactory(c -> {
@@ -283,13 +288,13 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		});
 
 		// Project Name
-		TableColumn<GmudReview, String> colProject = new TableColumn<>("Project");
+		TableColumn<GmudReview, String> colProject = new TableColumn<>(lang.getString(ItToolsKey.GITLAB_PROJECT));
 		colProject.setMinWidth(100);
         colProject.setMaxWidth(220);
 		colProject.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getGmud().getProjectName()));
 
 		// Review Comment (Editable)
-		TableColumn<GmudReview, String> colComment = new TableColumn<>("Comment");
+		TableColumn<GmudReview, String> colComment = new TableColumn<>(lang.getString(TUsualKey.COMMENT));
 		colComment.setMinWidth(245);
 		colComment.setMaxWidth(400);
 		colComment.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getComments()));
@@ -316,13 +321,14 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 	}
 
 	private HBox createActions() {
+		TLanguage lang = TLanguage.getInstance();
 		HBox hbox = new HBox(10);
 		hbox.setPadding(new Insets(10, 0, 0, 0));
 		hbox.setAlignment(Pos.CENTER_LEFT);
 
 		cmbActionStatus = new ComboBox<>();
 		cmbActionStatus.getItems().addAll(GmudStatus.values());
-		cmbActionStatus.setPromptText("Select Status to Apply");
+		cmbActionStatus.setPromptText(lang.getString(ItToolsKey.SELECT_STATUS_TO_APPLY));
 		cmbActionStatus.setConverter(new StringConverter<GmudStatus>() {
 			@Override
 			public String toString(GmudStatus object) {
@@ -335,10 +341,10 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 			}
 		});
 
-		btnApply = new TButton("Apply Changes");
+		btnApply = new TButton(lang.getString(ItToolsKey.APPLY_CHANGES));
 		btnApply.setOnAction(e -> applyChanges());
 
-		hbox.getChildren().addAll(new TLabel("Update Status:"), cmbActionStatus, btnApply);
+		hbox.getChildren().addAll(new TLabel(lang.getString(ItToolsKey.UPDATE_STATUS)), cmbActionStatus, btnApply);
 		return hbox;
 	}
 
@@ -351,6 +357,7 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		tableView.refresh();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void search() {
 		
 		try {
@@ -387,19 +394,19 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 			
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			showAlert("Error", "An unexpected error occurred", e.getMessage());
+			TLoggerUtil.error(this.getClass(), "Error during search", e);
+			showAlert(TMessageType.ERROR, e.getMessage());
 		}
 	}
 
 	private void applyChanges() {
 		GmudStatus newStatus = cmbActionStatus.getValue();
 		if (newStatus == null) {
-			showAlert("Warning", "No Status Selected", "Please select a status to apply.");
+			showAlert(TMessageType.WARNING, ItToolsKey.TEXT_SELECT_STATUS_TO_APPLY);
 			return;
 		}
 		if (selectedReviews.isEmpty()) {
-			showAlert("Warning", "No Items Selected", "Please select items to update.");
+			showAlert(TMessageType.WARNING, ItToolsKey.TEXT_SELECT_ITEMS_TO_UPDATE);
 			return;
 		}
 
@@ -416,15 +423,15 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 				}*/
 			}
 			if (allSuccess) {
-				showAlert("Success", "Updated successfully", "Selected items have been updated.");
+				//showErrorAlert("Success", "Updated successfully", "Selected items have been updated.");
 				search(); // Refresh
 			} else {
-				showAlert("Warning", "Partial Success", "Some items may not have been updated.");
+				//showErrorAlert("Warning", "Partial Success", "Some items may not have been updated.");
 				search();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			showAlert("Error", "Update failed", e.getMessage());
+			TLoggerUtil.error(this.getClass(), "Error during apply changes", e);
+			showAlert(TMessageType.ERROR, e.getMessage());
 		}
 	}
 
@@ -436,21 +443,32 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		TDynaView<ReadGmudMV> v = new TDynaView<>(ReadGmudMV.class, l, false, TDetachViewType.NONE);
 		v.tLoad();
 		
-		view.tShowModal(v, false);
+		TText title = new TText(TLanguage.getInstance().getString(ItToolsKey.GMUD_DETAILS) + " "+ gmud.getTitle());
+		title.settTextStyle(TTextStyle.LARGE);
+		TButton btnClose = new TButton(TLanguage.getInstance().getString(TUsualKey.CLOSE));
+		btnClose.setOnAction(e -> { 
+			view.tHideModal();
+			v.gettPresenter().invalidate();
+		});
+		
+		BorderPane sp = new BorderPane();
+		sp.getStyleClass().add("custom-popup");
+		sp.setPadding(new Insets(10));
+		sp.setTop(new HBox(10, title, btnClose));
+		sp.setCenter(v);
+		
+		view.tShowModal(sp, false);
 		
 	}
 
-	private void showAlert(String title, String header, String content) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle(title);
-		alert.setHeaderText(header);
-		alert.setContentText(content);
-		alert.showAndWait();
+	private void showAlert(TMessageType type, String content) {
+		TMessage message = new TMessage(type, content);
+		view.tShowModal(new TMessageBox(content), true); 
 	}
 	
 	@SuppressWarnings("rawtypes")
 	private class GmudReviewProcess extends TEntityProcess {
-
+		@SuppressWarnings("unchecked")
 		public GmudReviewProcess() {
 			super(GmudReview.class, IGmudReviewController.JNDI_NAME);
 		}

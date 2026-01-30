@@ -18,6 +18,7 @@ public interface ItToolsKey {
 	static final String APP_ITSUPPORT = "#{app.itsupport}";
 	static final String ADD_NEW_APP_TITLE = "#{label.add.new.app.title}";
 	static final String ADD_TO_ANALYSIS = "#{label.add.to.analysis}";
+	static final String APPLY_CHANGES = "#{label.apply.changes}";
 	static final String ASSIGNED_TO = "#{label.assigned.to}";
 	static final String ATTRIBUTES_CAPTURED = "#{label.attributes.captured}";
 	static final String CLEAR_ALL = "#{label.clear.all}";
@@ -28,9 +29,13 @@ public interface ItToolsKey {
 	static final String EXECUTION_ORDER = "#{label.execution.order}";
 	static final String GITLAB_PROJECT = "#{label.gitlab.project}";
 	static final String GMUD_ADD_REVIEWER = "#{label.gmud.add.reviewer}";
+	static final String GMUD_DETAILS = "#{label.gmud.details}";
 	static final String GMUD_EXECUTION_PLAN = "#{label.gmud.execution.plan}";
 	static final String GMUD_REDMINE_REFERENCE = "#{label.gmud.redmine.reference}";
+	static final String GMUD_REDMINE_REFERENCED = "#{label.gmud.redmine.referenced}";
+	static final String GMUD_REVIEWERS = "#{label.gmud.reviewers}";
 	static final String GMUD_ROLLBACK_PLAN = "#{label.gmud.rollback.plan}";
+	static final String GMUD_STATUS = "#{label.gmud.status}";
 	static final String ISSUE_ANALYSIS_WITH_TEROS = "#{label.issue.analysis.with.teros}";
 	static final String ISSUE_ID = "#{label.issue.id}";
 	static final String ISSUE_LINK = "#{label.issue.link}";
@@ -39,10 +44,12 @@ public interface ItToolsKey {
 	static final String PERCENTAGE_DONE = "#{label.percentage.done}";
 	static final String REMOVE_SELECTED = "#{label.remove.selected}";
 	static final String REVIEW_DATE = "#{label.review.date}";
+	static final String REVIEW_STATUS = "#{label.review.status}";
 	static final String REVIEWER = "#{label.reviewer}";
 	static final String SAVED_TO = "#{label.saved.to}";
 	static final String SEACH_FOR_ISSUE = "#{label.seach.for.issue}";
 	static final String SEARCH_RESULTS = "#{label.search.results}";
+	static final String SELECT_STATUS_TO_APPLY = "#{label.select.status.to.apply}";
 	static final String SELECTED_EVIDENCES = "#{label.selected.evidences}";
 	static final String SELECTED_ITEMS_TO_ANALYSE = "#{label.selected.items.to.analyse}";
 	static final String SEND_TO_TEROS = "#{label.send.to.teros}";
@@ -56,6 +63,7 @@ public interface ItToolsKey {
 	static final String TOOL = "#{label.tool}";
 	static final String TOOL_SHORT = "#{label.tool.short}";
 	static final String UNKNOWN_APP = "#{label.unknown.app}";
+	static final String UPDATE_STATUS = "#{label.update.status}";
 	static final String MENU_ITSUPPORT = "#{menu.itsupport}";
 	static final String MODULE_ITSUPPORT_EVIDENCE = "#{module.itsupport.evidence}";
 	static final String MODULE_ITSUPPORT_EVIDENCE_DESC = "#{module.itsupport.evidence.desc}";
@@ -71,6 +79,8 @@ public interface ItToolsKey {
 	static final String TEXT_PROVIDE_INSTRUCTIONS = "#{text.provide.instructions}";
 	static final String TEXT_SELECT_EVIDENCES = "#{text.select.evidences}";
 	static final String TEXT_SELECT_ITEMS_FIRST = "#{text.select.items.first}";
+	static final String TEXT_SELECT_ITEMS_TO_UPDATE = "#{text.select.items.to.update}";
+	static final String TEXT_SELECT_STATUS_TO_APPLY = "#{text.select.status.to.apply}";
 	static final String TITLE_ALERT_REDMINE = "#{title.alert.redmine}";
 	static final String TITLE_JOB_EVIDENCE_REPORT = "#{title.job.evidence.report}";
 	static final String VIEW_CAPTURE_EVIDENCE = "#{view.capture.evidence}";

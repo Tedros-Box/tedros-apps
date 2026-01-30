@@ -5,13 +5,11 @@ import java.util.Date;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TGenericType;
-import org.tedros.fx.annotation.control.THTMLEditor;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TShowField.TField;
 import org.tedros.fx.annotation.control.TTab;
 import org.tedros.fx.annotation.control.TTabPane;
-import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TFlowPane;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -21,7 +19,6 @@ import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.domain.TTimeStyle;
 import org.tedros.fx.model.TEntityModelView;
@@ -35,14 +32,13 @@ import org.tedros.it.tools.entity.GmudItem;
 import org.tedros.it.tools.entity.GmudReview;
 import org.tedros.person.model.Employee;
 
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.Priority;
 
-@TForm(editCssId = "t-rounded-form")
+//@TForm(editCssId = "t-form")
 @TPresenter(type=TDynaPresenter.class, 
 			decorator=@TDecorator(type = TViewDecorator.class, 
 			buildModesRadioButton=false),
@@ -51,10 +47,10 @@ public class ReadGmudMV extends TEntityModelView<Gmud> {
 	
 	@TTabPane(tabs = { 
 			@TTab(text = TUsualKey.MAIN_DATA, fields={"id", "type", "description"}), 
-			@TTab(text = ItToolsKey.GMUD_REDMINE_REFERENCE, fields={"issueReferences"}),
+			@TTab(text = ItToolsKey.GMUD_REDMINE_REFERENCED, fields={"issueReferences"}),
 			@TTab(text = ItToolsKey.GMUD_ROLLBACK_PLAN, fields={"rollbackPlan"}),
 			@TTab(text = ItToolsKey.GMUD_EXECUTION_PLAN, fields={"executionPlan"}),
-			@TTab(text = ItToolsKey.GMUD_ADD_REVIEWER, fields={"reviews"})
+			@TTab(text = ItToolsKey.GMUD_REVIEWERS, fields={"reviews"})
 			})			
 	private SimpleStringProperty tab;
 	
@@ -92,10 +88,10 @@ public class ReadGmudMV extends TEntityModelView<Gmud> {
     private SimpleStringProperty projectName;
 
 	@TLabel(text=TUsualKey.DESCRIPTION)
-	@THTMLEditor(control=@TControl( maxHeight=450, parse = true))
+	@TShowField(fields = {@TField(renderHtml = true)})
     private SimpleStringProperty description;
 
-	@THTMLEditor(control=@TControl( maxHeight=450, parse = true), required = true)
+	@TShowField(fields = {@TField(renderHtml = true)})
     private SimpleStringProperty rollbackPlan;
 	
 	@TFieldBox(node=@TNode(id="list", parse = true))
@@ -115,7 +111,7 @@ public class ReadGmudMV extends TEntityModelView<Gmud> {
 
 	@TFieldBox(node=@TNode(id="list", parse = true))
 	@TShowField(fields = {
-			@TField(name = "reviewer", label = ItToolsKey.EXECUTION_ORDER),
+			@TField(name = "reviewer", label = ItToolsKey.REVIEWER),
 			@TField(name = "comments", label = TUsualKey.COMMENT),
 			@TField(name = "status", label = TUsualKey.STATUS),
 			@TField(name = "reviewDate", label = ItToolsKey.REVIEW_DATE, timeStyle = TTimeStyle.MEDIUM)})
