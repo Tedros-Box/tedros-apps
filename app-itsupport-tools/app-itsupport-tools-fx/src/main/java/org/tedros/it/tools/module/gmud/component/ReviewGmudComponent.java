@@ -1,25 +1,34 @@
 package org.tedros.it.tools.module.gmud.component;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.tedros.api.descriptor.ITComponentDescriptor;
+import org.tedros.api.presenter.view.ITView;
+import org.tedros.api.presenter.view.TDetachViewType;
+import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
-import org.tedros.core.service.remote.TEjbServiceLocator;
+import org.tedros.fx.TUsualKey;
 import org.tedros.fx.component.ITComponent;
+import org.tedros.fx.control.TButton;
+import org.tedros.fx.control.TDatePickerField;
 import org.tedros.fx.control.TLabel;
+import org.tedros.fx.control.TLongField;
+import org.tedros.fx.presenter.dynamic.view.TDynaView;
+import org.tedros.fx.process.TEntityProcess;
 import org.tedros.it.tools.domain.GmudStatus;
 import org.tedros.it.tools.ejb.controller.IGmudReviewController;
+import org.tedros.it.tools.entity.Gmud;
 import org.tedros.it.tools.entity.GmudReview;
+import org.tedros.it.tools.module.gmud.model.ReadGmudMV;
 import org.tedros.server.query.TCompareOp;
 import org.tedros.server.query.TJoinType;
 import org.tedros.server.query.TSelect;
 import org.tedros.server.result.TResult;
-import org.tedros.server.result.TResult.TState;
+import org.tedros.tools.logged.user.TUserSettingModelView;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -30,10 +39,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -48,11 +55,12 @@ import javafx.util.StringConverter;
 
 public class ReviewGmudComponent extends BorderPane implements ITComponent {
 
+	private TLongField gmudNumber;
 	private TextField promptTitle;
 	private ComboBox<GmudStatus> cmbStatus;
-	private DatePicker datePicker;
+	private TDatePickerField datePicker;
 	private TextField txtProject;
-	private Button btnSearch;
+	private TButton btnSearch;
 
 	private TableView<GmudReview> tableView;
 	private ObservableList<GmudReview> tableData;
@@ -60,34 +68,47 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 	private CheckBox cbSelectAll;
 
 	private ComboBox<GmudStatus> cmbActionStatus;
-	private Button btnApply;
+	private TButton btnApply;
 
-	private IGmudReviewController controller;
+	GmudReviewProcess gmudReviewProcess;
+	
+	@SuppressWarnings("rawtypes")
+	private ITView view;
+	private SimpleBooleanProperty progressIndicatorVisible = new SimpleBooleanProperty(false);
 
 	public ReviewGmudComponent() {
 		this.selectedReviews = new HashSet<>();
 		this.tableData = FXCollections.observableArrayList();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void tInitializeComponent(ITComponentDescriptor descriptor) {
-		initController();
+		view = descriptor.getForm().gettPresenter().getView();
+		view.gettProgressIndicator().bind(progressIndicatorVisible);
 		buildUI();
+		
+		gmudReviewProcess = new GmudReviewProcess();
+		gmudReviewProcess.setOnFailed(e -> showAlert("Error", "Error message", gmudReviewProcess.getException().getMessage()));
+		gmudReviewProcess.setOnSucceeded(e -> {
+			List<TResult> lst = (List<TResult>) gmudReviewProcess.getValue();
+			TResult result =  lst.get(0);
+			if(result.getValue()!=null) {
+				List<GmudReview> reviews = (List<GmudReview>) result.getValue();
+				tableData.setAll(reviews);
+				selectedReviews.clear();
+				cbSelectAll.setSelected(false);
+			}
+		});
+		
+		progressIndicatorVisible.bind(gmudReviewProcess.runningProperty());
+		
 	}
 
 	@Override
 	public void tStopComponent() {
 		// Cleanup if needed
-	}
-
-	private void initController() {
-		try (TEjbServiceLocator locator = TEjbServiceLocator.getInstance()) {
-			controller = locator.lookup(IGmudReviewController.JNDI_NAME);
-		} catch (Exception e) {
-			e.printStackTrace();
-			showAlert("Error", "Could not initialize controller", e.getMessage());
-		}
-	}
+	}	
 
 	private void buildUI() {
 		this.setPadding(new Insets(10));
@@ -100,9 +121,16 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		HBox hbox = new HBox(10);
 		hbox.setPadding(new Insets(0, 0, 10, 0));
 		hbox.setAlignment(Pos.CENTER_LEFT);
+		
+		gmudNumber = new TLongField();
+		VBox vGmudNumber = new VBox(2, new TLabel("Number"), gmudNumber);
 
-		VBox vTitle = new VBox(2, new TLabel("Title"), promptTitle = new TextField());
-		VBox vStatus = new VBox(2, new TLabel("Status"), cmbStatus = new ComboBox<>());
+		promptTitle = new TextField();
+		cmbStatus = new ComboBox<>();
+		
+		VBox vTitle = new VBox(2, new TLabel("Title"), promptTitle);
+		VBox vStatus = new VBox(2, new TLabel("Status"), cmbStatus);
+		cmbStatus.getItems().add(null);		
 		cmbStatus.getItems().addAll(GmudStatus.values());
 		cmbStatus.setConverter(new StringConverter<GmudStatus>() {
 			@Override
@@ -115,21 +143,27 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 				return null;
 			}
 		});
+		
+		datePicker = new TDatePickerField();
+		txtProject = new TextField();
+				
+		VBox vDate = new VBox(2, new TLabel("Scheduled Date"), datePicker);
+		VBox vProject = new VBox(2, new TLabel("Project"), txtProject);
 
-		VBox vDate = new VBox(2, new TLabel("Scheduled Date"), datePicker = new DatePicker());
-		VBox vProject = new VBox(2, new TLabel("Project"), txtProject = new TextField());
-
-		btnSearch = new Button("Search");
+		btnSearch = new TButton("Search");
 		btnSearch.setOnAction(e -> search());
 
 		VBox vBtn = new VBox(2, new TLabel(""), btnSearch);
 		vBtn.setAlignment(Pos.BOTTOM_LEFT);
 
-		hbox.getChildren().addAll(vTitle, vStatus, vDate, vProject, vBtn);
+		hbox.getChildren().addAll(vGmudNumber, vTitle, vStatus, vDate, vProject, vBtn);
 		return hbox;
 	}
 
+	@SuppressWarnings("unchecked")
 	private VBox createTable() {
+		TLanguage lang = TLanguage.getInstance();
+		
 		tableView = new TableView<>();
 		tableView.setItems(tableData);
 		tableView.setEditable(true);
@@ -140,7 +174,12 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		cbSelectAll = new CheckBox();
 		cbSelectAll.setOnAction(e -> toggleSelectAll());
 		colSelect.setGraphic(cbSelectAll);
+		colSelect.setText(lang.getString(TUsualKey.SELECT));
 		colSelect.setSortable(false);
+		colSelect.setMinWidth(90);
+		colSelect.setMaxWidth(90);
+		colSelect.setPrefWidth(90);
+		colSelect.setResizable(true);
 		colSelect.setCellValueFactory(cell -> {
 			GmudReview r = cell.getValue();
 			SimpleBooleanProperty prop = new SimpleBooleanProperty(selectedReviews.contains(r));
@@ -195,42 +234,64 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		});
 
 		// GMUD Number (ID)
-		TableColumn<GmudReview, Long> colId = new TableColumn<>("ID");
+		TableColumn<GmudReview, Long> colId = new TableColumn<>(lang.getString(TUsualKey.NUMBER));
+		colId.setMinWidth(80);
+        colId.setMaxWidth(90);
+        colId.setPrefWidth(70);
+        colId.setResizable(true);
 		colId.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getGmud().getId()));
 
 		// Title
 		TableColumn<GmudReview, String> colTitle = new TableColumn<>("Title");
+		colTitle.setMinWidth(200); 
+        colTitle.setMaxWidth(Double.MAX_VALUE); 
 		colTitle.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getGmud().getTitle()));
 
 		// Reviewer Name
 		TableColumn<GmudReview, String> colReviewer = new TableColumn<>("Reviewer");
+		colReviewer.setMinWidth(200);
+        colReviewer.setMaxWidth(250);
 		colReviewer.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getReviewer().getName()));
 
 		// GMUD Status
 		TableColumn<GmudReview, String> colGStatus = new TableColumn<>("GMUD Status");
+		colGStatus.setMinWidth(100);
+        colGStatus.setMaxWidth(120);
 		colGStatus.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getGmud().getStatus()));
 
 		// Review Status
 		TableColumn<GmudReview, String> colRStatus = new TableColumn<>("Review Status");
+		colRStatus.setMinWidth(100);
+		colRStatus.setMaxWidth(120);
 		colRStatus.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
 
 		// Type
 		TableColumn<GmudReview, String> colType = new TableColumn<>("Type");
+		colType.setMinWidth(100);
+        colType.setMaxWidth(120);
 		colType.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getGmud().getType()));
 
 		// Review Date
 		TableColumn<GmudReview, String> colDate = new TableColumn<>("Review Date");
-		colDate.setCellValueFactory(c -> {
-			Date d = c.getValue().getReviewDate();
-			return new SimpleStringProperty(d != null ? d.toString() : "");
+		colDate.setMinWidth(180);
+        colDate.setMaxWidth(220);
+        colDate.setCellValueFactory(c -> {
+        	Date dt = c.getValue().getGmud().getScheduledDate();
+			return new SimpleStringProperty(dt != null ? DateFormat
+					.getDateInstance(DateFormat.MEDIUM, TLanguage.getLocale())
+					.format(dt) : "");
 		});
 
 		// Project Name
 		TableColumn<GmudReview, String> colProject = new TableColumn<>("Project");
+		colProject.setMinWidth(100);
+        colProject.setMaxWidth(220);
 		colProject.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getGmud().getProjectName()));
 
 		// Review Comment (Editable)
 		TableColumn<GmudReview, String> colComment = new TableColumn<>("Comment");
+		colComment.setMinWidth(245);
+		colComment.setMaxWidth(400);
 		colComment.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getComments()));
 		colComment.setCellFactory(TextFieldTableCell.forTableColumn());
 		colComment.setOnEditCommit(e -> {
@@ -274,7 +335,7 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 			}
 		});
 
-		btnApply = new Button("Apply Changes");
+		btnApply = new TButton("Apply Changes");
 		btnApply.setOnAction(e -> applyChanges());
 
 		hbox.getChildren().addAll(new TLabel("Update Status:"), cmbActionStatus, btnApply);
@@ -291,28 +352,26 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 	}
 
 	private void search() {
-		try (TEjbServiceLocator locator = TEjbServiceLocator.getInstance()) {
-			// Re-lookup or use cached controller if valid
-			if (controller == null)
-				controller = locator.lookup(IGmudReviewController.JNDI_NAME);
-
+		
+		try {
 			TSelect<GmudReview> select = new TSelect<>(GmudReview.class);
 			select.addJoin(TJoinType.INNER, TSelect.ALIAS, "gmud", "g1");
 			select.addJoin(TJoinType.INNER, TSelect.ALIAS, "reviewer", "r1");
+			
+			// Filters
+			if (gmudNumber.getText() != null && !gmudNumber.getText().isEmpty()) {
+				select.addAndCondition("g1", "id", TCompareOp.EQUAL, Long.parseLong(gmudNumber.getText()));
+			}
 
 			// Filters
 			if (promptTitle.getText() != null && !promptTitle.getText().isEmpty()) {
 				select.addAndCondition("g1", "title", TCompareOp.LIKE, "%" + promptTitle.getText() + "%");
 			}
 			if (cmbStatus.getValue() != null) {
-				select.addAndCondition("g1", "status", TCompareOp.EQUAL, cmbStatus.getValue().toString()); // Assuming
-																											// enum name
-																											// matches
-																											// DB
+				select.addAndCondition("g1", "status", TCompareOp.EQUAL, cmbStatus.getValue().getDescription()); 
 			}
 			if (datePicker.getValue() != null) {
-				LocalDate ld = datePicker.getValue();
-				Date date = Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				Date date = datePicker.getValue();
 				select.addAndCondition("g1", "scheduledDate", TCompareOp.EQUAL, date);
 			}
 			if (txtProject.getText() != null && !txtProject.getText().isEmpty()) {
@@ -323,14 +382,9 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 			// Assuming TedrosContext is available and has getLoggedUser()
 			select.addAndCondition("r1", "tedrosUserId", TCompareOp.EQUAL, TedrosContext.getLoggedUser().getId());
 
-			TResult<List<GmudReview>> result = controller.search(null, select);
-			if (result.getState().equals(TState.SUCCESS)) {
-				tableData.setAll(result.getValue());
-				selectedReviews.clear();
-				cbSelectAll.setSelected(false);
-			} else {
-				showAlert("Search Error", "Search failed", result.getMessage());
-			}
+			gmudReviewProcess.search(select);
+			gmudReviewProcess.startProcess();
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -356,10 +410,10 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 			for (GmudReview r : selectedReviews) {
 				r.setStatus(newStatus.name()); // Assuming string status
 				r.setReviewDate(new Date());
-				TResult<GmudReview> res = controller.save(null, r); // Assuming save/update exists
+				/*TResult<GmudReview> res = controller.save(null, r); // Assuming save/update exists
 				if (!res.getState().equals(TState.SUCCESS)) {
 					allSuccess = false;
-				}
+				}*/
 			}
 			if (allSuccess) {
 				showAlert("Success", "Updated successfully", "Selected items have been updated.");
@@ -374,13 +428,16 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		}
 	}
 
-	private void showGmudDetails(Object gmud) {
-		// Placeholder for modal details
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("GMUD Details");
-		alert.setHeaderText("GMUD Information");
-		alert.setContentText(gmud.toString()); // Replace with detailed view if possible
-		alert.showAndWait();
+	private void showGmudDetails(Gmud gmud) {
+		
+		ObservableList<ReadGmudMV> l = FXCollections.observableArrayList(new ReadGmudMV(gmud));
+		// 3) The View, note: we instantiate it but who decorates and behaves it is the
+		// presenter in it.
+		TDynaView<ReadGmudMV> v = new TDynaView<>(ReadGmudMV.class, l, false, TDetachViewType.NONE);
+		v.tLoad();
+		
+		view.tShowModal(v, false);
+		
 	}
 
 	private void showAlert(String title, String header, String content) {
@@ -390,4 +447,13 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		alert.setContentText(content);
 		alert.showAndWait();
 	}
+	
+	@SuppressWarnings("rawtypes")
+	private class GmudReviewProcess extends TEntityProcess {
+
+		public GmudReviewProcess() {
+			super(GmudReview.class, IGmudReviewController.JNDI_NAME);
+		}
+	}
+		
 }
