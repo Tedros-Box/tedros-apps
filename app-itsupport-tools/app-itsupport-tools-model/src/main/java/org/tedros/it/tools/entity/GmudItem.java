@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.tedros.it.tools.domain.DomainSchema;
 import org.tedros.it.tools.domain.DomainTables;
 import org.tedros.person.model.Employee;
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,12 +16,13 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = DomainTables.GMUD_ITEM, schema = DomainSchema.schema)
-public class GmudItem extends TEntity {
+public class GmudItem extends TVersionEntity {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4246280208687191618L;
+    private static final long serialVersionUID = 4246280208687191618L;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_gmud", nullable = false)
+    private Gmud gmud;
 
 	@Column(nullable = false)
     private Integer stepOrder;
@@ -66,6 +67,14 @@ public class GmudItem extends TEntity {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Gmud getGmud() {
+		return gmud;
+	}
+
+	public void setGmud(Gmud gmud) {
+		this.gmud = gmud;
 	}
 
 	@Override

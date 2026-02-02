@@ -6,7 +6,7 @@ import java.util.Objects;
 import org.tedros.it.tools.domain.DomainSchema;
 import org.tedros.it.tools.domain.DomainTables;
 import org.tedros.person.model.Employee;
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,7 +19,7 @@ import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = DomainTables.GMUD_REVIEW, schema = DomainSchema.schema)
-public class GmudReview extends TEntity {
+public class GmudReview extends TVersionEntity {
 
     private static final long serialVersionUID = -6940391737963052709L;
     

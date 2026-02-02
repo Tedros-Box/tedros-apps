@@ -26,4 +26,13 @@ public enum GmudItemStatus {
     public String getDescription() {
         return description;
     }
+    
+    public static GmudItemStatus fromDescription(String description) {
+		for (GmudItemStatus status : GmudItemStatus.values()) {
+			if (status.getDescription().equalsIgnoreCase(description)) {
+				return status;
+			}
+		}
+		return null;
+	}
 }

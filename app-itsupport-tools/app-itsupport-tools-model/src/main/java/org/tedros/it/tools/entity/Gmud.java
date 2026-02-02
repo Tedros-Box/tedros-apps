@@ -7,13 +7,14 @@ import java.util.Objects;
 import org.tedros.it.tools.domain.DomainSchema;
 import org.tedros.it.tools.domain.DomainTables;
 import org.tedros.person.model.Employee;
-import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -22,14 +23,15 @@ import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = DomainTables.GMUD, schema = DomainSchema.schema)
-public class Gmud extends TEntity {
+public class Gmud extends TVersionEntity {
 
     private static final long serialVersionUID = 1L;
 
     @Column(length = 150, nullable = false)
     private String title;
 
-    @Column(length = 1000)
+    @Lob
+    @Column
     private String description;
     
     @Column(length = 20, nullable = false)
@@ -46,7 +48,8 @@ public class Gmud extends TEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date scheduledDate;
 
-    @Column(length = 1000)
+    @Lob
+    @Column
     private String rollbackPlan;
     
     @Column
@@ -59,8 +62,8 @@ public class Gmud extends TEntity {
     @JoinColumn(name = "id_gmud", nullable = false, updatable = false)
     private List<GmudIssueReference> issueReferences;
     
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_gmud", nullable = false, updatable = false)
+    @OneToMany(mappedBy = "gmud", orphanRemoval = true, 
+    		cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<GmudItem> executionPlan;
 
     @OneToMany(mappedBy = "gmud", orphanRemoval = true, 
@@ -153,6 +156,11 @@ public class Gmud extends TEntity {
 
 	public void setExecutionPlan(List<GmudItem> executionPlan) {
 		this.executionPlan = executionPlan;
+		if(this.executionPlan!=null) {
+			for (GmudItem r : this.executionPlan) {
+				r.setGmud(this);
+			}
+		}
 	}
 
 	public List<GmudReview> getReviews() {

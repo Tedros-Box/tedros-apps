@@ -1,6 +1,7 @@
 package org.tedros.it.tools.module.gmud.component;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.message.TMessage;
 import org.tedros.core.message.TMessageType;
+import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.component.ITComponent;
 import org.tedros.fx.control.TButton;
@@ -25,6 +27,7 @@ import org.tedros.fx.modal.TMessageBox;
 import org.tedros.fx.presenter.dynamic.view.TDynaView;
 import org.tedros.fx.process.TEntityProcess;
 import org.tedros.it.tools.ItToolsKey;
+import org.tedros.it.tools.domain.GmudReviewStatus;
 import org.tedros.it.tools.domain.GmudStatus;
 import org.tedros.it.tools.ejb.controller.IGmudReviewController;
 import org.tedros.it.tools.entity.Gmud;
@@ -34,6 +37,7 @@ import org.tedros.server.query.TCompareOp;
 import org.tedros.server.query.TJoinType;
 import org.tedros.server.query.TSelect;
 import org.tedros.server.result.TResult;
+import org.tedros.server.result.TResult.TState;
 import org.tedros.util.TLoggerUtil;
 
 import javafx.beans.property.SimpleBooleanProperty;
@@ -50,6 +54,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -71,10 +76,11 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 	private Set<GmudReview> selectedReviews;
 	private CheckBox cbSelectAll;
 
-	private ComboBox<GmudStatus> cmbActionStatus;
+	private ComboBox<GmudReviewStatus> cmbActionStatus;
 	private TButton btnApply;
 
-	GmudReviewProcess gmudReviewProcess;
+	private GmudReviewProcess gmudReviewProcess;
+	private SaveGmudReviewProcess saveGmudReviewProcess;
 	
 	@SuppressWarnings("rawtypes")
 	private ITView view;
@@ -105,7 +111,31 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 			}
 		});
 		
-		progressIndicatorVisible.bind(gmudReviewProcess.runningProperty());
+		saveGmudReviewProcess = new SaveGmudReviewProcess();
+		saveGmudReviewProcess.setOnFailed(e -> showAlert(TMessageType.ERROR, saveGmudReviewProcess.getException().getMessage()));
+		saveGmudReviewProcess.setOnSucceeded(e -> {
+			List<TResult<GmudReview>> lst = saveGmudReviewProcess.getValue();
+			
+			if(!lst.isEmpty()) {
+				List<TMessage> messages = new ArrayList<>();
+				lst.stream().forEach(r->{
+					
+					if(r.getState() == TState.SUCCESS) {
+						search(); // Refresh
+						messages.add(new TMessage(TMessageType.INFO, TLanguage.getInstance()
+								.getFormatedString(TFxKey.MESSAGE_SAVE, r.getValue().getGmud().getTitle())));
+					}else if(r.getState() == TState.WARNING) {
+						messages.add(new TMessage(TMessageType.WARNING, r.getMessage()));
+					} else if(r.getState() == TState.ERROR) {
+						messages.add(new TMessage(TMessageType.ERROR, r.getMessage()));
+					}
+				});
+				view.tShowModal(new TMessageBox(messages), true);
+			}
+		});
+		
+		progressIndicatorVisible.bind(gmudReviewProcess.runningProperty()
+				.or(saveGmudReviewProcess.runningProperty()));
 		
 	}
 
@@ -206,28 +236,16 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 					setGraphic(null);
 				} else {
 					cb.setSelected(item);
-					cb.selectedProperty().unbind(); // clear previous bindings
-					cb.selectedProperty().addListener((obs, old, val) -> {
-						// Reflection back to property is handled by CellValueFactory binding usually,
-						// but here we are manually managing the set.
-						// Actually, simpler to just listen to checkbox changes if value factory is
-						// read-only or not providing writable prop effectively.
-						// Let's bind bidirectional if possible, but booleanproperty created on fly
-						// isn't bound to model.
-						// So we manually update model (Set) from CellValueFactory listener.
-						// To update CheckBox from Model, we rely on updateItem.
-						// To update Model from CheckBox, we add listener.
-					});
-					// BINDING FIX:
-					// The SimpleBooleanProperty in CellValueFactory reflects the Set state.
-					// But changing the CheckBox should update the property?
-					// No, the Property is creating a NEW instance every time.
-
-					// BETTER APPROACH:
-					// Just handle CheckBox events here to update Set.
-					// And update CheckBox state from Set in updateItem.
+					cb.selectedProperty().unbind();
 					cb.setOnAction(e -> {
 						GmudReview r = getTableView().getItems().get(getIndex());
+						
+						if(r.getGmud().getStatus().equals(GmudStatus.FINISHED.getDescription()) || 
+								r.getGmud().getStatus().equals(GmudStatus.EXECUTING.getDescription())) {
+							cb.setSelected(!cb.isSelected());
+							return;
+						}
+						
 						if (cb.isSelected())
 							selectedReviews.add(r);
 						else
@@ -298,13 +316,13 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		colComment.setMinWidth(245);
 		colComment.setMaxWidth(400);
 		colComment.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getComments()));
-		colComment.setCellFactory(TextFieldTableCell.forTableColumn());
+		colComment.setCellFactory(TextFieldTableCell.forTableColumn());		
 		colComment.setOnEditCommit(e -> {
 			GmudReview r = e.getRowValue();
 			r.setComments(e.getNewValue());
 			// Optionally save immediately or wait for "Apply"
 		});
-
+		tableView.setTooltip(new Tooltip("Double click a row to see GMUD details \n One click to edit comments. Press Enter after edit"));
 		tableView.getColumns().addAll(colSelect, colId, colTitle, colReviewer, colGStatus, colRStatus, colType, colDate,
 				colProject, colComment);
 
@@ -327,16 +345,16 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 		hbox.setAlignment(Pos.CENTER_LEFT);
 
 		cmbActionStatus = new ComboBox<>();
-		cmbActionStatus.getItems().addAll(GmudStatus.values());
+		cmbActionStatus.getItems().addAll(GmudReviewStatus.values());
 		cmbActionStatus.setPromptText(lang.getString(ItToolsKey.SELECT_STATUS_TO_APPLY));
-		cmbActionStatus.setConverter(new StringConverter<GmudStatus>() {
+		cmbActionStatus.setConverter(new StringConverter<GmudReviewStatus>() {
 			@Override
-			public String toString(GmudStatus object) {
+			public String toString(GmudReviewStatus object) {
 				return object != null ? object.getDescription() : "";
 			}
 
 			@Override
-			public GmudStatus fromString(String string) {
+			public GmudReviewStatus fromString(String string) {
 				return null;
 			}
 		});
@@ -400,39 +418,23 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 	}
 
 	private void applyChanges() {
-		GmudStatus newStatus = cmbActionStatus.getValue();
+		GmudReviewStatus newStatus = cmbActionStatus.getValue();
 		if (newStatus == null) {
 			showAlert(TMessageType.WARNING, ItToolsKey.TEXT_SELECT_STATUS_TO_APPLY);
 			return;
 		}
+		
 		if (selectedReviews.isEmpty()) {
 			showAlert(TMessageType.WARNING, ItToolsKey.TEXT_SELECT_ITEMS_TO_UPDATE);
 			return;
 		}
-
-		try {
-			// In a real scenario, we might batch update or iterate.
-			// Implementing iterative update for now as bulk update method isn't specified.
-			boolean allSuccess = true;
-			for (GmudReview r : selectedReviews) {
-				r.setStatus(newStatus.name()); // Assuming string status
-				r.setReviewDate(new Date());
-				/*TResult<GmudReview> res = controller.save(null, r); // Assuming save/update exists
-				if (!res.getState().equals(TState.SUCCESS)) {
-					allSuccess = false;
-				}*/
-			}
-			if (allSuccess) {
-				//showErrorAlert("Success", "Updated successfully", "Selected items have been updated.");
-				search(); // Refresh
-			} else {
-				//showErrorAlert("Warning", "Partial Success", "Some items may not have been updated.");
-				search();
-			}
-		} catch (Exception e) {
-			TLoggerUtil.error(this.getClass(), "Error during apply changes", e);
-			showAlert(TMessageType.ERROR, e.getMessage());
+		
+		for (GmudReview r : selectedReviews) {
+			r.setStatus(newStatus.getDescription());
+			saveGmudReviewProcess.save(r);
 		}
+		
+		saveGmudReviewProcess.startProcess();
 	}
 
 	private void showGmudDetails(Gmud gmud) {
@@ -463,13 +465,19 @@ public class ReviewGmudComponent extends BorderPane implements ITComponent {
 
 	private void showAlert(TMessageType type, String content) {
 		TMessage message = new TMessage(type, content);
-		view.tShowModal(new TMessageBox(content), true); 
+		view.tShowModal(new TMessageBox(message), true); 
 	}
-	
+		
 	@SuppressWarnings("rawtypes")
 	private class GmudReviewProcess extends TEntityProcess {
 		@SuppressWarnings("unchecked")
 		public GmudReviewProcess() {
+			super(GmudReview.class, IGmudReviewController.JNDI_NAME);
+		}
+	}
+	
+	private class SaveGmudReviewProcess extends TEntityProcess<GmudReview> {
+		public SaveGmudReviewProcess() {
 			super(GmudReview.class, IGmudReviewController.JNDI_NAME);
 		}
 	}

@@ -40,6 +40,7 @@ import org.tedros.fx.annotation.scene.control.TControl;
 import org.tedros.fx.annotation.scene.layout.TRegion;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.model.TEntityModelView;
+import org.tedros.fx.presenter.page.converter.TStringToLong;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.ejb.controller.IGmudController;
@@ -66,7 +67,7 @@ import javafx.scene.layout.Priority;
 @TListViewPresenter(
 		page=@TPage(serviceName = IGmudController.JNDI_NAME, 
 			query = @TQuery(entity=Gmud.class, 
-					condition = {	@TCondition(field = "id", operator=TCompareOp.EQUAL, label=TUsualKey.NUMBER),
+					condition = {	@TCondition(field = "id", operator=TCompareOp.EQUAL, label=TUsualKey.NUMBER, converter = TStringToLong.class),
 									@TCondition(field = "title", operator=TCompareOp.LIKE, label=TUsualKey.TITLE),
 									@TCondition(field = "type", operator=TCompareOp.LIKE, label=TUsualKey.TYPE),
 									@TCondition(field = "status", operator=TCompareOp.LIKE, label=TUsualKey.STATUS)},

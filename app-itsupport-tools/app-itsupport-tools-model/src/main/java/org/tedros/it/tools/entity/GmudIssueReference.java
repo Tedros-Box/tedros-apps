@@ -5,6 +5,7 @@ import java.util.Objects;
 import org.tedros.it.tools.domain.DomainSchema;
 import org.tedros.it.tools.domain.DomainTables;
 import org.tedros.server.entity.TEntity;
+import org.tedros.server.entity.TVersionEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = DomainTables.GMUD_ISSUE_REFERENCE, schema = DomainSchema.schema)
-public class GmudIssueReference extends TEntity {
+public class GmudIssueReference extends TVersionEntity {
 
     private static final long serialVersionUID = 4246280208687191618L;
 

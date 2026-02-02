@@ -8,6 +8,7 @@ import org.tedros.fx.form.TFieldBox;
 import org.tedros.it.tools.gitlab.ai.function.GitLabGatewayFactory;
 import org.tedros.it.tools.gitlab.api.model.GitLabProject;
 import org.tedros.it.tools.module.gmud.model.EditGmudMV;
+import org.tedros.util.TLoggerUtil;
 
 
 
@@ -22,12 +23,16 @@ public class SelectGitlabProjectTrigger extends TTrigger<String> {
 		if(event.equals(TEvent.ADDED)) {
 			EditGmudMV mv = (EditGmudMV) super.getForm().gettModelView();
 			if(StringUtils.isNotBlank(projectName)) {
-				List<GitLabProject> lst = GitLabGatewayFactory.getGateway().searchProjectsByName(projectName);
-				if(lst!=null && !lst.isEmpty()) {
-					GitLabProject project = lst.stream()
-							.filter(p -> p.name().equals(projectName))
-							.findFirst().orElse(lst.get(0));
-					mv.getProjectId().set(project.id());
+				try {
+					List<GitLabProject> lst = GitLabGatewayFactory.getGateway().searchProjectsByName(projectName);
+					if(lst!=null && !lst.isEmpty()) {
+						GitLabProject project = lst.stream()
+								.filter(p -> p.name().equals(projectName))
+								.findFirst().orElse(lst.get(0));
+						mv.getProjectId().set(project.id());
+					}
+				}catch (Exception e) {
+					TLoggerUtil.error(SelectGitlabProjectTrigger.class, e.getMessage(), e);
 				}
 			}else {
 				mv.getProjectId().setValue(null);

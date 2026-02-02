@@ -1,7 +1,5 @@
 package org.tedros.it.tools.module.gmud.model;
 
-import java.util.Date;
-
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TCallbackFactory;
@@ -10,7 +8,6 @@ import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TShowField;
 import org.tedros.fx.annotation.control.TTableColumn;
 import org.tedros.fx.annotation.control.TTableView;
-import org.tedros.fx.annotation.control.TTextAreaField;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.THBox;
 import org.tedros.fx.annotation.layout.THGrow;
@@ -58,28 +55,18 @@ public class GmudReviewMV extends TEntityModelView<GmudReview>{
 					@TCondition(field = "name", operator=TCompareOp.LIKE), 
 					@TCondition(logicOp=TLogicOp.OR, field = "lastName", operator=TCompareOp.LIKE)}))
 
-	@THBox(pane=@TPane(children={"reviewer","reviewDate", "status"}),
+	@THBox(pane=@TPane(children={"reviewer", "status"}),
 		hgrow = @THGrow(priority = {@TPriority(field = "reviewer", priority = Priority.NEVER),
-				@TPriority(field = "reviewDate", priority = Priority.NEVER),
 				@TPriority(field = "status", priority = Priority.NEVER)}))
     private SimpleObjectProperty<Employee> reviewer;
-	
-	@TLabel(text=ItToolsKey.REVIEW_DATE)
-	@TShowField
-    private SimpleObjectProperty<Date> reviewDate;
 	
 	@TLabel(text=TUsualKey.STATUS)
 	@TShowField
     private SimpleStringProperty status;
 
-	@TLabel(text=TUsualKey.COMMENT)
-	@TTextAreaField(prefRowCount = 6, maxLength = 1000, wrapText = true)
-    private SimpleStringProperty comments;
-
 	public GmudReviewMV(GmudReview entity) {
 		super(entity);
 		if(entity.isNew()) {
-			reviewDate.set(new Date());
 			status.set(GmudReviewStatus.PENDING.getDescription());
 		}
 	}
@@ -92,28 +79,11 @@ public class GmudReviewMV extends TEntityModelView<GmudReview>{
 		this.reviewer = reviewer;
 	}
 
-	public SimpleStringProperty getComments() {
-		return comments;
-	}
-
-	public void setComments(SimpleStringProperty comments) {
-		this.comments = comments;
-	}
-
 	public SimpleStringProperty getStatus() {
 		return status;
 	}
 
 	public void setStatus(SimpleStringProperty status) {
 		this.status = status;
-	}
-
-	public SimpleObjectProperty<Date> getReviewDate() {
-		return reviewDate;
-	}
-
-	public void setReviewDate(SimpleObjectProperty<Date> reviewDate) {
-		this.reviewDate = reviewDate;
-	}
-
+	}	
 }

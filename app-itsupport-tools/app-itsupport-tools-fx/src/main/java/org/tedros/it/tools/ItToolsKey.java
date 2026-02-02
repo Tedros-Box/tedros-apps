@@ -75,8 +75,13 @@ public interface ItToolsKey {
 	static final String TEXT_ADD_ISSUES_TO_ANALYSIS = "#{text.add.issues.to.analysis}";
 	static final String TEXT_ALERT_ERROR_HEADER = "#{text.alert.error.header}";
 	static final String TEXT_ALERT_ISSUE_NOT_FOUND = "#{text.alert.issue.not.found}";
+	static final String TEXT_CANNOT_REVERT_FINISHED_ITEMS_TO_EXECUTING = "#{text.cannot.revert.finished.items.to.executing}";
+	static final String TEXT_CANNOT_REVERT_FINISHED_ITEMS_TO_FAILED = "#{text.cannot.revert.finished.items.to.failed}";
 	static final String TEXT_NO_SCREENS_CAPTURED = "#{text.no.screens.captured}";
+	static final String TEXT_ONLY_ITEMS_EXECUTING_CAN_BE_FAILED = "#{text.only.items.executing.can.be.failed}";
+	static final String TEXT_ONLY_ITEMS_EXECUTING_CAN_BE_FINISHED = "#{text.only.items.executing.can.be.finished}";
 	static final String TEXT_PROVIDE_INSTRUCTIONS = "#{text.provide.instructions}";
+	static final String TEXT_SCREEN_REFRESHED_RETRY_OPERATION = "#{text.screen.refreshed.retry.operation}";
 	static final String TEXT_SELECT_EVIDENCES = "#{text.select.evidences}";
 	static final String TEXT_SELECT_ITEMS_FIRST = "#{text.select.items.first}";
 	static final String TEXT_SELECT_ITEMS_TO_UPDATE = "#{text.select.items.to.update}";
