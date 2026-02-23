@@ -74,6 +74,10 @@
 		
 		<class>org.tedros.it.tools.entity.JobEvidence</class>
 		<class>org.tedros.it.tools.entity.JobEvidenceItem</class>
+		<class>org.tedros.it.tools.entity.Gmud</class>
+		<class>org.tedros.it.tools.entity.GmudItem</class>
+		<class>org.tedros.it.tools.entity.GmudReview</class>
+		<class>org.tedros.it.tools.entity.GmudIssueReference</class>
 		
 		<properties>
 		

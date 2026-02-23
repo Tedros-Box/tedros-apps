@@ -9,6 +9,7 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.module.evidence.JobEvidenceModule;
+import org.tedros.it.tools.module.gmud.GmudModule;
 import org.tedros.it.tools.module.redmine.RedmineModule;
 import org.tedros.it.tools.resource.AppResource;
 
@@ -29,8 +30,14 @@ import org.tedros.it.tools.resource.AppResource;
 			name=ItToolsKey.MODULE_ITSUPPORT_REDMINE, 
 			menu=ItToolsKey.MENU_ITSUPPORT, 
 			description=ItToolsKey.MODULE_ITSUPPORT_REDMINE_DESC,
-			icon=TConstant.ICONS_FOLDER+"redmine_tools.png", 
-			menuIcon=TConstant.ICONS_FOLDER+"redmine_tools_menu.png")
+			icon=TConstant.ICONS_FOLDER+"redmine-icon.png", 
+			menuIcon=TConstant.ICONS_FOLDER+"redmine-menu-icon.png"),
+		@TModule(type=GmudModule.class, 
+			name=ItToolsKey.MODULE_ITSUPPORT_GMUD, 
+			menu=ItToolsKey.MODULE_ITSUPPORT_GMUD, 
+			description=ItToolsKey.MODULE_ITSUPPORT_GMUD_DESC,
+			icon=TConstant.ICONS_FOLDER+"gmud-icon.png", 
+			menuIcon=TConstant.ICONS_FOLDER+"gmud-menu-icon.png")
 	}, packageName = "org.tedros.it.tools", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"ittools"})

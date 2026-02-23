@@ -137,13 +137,13 @@ Below is a list of features provided by base applications that can be integrated
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/tedrosbox.png)
 
 **Main screen with open side menu**
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/menu.png)
+![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/menu-lateral.png)
 
 **Teros**
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/teros3.png)
+![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/teros.png)
 
 **Example of a simple view with search and pagination**
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/producprice.png)
+![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/tela-pais.png)
 
 **Example of generated report, logo can be changed in preferences**
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/pf_rel2.png)
