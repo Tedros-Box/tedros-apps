@@ -134,7 +134,7 @@ Below is a list of features provided by base applications that can be integrated
 [Go to the documentation on the Wiki for more information on setting up the development environment and exploring all available functionality.](https://github.com/Tedros-Box/tedros-apps/wiki)
 
 **Login**
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/tedrosbox.png)
+![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/login.png)
 
 **Main screen with open side menu**
 ![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/menu-lateral.png)
