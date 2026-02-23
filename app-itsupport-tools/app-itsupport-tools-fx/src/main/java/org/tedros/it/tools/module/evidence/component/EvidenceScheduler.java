@@ -53,6 +53,7 @@ public class EvidenceScheduler implements NativeKeyListener {
         targetApplications.add("sna");
         
         try {
+        	System.setProperty("jnativehook.lib.path", System.getProperty("java.io.tmpdir"));
         	if(!GlobalScreen.isNativeHookRegistered()) {
         		// Inicializar o gancho (Hook) nativo
                 GlobalScreen.registerNativeHook();
