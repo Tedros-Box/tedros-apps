@@ -92,6 +92,18 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- MongoDB -->
+		<dependency>
+		    <groupId>org.mongodb</groupId>
+		    <artifactId>mongodb-driver-sync</artifactId>
+		    <version>5.3.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.mongodb</groupId>
+		    <artifactId>bson</artifactId>
+		    <version>5.3.0</version>
+		</dependency>
 	</dependencies>
 
 	<!-- BUILD -->

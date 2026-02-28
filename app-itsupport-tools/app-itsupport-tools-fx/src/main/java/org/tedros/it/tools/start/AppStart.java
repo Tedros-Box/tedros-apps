@@ -9,6 +9,7 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.module.evidence.JobEvidenceModule;
+import org.tedros.it.tools.module.evidence.component.ProductivityTrackerService;
 import org.tedros.it.tools.module.gmud.GmudModule;
 import org.tedros.it.tools.module.redmine.RedmineModule;
 import org.tedros.it.tools.resource.AppResource;
@@ -45,15 +46,22 @@ import org.tedros.it.tools.resource.AppResource;
 	appName = ItToolsKey.APP_ITSUPPORT, 
 	allowedAccesses=TAuthorizationType.APP_ACCESS)
 public class AppStart implements ITApplication {
+	
+	private static ProductivityTrackerService productivityTrackerService;
 
 	@Override
 	public void start() {
 		AppResource.createResource();
+		// Start the productivity tracker service in the background
+		productivityTrackerService = new ProductivityTrackerService();
+		productivityTrackerService.startTracking(1, java.util.concurrent.TimeUnit.MINUTES);
+		
 	}
 
 	@Override
 	public void stop() {
 		// Executed on exit and logout
+		productivityTrackerService.stopTracking();
 	}
 	
 	

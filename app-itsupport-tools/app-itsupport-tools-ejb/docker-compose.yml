@@ -1,0 +1,19 @@
+services:
+  mongodb-local:
+    image: mongo:8.2.5
+    container_name: mongodb_tedros_dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      # Cria o usuário administrador root automaticamente
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: devpassword
+      # Cria o banco de dados inicial automaticamente
+      MONGO_INITDB_DATABASE: itsupport
+    volumes:
+      # Garante que os dados não sejam perdidos se o container for recriado
+      - mongo_local_data:/data/db
+
+volumes:
+  mongo_local_data:
