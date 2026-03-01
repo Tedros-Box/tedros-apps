@@ -899,4 +899,6 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 			};
 		}
     }
+    
+    
 }

@@ -1,15 +1,5 @@
 package org.tedros.it.tools.module.evidence.component;
 
-import com.github.kwhat.jnativehook.GlobalScreen;
-import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
-import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
-import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
-import com.github.kwhat.jnativehook.mouse.NativeMouseListener;
-import com.github.kwhat.jnativehook.mouse.NativeMouseMotionListener;
-import com.sun.jna.Native;
-import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinDef.HWND;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +11,22 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.naming.NamingException;
-
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.security.model.TUser;
 import org.tedros.core.service.remote.TEjbServiceLocator;
 import org.tedros.it.tools.ejb.controller.IProductivityActivityController;
 import org.tedros.it.tools.model.ProductivityActivityDTO;
 import org.tedros.util.TLoggerUtil;
+
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
+import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
+import com.github.kwhat.jnativehook.mouse.NativeMouseListener;
+import com.github.kwhat.jnativehook.mouse.NativeMouseMotionListener;
+import com.sun.jna.Native;
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef.HWND;
 
 /**
  * Background service that monitors productivity activity (window title,
@@ -38,27 +36,36 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
 
     private final ScheduledExecutorService scheduler;
     private final ConcurrentLinkedQueue<ProductivityActivityDTO> activityQueue;
-
     private final AtomicLong mouseEventCount;
     private final AtomicLong keyboardEventCount;
+    private final AtomicLong lastMouseEventTime; // para throttling
     private final TUser loggedUser;
 
+    private volatile boolean running = false;
+
     public ProductivityTrackerService() {
-        // Use a dedicated single-thread executor to completely isolate this tracking
-        // from any other application tasks (like the 3-minute screenshot task).
         this.scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
             Thread t = new Thread(r, "ProductivityTracker-Thread");
-            t.setDaemon(true); // Don't block application shutdown
+            t.setDaemon(true);
             return t;
         });
+
         this.loggedUser = TedrosContext.getLoggedUser();
         this.activityQueue = new ConcurrentLinkedQueue<>();
         this.mouseEventCount = new AtomicLong(0);
         this.keyboardEventCount = new AtomicLong(0);
+        this.lastMouseEventTime = new AtomicLong(0);
     }
 
     public void startTracking(long period, TimeUnit unit) {
-        // Disable JNativeHook's verbose logging to prevent log flooding
+        if (running) {
+            TLoggerUtil.warn(getClass(), "ProductivityTrackerService já está em execução. Ignorando chamada duplicada.");
+            return;
+        }
+
+        running = true;
+
+        // Desabilita log verboso do JNativeHook
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.WARNING);
         logger.setUseParentHandlers(false);
@@ -71,60 +78,75 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
             GlobalScreen.addNativeMouseListener(this);
             GlobalScreen.addNativeMouseMotionListener(this);
         } catch (Exception e) {
-            System.err.println("Error registering global hook for productivity tracking: " + e.getMessage());
+            TLoggerUtil.error("Erro ao registrar global hook para rastreamento de produtividade", e);
         }
 
-        // Schedule periodic snapshotting of activity and window title
         scheduler.scheduleAtFixedRate(this::snapshotActivity, 0, period, unit);
     }
 
     public void stopTracking() {
+        if (!running) return;
+
+        running = false;
         scheduler.shutdown();
-        GlobalScreen.removeNativeKeyListener(this);
-        GlobalScreen.removeNativeMouseListener(this);
-        GlobalScreen.removeNativeMouseMotionListener(this);
+
         try {
-            if (GlobalScreen.isNativeHookRegistered()) {
-                GlobalScreen.unregisterNativeHook();
+            // Último snapshot + envio antes de parar
+            snapshotActivity();
+            if (!activityQueue.isEmpty()) {
+                saveActivity();
             }
-        } catch (Exception e) {
-        	TLoggerUtil.error(e.getMessage(), e);
+
+            if (!scheduler.awaitTermination(8, TimeUnit.SECONDS)) {
+                scheduler.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            TLoggerUtil.error("Interrupted ao parar ProductivityTrackerService", e);
+        } finally {
+            GlobalScreen.removeNativeKeyListener(this);
+            GlobalScreen.removeNativeMouseListener(this);
+            GlobalScreen.removeNativeMouseMotionListener(this);
+
+            try {
+                if (GlobalScreen.isNativeHookRegistered()) {
+                    GlobalScreen.unregisterNativeHook();
+                }
+            } catch (Exception e) {
+                TLoggerUtil.error("Erro ao remover native hook", e);
+            }
         }
     }
-    
+
     private void saveActivity() {
-		
-    	try(TEjbServiceLocator locator = TEjbServiceLocator.getInstance()){
-    		IProductivityActivityController controller = locator.lookup(IProductivityActivityController.JNDI_NAME);
-    		List<ProductivityActivityDTO> activitiesToSave = new ArrayList<>();
-    		while (!activityQueue.isEmpty()) {
-				activitiesToSave.add(activityQueue.poll());
-			}
-    		
-    		if(!activitiesToSave.isEmpty()) {
-				controller.saveActivity(loggedUser.getAccessToken(), activitiesToSave);
-			}
-    		
-    	} catch (NamingException e) {
-			TLoggerUtil.error(e.getMessage(), e);
-		}
-    	
-	}
+        List<ProductivityActivityDTO> batch = new ArrayList<>();
+        ProductivityActivityDTO dto;
+        while ((dto = activityQueue.poll()) != null) {
+            batch.add(dto);
+        }
+
+        if (batch.isEmpty()) return;
+
+        try (TEjbServiceLocator locator = TEjbServiceLocator.getInstance()) {
+            IProductivityActivityController controller = locator.lookup(IProductivityActivityController.JNDI_NAME);
+            controller.saveActivity(loggedUser.getAccessToken(), batch);
+        } catch (Exception e) { 
+            TLoggerUtil.error("Falha ao salvar batch de atividades. Reenfileirando para próxima tentativa...", e);
+            activityQueue.addAll(batch); // protege contra perda de dados
+        }
+    }
 
     private void snapshotActivity() {
+        if (!running) return;
+
         try {
-            // 1. Capture OS User
             String userName = loggedUser.getName();
             Long userId = loggedUser.getId();
-
-            // 2. Capture Window Title (Windows specific via JNA)
             String activeWindowTitle = getActiveWindowTitle();
 
-            // 3. Capture and reset interaction counts atomically
             long mCount = mouseEventCount.getAndSet(0);
             long kCount = keyboardEventCount.getAndSet(0);
 
-            // 4. Create record
             ProductivityActivityDTO dto = new ProductivityActivityDTO(
                     LocalDateTime.now(),
                     userName,
@@ -133,15 +155,13 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
                     mCount,
                     kCount);
 
-            // 5. Enqueue for later processing
             activityQueue.offer(dto);
 
-            if(activityQueue.size() >= 10) { // Arbitrary batch size for saving
-				saveActivity();
-			}
-
+            if (activityQueue.size() >= 3) {
+                saveActivity();
+            }
         } catch (Exception e) {
-            System.err.println("Error processing activity snapshot: " + e.getMessage());
+            TLoggerUtil.error("Erro ao processar snapshot de atividade", e);
         }
     }
 
@@ -156,14 +176,17 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
                     char[] windowText = new char[512];
                     User32.INSTANCE.GetWindowText(hwnd, windowText, 512);
                     windowTitle = Native.toString(windowText).trim();
+                    if (windowTitle.isEmpty()) {
+                        windowTitle = "Unnamed Window";
+                    }
                 }
             } catch (Exception e) {
+                TLoggerUtil.error("Erro ao obter título da janela ativa", e);
                 windowTitle = "Error fetching title";
             }
         } else {
             windowTitle = "OS not supported for window title capture";
         }
-
         return windowTitle;
     }
 
@@ -171,7 +194,7 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
         return activityQueue;
     }
 
-    // --- Interaction Listeners (Volume Tracking Only) ---
+    // ==================== LISTENERS ====================
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
@@ -179,37 +202,36 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
     }
 
     @Override
-    public void nativeKeyReleased(NativeKeyEvent e) {
-        // Ignored to avoid double counting
-    }
-
+    public void nativeKeyReleased(NativeKeyEvent e) { /* ignorado */ }
     @Override
-    public void nativeKeyTyped(NativeKeyEvent e) {
-        // Ignored, privacy enforcement: we do not track typed characters
-    }
+    public void nativeKeyTyped(NativeKeyEvent e) { /* ignorado - privacidade */ }
 
     @Override
     public void nativeMouseClicked(NativeMouseEvent e) {
-        mouseEventCount.incrementAndGet();
+        mouseEventCount.incrementAndGet(); // cliques sempre contam
     }
 
     @Override
-    public void nativeMousePressed(NativeMouseEvent e) {
-        // Ignored to avoid double counting
-    }
-
+    public void nativeMousePressed(NativeMouseEvent e) { /* ignorado */ }
     @Override
-    public void nativeMouseReleased(NativeMouseEvent e) {
-        // Ignored to avoid double counting
-    }
+    public void nativeMouseReleased(NativeMouseEvent e) { /* ignorado */ }
 
     @Override
     public void nativeMouseMoved(NativeMouseEvent e) {
-        mouseEventCount.incrementAndGet();
+        throttleMouseEvent();
     }
 
     @Override
     public void nativeMouseDragged(NativeMouseEvent e) {
-        mouseEventCount.incrementAndGet();
+        throttleMouseEvent();
+    }
+
+    private void throttleMouseEvent() {
+        long now = System.currentTimeMillis();
+        long last = lastMouseEventTime.get();
+        if (now - last > 150) { // máximo ~6-7 eventos de movimento por segundo
+            lastMouseEventTime.set(now);
+            mouseEventCount.incrementAndGet();
+        }
     }
 }

@@ -24,7 +24,7 @@ public class MongoConnectionManager {
             // Read from environment variable or default to localhost
             String uri = System.getenv("MONGO_URI");
             if (uri == null || uri.isEmpty()) {
-                uri = "";
+                uri = "mongodb://admin:devpassword@localhost:27017/itsupport?authSource=admin";
                 LOGGER.info("MONGO_URI not found in environment. Using default: " + uri);
             } else {
                 LOGGER.info("Connecting to MongoDB using environment MONGO_URI.");

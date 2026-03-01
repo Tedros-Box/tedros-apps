@@ -19,6 +19,10 @@ public class ProductivityActivityDTO extends TEntity {
 	private long mouseEventCount;
 	private long keyboardEventCount;
 	
+	public ProductivityActivityDTO() {
+		
+	}
+	
 	public ProductivityActivityDTO(LocalDateTime timestamp, String username, Long userId, String activeWindowTitle,
 			long mouseEventCount, long keyboardEventCount) {
 		this.timestamp = timestamp;

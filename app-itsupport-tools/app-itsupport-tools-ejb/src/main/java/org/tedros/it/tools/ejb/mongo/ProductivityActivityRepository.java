@@ -10,8 +10,14 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.tedros.it.tools.model.ProductivityActivityDTO;
 
+import java.util.Arrays;
+import org.tedros.it.tools.model.ActivitySummaryDTO;
+
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -59,6 +65,46 @@ public class ProductivityActivityRepository {
                     safeGetLong(doc, "mouseEventCount"),
                     safeGetLong(doc, "keyboardEventCount"));
             results.add(dto);
+        }
+
+        return results;
+    }
+
+    public List<ActivitySummaryDTO> getWindowUsageSummary(Long userId, LocalDateTime start, LocalDateTime end) {
+        Bson match = Aggregates.match(Filters.and(
+                Filters.eq("userId", userId),
+                Filters.gte("timestamp", toDate(start)),
+                Filters.lte("timestamp", toDate(end))));
+
+        Bson group = Aggregates.group("$activeWindowTitle",
+                Accumulators.sum("activeCount",
+                        new Document("$cond", Arrays.asList(
+                                new Document("$gt", Arrays.asList(
+                                        new Document("$add", Arrays.asList(
+                                                new Document("$ifNull", Arrays.asList("$mouseEventCount", 0)),
+                                                new Document("$ifNull", Arrays.asList("$keyboardEventCount", 0)))),
+                                        0)),
+                                1, 0))),
+                Accumulators.sum("inactiveCount",
+                        new Document("$cond", Arrays.asList(
+                                new Document("$eq", Arrays.asList(
+                                        new Document("$add", Arrays.asList(
+                                                new Document("$ifNull", Arrays.asList("$mouseEventCount", 0)),
+                                                new Document("$ifNull", Arrays.asList("$keyboardEventCount", 0)))),
+                                        0)),
+                                1, 0))));
+
+        Bson addFields = new Document("$addFields", new Document("total",
+                new Document("$add", Arrays.asList("$activeCount", "$inactiveCount"))));
+
+        Bson sort = Aggregates.sort(Sorts.descending("total"));
+
+        List<ActivitySummaryDTO> results = new ArrayList<>();
+        for (Document doc : getCollection().aggregate(Arrays.asList(match, group, addFields, sort))) {
+            results.add(new ActivitySummaryDTO(
+                    doc.getString("_id"),
+                    safeGetLong(doc, "activeCount"),
+                    safeGetLong(doc, "inactiveCount")));
         }
 
         return results;
