@@ -35,6 +35,27 @@ public class ProductivityActivityRepository {
                 .getDatabase(mongoManager.getDatabaseName())
                 .getCollection(COLLECTION_NAME);
     }
+    
+    public void saveAll(List<ProductivityActivityDTO> activities) {
+        if (activities == null || activities.isEmpty()) {
+            return;
+        }
+
+        List<Document> documents = new ArrayList<>();
+        for (ProductivityActivityDTO activity : activities) {
+            Document doc = new Document()
+                    .append("timestamp", toDate(activity.getTimestamp()))
+                    .append("username", activity.getUsername())
+                    .append("userId", activity.getUserId())
+                    .append("activeWindowTitle", activity.getActiveWindowTitle())
+                    .append("mouseEventCount", activity.getMouseEventCount())
+                    .append("keyboardEventCount", activity.getKeyboardEventCount());
+            documents.add(doc);
+        }
+
+        // A mágica acontece aqui: Uma única chamada ao banco para N registros!
+        getCollection().insertMany(documents);
+    }
 
     public void save(ProductivityActivityDTO activity) {
         Document doc = new Document()
@@ -56,7 +77,7 @@ public class ProductivityActivityRepository {
 
         List<ProductivityActivityDTO> results = new ArrayList<>();
 
-        for (Document doc : getCollection().find(filter)) {
+        for (Document doc : getCollection().find(filter).sort(Sorts.ascending("timestamp"))) {
             ProductivityActivityDTO dto = new ProductivityActivityDTO(
                     toLocalDateTime(doc.getDate("timestamp")),
                     doc.getString("username"),

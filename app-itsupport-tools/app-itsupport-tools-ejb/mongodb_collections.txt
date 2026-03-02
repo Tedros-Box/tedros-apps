@@ -1,0 +1,8 @@
+db.createCollection("user_activities", {
+   timeseries: {
+      timeField: "timestamp",
+      metaField: "userId",
+      granularity: "minutes"
+   },
+   expireAfterSeconds: 7776000
+})

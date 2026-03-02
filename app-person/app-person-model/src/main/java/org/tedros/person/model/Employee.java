@@ -86,10 +86,15 @@ public class Employee extends NaturalPerson implements ICostCenterAccounting {
 
 	@Override
 	public String toString() {
-		return (getType() != null ? getType().getName() + ", " : "")
-				+ (getLegalPerson() != null ? getLegalPerson().getName() + ", " : "")
-				+ (getName() != null ?  getName() : "")
+		
+		String userName = (getName() != null ?  getName() : "")
 				+ (getLastName() != null ?  " " + getLastName() : "");
+		
+		String legalPersonName = (getLegalPerson() != null ? " [" + getLegalPerson().getName()+"]" : "");
+		
+		String functionName = (getType() != null ? " (" + getType().getName() + ")" : "");
+		
+		return userName + legalPersonName + functionName;
 	}
 
 	/* (non-Javadoc)

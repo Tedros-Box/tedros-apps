@@ -16,8 +16,8 @@ package org.tedros.it.tools;
 public interface ItToolsKey {
 
 	static final String APP_ITSUPPORT = "#{app.itsupport}";
-	static final String ACTIVITY = "#{label.activity}";
-	static final String ACTIVITY_SUMMARY = "#{label.activity.summary}";
+	static final String ACTIVITY_PER_ACTIVE_WINDOW = "#{label.activity.per.active.window}";
+	static final String ACTIVITY_PER_HOUR = "#{label.activity.per.hour}";
 	static final String ADD_NEW_APP_TITLE = "#{label.add.new.app.title}";
 	static final String ADD_TO_ANALYSIS = "#{label.add.to.analysis}";
 	static final String APPLY_CHANGES = "#{label.apply.changes}";
@@ -27,6 +27,8 @@ public interface ItToolsKey {
 	static final String COUNT = "#{label.count}";
 	static final String DESCRIBE_IA_INSTRUCTIONS = "#{label.describe.ia.instructions}";
 	static final String DUE_DATE = "#{label.due.date}";
+	static final String EMPLOYEE_ACTIVITY = "#{label.employee.activity}";
+	static final String EMPLOYEE_INACTIVITY = "#{label.employee.inactivity}";
 	static final String EVIDENCES = "#{label.evidences}";
 	static final String EXECUTION_DATE = "#{label.execution.date}";
 	static final String EXECUTION_ORDER = "#{label.execution.order}";
@@ -39,14 +41,17 @@ public interface ItToolsKey {
 	static final String GMUD_REVIEWERS = "#{label.gmud.reviewers}";
 	static final String GMUD_ROLLBACK_PLAN = "#{label.gmud.rollback.plan}";
 	static final String GMUD_STATUS = "#{label.gmud.status}";
-	static final String INACTIVITY = "#{label.inactivity}";
+	static final String HOUR = "#{label.hour}";
 	static final String ISSUE_ANALYSIS_WITH_TEROS = "#{label.issue.analysis.with.teros}";
 	static final String ISSUE_ID = "#{label.issue.id}";
 	static final String ISSUE_LINK = "#{label.issue.link}";
 	static final String ISSUE_NUMBER = "#{label.issue.number}";
 	static final String KEYBOARD_EVENTS = "#{label.keyboard.events}";
 	static final String MOUSE_EVENTS = "#{label.mouse.events}";
+	static final String OTHER_WINDOWS = "#{label.other.windows}";
 	static final String OUTPUT_FOLDER = "#{label.output.folder}";
+	static final String PER_ACTIVE_WINDOW = "#{label.per.active.window}";
+	static final String PER_HOUR = "#{label.per.hour}";
 	static final String PERCENTAGE_DONE = "#{label.percentage.done}";
 	static final String PRODUCTIVITY_SUMMARY = "#{label.productivity.summary}";
 	static final String REMOVE_SELECTED = "#{label.remove.selected}";
@@ -73,6 +78,8 @@ public interface ItToolsKey {
 	static final String UPDATE_STATUS = "#{label.update.status}";
 	static final String WINDOW_TITLE = "#{label.window.title}";
 	static final String MENU_ITSUPPORT = "#{menu.itsupport}";
+	static final String MODULE_ITSUPPORT_EMPLOYEE_ACTIVITY = "#{module.itsupport.employee.activity}";
+	static final String MODULE_ITSUPPORT_EMPLOYEE_ACTIVITY_DESC = "#{module.itsupport.employee.activity.desc}";
 	static final String MODULE_ITSUPPORT_EVIDENCE = "#{module.itsupport.evidence}";
 	static final String MODULE_ITSUPPORT_EVIDENCE_DESC = "#{module.itsupport.evidence.desc}";
 	static final String MODULE_ITSUPPORT_GMUD = "#{module.itsupport.gmud}";
@@ -102,6 +109,8 @@ public interface ItToolsKey {
 	static final String TITLE_JOB_EVIDENCE_REPORT = "#{title.job.evidence.report}";
 	static final String VIEW_CAPTURE_EVIDENCE = "#{view.capture.evidence}";
 	static final String VIEW_CAPTURE_EVIDENCE_DESC = "#{view.capture.evidence.desc}";
+	static final String VIEW_EMPLOYEE_ACTIVITY_MONITORING = "#{view.employee.activity.monitoring}";
+	static final String VIEW_EMPLOYEE_ACTIVITY_MONITORING_DESC = "#{view.employee.activity.monitoring.desc}";
 	static final String VIEW_GMUD_EDIT = "#{view.gmud.edit}";
 	static final String VIEW_GMUD_EDIT_DESC = "#{view.gmud.edit.desc}";
 	static final String VIEW_JOB_EVIDENCE = "#{view.job.evidence}";

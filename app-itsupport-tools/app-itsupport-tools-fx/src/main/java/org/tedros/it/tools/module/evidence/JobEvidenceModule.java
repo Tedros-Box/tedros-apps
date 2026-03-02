@@ -9,18 +9,12 @@ import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.entity.JobEvidence;
 import org.tedros.it.tools.model.JobEvidenceReportModel;
-import org.tedros.it.tools.model.ProductivityActivityDTO;
 import org.tedros.it.tools.module.evidence.model.CaptureEvidenceMV;
 import org.tedros.it.tools.module.evidence.model.CaptureEvidenceModel;
 import org.tedros.it.tools.module.evidence.model.CreateJobEvidenceMV;
 import org.tedros.it.tools.module.evidence.report.JobEvidenceReportMV;
-import org.tedros.it.tools.module.useractivity.model.UserActivityMV;
 
 @TView(items = {
-		@TItem(title =  "User Activity Report", 
-				//description = ItToolsKey.VIEW_CAPTURE_EVIDENCE_DESC, 
-		modelView = UserActivityMV.class, model = ProductivityActivityDTO.class),
-		
 		@TItem(title =  ItToolsKey.VIEW_CAPTURE_EVIDENCE, description = ItToolsKey.VIEW_CAPTURE_EVIDENCE_DESC, 
 			modelView = CaptureEvidenceMV.class, model = CaptureEvidenceModel.class),
 		@TItem(title = ItToolsKey.VIEW_JOB_EVIDENCE, description = ItToolsKey.VIEW_JOB_EVIDENCE_DESC, 

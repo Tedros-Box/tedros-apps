@@ -1,10 +1,12 @@
-package org.tedros.it.tools.module.evidence.component;
+package org.tedros.it.tools.module.employeeactivity.component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
@@ -31,35 +33,53 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 /**
  * Background service that monitors productivity activity (window title,
  * mouse interactions, keyboard events) without recording keystrokes.
+ * Otimizado para alta concorrência e baixo consumo de rede.
  */
-public class ProductivityTrackerService implements NativeKeyListener, NativeMouseListener, NativeMouseMotionListener {
+public class EmployeeActivityTrackerService implements NativeKeyListener, NativeMouseListener, NativeMouseMotionListener {
 
     private final ScheduledExecutorService scheduler;
-    private final ConcurrentLinkedQueue<ProductivityActivityDTO> activityQueue;
+    private final ExecutorService networkExecutor; // Pool dedicado para chamadas de rede (EJB)
+    private final LinkedBlockingQueue<ProductivityActivityDTO> activityQueue; // Fila com limite
+    
     private final AtomicLong mouseEventCount;
     private final AtomicLong keyboardEventCount;
     private final AtomicLong lastMouseEventTime; // para throttling
     private final TUser loggedUser;
 
     private volatile boolean running = false;
+    
+    // Configurações de Batch e Jitter (Aleatoriedade)
+    private int currentBatchTarget;
+    private final Random random = new Random();
+    private static final int MIN_BATCH_SIZE = 15; 
+    private static final int MAX_BATCH_SIZE = 30;
+    private static final int MAX_QUEUE_CAPACITY = 2000; // ~33 horas de retenção offline (proteção contra OOM)
 
-    public ProductivityTrackerService() {
+    public EmployeeActivityTrackerService() {
         this.scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
             Thread t = new Thread(r, "ProductivityTracker-Thread");
             t.setDaemon(true);
             return t;
         });
 
+        this.networkExecutor = Executors.newSingleThreadExecutor(r -> {
+            Thread t = new Thread(r, "ProductivityNetwork-Thread");
+            t.setDaemon(true);
+            return t;
+        });
+
         this.loggedUser = TedrosContext.getLoggedUser();
-        this.activityQueue = new ConcurrentLinkedQueue<>();
+        this.activityQueue = new LinkedBlockingQueue<>(MAX_QUEUE_CAPACITY);
         this.mouseEventCount = new AtomicLong(0);
         this.keyboardEventCount = new AtomicLong(0);
         this.lastMouseEventTime = new AtomicLong(0);
+        
+        updateBatchTarget(); // Define o primeiro alvo de envio aleatório
     }
 
     public void startTracking(long period, TimeUnit unit) {
         if (running) {
-            TLoggerUtil.warn(getClass(), "ProductivityTrackerService já está em execução. Ignorando chamada duplicada.");
+            TLoggerUtil.warn(getClass(), "EmployeeActivityTrackerService já está em execução. Ignorando chamada duplicada.");
             return;
         }
 
@@ -71,6 +91,7 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
         logger.setUseParentHandlers(false);
 
         try {
+        	System.setProperty("jnativehook.lib.path", System.getProperty("java.io.tmpdir"));
             if (!GlobalScreen.isNativeHookRegistered()) {
                 GlobalScreen.registerNativeHook();
             }
@@ -94,7 +115,7 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
             // Último snapshot + envio antes de parar
             snapshotActivity();
             if (!activityQueue.isEmpty()) {
-                saveActivity();
+                triggerAsyncSave(); // Manda o restante para o backend
             }
 
             if (!scheduler.awaitTermination(8, TimeUnit.SECONDS)) {
@@ -102,8 +123,10 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            TLoggerUtil.error("Interrupted ao parar ProductivityTrackerService", e);
+            TLoggerUtil.error("Interrupted ao parar EmployeeActivityTrackerService", e);
         } finally {
+            networkExecutor.shutdown(); // Finaliza a thread de rede
+            
             GlobalScreen.removeNativeKeyListener(this);
             GlobalScreen.removeNativeMouseListener(this);
             GlobalScreen.removeNativeMouseMotionListener(this);
@@ -118,51 +141,65 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
         }
     }
 
-    private void saveActivity() {
-        List<ProductivityActivityDTO> batch = new ArrayList<>();
-        ProductivityActivityDTO dto;
-        while ((dto = activityQueue.poll()) != null) {
-            batch.add(dto);
-        }
-
-        if (batch.isEmpty()) return;
-
-        try (TEjbServiceLocator locator = TEjbServiceLocator.getInstance()) {
-            IProductivityActivityController controller = locator.lookup(IProductivityActivityController.JNDI_NAME);
-            controller.saveActivity(loggedUser.getAccessToken(), batch);
-        } catch (Exception e) { 
-            TLoggerUtil.error("Falha ao salvar batch de atividades. Reenfileirando para próxima tentativa...", e);
-            activityQueue.addAll(batch); // protege contra perda de dados
-        }
+    private void updateBatchTarget() {
+        // Define o gatilho de envio para um número aleatório entre MIN e MAX
+        this.currentBatchTarget = MIN_BATCH_SIZE + random.nextInt((MAX_BATCH_SIZE - MIN_BATCH_SIZE) + 1);
     }
 
     private void snapshotActivity() {
         if (!running) return;
 
         try {
-            String userName = loggedUser.getName();
-            Long userId = loggedUser.getId();
-            String activeWindowTitle = getActiveWindowTitle();
-
             long mCount = mouseEventCount.getAndSet(0);
             long kCount = keyboardEventCount.getAndSet(0);
-
+            String currentWindowTitle = getActiveWindowTitle();
+            
             ProductivityActivityDTO dto = new ProductivityActivityDTO(
                     LocalDateTime.now(),
-                    userName,
-                    userId,
-                    activeWindowTitle,
+                    loggedUser.getName(),
+                    loggedUser.getId(),
+                    currentWindowTitle,
                     mCount,
                     kCount);
 
-            activityQueue.offer(dto);
+            // Tenta adicionar à fila. Se estiver cheia (servidor offline há muito tempo), remove o mais antigo.
+            if (!activityQueue.offer(dto)) {
+                activityQueue.poll(); 
+                activityQueue.offer(dto);
+            }
 
-            if (activityQueue.size() >= 3) {
-                saveActivity();
+            // Verifica se atingiu o alvo do batch com Jitter
+            if (activityQueue.size() >= currentBatchTarget) {
+                updateBatchTarget(); // Sorteia o próximo alvo
+                triggerAsyncSave();  // Envia sem bloquear a thread do snapshot
             }
         } catch (Exception e) {
             TLoggerUtil.error("Erro ao processar snapshot de atividade", e);
         }
+    }
+
+    private void triggerAsyncSave() {
+        // Submit para a thread separada de rede
+        networkExecutor.submit(() -> {
+            List<ProductivityActivityDTO> batch = new ArrayList<>();
+            // Move todos os itens atuais da fila para a lista batch de forma thread-safe
+            activityQueue.drainTo(batch);
+
+            if (batch.isEmpty()) return;
+
+            try (TEjbServiceLocator locator = TEjbServiceLocator.getInstance()) {
+                IProductivityActivityController controller = locator.lookup(IProductivityActivityController.JNDI_NAME);
+                controller.saveActivity(loggedUser.getAccessToken(), batch);
+            } catch (Exception e) { 
+                TLoggerUtil.error("Falha ao salvar batch de atividades. Reenfileirando para próxima tentativa...", e);
+                // Se falhar, devolve para a fila (protegendo contra estouro da capacidade)
+                for (ProductivityActivityDTO dto : batch) {
+                    if (!activityQueue.offer(dto)) {
+                        break; // Se encheu a fila novamente, descarta o resto do batch antigo
+                    }
+                }
+            }
+        });
     }
 
     private String getActiveWindowTitle() {
@@ -190,7 +227,7 @@ public class ProductivityTrackerService implements NativeKeyListener, NativeMous
         return windowTitle;
     }
 
-    public ConcurrentLinkedQueue<ProductivityActivityDTO> getActivityQueue() {
+    public LinkedBlockingQueue<ProductivityActivityDTO> getActivityQueue() {
         return activityQueue;
     }
 

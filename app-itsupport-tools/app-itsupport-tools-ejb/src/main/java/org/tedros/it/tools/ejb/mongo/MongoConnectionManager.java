@@ -1,40 +1,65 @@
 package org.tedros.it.tools.ejb.mongo;
 
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import jakarta.ejb.Singleton;
-import jakarta.ejb.Startup;
-import java.util.logging.Logger;
-import java.util.logging.Level;
+import jakarta.enterprise.context.ApplicationScoped;
 
-@Singleton
-@Startup
+@ApplicationScoped
 public class MongoConnectionManager {
 
-    private static final Logger LOGGER = Logger.getLogger(MongoConnectionManager.class.getName());
     private MongoClient mongoClient;
-    private final String dbName = "itsupport";
+    
+    // Nome do seu banco de dados
+    private final String databaseName = "itsupport";
 
     @PostConstruct
     public void init() {
-        LOGGER.info("Initializing MongoDB Connection...");
         try {
-            // Read from environment variable or default to localhost
-            String uri = System.getenv("MONGO_URI");
-            if (uri == null || uri.isEmpty()) {
-                uri = "mongodb://admin:devpassword@localhost:27017/itsupport?authSource=admin";
-                LOGGER.info("MONGO_URI not found in environment. Using default: " + uri);
-            } else {
-                LOGGER.info("Connecting to MongoDB using environment MONGO_URI.");
-            }
-            mongoClient = MongoClients.create(uri);
-            // Quick test connection
-            mongoClient.getDatabase(dbName).listCollectionNames().first();
-            LOGGER.info("MongoDB Connection established successfully.");
+            // 1. Cria um gerenciador de confiança que aceita o nosso certificado autoassinado
+            TrustManager[] trustAllCerts = new TrustManager[] {
+                new X509TrustManager() {
+                    public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) { }
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) { }
+                }
+            };
+
+            // 2. Inicializa o contexto SSL com esse gerenciador
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+
+            // 3. A String de Conexão (não precisa mais do tlsAllowInvalidCertificates aqui, faremos no builder)
+            String uri = "";
+            ConnectionString connectionString = new ConnectionString(uri);
+
+            // 4. Configura o MongoClient com o contexto SSL tolerante
+            MongoClientSettings settings = MongoClientSettings.builder()
+                    .applyConnectionString(connectionString)
+                    .applyToSslSettings(builder -> builder
+                            .enabled(true)
+                            .invalidHostNameAllowed(true)
+                            .context(sslContext)) // Injeta a nossa regra de confiança aqui
+                    .build();
+
+            // 5. Inicializa a conexão
+            this.mongoClient = MongoClients.create(settings);
+            
+            System.out.println("Conexao segura (TLS) com o MongoDB estabelecida com sucesso!");
+
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Failed to initialize MongoDB Connection", e);
+            System.err.println("Erro ao inicializar conexao segura com o MongoDB: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -43,15 +68,14 @@ public class MongoConnectionManager {
     }
 
     public String getDatabaseName() {
-        return dbName;
+        return databaseName;
     }
 
     @PreDestroy
     public void cleanup() {
         if (mongoClient != null) {
-            LOGGER.info("Closing MongoDB Connection...");
             mongoClient.close();
-            LOGGER.info("MongoDB Connection closed.");
+            System.out.println("Conexão com o MongoDB encerrada.");
         }
     }
 }

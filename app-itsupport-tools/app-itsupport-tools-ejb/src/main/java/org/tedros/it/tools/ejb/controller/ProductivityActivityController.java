@@ -57,8 +57,7 @@ public class ProductivityActivityController extends TSecureEjbController<Product
 
 	public TResult<ProductivityActivityDTO> saveActivity(TAccessToken token, List<ProductivityActivityDTO> activities) {
 		try {
-			for (ProductivityActivityDTO activity : activities)
-				repository.save(activity);
+			repository.saveAll(activities);
 			return new TResult<>(TState.SUCCESS);
 		} catch (Exception e) {
 			return super.processException(token, null, e);

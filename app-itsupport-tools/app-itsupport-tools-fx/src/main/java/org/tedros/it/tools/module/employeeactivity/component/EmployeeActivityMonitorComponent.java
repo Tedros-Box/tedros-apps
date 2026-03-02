@@ -1,8 +1,10 @@
-package org.tedros.it.tools.module.evidence.component;
+package org.tedros.it.tools.module.employeeactivity.component;
 
 import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -43,12 +45,13 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class ProductivityReportComponent extends VBox implements ITComponent {
+public class EmployeeActivityMonitorComponent extends VBox implements ITComponent {
 
     private ComboBox<Employee> employeeComboBox;
     private TDatePickerField startDatePicker;
@@ -57,9 +60,15 @@ public class ProductivityReportComponent extends VBox implements ITComponent {
     private TableView<ProductivityActivityDTO> resultsTable;
     private ObservableList<ProductivityActivityDTO> activityData = FXCollections.observableArrayList();
 
-    private StackedBarChart<String, Number> barChart;
-    private XYChart.Series<String, Number> activeSeries;
-    private XYChart.Series<String, Number> inactiveSeries;
+    // Gráfico de Janelas (Horizontal)
+    private StackedBarChart<Number, String> barChart;
+    private XYChart.Series<Number, String> activeSeries;
+    private XYChart.Series<Number, String> inactiveSeries;
+
+    // Novo Gráfico por Hora (Vertical)
+    private StackedBarChart<String, Number> hourlyChart;
+    private XYChart.Series<String, Number> hourlyActiveSeries;
+    private XYChart.Series<String, Number> hourlyInactiveSeries;
 
     @SuppressWarnings("rawtypes")
     private ITView view;
@@ -86,6 +95,7 @@ public class ProductivityReportComponent extends VBox implements ITComponent {
         rawDataService.setOnSucceeded(e -> {
             List<ProductivityActivityDTO> results = rawDataService.getValue();
             activityData.setAll(results);
+            populateHourlyChart(results);
             summaryService.startProcess();
         });
 
@@ -166,36 +176,60 @@ public class ProductivityReportComponent extends VBox implements ITComponent {
 
         resultsTable.getColumns().addAll(timestampCol, windowCol, mouseCol, keyboardCol);
 
-        // Build Chart (Right)
-        CategoryAxis xAxis = new CategoryAxis();
-        xAxis.setLabel(lang.getString(ItToolsKey.WINDOW_TITLE));
+        // Build Chart (Horizontal) - Resumo de Janelas
+        NumberAxis xAxis = new NumberAxis();
+        xAxis.setLabel(lang.getString(ItToolsKey.COUNT));
 
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel(lang.getString(ItToolsKey.COUNT));
+        CategoryAxis yAxis = new CategoryAxis();
+        yAxis.setLabel(lang.getString(ItToolsKey.WINDOW_TITLE));
 
         barChart = new StackedBarChart<>(xAxis, yAxis);
-        barChart.setTitle(lang.getString(ItToolsKey.ACTIVITY_SUMMARY));
+        barChart.setTitle(lang.getString(ItToolsKey.ACTIVITY_PER_ACTIVE_WINDOW));
         barChart.setAnimated(false); 
 
         activeSeries = new XYChart.Series<>();
-        activeSeries.setName(lang.getString(ItToolsKey.ACTIVITY));
+        activeSeries.setName(lang.getString(ItToolsKey.EMPLOYEE_ACTIVITY));
 
         inactiveSeries = new XYChart.Series<>();
-        inactiveSeries.setName(lang.getString(ItToolsKey.INACTIVITY));
+        inactiveSeries.setName(lang.getString(ItToolsKey.EMPLOYEE_INACTIVITY));
 
         barChart.getData().addAll(inactiveSeries, activeSeries);
 
+        // Build Hourly Chart (Vertical) - Novo Gráfico por Hora
+        CategoryAxis xAxisHourly = new CategoryAxis();
+        xAxisHourly.setLabel(lang.getString(ItToolsKey.HOUR));
+
+        NumberAxis yAxisHourly = new NumberAxis();
+        yAxisHourly.setLabel(lang.getString(ItToolsKey.COUNT));
+
+        hourlyChart = new StackedBarChart<>(xAxisHourly, yAxisHourly);
+        hourlyChart.setTitle(lang.getString(ItToolsKey.ACTIVITY_PER_HOUR));
+        hourlyChart.setAnimated(false);
+
+        hourlyActiveSeries = new XYChart.Series<>();
+        hourlyActiveSeries.setName(lang.getString(ItToolsKey.EMPLOYEE_ACTIVITY));
+
+        hourlyInactiveSeries = new XYChart.Series<>();
+        hourlyInactiveSeries.setName(lang.getString(ItToolsKey.EMPLOYEE_INACTIVITY));
+
+        hourlyChart.getData().addAll(hourlyInactiveSeries, hourlyActiveSeries);
+
+        // Montando as Abas
         TabPane tabPane = new TabPane();
         
         Tab resultsTab = new Tab(lang.getString(TUsualKey.RESULT), resultsTable);
         resultsTab.setClosable(false);
         
-        Tab summaryTab = new Tab(lang.getString(TUsualKey.SUMMARY), barChart);
-        summaryTab.setClosable(false);
+        Tab perActivityTab = new Tab(lang.getString(ItToolsKey.PER_ACTIVE_WINDOW), barChart);
+        perActivityTab.setClosable(false);
+
+        Tab perHourTab = new Tab(lang.getString(ItToolsKey.PER_HOUR), hourlyChart);
+        perHourTab.setClosable(false);
 
         tabPane.getTabs().addAll(
         		resultsTab,
-        		summaryTab);
+        		perActivityTab,
+                perHourTab);
 
         VBox.setVgrow(tabPane, Priority.ALWAYS);
 
@@ -207,6 +241,7 @@ public class ProductivityReportComponent extends VBox implements ITComponent {
         employeeService.setOnSucceeded(e -> {
             List<Employee> employees = employeeService.getValue();
             if (employees != null) {
+            	employees.sort((a, b) -> a.toString().compareToIgnoreCase(b.toString()));
                 employeeComboBox.getItems().setAll(employees);
             }
         });
@@ -227,24 +262,149 @@ public class ProductivityReportComponent extends VBox implements ITComponent {
 
         Long userId = emp.getTedrosUserId();
 
+        // Limpa os dados de todos os gráficos
         activityData.clear();
         inactiveSeries.getData().clear();
         activeSeries.getData().clear();
+        hourlyActiveSeries.getData().clear();
+        hourlyInactiveSeries.getData().clear();
 
         rawDataService.setParameters(userId, start, end);
         summaryService.setParameters(userId, start, end);
         rawDataService.startProcess();
     }
 
-    private void populateChart(List<ActivitySummaryDTO> summary) {
-        for (ActivitySummaryDTO dto : summary) {
-            String title = dto.windowTitle() != null ? dto.windowTitle() : "Unknown";
-            // Trim long titles for the chart axis
-            if (title.length() > 30) {
-                title = title.substring(0, 30) + "...";
+    // Método para processar o gráfico de horas baseado na lista bruta
+    private void populateHourlyChart(List<ProductivityActivityDTO> rawData) {
+        if (rawData == null || rawData.isEmpty()) return;
+
+        // Arrays para armazenar a contagem de cada uma das 24 horas (0-23)
+        long[] activeCount = new long[24];
+        long[] inactiveCount = new long[24];
+
+        for (ProductivityActivityDTO dto : rawData) {
+            if (dto.getTimestamp() != null) {
+                int hour = dto.getTimestamp().getHour();
+                long mouse = dto.getMouseEventCount();
+                long keyboard = dto.getKeyboardEventCount();
+
+                // Se houver qualquer evento de teclado ou mouse, conta como registro ativo
+                if (mouse > 0 || keyboard > 0) {
+                    activeCount[hour]++;
+                } else {
+                    inactiveCount[hour]++;
+                }
             }
-            activeSeries.getData().add(new XYChart.Data<>(title, dto.activeCount()));
-            inactiveSeries.getData().add(new XYChart.Data<>(title, dto.inactiveCount()));
+        }
+
+        List<XYChart.Data<String, Number>> activeList = new ArrayList<>();
+        List<XYChart.Data<String, Number>> inactiveList = new ArrayList<>();
+
+        for (int i = 0; i < 24; i++) {
+            String hourLabel = String.format("%02dh", i);
+            activeList.add(new XYChart.Data<>(hourLabel, activeCount[i]));
+            inactiveList.add(new XYChart.Data<>(hourLabel, inactiveCount[i]));
+        }
+
+        TLanguage lang = TLanguage.getInstance();
+        setupHourlyTooltip(activeList, lang.getString(ItToolsKey.EMPLOYEE_ACTIVITY));
+        setupHourlyTooltip(inactiveList, lang.getString(ItToolsKey.EMPLOYEE_INACTIVITY));
+
+        hourlyActiveSeries.getData().addAll(activeList);
+        hourlyInactiveSeries.getData().addAll(inactiveList);
+    }
+
+    private void setupHourlyTooltip(List<XYChart.Data<String, Number>> dataList, String typeLabel) {
+        for (XYChart.Data<String, Number> data : dataList) {
+            data.nodeProperty().addListener((observable, oldNode, newNode) -> {
+                if (newNode != null) {
+                    String tooltipText = String.format("%s: %s%n%s: %s", TLanguage.getInstance().getString(ItToolsKey.HOUR), 
+                    		data.getXValue(), typeLabel, data.getYValue());
+                    Tooltip tooltip = new Tooltip(tooltipText);
+                    Tooltip.install(newNode, tooltip);
+                }
+            });
+        }
+    }
+
+    private void populateChart(List<ActivitySummaryDTO> summary) {
+        if (summary == null || summary.isEmpty()) return;
+
+        List<ActivitySummaryDTO> sortedSummary = new ArrayList<>(summary);
+        sortedSummary.sort((a, b) -> {
+            long totalA = (a.activeCount()) + (a.inactiveCount());
+            long totalB = (b.activeCount()) + (b.inactiveCount());
+            return Long.compare(totalB, totalA);
+        });
+
+        int limit = 15; 
+        long otherActiveCount = 0;
+        long otherInactiveCount = 0;
+        boolean hasOthers = false;
+
+        List<XYChart.Data<Number, String>> activeDataList = new ArrayList<>();
+        List<XYChart.Data<Number, String>> inactiveDataList = new ArrayList<>();
+
+        for (int i = 0; i < sortedSummary.size(); i++) {
+            ActivitySummaryDTO dto = sortedSummary.get(i);
+            long active = dto.activeCount();
+            long inactive = dto.inactiveCount();
+            String fullTitle = dto.windowTitle() != null ? dto.windowTitle() : "Unknown";
+
+            if (i < limit) {
+                String displayTitle = fullTitle;
+                if (displayTitle.length() > 40) { 
+                    displayTitle = displayTitle.substring(0, 40) + "...";
+                }
+                
+                XYChart.Data<Number, String> activeData = new XYChart.Data<>(active, displayTitle);
+                activeData.setExtraValue(fullTitle); 
+                activeDataList.add(activeData);
+
+                XYChart.Data<Number, String> inactiveData = new XYChart.Data<>(inactive, displayTitle);
+                inactiveData.setExtraValue(fullTitle); 
+                inactiveDataList.add(inactiveData);
+            } else {
+                hasOthers = true;
+                otherActiveCount += active;
+                otherInactiveCount += inactive;
+            }
+        }
+
+        if (hasOthers) {
+            String othersTitle = TLanguage.getInstance().getString(ItToolsKey.OTHER_WINDOWS);
+            
+            XYChart.Data<Number, String> activeData = new XYChart.Data<>(otherActiveCount, othersTitle);
+            activeData.setExtraValue(othersTitle);
+            activeDataList.add(activeData);
+
+            XYChart.Data<Number, String> inactiveData = new XYChart.Data<>(otherInactiveCount, othersTitle);
+            inactiveData.setExtraValue(othersTitle);
+            inactiveDataList.add(inactiveData);
+        }
+
+        Collections.reverse(activeDataList);
+        Collections.reverse(inactiveDataList);
+
+        TLanguage lang = TLanguage.getInstance();
+        setupTooltip(activeDataList, lang.getString(ItToolsKey.EMPLOYEE_ACTIVITY));
+        setupTooltip(inactiveDataList, lang.getString(ItToolsKey.EMPLOYEE_INACTIVITY));
+
+        activeSeries.getData().addAll(activeDataList);
+        inactiveSeries.getData().addAll(inactiveDataList);
+    }
+
+    private void setupTooltip(List<XYChart.Data<Number, String>> dataList, String typeLabel) {
+        for (XYChart.Data<Number, String> data : dataList) {
+            data.nodeProperty().addListener((observable, oldNode, newNode) -> {
+                if (newNode != null) {
+                    String fullTitle = data.getExtraValue() != null ? data.getExtraValue().toString() : data.getYValue();
+                    String tooltipText = String.format("%s\n%s: %s", fullTitle, typeLabel, data.getXValue());
+                    
+                    Tooltip tooltip = new Tooltip(tooltipText);
+                    Tooltip.install(newNode, tooltip);
+                }
+            });
         }
     }
 
@@ -275,7 +435,6 @@ public class ProductivityReportComponent extends VBox implements ITComponent {
 
     @Override
     public void tStopComponent() {
-        // Stop background processes if necessary
     	if (rawDataService.isRunning()) {
     		rawDataService.cancel();
     	}
