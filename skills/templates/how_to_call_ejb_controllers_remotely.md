@@ -1,4 +1,5 @@
-## Examples of how to call ejb controllers remotely
+# Examples of how to call ejb controllers remotely
+
 
 ### List all users
 
