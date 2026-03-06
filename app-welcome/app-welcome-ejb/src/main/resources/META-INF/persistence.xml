@@ -1,0 +1,40 @@
+<persistence 	xmlns="http://java.sun.com/xml/ns/persistence" 
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+				xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" 
+				version="2.0">
+	<persistence-unit name="tedros_core_pu">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>tedrosDataSource</jta-data-source>
+		
+		<!-- Core entities required by Tedros architecture -->
+		<class>org.tedros.core.notify.model.TNotify</class>
+		<class>org.tedros.core.notify.model.TNotifyLog</class>
+		<class>org.tedros.common.model.TFileEntity</class>
+		<class>org.tedros.common.model.TBarcode</class>
+		<class>org.tedros.common.model.TByteEntity</class>
+		
+		<!-- Extension/Person/Stock entities are explicitly included in Tedros persistences -->
+		<class>org.tedros.extension.model.Contact</class>
+		<class>org.tedros.extension.model.Document</class>
+		<class>org.tedros.person.model.Person</class>
+		<!-- Other framework mandatory entities omitted for brevity but should mirror reference -->
+		
+		<!-- TODO: Add app-welcome specific entity classes here -->
+		<!-- <class>org.tedros.welcome.entity.MyEntity</class> -->
+		
+		<properties>
+		  <property name="jakarta.persistence.retrieveMode" value="BYPASS"/>
+	      <property name="jakarta.persistence.storeMode" value="BYPASS"/>
+	      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+	      <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+	      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+	      <property name="eclipselink.logging.level" value="OFF"/>
+          <property name="eclipselink.logging.exceptions" value="true"/>
+          <property name="eclipselink.logging.timestamp" value="true"/>
+          <property name="eclipselink.logging.thread" value="false"/>
+          <property name="eclipselink.logging.session" value="false"/>
+          <property name="eclipselink.logging.level.sql" value="OFF"/>
+          <property name="eclipselink.logging.parameters" value="true"/>
+	    </properties>
+	</persistence-unit> 
+</persistence>
