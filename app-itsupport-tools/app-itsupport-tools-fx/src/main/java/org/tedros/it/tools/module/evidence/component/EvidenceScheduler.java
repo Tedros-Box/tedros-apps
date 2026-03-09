@@ -197,12 +197,7 @@ public class EvidenceScheduler implements NativeKeyListener {
 		stopMonitoring();
 		listeners.clear();
 		targetApplications.clear();
-		scheduler = null;
-		try {
-			GlobalScreen.unregisterNativeHook();
-		} catch (NativeHookException e) {
-			TLoggerUtil.error(EvidenceScheduler.class, "Error unregistering native hook", e);
-		}
+		scheduler = null;		
 	}
 
     public int getCheckIntervalSeconds() {
