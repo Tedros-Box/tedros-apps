@@ -3,15 +3,14 @@ package org.tedros.it.tools.ejb.mongo;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.tedros.it.tools.model.ProductivityActivityDTO;
-
-import java.util.Arrays;
 import org.tedros.it.tools.model.ActivitySummaryDTO;
+import org.tedros.it.tools.model.ProductivityActivityDTO;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Accumulators;

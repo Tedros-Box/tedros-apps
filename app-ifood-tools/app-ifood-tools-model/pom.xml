@@ -27,12 +27,6 @@
 
 		<dependency>
 			<groupId>org.tedros</groupId>
-			<artifactId>app-services-model</artifactId>
-			<version>${app.services}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.tedros</groupId>
 			<artifactId>app-stock-model</artifactId>
 			<version>${app.stock}</version>
 		</dependency>

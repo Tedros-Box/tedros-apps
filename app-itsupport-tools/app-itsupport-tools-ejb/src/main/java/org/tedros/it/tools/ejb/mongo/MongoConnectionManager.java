@@ -6,6 +6,11 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.commons.lang3.StringUtils;
+import org.tedros.core.domain.TSystemPropertie;
+import org.tedros.core.support.TPropertieSupport;
+import org.tedros.server.service.TServiceLocator;
+
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
@@ -21,11 +26,20 @@ public class MongoConnectionManager {
     private MongoClient mongoClient;
     
     // Nome do seu banco de dados
-    private final String databaseName = "itsupport";
+    private static final String DATABASE_NAME = "itsupport";
 
     @PostConstruct
     public void init() {
-        try {
+    	
+    	try(TServiceLocator serv = TServiceLocator.getInstance()) {
+            
+    		TPropertieSupport support = serv.lookupWithRetry(TPropertieSupport.JNDI_NAME);
+    		String uri = support.getValue(TSystemPropertie.MONGODB_URI.getValue());
+        	
+        	if(StringUtils.isBlank(uri)) {
+        		throw new RuntimeException("MongoDB URI property not found in database. Please set the property " + TSystemPropertie.MONGODB_URI.getValue());
+        	}
+        	
             // 1. Cria um gerenciador de confiança que aceita o nosso certificado autoassinado
             TrustManager[] trustAllCerts = new TrustManager[] {
                 new X509TrustManager() {
@@ -38,9 +52,10 @@ public class MongoConnectionManager {
             // 2. Inicializa o contexto SSL com esse gerenciador
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-
+            
             // 3. A String de Conexão (não precisa mais do tlsAllowInvalidCertificates aqui, faremos no builder)
-            String uri = "";
+            uri += "/"+DATABASE_NAME+"?authSource="+DATABASE_NAME;            
+            
             ConnectionString connectionString = new ConnectionString(uri);
 
             // 4. Configura o MongoClient com o contexto SSL tolerante
@@ -68,7 +83,7 @@ public class MongoConnectionManager {
     }
 
     public String getDatabaseName() {
-        return databaseName;
+        return DATABASE_NAME;
     }
 
     @PreDestroy

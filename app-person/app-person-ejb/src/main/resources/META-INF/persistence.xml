@@ -58,27 +58,35 @@
 		<class>org.tedros.person.model.NaturalType</class>
 		<class>org.tedros.person.model.NaturalStatus</class>
 		
-		<properties>
+	    <properties>
+
+		    <property name="jakarta.persistence.retrieveMode" value="BYPASS"/>
+		    <property name="jakarta.persistence.storeMode" value="BYPASS"/>
+		    <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+		    
+		    <!-- drop-and-create-tables || create-or-extend-tables -->
+		    <property name="eclipselink.ddl-generation" value="create-tables"/>
+		    <property name="eclipselink.ddl-generation.output-mode" value="database"/>
 		
-		  <property name="jakarta.persistence.retrieveMode" value="BYPASS"/>
-	      <property name="jakarta.persistence.storeMode" value="BYPASS"/>
-	      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
-	      <!-- drop-and-create-tables || create-or-extend-tables -->
-	      <property name="eclipselink.ddl-generation" value="create-tables"/> 
-	      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
-	      <property name="eclipselink.logging.level" value="OFF"/>
-          <property name="eclipselink.logging.exceptions" value="true"/>
-          <property name="eclipselink.logging.timestamp" value="false"/>
-          <property name="eclipselink.logging.thread" value="false"/>
-          <property name="eclipselink.logging.session" value="false"/>
-          <property name="eclipselink.logging.level.sql" value="OFF"/>
-           <property name="eclipselink.logging.parameters" value="true"/>
-          
-         <!--  <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
-          <property name="jakarta.persistence.schema-generation.create-source" value="metadata"/> 
-          <property name="jakarta.persistence.schema-generation.drop-source" value="metadata"/> 
-          <property name="jakarta.persistence.sql-load-script-source" value="init.sql"/>  -->
-	    </properties>
+		    <!-- ================== LOGGING ================== -->
+		    <!-- Só erros graves + exceções -->
+		    <property name="eclipselink.logging.level" value="SEVERE"/>
+		    
+		    <!-- Mostra as queries SQL executadas (com parâmetros) -->
+		    <property name="eclipselink.logging.level.sql" value="FINE"/>
+		    
+		    <!-- Garante que exceções sempre apareçam -->
+		    <property name="eclipselink.logging.exceptions" value="true"/>
+		    
+		    <!-- Mostra os valores dos parâmetros nas queries -->
+		    <property name="eclipselink.logging.parameters" value="true"/>
+		    
+		    <!-- Formatação do log (opcional, mas útil) -->
+		    <property name="eclipselink.logging.timestamp" value="true"/>
+		    <property name="eclipselink.logging.thread" value="false"/>
+		    <property name="eclipselink.logging.session" value="false"/>
+		
+		</properties>
 		
       </persistence-unit> 
 	

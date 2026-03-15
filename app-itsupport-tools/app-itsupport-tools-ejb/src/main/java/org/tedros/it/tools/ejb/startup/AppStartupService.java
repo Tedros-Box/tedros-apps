@@ -17,7 +17,7 @@ import jakarta.enterprise.concurrent.ManagedExecutorService;
 @Startup
 @Singleton
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-public class RedmineStartService {
+public class AppStartupService {
 
     @Resource
     private ManagedExecutorService executor; // pool de threads do TomEE
