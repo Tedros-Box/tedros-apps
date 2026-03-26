@@ -54,6 +54,8 @@ files = {
     <ejb.plugin>3.2.1</ejb.plugin>
     <resource.plugin>3.3.1</resource.plugin>
     <ear.plugin>3.3.0</ear.plugin>
+    <!-- Define the folder path for Docker deployment -->
+    <docker.app.folder>D:\GitHub\Tedros-Box\Tedros\init\docker\deployment_app</docker.app.folder>
   </properties>
   <!-- DEVELOPERS -->
   <developers>
@@ -260,36 +262,101 @@ files = {
 		<class>org.tedros.common.model.TBarcode</class>
 		<class>org.tedros.common.model.TByteEntity</class>
 		
-		<!-- Extension/Person/Stock entities are explicitly included in Tedros persistences -->
 		<class>org.tedros.extension.model.Contact</class>
 		<class>org.tedros.extension.model.Document</class>
+		<class>org.tedros.extension.model.DocumentEvent</class>
+		<class>org.tedros.extension.model.DocumentStatus</class>
+		<class>org.tedros.extension.model.DocumentType</class>
+		<class>org.tedros.extension.model.ExtensionDomain</class>
+		
+		<class>org.tedros.extension.model.Country</class>
+		<class>org.tedros.extension.model.City</class>
+		<class>org.tedros.extension.model.AdminArea</class>
+		<class>org.tedros.extension.model.Place</class>
+		<class>org.tedros.extension.model.Address</class>
+		<class>org.tedros.extension.model.StreetType</class>
+		<class>org.tedros.extension.model.PlaceType</class>
+		
 		<class>org.tedros.person.model.Person</class>
-		<!-- Other framework mandatory entities omitted for brevity but should mirror reference -->
+		<class>org.tedros.person.model.NaturalPerson</class>
+		<class>org.tedros.person.model.LegalPerson</class>
+		<class>org.tedros.person.model.CostCenter</class>
+		<class>org.tedros.person.model.Employee</class>
+		<class>org.tedros.person.model.Customer</class>
+		<class>org.tedros.person.model.LegalType</class>
+		<class>org.tedros.person.model.PersonAttributes</class>
+		<class>org.tedros.person.model.PersonEvent</class>
+		<class>org.tedros.person.model.ClientCompany</class>
+		<class>org.tedros.person.model.ClientCompanyStatus</class>
+		<class>org.tedros.person.model.ClientCompanyType</class>
+		<class>org.tedros.person.model.CustomerStatus</class>
+		<class>org.tedros.person.model.CustomerType</class>
+		<class>org.tedros.person.model.EmployeeStatus</class>
+		<class>org.tedros.person.model.LegalStatus</class>
+		<class>org.tedros.person.model.Member</class>
+		<class>org.tedros.person.model.MemberStatus</class>
+		<class>org.tedros.person.model.MemberType</class>
+		<class>org.tedros.person.model.PersonCategory</class>
+		<class>org.tedros.person.model.PersonStatus</class>
+		<class>org.tedros.person.model.PersonType</class>
+		<class>org.tedros.person.model.Philanthrope</class>
+		<class>org.tedros.person.model.PhilanthropeStatus</class>
+		<class>org.tedros.person.model.PhilanthropeType</class>
+		<class>org.tedros.person.model.StaffType</class>
+		<class>org.tedros.person.model.Voluntary</class>
+		<class>org.tedros.person.model.VoluntaryStatus</class>
+		<class>org.tedros.person.model.VoluntaryType</class>
+		<class>org.tedros.person.model.NaturalType</class>
+		<class>org.tedros.person.model.NaturalStatus</class> 
 		
-		<!-- TODO: Add {APP_NAME} specific entity classes here -->
-		<!-- <class>org.tedros.{APP_PACKAGE}.entity.MyEntity</class> -->
+		<class>org.tedros.it.tools.entity.JobEvidence</class>
+		<class>org.tedros.it.tools.entity.JobEvidenceItem</class>
+		<class>org.tedros.it.tools.entity.Gmud</class>
+		<class>org.tedros.it.tools.entity.GmudItem</class>
+		<class>org.tedros.it.tools.entity.GmudReview</class>
+		<class>org.tedros.it.tools.entity.GmudIssueReference</class>
 		
-		<properties>
-		  <property name="jakarta.persistence.retrieveMode" value="BYPASS"/>
-	      <property name="jakarta.persistence.storeMode" value="BYPASS"/>
-	      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
-	      <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
-	      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
-	      <property name="eclipselink.logging.level" value="OFF"/>
-          <property name="eclipselink.logging.exceptions" value="true"/>
-          <property name="eclipselink.logging.timestamp" value="true"/>
-          <property name="eclipselink.logging.thread" value="false"/>
-          <property name="eclipselink.logging.session" value="false"/>
-          <property name="eclipselink.logging.level.sql" value="OFF"/>
-          <property name="eclipselink.logging.parameters" value="true"/>
-	    </properties>
+	    <properties>
+
+		    <property name="jakarta.persistence.retrieveMode" value="BYPASS"/>
+		    <property name="jakarta.persistence.storeMode" value="BYPASS"/>
+		    <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+		    
+		    <!-- drop-and-create-tables || create-or-extend-tables -->
+		    <property name="eclipselink.ddl-generation" value="create-tables"/>
+		    <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+		
+		    <!-- ================== LOGGING ================== -->
+		    <!-- Só erros graves + exceções -->
+		    <property name="eclipselink.logging.level" value="SEVERE"/>
+		    
+		    <!-- Mostra as queries SQL executadas (com parâmetros) -->
+		    <property name="eclipselink.logging.level.sql" value="FINE"/>
+		    
+		    <!-- Garante que exceções sempre apareçam -->
+		    <property name="eclipselink.logging.exceptions" value="true"/>
+		    
+		    <!-- Mostra os valores dos parâmetros nas queries -->
+		    <property name="eclipselink.logging.parameters" value="true"/>
+		    
+		    <!-- Formatação do log (opcional, mas útil) -->
+		    <property name="eclipselink.logging.timestamp" value="true"/>
+		    <property name="eclipselink.logging.thread" value="false"/>
+		    <property name="eclipselink.logging.session" value="false"/>
+		
+		</properties>
 	</persistence-unit> 
 </persistence>""",
     "{APP_NAME}-ejb/src/main/resources/META-INF/ejb-jar.xml": """<?xml version="1.0" encoding="UTF-8"?>
 <ejb-jar xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd" version="3.1">
  
 </ejb-jar>""",
-    "{APP_NAME}-ejb/src/main/resources/META-INF/beans.xml": """<beans>
+    "{APP_NAME}-ejb/src/main/resources/META-INF/beans.xml": """<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd"
+       version="4.0"
+       bean-discovery-mode="all">
 	<interceptors>
     	<class>org.tedros.server.interceptor.TSecurityInterceptor</class>
   	</interceptors>
@@ -411,7 +478,33 @@ remote.connection.default.password=s221978""",
 	</dependencies>
 	<!-- BUILD -->
 	<build>
-		<plugins>
+		<finalName>${project.artifactId}</finalName>	
+	    <plugins>
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-resources-plugin</artifactId>
+	            <version>3.3.1</version>
+	            <executions>
+	                <execution>
+	                    <id>copy-ear-to-docker</id>
+	                    <phase>package</phase>
+	                    <goals>
+	                        <goal>copy-resources</goal>
+	                    </goals>
+	                    <configuration>
+	                        <outputDirectory>${docker.app.folder}</outputDirectory>
+	                        <resources>
+	                            <resource>
+	                                <directory>${project.build.directory}</directory>
+	                                <includes>
+	                                    <include>${project.artifactId}.ear</include>
+	                                </includes>
+	                            </resource>
+	                        </resources>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ear-plugin</artifactId>
