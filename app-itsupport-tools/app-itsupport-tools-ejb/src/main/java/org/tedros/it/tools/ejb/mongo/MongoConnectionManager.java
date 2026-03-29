@@ -23,11 +23,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class MongoConnectionManager {
 
+	private static final String DATABASE_NAME = "itsupport";
+	
     private MongoClient mongoClient;
     
-    // Nome do seu banco de dados
-    private static final String DATABASE_NAME = "itsupport";
-
     @PostConstruct
     public void init() {
     	
@@ -53,27 +52,36 @@ public class MongoConnectionManager {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
             
-            // 3. A String de Conexão (não precisa mais do tlsAllowInvalidCertificates aqui, faremos no builder)
-            uri += "/"+DATABASE_NAME+"?authSource="+DATABASE_NAME;            
+            // 3. A String de Conexão 
+            uri += "/" + DATABASE_NAME + "?authSource=" + DATABASE_NAME;            
             
             ConnectionString connectionString = new ConnectionString(uri);
 
-            // 4. Configura o MongoClient com o contexto SSL tolerante
-            MongoClientSettings settings = MongoClientSettings.builder()
-                    .applyConnectionString(connectionString)
-                    .applyToSslSettings(builder -> builder
-                            .enabled(true)
-                            .invalidHostNameAllowed(true)
-                            .context(sslContext)) // Injeta a nossa regra de confiança aqui
-                    .build();
+            // 4. Configura o MongoClient 
+            MongoClientSettings.Builder settingsBuilder = MongoClientSettings.builder()
+                    .applyConnectionString(connectionString);
+            
+            // Verifica se a string requer TLS 
+            boolean requiresTls = uri.contains("tls=true") || uri.startsWith("mongodb+srv://");
+
+            if (requiresTls) {
+                // Configura o MongoClient com o contexto SSL tolerante
+                settingsBuilder.applyToSslSettings(builder -> builder
+                        .enabled(true)
+                        .invalidHostNameAllowed(true)
+                        .context(sslContext));
+                System.out.println("Configurando MongoClient com suporte a TLS autoassinado...");
+            } else {
+            	System.out.println("Configurando MongoClient SEM suporte a TLS...");
+            }
 
             // 5. Inicializa a conexão
-            this.mongoClient = MongoClients.create(settings);
+            this.mongoClient = MongoClients.create(settingsBuilder.build());
             
-            System.out.println("Conexao segura (TLS) com o MongoDB estabelecida com sucesso!");
+            System.out.println("Conexao com o MongoDB estabelecida com sucesso!");
 
         } catch (Exception e) {
-            System.err.println("Erro ao inicializar conexao segura com o MongoDB: " + e.getMessage());
+            System.err.println("Erro ao inicializar conexao com o MongoDB: " + e.getMessage());
             e.printStackTrace();
         }
     }
