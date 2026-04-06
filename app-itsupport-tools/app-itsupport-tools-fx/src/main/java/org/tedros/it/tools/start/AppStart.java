@@ -12,6 +12,7 @@ import org.tedros.it.tools.module.employeeactivity.MonitorEmployeeActivityModule
 import org.tedros.it.tools.module.employeeactivity.component.EmployeeActivityTrackerService;
 import org.tedros.it.tools.module.evidence.JobEvidenceModule;
 import org.tedros.it.tools.module.gmud.GmudModule;
+import org.tedros.it.tools.module.governance.GovernanceModule;
 import org.tedros.it.tools.module.redmine.RedmineModule;
 import org.tedros.it.tools.resource.AppResource;
 
@@ -45,7 +46,13 @@ import org.tedros.it.tools.resource.AppResource;
 			menu=ItToolsKey.MENU_ITSUPPORT, 
 			description=ItToolsKey.MODULE_ITSUPPORT_EMPLOYEE_ACTIVITY_DESC,
 			icon=TConstant.ICONS_FOLDER+"monitoring_user_activity.png", 
-			menuIcon=TConstant.ICONS_FOLDER+"monitoring_user_activity_menu.png")
+			menuIcon=TConstant.ICONS_FOLDER+"monitoring_user_activity_menu.png"),
+		@TModule(type=GovernanceModule.class,
+			name=ItToolsKey.MODULE_GOVERNANCE,
+			menu=ItToolsKey.MENU_GOVERNANCE,
+			description=ItToolsKey.MODULE_GOVERNANCE_DESC/*,
+			icon=TConstant.ICONS_FOLDER+"service_catalog.png",
+			menuIcon=TConstant.ICONS_FOLDER+"service_catalog_menu.png"*/)
 	}, packageName = "org.tedros.it.tools", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"ittools"})

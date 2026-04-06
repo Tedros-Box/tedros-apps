@@ -1,0 +1,75 @@
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="subrep_attributes" language="java" pageWidth="595" pageHeight="802" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="191ec7ab-7ce8-4bd4-b3c5-cb79712e2f2b" ignorePagination="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" forPrompting="false" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Desenv\\Projetos\\CovidSemFome\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hName" class="java.lang.String"/>
+	<parameter name="hNumber" class="java.lang.String"/>
+	<parameter name="hVariantId" class="java.lang.String"/>
+	<parameter name="hComplexity" class="java.lang.String"/>
+	<parameter name="hScope" class="java.lang.String"/>
+	<parameter name="hEstimatedHours" class="java.lang.String"/>
+	<parameter name="hDeliverables" class="java.lang.String"/>
+	<parameter name="hRequiredProfiles" class="java.lang.String"/>
+	<parameter name="hActivitiesPerformed" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="services" class="java.util.List"/>
+	<background splitType="Stretch"/>
+	<title splitType="Stretch"/>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader splitType="Stretch"/>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<element kind="textField" uuid="d9a0cba1-209e-4a70-8680-c903c635990c" mode="Transparent" x="0" y="0" width="595" height="20" forecolor="#000000" backcolor="#FFFFCC" rotation="None" markup="none" fontName="SansSerif" fontSize="10.0" pdfEncoding="Cp1252" pattern="" blankWhenNull="false" pdfEmbedded="false" underline="false" bold="true" italic="false" strikeThrough="false" hTextAlign="Center" vTextAlign="Middle">
+				<paragraph lineSpacing="Single"/>
+				<expression><![CDATA[$F{name}]]></expression>
+			</element>
+			<element kind="line" uuid="f9eac50e-694c-4200-a036-8bb15793d7d6" x="0" y="0" width="555" height="1" forecolor="#CCCCCC">
+				<pen lineStyle="Dashed"/>
+			</element>
+		</band>
+		<band height="19" splitType="Stretch">
+			<printWhenExpression><![CDATA[]]></printWhenExpression>
+			<element kind="subreport" uuid="ce1ad606-90e1-4d32-a9e8-e06422643b0f" stretchType="ContainerHeight" x="0" y="0" width="595" height="19" backcolor="#CCCCCC" runToBottom="false" usingCache="false" removeLineWhenBlank="true" printWhenDetailOverflows="true">
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{services})]]></dataSourceExpression>
+				<expression><![CDATA[$P{SUBREPORT_DIR}+"subrep_services.jasper"]]></expression>
+				<parameter name="SUBREPORT_DIR">
+					<expression><![CDATA[$P{SUBREPORT_DIR}]]></expression>
+				</parameter>
+				<parameter name="hDeliverables">
+					<expression><![CDATA[$P{hDeliverables}]]></expression>
+				</parameter>
+				<parameter name="hNumber">
+					<expression><![CDATA[$P{hNumber}]]></expression>
+				</parameter>
+				<parameter name="hActivitiesPerformed">
+					<expression><![CDATA[$P{hActivitiesPerformed}]]></expression>
+				</parameter>
+				<parameter name="hScope">
+					<expression><![CDATA[$P{hScope}]]></expression>
+				</parameter>
+				<parameter name="hComplexity">
+					<expression><![CDATA[$P{hComplexity}]]></expression>
+				</parameter>
+				<parameter name="hRequiredProfiles">
+					<expression><![CDATA[$P{hRequiredProfiles}]]></expression>
+				</parameter>
+				<parameter name="hVariantId">
+					<expression><![CDATA[$P{hVariantId}]]></expression>
+				</parameter>
+				<parameter name="hName">
+					<expression><![CDATA[$P{hName}]]></expression>
+				</parameter>
+				<parameter name="hEstimatedHours">
+					<expression><![CDATA[$P{hEstimatedHours}]]></expression>
+				</parameter>
+			</element>
+		</band>
+	</detail>
+	<columnFooter splitType="Stretch"/>
+	<pageFooter splitType="Stretch"/>
+	<summary splitType="Stretch"/>
+</jasperReport>

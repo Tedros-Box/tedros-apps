@@ -67,6 +67,12 @@
 		<class>org.tedros.it.tools.entity.GmudItem</class>
 		<class>org.tedros.it.tools.entity.GmudReview</class>
 		<class>org.tedros.it.tools.entity.GmudIssueReference</class>
+
+		<!-- Service Catalog -->
+		<class>org.tedros.it.tools.entity.ServiceCatalog</class>
+		<class>org.tedros.it.tools.entity.ServiceGroup</class>
+		<class>org.tedros.it.tools.entity.CatalogService</class>
+		<class>org.tedros.it.tools.entity.ServiceVariant</class>
 		
 	    <properties>
 

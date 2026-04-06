@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subrep_attributes" pageWidth="595" pageHeight="802" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="191ec7ab-7ce8-4bd4-b3c5-cb79712e2f2b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Desenv\\Projetos\\CovidSemFome\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hName" class="java.lang.String"/>
+	<parameter name="hNumber" class="java.lang.String"/>
+	<parameter name="hVariantId" class="java.lang.String"/>
+	<parameter name="hComplexity" class="java.lang.String"/>
+	<parameter name="hScope" class="java.lang.String"/>
+	<parameter name="hEstimatedHours" class="java.lang.String"/>
+	<parameter name="hDeliverables" class="java.lang.String"/>
+	<parameter name="hRequiredProfiles" class="java.lang.String"/>
+	<parameter name="hActivitiesPerformed" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="number" class="java.lang.Integer"/>
+	<field name="variants" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="5e41c344-ecd1-41e7-88d4-82fa9672c4ad"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hNumber}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="100" y="0" width="495" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f0ff20ef-f500-4a27-acf7-4cef147e0d4e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" forecolor="#CCCCCC" uuid="f9eac50e-694c-4200-a036-8bb15793d7d6"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="100" y="0" width="495" height="20" uuid="18e8981a-8749-4e96-bd8b-1f99ebb4c1b3"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="ca30bb5a-4883-4818-ab32-4637f7837476"/>
+				<textFieldExpression><![CDATA[$F{number}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="19">
+			<printWhenExpression><![CDATA[]]></printWhenExpression>
+			<subreport isUsingCache="false" runToBottom="false">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="595" height="19" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" backcolor="#CCCCCC" uuid="ce1ad606-90e1-4d32-a9e8-e06422643b0f"/>
+				<subreportParameter name="hDeliverables">
+					<subreportParameterExpression><![CDATA[$P{hDeliverables}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hNumber">
+					<subreportParameterExpression><![CDATA[$P{hNumber}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hActivitiesPerformed">
+					<subreportParameterExpression><![CDATA[$P{hActivitiesPerformed}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hScope">
+					<subreportParameterExpression><![CDATA[$P{hScope}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hComplexity">
+					<subreportParameterExpression><![CDATA[$P{hComplexity}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hRequiredProfiles">
+					<subreportParameterExpression><![CDATA[$P{hRequiredProfiles}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hVariantId">
+					<subreportParameterExpression><![CDATA[$P{hVariantId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hName">
+					<subreportParameterExpression><![CDATA[$P{hName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hEstimatedHours">
+					<subreportParameterExpression><![CDATA[$P{hEstimatedHours}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{variants})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"subrep_variants.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

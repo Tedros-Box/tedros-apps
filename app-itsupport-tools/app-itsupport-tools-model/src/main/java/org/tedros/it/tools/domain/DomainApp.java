@@ -54,4 +54,19 @@ public interface DomainApp {
 	static final String REDMINE_TOOLS_MODULE_ID = MNEMONIC + SEP + REDMINE_TOOLS + SEP + MODULE;
 	static final String REDMINE_TOOLS_FORM_ID = MNEMONIC + SEP + REDMINE_TOOLS + SEP + FORM;
 
+	// ─── Governança ───────────────────────────────────────────────────────────
+	static final String GOVERNANCE = "GOVERNANCE";
+	static final String SERVICE_CATALOG = "SERVICE_CATALOG";
+	static final String SERVICE_REPORT = "SERVICE_REPORT";
+	static final String GOVERNANCE_MODULE_ID = MNEMONIC + SEP + GOVERNANCE + SEP + MODULE;
+	static final String GOVERNANCE_SERVICE_CATALOG_FORM_ID = MNEMONIC + SEP + GOVERNANCE + SEP + SERVICE_CATALOG + SEP + FORM;
+	static final String GOVERNANCE_SERVICE_REPORT_FORM_ID = MNEMONIC + SEP + GOVERNANCE + SEP + SERVICE_REPORT + SEP + FORM;
+
+	static final String CATALOG_SERVICE = "CATALOG_SERVICE";
+	static final String GOVERNANCE_CATALOG_SERVICE_FORM_ID = MNEMONIC + SEP + GOVERNANCE + SEP + CATALOG_SERVICE + SEP + FORM;	
+	
+
+	
+	
+
 }
