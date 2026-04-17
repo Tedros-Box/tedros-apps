@@ -7,15 +7,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.persistence.Query;
-
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.server.cdi.eao.TGenericEAO;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.entity.StockItem;
 import org.tedros.stock.model.Inventory;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.persistence.CacheRetrieveMode;
+import jakarta.persistence.CacheStoreMode;
+import jakarta.persistence.Query;
 
 /**
  * @author Davis Gordon
@@ -59,6 +61,9 @@ public class InventoryEAO extends TGenericEAO<StockItem> {
 		sb.append(" ").append(asc);
 		
 		Query qry = super.getEntityManager().createQuery(sb.toString());
+		// === BYPASS DO CACHE ===
+        qry.setHint("jakarta.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
+        qry.setHint("jakarta.persistence.cache.storeMode", CacheStoreMode.BYPASS); // opcional, mas recomendado
 
 		if(lp!=null)
 			qry.setParameter("lp", lp);

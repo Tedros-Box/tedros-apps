@@ -46,6 +46,13 @@ public class InventoryTimer {
 
 	@Schedule(minute = "50", hour = "5")
 	public void run() {
+		// ==================== NOVO CÓDIGO ====================
+        String serverId = System.getProperty("server.id");
+        if (!"tomee1".equals(serverId)) {
+            System.out.println("[InventoryTimer] Timer ignorado nesta instância (server.id = " + serverId + ")");
+            return;
+        }
+        // =====================================================
 		try {
 			List<CostCenter> lst = ccServ.listAll(CostCenter.class);
 			if (lst != null) {
@@ -90,7 +97,7 @@ public class InventoryTimer {
 															sb.append("Current amount in stock: ")
 																	.append(inv.getAmount());
 															try {
-																nServ.toQueue(email, "[Tedros] Inventory info",
+																nServ.toQueue(email, "[Tedros:"+serverId+"] Inventory info",
 																		sb.toString());
 															} catch (Exception e) {
 																e.printStackTrace();

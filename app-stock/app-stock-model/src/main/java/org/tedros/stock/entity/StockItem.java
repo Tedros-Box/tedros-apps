@@ -3,6 +3,7 @@
  */
 package org.tedros.stock.entity;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.stock_item, schema = DomainSchema.schema)
 @JsonClassDescription("Stock item with the amount of product")
 public class StockItem extends TEntity implements StockableItem {

@@ -27,8 +27,13 @@
 		
 	    <properties>
 
-		    <property name="jakarta.persistence.retrieveMode" value="BYPASS"/>
-		    <property name="jakarta.persistence.storeMode" value="BYPASS"/>
+		    <!-- Desabilita o shared cache (L2) do EclipseLink -->
+		    <property name="eclipselink.cache.shared.default" value="false"/>
+		
+		    <!-- (Opcional) Força bypass também nas queries -->
+		    <property name="jakarta.persistence.cache.retrieveMode" value="BYPASS"/>
+		    <property name="jakarta.persistence.cache.storeMode" value="BYPASS"/>
+		    
 		    <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
 		    
 		    <!-- drop-and-create-tables || create-or-extend-tables -->
