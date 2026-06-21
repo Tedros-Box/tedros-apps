@@ -1,0 +1,1886 @@
+{
+    "catalogo": {
+        "nome": "CATÁLOGO DE SERVIÇOS - v2.0",
+        "grupos": [
+            {
+                "nome": "Análise e Projeto",
+                "servicos": [
+                    {
+                        "numero": 1,
+                        "nome": "Concepção da Solução de TI",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por Projeto/Módulo de Solução de TI.",
+                                "horas_previstas": 24,
+                                "entregaveis": "Documento de Visão do projeto/módulo de Solução de TI, Atas de Reuniões (se aplicável).",
+                                "perfis_exigidos": "Analista de Sistemas Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com os usuários, esboço das possíveis soluções, elaboração de documentos de visão da solução de TI."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por Projeto/Módulo de Solução de TI.",
+                                "horas_previstas": 32,
+                                "entregaveis": "Documento de Visão do projeto/módulo de Solução de TI, Atas de Reuniões (se aplicável).",
+                                "perfis_exigidos": "Analista de Sistemas Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com os usuários, esboço das possíveis soluções, elaboração de documentos de visão da solução de TI."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por Projeto/Módulo de Solução de TI.",
+                                "horas_previstas": 40,
+                                "entregaveis": "Documento de Visão do projeto/módulo de Solução de TI, Atas de Reuniões (se aplicável).",
+                                "perfis_exigidos": "Analista de Sistemas Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com os usuários, esboço das possíveis soluções, elaboração de documentos de visão da solução de TI."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 2,
+                        "nome": "Planejamento do Projeto da Solução de TI",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "",
+                                "horas_previstas": 8,
+                                "entregaveis": "Planejamento do projeto, composto de atividades com estimativas e marcos. Estrutura Analítica do Projeto (EAP).",
+                                "perfis_exigidos": "Gerente de Projetos de TIC Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Definição do planejamento do projeto, incluindo a elaboração da EAP, definição dos principais marcos do projeto, detalhamento das atividades do projeto em termos de tarefas, estimativa de prazos e definição de responsáveis, construção do cronograma, planejamentos dos Sprints."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "",
+                                "horas_previstas": 12,
+                                "entregaveis": "Planejamento do projeto, composto de atividades com estimativas e marcos. Estrutura Analítica do Projeto (EAP).",
+                                "perfis_exigidos": "Gerente de Projetos de TIC Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Definição do planejamento do projeto, incluindo a elaboração da EAP, definição dos principais marcos do projeto, detalhamento das atividades do projeto em termos de tarefas, estimativa de prazos e definição de responsáveis, construção do cronograma, planejamentos dos Sprints."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Única",
+                                "escopo": "",
+                                "horas_previstas": 20,
+                                "entregaveis": "Planejamento do projeto, composto de atividades com estimativas e marcos. Estrutura Analítica do Projeto (EAP).",
+                                "perfis_exigidos": "Gerente de Projetos de TIC Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Definição do planejamento do projeto, incluindo a elaboração da EAP, definição dos principais marcos do projeto, detalhamento das atividades do projeto em termos de tarefas, estimativa de prazos e definição de responsáveis, construção do cronograma, planejamentos dos Sprints."
+                            },
+                            {
+                                "id": "d",
+                                "complexidade": "Única",
+                                "escopo": "",
+                                "horas_previstas": 32,
+                                "entregaveis": "Planejamento do projeto, composto de atividades com estimativas e marcos. Estrutura Analítica do Projeto (EAP).",
+                                "perfis_exigidos": "Gerente de Projetos de TIC Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Definição do planejamento do projeto, incluindo a elaboração da EAP, definição dos principais marcos do projeto, detalhamento das atividades do projeto em termos de tarefas, estimativa de prazos e definição de responsáveis, construção do cronograma, planejamentos dos Sprints."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 3,
+                        "nome": "Levantamento, Análise e Detalhamento de Requisitos / Especificação de Funcionalidade de Sistema",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por nova documentação de Requisitos / Especificação de Funcionalidade de Sistema.",
+                                "horas_previstas": 14,
+                                "entregaveis": "Documentação de Requisitos/Especificação de Funcionalidade de Sistema.",
+                                "perfis_exigidos": "Analista de Sistemas Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com os usuários, definição dos atores, detalhamento de fluxos (principal, alternativos, exceções), detalhamento de regras de negócio."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por reanálise e revisão completa em documentação de Requisitos / Especificação de Funcionalidade de Sistema existente.",
+                                "horas_previstas": 8,
+                                "entregaveis": "Documentação de Requisitos/Especificação de Funcionalidade de Sistema reanalisada, revisada e alterada.",
+                                "perfis_exigidos": "Analista de Sistemas Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com os usuários, estudando/uso dos Documentos de Requisitos Existentes, validações e/ou alterações nas regras de negócio levantadas, atualização das demais documentações relacionadas."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Única",
+                                "escopo": "Por necessidade de alterações ou correções parciais em documentação de Requisitos / Especificação de Funcionalidade de Sistema existente.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Documentação de Requisitos/Especificação de Funcionalidade de Sistema alterada/corrigida.",
+                                "perfis_exigidos": "Analista de Sistemas Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com os usuários, alterações ou correções parciais em Documentos de Requisitos Existentes, sem a necessidade de reanálise ou reestudo das necessidades ou regras de negócio."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 4,
+                        "nome": "Documentação de História de Usuário",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por nova documentação de História de Usuário.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Documentação da História de Usuário.",
+                                "perfis_exigidos": "Analista de Sistemas Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com os usuários, documentação da História de Usuário contendo informações sobre as partes interessadas, o que é preciso fazer ou qual função deve ser executada, qual objetivo deve ser atendido ou qual é seu valor de negócio e incremento às regras de negócio."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por necessidade de alterações em documentação de História de Usuário existente.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Documentação da História de Usuário alterada.",
+                                "perfis_exigidos": "Analista de Sistemas Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com os usuários, atualização/documentação da História de Usuário e suas demais documentações relacionadas."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 5,
+                        "nome": "Definição de Arquitetura da Solução",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por Projeto/Módulo de Solução de TI.",
+                                "horas_previstas": 22,
+                                "entregaveis": "Documentação de Arquitetura da Solução, contendo descrições das definições arquiteturais da solução, requisitos não funcionais e diagramas de Contexto, Componente, Componentes, para cenários em que os padrões corporativos de Arquitetura pré-definidos forem insuficientes ou não aderentes.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Análises, definições e construção da arquitetura da solução. Obs.: Não deve ser utilizado em conjunto com o item 6 - Projeto da Solução."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por Projeto/Módulo de Solução de TI.",
+                                "horas_previstas": 29,
+                                "entregaveis": "Documentação de Arquitetura da Solução, contendo descrições das definições arquiteturais da solução, requisitos não funcionais e diagramas de Contexto, Componente, Componentes, para cenários em que os padrões corporativos de Arquitetura pré-definidos forem insuficientes ou não aderentes.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Análises, definições e construção da arquitetura da solução. Obs.: Não deve ser utilizado em conjunto com o item 6 - Projeto da Solução."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por Projeto/Módulo de Solução de TI.",
+                                "horas_previstas": 36,
+                                "entregaveis": "Documentação de Arquitetura da Solução, contendo descrições das definições arquiteturais da solução, requisitos não funcionais e diagramas de Contexto, Componente, Componentes, para cenários em que os padrões corporativos de Arquitetura pré-definidos forem insuficientes ou não aderentes.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Análises, definições e construção da arquitetura da solução. Obs.: Não deve ser utilizado em conjunto com o item 6 - Projeto da Solução."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 6,
+                        "nome": "Projeto da Solução",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por Projeto/Módulo de Solução de TI.",
+                                "horas_previstas": 12,
+                                "entregaveis": "Complementação da Documentação de Visão do projeto/módulo de Solução de TI com as informações relativas às definições técnicas da solução, baseadas nos padrões corporativos de Arquitetura pré-definidos.",
+                                "perfis_exigidos": "Analista de Sistemas, Pleno ou Sênior, Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Análises e definições técnicas da solução. Obs.: Não deve ser utilizado em conjunto com o item 5 - Definição de Arquitetura da Solução."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por Projeto/Módulo de Solução de TI.",
+                                "horas_previstas": 18,
+                                "entregaveis": "Complementação da Documentação de Visão do projeto/módulo de Solução de TI com as informações relativas às definições técnicas da solução, baseadas nos padrões corporativos de Arquitetura pré-definidos.",
+                                "perfis_exigidos": "Analista de Sistemas, Pleno ou Sênior, Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Análises e definições técnicas da solução. Obs.: Não deve ser utilizado em conjunto com o item 5 - Definição de Arquitetura da Solução."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por Projeto/Módulo de Solução de TI.",
+                                "horas_previstas": 24,
+                                "entregaveis": "Complementação da Documentação de Visão do projeto/módulo de Solução de TI com as informações relativas às definições técnicas da solução, baseadas nos padrões corporativos de Arquitetura pré-definidos.",
+                                "perfis_exigidos": "Analista de Sistemas, Pleno ou Sênior, Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Análises e definições técnicas da solução. Obs.: Não deve ser utilizado em conjunto com o item 5 - Definição de Arquitetura da Solução."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 7,
+                        "nome": "Modelagem Entidade Relacionamento da Solução de TI",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por Entidade.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Modelo Entidade Relacionamento (MER), Diagrama de Classes.",
+                                "perfis_exigidos": "Analista de Sistemas Junior, Pleno ou Sênior; Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Análise e modelagem das entidades do sistema e seus relacionamentos entregue na ferramenta de modelagem de banco padrão da contratante."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 8,
+                        "nome": "Documentação Customizada de Solução",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por hora de documentação.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Documentação específica / customizada da Solução de TI.",
+                                "perfis_exigidos": "Analista de Sistemas Junior, Pleno ou Sênior; Desenvolvedor Pleno ou Sênior; Arquiteto de Software Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Elaboração de documentações específicas / customizadas de soluções de TI que exijam um detalhamento diferenciado, não atendido pelos documentos padrões previstos."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 9,
+                        "nome": "Taxonomia / Classificação / Categorização de Documentos Corporativos em Soluções que gerenciam conteúdos digitais",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por Categoria de Documento.",
+                                "horas_previstas": 22,
+                                "entregaveis": "Projeto de Taxonomia / Classificação / Categorização dos Documentos elaborados.",
+                                "perfis_exigidos": "Analista de Sistemas Junior, Pleno ou Sênior; Desenvolvedor Pleno ou Sênior; Arquiteto de Software Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com os usuários, listagem e análise dos diferentes tipos de documentos manipulados pela aplicação, definição de metadados, elaboração de planilhas / documentos de taxonomia, refinamento."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 10,
+                        "nome": "Modelagem de Processos",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "A cada conjunto de 03 (três) atividades levantadas e modeladas.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Processo mapeado na notação BPMN em ferramenta destinada a este fim.",
+                                "perfis_exigidos": "Analista de Processos Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com as áreas de negócio, análise e modelagem dos processos."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 11,
+                        "nome": "Revisão da Modelagem de Processos",
+                        "variantes": [
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "A cada conjunto de 06 (seis) atividades existentes em BPMN revisadas e alteradas.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Processo mapeado na notação BPMN em ferramenta destinada a este fim.",
+                                "perfis_exigidos": "Analista de Processos Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com as áreas de negócio, análise e revisão da modelagem dos processos."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 12,
+                        "nome": "Estudo/Análise ou Participação em Repasse de Conhecimento de Sistema Legado",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por hora de estudo/análise ou participação em repasses de conhecimento.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Documentação da Solução de TI resultante do estudo/análise ou repasse de conhecimento realizado, descrevendo os requisitos, as funcionalidades existentes, regras de negócio, fluxos do sistema e validações, com registro do resultado da análise visando compor uma base de conhecimento.",
+                                "perfis_exigidos": "Analista de Sistemas Junior, Pleno ou Sênior; Desenvolvedor Junior, Pleno ou Sênior; Arquiteto de Software Júnior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Reuniões com usuários, reuniões com outros analistas, detalhamento de regras de negócio, print de telas (do sistema e de sistemas envolvidos), elaboração de documentação resultante do estudo/análise ou do repasse de conhecimento."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 13,
+                        "nome": "Gerenciamento de Projeto de Solução de TI",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por projeto, por semana de gerenciamento.",
+                                "horas_previstas": 10,
+                                "entregaveis": "Relatórios de Gerenciamento do projeto; evidências das comunicações periódicas com os Stakeholder do projeto; atas de reunião de gerenciamento periódico e de reuniões diárias, com registro descrevendo a reunião e evidências da participação; Cronogramas atualizados conforme evolução do projeto.",
+                                "perfis_exigidos": "Gerente de Projetos de TIC Júnior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Fazer gestão dos recursos disponíveis de forma a garantir o alcance dos objetivos do projeto; realizar reuniões diárias com time executor do projeto; realizar reuniões periódicas de monitoramento do projeto com os principais Stakeholder do projeto; atualizar cronograma com detalhamento de atividades e entregas suficiente para a boa comunicação entre todos Stakeholder do projeto; elaborar e divulgar, para os principais Stakeholder do projeto, o relatório periódico de monitoramento com ênfase nos encaminhamentos, destaques e problemas do projeto; registrar diário de bordo os relatórios de gerenciamento e subsidiar as informações de detalhamento do portfólio de projetos da Secretaria; Identificar e tratamento das necessidades de mudança e replanejamento do projeto quando necessário; seguir a metodologia estabelecida pela Secretaria. Obs.: Não deve ser utilizado em conjunto com o item 13 - Monitoramento de Projeto de Solução de TI."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 13,
+                        "nome": "Monitoramento de Projeto de Solução de TI",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por projeto, por semana de monitoramento.",
+                                "horas_previstas": 3,
+                                "entregaveis": "Relatórios de monitoramento do projeto; atas de Reunião de monitoramento periódico, com registro descrevendo a reunião e evidências da participação; cronogramas atualizado conforme evolução do projeto.",
+                                "perfis_exigidos": "Gerente de Projetos de TIC Júnior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Acompanhar a execução do projeto a partir do que foi planejado; realizar reuniões periódicas de monitoramento do projeto com os principais Stakeholder do projeto; realizar acordos com o dono produto sobre como o monitoramento (canal, periodicidade, etc.) acontecerá; atualizar cronograma com detalhamento de atividades e entregas suficiente para a boa comunicação entre os Stakeholders do projeto; registrar diário de bordo com os pontos importantes relatados pelo dono do produto e para subsidiar as informações de detalhamento do portfólio de projetos da Secretaria; seguir a metodologia estabelecida pela Secretaria. Obs.: Não deve ser utilizado em conjunto com o item 12 - Gerenciamento de Projeto de Solução de TI."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nome": "Codificação",
+                "servicos": [
+                    {
+                        "numero": 14,
+                        "nome": "Implementação de nova Funcionalidade (frontend e backend)",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por operação/ação de usuário (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações), independentemente de suas camadas/tiers, envolvendo até 20 (vinte) atributos.",
+                                "horas_previstas": 5,
+                                "entregaveis": "Nova funcionalidade completa (Interface de Usuário/frontend e backend) implementada, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento de nova funcionalidade completa (Interface de Usuário/frontend e backend), contendo as ações previstas para o atendimento dos requisitos de negócio (por exemplo, ações básicas de inclusão, exclusão, pesquisa e edição de dados / informações - CRUD). Este item contempla o desenvolvimento de componentes de backend (camadas de persistência, negócio e controle), suas validações básicas de dados (formato e obrigatoriedade), bem como o desenvolvimento do frontend - interfaces e seus comportamentos."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por operação/ação de usuário (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações), independentemente de suas camadas/tiers, envolvendo até 20 (vinte) atributos.",
+                                "horas_previstas": 6,
+                                "entregaveis": "Nova funcionalidade completa (Interface de Usuário/frontend e backend) implementada, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento de nova funcionalidade completa (Interface de Usuário/frontend e backend), contendo as ações previstas para o atendimento dos requisitos de negócio (por exemplo, ações básicas de inclusão, exclusão, pesquisa e edição de dados / informações - CRUD). Este item contempla o desenvolvimento de componentes de backend (camadas de persistência, negócio e controle), suas validações básicas de dados (formato e obrigatoriedade), bem como o desenvolvimento do frontend - interfaces e seus comportamentos."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por operação/ação de usuário (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações), independentemente de suas camadas/tiers, envolvendo até 20 (vinte) atributos.",
+                                "horas_previstas": 7,
+                                "entregaveis": "Nova funcionalidade completa (Interface de Usuário/frontend e backend) implementada, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento de nova funcionalidade completa (Interface de Usuário/frontend e backend), contendo as ações previstas para o atendimento dos requisitos de negócio (por exemplo, ações básicas de inclusão, exclusão, pesquisa e edição de dados / informações - CRUD). Este item contempla o desenvolvimento de componentes de backend (camadas de persistência, negócio e controle), suas validações básicas de dados (formato e obrigatoriedade), bem como o desenvolvimento do frontend - interfaces e seus comportamentos."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 15,
+                        "nome": "Implementação de novo Serviço/API (backend e endpoint)",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por operação/ação de usuário (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações), independentemente de suas camadas/tiers, envolvendo até 20 (vinte) atributos.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Novo Serviço/API (backend e endpoints) implementado, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Júnior, Pleno ou Sênior; Arquiteto de Machine Learning Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de novo Serviço contendo as ações previstas para o atendimento dos requisitos de negócio envolvendo integração de sistemas. Este item contempla o desenvolvimento de componentes de backend (camadas de persistência, negócio e controle), suas validações básicas de dados (formato e obrigatoriedade), bem como o desenvolvimento dos endpoints visando publicar / expor os serviços para seu consumo por meio de outras aplicações."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por operação/ação de usuário (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações), independentemente de suas camadas/tiers, envolvendo até 20 (vinte) atributos.",
+                                "horas_previstas": 5,
+                                "entregaveis": "Novo Serviço/API (backend e endpoints) implementado, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior; Arquiteto de Machine Learning Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de novo Serviço contendo as ações previstas para o atendimento dos requisitos de negócio envolvendo integração de sistemas. Este item contempla o desenvolvimento de componentes de backend (camadas de persistência, negócio e controle), suas validações básicas de dados (formato e obrigatoriedade), bem como o desenvolvimento dos endpoints visando publicar / expor os serviços para seu consumo por meio de outras aplicações."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por operação/ação de usuário (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações), independentemente de suas camadas/tiers, envolvendo até 20 (vinte) atributos.",
+                                "horas_previstas": 6,
+                                "entregaveis": "Novo Serviço/API (backend e endpoints) implementado, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior; Arquiteto de Machine Learning Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de novo Serviço contendo as ações previstas para o atendimento dos requisitos de negócio envolvendo integração de sistemas. Este item contempla o desenvolvimento de componentes de backend (camadas de persistência, negócio e controle), suas validações básicas de dados (formato e obrigatoriedade), bem como o desenvolvimento dos endpoints visando publicar / expor os serviços para seu consumo por meio de outras aplicações."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 16,
+                        "nome": "Implementação de novo Relatório (backend e template)",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por relatório, contemplando até 05 formatos (PDF, CSV, TXT, HTML, JSON ou outro similar).",
+                                "horas_previstas": 11,
+                                "entregaveis": "Novo Relatório implementado, commits, capturas de tela, incluindo relatório gerado após sua execução, se for parte da demanda.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior; Arquiteto de Machine Learning Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de novo Relatório contendo as ações previstas para o atendimento dos requisitos de negócio envolvendo pesquisas, filtros, impressão e/ou exportação de dados. Este item contempla o desenvolvimento de componentes de backend (camadas de acesso a dados), templates visuais dos Relatórios, bem como o desenvolvimento do frontend - interfaces e seus comportamentos -, caso necessário. Pode incluir a execução do relatório, caso seja parte da demanda."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por relatório, contemplando até 05 formatos (PDF, CSV, TXT, HTML, JSON ou outro similar).",
+                                "horas_previstas": 14,
+                                "entregaveis": "Novo Relatório implementado, commits, capturas de tela, incluindo relatório gerado após sua execução, se for parte da demanda.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior; Arquiteto de Machine Learning Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de novo Relatório contendo as ações previstas para o atendimento dos requisitos de negócio envolvendo pesquisas, filtros, impressão e/ou exportação de dados. Este item contempla o desenvolvimento de componentes de backend (camadas de acesso a dados), templates visuais dos Relatórios, bem como o desenvolvimento do frontend - interfaces e seus comportamentos -, caso necessário. Pode incluir a execução do relatório, caso seja parte da demanda."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por relatório, contemplando até 05 formatos (PDF, CSV, TXT, HTML, JSON ou outro similar).",
+                                "horas_previstas": 17,
+                                "entregaveis": "Novo Relatório implementado, commits, capturas de tela, incluindo relatório gerado após sua execução, se for parte da demanda.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior; Arquiteto de Machine Learning Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de novo Relatório contendo as ações previstas para o atendimento dos requisitos de negócio envolvendo pesquisas, filtros, impressão e/ou exportação de dados. Este item contempla o desenvolvimento de componentes de backend (camadas de acesso a dados), templates visuais dos Relatórios, bem como o desenvolvimento do frontend - interfaces e seus comportamentos -, caso necessário. Pode incluir a execução do relatório, caso seja parte da demanda."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 17,
+                        "nome": "Implementação de novo Batch (backend e jobs)",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por job (processo automatizado que executa uma série de tarefas e produz um determinado resultado).",
+                                "horas_previstas": 8,
+                                "entregaveis": "Novo Batch implementado, commits, capturas de tela, incluindo resultado de sua execução, se for parte da demanda.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior; Arquiteto de Machine Learning Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de novo Batch contendo as ações previstas para o atendimento dos requisitos de negócio envolvendo processamentos em lote de dados. Este item contempla o desenvolvimento de componentes de backend (camadas de acesso a dados, validações, conversões e processamentos), bem como o desenvolvimento dos jobs. Pode incluir a execução do job, caso seja parte da demanda."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por job (processo automatizado que executa uma série de tarefas e produz um determinado resultado).",
+                                "horas_previstas": 10,
+                                "entregaveis": "Novo Batch implementado, commits, capturas de tela, incluindo resultado de sua execução, se for parte da demanda.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior; Arquiteto de Machine Learning Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de novo Batch contendo as ações previstas para o atendimento dos requisitos de negócio envolvendo processamentos em lote de dados. Este item contempla o desenvolvimento de componentes de backend (camadas de acesso a dados, validações, conversões e processamentos), bem como o desenvolvimento dos jobs. Pode incluir a execução do job, caso seja parte da demanda."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por job (processo automatizado que executa uma série de tarefas e produz um determinado resultado).",
+                                "horas_previstas": 12,
+                                "entregaveis": "Novo Batch implementado, commits, capturas de tela, incluindo resultado de sua execução, se for parte da demanda.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior; Arquiteto de Machine Learning Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de novo Batch contendo as ações previstas para o atendimento dos requisitos de negócio envolvendo processamentos em lote de dados. Este item contempla o desenvolvimento de componentes de backend (camadas de acesso a dados, validações, conversões e processamentos), bem como o desenvolvimento dos jobs. Pode incluir a execução do job, caso seja parte da demanda."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 18,
+                        "nome": "Implementação de novo Dashboard (backend e frontend)",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por gráfico.",
+                                "horas_previstas": 6,
+                                "entregaveis": "Novo Dashboard com gráfico(s) implementado(s) ou novo(s) gráfico(s) implementado(s) em dashboard existente, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior; Arquiteto de Machine Learning Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de gráfico em Dashboard contendo as ações previstas para o atendimento dos requisitos de negócio envolvendo consolidações e exibições gráficas de dados. Este item contempla o desenvolvimento de componentes de backend (camadas de acesso a dados), bem como o desenvolvimento do frontend - telas e gráficos."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 19,
+                        "nome": "Implementação de novo Backend",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por operação/ação de usuário ou do sistema, independentemente de suas camadas/tiers.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Novo backend implementado, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento de nova operação de backend a ser utilizada em uma ou mais aplicações. Obs.: Não devem ser contabilizadas as diferentes camadas (tiers) de software como operações. Uma operação deve contemplar a implementação completa da operação/ação de um software, independentemente de suas camadas de backend."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por operação/ação de usuário ou do sistema, independentemente de suas camadas/tiers.",
+                                "horas_previstas": 3,
+                                "entregaveis": "Novo backend implementado, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento de nova operação de backend a ser utilizada em uma ou mais aplicações. Obs.: Não devem ser contabilizadas as diferentes camadas (tiers) de software como operações. Uma operação deve contemplar a implementação completa da operação/ação de um software, independentemente de suas camadas de backend."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por operação/ação de usuário ou do sistema, independentemente de suas camadas/tiers.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Novo backend implementado, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento de nova operação de backend a ser utilizada em uma ou mais aplicações. Obs.: Não devem ser contabilizadas as diferentes camadas (tiers) de software como operações. Uma operação deve contemplar a implementação completa da operação/ação de um software, independentemente de suas camadas de backend."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 20,
+                        "nome": "Implementação de nova Regra de Negócio",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por Regra de Negócio.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Nova Regra de Negócio implementada, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de nova Regra de Negócio a ser utilizada em uma ou mais aplicações."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por Regra de Negócio.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Nova Regra de Negócio implementada, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de nova Regra de Negócio a ser utilizada em uma ou mais aplicações."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por Regra de Negócio.",
+                                "horas_previstas": 3,
+                                "entregaveis": "Nova Regra de Negócio implementada, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de nova Regra de Negócio a ser utilizada em uma ou mais aplicações."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 21,
+                        "nome": "Implementação de novo Frontend (HTML, CSS e Javascript)",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por Tela / Interface de Usuário.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Nova tela implementada, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento de nova tela estática, incluindo artefatos HTML e CSS a partir de protótipo e template pré-definidos."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por operação/ação de usuário (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações).",
+                                "horas_previstas": 2,
+                                "entregaveis": "Nova operação de frontend implementada, commits, capturas de tela.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento de nova operação/ação de frontend a ser utilizada em uma ou mais aplicações. Obs.: Não devem ser contabilizadas as diferentes camadas (tiers) de software como operações. Uma operação deve contemplar a implementação completa da operação/ação de um software, independentemente de suas camadas de frontend."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 22,
+                        "nome": "Automatização de novos Processos modelados na disciplina BPM com ferramenta BPMS",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por atividade do processo a ser automatizada.",
+                                "horas_previstas": 8,
+                                "entregaveis": "Atividade de processo automatizado, commits, capturas de tela.",
+                                "perfis_exigidos": "Analista de Processos Pleno ou Sênior; Analista de Sistemas Pleno ou Senior; Arquiteto SOA Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Desenvolvimento completo de automatização de processos, contemplando os tipos de atividades previstos na notação de modelagem de processos da disciplina BPM (BPMS)."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 23,
+                        "nome": "Manutenções em Sistemas Existentes (corretivas, evolutivas, adaptativas ou perfectivas)",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de inclusão ou exclusão de atributo em formulário, relatório ou serviço existente, com os devidos ajustes nas camadas de frontend e backend.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Manutenção implementada, commits.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Implementação da manutenção em sistema existente."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de alteração de atributo em formulário, relatório ou serviço existentes, com os devidos ajustes nas camadas de frontend e backend.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Manutenção implementada, commits.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Implementação da manutenção em sistema existente."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de inclusão, alteração ou exclusão de labels, tooltips ou outros elementos estáticos em telas ou relatórios existentes.",
+                                "horas_previstas": 0.5,
+                                "entregaveis": "Manutenção implementada, commits.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Implementação da manutenção em sistema existente."
+                            },
+                            {
+                                "id": "d",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de inclusão, alteração ou exclusão de validações de dados.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Manutenção implementada: commits.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Implementação da manutenção em sistema existente."
+                            },
+                            {
+                                "id": "e",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de alteração ou exclusão de regra de negócio.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Manutenção implementada: commits.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Implementação da manutenção em sistema existente."
+                            },
+                            {
+                                "id": "f",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de alteração em operações de backend ou frontend.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Manutenção implementada: commits.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Implementação da manutenção em sistema existente."
+                            },
+                            {
+                                "id": "g",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de exclusão de funcionalidade existente, com os devidos ajustes de impacto no sistema.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Manutenção implementada: commits.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Implementação da manutenção em sistema existente."
+                            },
+                            {
+                                "id": "h",
+                                "complexidade": "Baixa",
+                                "escopo": "Por hora de análise exploratória de problemas em sistemas existentes.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Relatório com o diagnóstico obtido como resultado da análise e encaminhamentos ou medidas necessárias para a solução do problema.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior, Analista de Sistemas Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Identificação de erros em aplicações (troubleshooting): análise, testes e debug para identificar as causas do problema / defeito."
+                            },
+                            {
+                                "id": "i",
+                                "complexidade": "Média",
+                                "escopo": "Por hora de análise exploratória de problemas em sistemas existentes.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Relatório com o diagnóstico obtido como resultado da análise e encaminhamentos ou medidas necessárias para a solução do problema.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior, Analista de Sistemas Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Identificação de erros em aplicações (troubleshooting): análise, testes e debug para identificar as causas do problema / defeito."
+                            },
+                            {
+                                "id": "j",
+                                "complexidade": "Alta",
+                                "escopo": "Por hora de análise exploratória de problemas em sistemas existentes.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Relatório com o diagnóstico obtido como resultado da análise e encaminhamentos ou medidas necessárias para a solução do problema.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior, Analista de Sistemas Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Identificação de erros em aplicações (troubleshooting): análise, testes e debug para identificar as causas do problema / defeito."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nome": "Testes",
+                "servicos": [
+                    {
+                        "numero": 24,
+                        "nome": "Implementação de Teste Unitário Automatizado",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por novo teste unitário automatizado para operação/ação de usuário ou sistema (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações).",
+                                "horas_previstas": 4,
+                                "entregaveis": "Testes Unitários Automatizados Implementados, commits.",
+                                "perfis_exigidos": "Desenvolvedor Júnior, Pleno ou Sênior; Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Criação de testes utilizando tecnologias de construção de testes unitários (Junit ou equivalente)."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de alteração em teste unitário automatizado existente.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Testes Unitários Automatizados alterados, commits.",
+                                "perfis_exigidos": "Desenvolvedor Júnior, Pleno ou Sênior; Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Alteração de testes utilizando tecnologias de construção de testes unitários (Junit ou equivalente)."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 25,
+                        "nome": "Elaboração de Roteiro de Testes",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por novo Roteiro de Testes, por funcionalidade.",
+                                "horas_previstas": 8,
+                                "entregaveis": "Documento de Roteiro de Testes.",
+                                "perfis_exigidos": "Analista de Sistemas Pleno ou Sênior; Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Planejamento e concepção dos cenários de testes, definições dos casos de sucesso e falhas, definição dos dados para testes."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por necessidade de alterações ou correções parciais em Roteiro de Testes existente.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Documento de Roteiro de Testes.",
+                                "perfis_exigidos": "Analista de Sistemas Pleno ou Sênior; Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Planejamento e concepção dos cenários de testes, definições dos casos de sucesso e falhas, definição dos dados para testes."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 26,
+                        "nome": "Implementação de Testes Funcionais Automatizados",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por novo teste funcional automatizado, por funcionalidade.",
+                                "horas_previstas": 6,
+                                "entregaveis": "Teste Funcional Automatizado Implementado, commits.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior; Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Criação de testes utilizando ferramentas de automatização de testes funcionais (Selenium)."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de alteração em teste funcional automatizado existente.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Teste Funcional Automatizado Implementado, commits.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior; Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Criação de testes utilizando ferramentas de automatização de testes funcionais (Selenium)."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 27,
+                        "nome": "Execução de Testes Funcionais Manuais",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por Funcionalidade a ser testada.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Relatório de Resultados dos Testes Manuais.",
+                                "perfis_exigidos": "Analista de Sistemas Pleno ou Sênior; Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Execução de Testes Funcionais Manuais, com a produção de relatório comprobatório com os resultados obtidos durante os testes."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por Funcionalidade a ser re-testada.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Relatório de Resultados dos re-testes Manuais.",
+                                "perfis_exigidos": "Analista de Sistemas Pleno ou Sênior; Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Execução de re-testes Funcionais Manuais, com a produção de relatório comprobatório com os resultados obtidos durante os testes."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 28,
+                        "nome": "Implementação de Testes de Integração Automatizados",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por operação/ação de usuário ou sistema (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações).",
+                                "horas_previstas": 4,
+                                "entregaveis": "Testes Integração Automatizados Implementados, commits.",
+                                "perfis_exigidos": "Desenvolvedor Júnior, Pleno ou Sênior; Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Criação de testes utilizando ferramentas de automatização de testes unitários (Junit, Postman, SoapUI ou equivalente)."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 29,
+                        "nome": "Implementação de Testes de Carga Automatizados",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por operação/ação de usuário ou sistema (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações).",
+                                "horas_previstas": 8,
+                                "entregaveis": "Testes de Carga Automatizados Implementados, commits.",
+                                "perfis_exigidos": "Desenvolvedor Júnior, Pleno ou Sênior; Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Criação de testes de carga utilizando ferramentas de automatização de testes (Junit, Postman, SoapUI ou equivalente)."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 30,
+                        "nome": "Criação de Casos de Teste em Ferramenta de Gerenciamento de Testes",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por operação/ação de usuário ou sistema (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações).",
+                                "horas_previstas": 4,
+                                "entregaveis": "Criação dos casos de testes em ferramenta de gerenciamento de testes.",
+                                "perfis_exigidos": "Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Criação dos casos de testes em ferramenta de gerenciamento de testes (testlink, testecomplete, etc)."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 31,
+                        "nome": "Criação de Ambiente para Execução de Testes Automatizados",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por operação/ação de usuário ou sistema (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações).",
+                                "horas_previstas": 24,
+                                "entregaveis": "Ambiente de teste funcional.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Configuração de ambiente para execução dos testes automatizados, conteinerizados ou não. Deve configurar um ambiente para execução do teste, simulando o ambiente de produção onde a aplicação é executada."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 32,
+                        "nome": "Criação de Massa de Dados de Teste",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por operação/ação de usuário ou sistema (ex.: incluir, alterar, excluir, pesquisar ou outras operações/ações).",
+                                "horas_previstas": 4,
+                                "entregaveis": "Scripts SQL para a extração e/ou persistência dos dados utilizados no teste.",
+                                "perfis_exigidos": "Analista de Testes Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Elaborar script para a geração de massa de dados necessários para a execução de um ciclo de testes."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nome": "Gerência de Configuração",
+                "servicos": [
+                    {
+                        "numero": 33,
+                        "nome": "Configuração do Ambiente Local de Trabalho do Desenvolvedor",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por Módulo de Aplicação (projeto).",
+                                "horas_previstas": 2,
+                                "entregaveis": "Ambiente local de trabalho do desenvolvedor instalado, com o(s) projeto(s) devidamente configurado(s).",
+                                "perfis_exigidos": "Analista de Sistemas Júnior, Pleno ou Sênior; Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Instalação e configuração das ferramentas de trabalho necessárias à execução das tarefas de desenvolvimento; configuração dos projetos nos quais o colaborador atuará, incluindo a criação/checkout dos projetos e suas devidas configurações."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 34,
+                        "nome": "Configuração de Aplicação para Implantação",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por Aplicação.",
+                                "horas_previstas": 6,
+                                "entregaveis": "Arquivos de configuração, commits.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Criação de arquivos de profiles para a implantação em múltiplos ambientes, parametrizações, configurações de log, segurança, configurações gerais."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 35,
+                        "nome": "Solicitação e Validação de Ambiente para a Implantação",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por Aplicação, por Ambiente, a cada solicitação.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Atividades / Solicitações.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Solicitações de criação e configuração de ambientes para a implantação das aplicações, bem como sua validação."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 36,
+                        "nome": "Configuração padrão relacionada à Integração Contínua para Aplicação",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por Aplicação, por Ambiente, a cada configuração.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Configurações realizadas e solicitações atendidas.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Configuração de gerenciamento de versões, builds do Jenkins, configurações do Nexus."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 37,
+                        "nome": "Projeto customizado de Integração Contínua para Aplicação",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por Aplicação.",
+                                "horas_previstas": 8,
+                                "entregaveis": "Configurações realizadas e solicitações atendidas.",
+                                "perfis_exigidos": "Desenvolvedor Sênior; Arquiteto de Software Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Concepção e configuração de rotinas / scripts customizados para a Integração Contínua de Aplicações que possuam necessidades específicas."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por Aplicação.",
+                                "horas_previstas": 16,
+                                "entregaveis": "Configurações realizadas e solicitações atendidas.",
+                                "perfis_exigidos": "Desenvolvedor Sênior; Arquiteto de Software Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Concepção e configuração de rotinas / scripts customizados para a Integração Contínua de Aplicações que possuam necessidades específicas."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por Aplicação.",
+                                "horas_previstas": 36,
+                                "entregaveis": "Configurações realizadas e solicitações atendidas.",
+                                "perfis_exigidos": "Desenvolvedor Sênior; Arquiteto de Software Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Concepção e configuração de rotinas / scripts customizados para a Integração Contínua de Aplicações que possuam necessidades específicas."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 38,
+                        "nome": "Implantação (Deployment) de Aplicação",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por implantação (deployment) no ambiente solicitado.",
+                                "horas_previstas": 0.25,
+                                "entregaveis": "Aplicação implantada no ambiente solicitado ou artefato publicado em repositório específico.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Fechamento de versões, Merge Requests (sem conflitos), Empacotamento e Implantação (deployment) dos sistemas nos ambientes de Desenvolvimento, Homologação ou Produção. Não se aplica a implantações em ambiente local (máquina do desenvolvedor)."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 39,
+                        "nome": "Configuração da Taxonomia / Classificação / Categorização de Documentos Corporativos na ferramenta de Gerenciamento de Conteúdo Eletrônico",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por Categoria de Documento.",
+                                "horas_previstas": 6,
+                                "entregaveis": "Taxonomia / Classificação / Categorização dos Documentos configurada em ambiente de desenvolvimento e homologação.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior, Arquiteto SOA Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Solicitação de criação de usuários e security groups, implementação da configuração dos metadados por categoria, validação e homologação da configuração realizada."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 40,
+                        "nome": "Realizar Merge (mesclagem) Manual de Códigos Fonte com Conflitos",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por Merge Request.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Mesclagem dos códigos fonte na branch de destino com a resolução dos conflitos apresentados.",
+                                "perfis_exigidos": "Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Resolver conflitos ocorridos na integração de branchs candidatos a deploy e mesclar os códigos fonte para a branch de destino."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nome": "Suporte e Desenvolvimento",
+                "servicos": [
+                    {
+                        "numero": 41,
+                        "nome": "Operação assistida de apoio às Soluções de TI",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de operação em apoio/assistência, a cada 15 minutos.",
+                                "horas_previstas": 0.25,
+                                "entregaveis": "Registros das solicitações de apoio/assistência por parte da área demandante/solicitante, registro detalhado do atendimento realizado, com o passo a passo das ações realizadas e do resultado obtido, além de quaisquer outras evidências de atendimento da demanda.",
+                                "perfis_exigidos": "Perfis Juniores, Plenos ou Seniores.",
+                                "atividades_desempenhadas": "Apoio às diversas áreas no tocante à utilização de Soluções de TI, dúvidas técnicas; execuções de atividades de apoio relacionadas à Tecnologia da Informação."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 42,
+                        "nome": "Elaboração e execução de Scripts",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por script, a cada tabela envolvida no script.",
+                                "horas_previstas": 0.25,
+                                "entregaveis": "Scripts SQL e NoSQL, resultado da execução.",
+                                "perfis_exigidos": "Analista de Sistemas Pleno ou Sênior; Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Análise, elaboração e execução de Scripts SQL e NoSQL."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 43,
+                        "nome": "Ministrar ou Realizar Treinamentos / Workshops / Apresentações Técnicas / Repasse de Conhecimento de Interesse do Estado",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por hora de treinamento ministrado, apresentação ou repasse tecnológico realizados.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Material de apoio utilizado no treinamento, apresentação ou repasse tecnológico, como slides e manuais (se aplicáveis).",
+                                "perfis_exigidos": "Perfis Juniores, Plenos ou Sêniores.",
+                                "atividades_desempenhadas": "Apresentações, treinamentos e workshops voltados aos membros das equipes de desenvolvimento com o intuito de disseminar / repassar conhecimentos de negócio e conhecimentos técnicos, apresentar soluções corporativas, padrões, boas práticas e metodologias de desenvolvimento."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 44,
+                        "nome": "Elaboração de Manuais de Usuário",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por Funcionalidade.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Manuais de Usuários em formato HTML, PDF ou DOC.",
+                                "perfis_exigidos": "Analista de Sistemas Junior, Pleno ou Sênior; Desenvolvedor Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Elaboração de Manuais destinados aos Usuários das Soluções de TI."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 45,
+                        "nome": "Participação em Reuniões",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de participação em reuniões, a cada 15 minutos.",
+                                "horas_previstas": 0.25,
+                                "entregaveis": "Atas de reunião ou registro descrevendo a reunião com evidências da participação (lista de participantes) e da duração da reunião (início e fim), preferencialmente retiradas da plataforma de videoconferência.",
+                                "perfis_exigidos": "Perfis Juniores, Plenos ou Seniores.",
+                                "atividades_desempenhadas": "Participação em reuniões de interesse do estado, exceto aquelas realizadas pelos profissionais responsáveis na execução das demais atividades previstas neste Catálogo, tais como: reuniões de levantamento de requisitos, reuniões de mapeamento de processos, reuniões de planejamento, gerenciamento e monitoramento de projetos, reuniões de apoio/assistência (operação assistida), repasses de conhecimento ou participação em treinamentos."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 46,
+                        "nome": "Prospecção Tecnológica",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por evento/demanda.",
+                                "horas_previstas": 36,
+                                "entregaveis": "Relatório Técnico (Alternativas de Soluções, Prós e Contras, viabilidade, solução escolhida e justificativa).",
+                                "perfis_exigidos": "Desenvolvedor Sênior, Arquiteto SOA Pleno ou Sênior, Arquiteto de Software Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Pesquisas e estudos para a adoção de novas tecnologias e frameworks, novos padrões de projeto, integrações etc."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nome": "Design e UX",
+                "servicos": [
+                    {
+                        "numero": 47,
+                        "nome": "Wireframe de Funcionalidade",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por novo wireframe (protótipo simples), por funcionalidade.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Rascunho ou esboço da Funcionalidade.",
+                                "perfis_exigidos": "Designer de UX Pleno ou Sênior; Analista de Sistemas Pleno ou Sênior; Analista de Processos Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Elaboração de um rascunho ou esboço (protótipo não funcional), definindo como as informações devem estar organizadas em uma tela de sistema."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de alteração em wireframe (protótipo simples) existente.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Rascunho ou esboço da Funcionalidade.",
+                                "perfis_exigidos": "Designer de UX Pleno ou Sênior; Analista de Sistemas Pleno ou Sênior; Analista de Processos Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Alteração de um rascunho ou esboço (protótipo não funcional), definindo como as informações devem estar organizadas em uma tela de sistema."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 48,
+                        "nome": "Prototipação de Funcionalidade",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por novo protótipo funcional, por funcionalidade.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Protótipos funcionais da Funcionalidade criados e implementados em ferramenta de prototipação definida pela contratante.",
+                                "perfis_exigidos": "Designer de UX Pleno ou Sênior; Analista de Sistemas Pleno ou Sênior; Analista de Processos Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Elaboração de protótipo funcional, definindo como as informações devem estar organizadas, quais serão os componentes visuais, as cores, a tipografia e imagens que estarão dispostos em uma tela de sistema."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de alteração em protótipo funcional existente.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Protótipos funcionais da Funcionalidade criados e implementados em ferramenta de prototipação definida pela contratante.",
+                                "perfis_exigidos": "Designer de UX Pleno ou Sênior; Analista de Sistemas Pleno ou Sênior; Analista de Processos Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Alteração de protótipo funcional, definindo como as informações devem estar organizadas, quais serão os componentes visuais, as cores, a tipografia e imagens que estarão dispostos em uma tela de sistema."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 49,
+                        "nome": "Elaboração de Imagem",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por imagem.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Imagem disponibilizada nos formatos PNG, JPG ou SVG (ou similares).",
+                                "perfis_exigidos": "Designer de UX Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Produção de imagem, com base nas especificações de formato e tamanho, elaborado a partir de fontes preexistentes livres de direitos autorais, ou de uso formalmente autorizado, ou por meio do design criativo."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 50,
+                        "nome": "Elaboração de Ícone",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por ícone.",
+                                "horas_previstas": 0.5,
+                                "entregaveis": "Ícone disponibilizado nos formatos ICO, PNG, JPG ou SVG (ou similares).",
+                                "perfis_exigidos": "Designer de UX Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Produção de ícone, com base nas especificações de formato e tamanho, elaborado a partir de fontes preexistentes livres de direitos autorais, ou de uso formalmente autorizado, ou por meio do design criativo."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 51,
+                        "nome": "Elaboração de Vídeos",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Alta",
+                                "escopo": "Por minuto de vídeo contendo animações ou filmagens e narração/trilha sonora.",
+                                "horas_previstas": 8,
+                                "entregaveis": "Vídeo ou animação disponibilizados nos formatos AVI, MP4 ou similar.",
+                                "perfis_exigidos": "Designer de UX Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Produção de vídeo complexo - contendo animações, filmagens e narração/trilha sonora - com base nas especificações de formato e tamanho, elaborado a partir de fontes preexistentes livres de direitos autorais, ou de uso formalmente autorizado, ou por meio do design criativo. Obs.: vídeos de capturas de tela não serão consideradas como produto neste item de catálogo."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Baixa",
+                                "escopo": "Por minuto de vídeo contendo apenas imagens, sons/música de fundo e transições de quadros.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Vídeo ou animação disponibilizados nos formatos AVI, MP4 ou similar.",
+                                "perfis_exigidos": "Designer de UX Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Produção de vídeo simples - contendo apenas imagens, sons de fundo e transições de quadros -, com base nas especificações de formato e tamanho, elaborado a partir de fontes preexistentes livres de direitos autorais, ou de uso formalmente autorizado, ou por meio do design criativo. Obs.: vídeos de capturas de tela não serão consideradas como produto neste item de catálogo."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 52,
+                        "nome": "Elaboração de Briefing",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por projeto.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Documento de briefing com detalhes e diretriz sobre o projeto.",
+                                "perfis_exigidos": "Designer de UX Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Elaboração de documentos com todos os dados levantados em reunião que sejam relevantes para a execução do projeto."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nome": "IA/Machine Learning",
+                "servicos": [
+                    {
+                        "numero": 53,
+                        "nome": "Entendimento dos Dados",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por evento/demanda.",
+                                "horas_previstas": 40,
+                                "entregaveis": "Dicionário de dados; Relatório de Análise Exploratória; Relatório de qualidade; Códigos.",
+                                "perfis_exigidos": "Cientista de Dados; Arquiteto de Machine Learning Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Coleta de dados; Descrição dos dados; Exploração dos dados Verificação da qualidade dos dados."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 54,
+                        "nome": "Preparação dos Dados",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por evento/demanda.",
+                                "horas_previstas": 40,
+                                "entregaveis": "Conjunto de dados tratado; ETL; Códigos.",
+                                "perfis_exigidos": "Cientista de Dados; Arquiteto de Machine Learning Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Seleção de dados; Limpeza de dados; Construção de dados derivados; Combinação de dados; Formatação de dados."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 55,
+                        "nome": "Modelagem e Implementação",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por evento/demanda.",
+                                "horas_previstas": 80,
+                                "entregaveis": "Relatório das técnicas de modelagem; Relatório dos resultados dos experimentos; Modelos treinados e funcionais, de acordo com a demanda solicitada; Códigos.",
+                                "perfis_exigidos": "Cientista de Dados; Arquiteto de Machine Learning Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Seleção de técnicas de modelagem; Experimentação de teste; Otimização dos hiperparâmetros; Construção dos modelos; Avaliação dos modelos."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 56,
+                        "nome": "Validação e Otimização",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por evento/demanda.",
+                                "horas_previstas": 40,
+                                "entregaveis": "Relatórios de resultados de validação e otimização; Modelos otimizados e funcionais, de acordo com a demanda solicitada; Códigos.",
+                                "perfis_exigidos": "Cientista de Dados; Arquiteto de Machine Learning Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Validação de resultado de modelagem; Revisão do processo de modelagem; Otimização dos modelos; Construção dos modelos otimizados."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 57,
+                        "nome": "Implantação do Modelo",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por evento/demanda.",
+                                "horas_previstas": 20,
+                                "entregaveis": "Plano de implantação detalhado; Disponibilização dos códigos; Relatório de monitoramento.",
+                                "perfis_exigidos": "Cientista de Dados; Arquiteto de Machine Learning Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Planejamento da implantação; Implementação de APIs para uso dos modelos; Monitoramento da implantação."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 58,
+                        "nome": "Testes e Avaliações de Modelos Alternativos",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por evento/demanda.",
+                                "horas_previstas": 24,
+                                "entregaveis": "Relatório dos testes executados e seus resultados; Relatório comparativo com o modelo original; Análise de viabilidade da adoção do novo modelo; Modelos treinados e funcionais; Códigos.",
+                                "perfis_exigidos": "Cientista de Dados; Arquiteto de Machine Learning Junior, Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Estudo de viabilidade da adoção dos modelos a serem testados; Experimentação de teste; Otimização dos hiperparâmetros; Avaliação dos modelos."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nome": "Supervisão Técnica",
+                "servicos": [
+                    {
+                        "numero": 59,
+                        "nome": "Supervisão técnica",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por hora de supervisão.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Relatório periódico das atividades planejadas para as equipes.",
+                                "perfis_exigidos": "Analista de Sistemas Pleno.",
+                                "atividades_desempenhadas": "Reuniões com os usuários, esboço das possíveis soluções, elaboração de documentos de visão da solução de TI."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nome": "Arquitetura de Software",
+                "servicos": [
+                    {
+                        "numero": 60,
+                        "nome": "Criação de Módulos de Customização de funcionalidades para plataformas de Integração API, Webservice e aplicações",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por hora de Desenvolvimento.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Artefato implementado, commits, capturas de tela ou Relatório descritivo.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior, Arquiteto SOA Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Criar módulos que customize funcionalidades das plataformas de integração API, WEBSERVICE e aplicações."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 61,
+                        "nome": "Alteração de Módulos de Customização de funcionalidades para plataformas de Integração API, Webservice e aplicações",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por hora de Desenvolvimento.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Artefato implementado, commits, capturas de tela ou Relatório descritivo.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior, Arquiteto SOA Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Alteração de módulos que customize funcionalidades das plataformas de integração API, WEBSERVICE e aplicações."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 62,
+                        "nome": "Manutenções nos Módulos das Plataformas de Integração API (corretivas, evolutivas, adaptativas ou perfectivas)",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por hora de análise exploratória de problemas em sistemas existentes.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Descrição e registro da atividade ou código adicionado ao repositório quando aplicável.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior, Arquiteto SOA Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Identificação de erros em aplicações (troubleshooting): análise, testes e debug para identificar as causas do problema / defeito."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 63,
+                        "nome": "Instalação e configuração de pacotes, serviços ou aplicações",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por hora de operação de instalação/operação.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Descrição e registro da atividade ou código adicionado ao repositório quando aplicável.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior, Arquiteto SOA Pleno ou Sênior, Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Realizar instalação e configuração de pacotes, serviços ou aplicações."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 64,
+                        "nome": "Publicação de APIs, Webservices ou Aplicações",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por publicação.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Descrição e registro da atividade ou código adicionado ao repositório quando aplicável.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior, Arquiteto SOA Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Publicar APIs conforme demanda específica, definida pela parte interessada."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 65,
+                        "nome": "Republicação de APIs, Webservices ou Aplicações",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por publicação.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Descrição e registro da atividade ou código adicionado ao repositório quando aplicável.",
+                                "perfis_exigidos": "Desenvolvedor Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Republicar APIs conforme demanda específica, definida pela parte interessada."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 66,
+                        "nome": "Criação de Mediators para plataformas de Integração API, Webservice e aplicações",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por hora no Desenvolvimento do Mediator.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Descrição e registro da atividade e código adicionado ao repositório quando aplicável.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior, Arquiteto SOA Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Criar Mediators para realizar a integração entre o Gateway e diferentes APIs, WEBSERVICEs e aplicações."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 67,
+                        "nome": "Alteração de Mediators para plataformas de Integração API, Webservice e aplicações",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por hora no Desenvolvimento do Mediator.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Descrição e registro da atividade e código adicionado ao repositório quando aplicável.",
+                                "perfis_exigidos": "Arquiteto de Software Pleno ou Sênior, Arquiteto SOA Pleno ou Sênior.",
+                                "atividades_desempenhadas": "Alterações nos Mediators de realização das integrações entre o Gateway e diferentes APIs, WEBSERVICEs e aplicações."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nome": "BI e Data Analytics",
+                "servicos": [
+                    {
+                        "numero": 68,
+                        "nome": "Realizar Modelagem de Dados",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por criação, até 10 (dez) novas entidades.",
+                                "horas_previstas": 16,
+                                "entregaveis": "Modelo de Dados, dicionário de dados, Ficha de Conceituação de Informações - FCI.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados - Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Criar e documentar Modelo de Dados observando os padrões adotados."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por criação, até 16 (dezesseis) novas entidades.",
+                                "horas_previstas": 24,
+                                "entregaveis": "Modelo de Dados, dicionário de dados, Ficha de Conceituação de Informações - FCI.",
+                                "perfis_exigidos": "Analista de BI Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados - Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Criar e documentar Modelo de Dados observando os padrões adotados."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por criação, acima de 16 (dezesseis) novas entidades.",
+                                "horas_previstas": 32,
+                                "entregaveis": "Modelo de Dados, dicionário de dados, Ficha de Conceituação de Informações - FCI.",
+                                "perfis_exigidos": "Analista de BI Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados - Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Criar e documentar Modelo de Dados observando os padrões adotados."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 69,
+                        "nome": "Desenvolver Camada Semântica",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por camada, a cada conjunto de 10 (dez) entidades de dados.",
+                                "horas_previstas": 16,
+                                "entregaveis": "Camada semântica e documentação pertinente; Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados - Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Desenvolver e documentar camada semântica."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por alteração em uma camada.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Alteração realizada em camada semântica e documentação pertinente; Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados - Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Desenvolver e documentar alteração em camada semântica."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Única",
+                                "escopo": "Por código implementado envolvendo até 6 (seis) entidades de dados.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Código implementado.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados - Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Implementar código referente a camada semântica e documentar."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 70,
+                        "nome": "Desenvolver Dashboards e Relatórios",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por prototipação de visão.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Protótipos de Dashboard/relatório (um para cada visão de Dashboard ou relatório).",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados Pleno ou Senior.",
+                                "atividades_desempenhadas": "Elaboração de protótipo funcional, definindo como as informações devem estar organizadas, quais serão os componentes visuais, as cores, a tipografia e imagens que estarão dispostos em uma visão."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por evento de alteração em protótipo existente.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Alteração de protótipo funcional.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados Pleno ou Senior.",
+                                "atividades_desempenhadas": "Alteração de protótipo funcional."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Única",
+                                "escopo": "Por visão envolvendo até 10 (dez) entidades.",
+                                "horas_previstas": 24,
+                                "entregaveis": "Disponibilização de Dashboard/relatório, em solução de visualização de dados. Identificação das entidades envolvidas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados Pleno ou Senior.",
+                                "atividades_desempenhadas": "Desenvolver dashboard/relatório em solução de visualização dos dados, mesmo que diferente da definitiva."
+                            },
+                            {
+                                "id": "d",
+                                "complexidade": "Única",
+                                "escopo": "Por alteração envolvendo até 10 (dez) entidades.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Alteração de Dashboard/relatório, em solução de visualização de dados. Identificação das entidades envolvidas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados Pleno ou Senior.",
+                                "atividades_desempenhadas": "Alteração de dashboard/relatório em solução de visualização dos dados, mesmo que diferente da definitiva."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 71,
+                        "nome": "Testar Soluções",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por cenário.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Relatório de testes e conformidade do comportamento dos dados.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados - Pleno ou Senior.",
+                                "atividades_desempenhadas": "Realizar testes com dados para validar o comportamento / processamento dos mesmos."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por cenário em ambiente de Big Data.",
+                                "horas_previstas": 8,
+                                "entregaveis": "Relatório de testes e conformidade do comportamento dos dados.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados - Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Realizar testes com dados para validar o comportamento / processamento dos mesmos."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 72,
+                        "nome": "Avaliar de Qualidade de Dados",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por avaliação, até 10 (dez) entidade.",
+                                "horas_previstas": 16,
+                                "entregaveis": "Relatórios/Estatísticas/Identificação de Melhoria dos Dados Analisados. Identificação das entidades envolvidas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno; Engenheiro de Dados Pleno; Cientista de Dados - Pleno.",
+                                "atividades_desempenhadas": "Analisar e avaliar os Dados propondo melhorias."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por avaliação, até 10 (dez) entidade.",
+                                "horas_previstas": 16,
+                                "entregaveis": "Relatórios/Estatísticas/Identificação de Melhoria dos Dados Analisados. Identificação das entidades envolvidas.",
+                                "perfis_exigidos": "Analista de BI Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados - Pleno ou Senior.",
+                                "atividades_desempenhadas": "Analisar e avaliar os Dados propondo melhorias."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por avaliação, até 10 (dez) entidade.",
+                                "horas_previstas": 16,
+                                "entregaveis": "Relatórios/Estatísticas/Identificação de Melhoria dos Dados Analisados. Identificação das entidades envolvidas.",
+                                "perfis_exigidos": "Analista de BI Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados - Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Analisar e avaliar os Dados propondo melhorias."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 73,
+                        "nome": "Implementar Rotina ETL",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por rotina, até 2 entidades.",
+                                "horas_previstas": 8,
+                                "entregaveis": "Processo ETL criado. Identificação das entidades envolvidas. Documentação que descreve os processos de ETL Isso inclui informações sobre a origem dos dados, transformações realizadas e destinos de carregamento.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou senior; Engenheiro de Dados Pleno ou senior; Cientista de Dados Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Implementação de rotina de ETL."
+                            },
+                            {
+                                "id": "d",
+                                "complexidade": "Única",
+                                "escopo": "Por alteração, até 6 (seis) entidades de dados.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Processo de ETL alterado. Identificação das entidades envolvidas. Documentação pertinente.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou senior; Engenheiro de Dados Pleno ou senior; Cientista de Dados Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Alteração e teste da rotina ou procedimento de ETL para adequação das regras de negócio e de apresentação necessárias."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 74,
+                        "nome": "Criar e otimizar Consultas - Necessidade Específica",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por evento, até 10 (dez) entidades.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Script criado com consulta desejada. Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Junior ou Pleno; Engenheiro de Dados Pleno.",
+                                "atividades_desempenhadas": "Criar ou otimizar consultas específicas."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por evento, até 10 (dez) entidades.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Script criado com consulta desejada. Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou senior; Cientista de Dados Pleno ou Senior.",
+                                "atividades_desempenhadas": "Criar ou otimizar consultas específicas."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por evento, até 10 (dez) entidades.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Script criado com consulta desejada. Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Senior; Engenheiro de Dados Senior; Cientista de Dados Senior.",
+                                "atividades_desempenhadas": "Criar ou otimizar consultas específicas."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 75,
+                        "nome": "Realizar análise exploratória dos dados",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Única",
+                                "escopo": "Por análise de dados.",
+                                "horas_previstas": 16,
+                                "entregaveis": "Documentação relativa aos dados / Variáries disponíveis / Qualidade dos dados / Relatório conclusivo da Análise realizada.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados Pleno ou Senior.",
+                                "atividades_desempenhadas": "Análise, testes estratégicos para definição de estratégia, geração de Perfil dos dados."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Única",
+                                "escopo": "Por análise de dados em ambiente de Big Data.",
+                                "horas_previstas": 24,
+                                "entregaveis": "Documentação relativa aos dados / Variáries disponíveis / Qualidade dos dados / Relatório conclusivo da Análise realizada.",
+                                "perfis_exigidos": "Engenheiro de Dados Senior ou Cientista de Dados Pleno ou Senior; Arquiteto de Big Data Senior.",
+                                "atividades_desempenhadas": "Análise, testes estratégicos para definição de estratégia, geração de Perfil dos dados."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 76,
+                        "nome": "Implantar / realizar deploy de Solução",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por disponibilização.",
+                                "horas_previstas": 2,
+                                "entregaveis": "Disponibilização da Solução para utilização direta ou integrada a outra solução; Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados Pleno ou Senior; Arquiteto BigData Pleno ou Senior.",
+                                "atividades_desempenhadas": "Disponibilização da Solução para utilização."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por disponibilização.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Disponibilização da Solução para utilização direta ou integrada a outra solução; Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Cientista de Dados Pleno ou Senior; Arquiteto BigData Pleno ou Senior.",
+                                "atividades_desempenhadas": "Disponibilização da Solução para utilização."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por disponibilização.",
+                                "horas_previstas": 8,
+                                "entregaveis": "Disponibilização da Solução para utilização em ambientes Críticos/Complexos de Big Data.",
+                                "perfis_exigidos": "Engenheiro de Dados Senior; Cientista de Dados Pleno ou Senior; Arquiteto BigData Pleno ou Senior.",
+                                "atividades_desempenhadas": "Disponibilização da Solução para utilização."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nome": "Arquitetura e Sustentação de Ambiente de BI e Big Data",
+                "servicos": [
+                    {
+                        "numero": 77,
+                        "nome": "Implantar serviço / componente em ambiente de BI e Big Data",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por serviço / componente em ambiente de BI.",
+                                "horas_previstas": 16,
+                                "entregaveis": "Relatório das atividades realizadas; Serviços ativos e operacionais.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Instalar, atualizar e configurar softwares e rotinas."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 78,
+                        "nome": "Configurar e Gerenciar Arquitetura BI e Big Data",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por serviço / componente em ambiente de BI.",
+                                "horas_previstas": 8,
+                                "entregaveis": "Relatório das atividades realizadas; Serviços ativos e operacionais.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Atualizar o ambiente aplicando as configurações necessárias e colocar o ambiente em produção."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 79,
+                        "nome": "Suporte Ecossistema BI e Big Data",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por evento/Manutenção em ambiente de BI.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Resolução de problemas encontrados, suporte aos usuários e desenvolvedores."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 80,
+                        "nome": "Configurar/Gerenciar Segurança ambiente BI e Big Data",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por ocorrência de Inclusão de usuários em grupo de permissão e/ou concessão de privilégios.",
+                                "horas_previstas": 0.5,
+                                "entregaveis": "Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Criar grupos; usuários e conceder as devidas permissões que garantam o acesso e segurança do ambiente."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 81,
+                        "nome": "Atualizar/Ajustar configuração de produtos que compõem o ambiente de BI e Big Data",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "A cada 02 (duas) alterações de configurações e/ou correções em ambiente de BI.",
+                                "horas_previstas": 0.5,
+                                "entregaveis": "Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Atualização e Ajuste de parametros de configuração de produtos do ecosistema de BI e Big Data."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 82,
+                        "nome": "Tratamento de Incidentes, Tuning ou Atualização em ambiente de BI e BIG DATA",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por resolução de incidente em ambiente de BI, Por atualização em ambiente de BI, Por tuning em ambiente de BI.",
+                                "horas_previstas": 0.5,
+                                "entregaveis": "Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Tratar incidentes e/ou problemas de desempenho ou efetuar atualização de componente em ambiente de BI e Big Data."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 83,
+                        "nome": "Realizar monitoramento/Operação Assistida em ambiente de BI e Big Data",
+                        "variantes": [
+                            {
+                                "id": "-",
+                                "complexidade": "Única",
+                                "escopo": "Por Monitoramento em ambiente de BI.",
+                                "horas_previstas": 1,
+                                "entregaveis": "Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Analista de BI Junior, Pleno ou Senior; Engenheiro de Dados Pleno ou Senior; Arquiteto de Big Data Pleno ou Senior.",
+                                "atividades_desempenhadas": "Monitorar ambiente de maneira preventiva ou sob acionamentos a fim de evitar ou diagnosticar problemas em ambiente de BI."
+                            }
+                        ]
+                    },
+                    {
+                        "numero": 84,
+                        "nome": "Desenvolver Processos de Integração e qualidade de Dados",
+                        "variantes": [
+                            {
+                                "id": "a",
+                                "complexidade": "Baixa",
+                                "escopo": "Por processo, até 2 (duas) fontes de dados.",
+                                "horas_previstas": 4,
+                                "entregaveis": "Processo atualizado; Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Engenheiro de Dados - Pleno; Cientista de Dados Pleno",
+                                "atividades_desempenhadas": "Discutir, pesquisar sobre, escrever e atualiza processos de integração e qualidade de Dados."
+                            },
+                            {
+                                "id": "b",
+                                "complexidade": "Média",
+                                "escopo": "Por processo, até 2 (duas) fontes de dados.",
+                                "horas_previstas": 8,
+                                "entregaveis": "Processo atualizado; Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Engenheiro de Dados - Pleno ou Senior; Cientista de Dados Pleno ou Senior.",
+                                "atividades_desempenhadas": "Discutir, pesquisar sobre, escrever e atualiza processos de integração e qualidade de Dados."
+                            },
+                            {
+                                "id": "c",
+                                "complexidade": "Alta",
+                                "escopo": "Por processo, até 2 (duas) fontes de dados.",
+                                "horas_previstas": 16,
+                                "entregaveis": "Processo atualizado; Relatório das atividades realizadas.",
+                                "perfis_exigidos": "Cientista de Dados Senior; Engenheiro de Dados Senior; Arquiteto BigData Pleno ou Senior.",
+                                "atividades_desempenhadas": "Discutir, pesquisar sobre, escrever e atualiza processos de integração e qualidade de Dados."
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

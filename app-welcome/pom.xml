@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.tedros</groupId>
+  <artifactId>app-welcome</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>App Tedros Box parent project</name>
+  <description>Build a tedros application with all required projects</description>
+  <organization>
+    <name>organizationname</name>
+  </organization>
+  <!-- PROPERTIES -->
+  <properties>
+    <app.ext>17-1.0.0</app.ext>
+    <app.person>17-1.0.0</app.person>
+    <app.services>17-1.0.0</app.services>
+    <app.stock>17-1.0.0</app.stock>
+    <tedros.fx>17-0.0.1</tedros.fx>
+    <app.settings>17-0.0.1</app.settings>
+    <tedros.jee>17-0.0.1</tedros.jee>
+    <javafx.version>17.0.11</javafx.version>
+    <java.version>17</java.version>
+    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.home>D:\java\jdk\jdk-17.0.10\bin</java.home>
+    <commons-collections.version>4.4</commons-collections.version>
+    <commons.logging.version>1.3.3</commons.logging.version>
+    <commons.io.version>2.16.1</commons.io.version>
+    <commons.lang.version>3.14.0</commons.lang.version>
+    <commons.text.version>1.12.0</commons.text.version>
+    <!-- Define the version of OPEN HTML TO PDF in the properties section of your POM. -->
+    <openhtml.version>1.0.10</openhtml.version>
+    <junit.version>4.13</junit.version>
+    <cargo.version>1.10.14</cargo.version>
+    <h2.version>1.4.199</h2.version>
+    <eclipselink.version>4.0.3</eclipselink.version>
+    <jackson.jaxrs.json.provider>2.11.2</jackson.jaxrs.json.provider>
+    <javaee.api.version>9.1.1</javaee.api.version>
+    <openejb.version>9.1.3</openejb.version>
+    <tomee.version>9.1.3</tomee.version>
+    <tomee.ejb.url>http://127.0.0.1:8080/tomee/ejb</tomee.ejb.url>
+    <ejb.version>3.2</ejb.version>
+    <compiler.plugin>3.13.0</compiler.plugin>
+    <source.plugin>3.0.0</source.plugin>
+    <ejb.plugin>3.2.1</ejb.plugin>
+    <resource.plugin>3.3.1</resource.plugin>
+    <ear.plugin>3.3.0</ear.plugin>
+  </properties>
+  <!-- DEVELOPERS -->
+  <developers>
+    <developer>
+      <name>myname</name>
+      <email>myemail</email>
+      <organization>organizationname</organization>
+    </developer>
+  </developers>
+  <!-- BUILD -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${compiler.plugin}</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${source.plugin}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-archetype-plugin</artifactId>
+        <version>3.0.0</version>
+      </plugin>
+    </plugins>
+  </build>
+  <!-- REPOSITORIES -->
+  <repositories>
+    <repository>
+      <id>oss.sonatype.org</id>
+      <name>OSS Sonatype Staging</name>
+      <url>https://oss.sonatype.org/content/groups/staging</url>
+    </repository>
+    <repository>
+      <id>apache.releases.https</id>
+      <name>Apache</name>
+      <url>https://repository.apache.org/service/local/staging/deploy/maven2</url>
+    </repository>
+    <repository>
+      <id>Tedros-Box</id>
+      <name>Tedros</name>
+      <url>https://maven.pkg.github.com/tedros-box/package</url>
+    </repository>
+  </repositories>
+  <!-- MODULES -->
+  <modules>
+    <module>app-welcome-ejb</module>
+    <module>app-welcome-ejb-client</module>
+    <module>app-welcome-ejb-ear</module>
+    <module>app-welcome-model</module>
+    <module>app-welcome-fx</module>
+  </modules>
+</project>

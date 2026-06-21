@@ -3,6 +3,7 @@
  */
 package org.tedros.stock.entity;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonClassDescription;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.stock_out, schema = DomainSchema.schema)
 @DiscriminatorValue("OUT")
 @JsonClassDescription("Product stock output event")

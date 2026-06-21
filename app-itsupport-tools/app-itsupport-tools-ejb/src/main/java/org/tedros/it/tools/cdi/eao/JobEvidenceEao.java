@@ -1,9 +1,11 @@
 package org.tedros.it.tools.cdi.eao;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.tedros.it.tools.entity.JobEvidence;
 import org.tedros.person.model.Employee;
 import org.tedros.server.cdi.eao.TGenericEAO;
@@ -31,8 +33,10 @@ public class JobEvidenceEao extends TGenericEAO<JobEvidence> {
 			sb.append("and lower(p.issueTitle) like :issueTitle ");
 		if(employee!=null)
 			sb.append("and e.id = :employeeId ");
-		if(executionDate!=null)
-			sb.append("and p.executionDate = :executionDate ");
+		if(executionDate!=null) {
+			sb.append("and (p.executionDate >= :executionDateBegin ");
+			sb.append("and p.executionDate < :executionDateEnd) ");
+		}
 		
 		if(orderBy==null) 
 			orderBy = "p.name";
@@ -52,8 +56,12 @@ public class JobEvidenceEao extends TGenericEAO<JobEvidence> {
 			qry.setParameter("issueTitle", "%"+issueTitle.toLowerCase()+"%");
 		if(employee!=null)
 			qry.setParameter("employeeId", employee.getId());
-		if(executionDate!=null)
-			qry.setParameter("executionDate", executionDate);
+		if(executionDate!=null) {
+			Date executionDateBegin = DateUtils.truncate(executionDate, Calendar.DAY_OF_MONTH);
+			Date executionDateEnd = DateUtils.addDays(executionDateBegin, 1);
+			qry.setParameter("executionDateBegin", executionDateBegin);
+			qry.setParameter("executionDateEnd", executionDateEnd);
+		}
 		
 		return qry.getResultList();
 		

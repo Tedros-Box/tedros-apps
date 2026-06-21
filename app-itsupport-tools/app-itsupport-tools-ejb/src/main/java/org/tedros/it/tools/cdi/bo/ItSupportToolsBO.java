@@ -3,13 +3,13 @@
  */
 package org.tedros.it.tools.cdi.bo;
 
-import jakarta.enterprise.context.Dependent;
-import jakarta.inject.Inject;
-
 import org.tedros.it.tools.cdi.eao.ItSupportToolsEAO;
 import org.tedros.server.cdi.bo.TGenericBO;
 import org.tedros.server.cdi.eao.ITGenericEAO;
 import org.tedros.server.entity.ITEntity;
+
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
 
 /**
  * The CDI business object 

@@ -59,7 +59,9 @@
 		<ejb.plugin>3.2.1</ejb.plugin>
 		<resource.plugin>3.3.1</resource.plugin>
 		<ear.plugin>3.3.0</ear.plugin>
-
+    	<!-- Define the folder path for Docker deployment -->
+    	<docker.app.folder>D:\GitHub\Tedros-Box\Tedros\init\docker\deployment_app</docker.app.folder>
+  
 	</properties>
 
 	<!-- DEVELOPERS -->

@@ -3,10 +3,10 @@
  */
 package org.tedros.it.tools.cdi.eao;
 
-import jakarta.enterprise.context.Dependent;
-
 import org.tedros.server.cdi.eao.TGenericEAO;
 import org.tedros.server.entity.ITEntity;
+
+import jakarta.enterprise.context.Dependent;
 
 /**
  * The generic entity access object.

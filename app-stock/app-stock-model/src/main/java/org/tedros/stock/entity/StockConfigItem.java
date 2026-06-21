@@ -3,6 +3,7 @@
  */
 package org.tedros.stock.entity;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,6 +20,7 @@ import org.tedros.stock.domain.DomainTables;
  *
  */
 @Entity
+@Cacheable(false)
 @Table(name = DomainTables.stock_config_item, schema = DomainSchema.schema)
 public class StockConfigItem extends TEntity  {
 

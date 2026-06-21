@@ -52,11 +52,12 @@ implements IJobEvidenceReportController, ITSecurity {
 	protected ITEjbService<JobEvidence> getService() {
 		return serv;
 	}
-
+	
 	@Override
 	public TResult<JobEvidenceReportModel> process(TAccessToken token, JobEvidenceReportModel model) {
 		
 		try {
+			
 			List<JobEvidence> lst = serv.search(model.getName(), model.getIssueNumber(), model.getIssueTitle(), model.getEmployee(), 
 					model.getExecutionDate(), model.getOrderBy(), model.getOrderType());
 			

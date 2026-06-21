@@ -2,8 +2,10 @@ package org.tedros.it.tools.module.evidence.model;
 
 import java.util.Date;
 
+import org.tedros.core.TLanguage;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
+import org.tedros.core.model.TFormatter;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.control.TAutoCompleteEntity;
 import org.tedros.fx.annotation.control.TDatePickerField;
@@ -49,6 +51,7 @@ import org.tedros.person.ejb.controller.IEmployeeController;
 import org.tedros.person.model.Employee;
 import org.tedros.server.query.TCompareOp;
 import org.tedros.server.query.TLogicOp;
+import org.tedros.util.TDateUtil;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -61,11 +64,12 @@ import javafx.beans.property.SimpleStringProperty;
 		page=@TPage(serviceName = IJobEvidenceController.JNDI_NAME,
 			filterByLoggedUser=true,
 			query = @TQuery(entity=JobEvidence.class, condition= {
-				@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME),
-				@TCondition(field = "issueNumber", operator=TCompareOp.EQUAL, label=ItToolsKey.ISSUE_NUMBER)
-				},
-				orderBy= {@TOrder(label = ItToolsKey.ISSUE_NUMBER, field = "issueNumber"),
-						@TOrder(label = TUsualKey.NAME, field = "name")}
+							@TCondition(field = "name", operator=TCompareOp.LIKE, label=TUsualKey.NAME),
+							@TCondition(field = "issueNumber", operator=TCompareOp.EQUAL, label=ItToolsKey.ISSUE_NUMBER)
+						},
+					orderBy= {	@TOrder(label = ItToolsKey.ISSUE_NUMBER, field = "issueNumber"),
+								@TOrder(label = ItToolsKey.EXECUTION_DATE, field = "executionDate"),
+								@TOrder(label = TUsualKey.NAME, field = "name")}
 					),showSearch=true, showOrderBy=true),
 		presenter=@TPresenter(
 			decorator = @TDecorator(viewTitle=ItToolsKey.VIEW_JOB_EVIDENCE, buildModesRadioButton=false),
@@ -118,7 +122,7 @@ public class CreateJobEvidenceMV extends TEntityModelView<JobEvidence> {
     private SimpleObjectProperty<Employee> employee;
 
 	@TLabel(text=ItToolsKey.EXECUTION_DATE)
-	@TDatePickerField()
+	@TDatePickerField(required = true)
     private SimpleObjectProperty<Date> executionDate;
     
     @THTMLEditor(control=@TControl( maxHeight=450, parse = true))
@@ -136,7 +140,18 @@ public class CreateJobEvidenceMV extends TEntityModelView<JobEvidence> {
 
     public CreateJobEvidenceMV(JobEvidence entity) {
         super(entity);
-        super.formatToString("%s - %s", issueNumber, name);
+        super.formatToString(TFormatter.create()
+        		.add(executionDate, in -> {
+        				if(in!=null) {
+							return "[" + TDateUtil.formatShortDate((Date)in, TLanguage.getLocale()) + "]";
+						}
+        				return "";})
+        		.add(" %s -", issueNumber)
+        		.add(" %s", name));
+        
+        if(entity!=null && entity.isNew()) {
+        	executionDate.setValue(new Date());
+        }
     }
 
 	@Override

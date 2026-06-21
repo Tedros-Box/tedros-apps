@@ -27,14 +27,14 @@
 
 		<dependency>
 			<groupId>org.tedros</groupId>
-			<artifactId>app-services-model</artifactId>
-			<version>${app.services}</version>
+			<artifactId>app-person-model</artifactId>
+			<version>${app.person}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.tedros</groupId>
-			<artifactId>app-stock-model</artifactId>
-			<version>${app.stock}</version>
+			<artifactId>tedros-common-model</artifactId>
+			<version>${tedros.jee}</version>
 		</dependency>
 
 		<dependency>

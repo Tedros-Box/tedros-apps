@@ -11,6 +11,12 @@ public interface DomainTables {
     static final String GMUD_ITEM = "IT_GMUD_ITEM";
     static final String GMUD_ISSUE_REFERENCE = "IT_GMUD_ISSUE_REFERENCE";
     static final String GMUD_REVIEW = "IT_GMUD_REVIEW";
+
+    // Service Catalog
+    static final String SERVICE_CATALOG = "IT_SERVICE_CATALOG";
+    static final String SERVICE_GROUP = "IT_SERVICE_GROUP";
+    static final String CATALOG_SERVICE = "IT_CATALOG_SERVICE";
+    static final String SERVICE_VARIANT = "IT_SERVICE_VARIANT";
 }
 
 

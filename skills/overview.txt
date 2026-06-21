@@ -1,0 +1,19 @@
+O objetivo do framework Tedros é simplificar e tornar o desenvolvimento de aplicativos desktop com javafx o mais agil possivel, a ideia inicial veio
+apartir da dificuldade das empresas em criar aplicativos para as diversas areas de operação (RH, Vendas, Compras, Estoque, CRM e outros) de forma integrada
+e customizada que atenda as suas necessidades. Para suprir essa necessidade do mercado o Tedros foi construido sobre as seguintes premissas:
+
+- O Sistema Tedros deve executar e gerenciar o ciclo de vida dos aplicativos 
+- Os aplicativos devem ser integraveis, isto é, se um aplicativo precisar consultar a base de clientes ele irá utilizar os componentes do app-person, se precisar de dados de produtos ele irá usar os componentes do aplicativo app-stock e assim por diante.
+- O framework deve dar a capacidade do desenvolvedor se preocupar apenas com as regras de negocios, isto é, ele não deve se preocupar em ter que implementar  o design, validações de permissão, criação de binds entre os componentes de tela e o model/entidade, listagem, paginação, criação de telas
+- O sistema tedros deve ser internacionalizado (Ingles/portugues)
+- O sistema tedros deve dar a opção para o usuario customizar o visual do sistema de acordo com a sua marca (cores, fundo de tela, logo)
+- O sistema tedros dever dar a opção do usuario criar e configurar os perfis e usuarios do sistema
+- O framework tedros deve abstrair o maximo de codigos boilerplates para deixar que o desenvolvedor foque apenas no desenvolvimento do negocio
+- O framework tedros dever ser totalmente IA friendly, deve ser capaz de dar capacidade de agentes de IA de interagir com o sistema (Abrir telas, consultar dados, cruzar informação e outros)
+
+Essas premissas criaram o core da arquitetura tedros.
+
+O framework tedros é dividido em varias projetos maven:
+
+
+

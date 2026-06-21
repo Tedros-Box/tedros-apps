@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subrep_attributes" pageWidth="595" pageHeight="802" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="191ec7ab-7ce8-4bd4-b3c5-cb79712e2f2b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Desenv\\Projetos\\CovidSemFome\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hName" class="java.lang.String"/>
+	<parameter name="hNumber" class="java.lang.String"/>
+	<parameter name="hVariantId" class="java.lang.String"/>
+	<parameter name="hComplexity" class="java.lang.String"/>
+	<parameter name="hScope" class="java.lang.String"/>
+	<parameter name="hEstimatedHours" class="java.lang.String"/>
+	<parameter name="hDeliverables" class="java.lang.String"/>
+	<parameter name="hRequiredProfiles" class="java.lang.String"/>
+	<parameter name="hActivitiesPerformed" class="java.lang.String"/>
+	<field name="variantId" class="java.lang.String"/>
+	<field name="complexity" class="java.lang.String"/>
+	<field name="scope" class="java.lang.String"/>
+	<field name="estimatedHours" class="java.lang.Double"/>
+	<field name="deliverables" class="java.lang.String"/>
+	<field name="requiredProfiles" class="java.lang.String"/>
+	<field name="activitiesPerformed" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" forecolor="#CCCCCC" uuid="f9eac50e-694c-4200-a036-8bb15793d7d6"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="0" y="0" width="68" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9697cd2f-3c1f-4708-a528-052aefeeb804"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hVariantId}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="148" y="0" width="78" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="8e60dfa6-15cd-4eb8-9c93-ed8a9e13ef09"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hComplexity}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="326" y="0" width="109" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="b326a0d7-920e-476b-b7ab-9e33eef47543"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hEstimatedHours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="68" y="0" width="80" height="20" uuid="511e4f47-eca8-4186-9948-741cd415e6ff"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{variantId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="0" width="100" height="20" uuid="e2c9578e-5f21-414a-971c-c3387075eb7f"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{complexity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="0" width="160" height="20" uuid="2668d750-499b-481e-9e35-9506c01b2c4b"/>
+				<textFieldExpression><![CDATA[$P{hEstimatedHours}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<printWhenExpression><![CDATA[]]></printWhenExpression>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="0" y="0" width="68" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="ac2af047-1945-49ae-9108-4e0e442b88d2"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hScope}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="68" y="0" width="527" height="20" uuid="bfa43930-69f5-4f54-8984-0b901547af3a"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{scope}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="0" y="0" width="105" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="afdce35b-e026-4fd8-ad61-75dfbcb44020"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hRequiredProfiles}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="105" y="0" width="490" height="20" uuid="3a9e868d-1da5-43c3-9364-2f1fcfc9051d"/>
+				<textFieldExpression><![CDATA[$F{requiredProfiles}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="0" y="0" width="105" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="038e6eb6-fe2c-4c62-914c-b98e2549f453"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hDeliverables}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="105" y="0" width="490" height="20" uuid="b7cdce50-1e2b-4776-aa64-e502146763b4"/>
+				<textFieldExpression><![CDATA[$F{deliverables}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="0" y="0" width="105" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="22c1b5c4-f813-4fb9-b0e2-59f1f4697887"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hActivitiesPerformed}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="105" y="0" width="490" height="20" uuid="073c115f-b70e-4489-8bcf-af0c44694d59"/>
+				<textFieldExpression><![CDATA[$F{activitiesPerformed}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
