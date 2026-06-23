@@ -3,7 +3,7 @@ import os
 APP_NAME = "app-welcome"
 APP_PACKAGE = "welcome"
 APP_PREFIX = "welcome"
-BASE_DIR = r"c:\desenv\tedros\github\tedros-apps\app-welcome"
+BASE_DIR = os.path.join(os.getcwd(), APP_NAME)
 
 files = {
     "pom.xml": """<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -31,7 +31,6 @@ files = {
     <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.source>17</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.home>D:\\java\\jdk\\jdk-17.0.10\\bin</java.home>
     <commons-collections.version>4.4</commons-collections.version>
     <commons.logging.version>1.3.3</commons.logging.version>
     <commons.io.version>2.16.1</commons.io.version>
@@ -55,7 +54,7 @@ files = {
     <resource.plugin>3.3.1</resource.plugin>
     <ear.plugin>3.3.0</ear.plugin>
     <!-- Define the folder path for Docker deployment -->
-    <docker.app.folder>D:\GitHub\Tedros-Box\Tedros\init\docker\deployment_app</docker.app.folder>
+    <docker.app.folder>../../../tedros-environment/docker/deployment_app</docker.app.folder>
   </properties>
   <!-- DEVELOPERS -->
   <developers>

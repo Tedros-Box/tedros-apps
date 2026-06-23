@@ -32,7 +32,6 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<maven.compiler.source>17</maven.compiler.source>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.home>D:\java\jdk\jdk-17.0.10\bin</java.home>
 
 		<commons-collections.version>4.4</commons-collections.version>
 		<commons.logging.version>1.3.3</commons.logging.version>
@@ -63,7 +62,7 @@
 		<ear.plugin>3.3.0</ear.plugin>
   
     	<!-- Define the folder path for Docker deployment -->
-    	<docker.app.folder>D:\GitHub\Tedros-Box\Tedros\init\docker\deployment_app</docker.app.folder>
+    	<docker.app.folder>../../../tedros-environment/docker/deployment_app</docker.app.folder>
   
 	</properties>
 
