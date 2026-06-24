@@ -33,7 +33,7 @@ if ($null -eq $selectedProjects) {
             Push-Location $project.Path
             
             # Executa o Maven e exibe o log em tempo real
-            mvn clean install -DskipTests -s D:\maven\3.9.16\conf\tdrs-settings.xml
+            mvn clean install -DskipTests -s D:\maven\3.9.16-tdrs\conf\settings.xml
             
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "`n[ERRO] O Maven falhou no projeto $($project.Name). O script foi interrompido." -ForegroundColor White -BackgroundColor Red
