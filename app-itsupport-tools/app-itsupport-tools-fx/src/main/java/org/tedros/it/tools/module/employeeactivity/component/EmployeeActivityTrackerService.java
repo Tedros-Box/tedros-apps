@@ -115,7 +115,7 @@ public class EmployeeActivityTrackerService implements NativeKeyListener, Native
             // Último snapshot + envio antes de parar
             snapshotActivity();
             if (!activityQueue.isEmpty()) {
-                triggerAsyncSave(); // Manda o restante para o backend
+            	save(); // Manda o restante para o backend
             }
 
             if (!scheduler.awaitTermination(8, TimeUnit.SECONDS)) {
@@ -181,26 +181,30 @@ public class EmployeeActivityTrackerService implements NativeKeyListener, Native
     private void triggerAsyncSave() {
         // Submit para a thread separada de rede
         networkExecutor.submit(() -> {
-            List<ProductivityActivityDTO> batch = new ArrayList<>();
-            // Move todos os itens atuais da fila para a lista batch de forma thread-safe
-            activityQueue.drainTo(batch);
-
-            if (batch.isEmpty()) return;
-
-            try (TEjbServiceLocator locator = TEjbServiceLocator.getInstance()) {
-                IProductivityActivityController controller = locator.lookup(IProductivityActivityController.JNDI_NAME);
-                controller.saveActivity(loggedUser.getAccessToken(), batch);
-            } catch (Exception e) { 
-                TLoggerUtil.error("Falha ao salvar batch de atividades. Reenfileirando para próxima tentativa...", e);
-                // Se falhar, devolve para a fila (protegendo contra estouro da capacidade)
-                for (ProductivityActivityDTO dto : batch) {
-                    if (!activityQueue.offer(dto)) {
-                        break; // Se encheu a fila novamente, descarta o resto do batch antigo
-                    }
-                }
-            }
+            save();
         });
     }
+
+	private void save() {
+		List<ProductivityActivityDTO> batch = new ArrayList<>();
+		// Move todos os itens atuais da fila para a lista batch de forma thread-safe
+		activityQueue.drainTo(batch);
+
+		if (batch.isEmpty()) return;
+
+		try (TEjbServiceLocator locator = TEjbServiceLocator.getInstance()) {
+		    IProductivityActivityController controller = locator.lookup(IProductivityActivityController.JNDI_NAME);
+		    controller.saveActivity(loggedUser.getAccessToken(), batch);
+		} catch (Exception e) { 
+		    TLoggerUtil.error("Falha ao salvar batch de atividades. Reenfileirando para próxima tentativa...", e);
+		    // Se falhar, devolve para a fila (protegendo contra estouro da capacidade)
+		    for (ProductivityActivityDTO dto : batch) {
+		        if (!activityQueue.offer(dto)) {
+		            break; // Se encheu a fila novamente, descarta o resto do batch antigo
+		        }
+		    }
+		}
+	}
 
     private String getActiveWindowTitle() {
         String windowTitle = "Unknown Window/OS";

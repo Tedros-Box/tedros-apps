@@ -29,8 +29,11 @@ public class MongoConnectionManager {
     
     @PostConstruct
     public void init() {
-    	
-    	try(TServiceLocator serv = TServiceLocator.getInstance()) {
+    	buildMongoClient();
+    }
+
+	private void buildMongoClient() {
+		try(TServiceLocator serv = TServiceLocator.getInstance()) {
             
     		TPropertieSupport support = serv.lookupWithRetry(TPropertieSupport.JNDI_NAME);
     		String uri = support.getValue(TSystemPropertie.MONGODB_URI.getValue());
@@ -84,9 +87,11 @@ public class MongoConnectionManager {
             System.err.println("Erro ao inicializar conexao com o MongoDB: " + e.getMessage());
             e.printStackTrace();
         }
-    }
+	}
 
     public MongoClient getMongoClient() {
+    	if(mongoClient==null)
+    		buildMongoClient();    
         return mongoClient;
     }
 
