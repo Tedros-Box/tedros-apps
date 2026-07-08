@@ -407,7 +407,6 @@ The structural naming rules apply as follows:
   <properties>
   <property name="jakarta.persistence.retrieveMode" value="BYPASS"/>
   <property name="jakarta.persistence.storeMode" value="BYPASS"/>
-  <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
   
   <!-- drop-and-create-tables || create-or-extend-tables -->
   <property name="eclipselink.ddl-generation" value="create-tables"/>
@@ -574,11 +573,6 @@ remote.connection.default.password=s221978
    <version>1.0-SNAPSHOT</version>
    <scope>compile</scope>
    <type>ejb</type>
-  </dependency>
-  <dependency>
-   <groupId>com.h2database</groupId>
-   <artifactId>h2</artifactId>
-   <version>${h2.version}</version>
   </dependency>
   <dependency>
    <groupId>junit</groupId>
