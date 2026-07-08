@@ -12,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -56,7 +57,8 @@ public class DocumentEvent extends TVersionEntity {
 	columnNames = { "event_id","contact_id"}))
 	public List<Contact> contacts;
 	
-	@Column
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String content;
 	
 	

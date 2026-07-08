@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -45,7 +46,8 @@ public class Document extends TReceptiveEntity {
 	@Column(length=120, nullable = false)
 	private String name;
 	
-	@Column()
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String value;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -56,10 +58,12 @@ public class Document extends TReceptiveEntity {
 	@JoinColumn(name="status_id")
 	private DocumentStatus status;
 	
-	@Column()
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String observation;
 	
-	@Column()
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String content;
 
 	@JsonIgnore

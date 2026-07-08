@@ -12,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -49,10 +50,12 @@ public class CostCenter extends TVersionEntity {
 	@Column(length=120, nullable = false)
 	private String name;
 	
-	@Column
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
-	@Column
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String observation;
 	
 	@Column

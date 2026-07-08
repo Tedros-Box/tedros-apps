@@ -17,6 +17,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -35,7 +36,8 @@ public class JobEvidence extends TEntity {
 	@Column(length=120, nullable = false)
 	private String name;
 	
-	@Column
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	
 	@Column(length=50)

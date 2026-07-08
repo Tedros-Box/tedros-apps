@@ -16,6 +16,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -40,7 +41,8 @@ public class JobEvidenceItem extends TEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date evidenceDate;
 	
-	@Column
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
