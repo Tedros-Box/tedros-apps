@@ -14,6 +14,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -63,7 +64,8 @@ public class Contract extends TVersionEntity {
 	@Column(length=2000)
 	private String observation;
 	
-	@Column
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String content;
 	
 	@OneToMany(orphanRemoval=true, 

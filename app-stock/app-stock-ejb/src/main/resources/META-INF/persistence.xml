@@ -81,7 +81,6 @@
 		    <property name="jakarta.persistence.cache.retrieveMode" value="BYPASS"/>
 		    <property name="jakarta.persistence.cache.storeMode" value="BYPASS"/>
     
-		    <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
 		    
 		    <!-- drop-and-create-tables || create-or-extend-tables -->
 		    <property name="eclipselink.ddl-generation" value="create-tables"/>

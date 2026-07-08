@@ -1,176 +1,68 @@
-# Tedros
-|[Português](https://github.com/Tedros-Box/tedros-apps/blob/master/README-pt.md)|
+# Tedros Apps
 
-Tedros is a powerful application development framework for the Tedros system. With a wide range of features and advanced technologies, Tedros allows you to create robust, scalable, internationalized, rich and intelligent applications declaratively and quickly, without many complications. Focus on the business core to be developed, Tedros was designed to manage and integrate applications with each other and with artificial intelligence and aiming at this scenario, some base applications were developed to support that can be customized and integrated according to the customer's needs.
+**Tedros Apps** é o repositório dedicado aos aplicativos e módulos base do ecossistema corporativo Tedros. Ele contém aplicações prontas para extensão (Gestão de Pessoas, Estoque, Serviços, TI, etc.) e é o local onde você desenvolverá novos aplicativos de negócios para a plataforma.
 
-**Declaratively**
-```java
-@TSelectionModalPresenter(allowsMultipleSelections = true, 
-	page = @TPage(modelView=ChatUserMV.class, 
-		serviceName = IChatUserController.JNDI_NAME, query = 
-		@TQuery(entity=ChatUser.class)),
-	tableView = @TTableView(columns = { 
-		@TTableColumn(text = TUsualKey.NAME, cellValue="name")}))
-public class ChatUserMV extends TEntityModelView<ChatUser> {
+Este repositório compõe a stack do framework:
+- **[Tedros](https://github.com/Tedros-Box/Tedros)**: O núcleo do framework (lado cliente e servidor).
+- **[tedros-apps](https://github.com/Tedros-Box/tedros-apps)**: Este repositório, focado nos aplicativos e módulos de negócio.
+- **[tedros-environment](https://github.com/Tedros-Box/tedros-environment)**: Infraestrutura, orquestração Docker, proxy e banco de dados.
 
-	@TLabel(text=TUsualKey.NAME)
-	@TTextField
-	private SimpleStringProperty name;
-	
-	private SimpleStringProperty profiles;
-	
-	public ChatUserMV(ChatUser entity) {
-		super(entity);
-		super.formatToString("%s", name);
-	}
-}
-```
+---
 
-One of the most impressive features of Tedros is its chat with the artificial intelligence called Teros. It is possible to create functions that give access to artificial intelligence, generating countless possibilities for interaction.
+## 🏗️ Arquitetura de um Aplicativo
 
-1. Ask questions: You can ask questions to obtain information or clarify doubts about various subjects.
+O ecossistema Tedros adota uma arquitetura rigorosa de 5 submódulos Maven para cada novo aplicativo. Esta separação garante segurança, organização da lógica de negócios e UI isolada:
 
-2. Get answers: Teros will provide relevant and useful answers to your questions based on knowledge and capabilities of artificial intelligence.
+1. **Root (`pom.xml`)**: O projeto pai que amarra os módulos de um aplicativo.
+2. **`-model`**: Contém as entidades JPA e objetos de domínio, transferidos entre cliente e servidor.
+3. **`-ejb-client`**: Interfaces dos controladores EJB remotos.
+4. **`-ejb`**: O backend do seu aplicativo, contendo regras de negócio (BO), repositórios (EAO), lógica transacional (Services) e exposição segura de API (Controllers), além de configurações JPA (`persistence.xml`).
+5. **`-ejb-ear`**: O empacotador *Enterprise Archive* (EAR) usado para o deploy da aplicação no Apache TomEE.
+6. **`-fx`**: O lado cliente em JavaFX, contendo classes de Visão (`ModelView`), anotações de formulário, layouts e recursos de internacionalização (i18n).
 
-3. Request creation of images: You can ask Teros to create specific images according to your needs.
+O Tedros utiliza o **PostgreSQL** como o banco de dados principal de produção (com H2 suportado para desenvolvimento simplificado). A infraestrutura e scripts para inicialização do banco são gerenciados no repositório `tedros-environment`.
 
-4. Explore features: Teros can provide you with information about features available in the Tedros system and how to use them.
+---
 
-5. Get technical support: Teros can help troubleshoot technical issues and provide step-by-step guidance to resolve system-related issues.
+## 🚀 Como Desenvolver um Novo Aplicativo
 
-6. Perform automated tasks: Teros can perform automated tasks such as performing transactions, sending notifications or performing specific actions on the system.
+### 1. Scaffolding (Estrutura Inicial)
+Evite a criação manual de diretórios e arquivos de configuração! Utilize o script Python de scaffolding localizado em `skills/core/scaffold.py`. Ele gerará todos os 5 projetos do seu aplicativo já pré-configurados com os `pom.xml` adequados.
+* **Guia**: [`skills/core/project-scaffolding.md`](skills/core/project-scaffolding.md)
 
-These are just some of the actions you can perform on the Tedros system through chat with the Teros artificial intelligence. Teros is ready to help and provide support in several areas, making interaction with the system more efficient and intuitive.
+### 2. Ponto de Entrada e Módulos
+Toda aplicação começa com uma classe `AppStart` anotada com `@TApplication`. Essa anotação é lida por reflexão, tornando o aplicativo visível na plataforma sem a necessidade de configurações de registro manuais. 
+Dentro da `AppStart`, você registra classes filhas de `TModule` (anotadas com `@TView`), que definirão as abas e telas visíveis no menu lateral da aplicação.
+* **Guia**: [`skills/applications-and-modules-overview.md`](skills/applications-and-modules-overview.md)
 
-If the user has a specific question or needs help with a particular feature, just ask Teros the question and he's ready to help!
+### 3. Camada de Dados e Regras de Negócio (Backend)
+No módulo `-ejb`, você concentrará as regras de segurança e domínio:
+* **Entidades**: Objetos JPA para abstração de banco de dados.
+* **EAO (Entity Access Objects)**: Tratamento de eventos de ciclo de vida do banco (callbacks).
+* **BO (Business Objects)**: Onde reside toda a lógica de negócios da sua aplicação (contexto CDI local).
+* **Services**: EJBs `@Singleton` locais que gerenciam bloqueios (`@Lock`) e transações (`@TransactionAttribute`).
+* **Controllers**: EJBs remotos (`@Stateless`) protegidos pelo interceptor `@TSecurityInterceptor`, expondo a API de forma segura.
+* **Guias**: [`skills/data/`](skills/data/)
 
-**Create a function and that's it**
-```java
-/**
- * This function provides data on product prices 
- * to artificial intelligence
- * 
- * @author Davis Gordon
- *
- */
-public class ListProductPriceAiFunction extends TFunction<Empty> {
+### 4. Interface Gráfica Declarativa (JavaFX)
+O módulo `-fx` é o responsável por toda a interação do usuário. O Tedros possui um motor de UI declarativa massivo: você constrói telas inteiras apenas adicionando anotações (como `@TForm`, `@TTextField`, `@TComboBox`, etc.) sobre uma classe `TEntityModelView`.
+A comunicação de binding entre os campos visuais e sua Entidade é resolvida automaticamente por reflexão.
+* **Guias**: [`skills/ui/`](skills/ui/)
 
-	public ListProductPriceAiFunction() {
-		super("list_products_price", "Lists all products price", Empty.class, 
-			v->{
-				ServiceLocator loc = ServiceLocator.getInstance();
-				try {
-					IProductPriceController serv = loc.lookup(IProductPriceController.JNDI_NAME);
-					TResult<List<ProductPrice>> res = serv
-						.listAll(TedrosContext.getLoggedUser().getAccessToken(), ProductPrice.class);
-					
-					if(res.getState().equals(TState.SUCCESS) && !res.getValue().isEmpty()) {
-						List<Price> lst = new ArrayList<>();
-						res.getValue().forEach(p-> lst.add(new Price(p)));
-						return new Response("The products price list", lst);
-					}
-				} catch (NamingException e) {
-					e.printStackTrace();
-				}finally {
-					loc.close();
-				}
-				
-				return new Response("No data found");
-		});
-	}
-}
-```
+### 5. Integração Remota
+Os módulos cliente (`-fx`) comunicam-se com os EJBs do servidor usando lookups JNDI fornecidos por interfaces padrão, repassando o `TAccessToken` para validação na raiz de cada método de negócio.
+* **Guias**: [`skills/integration/`](skills/integration/)
 
-Below is a list of features provided by base applications that can be integrated and customized.
+---
 
-1. Theme Tools:
-    - Choose a theme for Tedros
-    - Change the colors of panels, texts, buttons and forms
-    - Change the background image
+## 📚 Base de Conhecimento (Skills)
 
-2. Preferences:
-    - Manage key system properties
-    - Manage Mime types of files
+Para auxiliar programadores humanos e também **Agentes de Inteligência Artificial**, este repositório traz uma pasta `skills/` com rica documentação e padrões de projeto exigidos pela arquitetura Tedros:
 
-3. Users:
-    - Load all authorization policies
-    - Manage user profiles
-    - Manage system users
+*   **[`skills/tedros-framework-overview.md`](skills/tedros-framework-overview.md)**: Visão arquitetural ponta a ponta.
+*   **`skills/core/`**: Scripts de scaffolding e padrões de árvore de diretório.
+*   **`skills/data/`**: Guias para construir sua camada de banco de dados e regras de negócio.
+*   **`skills/ui/`**: Catálogo de controles visuais, layout avançado e gerenciamento de arquivos.
+*   **`skills/integration/`**: Regras para se conectar e invocar os controladores remotos via EJB.
 
-4. Notifications:
-    - Manage email notifications (Scheduled, Sent or Queued)
-
-5. Teros (Artificial Intelligence):
-    - Describe an image to be created by artificial intelligence
-    - Ask questions to artificial intelligence
-    - Chat with artificial intelligence
-
-6. Products and Inventory:
-    - Manage the product catalog
-    - Create product reports
-    - Configure product inventory
-    - Record entries and exits of products in stock
-    - Manage input and output types of products
-    - Create inventory reports
-
-7. Support:
-    - Manage documents
-    - Manage document types
-    - Manage document states
-    - Manage locations (places, administrative areas, cities and countries)
-    - Manage individuals and legal entities
-    - Manage types of natural and legal persons
-    - Manage situations of individuals and legal entities
-    - Manage members and member types
-    - Manage member statuses
-    - Manage philanthropists and types of philanthropists
-    - Manage philanthropist situations
-    - Manage volunteers and types of volunteers
-    - Manage volunteer situations
-    - Manage customers and customer types
-    - Manage customer situations
-    - Manage categories of people
-
-[Go to the documentation on the Wiki for more information on setting up the development environment and exploring all available functionality.](https://github.com/Tedros-Box/tedros-apps/wiki)
-
-**Login**
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/login.png)
-
-**Main screen with open side menu**
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/menu-lateral.png)
-
-**Teros**
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/teros.png)
-
-**Example of a simple view with search and pagination**
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/tela-pais.png)
-
-**Example of generated report, logo can be changed in preferences**
-![Chatgpt](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/pf_rel2.png)
-
-
-# use case
-
-The Tedros system is in full use by the NGO [Social Movement](http://www.somossocial.org.br)
-
-This NGO started during the coronavirus pandemic Covid-19 that resulted in increased hunger, due to the lockdown, in many vulnerable people and homeless people who depended on food donations from restaurants and ordinary people, it was then that a group of friends started to prepare meals in home and distribute them on the streets. The initiative worked and they grew in volunteers, donations and distributed meals. With this growth came the need to follow a work process that would help them manage actions, donations, entry and exit of products in stock, recruitment and control of volunteers, mailing, terms of membership and information on the web site. With Tedros, a complete solution was developed that met all the needs of the then project called Covid Sem Fome and quickly and gradually the solution was developed without much effort, there were several iterations and changes in the applications and in the system, there were 27 versions in total , but they were all done quickly and without too many complications. When the project was officially registered as an NGO and with a new name, process and website the refactoring of the applications and the website was carried out without much effort and complication and today as I write this **the entire system is in functional and stable without interventions for +1.5 years**.
-
-The NGO's website is integrated with the services at the business layer of the Tedros system applications, which are used by the various NGO employees, each with the appropriate profile and permissions for their role.
-
-Here are some prints of Tedros and applications made for the NGO.
-
-NGO app screen:
-![Screen 1](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos1.png)
-
-![Screen 3](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos3.png)
-
-![Screen 4](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos4.png)
-
-![Screen 5](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos5.png)
-
-![Screen 6](https://github.com/Tedros-Box/tedros-apps/blob/master/printscreen/somos6.png)
-
-
-# Contact:
-Email: tedrosbox@gmail.com
-[LinkedIn](https://www.linkedin.com/in/davis-gordon-dun/)
+Sempre leia as orientações nos guias listados na pasta `skills/` antes de criar novos componentes para sua aplicação.

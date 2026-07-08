@@ -26,6 +26,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -75,7 +76,8 @@ public class StockEvent extends TVersionEntity implements ICostCenterAccounting,
 	@JoinColumn(name="person_id", nullable=true)
 	private Person responsable;
 	
-	@Column()
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String observation;
 	
 	@JsonPropertyDescription("List of items")

@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -59,7 +60,8 @@ public class Product extends TVersionEntity {
 	@JsonProperty(required=true)
 	private String name;
 	
-	@Column
+	@Lob
+	@Column(columnDefinition = "TEXT")
 	@JsonProperty
 	private String description;
 	
