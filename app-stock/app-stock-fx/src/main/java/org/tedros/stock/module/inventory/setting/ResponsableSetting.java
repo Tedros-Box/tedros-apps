@@ -12,7 +12,6 @@ import org.tedros.fx.model.TEntityModelView;
 import org.tedros.server.entity.TEntity;
 import org.tedros.server.query.TBlock;
 
-import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.WeakChangeListener;
 

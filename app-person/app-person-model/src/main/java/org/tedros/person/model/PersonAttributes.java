@@ -3,13 +3,13 @@
  */
 package org.tedros.person.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
 import org.tedros.person.domain.DomainSchema;
 import org.tedros.person.domain.DomainTables;
 import org.tedros.server.entity.TVersionEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 /**
  * @author Davis Gordon

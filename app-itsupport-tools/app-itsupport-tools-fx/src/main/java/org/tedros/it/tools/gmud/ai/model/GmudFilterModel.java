@@ -1,10 +1,12 @@
 package org.tedros.it.tools.gmud.ai.model;
 
 import java.util.Date;
+
 import org.tedros.it.tools.domain.GmudStatus;
 import org.tedros.it.tools.domain.GmudType;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription; // Importante
+
 import com.fasterxml.jackson.annotation.JsonFormat; // Importante para datas
+import com.fasterxml.jackson.annotation.JsonPropertyDescription; // Importante
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

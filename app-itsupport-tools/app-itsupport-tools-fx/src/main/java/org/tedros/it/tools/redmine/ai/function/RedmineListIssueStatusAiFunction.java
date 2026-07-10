@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.ToolCallResult;
 import org.tedros.ai.function.model.Empty;
-import org.tedros.it.tools.redmine.api.model.TIssueStatus;
-import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
+import org.tedros.integration.redmine.api.model.TIssueStatus;
+import org.tedros.integration.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
 public class RedmineListIssueStatusAiFunction extends TFunction<Empty> {

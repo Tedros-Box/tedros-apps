@@ -7,8 +7,6 @@ import org.tedros.fx.control.TDetailField;
 import org.tedros.fx.control.trigger.TTrigger;
 import org.tedros.fx.form.TFieldBox;
 
-import javafx.beans.Observable;
-
 /**
  * @author Davis Gordon
  *

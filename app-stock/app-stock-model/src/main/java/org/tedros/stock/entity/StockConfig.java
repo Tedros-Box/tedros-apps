@@ -5,6 +5,14 @@ package org.tedros.stock.entity;
 
 import java.util.List;
 
+import org.tedros.person.model.CostCenter;
+import org.tedros.person.model.ICostCenterAccounting;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.model.Person;
+import org.tedros.server.entity.TVersionEntity;
+import org.tedros.stock.domain.DomainSchema;
+import org.tedros.stock.domain.DomainTables;
+
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -14,14 +22,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-
-import org.tedros.person.model.CostCenter;
-import org.tedros.person.model.ICostCenterAccounting;
-import org.tedros.person.model.LegalPerson;
-import org.tedros.person.model.Person;
-import org.tedros.server.entity.TVersionEntity;
-import org.tedros.stock.domain.DomainSchema;
-import org.tedros.stock.domain.DomainTables;
 
 /**
  * @author Davis Gordon

@@ -5,6 +5,12 @@ package org.tedros.person.model;
 
 import java.util.Set;
 
+import org.tedros.person.domain.DomainSchema;
+import org.tedros.person.domain.DomainTables;
+import org.tedros.server.entity.TVersionEntity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -12,12 +18,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-
-import org.tedros.person.domain.DomainSchema;
-import org.tedros.person.domain.DomainTables;
-import org.tedros.server.entity.TVersionEntity;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Davis Gordon

@@ -6,8 +6,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.ToolCallResult;
-import org.tedros.it.tools.gitlab.ai.model.TGitLabProjectId;
-import org.tedros.it.tools.gitlab.api.model.BranchModel;
+import org.tedros.integration.gitlab.ai.model.TGitLabProjectId;
+import org.tedros.integration.gitlab.api.model.BranchModel;
 import org.tedros.util.TLoggerUtil;
 
 

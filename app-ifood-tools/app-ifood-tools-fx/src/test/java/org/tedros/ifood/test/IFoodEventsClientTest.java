@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.tedros.ifood.api.client.IFoodClientBuilder;
 import org.tedros.ifood.api.client.IFoodEventsClient;
-import org.tedros.ifood.api.client.IFoodMerchantClient;
 import org.tedros.ifood.api.model.PollingEvent;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

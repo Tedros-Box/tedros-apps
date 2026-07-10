@@ -5,9 +5,9 @@ import org.slf4j.Logger;
 import org.tedros.fx.control.TTextAreaField;
 import org.tedros.fx.control.trigger.TTrigger;
 import org.tedros.fx.form.TFieldBox;
+import org.tedros.integration.redmine.api.model.TIssueEvidenceInfo;
+import org.tedros.integration.redmine.gateway.RedmineApiGateway;
 import org.tedros.it.tools.redmine.ai.function.RedmineApiPropertyUtil;
-import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
-import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
 public class SearchForIssueTrigger extends TTrigger<String> {

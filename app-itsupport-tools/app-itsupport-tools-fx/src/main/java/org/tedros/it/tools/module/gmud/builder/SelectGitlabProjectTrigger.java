@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.tedros.fx.control.trigger.TTrigger;
 import org.tedros.fx.form.TFieldBox;
+import org.tedros.integration.gitlab.api.model.GitLabProject;
 import org.tedros.it.tools.gitlab.ai.function.GitLabGatewayFactory;
-import org.tedros.it.tools.gitlab.api.model.GitLabProject;
 import org.tedros.it.tools.module.gmud.model.EditGmudMV;
 import org.tedros.util.TLoggerUtil;
 

@@ -13,7 +13,6 @@ import org.tedros.extension.model.City;
 import org.tedros.extension.model.Country;
 import org.tedros.fx.TFxKey;
 import org.tedros.fx.TUsualKey;
-import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TIntegratedLinkField;
 import org.tedros.fx.annotation.control.TLabel;
 import org.tedros.fx.annotation.control.TShowField;
@@ -27,9 +26,6 @@ import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
 import org.tedros.fx.annotation.process.TEjbService;
-import org.tedros.fx.annotation.scene.TNode;
-import org.tedros.fx.annotation.text.TText;
-import org.tedros.fx.control.TText.TTextStyle;
 import org.tedros.fx.domain.TTimeStyle;
 import org.tedros.fx.model.TEntityModelView;
 import org.tedros.sample.ejb.controller.ISampleBController;
@@ -39,7 +35,6 @@ import org.tedros.samples.module.entity.action.NewAction;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.geometry.Pos;
 
 /**
  * @author Davis Gordon

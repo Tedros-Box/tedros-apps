@@ -1,15 +1,16 @@
 package org.tedros.ifood.api.client;
 
+import java.util.function.Supplier;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
 import feign.okhttp.OkHttpClient;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import java.util.function.Supplier;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class IFoodClientBuilder {

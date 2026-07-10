@@ -1,12 +1,12 @@
 package org.tedros.ifood.test;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.Test;
 import org.tedros.ifood.api.client.IFoodAuthClient;
 import org.tedros.ifood.api.client.IFoodClientBuilder;
 import org.tedros.ifood.api.model.IFoodAuthRequest;
 import org.tedros.ifood.api.model.IFoodAuthResponse;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class IFoodAuthClientTest {
 

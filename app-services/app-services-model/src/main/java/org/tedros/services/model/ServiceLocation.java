@@ -3,6 +3,13 @@
  */
 package org.tedros.services.model;
 
+import org.tedros.extension.model.Place;
+import org.tedros.server.entity.TVersionEntity;
+import org.tedros.services.domain.DomainSchema;
+import org.tedros.services.domain.DomainTables;
+
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,13 +17,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-import org.tedros.extension.model.Place;
-import org.tedros.server.entity.TVersionEntity;
-import org.tedros.services.domain.DomainSchema;
-import org.tedros.services.domain.DomainTables;
-
-import com.fasterxml.jackson.annotation.JsonClassDescription;
 
 /**
  * @author Davis Gordon

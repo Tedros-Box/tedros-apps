@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.ToolCallResult;
 import org.tedros.ai.function.model.Empty;
-import org.tedros.it.tools.gitlab.api.model.GitLabProject;
+import org.tedros.integration.gitlab.api.model.GitLabProject;
 import org.tedros.util.TLoggerUtil;
 
 public class ListAllGitLabProjectFunction extends TFunction<Empty>{

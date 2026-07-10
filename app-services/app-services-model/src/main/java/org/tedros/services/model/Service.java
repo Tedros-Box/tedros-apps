@@ -5,6 +5,13 @@ package org.tedros.services.model;
 
 import java.util.Set;
 
+import org.tedros.server.entity.TVersionEntity;
+import org.tedros.services.domain.DomainSchema;
+import org.tedros.services.domain.DomainTables;
+
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,13 +21,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-
-import org.tedros.server.entity.TVersionEntity;
-import org.tedros.services.domain.DomainSchema;
-import org.tedros.services.domain.DomainTables;
-
-import com.fasterxml.jackson.annotation.JsonClassDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 /**
  * @author Davis Gordon

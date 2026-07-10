@@ -1,12 +1,11 @@
 package org.tedros.ifood.test;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.tedros.ifood.api.model.MerchantInterruption;
 
-import java.util.Date;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class GsonDateReproductionTest {
 

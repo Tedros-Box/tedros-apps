@@ -3,10 +3,10 @@
  */
 package org.tedros.extension.ejb.controller;
 
-import jakarta.ejb.Remote;
-
 import org.tedros.extension.model.City;
 import org.tedros.server.controller.ITEjbImportController;
+
+import jakarta.ejb.Remote;
 
 /**
  * @author Davis Gordon

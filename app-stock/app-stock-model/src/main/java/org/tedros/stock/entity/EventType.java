@@ -5,6 +5,11 @@ package org.tedros.stock.entity;
 
 import java.util.Date;
 
+import org.tedros.server.annotation.TField;
+import org.tedros.server.entity.TVersionEntity;
+import org.tedros.stock.domain.DomainSchema;
+import org.tedros.stock.domain.DomainTables;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
@@ -13,11 +18,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
-
-import org.tedros.server.annotation.TField;
-import org.tedros.server.entity.TVersionEntity;
-import org.tedros.stock.domain.DomainSchema;
-import org.tedros.stock.domain.DomainTables;
 
 /**
  * @author Davis Gordon

@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.ToolCallResult;
 import org.tedros.common.model.TFileContentInfo;
-import org.tedros.it.tools.redmine.api.model.TAttachment;
-import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
+import org.tedros.integration.redmine.api.model.TAttachment;
+import org.tedros.integration.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
 public class DownloadRedmineAttachmentAiFunction extends TFunction<TAttachment> {

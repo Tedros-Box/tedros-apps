@@ -5,6 +5,11 @@ package org.tedros.person.model;
 
 import java.util.Date;
 
+import org.tedros.person.domain.DomainSchema;
+import org.tedros.person.domain.DomainTables;
+
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -15,11 +20,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-
-import org.tedros.person.domain.DomainSchema;
-import org.tedros.person.domain.DomainTables;
-
-import com.fasterxml.jackson.annotation.JsonClassDescription;
 
 /**
  * @author Davis Gordon

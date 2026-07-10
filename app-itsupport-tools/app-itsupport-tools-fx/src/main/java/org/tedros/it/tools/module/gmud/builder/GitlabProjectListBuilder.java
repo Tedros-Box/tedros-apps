@@ -6,8 +6,8 @@ package org.tedros.it.tools.module.gmud.builder;
 import java.util.List;
 
 import org.tedros.fx.builder.TGenericBuilder;
+import org.tedros.integration.gitlab.api.model.GitLabProject;
 import org.tedros.it.tools.gitlab.ai.function.GitLabGatewayFactory;
-import org.tedros.it.tools.gitlab.api.model.GitLabProject;
 import org.tedros.util.TLoggerUtil;
 
 /**

@@ -6,11 +6,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.ToolCallResult;
-import org.tedros.it.tools.redmine.ai.model.FilterCondition;
-import org.tedros.it.tools.redmine.ai.model.RedmineFilterField;
-import org.tedros.it.tools.redmine.ai.model.RedmineIssueFilter;
-import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
-import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
+import org.tedros.integration.redmine.ai.model.FilterCondition;
+import org.tedros.integration.redmine.ai.model.RedmineFilterField;
+import org.tedros.integration.redmine.ai.model.RedmineIssueFilter;
+import org.tedros.integration.redmine.api.model.TIssueEvidenceInfo;
+import org.tedros.integration.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
 public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter>  {

@@ -6,6 +6,10 @@ package org.tedros.extension.model;
 import java.util.Date;
 import java.util.List;
 
+import org.tedros.extension.domain.DomainSchema;
+import org.tedros.extension.domain.DomainTables;
+import org.tedros.server.entity.TVersionEntity;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,10 +23,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
-
-import org.tedros.extension.domain.DomainSchema;
-import org.tedros.extension.domain.DomainTables;
-import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis Gordon

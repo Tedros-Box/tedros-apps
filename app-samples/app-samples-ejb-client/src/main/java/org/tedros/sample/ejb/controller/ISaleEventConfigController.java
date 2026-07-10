@@ -3,10 +3,10 @@
  */
 package org.tedros.sample.ejb.controller;
 
-import jakarta.ejb.Remote;
-
 import org.tedros.sample.entity.SaleEventConfig;
 import org.tedros.server.controller.ITSecureEjbController;
+
+import jakarta.ejb.Remote;
 
 /**
  * @author Davis

@@ -1,9 +1,9 @@
 package org.tedros.extension.ejb.controller;
 
-import jakarta.ejb.Remote;
-
 import org.tedros.extension.model.Document;
 import org.tedros.server.controller.ITSecureEjbController;
+
+import jakarta.ejb.Remote;
 
 @Remote
 public interface IDocumentController extends ITSecureEjbController<Document>{

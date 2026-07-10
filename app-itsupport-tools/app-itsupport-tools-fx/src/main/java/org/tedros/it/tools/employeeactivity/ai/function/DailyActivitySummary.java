@@ -1,7 +1,9 @@
 package org.tedros.it.tools.employeeactivity.ai.function;
 
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

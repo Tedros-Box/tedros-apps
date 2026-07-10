@@ -3,13 +3,13 @@
  */
 package org.tedros.ifood.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
 import org.tedros.ifood.domain.DomainSchema;
 import org.tedros.ifood.domain.DomainTables;
 import org.tedros.server.entity.TVersionEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 /**
  * @author Davis Dun

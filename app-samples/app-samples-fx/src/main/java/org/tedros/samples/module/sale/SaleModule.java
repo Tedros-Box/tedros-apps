@@ -4,8 +4,8 @@
 package org.tedros.samples.module.sale;
 
 import org.tedros.core.TModule;
-import org.tedros.core.annotation.TView;
 import org.tedros.core.annotation.TItem;
+import org.tedros.core.annotation.TView;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.presenter.dynamic.view.TDynaGroupView;

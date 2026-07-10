@@ -3,6 +3,11 @@
  */
 package org.tedros.sample.entity;
 
+import org.tedros.sample.domain.DomainSchema;
+import org.tedros.sample.domain.DomainTables;
+import org.tedros.server.annotation.TField;
+import org.tedros.server.entity.TVersionEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
@@ -11,11 +16,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
-
-import org.tedros.sample.domain.DomainSchema;
-import org.tedros.sample.domain.DomainTables;
-import org.tedros.server.annotation.TField;
-import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis

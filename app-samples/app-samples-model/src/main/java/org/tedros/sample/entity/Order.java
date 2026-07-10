@@ -6,6 +6,16 @@ package org.tedros.sample.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.tedros.extension.model.Address;
+import org.tedros.person.model.CostCenter;
+import org.tedros.person.model.Employee;
+import org.tedros.person.model.ICostCenterAccounting;
+import org.tedros.person.model.LegalPerson;
+import org.tedros.person.model.Person;
+import org.tedros.sample.domain.DomainSchema;
+import org.tedros.sample.domain.DomainTables;
+import org.tedros.server.entity.TVersionEntity;
+
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,16 +28,6 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-
-import org.tedros.extension.model.Address;
-import org.tedros.person.model.CostCenter;
-import org.tedros.person.model.Employee;
-import org.tedros.person.model.ICostCenterAccounting;
-import org.tedros.person.model.LegalPerson;
-import org.tedros.person.model.Person;
-import org.tedros.sample.domain.DomainSchema;
-import org.tedros.sample.domain.DomainTables;
-import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis
