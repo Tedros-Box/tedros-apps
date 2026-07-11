@@ -63,7 +63,7 @@ public class GetRedmineIssueAiFunction extends TFunction<RedmineIssueIdToFind> {
 						.message("Error retrieving Redmine issue: " + e.getMessage())
 						.result(Map.of(
 	                        STATUS, ERROR,
-	                        ACTION, "gitlab_repository_commit_error",
+	                        ACTION, "redmine_issue_retrieved",
 	                        ERROR_MESSAGE, e.getMessage()
 	                    ))
 						.build();
