@@ -42,6 +42,27 @@ public class MongoConnectionManager {
         		throw new RuntimeException("MongoDB URI property not found in database. Please set the property " + TSystemPropertie.MONGODB_URI.getValue());
         	}
         	
+        	// Corrige a formatação da URI para garantir que tem o database e authSource
+        	if (!uri.contains(DATABASE_NAME)) {
+        		int queryIndex = uri.indexOf('?');
+        		if (queryIndex != -1) {
+        			String beforeQuery = uri.substring(0, queryIndex);
+        			if (beforeQuery.endsWith("/")) {
+        				beforeQuery = beforeQuery.substring(0, beforeQuery.length() - 1);
+        			}
+        			uri = beforeQuery + "/" + DATABASE_NAME + uri.substring(queryIndex);
+        		} else {
+        			if (uri.endsWith("/")) {
+        				uri = uri.substring(0, uri.length() - 1);
+        			}
+        			uri += "/" + DATABASE_NAME;
+        		}
+        	}
+        	
+        	if (!uri.contains("authSource=")) {
+        		uri += (uri.contains("?") ? "&" : "?") + "authSource=" + DATABASE_NAME;
+        	}
+        	
             // 1. Cria um gerenciador de confiança que aceita o nosso certificado autoassinado
             TrustManager[] trustAllCerts = new TrustManager[] {
                 new X509TrustManager() {
@@ -55,9 +76,7 @@ public class MongoConnectionManager {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
             
-            // 3. A String de Conexão 
-            uri += "/" + DATABASE_NAME + "?authSource=" + DATABASE_NAME;            
-            
+            // 3. A String de Conexão foi processada acima
             ConnectionString connectionString = new ConnectionString(uri);
 
             // 4. Configura o MongoClient 
@@ -65,7 +84,7 @@ public class MongoConnectionManager {
                     .applyConnectionString(connectionString);
             
             // Verifica se a string requer TLS 
-            boolean requiresTls = uri.contains("tls=true") || uri.startsWith("mongodb+srv://");
+            boolean requiresTls = uri.contains("tls=true") || uri.startsWith("mongodb+srv://") || uri.contains("tedros-mongodb");
 
             if (requiresTls) {
                 // Configura o MongoClient com o contexto SSL tolerante
