@@ -3,18 +3,18 @@
  */
 package org.tedros.sample.entity;
 
+import org.tedros.sample.domain.DomainSchema;
+import org.tedros.sample.domain.DomainTables;
+import org.tedros.server.entity.TVersionEntity;
+import org.tedros.stock.entity.EntryType;
+import org.tedros.stock.entity.OutType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-import org.tedros.sample.domain.DomainSchema;
-import org.tedros.sample.domain.DomainTables;
-import org.tedros.server.entity.TVersionEntity;
-import org.tedros.stock.entity.EntryType;
-import org.tedros.stock.entity.OutType;
 
 /**
  * @author Davis Gordon

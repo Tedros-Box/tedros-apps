@@ -3,9 +3,9 @@
  */
 package org.tedros.sample.ejb.controller;
 
-import jakarta.ejb.Remote;
-
 import org.tedros.server.controller.ITEjbChartController;
+
+import jakarta.ejb.Remote;
 
 /**
  * @author Davis

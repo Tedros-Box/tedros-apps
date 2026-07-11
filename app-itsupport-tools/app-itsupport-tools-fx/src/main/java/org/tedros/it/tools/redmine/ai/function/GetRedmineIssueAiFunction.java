@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.ToolCallResult;
 import org.tedros.ai.function.model.Response;
-import org.tedros.it.tools.redmine.ai.model.RedmineIssueIdToFind;
-import org.tedros.it.tools.redmine.api.model.TIssueEvidenceInfo;
-import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
+import org.tedros.integration.redmine.ai.model.RedmineIssueIdToFind;
+import org.tedros.integration.redmine.api.model.TIssueEvidenceInfo;
+import org.tedros.integration.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
 public class GetRedmineIssueAiFunction extends TFunction<RedmineIssueIdToFind> {
@@ -63,7 +63,7 @@ public class GetRedmineIssueAiFunction extends TFunction<RedmineIssueIdToFind> {
 						.message("Error retrieving Redmine issue: " + e.getMessage())
 						.result(Map.of(
 	                        STATUS, ERROR,
-	                        ACTION, "gitlab_repository_commit_error",
+	                        ACTION, "redmine_issue_retrieved",
 	                        ERROR_MESSAGE, e.getMessage()
 	                    ))
 						.build();

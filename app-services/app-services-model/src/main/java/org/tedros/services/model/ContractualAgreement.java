@@ -5,15 +5,15 @@ package org.tedros.services.model;
 
 import java.math.BigDecimal;
 
+import org.tedros.server.entity.TVersionEntity;
+import org.tedros.services.domain.DomainSchema;
+import org.tedros.services.domain.DomainTables;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-import org.tedros.server.entity.TVersionEntity;
-import org.tedros.services.domain.DomainSchema;
-import org.tedros.services.domain.DomainTables;
 
 /**
  * @author Davis Gordon

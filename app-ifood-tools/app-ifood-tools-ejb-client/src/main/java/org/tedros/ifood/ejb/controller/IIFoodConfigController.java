@@ -3,10 +3,10 @@
  */
 package org.tedros.ifood.ejb.controller;
 
-import jakarta.ejb.Remote;
-
 import org.tedros.ifood.entity.IFoodConfig;
 import org.tedros.server.controller.ITSecureEjbController;
+
+import jakarta.ejb.Remote;
 
 /**
  * @author Davis Dun

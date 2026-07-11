@@ -6,8 +6,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.ToolCallResult;
-import org.tedros.it.tools.gitlab.ai.model.TGitLabCommit;
-import org.tedros.it.tools.gitlab.api.model.CommitDiffModel;
+import org.tedros.integration.gitlab.ai.model.TGitLabCommit;
+import org.tedros.integration.gitlab.api.model.CommitDiffModel;
 import org.tedros.util.TLoggerUtil;
 
 public class GetGitLabRepositoryCommitDiffFunction extends TFunction<TGitLabCommit> {

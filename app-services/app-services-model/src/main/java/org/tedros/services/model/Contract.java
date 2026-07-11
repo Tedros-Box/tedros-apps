@@ -6,6 +6,16 @@ package org.tedros.services.model;
 import java.util.Date;
 import java.util.Set;
 
+import org.tedros.extension.model.Document;
+import org.tedros.person.model.Person;
+import org.tedros.server.entity.TVersionEntity;
+import org.tedros.services.domain.DomainSchema;
+import org.tedros.services.domain.DomainTables;
+import org.tedros.services.domain.Status;
+
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,16 +32,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
-
-import org.tedros.extension.model.Document;
-import org.tedros.person.model.Person;
-import org.tedros.server.entity.TVersionEntity;
-import org.tedros.services.domain.DomainSchema;
-import org.tedros.services.domain.DomainTables;
-import org.tedros.services.domain.Status;
-
-import com.fasterxml.jackson.annotation.JsonClassDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 /**
  * @author Davis Gordon

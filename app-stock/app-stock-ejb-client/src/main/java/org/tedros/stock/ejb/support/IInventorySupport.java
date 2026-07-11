@@ -6,8 +6,6 @@ package org.tedros.stock.ejb.support;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.ejb.Remote;
-
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.LegalPerson;
 import org.tedros.person.model.Person;
@@ -16,6 +14,8 @@ import org.tedros.stock.entity.EntryType;
 import org.tedros.stock.entity.OutType;
 import org.tedros.stock.entity.Product;
 import org.tedros.stock.model.Inventory;
+
+import jakarta.ejb.Remote;
 
 /**
  * 

@@ -4,10 +4,7 @@ import org.tedros.core.ITApplication;
 import org.tedros.core.annotation.TApplication;
 import org.tedros.core.annotation.TModule;
 import org.tedros.core.annotation.TResourceBundle;
-import org.tedros.core.annotation.security.TAuthorizationType;
-import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.ifood.IFOODKey;
-import org.tedros.ifood.domain.DomainApp;
 import org.tedros.ifood.module.order.IFoodConfigModule;
 
 /**

@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import org.tedros.it.tools.domain.DomainSchema;
 import org.tedros.it.tools.domain.DomainTables;
-import org.tedros.server.entity.TEntity;
 import org.tedros.server.entity.TVersionEntity;
 
 import jakarta.persistence.Column;

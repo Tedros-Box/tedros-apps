@@ -5,15 +5,15 @@ package org.tedros.extension.model;
 
 import java.util.Collection;
 
+import org.tedros.extension.domain.DomainSchema;
+import org.tedros.extension.domain.DomainTables;
+import org.tedros.server.entity.TVersionEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
-
-import org.tedros.extension.domain.DomainSchema;
-import org.tedros.extension.domain.DomainTables;
-import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis Gordon

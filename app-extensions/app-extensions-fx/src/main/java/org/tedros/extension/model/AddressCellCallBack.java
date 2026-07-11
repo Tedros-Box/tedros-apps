@@ -1,7 +1,5 @@
 package org.tedros.extension.model;
 
-import org.tedros.extension.model.Address;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableColumn.CellDataFeatures;

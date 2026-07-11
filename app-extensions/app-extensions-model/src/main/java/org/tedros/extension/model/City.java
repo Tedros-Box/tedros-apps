@@ -3,10 +3,6 @@
  */
 package org.tedros.extension.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
 import org.tedros.extension.domain.DomainSchema;
 import org.tedros.extension.domain.DomainTables;
 import org.tedros.server.annotation.TCaseSensitive;
@@ -14,6 +10,10 @@ import org.tedros.server.annotation.TField;
 import org.tedros.server.annotation.TFileType;
 import org.tedros.server.annotation.TImportInfo;
 import org.tedros.server.entity.TVersionEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 /**
  * @author Davis Gordon

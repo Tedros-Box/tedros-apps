@@ -3,13 +3,13 @@
  */
 package org.tedros.it.tools.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
 import org.tedros.it.tools.domain.DomainSchema;
 import org.tedros.it.tools.domain.DomainTables;
 import org.tedros.server.entity.TVersionEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 /**
  * @author Davis Dun

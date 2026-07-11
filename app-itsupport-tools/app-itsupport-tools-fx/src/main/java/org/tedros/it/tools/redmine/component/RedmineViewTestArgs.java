@@ -1,7 +1,5 @@
 package org.tedros.it.tools.redmine.component;
 
-import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

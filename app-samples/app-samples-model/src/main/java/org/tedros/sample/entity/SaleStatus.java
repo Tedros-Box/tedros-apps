@@ -3,13 +3,13 @@
  */
 package org.tedros.sample.entity;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
 import org.tedros.sample.domain.DomainSchema;
 import org.tedros.sample.domain.DomainTables;
 import org.tedros.server.annotation.TModelInfo;
+
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 /**
  * @author Davis

@@ -3,6 +3,10 @@
  */
 package org.tedros.person.model;
 
+import org.tedros.person.domain.DomainSchema;
+import org.tedros.person.domain.DomainTables;
+import org.tedros.server.entity.TVersionEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
@@ -11,10 +15,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
-
-import org.tedros.person.domain.DomainSchema;
-import org.tedros.person.domain.DomainTables;
-import org.tedros.server.entity.TVersionEntity;
 
 /**
  * @author Davis Gordon

@@ -1,11 +1,11 @@
 package org.tedros.ifood.api.client;
 
-import feign.Headers;
-import feign.RequestLine;
-import feign.Body;
-import feign.Param;
-
 import org.tedros.ifood.api.model.IFoodAuthResponse;
+
+import feign.Body;
+import feign.Headers;
+import feign.Param;
+import feign.RequestLine;
 
 public interface IFoodAuthClient {
 

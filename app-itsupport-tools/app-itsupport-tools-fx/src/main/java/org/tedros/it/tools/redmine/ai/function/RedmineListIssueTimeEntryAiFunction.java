@@ -6,9 +6,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.ToolCallResult;
-import org.tedros.it.tools.redmine.ai.model.RedmineIssueIdToFind;
-import org.tedros.it.tools.redmine.api.model.TTimeEntry;
-import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
+import org.tedros.integration.redmine.ai.model.RedmineIssueIdToFind;
+import org.tedros.integration.redmine.api.model.TTimeEntry;
+import org.tedros.integration.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
 public class RedmineListIssueTimeEntryAiFunction extends TFunction<RedmineIssueIdToFind> {

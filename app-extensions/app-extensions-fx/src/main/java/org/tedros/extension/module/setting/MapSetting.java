@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 
 import org.tedros.api.descriptor.ITComponentDescriptor;
 import org.tedros.extension.model.AddressMV;
-import org.tedros.extension.model.City;
 import org.tedros.extension.model.Coordinated;
 import org.tedros.extension.model.GeoLocation;
 import org.tedros.extension.model.GeoMap;

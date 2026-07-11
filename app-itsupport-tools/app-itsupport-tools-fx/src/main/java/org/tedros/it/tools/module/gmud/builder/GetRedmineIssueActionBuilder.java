@@ -2,11 +2,11 @@ package org.tedros.it.tools.module.gmud.builder;
 
 import org.tedros.core.TLanguage;
 import org.tedros.fx.builder.TBaseEventHandlerBuilder;
+import org.tedros.integration.redmine.api.model.TIssue;
+import org.tedros.integration.redmine.gateway.RedmineApiGateway;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.module.gmud.model.GmudIssueReferenceMV;
 import org.tedros.it.tools.redmine.ai.function.RedmineApiPropertyUtil;
-import org.tedros.it.tools.redmine.api.model.TIssue;
-import org.tedros.it.tools.redmine.gateway.RedmineApiGateway;
 import org.tedros.util.TLoggerUtil;
 
 import com.taskadapter.redmineapi.NotFoundException;

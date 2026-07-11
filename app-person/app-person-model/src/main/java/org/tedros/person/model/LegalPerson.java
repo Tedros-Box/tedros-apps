@@ -7,6 +7,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.tedros.person.domain.DomainSchema;
+import org.tedros.person.domain.DomainTables;
+
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,12 +23,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-
-import org.tedros.person.domain.DomainSchema;
-import org.tedros.person.domain.DomainTables;
-
-import com.fasterxml.jackson.annotation.JsonClassDescription;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Davis Gordon

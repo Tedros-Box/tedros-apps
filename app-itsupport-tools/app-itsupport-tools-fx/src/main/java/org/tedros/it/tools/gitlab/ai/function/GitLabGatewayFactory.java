@@ -1,7 +1,7 @@
 package org.tedros.it.tools.gitlab.ai.function;
 
 import org.slf4j.Logger;
-import org.tedros.it.tools.gitlab.gateway.GitLabGateway;
+import org.tedros.integration.gitlab.gateway.GitLabGateway;
 import org.tedros.util.TLoggerUtil;
 
 public final class GitLabGatewayFactory {

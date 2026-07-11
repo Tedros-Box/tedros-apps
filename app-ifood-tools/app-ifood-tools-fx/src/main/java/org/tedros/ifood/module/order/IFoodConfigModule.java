@@ -6,10 +6,7 @@ package org.tedros.ifood.module.order;
 import org.tedros.core.TModule;
 import org.tedros.core.annotation.TItem;
 import org.tedros.core.annotation.TView;
-import org.tedros.core.annotation.security.TAuthorizationType;
-import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.ifood.IFOODKey;
-import org.tedros.ifood.domain.DomainApp;
 import org.tedros.ifood.module.order.model.OrderDashboardMV;
 import org.tedros.ifood.module.order.model.OrderDashboardModel;
 

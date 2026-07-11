@@ -5,6 +5,18 @@ package org.tedros.person.model;
 
 import java.util.Set;
 
+import org.tedros.common.model.TFileEntity;
+import org.tedros.extension.model.Address;
+import org.tedros.extension.model.Contact;
+import org.tedros.extension.model.Document;
+import org.tedros.person.domain.DomainSchema;
+import org.tedros.person.domain.DomainTables;
+import org.tedros.server.entity.ITDiscriminable;
+import org.tedros.server.entity.TReceptiveEntity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,18 +35,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-
-import org.tedros.common.model.TFileEntity;
-import org.tedros.extension.model.Address;
-import org.tedros.extension.model.Contact;
-import org.tedros.extension.model.Document;
-import org.tedros.person.domain.DomainSchema;
-import org.tedros.person.domain.DomainTables;
-import org.tedros.server.entity.ITDiscriminable;
-import org.tedros.server.entity.TReceptiveEntity;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 /**
  * @author Davis Gordon

@@ -1,10 +1,10 @@
 package org.tedros.ifood.api.client;
 
+import java.util.function.Supplier;
+
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.RequiredArgsConstructor;
-
-import java.util.function.Supplier;
 
 @RequiredArgsConstructor
 public class IFoodTokenInterceptor implements RequestInterceptor {

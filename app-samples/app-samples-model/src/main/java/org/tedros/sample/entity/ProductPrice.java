@@ -5,14 +5,6 @@ package org.tedros.sample.entity;
 
 import java.math.BigDecimal;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
-
 import org.tedros.person.model.CostCenter;
 import org.tedros.person.model.ICostCenterAccounting;
 import org.tedros.person.model.LegalPerson;
@@ -20,6 +12,14 @@ import org.tedros.sample.domain.DomainSchema;
 import org.tedros.sample.domain.DomainTables;
 import org.tedros.server.entity.TVersionEntity;
 import org.tedros.stock.entity.Product;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 /**
  * 
