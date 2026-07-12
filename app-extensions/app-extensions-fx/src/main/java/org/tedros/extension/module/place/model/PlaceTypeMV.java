@@ -15,7 +15,6 @@ import org.tedros.extension.domain.DomainApp;
 import org.tedros.extension.ejb.controller.IExtensionDomainController;
 import org.tedros.extension.model.ExtensionDomainMV;
 import org.tedros.extension.model.PlaceType;
-import org.tedros.fx.annotation.assistant.TAiAssistant;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.presenter.TBehavior;
@@ -38,8 +37,6 @@ import javafx.scene.text.TextAlignment;
 @TForm(header = LocatKey.FORM_PLACE_TYPE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IExtensionDomainController.JNDI_NAME, model=PlaceType.class)
 @TListViewPresenter(
-	aiAssistant=@TAiAssistant(jsonModel = PlaceTypeJsonModel.class, show=true,
-		modelViewClass = PlaceTypeMV.class),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=LocatKey.VIEW_PLACE_TYPE),
 		behavior=@TBehavior(runNewActionAfterSave=true)))
