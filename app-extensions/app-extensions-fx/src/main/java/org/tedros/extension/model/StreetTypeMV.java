@@ -13,7 +13,6 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.extension.LocatKey;
 import org.tedros.extension.domain.DomainApp;
 import org.tedros.extension.ejb.controller.IExtensionDomainController;
-import org.tedros.fx.annotation.assistant.TAiAssistant;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.presenter.TBehavior;
@@ -36,8 +35,6 @@ import javafx.scene.text.TextAlignment;
 @TForm(header = LocatKey.FORM_STREET, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IExtensionDomainController.JNDI_NAME, model=StreetType.class)
 @TListViewPresenter(
-	aiAssistant=@TAiAssistant(jsonModel = StreetTypeJsonModel.class, show=true,
-		modelViewClass = StreetTypeMV.class),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=LocatKey.VIEW_STREET_TYPE),
 		behavior = @TBehavior(runNewActionAfterSave=true, 

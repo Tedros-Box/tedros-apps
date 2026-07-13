@@ -14,7 +14,6 @@ import org.tedros.extension.model.DocumentType;
 import org.tedros.extension.model.ExtensionDomainMV;
 import org.tedros.extension.module.doc.converter.DocTypeConverter;
 import org.tedros.fx.TUsualKey;
-import org.tedros.fx.annotation.assistant.TAiAssistant;
 import org.tedros.fx.annotation.control.TConverter;
 import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.THRadioGroup;
@@ -49,8 +48,6 @@ import javafx.scene.text.TextAlignment;
 @TForm(header = ExtKey.FORM_DOCS_TYPE, showBreadcrumBar=true, scroll=false)
 @TEjbService(serviceName = IExtensionDomainController.JNDI_NAME, model=DocumentType.class)
 @TListViewPresenter(
-	aiAssistant=@TAiAssistant(jsonModel = DocumentTypeJsonModel.class, show=true, 
-		modelViewClass = DocumentTypeMV.class),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=ExtKey.VIEW_DOCS_TYPE),
 		behavior = @TBehavior(runNewActionAfterSave=true)))
