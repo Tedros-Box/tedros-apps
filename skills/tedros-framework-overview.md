@@ -17,7 +17,8 @@ O **Tedros** é um framework Java de aplicação desktop construído sobre **Jav
 | Persistência     | JPA / EclipseLink 4.x, banco H2 (embutido ou servidor) |
 | Comunicação      | JNDI remoto (chamadas EJB via HTTP `tomee/ejb`)         |
 | Mensageria       | Apache ActiveMQ 5.x                                     |
-| IA               | Integração com OpenAI (cliente `openai-client 0.18.x`)  |
+| IA               | langchain4j — **1.10.0 no cliente** (`tedros-core`, chamadas diretas OpenAI/Grok/Gemini) e **1.17.2 no servidor** (`tdrs-ai`, orquestração *Tool Relay*, ver seção 11) |
+| Observabilidade  | Micrometer + Prometheus + Grafana (métricas/custo do Tool Relay, ver seção 11.6) |
 | Relatórios       | JasperReports 7.x                                       |
 | Serialização     | Jackson 2.17.x                                          |
 
@@ -33,6 +34,7 @@ tedrosbox/                      ← POM pai (groupId: org.tedros, version: 17-0.
 ├── tdrs-fx/                    ← API de UI/widgets JavaFX
 ├── tdrs-miscellaneous/         ← Utilitários genéricos
 ├── tdrs-server/                ← Camadas servidor (EJB, JPA, API REST-like)
+├── tdrs-ai/                    ← IA centralizada no backend (Tool Relay) + observabilidade — ver seção 11
 └── app-chat/                   ← Módulo de chat entre os usuarios do sistema
 ```
 
@@ -474,6 +476,12 @@ Módulo completo de chat empresarial com integração de IA. Estrutura em camada
 | `TSecurityService` | `tedros-core-ejb` | Gerenciamento de sessões em memória |
 | `TSecurityInterceptor` | `tedros-server-client-api` | Anotação CDI de interceptação de segurança |
 | `DomainApp` | `tedros-core-model` | IDs de módulos/forms/views do núcleo |
+| `ITAiToolRelayController` | `tedros-ai-ejb-client` | Interface remota do Tool Relay (`interact(token, request)`), JNDI `ITAiToolRelayControllerRemote` |
+| `TAiRelayLoop` | `tedros-ai-ejb` | Loop de tool calling do backend — chama o LLM e particiona tools BE/FE |
+| `TAiConversationStore` | `tedros-ai-ejb` | Estado das conversas em memória (por nó), eviction por TTL/LRU |
+| `TServerAiFunction` | `tedros-ai-ejb` | Contrato de uma tool de IA rodando no backend (equivalente server-side de `TFunction`) |
+| `TAiMetrics` | `tedros-ai-ejb` | Fachada Micrometer/Prometheus do Tool Relay (tokens, custo, latência, saúde) |
+| `TAiRelayConfig` | `tedros-ai-ejb` | Resolve/cacheia `sys.ai.*` e `sys.ai.toolrelay.*` via `TPropertieSupport` |
 
 ---
 
@@ -499,6 +507,97 @@ http://<host>:8080/tomee/ejb
 configurado na propriedade `tomee.ejb.url` do POM raiz.
 
 Para Docker, os EARs são copiados para `docker.app.folder` definido no POM.
+
+---
+
+## 11. Grupo `tdrs-ai` — Tool Relay (Agente de IA centralizado no Backend)
+
+### 11.1 O que é e por que existe
+
+Até aqui, a integração com LLMs (OpenAI/Grok/Gemini) acontecia inteiramente no **cliente JavaFX** (`org.tedros.ai.service.*` em `tedros-core`): a API key ficava configurada no FE e o próprio cliente rodava o loop de *tool calling* do langchain4j.
+
+O **Tool Relay** move essa orquestração para um EAR isolado no servidor — `tdrs-ai` — sem quebrar a solução antiga. As duas convivem por *feature flag*:
+
+| Modo | Onde a API key vive | Quem roda o loop de tools | Ativado por |
+|---|---|---|---|
+| **Legado** (default) | Configuração do cliente FE | `tedros-core` (FE) | `sys.ai.toolrelay.enabled=false` |
+| **Tool Relay** | Só no servidor (`sys.<provider>.key`) | `tdrs-ai-ejb` (BE) | `sys.ai.toolrelay.enabled=true` |
+
+**Regra para agentes de IA:** o código do modo legado (`org.tedros.ai.service.*`, `org.tedros.ai.function.*` em `tedros-core`) **não é alterado** pelo Tool Relay — é aditivo. Nunca proponha remover ou reescrever esse caminho ao trabalhar em `tdrs-ai`.
+
+### 11.2 Módulos Maven
+
+```
+tdrs-ai/                          ← POM agregador
+├── tedros-ai-model/              ← DTOs do protocolo (org.tedros.ai.model) + DomainApp
+├── tedros-ai-ejb-client/         ← Interface remota ITAiToolRelayController
+├── tedros-ai-ejb/                ← Toda a lógica de servidor: loop, tools, config, observabilidade
+├── tedros-ai-metrics/            ← WAR fino (JAX-RS) que expõe /ai/prometheus e /ai/status
+└── tedros-ai-ejb-ear/            ← EAR isolado — deploy independente no TomEE, ao lado dos demais
+```
+
+O `tedros-ai-ejb` depende de **todos** os `-ejb-client` já existentes no ecossistema (`tedros-core-ejb-client`, `app-person-ejb-client`, `app-stock-ejb-client`, etc.): uma tool de backend que precisa de outro serviço Tedros faz **lookup JNDI da interface cliente correspondente** (`TServiceLocator.lookupWithRetry(...)`) — nunca depende do jar EJB de outro EAR.
+
+### 11.3 A mágica primeiro: o ping-pong de um turno
+
+```
+[FE] interact(userMessage) ─────────────────► [BE]
+[BE] chat(messages, specs FE+BE) ───────────► [LLM]
+[LLM] tool call de BACKEND?  → BE executa inline e re-chama o LLM
+[LLM] tool call de FRONTEND? → BE responde ao FE:
+      { type: CLIENT_TOOL_CALLS, calls: [{callId, name, argumentsJson}] }
+[FE] executa a tool local (ex: abrir tela) e reenvia o resultado
+[BE] anexa o resultado e continua o loop ► [LLM]
+[LLM] resposta final → BE → { type: FINAL, text } → FE
+```
+
+Um único método remoto cobre todo o protocolo: `ITAiToolRelayController.interact(TAccessToken, TAiTurnRequest)`. O `TAiTurnRequest.type` discrimina `MESSAGE` (nova pergunta), `TOOL_RESULTS` (retorno de tools de FE) ou `CLOSE` (encerra a conversa no servidor).
+
+### 11.4 Por debaixo dos panos: quem faz o quê
+
+| Classe | Pacote | Responsabilidade |
+|---|---|---|
+| `TAiToolRelayController` | `org.tedros.ai.ejb.controller` | Porta de entrada segura (`@TBeanSecurity`), delega para o service |
+| `TAiToolRelayService` | `org.tedros.ai.ejb.service` | Orquestra o protocolo (estado da conversa, roteamento MESSAGE/TOOL_RESULTS/CLOSE) |
+| `TAiRelayLoop` | `org.tedros.ai.toolrelay` | O loop de tool calling: chama o `ChatModel`, particiona `ToolExecutionRequest`s em backend/frontend, acumula `tokenUsage()` |
+| `TAiConversationStore` / `TAiConversation` | `org.tedros.ai.toolrelay` | `ConcurrentHashMap` de conversas em memória (por nó), memória limitada (`MessageWindowChatMemory`, 20 mensagens), lock por conversa (`TURN_IN_PROGRESS` se concorrente) |
+| `TRelayModelAdapter` | `org.tedros.ai.toolrelay` | Cache de instâncias de `ChatModel` por configuração (OpenAI, Grok via baseUrl customizada, Gemini) |
+| `TServerAiFunction` | `org.tedros.ai.toolrelay.function` | Contrato de uma tool de backend (nome, descrição, modelo de parâmetros, `execute(arg, TAiToolContext)`) |
+| `TServerFunctionCatalog` | `org.tedros.ai.toolrelay.function` | Descobre as tools via CDI (`Instance<TServerAiFunction>`) e indexa por nome |
+| `TJsonSchemaConverter` | `org.tedros.ai.toolrelay.function` | Converte o JSON Schema enviado pelo FE (specs de tools client-side) em `JsonObjectSchema` do langchain4j |
+| `TAiRelayConfig` | `org.tedros.ai.toolrelay` | Resolve e cacheia (TTL ~3min) a configuração via `TPropertieSupport` |
+| `AiAppStartupService` / `AiRelayPropertie` | `org.tedros.ai.ejb.startup` | Semeia as properties novas do módulo no boot (assíncrono, não bloqueia o deploy) |
+
+**Regra de resolução da configuração do LLM** (via `TPropertieSupport`, lookup JNDI server-side): `sys.ai.enabled` (liga/desliga IA) → `sys.ai.provider` (`OPENAI`/`GROK`/`GEMINI`) → `sys.<provider>.key`/`sys.<provider>.model`/`sys.<provider>.prompt`. Com `sys.ai.enabled=false`, `interact` responde `ERROR/AI_DISABLED` sem chamar o LLM.
+
+> **Dica Pro — colisão de nomes:** se uma tool de backend e uma spec enviada pelo cliente tiverem o mesmo `name`, **a tool de backend sempre vence** (com warning no log). É esse comportamento que permite "migrar" uma `TFunction` do FE para o BE só criando a equivalente em `tdrs-ai` com nome idêntico — nenhuma linha muda no `-fx`.
+
+### 11.5 Catálogo de tools de backend já migradas
+
+O backend já traz **27 tools** portadas de `TFunction`s do FE (mesmo `name`, mesma `description`, mesmo formato de retorno), organizadas por domínio em `org.tedros.ai.toolrelay.function.*`:
+
+| Pacote | Origem (FE) | Conteúdo |
+|---|---|---|
+| `function.person` | `app-person-fx` | Busca/listagem de pessoas, funcionários, categorias/status/tipos |
+| `function.stock` | `app-stock-fx` | Busca de produtos |
+| `function.services` | `app-services-fx` | Listagem de serviços |
+| `function.extension` | `app-extensions-fx` | Busca de documentos |
+| `function.samples` | `app-samples-fx` | Preços de produtos de exemplo |
+| `function.redmine` | `app-itsupport-tools-fx` | Issues, filtro por usuário, status, apontamento de horas |
+| `function.gitlab` | `app-itsupport-tools-fx` | Projetos, branches, commits, diffs, Merge Requests |
+| `function.itsupport` | `app-itsupport-tools-fx` | Atividades de funcionários, busca de GMUD |
+
+Tools que abrem telas, leem estado da UI ou lidam com conteúdo de arquivo (multimodal) **ficam exclusivas do FE** — não fazem parte deste catálogo (limitação conhecida da Fase 1 do relay).
+
+### 11.6 Observabilidade e custo (Prometheus + Grafana)
+
+O EAR de IA expõe métricas Prometheus (Micrometer) e um ledger de custo em banco, ambos "de graça" para quem já usa o Tool Relay — não requerem nenhuma mudança de código nas tools.
+
+- **Endpoint de scrape:** `GET /ai/prometheus` (WAR `tedros-ai-metrics`, dentro do EAR `tdrs-ai`) — nunca `/ai/metrics` (o TomEE Plume reserva `<contexto>/metrics` para o MicroProfile Metrics). Liveness/readiness em `GET /ai/status`.
+- **Métricas principais:** `tedros_ai_tokens_total{provider,model,type}`, `tedros_ai_cost_usd_total{provider,model,tier}`, `tedros_ai_llm_request_seconds{provider,model}`, `tedros_ai_tool_calls_total{tool,outcome}`, `tedros_ai_turns_total{type,outcome}`, `tedros_ai_conversations_active{node}`, `tedros_ai_errors_total{code}`.
+- **Regra de cardinalidade:** nenhuma métrica Prometheus usa `userId`/`conversationId` como label. Consumo por usuário é resolvido no **Postgres** (tabela `TAI_LLM_CALL`, ledger de 1 linha por chamada ao LLM com custo em USD já calculado).
+- **Custo em USD:** cada chamada ao LLM é precificada via a tabela `TAI_PRICE` (preços versionados por provider/modelo/tier) e gravada de forma assíncrona — nunca adiciona latência ao turno do usuário.
+- **Dashboards e alertas:** provisionados no repositório `tedros-environment` (Prometheus + Grafana), não neste repositório — ver `docker/observability` no README do `tedros-environment`.
 
 ---
 
