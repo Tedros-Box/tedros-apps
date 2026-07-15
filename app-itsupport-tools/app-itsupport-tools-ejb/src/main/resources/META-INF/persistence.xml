@@ -62,6 +62,10 @@
 		
 		<class>org.tedros.it.tools.entity.JobEvidence</class>
 		<class>org.tedros.it.tools.entity.JobEvidenceItem</class>
+		<class>org.tedros.it.tools.entity.MeetingMinutes</class>
+		<class>org.tedros.it.tools.entity.MeetingAgenda</class>
+		<class>org.tedros.it.tools.entity.MeetingReferral</class>
+		<class>org.tedros.it.tools.entity.MeetingEvidence</class>
 		<class>org.tedros.it.tools.entity.Gmud</class>
 		<class>org.tedros.it.tools.entity.GmudItem</class>
 		<class>org.tedros.it.tools.entity.GmudReview</class>

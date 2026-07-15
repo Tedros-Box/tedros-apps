@@ -3,6 +3,9 @@ package org.tedros.it.tools.cdi.eao;
 import org.tedros.it.tools.entity.Gmud;
 import org.tedros.server.cdi.eao.TGenericEAO;
 
+import jakarta.enterprise.context.RequestScoped;
+
+@RequestScoped
 public class GmudEao extends TGenericEAO<Gmud> {
 	
 	@Override

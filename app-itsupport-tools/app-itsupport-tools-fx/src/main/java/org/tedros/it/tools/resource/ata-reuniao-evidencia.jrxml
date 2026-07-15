@@ -1,0 +1,25 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="ata-reuniao-evidencia" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2dae2a26-2f5b-4788-a872-290e9e7a1a5c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="evidence" class="java.io.InputStream"/>
+	<background splitType="Stretch"/>
+	<title splitType="Stretch"/>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader height="31" splitType="Stretch">
+		<element kind="staticText" uuid="dd513efd-6aaf-4c79-a102-4c49a83a8259" x="0" y="0" width="140" height="30" fontSize="13.0" bold="true" hTextAlign="Left" vTextAlign="Bottom">
+			<text><![CDATA[5. Evidência ]]></text>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</columnHeader>
+	<detail>
+		<band height="60" splitType="Stretch">
+			<element kind="image" uuid="369ec8cc-ea35-43bd-b0b4-000e49892f0e" positionType="Float" x="0" y="10" width="50" height="50" scaleImage="RealSize" fill="Solid">
+				<expression><![CDATA[$F{evidence}]]></expression>
+			</element>
+		</band>
+	</detail>
+	<columnFooter splitType="Stretch"/>
+	<pageFooter splitType="Stretch"/>
+	<summary splitType="Stretch"/>
+</jasperReport>

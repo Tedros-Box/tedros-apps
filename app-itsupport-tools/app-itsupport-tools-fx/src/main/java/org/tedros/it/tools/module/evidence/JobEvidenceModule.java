@@ -8,10 +8,12 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.it.tools.ItToolsKey;
 import org.tedros.it.tools.domain.DomainApp;
 import org.tedros.it.tools.entity.JobEvidence;
+import org.tedros.it.tools.entity.MeetingMinutes;
 import org.tedros.it.tools.model.JobEvidenceReportModel;
 import org.tedros.it.tools.module.evidence.model.CaptureEvidenceMV;
 import org.tedros.it.tools.module.evidence.model.CaptureEvidenceModel;
 import org.tedros.it.tools.module.evidence.model.CreateJobEvidenceMV;
+import org.tedros.it.tools.module.evidence.model.MeetingMinutesMV;
 import org.tedros.it.tools.module.evidence.report.JobEvidenceReportMV;
 
 @TView(items = {
@@ -19,6 +21,8 @@ import org.tedros.it.tools.module.evidence.report.JobEvidenceReportMV;
 			modelView = CaptureEvidenceMV.class, model = CaptureEvidenceModel.class),
 		@TItem(title = ItToolsKey.VIEW_JOB_EVIDENCE, description = ItToolsKey.VIEW_JOB_EVIDENCE_DESC, 
 			modelView = CreateJobEvidenceMV.class, model = JobEvidence.class),
+		@TItem(title = ItToolsKey.VIEW_MEETING_MINUTES, description = ItToolsKey.VIEW_MEETING_MINUTES_DESC,
+			modelView = MeetingMinutesMV.class, model = MeetingMinutes.class),
 		@TItem(title = ItToolsKey.VIEW_JOB_EVIDENCE_REPORT, description = ItToolsKey.VIEW_JOB_EVIDENCE_REPORT_DESC,
 			modelView = JobEvidenceReportMV.class, model = JobEvidenceReportModel.class)})
 @TSecurity(id = DomainApp.EVIDENCE_MANAGER_MODULE_ID, appName = ItToolsKey.APP_ITSUPPORT, 
