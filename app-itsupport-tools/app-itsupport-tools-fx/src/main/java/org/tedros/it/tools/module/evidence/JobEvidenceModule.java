@@ -17,12 +17,12 @@ import org.tedros.it.tools.module.evidence.model.MeetingMinutesMV;
 import org.tedros.it.tools.module.evidence.report.JobEvidenceReportMV;
 
 @TView(items = {
+		@TItem(title = ItToolsKey.VIEW_MEETING_MINUTES, description = ItToolsKey.VIEW_MEETING_MINUTES_DESC,
+				modelView = MeetingMinutesMV.class, model = MeetingMinutes.class),
 		@TItem(title =  ItToolsKey.VIEW_CAPTURE_EVIDENCE, description = ItToolsKey.VIEW_CAPTURE_EVIDENCE_DESC, 
 			modelView = CaptureEvidenceMV.class, model = CaptureEvidenceModel.class),
 		@TItem(title = ItToolsKey.VIEW_JOB_EVIDENCE, description = ItToolsKey.VIEW_JOB_EVIDENCE_DESC, 
-			modelView = CreateJobEvidenceMV.class, model = JobEvidence.class),
-		@TItem(title = ItToolsKey.VIEW_MEETING_MINUTES, description = ItToolsKey.VIEW_MEETING_MINUTES_DESC,
-			modelView = MeetingMinutesMV.class, model = MeetingMinutes.class),
+			modelView = CreateJobEvidenceMV.class, model = JobEvidence.class),		
 		@TItem(title = ItToolsKey.VIEW_JOB_EVIDENCE_REPORT, description = ItToolsKey.VIEW_JOB_EVIDENCE_REPORT_DESC,
 			modelView = JobEvidenceReportMV.class, model = JobEvidenceReportModel.class)})
 @TSecurity(id = DomainApp.EVIDENCE_MANAGER_MODULE_ID, appName = ItToolsKey.APP_ITSUPPORT, 

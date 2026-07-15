@@ -1,8 +1,8 @@
 <!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
-<jasperReport name="ata-reuniao" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="298a6e4d-1707-4313-ac73-e2477f6bb75f">
+<jasperReport name="ata-reuniao" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="298a6e4d-1707-4313-ac73-e2477f6bb75f" summaryNewPage="true">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
-		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\davis.dun\\JaspersoftWorkspace\\Tedros-Reports\\"]]></defaultValueExpression>
 	</parameter>
 	<query language="sql"><![CDATA[]]></query>
 	<field name="meetingPlace" class="java.lang.String"/>
@@ -19,6 +19,10 @@
 	<field name="meetingAgenda" class="java.util.List"/>
 	<field name="meetingReferrals" class="java.util.List"/>
 	<background height="802" splitType="Stretch">
+		<element kind="image" uuid="7bb3a174-3e5a-4344-934c-5b560f9a884e" x="0" y="0" width="560" height="802" scaleImage="RealSize" evaluationTime="Auto">
+			<expression><![CDATA["C:/Users/davis.dun/Pictures/Imagem WPS.png"]]></expression>
+		</element>
+		<element kind="rectangle" uuid="2b954cfb-4236-41b5-a4b1-b3370c88f8a5" x="0" y="0" width="560" height="790" forecolor="#FFFFFF" backcolor="rgba(255, 255, 255, 0.74509805)"/>
 		<property name="com.jaspersoft.studio.unit.height" value="px"/>
 	</background>
 	<title height="85" splitType="Stretch">
@@ -79,7 +83,7 @@
 					<leftPen lineWidth="0.25"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="29007d41-a161-46ed-a81d-6e59e840454b" x="400" y="39" width="150" height="24" fontSize="11.0" bold="false" vTextAlign="Middle">
+			<element kind="textField" uuid="29007d41-a161-46ed-a81d-6e59e840454b" x="400" y="39" width="160" height="24" fontSize="11.0" bold="false" vTextAlign="Middle">
 				<expression><![CDATA[$F{meetingDate}]]></expression>
 				<box padding="2">
 					<topPen lineWidth="0.25"/>
@@ -101,7 +105,7 @@
 					<leftPen lineWidth="0.25"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="84d6a42b-2f54-4e75-8823-a1a54b0ac9d9" x="400" y="63" width="150" height="24" fontSize="11.0" bold="false" vTextAlign="Middle">
+			<element kind="textField" uuid="84d6a42b-2f54-4e75-8823-a1a54b0ac9d9" x="400" y="63" width="160" height="24" fontSize="11.0" bold="false" vTextAlign="Middle">
 				<expression><![CDATA[$F{meetingFinishTime}]]></expression>
 				<box padding="2">
 					<topPen lineWidth="0.25"/>
@@ -109,7 +113,7 @@
 					<rightPen lineWidth="0.25"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="c09727ae-12be-4770-8cae-66e0cc50b6b9" x="140" y="87" width="410" height="62" fontSize="11.0" bold="false" vTextAlign="Middle">
+			<element kind="textField" uuid="c09727ae-12be-4770-8cae-66e0cc50b6b9" x="140" y="87" width="420" height="62" fontSize="11.0" bold="false" vTextAlign="Middle">
 				<expression><![CDATA[$F{meetingTopic}]]></expression>
 				<box padding="2">
 					<topPen lineWidth="0.25"/>
@@ -117,7 +121,7 @@
 					<rightPen lineWidth="0.25"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="97efd77e-03fb-4db0-bfd1-141ca6a3ca1c" x="140" y="149" width="410" height="50" fontSize="11.0" bold="false" vTextAlign="Middle">
+			<element kind="textField" uuid="97efd77e-03fb-4db0-bfd1-141ca6a3ca1c" x="140" y="149" width="420" height="50" fontSize="11.0" bold="false" vTextAlign="Middle">
 				<expression><![CDATA[$F{participants}]]></expression>
 				<box padding="2">
 					<topPen lineWidth="0.25"/>
@@ -141,7 +145,7 @@
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 		</band>
-		<band height="92">
+		<band height="76">
 			<element kind="staticText" uuid="372d0094-aa33-4bbd-b821-fad44c1df6f9" x="20" y="36" width="120" height="20" bold="true" hTextAlign="Center" vTextAlign="Middle">
 				<text><![CDATA[Local/Plataforma]]></text>
 				<box padding="2">
@@ -214,15 +218,19 @@
 				</box>
 			</element>
 		</band>
-		<band height="51" splitType="Stretch">
-			<element kind="subreport" uuid="02b5314f-7fa6-47ee-9968-5fbfb80a60a4" x="-20" y="0" width="570" height="50">
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{evidences})]]></dataSourceExpression>
-				<expression><![CDATA[$P{SUBREPORT_DIR}+"ata-reuniao-evidencia.jasper"]]></expression>
-			</element>
+		<band splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout"/>
 		</band>
 	</detail>
 	<columnFooter splitType="Stretch"/>
 	<pageFooter splitType="Stretch"/>
-	<summary splitType="Stretch"/>
+	<summary height="51" splitType="Stretch">
+		<printWhenExpression><![CDATA[$F{evidences}!=null && !$F{evidences}.isEmpty()]]></printWhenExpression>
+		<element kind="subreport" uuid="02b5314f-7fa6-47ee-9968-5fbfb80a60a4" x="-20" y="0" width="569" height="49">
+			<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{evidences})]]></dataSourceExpression>
+			<expression><![CDATA[$P{SUBREPORT_DIR}+"ata-reuniao-evidencia.jasper"]]></expression>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+	</summary>
 </jasperReport>

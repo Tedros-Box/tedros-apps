@@ -11,21 +11,32 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-import org.tedros.ai.service.AiServiceProvider;
-import org.tedros.ai.service.AiTerosServiceFactory;
+import org.tedros.ai.service.AiTerosContext;
 import org.tedros.ai.service.DocumentConverter;
 import org.tedros.ai.service.DocumentConverter.ProcessedDocument;
 import org.tedros.ai.service.IAiTerosService;
 import org.tedros.api.descriptor.ITComponentDescriptor;
+import org.tedros.api.presenter.view.ITView;
 import org.tedros.common.model.TByteEntity;
 import org.tedros.common.model.TFileEntity;
 import org.tedros.core.TLanguage;
 import org.tedros.core.context.TedrosContext;
+import org.tedros.core.repository.TRepository;
+import org.tedros.fx.TUsualKey;
 import org.tedros.fx.component.ITComponent;
 import org.tedros.fx.control.TButton;
+import org.tedros.fx.control.THyperlink;
 import org.tedros.fx.control.TLabel;
+import org.tedros.fx.control.TMaskField;
+import org.tedros.fx.domain.TLayoutType;
+import org.tedros.fx.exception.TProcessException;
+import org.tedros.fx.layout.TFieldSet;
+import org.tedros.fx.layout.TToolBar;
+import org.tedros.fx.presenter.dynamic.TDynaPresenter;
+import org.tedros.fx.presenter.dynamic.view.TDynaView;
 import org.tedros.fx.process.TProcess;
 import org.tedros.fx.process.TTaskImpl;
+import org.tedros.fx.property.TBytesLoader;
 import org.tedros.integration.redmine.api.model.TIssueEvidenceInfo;
 import org.tedros.integration.redmine.gateway.MeetingMinutesRedmineUpdateResult;
 import org.tedros.integration.redmine.gateway.RedmineApiGateway;
@@ -48,7 +59,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.WeakEventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListCell;
@@ -59,12 +75,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 public class MeetingMinutesComponent extends StackPane implements ITComponent {
 
+	private static final String FX_BACKGROUND_COLOR = "-fx-background-color: #ffec8e";
 	private static final Logger LOGGER = TLoggerUtil.getLogger(MeetingMinutesComponent.class);
 	private static final String MEETING_JSON_SYSTEM_PROMPT = """
 			You extract structured meeting minutes from a transcription.
@@ -90,15 +108,15 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 	private File transcriptionFile;
 	private TLabel lblTranscription;
 	private TextField tfMeetingPlace;
-	private TextField tfMeetingDate;
-	private TextField tfMeetingStart;
-	private TextField tfMeetingFinish;
+	private TMaskField tfMeetingDate;
+	private TMaskField tfMeetingStart;
+	private TMaskField tfMeetingFinish;
 	private TextArea taMeetingTopic;
 	private TextArea taParticipants;
 	private TextField tfNextPlace;
-	private TextField tfNextDate;
-	private TextField tfNextStart;
-	private TextField tfNextFinish;
+	private TMaskField tfNextDate;
+	private TMaskField tfNextStart;
+	private TMaskField tfNextFinish;
 	private ListView<MeetingAgenda> lvAgenda;
 	private ListView<MeetingReferral> lvReferrals;
 	private ListView<MeetingEvidence> lvEvidences;
@@ -106,13 +124,69 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 	private TextField tfIssueTitle;
 	private TextField tfActivityId;
 	private TLabel lblStatus;
-	private TLabel lblPdfPath;
+	private THyperlink linkPdfPath;
+	
+	
+	private TerosFillService terosFillService;
+	private MeetingMinutesReportProcess meetingMinutesReportProcess;
+	private SimpleBooleanProperty progressIndicatorVisible = new SimpleBooleanProperty(false);
+	private TRepository repo; 
 
 	@Override
+	@SuppressWarnings("rawtypes")
 	public void tInitializeComponent(ITComponentDescriptor descriptor) {
 		mv = (MeetingMinutesMV) descriptor.getModelView();
+		ITView view = descriptor.getForm().gettPresenter().getView();
+		view.gettProgressIndicator().bind(progressIndicatorVisible);
+		repo = ((TDynaPresenter) ((TDynaView)view).gettPresenter()).getBehavior().getForm().gettObjectRepository();
+		
 		buildUi();
 		bindFromMv();
+		
+		// Teros Fill Service
+		terosFillService = new TerosFillService();
+		terosFillService.setOnSucceeded(ev -> {
+			String json = terosFillService.getValue();
+			try {
+				if (StringUtils.isNotBlank(terosFillService.getTranscriptionText())) {
+					mv.getTranscription().set(terosFillService.getTranscriptionText());
+				}
+				applyAiJson(json);
+				lblStatus.setText(TLanguage.getInstance().getString(ItToolsKey.MEETING_AI_DONE));
+			} catch (Exception ex) {
+				LOGGER.error(ex.getMessage(), ex);
+				lblStatus.setText(ex.getMessage());
+				alert(AlertType.ERROR, ex.getMessage());
+			}
+		});
+		terosFillService.setOnFailed(ev -> {
+			Throwable ex = terosFillService.getException();
+			lblStatus.setText(ex != null ? ex.getMessage() : "AI error");
+			alert(AlertType.ERROR, lblStatus.getText());
+		});
+		
+		// Report Process
+		meetingMinutesReportProcess = new MeetingMinutesReportProcess();
+		meetingMinutesReportProcess.setOnSucceeded(ev -> {
+			TResult<String> res = meetingMinutesReportProcess.getValue();
+			if (res != null && res.getState() == TState.SUCCESS) {
+				String path = res.getValue() != null ? res.getValue() : res.getMessage();
+				mv.getGeneratedPdfPath().set(path);
+				linkPdfPath.setText(path);
+				lblStatus.setText(TLanguage.getInstance().getString(ItToolsKey.MEETING_PDF_OK));
+			} else {
+				String msg = res != null ? res.getMessage() : "PDF error";
+				lblStatus.setText(msg);
+				alert(AlertType.ERROR, msg);
+			}
+		});
+		meetingMinutesReportProcess.setOnFailed(ev -> {
+			Throwable ex = meetingMinutesReportProcess.getException();
+			alert(AlertType.ERROR, ex != null ? ex.getMessage() : "PDF error");
+		});
+		
+		progressIndicatorVisible.bind(terosFillService.runningProperty()
+				.or(meetingMinutesReportProcess.runningProperty()));
 	}
 
 	@Override
@@ -128,21 +202,32 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 		btnPick.setOnAction(e -> pickTranscription());
 		TButton btnSendAi = new TButton(TLanguage.getInstance().getString(ItToolsKey.SEND_TO_TEROS));
 		btnSendAi.setOnAction(e -> sendToTeros());
+		
+		TToolBar transcriptionTollBar = new TToolBar();
+		transcriptionTollBar.getItems().addAll(btnPick, btnSendAi);
+		
 		root.getChildren().add(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_TRANSCRIPTION),
-				new HBox(8, btnPick, btnSendAi), lblTranscription));
+				transcriptionTollBar, lblTranscription));
 
+		
+		TFieldSet meetingMinutesFieldSet = new TFieldSet(TLayoutType.VBOX, TLanguage.getInstance().getString(ItToolsKey.LABEL_MEETING_MINUTES));	
+		root.getChildren().add(meetingMinutesFieldSet);
+		
 		tfMeetingPlace = new TextField();
-		tfMeetingDate = new TextField();
-		tfMeetingStart = new TextField();
-		tfMeetingFinish = new TextField();
+		tfMeetingDate = new TMaskField("99/99/9999");
+		tfMeetingStart = new TMaskField("99:99");
+		tfMeetingFinish = new TMaskField("99:99");
 		taMeetingTopic = new TextArea();
 		taMeetingTopic.setPrefRowCount(3);
+		taMeetingTopic.setWrapText(true);
 		taParticipants = new TextArea();
 		taParticipants.setPrefRowCount(2);
+		taParticipants.setWrapText(true);
 		GridPane meetingGrid = formGrid(
 				row(ItToolsKey.MEETING_PLACE, tfMeetingPlace, ItToolsKey.MEETING_DATE, tfMeetingDate),
 				row(ItToolsKey.MEETING_START_TIME, tfMeetingStart, ItToolsKey.MEETING_FINISH_TIME, tfMeetingFinish));
-		root.getChildren().add(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_DATA), meetingGrid,
+		
+		meetingMinutesFieldSet.tAddAllContent(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_DATA), meetingGrid,
 				labeled(ItToolsKey.MEETING_TOPIC, taMeetingTopic), labeled(ItToolsKey.MEETING_PARTICIPANTS, taParticipants)));
 
 		lvAgenda = new ListView<>();
@@ -158,9 +243,13 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 				renumberAgenda();
 			}
 		});
-		root.getChildren().add(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_AGENDA),
-				new HBox(8, btnAddAgenda, btnRemAgenda), lvAgenda));
-
+		
+		TToolBar agendaTollBar = new TToolBar();
+		agendaTollBar.getItems().addAll(btnAddAgenda, btnRemAgenda);
+		
+		meetingMinutesFieldSet.tAddAllContent(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_AGENDA),
+				agendaTollBar, lvAgenda));
+				
 		lvReferrals = new ListView<>();
 		lvReferrals.setPrefHeight(160);
 		lvReferrals.setCellFactory(v -> referralCell());
@@ -174,17 +263,22 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 				renumberReferrals();
 			}
 		});
-		root.getChildren().add(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_REFERRALS),
-				new HBox(8, btnAddRef, btnRemRef), lvReferrals));
-
+		
+		TToolBar referralsTollBar = new TToolBar();
+		referralsTollBar.getItems().addAll(btnAddRef, btnRemRef);
+		
+		meetingMinutesFieldSet.tAddAllContent(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_REFERRALS),
+				referralsTollBar, lvReferrals));
+		
 		tfNextPlace = new TextField();
-		tfNextDate = new TextField();
-		tfNextStart = new TextField();
-		tfNextFinish = new TextField();
-		root.getChildren().add(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_NEXT),
+		tfNextDate = new TMaskField("99/99/9999");
+		tfNextStart = new TMaskField("99:99");
+		tfNextFinish = new TMaskField("99:99");
+		
+		meetingMinutesFieldSet.tAddAllContent(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_NEXT),
 				formGrid(row(ItToolsKey.MEETING_PLACE, tfNextPlace, ItToolsKey.MEETING_DATE, tfNextDate),
 						row(ItToolsKey.MEETING_START_TIME, tfNextStart, ItToolsKey.MEETING_FINISH_TIME, tfNextFinish))));
-
+		
 		lvEvidences = new ListView<>();
 		lvEvidences.setPrefHeight(120);
 		TButton btnAddEv = new TButton(TLanguage.getInstance().getString(ItToolsKey.MEETING_ADD_EVIDENCE));
@@ -195,14 +289,31 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 			if (sel != null)
 				mv.getEvidences().remove(sel);
 		});
-		root.getChildren().add(section(TLanguage.getInstance().getString(ItToolsKey.EVIDENCES),
-				new HBox(8, btnAddEv, btnRemEv), lvEvidences));
-
+		
+		TToolBar evidencesTollBar = new TToolBar();
+		evidencesTollBar.getItems().addAll(btnAddEv, btnRemEv);
+		
+		meetingMinutesFieldSet.tAddAllContent(section(TLanguage.getInstance().getString(ItToolsKey.EVIDENCES),
+				evidencesTollBar, lvEvidences));
+		
 		TButton btnPdf = new TButton(TLanguage.getInstance().getString(ItToolsKey.MEETING_GENERATE_FILE));
 		btnPdf.setOnAction(e -> generatePdf());
-		lblPdfPath = new TLabel();
+		linkPdfPath = new THyperlink();
+		
+		EventHandler<ActionEvent> linkPdfPathEv = e -> {
+			if(StringUtils.isBlank(linkPdfPath.getText()))
+				return;
+			try {
+				TedrosContext.openDocument(linkPdfPath.getText());
+			} catch (Exception e1) {
+				LOGGER.error(e1.getMessage(), e1);
+			}
+		};
+		repo.add("linkPdfPathEv", linkPdfPathEv);
+		linkPdfPath.setOnAction(new WeakEventHandler<>(linkPdfPathEv));
+		
 		root.getChildren().add(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_ACTIONS),
-				new HBox(8, btnPdf), lblPdfPath));
+				new HBox(8, btnPdf), linkPdfPath));
 
 		tfIssueNumber = new TextField();
 		tfIssueTitle = new TextField();
@@ -212,9 +323,13 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 		btnSearch.setOnAction(e -> searchIssue());
 		TButton btnUpdate = new TButton(TLanguage.getInstance().getString(ItToolsKey.MEETING_UPDATE_ISSUE));
 		btnUpdate.setOnAction(e -> updateRedmineIssue());
+		
+		TToolBar redmineIssueTollBar = new TToolBar();
+		redmineIssueTollBar.getItems().addAll(btnSearch, btnUpdate);
+		
 		root.getChildren().add(section(TLanguage.getInstance().getString(ItToolsKey.MEETING_REDMINE),
 				formGrid(row(ItToolsKey.ISSUE_NUMBER, tfIssueNumber, ItToolsKey.MEETING_ACTIVITY_ID, tfActivityId)),
-				labeled(ItToolsKey.MEETING_ISSUE_TITLE, tfIssueTitle), new HBox(8, btnSearch, btnUpdate)));
+				labeled(ItToolsKey.MEETING_ISSUE_TITLE, tfIssueTitle), redmineIssueTollBar));
 
 		lblStatus = new TLabel();
 		root.getChildren().add(lblStatus);
@@ -250,11 +365,24 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 		});
 		lvAgenda.setItems(mv.getMeetingAgenda());
 		lvReferrals.setItems(mv.getMeetingReferrals());
+		
+		if(mv.getEvidences()!=null && !mv.getEvidences().isEmpty()) {
+			mv.getEvidences().stream().forEach(i->{
+				if(i.getFile()!=null && i.getFile().getByteEntity()!=null && i.getFile().getByteEntity().getBytes()==null) {
+					try {
+						TBytesLoader.loadBytes(i.getFile());
+					} catch (TProcessException e) {
+						LOGGER.error(e.getMessage(), e);
+					}
+				}
+			});
+		}		
+		
 		lvEvidences.setItems(mv.getEvidences());
 		if (StringUtils.isNotBlank(mv.getTranscriptionFileName().get()))
 			lblTranscription.setText(mv.getTranscriptionFileName().get());
 		if (StringUtils.isNotBlank(mv.getGeneratedPdfPath().get()))
-			lblPdfPath.setText(mv.getGeneratedPdfPath().get());
+			linkPdfPath.setText(mv.getGeneratedPdfPath().get());
 	}
 
 	private void bindText(TextField field, javafx.beans.property.StringProperty prop) {
@@ -283,28 +411,8 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 			alert(AlertType.WARNING, TLanguage.getInstance().getString(ItToolsKey.MEETING_SELECT_TRANSCRIPTION_FIRST));
 			return;
 		}
-		lblStatus.setText(TLanguage.getInstance().getString(ItToolsKey.MEETING_AI_PROCESSING));
-		TerosFillService svc = new TerosFillService();
-		svc.setOnSucceeded(ev -> {
-			String json = svc.getValue();
-			try {
-				if (StringUtils.isNotBlank(svc.getTranscriptionText())) {
-					mv.getTranscription().set(svc.getTranscriptionText());
-				}
-				applyAiJson(json);
-				lblStatus.setText(TLanguage.getInstance().getString(ItToolsKey.MEETING_AI_DONE));
-			} catch (Exception ex) {
-				LOGGER.error(ex.getMessage(), ex);
-				lblStatus.setText(ex.getMessage());
-				alert(AlertType.ERROR, ex.getMessage());
-			}
-		});
-		svc.setOnFailed(ev -> {
-			Throwable ex = svc.getException();
-			lblStatus.setText(ex != null ? ex.getMessage() : "AI error");
-			alert(AlertType.ERROR, lblStatus.getText());
-		});
-		svc.startProcess();
+		lblStatus.setText(TLanguage.getInstance().getString(ItToolsKey.MEETING_AI_PROCESSING));		
+		terosFillService.startProcess();
 	}
 
 	private void applyAiJson(String raw) {
@@ -444,26 +552,8 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 	private void generatePdf() {
 		syncEntityCollections();
 		try {
-			MeetingMinutesReportProcess process = new MeetingMinutesReportProcess();
-			process.exportPDF(mv.getEntity(), TedrosFolder.EXPORT_FOLDER.getFullPath());
-			process.setOnSucceeded(ev -> {
-				TResult<String> res = process.getValue();
-				if (res != null && res.getState() == TState.SUCCESS) {
-					String path = res.getValue() != null ? res.getValue() : res.getMessage();
-					mv.getGeneratedPdfPath().set(path);
-					lblPdfPath.setText(path);
-					lblStatus.setText(TLanguage.getInstance().getString(ItToolsKey.MEETING_PDF_OK));
-				} else {
-					String msg = res != null ? res.getMessage() : "PDF error";
-					lblStatus.setText(msg);
-					alert(AlertType.ERROR, msg);
-				}
-			});
-			process.setOnFailed(ev -> {
-				Throwable ex = process.getException();
-				alert(AlertType.ERROR, ex != null ? ex.getMessage() : "PDF error");
-			});
-			process.startProcess();
+			meetingMinutesReportProcess.exportPDF(mv.getEntity(), TedrosFolder.EXPORT_FOLDER.getFullPath());
+			meetingMinutesReportProcess.startProcess();
 		} catch (Exception ex) {
 			LOGGER.error(ex.getMessage(), ex);
 			alert(AlertType.ERROR, ex.getMessage());
@@ -565,7 +655,12 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 			private final HBox box = new HBox(6, item, desc);
 			{
 				item.setPrefWidth(50);
-				desc.setPrefRowCount(2);
+				item.setStyle(FX_BACKGROUND_COLOR);
+				item.setPromptText(TLanguage.getInstance().getString(ItToolsKey.MEETING_ITEM));
+				desc.setWrapText(true); 
+				desc.setPrefRowCount(2);				
+				desc.setStyle(FX_BACKGROUND_COLOR);
+				desc.setPromptText(TLanguage.getInstance().getString(TUsualKey.DESCRIPTION));				
 				HBox.setHgrow(desc, Priority.ALWAYS);
 			}
 
@@ -593,53 +688,86 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 	}
 
 	private ListCell<MeetingReferral> referralCell() {
-		return new ListCell<>() {
-			private final TextField item = new TextField();
-			private final TextArea desc = new TextArea();
-			private final TextField resp = new TextField();
-			private final TextField deadline = new TextField();
-			private final HBox box = new HBox(6, item, desc, resp, deadline);
-			{
-				item.setPrefWidth(40);
-				resp.setPrefWidth(120);
-				deadline.setPrefWidth(100);
-				desc.setPrefRowCount(2);
-				HBox.setHgrow(desc, Priority.ALWAYS);
-			}
+	    return new ListCell<>() {
+	        private final TextField item = new TextField();
+	        private final TextArea desc = new TextArea();
+	        private final TextField resp = new TextField();
+	        private final TextField deadline = new TextField();
+	        private final HBox box = new HBox(6, item, desc, resp, deadline);
 
-			@Override
-			protected void updateItem(MeetingReferral r, boolean empty) {
-				super.updateItem(r, empty);
-				if (empty || r == null) {
-					setGraphic(null);
-					return;
-				}
-				item.setText(r.getItem());
-				desc.setText(r.getDescription());
-				resp.setText(r.getResponsable());
-				deadline.setText(r.getDeadline());
-				item.focusedProperty().addListener((o, a, n) -> {
-					if (!n)
-						r.setItem(item.getText());
-				});
-				desc.focusedProperty().addListener((o, a, n) -> {
-					if (!n)
-						r.setDescription(desc.getText());
-				});
-				resp.focusedProperty().addListener((o, a, n) -> {
-					if (!n)
-						r.setResponsable(resp.getText());
-				});
-				deadline.focusedProperty().addListener((o, a, n) -> {
-					if (!n)
-						r.setDeadline(deadline.getText());
-				});
-				setGraphic(box);
-			}
-		};
+	        {
+	            // Trava a largura do campo Item
+	            item.setPrefWidth(40);
+	            item.setMinWidth(Region.USE_PREF_SIZE);
+	            item.setMaxWidth(Region.USE_PREF_SIZE);
+	            item.setStyle(FX_BACKGROUND_COLOR);
+	            item.setPromptText(TLanguage.getInstance().getString(ItToolsKey.MEETING_ITEM));
+	            
+	            // Trava a largura do campo Responsável
+	            resp.setPrefWidth(120);
+	            resp.setMinWidth(Region.USE_PREF_SIZE);
+	            resp.setMaxWidth(Region.USE_PREF_SIZE);
+	            resp.setStyle(FX_BACKGROUND_COLOR);
+	            resp.setPromptText(TLanguage.getInstance().getString(TUsualKey.RESPONSABLE));
+	            
+	            // Trava a largura do campo Prazo
+	            deadline.setPrefWidth(100);
+	            deadline.setMinWidth(Region.USE_PREF_SIZE);
+	            deadline.setMaxWidth(Region.USE_PREF_SIZE);
+	            deadline.setStyle(FX_BACKGROUND_COLOR);
+	            deadline.setPromptText(TLanguage.getInstance().getString(ItToolsKey.MEETING_DEADLINE));
+	            
+	            // Configura a Descrição para ser responsiva
+	            desc.setPrefRowCount(2);
+	            desc.setStyle(FX_BACKGROUND_COLOR);
+	            desc.setPromptText(TLanguage.getInstance().getString(TUsualKey.DESCRIPTION));
+	            
+	            // 1. Permite que o TextArea encolha bastante antes de estourar a tela
+	            desc.setMinWidth(50); 
+	            
+	            // 2. Opcional, mas recomendado: quebra o texto em vez de esconder
+	            desc.setWrapText(true); 
+	            
+	            // 3. Diz ao HBox para dar todo o espaço horizontal excedente para o desc
+	            HBox.setHgrow(desc, Priority.ALWAYS); 
+	            
+	            // 4. (Opcional) Garante que o HBox não ultrapasse a largura visível da ListCell
+	            box.prefWidthProperty().bind(widthProperty().subtract(20)); // -20 compensa o scroll vertical
+	        }
+
+	        @Override
+	        protected void updateItem(MeetingReferral r, boolean empty) {
+	            super.updateItem(r, empty);
+	            if (empty || r == null) {
+	                setGraphic(null);
+	                return;
+	            }
+	            
+	            item.setText(r.getItem());
+	            desc.setText(r.getDescription());
+	            resp.setText(r.getResponsable());
+	            deadline.setText(r.getDeadline());
+	            
+	            item.focusedProperty().addListener((o, a, n) -> {
+	                if (!n) r.setItem(item.getText());
+	            });
+	            desc.focusedProperty().addListener((o, a, n) -> {
+	                if (!n) r.setDescription(desc.getText());
+	            });
+	            resp.focusedProperty().addListener((o, a, n) -> {
+	                if (!n) r.setResponsable(resp.getText());
+	            });
+	            deadline.focusedProperty().addListener((o, a, n) -> {
+	                if (!n) r.setDeadline(deadline.getText());
+	            });
+	            
+	            setGraphic(box);
+	        }
+	    };
 	}
 
-	private VBox section(String title, javafx.scene.Node... nodes) {
+	private VBox section(String title, Node... nodes) {
+		
 		VBox box = new VBox(6);
 		TLabel h = new TLabel(title);
 		h.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
@@ -648,7 +776,7 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 		return box;
 	}
 
-	private VBox labeled(String key, javafx.scene.Node node) {
+	private VBox labeled(String key, Node node) {
 		return new VBox(2, new TLabel(TLanguage.getInstance().getString(key)), node);
 	}
 
@@ -659,15 +787,15 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 		int r = 0;
 		for (Object[] row : rows) {
 			grid.add(new TLabel(TLanguage.getInstance().getString((String) row[0])), 0, r);
-			grid.add((javafx.scene.Node) row[1], 1, r);
+			grid.add((Node) row[1], 1, r);
 			grid.add(new TLabel(TLanguage.getInstance().getString((String) row[2])), 2, r);
-			grid.add((javafx.scene.Node) row[3], 3, r);
+			grid.add((Node) row[3], 3, r);
 			r++;
 		}
 		return grid;
 	}
 
-	private Object[] row(String k1, javafx.scene.Node n1, String k2, javafx.scene.Node n2) {
+	private Object[] row(String k1, Node n1, String k2, Node n2) {
 		return new Object[] { k1, n1, k2, n2 };
 	}
 
@@ -679,24 +807,13 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 	}
 
 	private class TerosFillService extends TProcess<String> {
+		
 		private final IAiTerosService iaServ;
-		private final String prompt;
-		private final String transcriptionText;
+		private String prompt;
+		private String transcriptionText;
 
 		TerosFillService() {
-			String apiKey = TedrosContext.getAiApiKey();
-			String aiModel = TedrosContext.getAiModel();
-			AiServiceProvider aiProvider = TedrosContext.getAiServiceProvider();
-			iaServ = AiTerosServiceFactory.newInstanceWithLangChain4jAdapters(apiKey, aiModel, MEETING_JSON_SYSTEM_PROMPT,
-					aiProvider);
-			try {
-				byte[] bytes = Files.readAllBytes(transcriptionFile.toPath());
-				ProcessedDocument doc = DocumentConverter.processFile(bytes, transcriptionFile.getName());
-				transcriptionText = doc.textContent() != null ? doc.textContent() : "";
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-			prompt = "Extract the meeting minutes JSON from this transcription:\n\n" + transcriptionText;
+			iaServ = AiTerosContext.newInstanceAiTerosService(MEETING_JSON_SYSTEM_PROMPT);
 		}
 
 		String getTranscriptionText() {
@@ -708,6 +825,18 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 			return new TTaskImpl<String>() {
 				@Override
 				protected String call() {
+					
+					try {
+						byte[] bytes = Files.readAllBytes(transcriptionFile.toPath());
+						ProcessedDocument doc = DocumentConverter.processFile(bytes, transcriptionFile.getName());
+						transcriptionText = doc.textContent() != null ? doc.textContent() : "";
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+					
+					prompt = "Extract the meeting minutes JSON from this transcription:\n\n" + transcriptionText;
+					
+					iaServ.cleanMessageHistory();					
 					return iaServ.call(prompt, MEETING_JSON_SYSTEM_PROMPT);
 				}
 

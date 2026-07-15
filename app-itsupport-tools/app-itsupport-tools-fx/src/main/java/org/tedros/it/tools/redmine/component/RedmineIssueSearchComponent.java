@@ -11,14 +11,12 @@ import java.util.stream.Collectors;
 
 import org.tedros.ai.function.TFunction;
 import org.tedros.ai.function.TFunctionHelper;
-import org.tedros.ai.service.AiServiceProvider;
-import org.tedros.ai.service.AiTerosServiceFactory;
+import org.tedros.ai.service.AiTerosContext;
 import org.tedros.ai.service.IAiTerosService;
 import org.tedros.ai.web.TerosWebViewBridge;
 import org.tedros.api.descriptor.ITComponentDescriptor;
 import org.tedros.api.presenter.view.ITView;
 import org.tedros.core.TLanguage;
-import org.tedros.core.context.TedrosContext;
 import org.tedros.core.control.ITProgressIndicator;
 import org.tedros.core.control.TProgressIndicator;
 import org.tedros.fx.TUsualKey;
@@ -753,11 +751,9 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 		
 		@SuppressWarnings("rawtypes")
 		public TerosService() {
-			String apiKey = TedrosContext.getAiApiKey();
-            String aiModel = TedrosContext.getAiModel();
-            AiServiceProvider aiProvider = TedrosContext.getAiServiceProvider();
-            iaServ = AiTerosServiceFactory.newInstanceWithLangChain4jAdapters(apiKey, aiModel, SYSTEM_PROMPT, aiProvider);
-            TFunction[] arr = new TFunction[] {
+			
+			iaServ = AiTerosContext.newInstanceAiTerosService(SYSTEM_PROMPT);
+			TFunction[] arr = new TFunction[] {
 					TFunctionHelper.listAllViewPathFunction(),
 					TFunctionHelper.getViewInfoFunction(),
 					TFunctionHelper.callUpViewFunction(),
@@ -781,8 +777,8 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 					new SearchGitLabRepositoryBranchesFunction(),
 					new SearchGitLabRepositoryCommitsFunction()
             };
-						
-			iaServ.createFunctionExecutor(arr);
+            iaServ.createFunctionExecutor(arr);
+			
 		}
 
 		@Override
