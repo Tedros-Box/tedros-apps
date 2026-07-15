@@ -6,6 +6,11 @@ public interface DomainTables {
 	static final String JOB_EVIDENCE= "IT_JOB_EVIDENCE";
 	static final String JOB_EVIDENCE_ITEM= "IT_JOB_EVIDENCE_ITEM";
 	static final String JOB_EVIDENCE_ITEM_FILE= "IT_JOB_EVIDENCE_ITEM_FILE";
+
+	static final String MEETING_MINUTES = "IT_MEETING_MINUTES";
+	static final String MEETING_AGENDA = "IT_MEETING_AGENDA";
+	static final String MEETING_REFERRAL = "IT_MEETING_REFERRAL";
+	static final String MEETING_EVIDENCE = "IT_MEETING_EVIDENCE";
 	
 	static final String GMUD = "IT_GMUD";
     static final String GMUD_ITEM = "IT_GMUD_ITEM";
