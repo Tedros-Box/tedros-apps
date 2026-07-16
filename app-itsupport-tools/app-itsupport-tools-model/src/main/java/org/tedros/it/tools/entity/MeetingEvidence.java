@@ -117,4 +117,9 @@ public class MeetingEvidence extends TVersionEntity {
 		return Objects.equals(file, other.file) && Objects.equals(filePath, other.filePath)
 				&& Objects.equals(name, other.name);
 	}
+	
+	@Override
+	public String toString() {
+		return this.filePath!=null ? this.filePath : "";
+	}
 }

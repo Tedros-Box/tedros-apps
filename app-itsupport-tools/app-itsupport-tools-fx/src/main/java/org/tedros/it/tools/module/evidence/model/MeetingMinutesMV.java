@@ -3,6 +3,7 @@ package org.tedros.it.tools.module.evidence.model;
 import org.tedros.core.annotation.security.TAuthorizationType;
 import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.core.model.TFormatter;
+import org.tedros.fx.annotation.control.TFieldBox;
 import org.tedros.fx.annotation.control.TGenericType;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.page.TPage;
@@ -14,6 +15,7 @@ import org.tedros.fx.annotation.process.TEjbService;
 import org.tedros.fx.annotation.query.TCondition;
 import org.tedros.fx.annotation.query.TOrder;
 import org.tedros.fx.annotation.query.TQuery;
+import org.tedros.fx.annotation.scene.TNode;
 import org.tedros.fx.collections.ITObservableList;
 import org.tedros.fx.component.TComponent;
 import org.tedros.fx.model.TEntityModelView;
@@ -44,6 +46,7 @@ import javafx.beans.property.SimpleStringProperty;
 		TAuthorizationType.NEW })
 public class MeetingMinutesMV extends TEntityModelView<MeetingMinutes> {
 
+	@TFieldBox(node = @TNode(parse = true, id = "no-effect-id"))
 	@TComponent(type = MeetingMinutesComponent.class)
 	private SimpleStringProperty component;
 
