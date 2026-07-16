@@ -126,7 +126,8 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 	private TLabel lblStatus;
 	private THyperlink linkPdfPath;
 	
-	
+	private SearchRedmineService searchRedmineService;
+	private UpdateRedmineService updateRedmineService;
 	private TerosFillService terosFillService;
 	private MeetingMinutesReportProcess meetingMinutesReportProcess;
 	private SimpleBooleanProperty progressIndicatorVisible = new SimpleBooleanProperty(false);
@@ -185,8 +186,44 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 			alert(AlertType.ERROR, ex != null ? ex.getMessage() : "PDF error");
 		});
 		
+		// Update Redmine Process
+		updateRedmineService= new UpdateRedmineService();
+		updateRedmineService.setOnSucceeded(ev -> {
+			UpdateRedmineResult res = updateRedmineService.getValue();
+			
+			if (res.attachmentId() != null)
+				mv.getRedmineAttachmentId().set(res.attachmentId);
+			if (res.timeEntryId() != null)
+				mv.getRedmineTimeEntryId().set(res.timeEntryId());
+			
+			lblStatus.setText(TLanguage.getInstance().getString(ItToolsKey.MEETING_REDMINE_UPDATED));
+			
+		});
+		updateRedmineService.setOnFailed(ev -> {
+			Throwable ex = updateRedmineService.getException();
+			alert(AlertType.ERROR, ex != null ? ex.getMessage() : "Update Redmine error");
+		});
+		
+		// Search Redmine Process
+		searchRedmineService= new SearchRedmineService();
+		searchRedmineService.setOnSucceeded(ev -> {
+			TIssueEvidenceInfo issue = searchRedmineService.getValue();
+			
+			mv.getIssueNumber().set(tfIssueNumber.getText().trim());
+			mv.getIssueTitle().set(issue.getSubject());
+			lblStatus.setText(issue.getSubject());
+			
+		});
+		searchRedmineService.setOnFailed(ev -> {
+			Throwable ex = searchRedmineService.getException();
+			alert(AlertType.ERROR, ex != null ? ex.getMessage() : "Search Redmine error");
+		});
+		
+		// bind progress indicator
 		progressIndicatorVisible.bind(terosFillService.runningProperty()
-				.or(meetingMinutesReportProcess.runningProperty()));
+				.or(meetingMinutesReportProcess.runningProperty())
+				.or(searchRedmineService.runningProperty())
+				.or(updateRedmineService.runningProperty()));
 	}
 
 	@Override
@@ -564,17 +601,9 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 		String num = tfIssueNumber.getText();
 		if (StringUtils.isBlank(num))
 			return;
-		try {
-			RedmineApiPropertyUtil util = RedmineApiPropertyUtil.getInstance();
-			RedmineApiGateway gateway = new RedmineApiGateway(util.getRedmineUrl(), util.getRedmineKey());
-			TIssueEvidenceInfo issue = gateway.getTIssueEvidenceInfo(Integer.valueOf(num.trim()));
-			mv.getIssueNumber().set(num.trim());
-			mv.getIssueTitle().set(issue.getSubject());
-			lblStatus.setText(issue.getSubject());
-		} catch (Exception ex) {
-			LOGGER.warn(ex.getMessage(), ex);
-			alert(AlertType.WARNING, ex.getMessage());
-		}
+		
+		searchRedmineService.setIssueNumber(num.trim());
+		searchRedmineService.startProcess();
 	}
 
 	private void updateRedmineIssue() {
@@ -588,28 +617,12 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 			alert(AlertType.WARNING, TLanguage.getInstance().getString(ItToolsKey.ISSUE_NUMBER));
 			return;
 		}
-		try {
-			byte[] pdfBytes = Files.readAllBytes(new File(pdf).toPath());
-			Float hours = computeHours(mv.getMeetingStartTime().get(), mv.getMeetingFinishTime().get());
-			Date spentOn = parseMeetingDate(mv.getMeetingDate().get());
-			Integer activity = mv.getActivityId().getValue() != null ? mv.getActivityId().getValue() : 19;
-			Integer issueId = Integer.valueOf(mv.getIssueNumber().get().trim());
-
-			RedmineApiPropertyUtil util = RedmineApiPropertyUtil.getInstance();
-			RedmineApiGateway gateway = new RedmineApiGateway(util.getRedmineUrl(), util.getRedmineKey());
-			String fileName = new File(pdf).getName();
-			MeetingMinutesRedmineUpdateResult result = gateway.updateIssueWithMeetingMinutes(issueId, null, activity,
-					pdfBytes, fileName, "application/pdf", hours, spentOn, "Participação em Reunião",
-					mv.getRedmineAttachmentId().get(), mv.getRedmineTimeEntryId().get());
-			if (result.getAttachmentId() != null)
-				mv.getRedmineAttachmentId().set(String.valueOf(result.getAttachmentId()));
-			if (result.getTimeEntryId() != null)
-				mv.getRedmineTimeEntryId().set(String.valueOf(result.getTimeEntryId()));
-			lblStatus.setText(TLanguage.getInstance().getString(ItToolsKey.MEETING_REDMINE_UPDATED));
-		} catch (Exception ex) {
-			LOGGER.error(ex.getMessage(), ex);
-			alert(AlertType.ERROR, ex.getMessage());
-		}
+		
+		updateRedmineService.setIssueData(pdf, mv.getIssueNumber().get().trim(), 
+				mv.getMeetingDate().get(), mv.getMeetingStartTime().get(), mv.getMeetingFinishTime().get(), 
+				mv.getRedmineAttachmentId().get(), mv.getRedmineTimeEntryId().get(), 
+				mv.getActivityId().getValue() != null ? mv.getActivityId().getValue() : 19);
+		updateRedmineService.startProcess();
 	}
 
 	private void syncEntityCollections() {
@@ -843,6 +856,115 @@ public class MeetingMinutesComponent extends StackPane implements ITComponent {
 				@Override
 				public String getServiceNameInfo() {
 					return "MeetingMinutesTeros";
+				}
+			};
+		}
+	}
+	
+	private record UpdateRedmineResult(String attachmentId, String timeEntryId) {};
+	
+	private class UpdateRedmineService extends TProcess<UpdateRedmineResult> {
+		
+		private String pdf;
+		private String meetingDate;
+		private String meetingStartTime;
+		private String meetingFinishTime;
+		private Integer activityId;
+		private String issueNumber;
+		private String redmineAttachmentId;
+		private String redmineTimeEntryId;
+
+		UpdateRedmineService() {
+			
+		}
+
+		void setIssueData(String pdf, String issueNumber,   
+				String meetingDate, String meetingStartTime, String meetingFinishTime, 
+				String redmineAttachmentId, String redmineTimeEntryId, Integer activityId){
+			this.pdf = pdf;
+			this.issueNumber = issueNumber;
+			this.activityId = activityId;
+			this.meetingDate = meetingDate;
+			this.meetingStartTime = meetingStartTime;
+			this.meetingFinishTime = meetingFinishTime;
+			this.redmineAttachmentId = redmineAttachmentId;
+			this.redmineTimeEntryId = redmineTimeEntryId;
+		}
+
+		@Override
+		protected TTaskImpl<UpdateRedmineResult> createTask() {
+			return new TTaskImpl<UpdateRedmineResult>() {
+				@Override
+				protected UpdateRedmineResult call() {
+					String attachmentId = null;
+					String timeEntryId = null;
+					try {
+						byte[] pdfBytes = Files.readAllBytes(new File(pdf).toPath());
+						Float hours = computeHours(meetingStartTime, meetingFinishTime);
+						Date spentOn = parseMeetingDate(meetingDate);
+						Integer activity = activityId;
+						Integer issueId = Integer.valueOf(issueNumber);
+
+						RedmineApiPropertyUtil util = RedmineApiPropertyUtil.getInstance();
+						RedmineApiGateway gateway = new RedmineApiGateway(util.getRedmineUrl(), util.getRedmineKey());
+						String fileName = new File(pdf).getName();
+						MeetingMinutesRedmineUpdateResult result = gateway.updateIssueWithMeetingMinutes(issueId, null, activity,
+								pdfBytes, fileName, "application/pdf", hours, spentOn, "Participação em Reunião",
+								redmineAttachmentId, redmineTimeEntryId);
+						
+						if (result.getAttachmentId() != null)
+							attachmentId = String.valueOf(result.getAttachmentId());
+						if (result.getTimeEntryId() != null)
+							timeEntryId = String.valueOf(result.getTimeEntryId());
+						
+					} catch (Exception ex) {
+						throw new RuntimeException(ex);
+					}
+					
+					return new UpdateRedmineResult(attachmentId, timeEntryId);				
+					
+				}
+
+				@Override
+				public String getServiceNameInfo() {
+					return "UpdateRedmineService";
+				}
+			};
+		}
+	}
+	
+	private class SearchRedmineService extends TProcess<TIssueEvidenceInfo> {
+		
+		private String issueNumber;
+
+		SearchRedmineService() {
+			
+		}
+
+		void setIssueNumber(String issueNumber){
+			this.issueNumber = issueNumber;
+		}
+
+		@Override
+		protected TTaskImpl<TIssueEvidenceInfo> createTask() {
+			return new TTaskImpl<TIssueEvidenceInfo>() {
+				@Override
+				protected TIssueEvidenceInfo call() {
+					TIssueEvidenceInfo res = null;
+					try {
+						RedmineApiPropertyUtil util = RedmineApiPropertyUtil.getInstance();
+						RedmineApiGateway gateway = new RedmineApiGateway(util.getRedmineUrl(), util.getRedmineKey());
+						res = gateway.getTIssueEvidenceInfo(Integer.valueOf(issueNumber));
+					} catch (Exception ex) {
+						throw new RuntimeException(ex);
+					}
+					
+					return res;
+				}
+
+				@Override
+				public String getServiceNameInfo() {
+					return "SearchRedmineService";
 				}
 			};
 		}
