@@ -10,7 +10,7 @@ import org.tedros.it.tools.cdi.bo.MeetingMinutesBO;
 import org.tedros.it.tools.entity.MeetingMinutes;
 import org.tedros.server.ejb.service.TEjbService;
 import org.tedros.server.security.TAccessToken;
-import org.tedros.server.service.TServiceLocator;
+import org.tedros.server.util.TServiceLocator;
 import org.tedros.util.TLoggerUtil;
 
 import jakarta.ejb.Asynchronous;
