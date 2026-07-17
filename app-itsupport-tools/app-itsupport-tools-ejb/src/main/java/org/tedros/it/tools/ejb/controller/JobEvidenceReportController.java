@@ -22,7 +22,7 @@ import org.tedros.server.security.TBeanPolicie;
 import org.tedros.server.security.TBeanSecurity;
 import org.tedros.server.security.TSecurityInterceptor;
 import org.tedros.server.service.ITEjbService;
-import org.tedros.server.service.TServiceLocator;
+import org.tedros.server.util.TServiceLocator;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;

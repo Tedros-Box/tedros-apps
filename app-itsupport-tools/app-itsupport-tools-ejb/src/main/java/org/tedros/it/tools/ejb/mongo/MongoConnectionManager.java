@@ -8,8 +8,8 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.lang3.StringUtils;
 import org.tedros.core.domain.TSystemPropertie;
-import org.tedros.core.support.TPropertieSupport;
-import org.tedros.server.service.TServiceLocator;
+import org.tedros.core.support.TDomainPropertieSupport;
+import org.tedros.server.util.TServiceLocator;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -35,8 +35,8 @@ public class MongoConnectionManager {
 	private void buildMongoClient() {
 		try(TServiceLocator serv = TServiceLocator.getInstance()) {
             
-    		TPropertieSupport support = serv.lookupWithRetry(TPropertieSupport.JNDI_NAME);
-    		String uri = support.getValue(TSystemPropertie.MONGODB_URI.getValue());
+			TDomainPropertieSupport support = serv.lookupWithRetry(TDomainPropertieSupport.JNDI_NAME);
+    		String uri = support.getSystemPropertyValue(TSystemPropertie.MONGODB_URI.getValue());
         	
         	if(StringUtils.isBlank(uri)) {
         		throw new RuntimeException("MongoDB URI property not found in database. Please set the property " + TSystemPropertie.MONGODB_URI.getValue());

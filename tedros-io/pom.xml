@@ -19,7 +19,7 @@
 	
 		<dependency>
 			<groupId>org.tedros</groupId>
-			<artifactId>tedros-server-client-api</artifactId>
+			<artifactId>tedros-server-api</artifactId>
 			<version>${tedros.jee}</version>
 			<scope>compile</scope>
 		</dependency>

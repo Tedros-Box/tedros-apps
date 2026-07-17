@@ -39,7 +39,7 @@
 
 		<dependency>
 			<groupId>org.tedros</groupId>
-			<artifactId>tedros-common-model</artifactId>
+			<artifactId>tedros-core-model</artifactId>
 			<version>${tedros.jee}</version>
 		</dependency>
 
