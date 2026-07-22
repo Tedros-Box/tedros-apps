@@ -5,10 +5,10 @@ import java.util.Optional;
 
 import javax.naming.NamingException;
 
+import org.tedros.common.model.TPropertie;
 import org.tedros.core.context.TedrosContext;
 import org.tedros.core.controller.TPropertieController;
 import org.tedros.core.service.remote.TEjbServiceLocator;
-import org.tedros.core.setting.model.TPropertie;
 import org.tedros.ifood.api.client.IFoodAuthClient;
 import org.tedros.ifood.api.client.IFoodClientBuilder;
 import org.tedros.ifood.api.client.IFoodEventsClient;

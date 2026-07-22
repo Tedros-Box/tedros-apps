@@ -9,6 +9,10 @@
 		
 		<class>org.tedros.common.model.TFileEntity</class>
 		<class>org.tedros.common.model.TByteEntity</class>
+		<class>org.tedros.common.model.TPropertie</class>
+		<class>org.tedros.common.model.TDomainPropertie</class>
+		<class>org.tedros.common.model.TUserPropertie</class>
+		
 		<class>org.tedros.extension.model.Contact</class>
 		<class>org.tedros.extension.model.Document</class>
 		<class>org.tedros.extension.model.DocumentEvent</class>
