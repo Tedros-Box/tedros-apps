@@ -35,13 +35,17 @@ import javafx.beans.property.SimpleStringProperty;
 
 @TForm(header = "", showBreadcrumBar = false, scroll = true)
 @TEjbService(serviceName = IMeetingMinutesController.JNDI_NAME, model = MeetingMinutes.class, filterByLoggedUser = true)
-@TListViewPresenter(page = @TPage(serviceName = IMeetingMinutesController.JNDI_NAME, filterByLoggedUser = true, query = @TQuery(entity = MeetingMinutes.class, condition = {
+@TListViewPresenter(page = @TPage(serviceName = IMeetingMinutesController.JNDI_NAME, filterByLoggedUser = true, 
+	query = @TQuery(entity = MeetingMinutes.class, condition = {
 		@TCondition(field = "meetingTopic", operator = TCompareOp.LIKE, label = ItToolsKey.MEETING_TOPIC),
 		@TCondition(field = "meetingDate", operator = TCompareOp.EQUAL, label = ItToolsKey.MEETING_DATE),
 		@TCondition(field = "issueNumber", operator = TCompareOp.EQUAL, label = ItToolsKey.ISSUE_NUMBER) }, orderBy = {
 				@TOrder(label = ItToolsKey.MEETING_DATE, field = "meetingDate"),
-				@TOrder(label = ItToolsKey.ISSUE_NUMBER, field = "issueNumber") }), showSearch = true, showOrderBy = true), presenter = @TPresenter(decorator = @TDecorator(viewTitle = ItToolsKey.VIEW_MEETING_MINUTES, buildModesRadioButton = false), behavior = @TBehavior(runNewActionAfterSave = false, saveAllModels = false, saveOnlyChangedModels = false)))
-@TSecurity(id = DomainApp.MEETING_MINUTES_FORM_ID, appName = ItToolsKey.APP_ITSUPPORT, moduleName = ItToolsKey.MODULE_ITSUPPORT_EVIDENCE, viewName = ItToolsKey.VIEW_MEETING_MINUTES, allowedAccesses = {
+				@TOrder(label = ItToolsKey.ISSUE_NUMBER, field = "issueNumber") }), showSearch = true, showOrderBy = true), 
+	presenter = @TPresenter(decorator = @TDecorator(viewTitle = ItToolsKey.VIEW_MEETING_MINUTES, buildModesRadioButton = false), 
+							behavior  = @TBehavior(saveOnlyChangedModels = false)))
+@TSecurity(id = DomainApp.MEETING_MINUTES_FORM_ID, appName = ItToolsKey.APP_ITSUPPORT, moduleName = ItToolsKey.MODULE_ITSUPPORT_EVIDENCE, 
+			viewName = ItToolsKey.VIEW_MEETING_MINUTES, allowedAccesses = {
 		TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, TAuthorizationType.SAVE, TAuthorizationType.DELETE,
 		TAuthorizationType.NEW })
 public class MeetingMinutesMV extends TEntityModelView<MeetingMinutes> {

@@ -77,7 +77,7 @@ import javafx.scene.layout.Priority;
 			),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=LocatKey.VIEW_PLACE),
-		behavior = @TBehavior(saveOnlyChangedModels=false, saveAllModels=false)))
+		behavior = @TBehavior(saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.PLACE_FORM_ID, appName = LocatKey.APP_LOCATION_NAME,
 moduleName = LocatKey.MODULE_PLACES, viewName = LocatKey.VIEW_PLACE,
 allowedAccesses={VIEW_ACCESS, EDIT, SAVE, DELETE, NEW})

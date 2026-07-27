@@ -82,7 +82,7 @@ import javafx.scene.layout.Priority;
 			),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=PersonKeys.VIEW_COST_CENTER, buildModesRadioButton=false),
-		behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
+		behavior=@TBehavior(saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.COST_CENTER_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_LEGAL_PERSON, viewName = PersonKeys.VIEW_COST_CENTER,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 

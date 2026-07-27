@@ -79,7 +79,7 @@ import javafx.scene.layout.Priority;
 		
 		presenter=@TPresenter(
 			decorator = @TDecorator(viewTitle=ItToolsKey.VIEW_GMUD_EDIT, buildModesRadioButton=false),
-			behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
+			behavior=@TBehavior(saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.CHANGE_MANAGER_GMUD_EDIT_FORM_ID, appName = ItToolsKey.APP_ITSUPPORT,
 	moduleName = ItToolsKey.MODULE_ITSUPPORT_GMUD, viewName = ItToolsKey.VIEW_GMUD_EDIT,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 

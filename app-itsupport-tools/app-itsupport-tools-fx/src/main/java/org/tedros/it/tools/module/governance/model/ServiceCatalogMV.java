@@ -61,8 +61,6 @@ import javafx.beans.property.SimpleStringProperty;
             viewTitle = ItToolsKey.TITLE_SERVICE_CATALOG,
             listTitle = ItToolsKey.TITLE_SERVICE_CATALOG_LIST),
         behavior = @TBehavior(
-            runNewActionAfterSave = false,
-            saveAllModels = false,            
             action = ExportServiceCatalogAction.class)))
 @TSecurity(
     id = DomainApp.GOVERNANCE_SERVICE_CATALOG_FORM_ID,

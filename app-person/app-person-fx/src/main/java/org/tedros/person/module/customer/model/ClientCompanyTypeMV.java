@@ -37,7 +37,7 @@ import org.tedros.server.query.TCompareOp;
 				),showSearch=true, showOrderBy=true),
 		presenter=@TPresenter(decorator = @TDecorator(viewTitle=PersonKeys.VIEW_CLIENT_COMPANY_TYPE,
 		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels = false, saveAllModels = false)))
+	behavior=@TBehavior(saveOnlyChangedModels = false)))
 @TSecurity(id=DomainApp.CLIENT_COMPANY_TYPE_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_CUSTOMER, viewName = PersonKeys.VIEW_CLIENT_COMPANY_TYPE,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT,

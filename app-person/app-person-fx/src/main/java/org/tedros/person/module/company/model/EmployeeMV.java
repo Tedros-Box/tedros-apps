@@ -63,7 +63,7 @@ import javafx.beans.property.SimpleObjectProperty;
 				),showSearch=true, showOrderBy=true),
 		presenter=@TPresenter(
 			decorator = @TDecorator(viewTitle=PersonKeys.VIEW_EMPLOYEES, buildModesRadioButton=false),
-			behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
+			behavior=@TBehavior(saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.EMPLOYEE_FORM_ID, appName = PersonKeys.APP_PERSON,
 	moduleName = PersonKeys.MODULE_LEGAL_PERSON, viewName = PersonKeys.VIEW_EMPLOYEES,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 

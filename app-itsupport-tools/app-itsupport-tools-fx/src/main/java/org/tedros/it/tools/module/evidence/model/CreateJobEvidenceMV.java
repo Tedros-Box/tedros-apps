@@ -73,7 +73,7 @@ import javafx.beans.property.SimpleStringProperty;
 					),showSearch=true, showOrderBy=true),
 		presenter=@TPresenter(
 			decorator = @TDecorator(viewTitle=ItToolsKey.VIEW_JOB_EVIDENCE, buildModesRadioButton=false),
-			behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, saveOnlyChangedModels=false)))
+			behavior=@TBehavior(saveOnlyChangedModels=false)))
 
 @TSecurity(id=DomainApp.EVIDENCE_MANAGER_FORM_ID, appName = ItToolsKey.APP_ITSUPPORT,
 	moduleName = ItToolsKey.MODULE_ITSUPPORT_EVIDENCE, viewName = ItToolsKey.VIEW_JOB_EVIDENCE,
