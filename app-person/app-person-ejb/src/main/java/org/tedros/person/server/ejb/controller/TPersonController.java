@@ -75,7 +75,7 @@ public class TPersonController<E extends Person> extends TSecureEjbController<E>
 	public  TResult<E> save(TAccessToken token, E entity) {
 		try{
 			E e = (E) getService().save(entity);
-			e = getService().findById(e);
+			e = getService().findById(e);			
 			boolean f = false;
 			if(e.getDocuments()!=null)
 				for(Document d : e.getDocuments()) {
