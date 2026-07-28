@@ -37,7 +37,7 @@ import org.tedros.server.query.TCompareOp;
 				),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=SmplsKey.VIEW_ORDER_STATUS,
 		buildModesRadioButton=false),
-		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false, saveAllModels=true)))
+		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.ORDER_STATUS_FORM_ID, appName = SmplsKey.APP_SAMPLES,
 	moduleName = SmplsKey.MODULE_ORDERS, viewName = SmplsKey.VIEW_ORDER_STATUS,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 

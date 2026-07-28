@@ -8,7 +8,6 @@ import org.tedros.core.annotation.security.TSecurity;
 import org.tedros.fx.TUsualKey;
 import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.page.TPage;
-import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
@@ -35,8 +34,7 @@ import org.tedros.stock.entity.EntryType;
 			orderBy= {@TOrder(label = TUsualKey.NAME, field = "name")}
 		),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(
-		decorator=@TDecorator(viewTitle=STCKKey.VIEW_ENTRY_TYPE, buildModesRadioButton=false),
-		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false)))
+		decorator=@TDecorator(viewTitle=STCKKey.VIEW_ENTRY_TYPE)))
 @TSecurity(id=DomainApp.ENTRY_TYPE_FORM_ID, appName = STCKKey.APP_STOCK,
 	moduleName = STCKKey.MODULE_INVENTORY, viewName = STCKKey.VIEW_ENTRY_TYPE,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 

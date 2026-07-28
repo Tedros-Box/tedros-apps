@@ -15,7 +15,6 @@ import org.tedros.fx.annotation.form.TForm;
 import org.tedros.fx.annotation.layout.TFlowPane;
 import org.tedros.fx.annotation.layout.TPane;
 import org.tedros.fx.annotation.page.TPage;
-import org.tedros.fx.annotation.presenter.TBehavior;
 import org.tedros.fx.annotation.presenter.TDecorator;
 import org.tedros.fx.annotation.presenter.TListViewPresenter;
 import org.tedros.fx.annotation.presenter.TPresenter;
@@ -69,10 +68,7 @@ import javafx.beans.property.SimpleStringProperty;
     presenter = @TPresenter(
         decorator = @TDecorator(
             viewTitle = ItToolsKey.TITLE_CATALOG_SERVICE,
-            listTitle = ItToolsKey.TITLE_CATALOG_SERVICE_LIST),
-        behavior = @TBehavior(
-            runNewActionAfterSave = false,
-            saveAllModels = false)))
+            listTitle = ItToolsKey.TITLE_CATALOG_SERVICE_LIST)))
 @TSecurity(
     id = DomainApp.GOVERNANCE_CATALOG_SERVICE_FORM_ID,
     appName = ItToolsKey.APP_ITSUPPORT,

@@ -10,6 +10,7 @@
 		
 		<class>org.tedros.core.notify.model.TNotify</class>
 		<class>org.tedros.core.notify.model.TNotifyLog</class>
+		<class>org.tedros.common.converter.NullSafeUuidConverter</class>
 		<class>org.tedros.common.model.TFileEntity</class>
 		<class>org.tedros.common.model.TBarcode</class>
 		<class>org.tedros.common.model.TByteEntity</class>

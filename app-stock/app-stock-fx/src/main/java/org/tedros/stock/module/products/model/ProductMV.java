@@ -66,8 +66,7 @@ import javafx.scene.layout.Priority;
 		),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(decorator = @TDecorator(viewTitle=STCKKey.VIEW_PRODUCT,
 		buildModesRadioButton=false),
-	behavior=@TBehavior(runNewActionAfterSave=false, saveAllModels=false, 
-	saveOnlyChangedModels=false)))
+	behavior=@TBehavior(saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.PRODUCT_FORM_ID, appName = STCKKey.APP_STOCK,
 	moduleName = STCKKey.MODULE_PRODUCTS, viewName = STCKKey.VIEW_PRODUCT,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 

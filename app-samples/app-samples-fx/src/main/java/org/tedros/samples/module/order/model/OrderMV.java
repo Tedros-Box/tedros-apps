@@ -118,7 +118,7 @@ import javafx.scene.layout.Priority;
 	),showSearch=true, showOrderBy=true),
 	presenter=@TPresenter(
 		decorator = @TDecorator(viewTitle=SmplsKey.VIEW_ORDERS, buildModesRadioButton=false),
-		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false, saveAllModels=false)))
+		behavior=@TBehavior(runNewActionAfterSave=false, saveOnlyChangedModels=false)))
 @TSecurity(id=DomainApp.ORDER_FORM_ID, appName = SmplsKey.APP_SAMPLES,
 	moduleName = SmplsKey.MODULE_ORDERS, viewName = SmplsKey.VIEW_ORDERS,
 	allowedAccesses={TAuthorizationType.VIEW_ACCESS, TAuthorizationType.EDIT, 
