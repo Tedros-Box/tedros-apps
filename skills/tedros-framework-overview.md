@@ -14,7 +14,7 @@ O **Tedros** é um framework Java de aplicação desktop construído sobre **Jav
 |------------------|---------------------------------------------------------|
 | Cliente (UI)     | JavaFX 17, CSS Caspian customizado                      |
 | Servidor         | Apache TomEE 9.x, Jakarta EJB 3.2, CDI                 |
-| Persistência     | JPA / EclipseLink 4.x, banco H2 (embutido ou servidor) |
+| Persistência     | JPA / EclipseLink 4.x, PostgreSQL (default; feature flag de banco na infra) |
 | Comunicação      | JNDI remoto (chamadas EJB via HTTP `tomee/ejb`)         |
 | Mensageria       | Apache ActiveMQ 5.x                                     |
 | IA               | langchain4j — **1.10.0 no cliente** (`tedros-core`, chamadas diretas OpenAI/Grok/Gemini) e **1.17.2 no servidor** (`tdrs-ai`, orquestração *Tool Relay*, ver seção 11) |

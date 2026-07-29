@@ -20,7 +20,7 @@ O ecossistema Tedros adota uma arquitetura rigorosa de 5 submódulos Maven para 
 5. **`-ejb-ear`**: O empacotador *Enterprise Archive* (EAR) usado para o deploy da aplicação no Apache TomEE.
 6. **`-fx`**: O lado cliente em JavaFX, contendo classes de Visão (`ModelView`), anotações de formulário, layouts e recursos de internacionalização (i18n).
 
-O Tedros utiliza o **PostgreSQL** como o banco de dados principal de produção (com H2 suportado para desenvolvimento simplificado). A infraestrutura e scripts para inicialização do banco são gerenciados no repositório `tedros-environment`.
+O Tedros utiliza o **PostgreSQL** como banco padrão (feature flag na infra `tedros-environment`). Os EARs são agnósticos ao vendor: a troca de banco (ex. Oracle) é feita só na infraestrutura, sem recompilar apps.
 
 ---
 
