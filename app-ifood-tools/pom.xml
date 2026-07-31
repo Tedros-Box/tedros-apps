@@ -32,7 +32,6 @@
     <openhtml.version>1.0.10</openhtml.version>
     <junit.version>4.13</junit.version>
     <cargo.version>1.10.14</cargo.version>
-    <h2.version>1.4.199</h2.version>
     <eclipselink.version>4.0.3</eclipselink.version>
     <jackson.jaxrs.json.provider>2.11.2</jackson.jaxrs.json.provider>
     <javaee.api.version>9.1.1</javaee.api.version>
