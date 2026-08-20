@@ -50,9 +50,9 @@ import org.tedros.it.tools.resource.AppResource;
 		@TModule(type=GovernanceModule.class,
 			name=ItToolsKey.MODULE_GOVERNANCE,
 			menu=ItToolsKey.MENU_GOVERNANCE,
-			description=ItToolsKey.MODULE_GOVERNANCE_DESC/*,
-			icon=TConstant.ICONS_FOLDER+"service_catalog.png",
-			menuIcon=TConstant.ICONS_FOLDER+"service_catalog_menu.png"*/)
+			description=ItToolsKey.MODULE_GOVERNANCE_DESC,
+			icon=TConstant.ICONS_FOLDER+"catalog.png",
+			menuIcon=TConstant.ICONS_FOLDER+"catalog_menu.png")
 	}, packageName = "org.tedros.it.tools", 
 	universalUniqueIdentifier=TConstant.UUI)
 @TResourceBundle(resourceName={"ittools"})
