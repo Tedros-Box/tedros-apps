@@ -46,6 +46,7 @@ import org.tedros.it.tools.gitlab.ai.function.SearchGitLabOpenedMergeRequestFunc
 import org.tedros.it.tools.gitlab.ai.function.SearchGitLabProjectFunction;
 import org.tedros.it.tools.gitlab.ai.function.SearchGitLabRepositoryBranchesFunction;
 import org.tedros.it.tools.gitlab.ai.function.SearchGitLabRepositoryCommitsFunction;
+import org.tedros.it.tools.module.governance.ai.function.SearchServiceCatalogAiFunction;
 import org.tedros.it.tools.redmine.ai.function.DownloadRedmineAttachmentAiFunction;
 import org.tedros.it.tools.redmine.ai.function.GetRedmineIssueAiFunction;
 import org.tedros.it.tools.redmine.ai.function.RedmineApiPropertyUtil;
@@ -103,7 +104,8 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 				2. Data: Use only provided/system data. Do NOT invent data.
 				3. Missing Info: If data is missing, explicitly ask for specific fields and provide a placeholder example.
 				4. No Images: Do NOT generate <img> tags or reference external images.
-				5. Responses language: Always respond in the user's language. The primary languages are Portuguese and English. Detect the language of the user's input and match it.
+				5. Responses language: Always respond in the user's language. The primary languages are Portuguese and English. Detect the language of the user's input and match it.				
+				6. Tool Calling: You are STRICTLY FORBIDDEN from calling or invoking the `show_html_content` function/tool in this chat context. Do not attempt to use it under any circumstances.
 				
 				CRITICAL OUTPUT RULES (Follow Strictly):
 				1. **RAW HTML ONLY**: You must return a raw HTML string.
@@ -123,6 +125,8 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 				
 				Example of WRONG response (Do NOT do this):
 				```html\n&lt;div style="background-color:black"&gt;...&lt;/div&gt;\n```
+				---
+				
                """;
 
     // Filters
@@ -589,7 +593,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
                     // Cria uma tarefa para este item e adiciona na fila
                     pendingTasks.add(() -> 
                         callTerosService(List.of(issue), userPrompt,
-                                "the user selected " + total
+                                "The user selected " + total
                                         + " issues and to prevent overload we are sending one by one. this one is the number "
                                         + currentNum + " of " + total + ". Reply using HTML format only."));
                     count++;
@@ -615,7 +619,7 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
         String contextData = toJson(selectedIssues);
         String fullPromptWithIssues = (userPrompt != null ? userPrompt : "") + "\n\nData:\n" + contextData;        
         terosServ.prompt = fullPromptWithIssues;
-        terosServ.systemPrompt = systemPrompt != null ? systemPrompt : SYSTEM_PROMPT;
+        terosServ.systemPrompt = systemPrompt != null ? SYSTEM_PROMPT + systemPrompt : SYSTEM_PROMPT;
         terosServ.startProcess();
     }
 
@@ -775,7 +779,8 @@ public class RedmineIssueSearchComponent extends VBox implements ITComponent{
 					new SearchGitLabOpenedMergeRequestFunction(),
 					new SearchGitLabProjectFunction(),
 					new SearchGitLabRepositoryBranchesFunction(),
-					new SearchGitLabRepositoryCommitsFunction()
+					new SearchGitLabRepositoryCommitsFunction(),
+					new SearchServiceCatalogAiFunction()
             };
             iaServ.createFunctionExecutor(arr);
 			

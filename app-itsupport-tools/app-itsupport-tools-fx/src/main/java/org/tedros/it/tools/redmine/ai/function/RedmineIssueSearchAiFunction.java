@@ -48,27 +48,31 @@ public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> 
 			Redmine Filterable Fields:
 
 			Core issue fields:
-			status_id - Situação
+			status_id - Situação (or issue.status_id)
 			project_id - Projeto
-			tracker_id - Tipo
+			subproject_id - Subprojeto
+			tracker_id - Tipo (or issue.tracker_id)
 			priority_id - Prioridade
 			author_id - Autor
 			assigned_to_id - Atribuído para
-			fixed_version_id - Versão
+			fixed_version_id - Versão (or issue.fixed_version_id)
+			category_id - Categoria (or issue.category_id)
 			subject - Título
 			description - Descrição
 			notes - Notas
+			comments - Comentário
 			done_ratio - % Terminado
 			is_private - Privado
 			watcher_id - Observador
 			updated_by - Atualizado por
 			last_updated_by - Última atualização por
 			issue_id - Tarefa
-			tags - Tags
+			tags - Tags (or issue_tags)
 
 			Atribuição (responsável):
 			member_of_group - Responsável pelo grupo
 			assigned_to_role - Papel do responsável
+			user_id - Usuário
 
 			Datas:
 			created_on - Criado em
@@ -76,10 +80,13 @@ public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> 
 			closed_on - Concluído
 			start_date - Início
 			due_date - Data prevista
+			spent_on - Data
 
 			Registro de horas:
 			estimated_hours - Tempo estimado
 			spent_time - Tempo gasto
+			hours - Horas
+			activity_id - Atividade
 
 			Arquivos:
 			attachment - Arquivo
@@ -102,19 +109,34 @@ public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> 
 			child_id - Subtarefas
 
 			Campos personalizados (custom fields):
-			cf_80 - OS Globalweb
-			cf_62 - Origem
-			cf_2 - SEI
-			cf_3 - Ambiente
-			cf_5 - Janela
-			cf_6 - Número do protocolo
-			cf_41 - Observações
-			cf_59 - Perfil Exigido
-			cf_60 - Serviços
-			cf_61 - Qtd. Itens Serviço
-			cf_75 - HPA
-			cf_71 - Classificação
-			cf_30 - Relatório G4F (OS)
+			
+			[Tarefa]
+			issue.cf_1 - Tarefa Área
+			issue.cf_4 - Tarefa Nº SEI!
+			issue.cf_12 - Tarefa Quantidade
+			issue.cf_58 - Tarefa Chamado GLPI / 4Biz / Nº SEI
+			issue.cf_83 - Tarefa Fase
+			issue.cf_96 - Tarefa Serviço (Memora)
+			issue.cf_100 - Tarefa Entregável (Memora)
+			issue.cf_109 - Tarefa OS (Memora)
+			issue.cf_113 - Tarefa Story Points
+			issue.cf_114 - Tarefa Classificação da demanda
+			
+			[Projeto]
+			project.cf_78 - Projeto Área gestora
+			project.cf_84 - Projeto Gestor / Dono do Produto
+			project.cf_85 - Projeto Tipo de produto
+			project.cf_87 - Projeto Status / Fase atual
+			project.cf_88 - Projeto Bibliotecas Internas
+			project.cf_89 - Projeto Integrações com API internas
+			project.cf_91 - Projeto Criticidade
+			project.cf_92 - Projeto Linguagem / Tecnologia
+			project.cf_106 - Projeto Gerente de Projeto
+			project.cf_107 - Projeto Áreas da 
+			
+			[Usuário]
+			user.cf_3 - Usuário Unidade Administrativa
+			user.cf_11 - Usuário CPF
 
 			Examples:
 
@@ -124,9 +146,9 @@ public class RedmineIssueSearchAiFunction extends TFunction<RedmineIssueFilter> 
 			  "assigned_to_id": { "op": "=", "value": "509" }
 			}
 
-			Example 2 - Filter by custom field "cf_30" equal to "Entregue" and due between 2025-01-01 and 2025-12-31:
+			Example 2 - Filter by custom field "issue.cf_114" equal to "Manutenção" and due between 2025-01-01 and 2025-12-31:
 			{
-			  "cf_30": { "op": "=", "value": "Entregue" },
+			  "issue.cf_114": { "op": "=", "value": "Manutenção" },
 			  "due_date": { "op": "><", "value": { "from": "2025-01-01", "to": "2025-12-31" } }
 			}
 
